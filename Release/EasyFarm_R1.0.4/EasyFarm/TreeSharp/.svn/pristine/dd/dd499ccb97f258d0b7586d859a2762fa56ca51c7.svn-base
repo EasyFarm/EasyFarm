@@ -1,0 +1,2 @@
+alexjc @ AiGameDev.com: The main 'push' behind this quick little library. He's the guy who got me interested in behavior trees.
+amadmonk @ MMOwned.com: The original implementation of the IEnumerable version of the Composite class. Major changes have been made since, but I owe a great deal of code to him.
