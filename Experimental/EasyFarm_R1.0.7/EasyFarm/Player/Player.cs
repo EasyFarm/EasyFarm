@@ -552,7 +552,6 @@ namespace EasyFarm.PlayerTools
                 bool NeedsMoreHP = IsResting && Engine.FFInstance.Instance.Player.HPPCurrent < Engine.Config.HighHP;
                 bool NeedsMoreMP = IsResting && Engine.FFInstance.Instance.Player.MPPCurrent < Engine.Config.HighMP;
                 bool RestingPossible = (Engine.Config.IsRestingHPEnabled || Engine.Config.IsRestingMPEnabled) && !IsRestingBlocked && !IsAggroed && !IsFighting && !IsDead;
-                List<byte[]> data = Engine.Units.ValidMobs.Select(x => x.RawData).ToList();
                 return RestingPossible && ((IsHPAtTriggerLevel || NeedsMoreHP) || (IsMPAtTriggerLevel || NeedsMoreMP));
             }
         }
