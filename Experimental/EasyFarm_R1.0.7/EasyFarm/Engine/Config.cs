@@ -21,6 +21,24 @@ namespace EasyFarm.Engine
         public Config(ref GameEngine m_gameEngine)
         {            
             this.m_gameEngine = m_gameEngine;
+
+            IgnoredList = new ObservableCollection<string>();
+            TargetsList = new ObservableCollection<string>();
+            Waypoints = new ObservableCollection<FFACE.Position>();
+            Weaponskill = new WeaponAbility();
+
+            HighHP = 0;
+            LowHP = 0;
+            WSHealthThreshold = 100;
+
+            BattleAggro = true;
+            BattlePartyClaimed = true;
+            BattleUnclaimed = true;
+
+            BattleList = new ObservableCollection<Ability>();
+            StartList = new ObservableCollection<Ability>();
+            EndList = new ObservableCollection<Ability>();
+            HealingList = new ObservableCollection<AbilityListItem<HealingAbility>>();
         }
 
         public ObservableCollection<Ability> StartList { get; set; }
