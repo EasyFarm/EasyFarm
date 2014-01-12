@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!--Radsources last updated 2013.04.12. This file generated on 2013.05.01-->
+<!--Radsources last updated 2013.03.27. This file generated on 2013.04.02-->
 <spells>
   <s id="1" index="1" prefix="/magic" english="Cure" german="Heilen" french="Soin" japanese="ケアル" type="WhiteMagic" element="Light" targets="Self, Player, Party, Ally, NPC, Enemy" skill="HealingMagic" mpcost="8" casttime="2" recast="5" alias="" />
   <s id="2" index="2" prefix="/magic" english="Cure II" german="Heilen II" french="Soin II" japanese="ケアルII" type="WhiteMagic" element="Light" targets="Self, Player, Party, Ally, NPC, Enemy" skill="HealingMagic" mpcost="24" casttime="2.25" recast="5.5" alias="c2" />

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!--Radsources last updated 2013.04.12. This file generated on 2013.05.01.-->
+<!--Radsources last updated 2013.03.27. This file generated on 2013.04.02.-->
 <abils>
   <a id="1" index="0" prefix="/range" english="Ranged" german="Fernwaffe" french="Attaque à dist." japanese="飛び道具" type="Misc" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
   <a id="2" index="0" prefix="/echo" english="Weapon Abilities" german="Waffenfähigkeiten" french="Compétence arme" japanese="武器技" type="Misc" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
@@ -334,7 +334,7 @@
   <a id="350" index="247" prefix="/jobability" english="Blaze of Glory" german="Glanz und Gloria" french="Emport. géomant." japanese="グローリーブレイズ" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
   <a id="351" index="248" prefix="/jobability" english="Dematerialize" german="Dematerialisation" french="Dématérialisation" japanese="デマテリアライズ" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
   <a id="352" index="249" prefix="/jobability" english="Theurgic Focus" german="Thaumat. Fokus" french="Focalis. thaum." japanese="タウマテルギフォカス" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
-  <a id="353" index="250" prefix="/jobability" english="Concentric Pulse" german="Konzentr. Puls" french="Exp. concentrique" japanese="コンセントリクパルス" type="JobAbility" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
+  <a id="353" index="250" prefix="/jobability" english="Concentric Pulse" german="Konz. Expulsion" french="Exp. concentrique" japanese="コンセントリクパルス" type="JobAbility" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
   <a id="356" index="0" prefix="/jobability" english="Elemental Sforzo" german="Verzauber.-Sforzo" french="Sforzo élémentaire" japanese="E.スフォルツォ" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
   <a id="357" index="92" prefix="/jobability" english="Rune Enchantment" german="Verzauber.-Rune" french="Runes enchant." japanese="エンチャントルーン" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
   <a id="358" index="10" prefix="/jobability" english="Ignis" german="Ignis" french="Ignis" japanese="イグニス" type="Rune" element="None" targets="Self" skill="Ability" mpcost="1" tpcost="-1" casttime="0" recast="0" alias="" />
@@ -356,7 +356,6 @@
   <a id="374" index="118" prefix="/jobability" english="One for All" german="Einer für alle" french="Un pour tous" japanese="ワンフォアオール" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
   <a id="379" index="142" prefix="/jobability" english="Ward" german="Wehr" french="Gardes runiques" japanese="ワード" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
   <a id="380" index="143" prefix="/jobability" english="Effusion" german="Effusion" french="Assauts runiques" japanese="エフューズ" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
-  <a id="381" index="218" prefix="/jobability" english="Chocobo Jig II" german="Chocobo-Tango II" french="Gigue chocobo II" japanese="チョコボジグII" type="Jig" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" alias="" />
   <a id="385" index="0" prefix="/echo" english="Accuracy Bonus" german="Präzisions-Bonus" french="Bonus précision" japanese="物理命中率アップ" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
   <a id="386" index="0" prefix="/echo" english="Evasion Bonus" german="Ausweich-Bonus" french="Bonus esquive" japanese="物理回避率アップ" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />
   <a id="387" index="0" prefix="/echo" english="Attack Bonus" german="Attacken-Bonus" french="Bonus attaque" japanese="物理攻撃力アップ" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="-1" casttime="0" recast="0" alias="" />

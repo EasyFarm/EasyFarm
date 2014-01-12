@@ -48,22 +48,9 @@ namespace EasyFarm.UtilityTools
 
             //Go through all the FFXI Processes, and where a processes Title matches something in the list box, select that item.
             //returns a process in query
-            var Query = from i in POL_Processes where i.MainWindowTitle.Equals(SessionsListBox.SelectedItem.ToString()) select i;
-
-            POL_Process = Query.First();
-
-            Process pol = Process.GetProcessById(POL_Process.Id);
-            foreach (System.Diagnostics.ProcessModule mod in pol.Modules)
-            {
-                if (mod.ModuleName.ToLower() == "hook.dll")
-                {
-                    FFACETools.FFACE.WindowerPath = Path.GetDirectoryName(mod.FileName) + @"\plugins";
-                    break;
-                }
-            }
-
-            //This is where the problem occurs, it states that the index is out of bounds
-            //When making a new instance of FFACETools.FFACE
+            POL_Process = (from i in POL_Processes
+                           where i.MainWindowTitle.Equals(SessionsListBox.SelectedItem.ToString())
+                           select i).First();
             FFXI_Session = new FFACE(POL_Process.Id);
 
             this.Close();

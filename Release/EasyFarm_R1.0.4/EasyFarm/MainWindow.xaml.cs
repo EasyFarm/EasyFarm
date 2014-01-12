@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using EasyFarm.PlayerTools;
 using EasyFarm.UtilityTools;
-using EasyFarm.ExtensionMethods;
 using FFACETools;
 
 namespace EasyFarm
