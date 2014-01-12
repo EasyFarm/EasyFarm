@@ -117,11 +117,14 @@
     <Compile Include="Behavior\Selector.cs" />
     <Compile Include="Behavior\Sequencer.cs" />
     <Compile Include="Behavior\Task.cs" />
-    <Compile Include="Debug\DebugSpells.xaml.cs">
+    <Compile Include="ErrorAids\DebugCreatures.xaml.cs">
+      <DependentUpon>DebugCreatures.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorAids\DebugSpells.xaml.cs">
       <DependentUpon>DebugSpells.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Debug\DebugCreatures.xaml.cs">
-      <DependentUpon>DebugCreatures.xaml</DependentUpon>
+    <Compile Include="ErrorAids\NPCDialogDebug.xaml.cs">
+      <DependentUpon>NPCDialogDebug.xaml</DependentUpon>
     </Compile>
     <Compile Include="FSM\HealingState.cs" />
     <Compile Include="MVVM\AbilityListItem.cs" />
@@ -136,9 +139,6 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Debug\NPCDialogDebug.xaml.cs">
-      <DependentUpon>NPCDialogDebug.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\ViewModel_Battles.cs" />
     <Compile Include="MVVM\ViewModel_Healing.cs" />
@@ -164,23 +164,23 @@
     <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="MVVM\ViewModel_Main.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
-    <Page Include="Debug\DebugSpells.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Debug\DebugCreatures.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MainWindow.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="ErrorAids\DebugCreatures.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Debug\NPCDialogDebug.xaml">
+    <Page Include="ErrorAids\DebugSpells.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ErrorAids\NPCDialogDebug.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

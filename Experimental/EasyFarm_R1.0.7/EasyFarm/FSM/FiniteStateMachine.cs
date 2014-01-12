@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Author: Myrmidon
+// Site: FFEVO.net
+// All credit to him!
+
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using EasyFarm.Engine;
@@ -25,6 +29,7 @@ public class FiniteStateEngine
     {
         this.Engine = Engine;
 
+        //Create the states
         AddState(new RestState(ref this.Engine));
         AddState(new AttackState(ref this.Engine));
         AddState(new TravelState(ref this.Engine));

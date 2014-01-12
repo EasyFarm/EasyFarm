@@ -8,13 +8,45 @@ namespace EasyFarm.PlayerTools
 {
     public class Player
     {
+        /// <summary>
+        /// Reference to the game engine object. 
+        /// Modifications to the changes the object for everyone.
+        /// </summary>
         private GameEngine Engine;
+
+        /// <summary>
+        /// Who we are trying to kill currently
+        /// </summary>
         public Unit TargetUnit { get; set; }
+        
+        /// <summary>
+        /// Command for resting
+        /// </summary>
         const string RESTING_ON = "/heal on";
+        
+        /// <summary>
+        /// Command for stopping resting
+        /// </summary>
         const string RESTING_OFF = "/heal off";
+        
+        /// <summary>
+        /// Command for disengaging
+        /// </summary>
         const string ATTACK_OFF = "/attack off";
+        
+        /// <summary>
+        /// Command for engaging
+        /// </summary>
         const string ATTACK_ON = "/attack on";
+        
+        /// <summary>
+        /// Min distance we need to maintain from the enemy
+        /// </summary>
         const int DIST_MIN = 3;
+        
+        /// <summary>
+        /// Max distance we can be from the enemy
+        /// </summary>
         const int DIST_MAX = 5;
 
         private Player()
@@ -36,16 +68,25 @@ namespace EasyFarm.PlayerTools
         // Player Info
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        /// <summary>
+        /// Do we have moves we can use in battle again the creature?
+        /// </summary>
         public bool HasBattleMoves
         {
             get { return Engine.Config.BattleList.Count > 0; }
         }
 
+        /// <summary>
+        /// Do we have any moves we can pull the enemy with?
+        /// </summary>
         public bool HasStartMoves
         {
             get { return Engine.Config.StartList.Count > 0; }
         }
 
+        /// <summary>
+        /// Do we have instruction on what to do when the creature is dead?
+        /// </summary>
         public bool HasEndMoves
         {
             get { return Engine.Config.EndList.Count > 0; }
@@ -169,6 +210,9 @@ namespace EasyFarm.PlayerTools
             }
         }
 
+        /// <summary>
+        /// Can we use job abilities?
+        /// </summary>
         public bool IsAbilitiesBlocked
         {
             get
@@ -387,6 +431,9 @@ namespace EasyFarm.PlayerTools
             Engine.FFInstance.Instance.Navigator.GotoTarget();
         }
 
+        /// <summary>
+        /// Places the cursor on the enemy
+        /// </summary>
         public void Target()
         {
             if (!IsTargetUnit)
@@ -534,6 +581,9 @@ namespace EasyFarm.PlayerTools
         // End
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
+        /// <summary>
+        /// Is our players status equal to dead?
+        /// </summary>
         public bool IsDead
         {
             get
@@ -543,6 +593,9 @@ namespace EasyFarm.PlayerTools
             }
         }
 
+        /// <summary>
+        /// Should we rest by way of /heal?
+        /// </summary>
         public bool shouldRest
         {
             get
@@ -556,6 +609,9 @@ namespace EasyFarm.PlayerTools
             }
         }
 
+        /// <summary>
+        /// Should we heal by way of abilities and spells?
+        /// </summary>
         public bool shouldHeal
         { 
             get 
@@ -564,6 +620,9 @@ namespace EasyFarm.PlayerTools
             }
         }
 
+        /// <summary>
+        /// Should we move to the next waypoint?
+        /// </summary>
         public bool shouldTravel
         {
             get
@@ -572,6 +631,9 @@ namespace EasyFarm.PlayerTools
             }
         }
 
+        /// <summary>
+        /// Returns the list of currently usuable Healing Abilities and Spells.
+        /// </summary>
         public List<Ability> HealingList
         {
             get 

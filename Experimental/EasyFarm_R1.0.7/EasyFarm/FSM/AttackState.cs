@@ -2,6 +2,9 @@
 
 namespace EasyFarm.FSM
 {
+    /// <summary>
+    /// A class for defeating monsters.
+    /// </summary>
     class AttackState : BaseState
     {
         public AttackState(ref GameEngine gameEngine) : base(ref gameEngine) { }

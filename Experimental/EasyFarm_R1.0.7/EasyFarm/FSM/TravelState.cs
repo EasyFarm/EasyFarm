@@ -29,16 +29,19 @@ namespace EasyFarm.FSM
 
         public override void RunState()
         {
+            // If we've reached the end of the path....
             if (position >= gameEngine.Config.Waypoints.Count)
             {
+                // Turn around and run the path in reverse with the old end being the new starting point
                 gameEngine.Config.Waypoints = new ObservableCollection<FFACE.Position>(gameEngine.Config.Waypoints.Reverse());
                 position = 0;
             }
 
+            // If we are more than 10 yalms away from the nearest point...
             if (gameEngine.FFInstance.Instance.Navigator.DistanceTo(gameEngine.Config.Waypoints[position]) > 10)
             {
+                // Find the closest point and ...
                 FFACE.Position point = null;
-
                 foreach (var pos in gameEngine.Config.Waypoints)
                 {
                     if (point == null) { point = pos; }
@@ -48,12 +51,14 @@ namespace EasyFarm.FSM
                         point = pos;
                 }
 
+                // Get its index in the array of points, then ...
                 if (point != null)
                 {
                     position = gameEngine.Config.Waypoints.IndexOf(point);
                 }
             }
 
+            //Go to that point
             gameEngine.Pathing.GotoWaypoint(gameEngine.Config.Waypoints[position]);
             position++;
         }
