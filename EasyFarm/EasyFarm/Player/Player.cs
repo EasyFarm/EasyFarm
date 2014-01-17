@@ -585,6 +585,8 @@ namespace EasyFarm.PlayerTools
         /// <param name="unit"></param>
         public void Battle()
         {
+            MoveToUnit();
+            MaintainHeading();
             Target();
             Pull();
             Engage();
