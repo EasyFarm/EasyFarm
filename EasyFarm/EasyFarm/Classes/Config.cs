@@ -42,7 +42,7 @@ namespace EasyFarm.Engine
             BattleList = new ObservableCollection<Ability>();
             StartList = new ObservableCollection<Ability>();
             EndList = new ObservableCollection<Ability>();
-            HealingList = new ObservableCollection<AbilityListItem<HealingAbility>>();
+            HealingList = new ObservableCollection<ListItem<HealingAbility>>();
 
             StartListSelected = true;
             BattleListSelected = false;
@@ -67,7 +67,7 @@ namespace EasyFarm.Engine
         /// <summary>
         /// List of actions that should be used when injured
         /// </summary>
-        public ObservableCollection<AbilityListItem<HealingAbility>> HealingList { get; set; }
+        public ObservableCollection<ListItem<HealingAbility>> HealingList { get; set; }
         
         /// <summary>
         /// List of mob's name of the mobs that should be ignored

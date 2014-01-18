@@ -64,20 +64,11 @@ namespace EasyFarm
             }
         }
 
-        public ICommand AddActionCommand
-        {            
-            get { return new RelayCommand(AddAction, IsBattleActionAddable); }
-        }
+        public ICommand AddActionCommand { get; set; }
 
-        public ICommand DeleteActionCommand 
-        { 
-            get { return new RelayCommand(DeleteAction, IsBattleActionRemovable); } 
-        }        
+        public ICommand DeleteActionCommand { get; set; }
 
-        public ICommand ClearActionsCommand
-        {
-            get { return new RelayCommand(ClearActions, Condition => { return true; }); }
-        }
+        public ICommand ClearActionsCommand { get; set; }
 
         private ObservableCollection<Ability> SelectedList
         {

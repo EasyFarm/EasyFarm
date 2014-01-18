@@ -42,18 +42,9 @@ namespace EasyFarm
             }
         }
 
-        public ICommand SetWeaponSkillCommand
-        {
-            get
-            {
-                return new RelayCommand(
-                    Action => SetWeaponSkill(),
-                    Condition => { return true; }
-                    );
-            }
-        }
+        public ICommand SetWeaponSkillCommand { get; set; }
 
-        private void SetWeaponSkill()
+        private void SetWeaponSkill(object obj)
         {
             if (!string.IsNullOrWhiteSpace(Engine.Config.WSName))
             {

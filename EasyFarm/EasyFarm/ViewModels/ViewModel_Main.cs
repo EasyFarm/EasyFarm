@@ -1,4 +1,5 @@
 ﻿
+using Ashita.Model;
 using EasyFarm.Engine;
 using EasyFarm.MVVM;
 using EasyFarm.ProcessTools;
@@ -12,7 +13,7 @@ using System.Windows.Threading;
 
 namespace EasyFarm
 {
-    public partial class ViewModel : ViewModelBase
+    public partial class ViewModel : NotifiableModel
     {
         public GameEngine Engine;
         DispatcherTimer WaypointRecorder = new DispatcherTimer();
@@ -27,6 +28,44 @@ namespace EasyFarm
             // Used for recording waypoints.
             WaypointRecorder.Tick += new EventHandler(RouteRecorder_Tick);
             WaypointRecorder.Interval = new TimeSpan(0, 0, 1);
+
+            // Main Commands
+            this.OnStart = new RelayCommand(Action => Start(), Condition => { return true; });
+
+            // Target Commands
+            this.AddTargetUnitCommand = new RelayCommand(
+                    Action => AddUnit(Targets, TargetsName),
+                    Condition => IsAddable(Targets, TargetsName));
+            this.DeleteTargetUnitCommand = new RelayCommand(
+                    Action => DeleteUnit(Targets, TargetsName),
+                    Condition => !IsAddable(Targets, TargetsName));
+            this.ClearTargetUnitsCommand = new RelayCommand(Action => ClearUnits(Targets));
+
+            // Battle Commands
+            AddActionCommand = new RelayCommand(AddAction, IsBattleActionAddable);
+            DeleteActionCommand = new RelayCommand(DeleteAction, IsBattleActionRemovable);
+            ClearActionsCommand = new RelayCommand(ClearActions);
+            
+            // WS Commands
+            this.SetWeaponSkillCommand = new RelayCommand(SetWeaponSkill);
+            
+            // Ignore Commands
+            this.AddIgnoredUnitCommand = new RelayCommand(
+                Action => AddUnit(Ignored, IgnoredName),
+                Condition => IsAddable(Ignored, IgnoredName));
+            this.DeleteIgnoredUnitCommand = new RelayCommand(
+                Action => DeleteUnit(Ignored, IgnoredName),
+                Condition => !IsAddable(Ignored, IgnoredName));
+            
+
+            // Healing Commands
+            this.AddHealingCommand = new RelayCommand(AddHealingItem);
+            this.DeleteHealingCommand = new RelayCommand(DeleteHealing);
+            this.ClearHealingCommand = new RelayCommand(ClearHealing);
+            
+            // Routes Commands
+            this.RecordRouteCommand = new RelayCommand(RecordRoute);
+            this.ClearHealingCommand = new RelayCommand(ClearRoute);
         }
         
         private void InitializeEngine()
@@ -59,13 +98,7 @@ namespace EasyFarm
             OnPropertyChanged("IgnoredName");
         }
 
-        public ICommand OnStart
-        {
-            get
-            {
-                return new RelayCommand(Action => Start(), Condition => { return true; });
-            }
-        }
+        public ICommand OnStart { get; set; }
 
         public String StatusBarText
         {

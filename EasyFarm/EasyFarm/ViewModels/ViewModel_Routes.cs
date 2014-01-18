@@ -22,28 +22,16 @@ namespace EasyFarm
             }
         }
 
-        public ICommand RecordRouteCommand
-        {
-            get
-            {
-                return new RelayCommand(Action => RecordRoute(), Condition => { return true; });
-            }
-        }
+        public ICommand RecordRouteCommand { get; set; }
 
-        public ICommand ClearRouteCommand
-        {
-            get
-            {
-                return new RelayCommand(Action => ClearRoute(), Condition => { return true; });
-            }
-        }
+        public ICommand ClearRouteCommand { get; set; }
 
-        void ClearRoute()
+        void ClearRoute(object obj)
         {
             Route = new ObservableCollection<FFACE.Position>();
         }
 
-        void RecordRoute()
+        void RecordRoute(object obj)
         {
             if (!WaypointRecorder.IsEnabled)
             {

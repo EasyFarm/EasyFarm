@@ -111,12 +111,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Behavior\BehaviorTree.cs" />
-    <Compile Include="Behavior\Node.cs" />
-    <Compile Include="Behavior\Parrallel.cs" />
-    <Compile Include="Behavior\Selector.cs" />
-    <Compile Include="Behavior\Sequencer.cs" />
-    <Compile Include="Behavior\Task.cs" />
+    <Compile Include="Decision\Behavior\BehaviorTree.cs" />
+    <Compile Include="Decision\Behavior\Node.cs" />
+    <Compile Include="Decision\Behavior\Parrallel.cs" />
+    <Compile Include="Decision\Behavior\Selector.cs" />
+    <Compile Include="Decision\Behavior\Sequencer.cs" />
+    <Compile Include="Decision\Behavior\Task.cs" />
     <Compile Include="ErrorAids\DebugCreatures.xaml.cs">
       <DependentUpon>DebugCreatures.xaml</DependentUpon>
     </Compile>
@@ -126,64 +126,65 @@
     <Compile Include="ErrorAids\NPCDialogDebug.xaml.cs">
       <DependentUpon>NPCDialogDebug.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FSM\HealingState.cs" />
-    <Compile Include="IgnoredView.xaml.cs">
+    <Compile Include="Decision\FSM\HealingState.cs" />
+    <Compile Include="Controls\IgnoredView.xaml.cs">
       <DependentUpon>IgnoredView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MvvmFoundation\Messenger.cs" />
     <Compile Include="MvvmFoundation\ObservableObject.cs" />
     <Compile Include="MvvmFoundation\PropertyObserver.cs" />
     <Compile Include="MvvmFoundation\RelayCommand.cs" />
-    <Compile Include="MVVM\AbilityListItem.cs" />
-    <Compile Include="Engine\GameEngine.cs" />
-    <Compile Include="Engine\GameState.cs" />
-    <Compile Include="FSM\AttackState.cs" />
-    <Compile Include="FSM\BaseState.cs" />
-    <Compile Include="FSM\FiniteStateMachine.cs" />
-    <Compile Include="FSM\RestState.cs" />
-    <Compile Include="FSM\TravelState.cs" />
-    <Compile Include="Engine\Config.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Classes\GameEngine.cs" />
+    <Compile Include="Classes\GameState.cs" />
+    <Compile Include="Decision\FSM\AttackState.cs" />
+    <Compile Include="Decision\FSM\BaseState.cs" />
+    <Compile Include="Decision\FSM\FiniteStateMachine.cs" />
+    <Compile Include="Decision\FSM\RestState.cs" />
+    <Compile Include="Decision\FSM\TravelState.cs" />
+    <Compile Include="Classes\Config.cs" />
+    <Compile Include="ViewModels\NotifiableModel.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MVVM\ListItem.cs" />
-    <Compile Include="MVVM\ViewModel_Battles.cs" />
-    <Compile Include="MVVM\ViewModel_Healing.cs" />
-    <Compile Include="MVVM\ViewModel_Resting.cs" />
-    <Compile Include="MVVM\ViewModel_Routes.cs" />
-    <Compile Include="MVVM\ViewModel_Targets.cs" />
-    <Compile Include="MVVM\ViewModel_Ignored.cs" />
-    <Compile Include="MVVM\ViewModel_WeaponSkill.cs" />
-    <Compile Include="Pathing\Pathing.cs" />
-    <Compile Include="Pathing\Waypoint.cs" />
-    <Compile Include="Player\Ability.cs" />
-    <Compile Include="Player\HealingAbility.cs" />
-    <Compile Include="Player\Weaponskill.cs" />
-    <Compile Include="Processes\FFInstance.cs" />
-    <Compile Include="MVVM\RelayCommand.cs" />
-    <Compile Include="RoutesView.xaml.cs">
+    <Compile Include="ViewModels\ListItem.cs" />
+    <Compile Include="ViewModels\ViewModel_Battles.cs" />
+    <Compile Include="ViewModels\ViewModel_Healing.cs" />
+    <Compile Include="ViewModels\ViewModel_Resting.cs" />
+    <Compile Include="ViewModels\ViewModel_Routes.cs" />
+    <Compile Include="ViewModels\ViewModel_Targets.cs" />
+    <Compile Include="ViewModels\ViewModel_Ignored.cs" />
+    <Compile Include="ViewModels\ViewModel_WeaponSkill.cs" />
+    <Compile Include="Classes\Pathing.cs" />
+    <Compile Include="Classes\Waypoint.cs" />
+    <Compile Include="Classes\Ability.cs" />
+    <Compile Include="Classes\HealingAbility.cs" />
+    <Compile Include="Classes\WeaponAbility.cs" />
+    <Compile Include="Classes\FFInstance.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="Controls\RoutesView.xaml.cs">
       <DependentUpon>RoutesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TargetsView.xaml.cs">
+    <Compile Include="Classes\SerializableDictionary.cs" />
+    <Compile Include="Controls\TargetsView.xaml.cs">
       <DependentUpon>TargetsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Units\Unit.cs" />
-    <Compile Include="Units\Units.cs" />
-    <Compile Include="Utilities\frmStartup.cs">
+    <Compile Include="Classes\Unit.cs" />
+    <Compile Include="Classes\Units.cs" />
+    <Compile Include="Views\frmStartup.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utilities\frmStartup.designer.cs">
+    <Compile Include="Views\frmStartup.designer.cs">
       <DependentUpon>frmStartup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\Utilities.cs" />
-    <Compile Include="MVVM\ViewModel_Main.cs" />
-    <Compile Include="MVVM\ViewModelBase.cs" />
+    <Compile Include="Classes\Utilities.cs" />
+    <Compile Include="ViewModels\ViewModel_Main.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ControlStyles.xaml">
+    <Page Include="Views\ControlStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -199,25 +200,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="IgnoredView.xaml">
+    <Page Include="Controls\IgnoredView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RoutesView.xaml">
+    <Page Include="Controls\RoutesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TargetsView.xaml">
+    <Page Include="Controls\TargetsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Player\Player.cs" />
+    <Compile Include="Classes\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -235,7 +236,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utilities\frmStartup.resx">
+    <EmbeddedResource Include="Views\frmStartup.resx">
       <DependentUpon>frmStartup.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />

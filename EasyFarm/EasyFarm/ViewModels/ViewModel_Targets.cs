@@ -66,35 +66,10 @@ namespace EasyFarm
             }
         }
 
-        public ICommand AddTargetUnitCommand
-        {
-            get
-            {
-                return new RelayCommand(
-                    Action      => AddUnit(Targets, TargetsName),
-                    Condition   => IsAddable(Targets, TargetsName));
-            }
-        }
+        public ICommand AddTargetUnitCommand { get; set; }
 
-        public ICommand DeleteTargetUnitCommand
-        {
-            get
-            {
-                return new RelayCommand(
-                    Action      => DeleteUnit(Targets,TargetsName),
-                    Condition   => !IsAddable(Targets, TargetsName));
-            }
-        }
+        public ICommand DeleteTargetUnitCommand { get; set; }
 
-        public ICommand ClearTargetUnitsCommand
-        {
-            get
-            {
-                return new RelayCommand(
-                    Action      => ClearUnits(Targets),
-                    Condition   => { return true; }
-                );
-            }
-        }
+        public ICommand ClearTargetUnitsCommand { get; set; }
     }
 }
