@@ -1,10 +1,9 @@
-﻿
-using Ashita.Model;
-using EasyFarm.Engine;
+﻿using EasyFarm.Engine;
 using EasyFarm.MVVM;
 using EasyFarm.ProcessTools;
 using EasyFarm.UtilityTools;
 using FFACETools;
+using MvvmFoundation.Wpf;
 using System;
 using System.Collections;
 using System.Diagnostics;
@@ -13,7 +12,7 @@ using System.Windows.Threading;
 
 namespace EasyFarm
 {
-    public partial class ViewModel : NotifiableModel
+    public partial class ViewModel : ObservableObject
     {
         public GameEngine Engine;
         DispatcherTimer WaypointRecorder = new DispatcherTimer();
@@ -30,37 +29,37 @@ namespace EasyFarm
             WaypointRecorder.Interval = new TimeSpan(0, 0, 1);
 
             // Main Commands
-            this.OnStart = new RelayCommand(Action => Start(), Condition => { return true; });
+            this.OnStart = new RelayCommand<object>(Action => Start(), Condition => { return true; });
 
             // Target Commands
-            this.AddTargetUnitCommand = new RelayCommand(
+            this.AddTargetUnitCommand = new RelayCommand<object>(
                     Action => AddUnit(Targets, TargetsName),
                     Condition => IsAddable(Targets, TargetsName));
-            this.DeleteTargetUnitCommand = new RelayCommand(
+            this.DeleteTargetUnitCommand = new RelayCommand<object>(
                     Action => DeleteUnit(Targets, TargetsName),
                     Condition => !IsAddable(Targets, TargetsName));
-            this.ClearTargetUnitsCommand = new RelayCommand(Action => ClearUnits(Targets));
+            this.ClearTargetUnitsCommand = new RelayCommand<object>(Action => ClearUnits(Targets));
 
             // Battle Commands
-            AddActionCommand = new RelayCommand(AddAction, IsBattleActionAddable);
-            DeleteActionCommand = new RelayCommand(DeleteAction, IsBattleActionRemovable);
+            AddActionCommand = new RelayCommand<object>(AddAction, IsBattleActionAddable);
+            DeleteActionCommand = new RelayCommand<object>(DeleteAction, IsBattleActionRemovable);
             ClearActionsCommand = new RelayCommand(ClearActions);
             
             // WS Commands
             this.SetWeaponSkillCommand = new RelayCommand(SetWeaponSkill);
             
             // Ignore Commands
-            this.AddIgnoredUnitCommand = new RelayCommand(
+            this.AddIgnoredUnitCommand = new RelayCommand<object>(
                 Action => AddUnit(Ignored, IgnoredName),
                 Condition => IsAddable(Ignored, IgnoredName));
-            this.DeleteIgnoredUnitCommand = new RelayCommand(
+            this.DeleteIgnoredUnitCommand = new RelayCommand<object>(
                 Action => DeleteUnit(Ignored, IgnoredName),
                 Condition => !IsAddable(Ignored, IgnoredName));
             
 
             // Healing Commands
             this.AddHealingCommand = new RelayCommand(AddHealingItem);
-            this.DeleteHealingCommand = new RelayCommand(DeleteHealing);
+            this.DeleteHealingCommand = new RelayCommand<object>(DeleteHealing);
             this.ClearHealingCommand = new RelayCommand(ClearHealing);
             
             // Routes Commands
@@ -91,11 +90,11 @@ namespace EasyFarm
 
         public void RefreshConfig()
         {
-            OnPropertyChanged("KillPartyClaimed");
-            OnPropertyChanged("KillUnclaimed");
-            OnPropertyChanged("KillAggro");            
-            OnPropertyChanged("TargetsName");
-            OnPropertyChanged("IgnoredName");
+            RaisePropertyChanged("KillPartyClaimed");
+            RaisePropertyChanged("KillUnclaimed");
+            RaisePropertyChanged("KillAggro");            
+            RaisePropertyChanged("TargetsName");
+            RaisePropertyChanged("IgnoredName");
         }
 
         public ICommand OnStart { get; set; }
@@ -110,7 +109,7 @@ namespace EasyFarm
             set 
             { 
                 Engine.Config.StatusBarText = value;
-                OnPropertyChanged("StatusBarText");
+                RaisePropertyChanged("StatusBarText");
             }
         }
 

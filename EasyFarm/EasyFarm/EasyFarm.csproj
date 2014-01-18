@@ -142,7 +142,6 @@
     <Compile Include="Decision\FSM\RestState.cs" />
     <Compile Include="Decision\FSM\TravelState.cs" />
     <Compile Include="Classes\Config.cs" />
-    <Compile Include="ViewModels\NotifiableModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -161,7 +160,6 @@
     <Compile Include="Classes\HealingAbility.cs" />
     <Compile Include="Classes\WeaponAbility.cs" />
     <Compile Include="Classes\FFInstance.cs" />
-    <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="Controls\RoutesView.xaml.cs">
       <DependentUpon>RoutesView.xaml</DependentUpon>
     </Compile>

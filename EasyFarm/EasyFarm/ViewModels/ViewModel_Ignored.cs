@@ -17,7 +17,7 @@ namespace EasyFarm
             set
             {
                 Engine.Config.IgnoredName = value;
-                OnPropertyChanged("IgnoredName");
+                RaisePropertyChanged("IgnoredName");
             }
         }
 

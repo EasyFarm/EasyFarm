@@ -16,7 +16,7 @@ namespace EasyFarm
             set 
             { 
                 Engine.Config.WSName = value;
-                OnPropertyChanged("WeaponSkillName");
+                RaisePropertyChanged("WeaponSkillName");
             }
         }
 
@@ -27,7 +27,7 @@ namespace EasyFarm
             { 
                 Engine.Config.WSDistance = value;
                 StatusBarText = "Distance: " + value;
-                OnPropertyChanged("WeaponSkillDistance");
+                RaisePropertyChanged("WeaponSkillDistance");
             }
         }
 
@@ -38,13 +38,13 @@ namespace EasyFarm
             { 
                 Engine.Config.WSHealthThreshold = (int)value;
                 StatusBarText = "Health: " + (int)value;
-                OnPropertyChanged("WeaponSkillHealth");
+                RaisePropertyChanged("WeaponSkillHealth");
             }
         }
 
         public ICommand SetWeaponSkillCommand { get; set; }
 
-        private void SetWeaponSkill(object obj)
+        private void SetWeaponSkill()
         {
             if (!string.IsNullOrWhiteSpace(Engine.Config.WSName))
             {

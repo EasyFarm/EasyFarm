@@ -35,7 +35,7 @@ namespace EasyFarm
         {
             get { return Engine.Config.BattleListSelected; }
             set { Engine.Config.BattleListSelected = value;
-            OnPropertyChanged("BattleListSelected");
+            RaisePropertyChanged("BattleListSelected");
             }
         }
 
@@ -43,7 +43,7 @@ namespace EasyFarm
         {
             get { return Engine.Config.StartListSelected; }
             set { Engine.Config.StartListSelected = value;
-            OnPropertyChanged("StartListSelected");
+            RaisePropertyChanged("StartListSelected");
             }
         }
 
@@ -51,7 +51,7 @@ namespace EasyFarm
         {
             get { return Engine.Config.EndListSelected; }
             set { Engine.Config.EndListSelected = value;
-            OnPropertyChanged("EndListSelected");
+            RaisePropertyChanged("EndListSelected");
             }
         }
 
@@ -59,7 +59,7 @@ namespace EasyFarm
         {
             get { return Engine.Config.BattleActionName; }
             set { Engine.Config.BattleActionName = value;
-            OnPropertyChanged("BattleActionName");
+            RaisePropertyChanged("BattleActionName");
             BattleAction = new Ability(BattleActionName);
             }
         }
@@ -95,7 +95,7 @@ namespace EasyFarm
             SelectedList.Remove(obj as Ability);
         }
 
-        private void ClearActions(object obj)
+        private void ClearActions()
         {
             SelectedList.Clear();
         }

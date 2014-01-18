@@ -23,7 +23,7 @@ namespace EasyFarm
 
         public ICommand ClearHealingCommand { get; set; }
 
-        private void ClearHealing(object obj)
+        private void ClearHealing()
         {
             HealingList.Clear();
         }
@@ -33,7 +33,7 @@ namespace EasyFarm
             HealingList.Remove(obj as ListItem<HealingAbility>);
         }
 
-        private void AddHealingItem(object obj)
+        private void AddHealingItem()
         {
             HealingList.Add(new ListItem<HealingAbility>(new HealingAbility() { IsEnabled = false, Name = "Empty", TriggerLevel = 0}));
         }

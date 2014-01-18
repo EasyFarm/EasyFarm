@@ -16,7 +16,7 @@ namespace EasyFarm
             set
             {
                 Engine.Config.TargetsName = value;
-                OnPropertyChanged("TargetsName");
+                RaisePropertyChanged("TargetsName");
             }
         }
 
@@ -42,7 +42,7 @@ namespace EasyFarm
             set
             {
                 Engine.Config.BattleAggro = value;
-                OnPropertyChanged("KillAggro");
+                RaisePropertyChanged("KillAggro");
             }
         }
 
@@ -52,7 +52,7 @@ namespace EasyFarm
             set
             {
                 Engine.Config.BattleUnclaimed = value;
-                OnPropertyChanged("KillUnclaimed");
+                RaisePropertyChanged("KillUnclaimed");
             }
         }
 
@@ -62,7 +62,7 @@ namespace EasyFarm
             set
             {
                 Engine.Config.BattlePartyClaimed = value;
-                OnPropertyChanged("KillPartyClaimed");
+                RaisePropertyChanged("KillPartyClaimed");
             }
         }
 

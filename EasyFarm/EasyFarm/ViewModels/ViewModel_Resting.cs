@@ -19,7 +19,7 @@ namespace EasyFarm
         public int HighHP {
             get { return Engine.Config.HighHP; }
             set { Engine.Config.HighHP = value;
-            OnPropertyChanged("HighHP");
+            RaisePropertyChanged("HighHP");
             StatusBarText = "UP HP : " + value;
             }
         }
@@ -27,7 +27,7 @@ namespace EasyFarm
         public int LowMP {
             get { return Engine.Config.LowMP; }
             set { Engine.Config.LowMP = value;
-            OnPropertyChanged("LowMP");
+            RaisePropertyChanged("LowMP");
             StatusBarText = "Down MP : " + value;
             }
         }
@@ -35,7 +35,7 @@ namespace EasyFarm
         public int HighMP {
             get { return Engine.Config.HighMP; }
             set { Engine.Config.HighMP = value;
-            OnPropertyChanged("HighMP");
+            RaisePropertyChanged("HighMP");
             StatusBarText = "UP MP : " + value;
             }
         }
@@ -44,7 +44,7 @@ namespace EasyFarm
         {
             get { return Engine.Config.IsRestingHPEnabled; }
             set { Engine.Config.IsRestingHPEnabled = value;
-            OnPropertyChanged("IsRestingHPEnabled");
+            RaisePropertyChanged("IsRestingHPEnabled");
             }
         }
 
@@ -52,7 +52,7 @@ namespace EasyFarm
         {
             get { return Engine.Config.IsRestingMPEnabled; }
             set { Engine.Config.IsRestingMPEnabled = value;
-            OnPropertyChanged("IsRestingMPEnabled");
+            RaisePropertyChanged("IsRestingMPEnabled");
             }
         }
     }

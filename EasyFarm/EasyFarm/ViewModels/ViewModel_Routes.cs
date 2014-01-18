@@ -26,12 +26,12 @@ namespace EasyFarm
 
         public ICommand ClearRouteCommand { get; set; }
 
-        void ClearRoute(object obj)
+        void ClearRoute()
         {
             Route = new ObservableCollection<FFACE.Position>();
         }
 
-        void RecordRoute(object obj)
+        void RecordRoute()
         {
             if (!WaypointRecorder.IsEnabled)
             {
