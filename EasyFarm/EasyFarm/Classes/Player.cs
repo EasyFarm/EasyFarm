@@ -38,6 +38,11 @@ namespace EasyFarm.PlayerTools
         /// <summary>
         /// Command for engaging
         /// </summary>
+        const string ATTACK_TARGET = "/attack <t>";
+
+        /// <summary>
+        /// Command for engaging a target
+        /// </summary>
         const string ATTACK_ON = "/attack on";
         
         /// <summary>
@@ -503,7 +508,8 @@ namespace EasyFarm.PlayerTools
         {
             if (!IsTargetUnit)
             {
-                Engine.FFInstance.Instance.Windower.SendKeyPress(FFACETools.KeyCode.TabKey);
+                Engine.FFInstance.Instance.Target.SetNPCTarget(TargetUnit.ID);
+                // Engine.FFInstance.Instance.Windower.SendKeyPress(FFACETools.KeyCode.TabKey);
                 System.Threading.Thread.Sleep(50);
             }
         }
@@ -529,7 +535,7 @@ namespace EasyFarm.PlayerTools
             // if we have a correct target and our player isn't currently fighting...
             if (IsTargetUnit && !IsFighting)
             {
-                Engine.FFInstance.Instance.Windower.SendString(ATTACK_ON);
+                Engine.FFInstance.Instance.Windower.SendString(ATTACK_TARGET);
             }
 
             // Wrong Target Attacked
