@@ -111,23 +111,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Decision\Behavior\BehaviorTree.cs" />
-    <Compile Include="Decision\Behavior\Node.cs" />
-    <Compile Include="Decision\Behavior\Parrallel.cs" />
-    <Compile Include="Decision\Behavior\Selector.cs" />
-    <Compile Include="Decision\Behavior\Sequencer.cs" />
-    <Compile Include="Decision\Behavior\Task.cs" />
-    <Compile Include="Decision\FSM\DeadState.cs" />
-    <Compile Include="ErrorAids\DebugCreatures.xaml.cs">
-      <DependentUpon>DebugCreatures.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ErrorAids\DebugSpells.xaml.cs">
-      <DependentUpon>DebugSpells.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ErrorAids\NPCDialogDebug.xaml.cs">
-      <DependentUpon>NPCDialogDebug.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Decision\FSM\HealingState.cs" />
+    <Compile Include="Classes\BaseModel.cs" />
+    <Compile Include="Decision\DeadState.cs" />
+    <Compile Include="Decision\HealingState.cs" />
     <Compile Include="Controls\IgnoredView.xaml.cs">
       <DependentUpon>IgnoredView.xaml</DependentUpon>
     </Compile>
@@ -137,11 +123,11 @@
     <Compile Include="MvvmFoundation\RelayCommand.cs" />
     <Compile Include="Classes\GameEngine.cs" />
     <Compile Include="Classes\GameState.cs" />
-    <Compile Include="Decision\FSM\AttackState.cs" />
-    <Compile Include="Decision\FSM\BaseState.cs" />
-    <Compile Include="Decision\FSM\FiniteStateMachine.cs" />
-    <Compile Include="Decision\FSM\RestState.cs" />
-    <Compile Include="Decision\FSM\TravelState.cs" />
+    <Compile Include="Decision\AttackState.cs" />
+    <Compile Include="Decision\BaseState.cs" />
+    <Compile Include="Decision\FiniteStateMachine.cs" />
+    <Compile Include="Decision\RestState.cs" />
+    <Compile Include="Decision\TravelState.cs" />
     <Compile Include="Classes\Config.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -164,7 +150,6 @@
     <Compile Include="Controls\RoutesView.xaml.cs">
       <DependentUpon>RoutesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\SerializableDictionary.cs" />
     <Compile Include="Controls\TargetsView.xaml.cs">
       <DependentUpon>TargetsView.xaml</DependentUpon>
     </Compile>
@@ -184,18 +169,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\ControlStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ErrorAids\DebugCreatures.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ErrorAids\DebugSpells.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ErrorAids\NPCDialogDebug.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
