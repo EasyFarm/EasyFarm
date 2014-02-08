@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using EasyFarm.Engine;
 using EasyFarm.FSM;
 using System.Threading.Tasks;
+using EasyFarm.Decision.FSM;
 
 public class FiniteStateEngine
 {
@@ -34,6 +35,7 @@ public class FiniteStateEngine
         AddState(new AttackState(ref this.Engine));
         AddState(new TravelState(ref this.Engine));
         AddState(new HealingState(ref this.Engine));
+        AddState(new DeadState(ref this.Engine));
 
         foreach (var b in this.Brains)
             b.Enabled = true;

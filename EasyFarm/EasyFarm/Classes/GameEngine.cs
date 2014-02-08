@@ -68,6 +68,7 @@ namespace EasyFarm.Engine
         /// The current target the bot is trying to kill.
         /// </summary>
         private Unit m_target = null;
+
         #endregion
 
         #region Constructors

@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using EasyFarm.UtilityTools;
 using EasyFarm.MVVM;
 using System.Xml.Serialization;
+using MvvmFoundation.Wpf;
 
 namespace EasyFarm.Engine
 {
@@ -13,12 +14,13 @@ namespace EasyFarm.Engine
     /// A configuration file for the user to edit through his GUI.
     /// Gives the bot access to allow of his decisions.
     /// </summary>
-    public class Config
+    public class Config : ObservableObject
     {
         /// <summary>
         /// Reference of the game engine
         /// </summary>
         private GameEngine m_gameEngine;
+        private string m_statusBarText;
 
         private Config() { }
 
@@ -123,7 +125,15 @@ namespace EasyFarm.Engine
         /// The text dislayed at the bottom of the screen
         /// </summary>
         [XmlIgnore]
-        public string StatusBarText { get; set; }
+        public string StatusBarText 
+        {
+            get { return m_statusBarText; }
+            set 
+            {
+                this.m_statusBarText = value;
+                RaisePropertyChanged("StatusBarText");
+            }
+        }
         
         /// <summary>
         /// Is the BattleList Selected in the battle tab?

@@ -15,17 +15,13 @@ namespace EasyFarm
         private ViewModel Bindings;
         DispatcherTimer WaypointRecorder = new DispatcherTimer();
         FFACE.Position LastPosition = new FFACE.Position();
-   
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
 
-        public MainWindow(ref ViewModel Bindings) : this()
+        public MainWindow(ref ViewModel Bindings)
         {
             this.Bindings = Bindings;
             WaypointRecorder.Tick += new EventHandler(RouteRecorder_Tick);
             WaypointRecorder.Interval = new TimeSpan(0, 0, 1);
+            InitializeComponent();
         }
 
         public void ClearRoute(object s, EventArgs e)

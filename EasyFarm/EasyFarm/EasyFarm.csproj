@@ -91,6 +91,10 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FFACETools, Version=1.3.1.18, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\FFACETools.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -113,6 +117,7 @@
     <Compile Include="Decision\Behavior\Selector.cs" />
     <Compile Include="Decision\Behavior\Sequencer.cs" />
     <Compile Include="Decision\Behavior\Task.cs" />
+    <Compile Include="Decision\FSM\DeadState.cs" />
     <Compile Include="ErrorAids\DebugCreatures.xaml.cs">
       <DependentUpon>DebugCreatures.xaml</DependentUpon>
     </Compile>
@@ -126,24 +131,6 @@
     <Compile Include="Controls\IgnoredView.xaml.cs">
       <DependentUpon>IgnoredView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FFACETools\Chat.cs" />
-    <Compile Include="FFACETools\enums.cs" />
-    <Compile Include="FFACETools\FFACETools.cs" />
-    <Compile Include="FFACETools\Fish.cs" />
-    <Compile Include="FFACETools\Imports.cs" />
-    <Compile Include="FFACETools\Item.cs" />
-    <Compile Include="FFACETools\Menu.cs" />
-    <Compile Include="FFACETools\Navigator.cs" />
-    <Compile Include="FFACETools\NPC.cs" />
-    <Compile Include="FFACETools\ParseResources.cs" />
-    <Compile Include="FFACETools\Party.cs" />
-    <Compile Include="FFACETools\PartyMember.cs" />
-    <Compile Include="FFACETools\Player.cs" />
-    <Compile Include="FFACETools\Search.cs" />
-    <Compile Include="FFACETools\Structures.cs" />
-    <Compile Include="FFACETools\Target.cs" />
-    <Compile Include="FFACETools\Timer.cs" />
-    <Compile Include="FFACETools\Windower.cs" />
     <Compile Include="MvvmFoundation\Messenger.cs" />
     <Compile Include="MvvmFoundation\ObservableObject.cs" />
     <Compile Include="MvvmFoundation\PropertyObserver.cs" />

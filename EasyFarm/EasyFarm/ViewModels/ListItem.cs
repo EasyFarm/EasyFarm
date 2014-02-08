@@ -19,7 +19,7 @@ namespace EasyFarm.MVVM
 
         public T Item 
         {             
-            get {  return Item;  }
+            get {  return item;  }
             
             set {  item = value;  RaisePropertyChanged("Item");  }
         }

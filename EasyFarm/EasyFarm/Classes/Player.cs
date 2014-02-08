@@ -18,7 +18,18 @@ namespace EasyFarm.PlayerTools
         /// <summary>
         /// Who we are trying to kill currently
         /// </summary>
-        public Unit TargetUnit { get { return Engine.Units.Target; } }
+        public Unit TargetUnit 
+        {
+            get { 
+                return m_targetUnit == null || 
+                m_targetUnit.Status == Status.Dead1 || 
+                m_targetUnit.Status == Status.Dead2 ||
+                m_targetUnit.ID == 0? 
+                m_targetUnit = Engine.Units.Target : m_targetUnit; 
+            }
+
+            set { this.TargetUnit = value; }
+        }
         
         /// <summary>
         /// Command for resting
@@ -697,5 +708,7 @@ namespace EasyFarm.PlayerTools
 
             return 0 == Recast;
         }
+
+        private Unit m_targetUnit = null;
     }
 }

@@ -113,7 +113,7 @@ namespace EasyFarm
             }
         }
 
-        void Start()
+        private void Start()
         {
             Engine.FFInstance.Instance.Navigator.Reset();
             if (!Engine.IsWorking)
@@ -128,22 +128,22 @@ namespace EasyFarm
             }
         }
 
-        bool IsAddable(IList Units, String name)
+        private bool IsAddable(IList Units, String name)
         {
             return !Units.Contains(name) && !String.IsNullOrWhiteSpace(name);
         }
 
-        void AddUnit(IList Units, String name)
+        private void AddUnit(IList Units, String name)
         {
             Units.Add(name);
         }
 
-        void DeleteUnit(IList Units, String name)
+        private void DeleteUnit(IList Units, String name)
         {
             Units.Remove(name);
         }
 
-        void ClearUnits(IList Units)
+        private void ClearUnits(IList Units)
         {
             Units.Clear();
         }
