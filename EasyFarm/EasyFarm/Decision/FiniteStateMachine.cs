@@ -19,14 +19,31 @@ public class FiniteStateEngine
     private Timer Heartbeat = new Timer();
     private GameEngine Engine;
 
+
+    private Task m_thread;
+    public Task Thread
+    {
+        get
+        {
+            return 
+                m_thread == null || !m_thread.Status.Equals(TaskStatus.Running) ?
+                m_thread = new Task(() => Heartbeat_Tick(null, null)) : m_thread;
+        }    
+    }
+
     // Constructor.
     public FiniteStateEngine()
     {
         Heartbeat.Interval = 100; // Check State list ten times per second.
-        Heartbeat.Tick += new EventHandler(Heartbeat_Tick);
+        Heartbeat.Tick += new EventHandler((X, Y) => 
+        {
+            if(Thread.Status != TaskStatus.Running) 
+                Thread.Start(); 
+        });
     }
 
-    public FiniteStateEngine(ref GameEngine Engine) : this()
+    public FiniteStateEngine(ref GameEngine Engine)
+        : this()
     {
         this.Engine = Engine;
 
@@ -44,36 +61,33 @@ public class FiniteStateEngine
     // Handles the updating.
     public void Heartbeat_Tick(object sender, EventArgs e)
     {
-        new Task(() =>
+        lock (Brains)
         {
-            lock (Brains)
+            // Sort the List, States may have updated Priorities.
+            Brains.Sort();
+
+            // Find a State that says it needs to run.
+            foreach (BaseState BS in Brains)
             {
-                // Sort the List, States may have updated Priorities.
-                Brains.Sort();
-
-                // Find a State that says it needs to run.
-                foreach (BaseState BS in Brains)
+                if (BS.Enabled == false) { continue; } // Skip disabled States.
+                if (BS.CheckState() == true)
                 {
-                    if (BS.Enabled == false) { continue; } // Skip disabled States.
-                    if (BS.CheckState() == true)
+                    // Says it needs to run. Same State as before?
+                    if (LastRan == null) { LastRan = BS; }
+                    if (LastRan != BS)
                     {
-                        // Says it needs to run. Same State as before?
-                        if (LastRan == null) { LastRan = BS; }
-                        if (LastRan != BS)
-                        {
-                            // Make the previous State clean up and exit.
-                            LastRan.ExitState();
-                            LastRan = BS;
-                            BS.EnterState();
-                        }
-
-                        // Run this State and stop.
-                        BS.RunState();
-                        return;
+                        // Make the previous State clean up and exit.
+                        LastRan.ExitState();
+                        LastRan = BS;
+                        BS.EnterState();
                     }
+
+                    // Run this State and stop.
+                    BS.RunState();
+                    return;
                 }
             }
-        }).Start();
+        }
     }
 
     // Start and stop.

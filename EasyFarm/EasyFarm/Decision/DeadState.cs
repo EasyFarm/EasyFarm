@@ -19,6 +19,8 @@ namespace EasyFarm.Decision.FSM
 
         public override void RunState() { 
             gameEngine.Stop();
+            gameEngine.FFInstance.Instance.Navigator.Reset();
+            System.Threading.Thread.Sleep(100);
             gameEngine.Config.StatusBarText = "Stopped!";
         }
 

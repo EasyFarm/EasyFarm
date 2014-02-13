@@ -98,6 +98,78 @@ namespace EasyFarm.PlayerTools
             }
         }
 
+        public bool shouldRestForMP
+        {
+            get 
+            {
+                return IsRestingPossible && (IsMPRestingEnabled && (IsMPLow || NeedsMoreMP));
+            }
+        }
+
+        public bool shouldRestForHP
+        {
+            get
+            {
+                return IsRestingPossible && (IsHPRestingEnabled && (IsHPLow || NeedsMoreHP));
+            }
+        }
+
+        public bool IsHPLow 
+        { 
+            get 
+            { 
+                return Engine.FFInstance.Instance.Player.HPPCurrent <= Engine.Config.LowHP; 
+            } 
+        }
+
+        public bool IsMPLow
+        {
+            get
+            {
+                return Engine.FFInstance.Instance.Player.MPPCurrent <= Engine.Config.LowMP;
+            }
+        }
+
+        public bool NeedsMoreHP 
+        { 
+            get 
+            { 
+                return IsResting && Engine.FFInstance.Instance.Player.HPPCurrent < Engine.Config.HighHP; 
+            } 
+        }
+
+        public bool NeedsMoreMP
+        {
+            get
+            {
+                return IsResting && Engine.FFInstance.Instance.Player.MPPCurrent < Engine.Config.HighMP;
+            }
+        }
+
+        public bool IsRestingPossible 
+        { 
+            get 
+            {
+                return !IsRestingBlocked && !IsAggroed && !IsFighting && !IsDead;
+            } 
+        }
+
+        public bool IsHPRestingEnabled 
+        { 
+            get 
+            { 
+                return Engine.Config.IsRestingHPEnabled; 
+            } 
+        }
+
+        public bool IsMPRestingEnabled 
+        { 
+            get 
+            { 
+                return Engine.Config.IsRestingMPEnabled; 
+            } 
+        }
+
         /// <summary>
         /// Should we rest by way of /heal?
         /// </summary>
@@ -105,14 +177,7 @@ namespace EasyFarm.PlayerTools
         {
             get
             {
-                bool IsHPAtTriggerLevel = Engine.FFInstance.Instance.Player.HPPCurrent <= Engine.Config.LowHP;
-                bool IsMPAtTriggerLevel = Engine.FFInstance.Instance.Player.MPPCurrent <= Engine.Config.LowMP;
-                bool NeedsMoreHP = IsResting && Engine.FFInstance.Instance.Player.HPPCurrent < Engine.Config.HighHP;
-                bool NeedsMoreMP = IsResting && Engine.FFInstance.Instance.Player.MPPCurrent < Engine.Config.HighMP;
-                bool RestingPossible = (Engine.Config.IsRestingHPEnabled || Engine.Config.IsRestingMPEnabled) && !IsRestingBlocked && !IsAggroed && !IsFighting && !IsDead;
-                bool IsHPRestingEnabled = Engine.Config.IsRestingHPEnabled;
-                bool IsMPRestingEnabled = Engine.Config.IsRestingMPEnabled;
-                return RestingPossible && ((IsHPRestingEnabled && (IsHPAtTriggerLevel || NeedsMoreHP)) || (IsMPRestingEnabled && (IsMPAtTriggerLevel || NeedsMoreMP)));
+                return shouldRestForHP || shouldRestForMP;
             }
         }
 
@@ -134,7 +199,20 @@ namespace EasyFarm.PlayerTools
         {
             get
             {
-                return Engine.Config.Waypoints.Count > 0 && Engine.Units.Target.ID == 0 && !shouldRest && !shouldHeal && !IsUnable;
+                return Engine.Config.Waypoints.Count > 0 && !shouldFight && !shouldRest && !shouldHeal && !IsUnable;
+            }
+        }
+
+        public bool shouldFight
+        {
+            get 
+            {
+                // Can we battle the unit?
+                bool IsAttackable = Engine.Player.IsUnitBattleReady;
+                // Should we attack?
+                bool IsAttacking = !Engine.Player.IsDead && (IsAttackable && (IsFighting || IsAggroed || (IsFighting || !Engine.Player.shouldRest)));
+
+                return IsAttacking && Engine.IsWorking;
             }
         }
 
