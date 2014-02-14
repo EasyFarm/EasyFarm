@@ -6,7 +6,7 @@ class RestState : BaseState
 
     public override bool CheckState()
     {
-        return gameEngine.Player.shouldRest && gameEngine.IsWorking;
+        return gameEngine.PlayerData.shouldRest && gameEngine.IsWorking;
     }
 
     public override void EnterState()
@@ -16,9 +16,9 @@ class RestState : BaseState
 
     public override void RunState()
     {
-        if (!gameEngine.Player.IsResting)
+        if (!gameEngine.PlayerData.IsResting)
         {
-            gameEngine.Player.RestingOn();
+            gameEngine.Resting.On();
         }
     }
 

@@ -112,6 +112,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\BaseModel.cs" />
+    <Compile Include="Classes\PlayerData.cs" />
+    <Compile Include="Classes\Resting.cs" />
+    <Compile Include="Classes\TargetData.cs" />
     <Compile Include="Decision\DeadState.cs" />
     <Compile Include="Decision\HealingState.cs" />
     <Compile Include="Controls\IgnoredView.xaml.cs">
@@ -190,7 +193,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Player.cs" />
+    <Compile Include="Classes\Combat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

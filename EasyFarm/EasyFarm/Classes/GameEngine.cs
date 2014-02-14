@@ -1,4 +1,5 @@
-﻿using EasyFarm.PathingTools;
+﻿using EasyFarm.Classes;
+using EasyFarm.PathingTools;
 using EasyFarm.PlayerTools;
 using EasyFarm.ProcessTools;
 using EasyFarm.UnitTools;
@@ -62,12 +63,27 @@ namespace EasyFarm.Engine
         /// <summary>
         /// Contains method for combat and player status info.
         /// </summary>
-        private Player m_player = null;
+        private Combat m_combat = null;
 
         /// <summary>
         /// The current target the bot is trying to kill.
         /// </summary>
         private Unit m_target = null;
+
+        /// <summary>
+        /// Some base information about the player like if they are injured or fighting.
+        /// </summary>
+        private PlayerData m_playerData = null;
+
+        /// <summary>
+        /// Details about our current target.
+        /// </summary>
+        private TargetData m_targetData = null;
+
+        /// <summary>
+        /// Functions and details for resting.
+        /// </summary>
+        private Resting m_resting = null;
 
         #endregion
 
@@ -83,13 +99,16 @@ namespace EasyFarm.Engine
         {
             m_process = Process;
             m_ffinstance = new FFInstance(this.m_process);
-            m_gameState = new GameState(ref m_gameEngine);
+            // m_gameState = new GameState(ref m_gameEngine);
             m_stateMachine = new FiniteStateEngine(ref m_gameEngine);
             m_config = new Config(ref m_gameEngine);
             m_pathing = new Pathing(ref m_gameEngine);
             m_units = new Units(ref m_gameEngine);
-            m_player = new Player(ref m_gameEngine);
+            m_combat = new Combat(ref m_gameEngine);
             m_target = Unit.CreateUnit(0);
+            m_playerData = new PlayerData(ref m_gameEngine);
+            m_targetData = new TargetData(ref m_gameEngine);
+            m_resting = new Resting(ref m_gameEngine);
         }
         #endregion
 
@@ -153,10 +172,35 @@ namespace EasyFarm.Engine
         /// <summary>
         /// Returns a player object; contains mostly combat methods and player status information.
         /// </summary>
-        public Player Player
+        public Combat Combat
         {
-            get { return m_player; }
+            get { return m_combat; }
         }
+
+        /// <summary>
+        /// Returns player specific details. 
+        /// </summary>
+        public PlayerData PlayerData
+        {
+            get { return m_playerData; }
+        }
+
+        /// <summary>
+        /// Returns target specific details
+        /// </summary>
+        public TargetData TargetData
+        {
+            get { return m_targetData; }
+        }
+
+        /// <summary>
+        /// Contains functions and information for resting.
+        /// </summary>
+        public Resting Resting
+        { 
+            get { return m_resting; } 
+        }
+
         #endregion
 
         #region Methods
@@ -189,7 +233,7 @@ namespace EasyFarm.Engine
         /// <param name="Engine"></param>
         public void SaveSettings(GameEngine Engine)
         {
-            String Filename = Engine.FFInstance.Instance.Player.Name + "_UserPref.xml";
+            String Filename = FFInstance.Instance.Player.Name + "_UserPref.xml";
             Utilities.Serialize(Filename, Config);
         }
 
@@ -198,7 +242,7 @@ namespace EasyFarm.Engine
         /// </summary>
         public void LoadSettings()
         {
-            String Filename = m_gameState.FFInstance.Instance.Player.Name + "_UserPref.xml";
+            String Filename = FFInstance.Instance.Player.Name + "_UserPref.xml";
             m_config = Utilities.Deserialize(Filename, Config);
         }
         #endregion

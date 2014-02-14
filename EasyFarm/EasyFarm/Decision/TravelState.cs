@@ -10,18 +10,19 @@ namespace EasyFarm.FSM
     class TravelState : BaseState
     {
         int position = 0;
+        DateTime runTime = DateTime.Now;
 
         public TravelState(ref GameEngine gameEngine) : base(ref gameEngine) { }
 
         public override bool CheckState()
         {
-            return gameEngine.Player.shouldTravel && gameEngine.IsWorking;
+            return gameEngine.PlayerData.shouldTravel && gameEngine.IsWorking;
         }
 
         public override void EnterState()
         {
-            gameEngine.Player.RestingOff();
-            gameEngine.Player.Disengage();
+            gameEngine.Resting.Off();
+            gameEngine.Combat.Disengage();
 
             gameEngine.FFInstance.Instance.Navigator.DistanceTolerance = 1;
             gameEngine.FFInstance.Instance.Navigator.HeadingTolerance = 1;
@@ -56,11 +57,16 @@ namespace EasyFarm.FSM
                 {
                     position = gameEngine.Config.Waypoints.IndexOf(point);
                 }
-            }
+            }            
 
-            //Go to that point
-            gameEngine.Pathing.GotoWaypoint(gameEngine.Config.Waypoints[position]);
-            position++;
+            //Go to that point if we are far away from it
+            if (gameEngine.FFInstance.Instance.Navigator.DistanceTo(gameEngine.Config.Waypoints[position]) > 1)
+            {
+                // Run to the waypoint
+                gameEngine.FFInstance.Instance.Navigator.Goto(gameEngine.Config.Waypoints[position], false);
+                // Set our position to the next point in the list
+                position++;
+            }
         }
 
         public override void ExitState()

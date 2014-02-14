@@ -116,6 +116,9 @@ namespace EasyFarm.UnitTools
 
         public bool IsValid(Unit unit)
         {
+            // If what was passed in is null, its not valid.
+            if (unit == null) return false; 
+
             bool ValidMob =
                 ((unit.IsActive) && (unit.Distance < 17) && (unit.YDifference < 5) && (unit.NPCBit != 0) && (!unit.IsDead) && (unit.NPCType == NPCType.Mob) && unit.IsRendered)
                 &&

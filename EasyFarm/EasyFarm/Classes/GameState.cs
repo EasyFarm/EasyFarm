@@ -16,7 +16,7 @@ namespace EasyFarm.Engine
         public FFInstance  FFInstance  { get; set; }
         public Pathing     Pathing     { get; set; }
         public Units       Units       { get; set; }
-        public Player      Player      { get; set; }
+        public Combat      Player      { get; set; }
         public GameEngine  GameEngine  { get; set; }
         public Unit        Target      { get; set; }
         private GameState  m_gameState;
@@ -27,7 +27,7 @@ namespace EasyFarm.Engine
             this.FFInstance  = GameEngine.FFInstance;
             this.Pathing     = new Pathing(ref GameEngine);
             this.Units       = new Units(ref GameEngine);
-            this.Player      = new Player(ref GameEngine);
+            this.Player      = new Combat(ref GameEngine);
             this.GameEngine  = GameEngine;
             this.Target      = Unit.CreateUnit(0);
         }

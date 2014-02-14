@@ -13,14 +13,12 @@ namespace EasyFarm.Decision.FSM
     {
         public DeadState(ref GameEngine gameEngine) : base(ref gameEngine) { }
 
-        public override bool CheckState() { return gameEngine.Player.IsDead; }
+        public override bool CheckState() { return gameEngine.PlayerData.IsDead; }
 
         public override void EnterState() { }
 
         public override void RunState() { 
             gameEngine.Stop();
-            gameEngine.FFInstance.Instance.Navigator.Reset();
-            System.Threading.Thread.Sleep(100);
             gameEngine.Config.StatusBarText = "Stopped!";
         }
 

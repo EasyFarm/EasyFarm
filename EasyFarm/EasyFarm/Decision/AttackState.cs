@@ -11,23 +11,23 @@ namespace EasyFarm.FSM
 
         public override bool CheckState()
         {
-            return gameEngine.Player.shouldFight;
+            return gameEngine.PlayerData.shouldFight;
         }
 
         public override void EnterState()
         {
-            gameEngine.Player.Enter();
-            gameEngine.Player.RestingOff();
+            gameEngine.Combat.Enter();
+            gameEngine.Resting.Off();
         }
 
         public override void RunState()
         {
-            gameEngine.Player.Battle();
+            gameEngine.Combat.Battle();
         }
 
         public override void ExitState()
         {
-            gameEngine.Player.Exit();
+            gameEngine.Combat.Exit();
         }
     }
 }
