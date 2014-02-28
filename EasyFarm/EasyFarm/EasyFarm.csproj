@@ -111,7 +111,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\BaseModel.cs" />
     <Compile Include="Classes\PlayerData.cs" />
     <Compile Include="Classes\Resting.cs" />
     <Compile Include="Classes\TargetData.cs" />
@@ -125,7 +124,6 @@
     <Compile Include="MvvmFoundation\PropertyObserver.cs" />
     <Compile Include="MvvmFoundation\RelayCommand.cs" />
     <Compile Include="Classes\GameEngine.cs" />
-    <Compile Include="Classes\GameState.cs" />
     <Compile Include="Decision\AttackState.cs" />
     <Compile Include="Decision\BaseState.cs" />
     <Compile Include="Decision\FiniteStateMachine.cs" />

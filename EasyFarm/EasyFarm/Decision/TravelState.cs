@@ -59,14 +59,10 @@ namespace EasyFarm.FSM
                 }
             }            
 
-            //Go to that point if we are far away from it
-            if (gameEngine.FFInstance.Instance.Navigator.DistanceTo(gameEngine.Config.Waypoints[position]) > 1)
-            {
-                // Run to the waypoint
-                gameEngine.FFInstance.Instance.Navigator.Goto(gameEngine.Config.Waypoints[position], false);
-                // Set our position to the next point in the list
-                position++;
-            }
+            // Run to the waypoint
+            gameEngine.FFInstance.Instance.Navigator.Goto(gameEngine.Config.Waypoints[position], false);
+            // Set our position to the next point in the list
+            position++;
         }
 
         public override void ExitState()

@@ -120,7 +120,7 @@ namespace EasyFarm.UnitTools
             if (unit == null) return false; 
 
             bool ValidMob =
-                ((unit.IsActive) && (unit.Distance < 17) && (unit.YDifference < 5) && (unit.NPCBit != 0) && (!unit.IsDead) && (unit.NPCType == NPCType.Mob) && unit.IsRendered)
+                ((unit.IsActive) && (unit.Distance < 17) && (unit.YDifference < 5) && (unit.NPCBit != 0) && (!unit.IsDead) && (unit.NPCType == NPCType.Mob))
                 &&
                 (((Engine.Config.TargetsList.Contains(unit.Name) && !unit.IsClaimed) || (Engine.Config.TargetsList.Count == 0 && !Engine.Config.IgnoredList.Contains(unit.Name)))
                 ||

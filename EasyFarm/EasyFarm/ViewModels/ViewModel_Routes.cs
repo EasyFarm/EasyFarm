@@ -47,7 +47,7 @@ namespace EasyFarm
 
         void RouteRecorder_Tick(object sender, EventArgs e)
         {
-            Engine.GameState.Pathing.AddWaypoint();
+            Engine.Pathing.AddWaypoint();
         }
     }
 }

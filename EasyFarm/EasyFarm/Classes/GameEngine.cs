@@ -24,13 +24,7 @@ namespace EasyFarm.Engine
         /// <summary>
         /// The FFACE and Process Instance of the current FFXI Instance
         /// </summary>
-        private FFInstance m_ffinstance = null;
-        
-        /// <summary>
-        /// A collection of data used by the bot to make decisions
-        /// It doesn't use this anymore...
-        /// </summary>
-        private GameState m_gameState = null;
+        private FFInstance m_ffinstance = null;      
         
         /// <summary>
         /// The engine to run the bot. Contains all the information the bot 
@@ -127,14 +121,6 @@ namespace EasyFarm.Engine
         public FFInstance FFInstance
         {
             get { return m_ffinstance; }
-        }
-
-        /// <summary>
-        /// Originally the bots knowledge source; has been replaced by the engine obj.
-        /// </summary>
-        public GameState GameState
-        {
-            get { return m_gameState; }
         }
         
         /// <summary>
