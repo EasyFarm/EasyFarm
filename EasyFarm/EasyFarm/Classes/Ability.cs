@@ -88,6 +88,12 @@ namespace EasyFarm.PlayerTools
             // Fetches the ability from xml.
             XElement element = XMLDoc.Elements("a").Attributes().Where(x => x.Name == "english" && x.Value == name).Select(x => x.Parent).SingleOrDefault();
 
+            foreach (XElement elm in XMLDoc.Elements("a").Attributes().Select(x=> x.Parent))
+            {
+                if (elm.Attribute("english").Equals("Caliginosity"))
+                    Console.WriteLine(elm.Attribute("english"));
+            }
+
             // Return blank if we did not find the ability.
             if (element == null)
             {

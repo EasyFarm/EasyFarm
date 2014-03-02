@@ -60,7 +60,7 @@ namespace EasyFarm.FSM
             }            
 
             // Run to the waypoint
-            gameEngine.FFInstance.Instance.Navigator.Goto(gameEngine.Config.Waypoints[position], false);
+            gameEngine.FFInstance.Instance.Navigator.Goto(gameEngine.Config.Waypoints[position], true, 10);
             // Set our position to the next point in the list
             position++;
         }

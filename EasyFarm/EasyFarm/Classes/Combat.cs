@@ -176,7 +176,7 @@ namespace EasyFarm.PlayerTools
         {
             // Run to the unit while we are out of distance. 
             if (Engine.FFInstance.Instance.Navigator.DistanceTo(TargetData.Position) >= DIST_MIN)
-                Engine.FFInstance.Instance.Navigator.Goto(TargetData.Position, false);
+                Engine.FFInstance.Instance.Navigator.GotoNPC(TargetData.TargetUnit.ID, 10);
         }
 
         /// <summary>
