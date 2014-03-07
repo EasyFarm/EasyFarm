@@ -16,25 +16,51 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿namespace EasyFarm.PlayerTools
+using System;
+
+namespace EasyFarm.Classes
 {
-    public class WeaponAbility : Ability
+    public class WeaponAbility
     {
-        public WeaponAbility() { }
-        
-        public WeaponAbility(string name, double distance) : base(name) 
+        private Ability _ws = new Ability();
+
+        public WeaponAbility()
         {
-            MaxDistance = distance;
+
         }
-        
+
+        public WeaponAbility(String name)
+        {
+            _ws = Abilities.CreateAbility(name);
+        }
+
         /// <summary>
         /// Max distance we cna use a weaponskill at
         /// </summary>
-        public double MaxDistance;
+        public double DistanceTrigger { get; set; }
 
         /// <summary>
         /// Can we use the weaponskill?
         /// </summary>
-        public bool IsEnabled;
+        public bool IsEnabled { get; set; }
+
+        /// <summary>
+        /// What is its name?
+        /// </summary>
+        public String Name { get; set; }
+
+        /// <summary>
+        /// Mob hp needed inorder to use weaponskill
+        /// </summary>
+        public int HPTrigger { get; set; }
+
+        /// <summary>
+        /// Extra data on the weapon skill
+        /// </summary>
+        public Ability Ability 
+        {
+            get { return _ws; }
+            set { _ws = value; }
+        }
     }
 }

@@ -212,10 +212,10 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.FFInstance.Instance.Player.TPCurrent >= Engine.Config.Weaponskill.TPCost &&
-                                    Engine.TargetData.TargetUnit.HPPCurrent <= Engine.Config.WSHealthThreshold &&
-                                    IsFighting && Engine.TargetData.TargetUnit.Distance < Engine.Config.Weaponskill.MaxDistance &&
-                                    Engine.Config.Weaponskill.IsValidName;
+                return Engine.FFInstance.Instance.Player.TPCurrent >= 100 &&
+                                    Engine.TargetData.TargetUnit.HPPCurrent <= Engine.Config.Weaponskill.HPTrigger &&
+                                    IsFighting && Engine.TargetData.TargetUnit.Distance < Engine.Config.Weaponskill.DistanceTrigger &&
+                                    Engine.Config.Weaponskill.Ability.IsValidName;
             }
         }
 

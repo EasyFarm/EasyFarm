@@ -18,13 +18,12 @@ You should have received a copy of the GNU General Public License
 
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EasyFarm.Engine;
-using EasyFarm.UnitTools;
 using FFACETools;
 using System;
+using EasyFarm.Engine;
 using EasyFarm.Classes;
 
-namespace EasyFarm.PlayerTools
+namespace EasyFarm.Views.Classes
 {
     public class Combat
     {
@@ -143,7 +142,7 @@ namespace EasyFarm.PlayerTools
                         Engine.Config.HealingList
                             .Where(x => x.Item.IsEnabled)
                             .Where(x => x.Item.TriggerLevel >= Engine.FFInstance.Instance.Player.HPPCurrent)
-                            .Select(x => new Ability(x.Item.Name)).ToList()
+                            .Select(x => Abilities.CreateAbility(x.Item.Name)).ToList()
                     );
             }
         }
@@ -256,7 +255,7 @@ namespace EasyFarm.PlayerTools
 
                 // Execute the weaponskill
                 else if (PlayerData.CanWeaponskill) {
-                    ExecuteActions(new List<Ability>() { Engine.Config.Weaponskill });
+                    ExecuteActions(new List<Ability>() { Engine.Config.Weaponskill.Ability });
                 }
             }
         }
@@ -361,12 +360,15 @@ namespace EasyFarm.PlayerTools
         public void UseAbility(Ability Ability)
         {
             // Set the duration to spell time or 50 for an ability
-            int SleepDuration = Ability.IsSpell ? (int)Engine.FFInstance.Instance.Player.CastMax + 2000 : 50;
+            int SleepDuration = Ability.IsSpell ? (int)Ability.CastTime + 1500 : 50;
+
+            // Sleep for a second to pause the bots motion
+            System.Threading.Thread.Sleep(1000);
 
             // Send it to the game
             Engine.FFInstance.Instance.Windower.SendString(Ability.ToString());
 
-            // Sleep the duration
+            // Sleep for the cast duration
             System.Threading.Thread.Sleep(SleepDuration);
         }
 

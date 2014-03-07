@@ -22,6 +22,7 @@ using EasyFarm.PlayerTools;
 using EasyFarm.ProcessTools;
 using EasyFarm.UnitTools;
 using EasyFarm.UtilityTools;
+using EasyFarm.Views.Classes;
 using System;
 using System.Diagnostics;
 

@@ -16,8 +16,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.MVVM;
+﻿using EasyFarm.Classes;
+using EasyFarm.MVVM;
 using EasyFarm.PlayerTools;
+using EasyFarm.Views.Classes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -78,7 +80,7 @@ namespace EasyFarm
             get { return Engine.Config.BattleActionName; }
             set { Engine.Config.BattleActionName = value;
             RaisePropertyChanged("BattleActionName");
-            BattleAction = new Ability(BattleActionName);
+            BattleAction = Abilities.CreateAbility(BattleActionName);
             }
         }
 

@@ -17,18 +17,19 @@ You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
 ﻿using System.Linq;
-using EasyFarm.Engine;
 using System.Collections.ObjectModel;
 using FFACETools;
-using EasyFarm.UtilityTools;
 using System;
+using EasyFarm.Classes;
+using EasyFarm.Engine;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace EasyFarm.FSM
+namespace EasyFarm.Decision
 {
     class TravelState : BaseState
     {
         int position = 0;
-        DateTime runTime = DateTime.Now;
 
         public TravelState(ref GameEngine gameEngine) : base(ref gameEngine) { }
 
@@ -53,34 +54,36 @@ namespace EasyFarm.FSM
             {
                 // Turn around and run the path in reverse with the old end being the new starting point
                 gameEngine.Config.Waypoints = new ObservableCollection<FFACE.Position>(gameEngine.Config.Waypoints.Reverse());
-                position = 0;
+                position = 0;                
             }
 
             // If we are more than 10 yalms away from the nearest point...
             if (gameEngine.FFInstance.Instance.Navigator.DistanceTo(gameEngine.Config.Waypoints[position]) > 10)
             {
-                // Find the closest point and ...
-                FFACE.Position point = null;
-                foreach (var pos in gameEngine.Config.Waypoints)
-                {
-                    if (point == null) { point = pos; }
-                    
-                    else if (gameEngine.FFInstance.Instance.Navigator.DistanceTo(pos) <
-                        gameEngine.FFInstance.Instance.Navigator.DistanceTo(point))
-                        point = pos;
-                }
+                SetPositionToNearestPoint();
+            }
 
-                // Get its index in the array of points, then ...
-                if (point != null)
-                {
-                    position = gameEngine.Config.Waypoints.IndexOf(point);
-                }
-            }            
+            gameEngine.FFInstance.Instance.Navigator.Goto(gameEngine.Config.Waypoints[position++], true);
+        }
 
-            // Run to the waypoint
-            gameEngine.FFInstance.Instance.Navigator.Goto(gameEngine.Config.Waypoints[position], true, 10);
-            // Set our position to the next point in the list
-            position++;
+        private void SetPositionToNearestPoint()
+        {
+            // Find the closest point and ...
+            FFACE.Position point = null;
+            foreach (var pos in gameEngine.Config.Waypoints)
+            {
+                if (point == null) { point = pos; }
+
+                else if (gameEngine.FFInstance.Instance.Navigator.DistanceTo(pos) <
+                    gameEngine.FFInstance.Instance.Navigator.DistanceTo(point))
+                    point = pos;
+            }
+
+            // Get its index in the array of points, then ...
+            if (point != null)
+            {
+                position = gameEngine.Config.Waypoints.IndexOf(point);
+            }
         }
 
         public override void ExitState()

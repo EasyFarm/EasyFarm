@@ -111,6 +111,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Abilities.cs" />
     <Compile Include="Classes\PlayerData.cs" />
     <Compile Include="Classes\Resting.cs" />
     <Compile Include="Classes\TargetData.cs" />

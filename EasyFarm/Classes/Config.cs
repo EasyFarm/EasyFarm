@@ -25,6 +25,8 @@ using EasyFarm.UtilityTools;
 using EasyFarm.MVVM;
 using System.Xml.Serialization;
 using MvvmFoundation.Wpf;
+using EasyFarm.Views.Classes;
+using EasyFarm.Classes;
 
 namespace EasyFarm.Engine
 {

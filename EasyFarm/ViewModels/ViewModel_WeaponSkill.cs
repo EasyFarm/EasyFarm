@@ -16,7 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.MVVM;
+﻿using EasyFarm.Classes;
+using EasyFarm.MVVM;
 using EasyFarm.PlayerTools;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ using System.Windows.Input;
 
 namespace EasyFarm
 {
-    partial class ViewModel
+    public partial class ViewModel
     {
         public String WeaponSkillName
         {
@@ -66,11 +67,13 @@ namespace EasyFarm
         {
             if (!string.IsNullOrWhiteSpace(Engine.Config.WSName))
             {
-                var Weaponskill = new WeaponAbility(Engine.Config.WSName,
-                    Engine.Config.WSDistance);
-
-                if (Weaponskill.IsValidName)
+                var Weaponskill = new WeaponAbility(WeaponSkillName);
+             
+                if (Weaponskill.Ability.IsValidName)
                 {
+                    Weaponskill.DistanceTrigger = WeaponSkillDistance;
+                    Weaponskill.HPTrigger = WeaponSkillHealth;
+                    Weaponskill.Name = WeaponSkillName;
                     Engine.Config.Weaponskill = Weaponskill;
                     StatusBarText = Weaponskill.Name + " : now set!";
                 }
