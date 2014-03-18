@@ -63,7 +63,7 @@ namespace EasyFarm.Decision
                 SetPositionToNearestPoint();
             }
 
-            gameEngine.FFInstance.Instance.Navigator.Goto(gameEngine.Config.Waypoints[position++], true);
+            gameEngine.FFInstance.Instance.Navigator.Goto(gameEngine.Config.Waypoints[position++], false);
         }
 
         private void SetPositionToNearestPoint()
