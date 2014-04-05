@@ -14,27 +14,32 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*//////////////////////////////////////////////////////////////////// 
+*/
+///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Engine;
-using EasyFarm.PlayerTools;
-using FFACETools;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace EasyFarm
+namespace EasyFarm.Views
 {
-    // Members and Constructors
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for HealingView.xaml
+    /// </summary>
+    public partial class HealingView : UserControl
     {
-        private ViewModel Bindings;
-       
-        public MainWindow(ref ViewModel Bindings)
+        public HealingView()
         {
-            this.Bindings = Bindings;
             InitializeComponent();
         }
     }

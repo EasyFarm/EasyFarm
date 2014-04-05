@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -31,16 +31,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Threading;
 
-namespace EasyFarm
+namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for Routes.xaml
+    /// Interaction logic for ProcessesView.xaml
     /// </summary>
-    public partial class RoutesView : UserControl
+    public partial class ProcessesView : UserControl
     {
-        public RoutesView()
+        public ProcessesView()
         {
             InitializeComponent();
         }

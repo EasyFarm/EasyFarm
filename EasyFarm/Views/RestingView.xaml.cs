@@ -31,14 +31,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EasyFarm
+namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for TargetsView.xaml
+    /// Interaction logic for RestingView.xaml
     /// </summary>
-    public partial class TargetsView : UserControl
+    public partial class RestingView : UserControl
     {
-        public TargetsView()
+        public RestingView()
         {
             InitializeComponent();
         }

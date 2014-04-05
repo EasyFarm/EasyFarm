@@ -1,13 +1,10 @@
-﻿<UserControl x:Class="EasyFarm.TargetsView"
+﻿<UserControl x:Class="EasyFarm.Views.TargetsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              mc:Ignorable="d" 
-             d:DesignHeight="154.038" d:DesignWidth="482.038">
-    <UserControl.Resources>
-        <ResourceDictionary Source="ControlStyles.xaml"/>
-    </UserControl.Resources>
+             d:DesignHeight="143.284" d:DesignWidth="432.836">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
@@ -26,14 +23,14 @@
                             Delete will delete the currently selected item. 
                             Add will add the comboboxes text to the list of items
                             Clear will remove all items. -->
-        <Button x:Name="btnDeleteTarget" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Content="Delete" Margin="114,11,112,0" VerticalAlignment="Top" Height="22" Command="{Binding DeleteTargetUnitCommand}" />
-        <Button x:Name="btnAddTarget" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Content="Add" Margin="10,10,0,2" Command="{Binding AddTargetUnitCommand}" />
-        <Button x:Name="btnClearTarget" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Content="Clear" Margin="0,10,10,4" Command="{Binding ClearTargetUnitsCommand}" />
+        <Button x:Name="btnDeleteTarget" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Content="Delete" Margin="114,11,112,0" VerticalAlignment="Top" Height="22" Command="{Binding DeleteCommand}" />
+        <Button x:Name="btnAddTarget" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Content="Add" Margin="10,10,0,2" Command="{Binding AddCommand}" />
+        <Button x:Name="btnClearTarget" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Content="Clear" Margin="0,10,10,4" Command="{Binding ClearCommand}" />
         <!--Used to filter what types of creatures we want to kill. 
                     Do we want to only kill things are party attack for example?-->
-        <CheckBox x:Name="chkKillAggro" Height="16" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="11,15,0,0" VerticalAlignment="Top" Content="Aggro" Foreground="White" IsChecked="{Binding KillAggro}" />
-        <CheckBox x:Name="chkKillPartyClaimed" Height="16" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="99,15,0,0" VerticalAlignment="Top" Content="Party Claimed" Foreground="White" IsChecked="{Binding KillPartyClaimed}" />
-        <CheckBox x:Name="chkKillUnclaimed" Height="16" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="218,15,0,0" VerticalAlignment="Top" Content="Unclaimed" Foreground="White" IsChecked="{Binding KillUnclaimed}" />
+        <CheckBox x:Name="chkKillAggro" Height="16" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="11,15,0,0" VerticalAlignment="Top" Content="Aggro" Foreground="White" IsChecked="{Binding Aggro}" />
+        <CheckBox x:Name="chkKillPartyClaimed" Height="16" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="99,15,0,0" VerticalAlignment="Top" Content="Party Claimed" Foreground="White" IsChecked="{Binding PartyClaimed}" />
+        <CheckBox x:Name="chkKillUnclaimed" Height="16" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="218,15,0,0" VerticalAlignment="Top" Content="Unclaimed" Foreground="White" IsChecked="{Binding Unclaimed}" />
         <Label x:Name="label1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Kill" />
     </Grid>
 </UserControl>

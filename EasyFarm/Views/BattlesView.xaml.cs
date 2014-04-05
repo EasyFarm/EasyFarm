@@ -14,7 +14,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
 using System;
 using System.Collections.Generic;
@@ -30,14 +31,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EasyFarm
+namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for IgnoredView.xaml
+    /// Interaction logic for BattlesView.xaml
     /// </summary>
-    public partial class IgnoredView : UserControl
+    public partial class BattlesView : UserControl
     {
-        public IgnoredView()
+        public BattlesView()
         {
             InitializeComponent();
         }

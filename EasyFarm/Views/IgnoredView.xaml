@@ -1,13 +1,10 @@
-﻿<UserControl x:Class="EasyFarm.IgnoredView"
+﻿<UserControl x:Class="EasyFarm.Views.IgnoredView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="93.608" d:DesignWidth="409.398">
-    <UserControl.Resources>
-        <ResourceDictionary Source="ControlStyles.xaml"/>
-    </UserControl.Resources>
+             d:DesignHeight="108.904" d:DesignWidth="435.616">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />

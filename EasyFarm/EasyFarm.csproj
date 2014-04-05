@@ -117,9 +117,6 @@
     <Compile Include="Classes\TargetData.cs" />
     <Compile Include="Decision\DeadState.cs" />
     <Compile Include="Decision\HealingState.cs" />
-    <Compile Include="Controls\IgnoredView.xaml.cs">
-      <DependentUpon>IgnoredView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MvvmFoundation\Messenger.cs" />
     <Compile Include="MvvmFoundation\ObservableObject.cs" />
     <Compile Include="MvvmFoundation\PropertyObserver.cs" />
@@ -131,6 +128,15 @@
     <Compile Include="Decision\RestState.cs" />
     <Compile Include="Decision\TravelState.cs" />
     <Compile Include="Classes\Config.cs" />
+    <Compile Include="Views\BattlesView.xaml.cs">
+      <DependentUpon>BattlesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HealingView.xaml.cs">
+      <DependentUpon>HealingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IgnoredView.xaml.cs">
+      <DependentUpon>IgnoredView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -149,12 +155,6 @@
     <Compile Include="Classes\HealingAbility.cs" />
     <Compile Include="Classes\WeaponAbility.cs" />
     <Compile Include="Classes\FFInstance.cs" />
-    <Compile Include="Controls\RoutesView.xaml.cs">
-      <DependentUpon>RoutesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TargetsView.xaml.cs">
-      <DependentUpon>TargetsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\Units.cs" />
     <Compile Include="Views\frmStartup.cs">
@@ -170,11 +170,34 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\ProcessView.xaml.cs">
+      <DependentUpon>ProcessView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RestingView.xaml.cs">
+      <DependentUpon>RestingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RoutesView.xaml.cs">
+      <DependentUpon>RoutesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TargetsView.xaml.cs">
+      <DependentUpon>TargetsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WeaponsView.xaml.cs">
+      <DependentUpon>WeaponsView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\BattlesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ControlStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\IgnoredView.xaml">
+    <Page Include="Views\HealingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\IgnoredView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -182,11 +205,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\RoutesView.xaml">
+    <Page Include="Views\ProcessView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\TargetsView.xaml">
+    <Page Include="Views\RestingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RoutesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TargetsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WeaponsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
