@@ -31,12 +31,12 @@ namespace EasyFarm
     public partial class App : Application
     {
         MainWindow Window = null;
-        ViewModel Bindings = null;
 
         public App()
         {
+            /*
             Bindings = new ViewModel();
-            Window = new MainWindow(ref Bindings);            
+            Window = new MainWindow(ref Bindings); 
             Window.DataContext = Bindings;
 
             Bindings.Engine.LoadSettings();
@@ -46,6 +46,7 @@ namespace EasyFarm
             Exit += (s, e) => {
                 Bindings.Engine.SaveSettings(Bindings.Engine);
             };
+             */
         }
     }
 }

@@ -28,11 +28,11 @@ namespace EasyFarm
     // Members and Constructors
     public partial class MainWindow : Window
     {
-        private ViewModel Bindings;
+        // private ViewModel Bindings;
        
-        public MainWindow(ref ViewModel Bindings)
+        public MainWindow(/*ref ViewModel Bindings*/)
         {
-            this.Bindings = Bindings;
+            // this.Bindings = Bindings;
             InitializeComponent();
         }
     }

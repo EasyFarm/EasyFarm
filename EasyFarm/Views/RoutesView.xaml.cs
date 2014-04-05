@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.ViewModels;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -40,60 +41,9 @@ namespace EasyFarm.Views
     /// </summary>
     public partial class RoutesView : UserControl
     {
-        DispatcherTimer WaypointRecorder = new DispatcherTimer();
-        FFACE.Position LastPosition = new FFACE.Position();
-        ViewModel Bindings;
-
         public RoutesView()
-        {
-            WaypointRecorder.Tick += new EventHandler(RouteRecorder_Tick);
-            WaypointRecorder.Interval = new TimeSpan(0, 0, 1);
-            this.Loaded += RoutesView_Loaded;
+        {            
             InitializeComponent();
-        }
-
-        void RoutesView_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Perform on load once so that we do not add duplicate waypoint entries into the waypoint list. 
-            if (Bindings != null) return;
-
-            this.Bindings = this.DataContext as ViewModel;
-
-            foreach (var w in Bindings.Engine.Config.Waypoints)
-            {
-                lstWaypoints.Items.Add("X: " + w.X + "Z: " + w.Z);
-            }
-        }
-
-        public void ClearRoute(object s, EventArgs e)
-        {
-            Bindings.Engine.Config.Waypoints.Clear();
-            lstWaypoints.Items.Clear();
-        }
-
-        void RecordRoute(object s, EventArgs e)
-        {
-            if (!WaypointRecorder.IsEnabled)
-            {
-                WaypointRecorder.Start();
-                Bindings.StatusBarText = "Recording!";
-            }
-            else
-            {
-                WaypointRecorder.Stop();
-                Bindings.StatusBarText = "Recording Stopped!";
-            }
-        }
-
-        void RouteRecorder_Tick(object sender, EventArgs e)
-        {
-            var Point = Bindings.Engine.FFInstance.Instance.Player.Position;
-            if (!Point.Equals(LastPosition))
-            {
-                Bindings.Engine.Config.Waypoints.Add(Point);
-                lstWaypoints.Items.Add("X: " + Point.X + " Z: " + Point.Z);
-                LastPosition = Point;
-            }
         }
     }
 }

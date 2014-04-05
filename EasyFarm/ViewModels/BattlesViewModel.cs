@@ -16,8 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.Classes;
-using EasyFarm.MVVM;
+using EasyFarm.Classes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,61 +24,82 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
-namespace EasyFarm
+namespace EasyFarm.ViewModels
 {
-    partial class ViewModel
+    public class BattlesViewModel : ViewModelBase
     {
-        private Ability BattleAction;
+        public BattlesViewModel(ref GameEngine Engine) : base(ref Engine) { }
+
+        public Ability BattleAction { get; set; }
 
         public ObservableCollection<Ability> StartList
         {
-            get { return Engine.Config.ActionInfo.StartList; }
-            set { Engine.Config.ActionInfo.StartList = value; }
+            get { return GameEngine.Config.ActionInfo.StartList; }
+            set
+            {
+                GameEngine.Config.ActionInfo.StartList = value;
+                this.RaisePropertyChanged("StartList");
+            }
         }
         
         public ObservableCollection<Ability> BattleList
         {
-            get { return Engine.Config.ActionInfo.BattleList; }
-            set { Engine.Config.ActionInfo.BattleList= value; }
+            get { return GameEngine.Config.ActionInfo.BattleList; }
+            set
+            {
+                GameEngine.Config.ActionInfo.BattleList = value;
+                this.RaisePropertyChanged("BattleList");
+            }
         }
         
         public ObservableCollection<Ability> EndList
         {
-            get { return Engine.Config.ActionInfo.EndList; }
-            set { Engine.Config.ActionInfo.EndList = value; }
+            get { return GameEngine.Config.ActionInfo.EndList; }
+            set
+            {
+                GameEngine.Config.ActionInfo.EndList = value;
+                this.RaisePropertyChanged("EndSelected");
+            }
+
         }
 
-        public bool BattleListSelected 
+        public bool BattleSelected 
         {
-            get { return Engine.Config.ActionInfo.BattleListSelected; }
-            set { Engine.Config.ActionInfo.BattleListSelected = value;
-            RaisePropertyChanged("BattleListSelected");
+            get { return GameEngine.Config.ActionInfo.BattleListSelected; }
+            set
+            {
+                GameEngine.Config.ActionInfo.BattleListSelected = value;
+                this.RaisePropertyChanged("BattleSelected");
             }
         }
 
-        public bool StartListSelected 
+        public bool StartSelected
         {
-            get { return Engine.Config.ActionInfo.StartListSelected; }
-            set { Engine.Config.ActionInfo.StartListSelected = value;
-            RaisePropertyChanged("StartListSelected");
+            get { return GameEngine.Config.ActionInfo.StartListSelected; }
+            set
+            {
+                GameEngine.Config.ActionInfo.StartListSelected= value;
+                this.RaisePropertyChanged("StartSelected");
             }
         }
 
-        public bool EndListSelected 
+        public bool EndSelected
         {
-            get { return Engine.Config.ActionInfo.EndListSelected; }
-            set { Engine.Config.ActionInfo.EndListSelected = value;
-            RaisePropertyChanged("EndListSelected");
+            get { return GameEngine.Config.ActionInfo.EndListSelected; }
+            set { GameEngine.Config.ActionInfo.EndListSelected = value;
+            this.RaisePropertyChanged("EndSelected");
             }
         }
 
-        public String BattleActionName
+        public String ActionName
         {
-            get { return Engine.Config.ActionInfo.BattleActionName; }
-            set { Engine.Config.ActionInfo.BattleActionName = value;
-            RaisePropertyChanged("BattleActionName");
-            BattleAction = Engine.AbilityService.CreateAbility(BattleActionName) as Ability;
-            }
+            get { return GameEngine.Config.ActionInfo.BattleActionName; }
+            set 
+            {
+                GameEngine.Config.ActionInfo.BattleActionName = value;
+                this.RaisePropertyChanged("ActionName");
+                BattleAction = GameEngine.AbilityService.CreateAbility(ActionName);
+            }            
         }
 
         public ICommand AddActionCommand { get; set; }
@@ -92,11 +112,11 @@ namespace EasyFarm
         {
             get 
             {
-                if (StartListSelected)
+                if (StartSelected)
                     return StartList;
-                else if (BattleListSelected)
+                else if (BattleSelected)
                     return BattleList;
-                else if (EndListSelected)
+                else if (EndSelected)
                     return EndList;
                 else
                     return new ObservableCollection<Ability>();

@@ -138,6 +138,14 @@
     <Compile Include="MvvmFoundation\RelayCommand.cs" />
     <Compile Include="Classes\GameEngine.cs" />
     <Compile Include="Classes\Config.cs" />
+    <Compile Include="ViewModels\BattlesViewModel.cs" />
+    <Compile Include="ViewModels\HealingViewModel.cs" />
+    <Compile Include="ViewModels\IgnoredViewModel.cs" />
+    <Compile Include="ViewModels\RestingViewModel.cs" />
+    <Compile Include="ViewModels\RoutesViewModel.cs" />
+    <Compile Include="ViewModels\TargetsViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\WeaponsViewModel.cs" />
     <Compile Include="Views\BattlesView.xaml.cs">
       <DependentUpon>BattlesView.xaml</DependentUpon>
     </Compile>
@@ -152,13 +160,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\ListItem.cs" />
-    <Compile Include="ViewModels\ViewModel_Battles.cs" />
-    <Compile Include="ViewModels\ViewModel_Healing.cs" />
-    <Compile Include="ViewModels\ViewModel_Resting.cs" />
-    <Compile Include="ViewModels\ViewModel_Routes.cs" />
-    <Compile Include="ViewModels\ViewModel_Targets.cs" />
-    <Compile Include="ViewModels\ViewModel_Ignored.cs" />
-    <Compile Include="ViewModels\ViewModel_WeaponSkill.cs" />
     <Compile Include="Classes\Pathing.cs" />
     <Compile Include="Classes\Waypoint.cs" />
     <Compile Include="Classes\Ability.cs" />
@@ -173,8 +174,6 @@
       <DependentUpon>frmStartup.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Utilities.cs" />
-    <Compile Include="ViewModels\ViewModel_Main.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
