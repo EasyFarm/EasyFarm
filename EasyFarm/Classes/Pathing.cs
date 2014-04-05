@@ -19,10 +19,10 @@ You should have received a copy of the GNU General Public License
 ﻿using System;
 using System.Linq;
 using System.Windows.Threading;
-using EasyFarm.Engine;
 using FFACETools;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using EasyFarm.Classes;
 
 namespace EasyFarm.PathingTools
 {

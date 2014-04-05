@@ -16,31 +16,30 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using System;
+﻿using EasyFarm.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.Decision.FSM
 {
     /// <summary>
-    /// Class for Healing Abilities
+    /// A state to pause the bot if it is dead.
     /// </summary>
-    public class HealingAbility
+    class DeadState : BaseState
     {
-        /// <summary>
-        /// Can we use this abilitiy?
-        /// </summary>
-        public bool IsEnabled { get; set; }
+        public DeadState(ref GameEngine gameEngine) : base(ref gameEngine) { }
 
-        /// <summary>
-        /// What is its name?
-        /// </summary>
-        public String Name { get; set; }
+        public override bool CheckState() { return gameEngine.PlayerData.IsDead; }
 
-        /// <summary>
-        /// The level to which we should use the ability
-        /// </summary>
-        public int TriggerLevel { get; set; }
+        public override void EnterState() { }
+
+        public override void RunState() { 
+            gameEngine.Stop();
+            gameEngine.Config.StatusBarText = "Stopped!";
+        }
+
+        public override void ExitState() { }
     }
 }

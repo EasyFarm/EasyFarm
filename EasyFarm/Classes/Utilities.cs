@@ -16,7 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using FFACETools;
+﻿using EasyFarm.UtilityTools;
+using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,7 +30,7 @@ using System.Windows.Input;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace EasyFarm.UtilityTools
+namespace EasyFarm.Classes
 {
     /// <summary>
     /// This class is essential the code graveyard. Any code that I would rather not dispose
@@ -60,6 +61,24 @@ namespace EasyFarm.UtilityTools
                 }
 
             return value;
+        }
+
+        public static FFACE GetFFACESession()
+        {
+            // Let user select ffxi process
+            frmStartup ProcessSelectionScreen = new frmStartup();
+            ProcessSelectionScreen.ShowDialog();
+
+            // Validate the selection
+            var m_process = ProcessSelectionScreen.POL_Process;
+
+            if (m_process == null)
+            {
+                System.Windows.Forms.MessageBox.Show("No valid process was selected: Exiting now.");
+                Environment.Exit(0);
+            }
+
+            return ProcessSelectionScreen.FFXI_Session;
         }
     }
 }

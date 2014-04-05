@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 
 ﻿using EasyFarm.Classes;
 using EasyFarm.MVVM;
-using EasyFarm.PlayerTools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,20 +30,20 @@ namespace EasyFarm
     {
         public String WeaponSkillName
         {
-            get { return Engine.Config.WSName; }
+            get { return Engine.Config.WeaponInfo.Name; }
             set 
-            { 
-                Engine.Config.WSName = value;
+            {
+                Engine.Config.WeaponInfo.Name = value;
                 RaisePropertyChanged("WeaponSkillName");
             }
         }
 
         public double WeaponSkillDistance
         {
-            get { return Engine.Config.WSDistance; }
+            get { return Engine.Config.WeaponInfo.Distance; }
             set
-            { 
-                Engine.Config.WSDistance = value;
+            {
+                Engine.Config.WeaponInfo.Distance = value;
                 StatusBarText = "Distance: " + value;
                 RaisePropertyChanged("WeaponSkillDistance");
             }
@@ -52,10 +51,10 @@ namespace EasyFarm
 
         public int WeaponSkillHealth
         {
-            get { return Engine.Config.WSHealthThreshold; }
+            get { return Engine.Config.WeaponInfo.HealthThreshold; }
             set 
-            { 
-                Engine.Config.WSHealthThreshold = (int)value;
+            {
+                Engine.Config.WeaponInfo.HealthThreshold = (int)value;
                 StatusBarText = "Health: " + (int)value;
                 RaisePropertyChanged("WeaponSkillHealth");
             }
@@ -65,7 +64,7 @@ namespace EasyFarm
 
         private void SetWeaponSkill()
         {
-            if (!string.IsNullOrWhiteSpace(Engine.Config.WSName))
+            if (!string.IsNullOrWhiteSpace(Engine.Config.WeaponInfo.Name))
             {
                 var Weaponskill = new WeaponAbility(WeaponSkillName);
              
@@ -74,7 +73,7 @@ namespace EasyFarm
                     Weaponskill.DistanceTrigger = WeaponSkillDistance;
                     Weaponskill.HPTrigger = WeaponSkillHealth;
                     Weaponskill.Name = WeaponSkillName;
-                    Engine.Config.Weaponskill = Weaponskill;
+                    Engine.Config.WeaponInfo.WeaponSkill = Weaponskill;
                     StatusBarText = Weaponskill.Name + " : now set!";
                 }
                 else 

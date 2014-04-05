@@ -17,43 +17,40 @@ You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
 ﻿using EasyFarm.Classes;
-using EasyFarm.MVVM;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Windows.Input;
 
-namespace EasyFarm
+namespace EasyFarm.FSM
 {
-    partial class ViewModel
+    class HealingState : BaseState
     {
-        public ObservableCollection<ListItem<HealingAbility>> HealingList
+        public HealingState(ref GameEngine gameEngine) : base(ref gameEngine) { }
+
+        public override bool CheckState()
         {
-            get { return Engine.Config.ActionInfo.HealingList; }
-            set { Engine.Config.ActionInfo.HealingList = value; }
+            return gameEngine.PlayerData.shouldHeal && !gameEngine.PlayerData.shouldRest;
         }
 
-        public ICommand AddHealingCommand { get; set; }
-
-        public ICommand DeleteHealingCommand { get; set; }
-
-        public ICommand ClearHealingCommand { get; set; }
-
-        private void ClearHealing()
+        public override void EnterState()
         {
-            HealingList.Clear();
+            gameEngine.Resting.Off();
         }
 
-        private void DeleteHealing(object obj)
+        public override void RunState()
         {
-            HealingList.Remove(obj as ListItem<HealingAbility>);
+            // Use an ability to heal from the healing list if we can
+            if(gameEngine.PlayerActions.HealingList.Count > 0)
+            {
+                // Check for actions available
+                var act = gameEngine.PlayerActions.HealingList.FirstOrDefault();
+                if (act == null) { return; }
+                //
+                else { gameEngine.AbilityExecutor.UseAbility(act); }
+            }
         }
 
-        private void AddHealingItem()
-        {
-            HealingList.Add(new ListItem<HealingAbility>(new HealingAbility() { IsEnabled = false, Name = "Empty", TriggerLevel = 0}));
-        }
+        public override void ExitState() { }
     }
 }

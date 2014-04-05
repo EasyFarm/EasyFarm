@@ -24,7 +24,7 @@ You should have received a copy of the GNU General Public License
 using System.Diagnostics;
 using FFACETools;
 
-namespace EasyFarm.ProcessTools
+namespace EasyFarm.Classes
 {
     public class FFInstance
     {

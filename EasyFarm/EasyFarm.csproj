@@ -111,22 +111,32 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\Abilities.cs" />
+    <Compile Include="Classes\AbilitiesService.cs" />
+    <Compile Include="Classes\AbilityExecutor.cs" />
+    <Compile Include="Classes\AbilityParser.cs" />
+    <Compile Include="Classes\ActionBlocked.cs" />
+    <Compile Include="Classes\AttackState.cs" />
+    <Compile Include="Classes\BaseState.cs" />
+    <Compile Include="Classes\CombatService.cs" />
+    <Compile Include="Classes\DeadState.cs" />
+    <Compile Include="Classes\FiniteStateMachine.cs" />
+    <Compile Include="Classes\HealingState.cs" />
+    <Compile Include="Classes\ActionInfo.cs" />
+    <Compile Include="Classes\RestingInfo.cs" />
+    <Compile Include="Classes\WeaponInfo.cs" />
+    <Compile Include="Classes\MobFilters.cs" />
+    <Compile Include="Classes\PlayerActions.cs" />
     <Compile Include="Classes\PlayerData.cs" />
-    <Compile Include="Classes\Resting.cs" />
+    <Compile Include="Classes\RestingService.cs" />
+    <Compile Include="Classes\RestState.cs" />
     <Compile Include="Classes\TargetData.cs" />
-    <Compile Include="Decision\DeadState.cs" />
-    <Compile Include="Decision\HealingState.cs" />
+    <Compile Include="Classes\TravelState.cs" />
+    <Compile Include="Classes\UnitService.cs" />
     <Compile Include="MvvmFoundation\Messenger.cs" />
     <Compile Include="MvvmFoundation\ObservableObject.cs" />
     <Compile Include="MvvmFoundation\PropertyObserver.cs" />
     <Compile Include="MvvmFoundation\RelayCommand.cs" />
     <Compile Include="Classes\GameEngine.cs" />
-    <Compile Include="Decision\AttackState.cs" />
-    <Compile Include="Decision\BaseState.cs" />
-    <Compile Include="Decision\FiniteStateMachine.cs" />
-    <Compile Include="Decision\RestState.cs" />
-    <Compile Include="Decision\TravelState.cs" />
     <Compile Include="Classes\Config.cs" />
     <Compile Include="Views\BattlesView.xaml.cs">
       <DependentUpon>BattlesView.xaml</DependentUpon>
@@ -156,7 +166,6 @@
     <Compile Include="Classes\WeaponAbility.cs" />
     <Compile Include="Classes\FFInstance.cs" />
     <Compile Include="Classes\Unit.cs" />
-    <Compile Include="Classes\Units.cs" />
     <Compile Include="Views\frmStartup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -227,7 +236,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Combat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

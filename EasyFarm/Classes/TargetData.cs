@@ -16,8 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.Engine;
-using EasyFarm.UnitTools;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -31,12 +29,20 @@ namespace EasyFarm.Classes
     /// </summary>
     public class TargetData
     {
-        public TargetData(ref GameEngine Engine)
+        public TargetData(ref Classes.GameEngine m_gameEngine)
         {
-            this.Engine = Engine;
+            this.m_gameEngine = m_gameEngine;
+
+            this.PlayerActions = m_gameEngine.PlayerActions;
+            this.Units = m_gameEngine.Units;
+            this.TargetTools = m_gameEngine.FFInstance.Instance.Target;
         }
 
         private Unit m_targetUnit = null;
+        private UnitService Units;
+        private FFACE.TargetTools TargetTools;
+        private PlayerActions PlayerActions;
+        private GameEngine m_gameEngine;
 
         /// <summary>
         /// Who we are trying to kill currently
@@ -46,8 +52,8 @@ namespace EasyFarm.Classes
             get
             {
                 return m_targetUnit == null ||
-                !Engine.Units.IsValid(m_targetUnit) ?
-                m_targetUnit = Engine.Units.Target : m_targetUnit;
+                !Units.IsValid(m_targetUnit) ?
+                m_targetUnit = Units.GetTarget() : m_targetUnit;
             }
 
             set { this.TargetUnit = value; }
@@ -58,11 +64,11 @@ namespace EasyFarm.Classes
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public bool IsUnitPullable
+        public bool IsPullable
         {
             get
             {
-                return IsTargetUnit && !IsUnitFighting && Engine.Combat.HasStartMoves;
+                return IsTarget && !IsFighting && PlayerActions.HasStartMoves;
             }
         }
 
@@ -71,11 +77,11 @@ namespace EasyFarm.Classes
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public bool IsTargetUnit
+        public bool IsTarget
         {
             get
             {
-                return Engine.FFInstance.Instance.Target.ID == TargetUnit.ID;
+                return TargetTools.ID == TargetUnit.ID;
             }
         }
 
@@ -84,7 +90,7 @@ namespace EasyFarm.Classes
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public bool IsUnitFighting
+        public bool IsFighting
         {
             get { return TargetUnit.Status == Status.Fighting; }
         }
@@ -104,11 +110,11 @@ namespace EasyFarm.Classes
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public bool IsUnitBattleReady
+        public bool IsValid
         {
             get
             {
-                return Engine.Units.IsValid(TargetUnit);
+                return Units.IsValid(TargetUnit);
             }
         }
 
@@ -116,7 +122,5 @@ namespace EasyFarm.Classes
         {
             get { return TargetUnit.Position; }
         }
-
-        public GameEngine Engine { get; set; }
     }
 }

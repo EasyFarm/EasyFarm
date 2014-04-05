@@ -14,7 +14,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
 ﻿using EasyFarm.MVVM;
 using System;
@@ -27,50 +28,66 @@ namespace EasyFarm
 {
     partial class ViewModel
     {
-        public int LowHP {
-            get { return Engine.Config.LowHP; }
-            set { Engine.Config.LowHP = value;
-            StatusBarText = "Down HP : " + value;
-            }
-        }
-        
-        public int HighHP {
-            get { return Engine.Config.HighHP; }
-            set { Engine.Config.HighHP = value;
-            RaisePropertyChanged("HighHP");
-            StatusBarText = "UP HP : " + value;
-            }
-        }
-
-        public int LowMP {
-            get { return Engine.Config.LowMP; }
-            set { Engine.Config.LowMP = value;
-            RaisePropertyChanged("LowMP");
-            StatusBarText = "Down MP : " + value;
-            }
-        }
-
-        public int HighMP {
-            get { return Engine.Config.HighMP; }
-            set { Engine.Config.HighMP = value;
-            RaisePropertyChanged("HighMP");
-            StatusBarText = "UP MP : " + value;
-            }
-        }
-
-        public bool IsRestingHPEnabled 
+        public int LowHP
         {
-            get { return Engine.Config.IsRestingHPEnabled; }
-            set { Engine.Config.IsRestingHPEnabled = value;
-            RaisePropertyChanged("IsRestingHPEnabled");
+            get { return Engine.Config.RestingInfo.LowHP; }
+            set
+            {
+                Engine.Config.RestingInfo.LowHP = value;
+                StatusBarText = "Down HP : " + value;
+            }
+        }
+
+        public int HighHP
+        {
+            get { return Engine.Config.RestingInfo.HighHP; }
+            set
+            {
+                Engine.Config.RestingInfo.HighHP = value;
+                RaisePropertyChanged("HighHP");
+                StatusBarText = "UP HP : " + value;
+            }
+        }
+
+        public int LowMP
+        {
+            get { return Engine.Config.RestingInfo.LowMP; }
+            set
+            {
+                Engine.Config.RestingInfo.LowMP = value;
+                RaisePropertyChanged("LowMP");
+                StatusBarText = "Down MP : " + value;
+            }
+        }
+
+        public int HighMP
+        {
+            get { return Engine.Config.RestingInfo.HighMP; }
+            set
+            {
+                Engine.Config.RestingInfo.HighMP = value;
+                RaisePropertyChanged("HighMP");
+                StatusBarText = "UP MP : " + value;
+            }
+        }
+
+        public bool IsRestingHPEnabled
+        {
+            get { return Engine.Config.RestingInfo.IsRestingHPEnabled; }
+            set
+            {
+                Engine.Config.RestingInfo.IsRestingHPEnabled = value;
+                RaisePropertyChanged("IsRestingHPEnabled");
             }
         }
 
         public bool IsRestingMPEnabled
         {
-            get { return Engine.Config.IsRestingMPEnabled; }
-            set { Engine.Config.IsRestingMPEnabled = value;
-            RaisePropertyChanged("IsRestingMPEnabled");
+            get { return Engine.Config.RestingInfo.IsRestingMPEnabled; }
+            set
+            {
+                Engine.Config.RestingInfo.IsRestingMPEnabled = value;
+                RaisePropertyChanged("IsRestingMPEnabled");
             }
         }
     }

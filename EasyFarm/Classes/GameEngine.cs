@@ -18,15 +18,11 @@ You should have received a copy of the GNU General Public License
 
 ﻿using EasyFarm.Classes;
 using EasyFarm.PathingTools;
-using EasyFarm.PlayerTools;
-using EasyFarm.ProcessTools;
-using EasyFarm.UnitTools;
 using EasyFarm.UtilityTools;
-using EasyFarm.Views.Classes;
 using System;
 using System.Diagnostics;
 
-namespace EasyFarm.Engine
+namespace EasyFarm.Classes
 {
     /// <summary>
     /// An object that controls the bot and contains all the data. 
@@ -71,12 +67,12 @@ namespace EasyFarm.Engine
         /// Contains data on Creatures/NPCS in the environment. 
         /// Does not contain player information.
         /// </summary>
-        private Units m_units = null;
+        private UnitService m_units = null;
 
         /// <summary>
         /// Contains method for combat and player status info.
         /// </summary>
-        private Combat m_combat = null;
+        private CombatService m_combat = null;
 
         /// <summary>
         /// The current target the bot is trying to kill.
@@ -96,7 +92,17 @@ namespace EasyFarm.Engine
         /// <summary>
         /// Functions and details for resting.
         /// </summary>
-        private Resting m_resting = null;
+        private RestingService m_resting = null;
+        
+        private FilterInfo m_mobfilters;
+        
+        private AbilityExecutor m_abilityExecutor;
+        
+        private PlayerActions m_playerActions;
+        
+        private AbilityService m_abilityService;
+        
+        private ActionBlocked m_ActionBlocked;
 
         #endregion
 
@@ -112,16 +118,20 @@ namespace EasyFarm.Engine
         {
             m_process = Process;
             m_ffinstance = new FFInstance(this.m_process);
-            // m_gameState = new GameState(ref m_gameEngine);
             m_stateMachine = new FiniteStateEngine(ref m_gameEngine);
             m_config = new Config(ref m_gameEngine);
+            m_mobfilters = new FilterInfo();
             m_pathing = new Pathing(ref m_gameEngine);
-            m_units = new Units(ref m_gameEngine);
-            m_combat = new Combat(ref m_gameEngine);
+            m_units = new UnitService(ref m_gameEngine);
+            m_combat = new CombatService(ref m_gameEngine);
             m_target = Unit.CreateUnit(0);
             m_playerData = new PlayerData(ref m_gameEngine);
             m_targetData = new TargetData(ref m_gameEngine);
-            m_resting = new Resting(ref m_gameEngine);
+            m_resting = new RestingService(ref m_gameEngine);
+            m_abilityExecutor = new AbilityExecutor(ref m_gameEngine);
+            m_playerActions = new PlayerActions(ref m_gameEngine);
+            m_ActionBlocked = new ActionBlocked(ref m_gameEngine);
+            m_abilityService = new AbilityService();
         }
         #endregion
 
@@ -169,7 +179,7 @@ namespace EasyFarm.Engine
         /// <summary>
         /// Contains the mob array excluding surrounding players.
         /// </summary>
-        public Units Units
+        public UnitService Units
         {
             get { return m_units; }
         }
@@ -177,7 +187,7 @@ namespace EasyFarm.Engine
         /// <summary>
         /// Returns a player object; contains mostly combat methods and player status information.
         /// </summary>
-        public Combat Combat
+        public CombatService Combat
         {
             get { return m_combat; }
         }
@@ -201,9 +211,34 @@ namespace EasyFarm.Engine
         /// <summary>
         /// Contains functions and information for resting.
         /// </summary>
-        public Resting Resting
+        public RestingService Resting
         { 
             get { return m_resting; } 
+        }
+
+        public FilterInfo MobFilters 
+        {
+            get { return m_config.FilterInfo; }
+        }
+
+        public PlayerActions PlayerActions 
+        {
+            get { return m_playerActions; }
+        }
+
+        public AbilityExecutor AbilityExecutor 
+        {
+            get { return m_abilityExecutor; }
+        }
+
+        public AbilityService AbilityService 
+        {
+            get { return m_abilityService; }
+        }
+
+        public ActionBlocked ActionBlocked 
+        {
+            get { return m_ActionBlocked; }
         }
 
         #endregion

@@ -16,8 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *//////////////////////////////////////////////////////////////////// 
 
-using EasyFarm.Engine;
-using EasyFarm.PlayerTools;
 using FFACETools;
 using System;
 using System.Collections.Generic;

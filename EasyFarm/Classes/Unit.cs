@@ -18,8 +18,9 @@ You should have received a copy of the GNU General Public License
 
 ﻿using System;
 using FFACETools;
+using EasyFarm.Classes;
 
-namespace EasyFarm.UnitTools
+namespace EasyFarm.Classes
 {
     public class Unit
     {
@@ -32,7 +33,7 @@ namespace EasyFarm.UnitTools
         #region Constructors
         Unit(int id = 0)
         {
-            if (NPCTools == null)
+            if (NPCTools == null && Session != null)
             {
                 NPCTools = Session.NPC;
             }

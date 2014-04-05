@@ -18,23 +18,46 @@ You should have received a copy of the GNU General Public License
 
 ﻿using System;
 using System.Linq;
-using EasyFarm.Engine;
+using EasyFarm.Classes;
 using FFACETools;
 
-namespace EasyFarm.UnitTools
+namespace EasyFarm.Classes
 {
-    public class Units
+    public class UnitService
     {
         #region Members
-
         private static Unit[] UnitArray;
-        private static GameEngine Engine;
         private const short MOBARRAY_MAX = 768;
+        private FilterInfo MobFilters;
+        private GameEngine m_gameEngine;
 
         #endregion
 
+        public UnitService(FFACE Session, FilterInfo Filters)
+        {
+
+        }
+
+        public UnitService(ref Classes.GameEngine m_gameEngine)
+        {
+            this.m_gameEngine = m_gameEngine;
+
+            Unit.Session = m_gameEngine.FFInstance.Instance;
+            this.MobFilters = m_gameEngine.Config.FilterInfo;
+            UnitArray = new Unit[MOBARRAY_MAX];
+
+            // Create units
+            for (int id = 0; id < MOBARRAY_MAX; id++)
+            {
+                UnitArray[id] = Unit.CreateUnit(id);
+            }
+        }
+
         #region Properties
 
+        /// <summary>
+        /// Does there exist a mob that has aggroed in general.
+        /// </summary>
         public bool HasAggro
         {
             get
@@ -51,6 +74,9 @@ namespace EasyFarm.UnitTools
             }
         }
 
+        /// <summary>
+        /// Do we have claim on any mob?
+        /// </summary>
         public bool HasClaim
         {
             get
@@ -77,34 +103,33 @@ namespace EasyFarm.UnitTools
             }
         }
 
-        public Unit Target
+        public Unit GetTarget()
         {
-            get
-            {
                 // Create a blank target
-                var MainTarget = Unit.CreateUnit(0);
+                Unit MainTarget = Unit.CreateUnit(0);
 
                 // Create a copy of the valid mobs
                 Unit[] PotentialTargets = ValidMobs;
 
                 try
                 {
-                    if (Engine.Config.BattlePartyClaimed && PotentialTargets.Where(mob => mob.PartyClaim).Count() > 0)
-                    {
-                        MainTarget = PotentialTargets.OrderBy(x=> x.Distance).First(mob => mob.PartyClaim);
-                    }
-                    else if (PotentialTargets.Where(mob => mob.MyClaim).Count() > 0)
-                    {
-                        MainTarget = PotentialTargets.OrderBy(x => x.Distance).First(mob => mob.MyClaim);
-                    }
-                    else if (Engine.Config.BattleAggro && PotentialTargets.Where(mob => mob.HasAggroed).Count() > 0)
-                    {
-                        MainTarget = PotentialTargets.OrderBy(x => x.Distance).First(mob => mob.HasAggroed);
-                    }
-                    else if (Engine.Config.BattleUnclaimed && PotentialTargets.Where(mob => !mob.IsClaimed).Count() > 0)
-                    {
-                        MainTarget = PotentialTargets.OrderBy(x => x.Distance).Where(mob => !mob.IsClaimed).First();
-                    }
+                    return PotentialTargets
+                            // Get all of the party claimed mobs
+                            .Where(mob => MobFilters.PartyFilter && mob.PartyClaim)
+                            .OrderBy(mob => mob.Distance)
+                        .Concat(PotentialTargets
+                            // Get all of my claimed mobs.
+                            .Where(mob => mob.MyClaim)
+                            .OrderBy(mob => mob.Distance))
+                        .Concat(PotentialTargets
+                            // Get all of the aggroed mobs
+                            .Where(mob => MobFilters.AggroFilter && mob.HasAggroed)
+                            .OrderBy(mob => mob.Distance))
+                        .Concat(PotentialTargets
+                            // Get all of the unclaimed mobs
+                            .Where(mob => MobFilters.UnclaimedFilter && !mob.IsClaimed)
+                            .OrderBy(mob => mob.Distance))                            
+                        .First();                    
                 }
                 catch (InvalidOperationException)
                 {
@@ -112,41 +137,24 @@ namespace EasyFarm.UnitTools
                 }
 
                 return MainTarget;
-            }
         }
 
         #endregion
 
-        #region Constructors
-
-        public Units(ref GameEngine GameEngine)
-        {
-            Engine = GameEngine;
-            Unit.Session = Engine.FFInstance.Instance;
-            UnitArray = new Unit[MOBARRAY_MAX];
-
-            // Create units
-            for (int id = 0; id < MOBARRAY_MAX; id++)
-            {
-                UnitArray[id] = Unit.CreateUnit(id);
-            }
-        }
 
         public bool IsValid(Unit unit)
         {
             // If what was passed in is null, its not valid.
-            if (unit == null) return false; 
+            if (unit == null) return false;
 
             bool ValidMob =
                 ((unit.IsActive) && (unit.Distance < 17) && (unit.YDifference < 5) && (unit.NPCBit != 0) && (!unit.IsDead) && (unit.NPCType == NPCType.Mob))
                 &&
-                (((Engine.Config.TargetsList.Contains(unit.Name) && !unit.IsClaimed) || (Engine.Config.TargetsList.Count == 0 && !Engine.Config.IgnoredList.Contains(unit.Name)))
+                (((MobFilters.TargetedMobs.Contains(unit.Name) && !unit.IsClaimed) || (MobFilters.TargetedMobs.Count == 0 && !MobFilters.IgnoredMobs.Contains(unit.Name)))
                 ||
                 ((unit.HasAggroed) || (unit.MyClaim) || (unit.PartyClaim)));
 
             return ValidMob;
         }
-
-        #endregion
     }
 }

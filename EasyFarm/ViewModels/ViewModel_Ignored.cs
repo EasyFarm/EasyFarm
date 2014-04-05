@@ -31,20 +31,20 @@ namespace EasyFarm
     {
         public String IgnoredName
         {
-            get { return Engine.Config.IgnoredName; }
+            get { return Engine.Config.FilterInfo.IgnoredName; }
             set
             {
-                Engine.Config.IgnoredName = value;
+                Engine.Config.FilterInfo.IgnoredName = value;
                 RaisePropertyChanged("IgnoredName");
             }
         }
 
         public ObservableCollection<String> Ignored
         {
-            get { return Engine.Config.IgnoredList; }
+            get { return Engine.Config.FilterInfo.IgnoredMobs; }
             set
             {
-                Engine.Config.IgnoredList = value;
+                Engine.Config.FilterInfo.IgnoredMobs = value;
             }
         }
 

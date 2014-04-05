@@ -16,31 +16,32 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using EasyFarm.Classes;
 
-namespace EasyFarm.Classes
+class RestState : BaseState
 {
-    /// <summary>
-    /// Class for Healing Abilities
-    /// </summary>
-    public class HealingAbility
+    public RestState(ref GameEngine gameEngine) : base(ref gameEngine) { }
+
+    public override bool CheckState()
     {
-        /// <summary>
-        /// Can we use this abilitiy?
-        /// </summary>
-        public bool IsEnabled { get; set; }
+        return gameEngine.PlayerData.shouldRest && gameEngine.IsWorking;
+    }
 
-        /// <summary>
-        /// What is its name?
-        /// </summary>
-        public String Name { get; set; }
+    public override void EnterState()
+    {
 
-        /// <summary>
-        /// The level to which we should use the ability
-        /// </summary>
-        public int TriggerLevel { get; set; }
+    }
+
+    public override void RunState()
+    {
+        if (!gameEngine.PlayerData.IsResting)
+        {
+            gameEngine.Resting.On();
+        }
+    }
+
+    public override void ExitState()
+    {
+
     }
 }

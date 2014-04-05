@@ -18,8 +18,6 @@ You should have received a copy of the GNU General Public License
 
 ﻿using EasyFarm.Classes;
 using EasyFarm.MVVM;
-using EasyFarm.PlayerTools;
-using EasyFarm.Views.Classes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,52 +33,52 @@ namespace EasyFarm
 
         public ObservableCollection<Ability> StartList
         {
-            get { return Engine.Config.StartList; }
-            set { Engine.Config.StartList = value; }
+            get { return Engine.Config.ActionInfo.StartList; }
+            set { Engine.Config.ActionInfo.StartList = value; }
         }
         
         public ObservableCollection<Ability> BattleList
         {
-            get { return Engine.Config.BattleList; }
-            set { Engine.Config.BattleList= value; }
+            get { return Engine.Config.ActionInfo.BattleList; }
+            set { Engine.Config.ActionInfo.BattleList= value; }
         }
         
         public ObservableCollection<Ability> EndList
         {
-            get { return Engine.Config.EndList; }
-            set { Engine.Config.EndList = value; }
+            get { return Engine.Config.ActionInfo.EndList; }
+            set { Engine.Config.ActionInfo.EndList = value; }
         }
 
         public bool BattleListSelected 
         {
-            get { return Engine.Config.BattleListSelected; }
-            set { Engine.Config.BattleListSelected = value;
+            get { return Engine.Config.ActionInfo.BattleListSelected; }
+            set { Engine.Config.ActionInfo.BattleListSelected = value;
             RaisePropertyChanged("BattleListSelected");
             }
         }
 
         public bool StartListSelected 
         {
-            get { return Engine.Config.StartListSelected; }
-            set { Engine.Config.StartListSelected = value;
+            get { return Engine.Config.ActionInfo.StartListSelected; }
+            set { Engine.Config.ActionInfo.StartListSelected = value;
             RaisePropertyChanged("StartListSelected");
             }
         }
 
         public bool EndListSelected 
         {
-            get { return Engine.Config.EndListSelected; }
-            set { Engine.Config.EndListSelected = value;
+            get { return Engine.Config.ActionInfo.EndListSelected; }
+            set { Engine.Config.ActionInfo.EndListSelected = value;
             RaisePropertyChanged("EndListSelected");
             }
         }
 
         public String BattleActionName
         {
-            get { return Engine.Config.BattleActionName; }
-            set { Engine.Config.BattleActionName = value;
+            get { return Engine.Config.ActionInfo.BattleActionName; }
+            set { Engine.Config.ActionInfo.BattleActionName = value;
             RaisePropertyChanged("BattleActionName");
-            BattleAction = Abilities.CreateAbility(BattleActionName);
+            BattleAction = Engine.AbilityService.CreateAbility(BattleActionName) as Ability;
             }
         }
 

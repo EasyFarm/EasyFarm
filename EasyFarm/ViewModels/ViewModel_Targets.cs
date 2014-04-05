@@ -30,10 +30,10 @@ namespace EasyFarm
         /// </summary>
         public String TargetsName
         {
-            get { return Engine.Config.TargetsName; }
+            get { return Engine.Config.FilterInfo.TargetName; }
             set
             {
-                Engine.Config.TargetsName = value;
+                Engine.Config.FilterInfo.TargetName = value;
                 RaisePropertyChanged("TargetsName");
             }
         }
@@ -43,10 +43,10 @@ namespace EasyFarm
         /// </summary>
         public ObservableCollection<String> Targets
         {
-            get { return Engine.Config.TargetsList; }
+            get { return Engine.Config.FilterInfo.TargetedMobs; }
             set
             {
-                Engine.Config.TargetsList = value;
+                Engine.Config.FilterInfo.TargetedMobs = value;
             }
         }
 
@@ -56,30 +56,30 @@ namespace EasyFarm
         /// </summary>
         public bool KillAggro
         {
-            get { return Engine.Config.BattleAggro; }
+            get { return Engine.Config.FilterInfo.AggroFilter; }
             set
             {
-                Engine.Config.BattleAggro = value;
+                Engine.Config.FilterInfo.AggroFilter = value;
                 RaisePropertyChanged("KillAggro");
             }
         }
 
         public bool KillUnclaimed
         {
-            get { return Engine.Config.BattleUnclaimed; }
+            get { return Engine.Config.FilterInfo.UnclaimedFilter; }
             set
             {
-                Engine.Config.BattleUnclaimed = value;
+                Engine.Config.FilterInfo.UnclaimedFilter = value;
                 RaisePropertyChanged("KillUnclaimed");
             }
         }
 
         public bool KillPartyClaimed
         {
-            get { return Engine.Config.BattlePartyClaimed; }
+            get { return Engine.Config.FilterInfo.PartyFilter; }
             set
             {
-                Engine.Config.BattlePartyClaimed = value;
+                Engine.Config.FilterInfo.PartyFilter = value;
                 RaisePropertyChanged("KillPartyClaimed");
             }
         }

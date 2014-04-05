@@ -17,30 +17,26 @@ You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using EasyFarm.Classes;
 
-namespace EasyFarm.Classes
+public abstract class BaseState : IComparable<BaseState>
 {
-    /// <summary>
-    /// Class for Healing Abilities
-    /// </summary>
-    public class HealingAbility
+    public bool Enabled;
+    public int Priority;
+    protected GameEngine gameEngine;
+    
+    public abstract bool CheckState();
+    public abstract void EnterState();
+    public abstract void RunState();
+    public abstract void ExitState();
+
+    public BaseState(ref GameEngine gameEngine)
     {
-        /// <summary>
-        /// Can we use this abilitiy?
-        /// </summary>
-        public bool IsEnabled { get; set; }
+        this.gameEngine = gameEngine;
+    }
 
-        /// <summary>
-        /// What is its name?
-        /// </summary>
-        public String Name { get; set; }
-
-        /// <summary>
-        /// The level to which we should use the ability
-        /// </summary>
-        public int TriggerLevel { get; set; }
+    public int CompareTo(BaseState other)
+    {
+        return -this.Priority.CompareTo(other.Priority);
     }
 }

@@ -16,8 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.Engine;
-using EasyFarm.PlayerTools;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -31,9 +29,20 @@ namespace EasyFarm.Classes
     /// </summary>
     public class PlayerData
     {
-        public PlayerData(ref GameEngine Engine)
+        private FFACE.PlayerTools PlayerTools;
+        private Config Config;
+        private TargetData TargetData;
+        private UnitService Units;
+        private Classes.GameEngine m_gameEngine;
+
+        public PlayerData(ref Classes.GameEngine m_gameEngine)
         {
-            this.Engine = Engine;
+            this.m_gameEngine = m_gameEngine;
+
+            this.PlayerTools = m_gameEngine.FFInstance.Instance.Player;
+            this.Config = m_gameEngine.Config;
+            this.TargetData = m_gameEngine.TargetData;
+            this.Units = m_gameEngine.Units;
         }
 
         /// <summary>
@@ -43,8 +52,8 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.FFInstance.Instance.Player.Status == Status.Dead1 ||
-                    Engine.FFInstance.Instance.Player.Status == Status.Dead2;
+                return PlayerTools.Status == Status.Dead1 ||
+                    PlayerTools.Status == Status.Dead2;
             }
         }
 
@@ -68,7 +77,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.FFInstance.Instance.Player.HPPCurrent <= Engine.Config.LowHP;
+                return PlayerTools.HPPCurrent <= Config.RestingInfo.LowHP;
             }
         }
 
@@ -76,7 +85,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.FFInstance.Instance.Player.MPPCurrent <= Engine.Config.LowMP;
+                return PlayerTools.MPPCurrent <= Config.RestingInfo.LowMP;
             }
         }
 
@@ -84,7 +93,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return IsResting && Engine.FFInstance.Instance.Player.HPPCurrent < Engine.Config.HighHP;
+                return IsResting && PlayerTools.HPPCurrent < Config.RestingInfo.HighHP;
             }
         }
 
@@ -92,7 +101,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return IsResting && Engine.FFInstance.Instance.Player.MPPCurrent < Engine.Config.HighMP;
+                return IsResting && PlayerTools.MPPCurrent < Config.RestingInfo.HighMP;
             }
         }
 
@@ -108,7 +117,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.Config.IsRestingHPEnabled;
+                return Config.RestingInfo.IsRestingHPEnabled;
             }
         }
 
@@ -116,55 +125,12 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.Config.IsRestingMPEnabled;
+                return Config.RestingInfo.IsRestingMPEnabled;
             }
         }
 
-        /// <summary>
-        /// Should we rest by way of /heal?
-        /// </summary>
-        public bool shouldRest
-        {
-            get
-            {
-                return shouldRestForHP || shouldRestForMP;
-            }
-        }
 
-        /// <summary>
-        /// Should we heal by way of abilities and spells?
-        /// </summary>
-        public bool shouldHeal
-        {
-            get
-            {
-                return Engine.IsWorking && !IsDead && Engine.Combat.HealingList.Count > 0;
-            }
-        }
-
-        /// <summary>
-        /// Should we move to the next waypoint?
-        /// </summary>
-        public bool shouldTravel
-        {
-            get
-            {
-                return Engine.Config.Waypoints.Count > 0 && !shouldFight && !shouldRest && !shouldHeal && !IsUnable;
-            }
-        }
-
-        public bool shouldFight
-        {
-            get
-            {
-                // Can we battle the unit?
-                bool IsAttackable = Engine.TargetData.IsUnitBattleReady;
-                // Should we attack?
-                bool IsAttacking = !IsDead && (IsAttackable && (IsFighting || IsAggroed || (IsFighting || !shouldRest)));
-
-                return IsAttacking && Engine.IsWorking;
-            }
-        }
+        
 
         /// <summary>
         /// If we have more than zero hp,
@@ -175,7 +141,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.FFInstance.Instance.Player.HPCurrent > 0;
+                return PlayerTools.HPCurrent > 0;
             }
         }
 
@@ -187,7 +153,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.FFInstance.Instance.Player.Status == Status.Healing;
+                return PlayerTools.Status == Status.Healing;
             }
         }
 
@@ -199,7 +165,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.FFInstance.Instance.Player.Status == Status.Fighting;
+                return PlayerTools.Status == Status.Fighting;
             }
         }
 
@@ -212,84 +178,16 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.FFInstance.Instance.Player.TPCurrent >= 100 &&
-                                    Engine.TargetData.TargetUnit.HPPCurrent <= Engine.Config.Weaponskill.HPTrigger &&
-                                    IsFighting && Engine.TargetData.TargetUnit.Distance < Engine.Config.Weaponskill.DistanceTrigger &&
-                                    Engine.Config.Weaponskill.Ability.IsValidName;
+                return PlayerTools.TPCurrent >= 100 &&
+                                    TargetData.TargetUnit.HPPCurrent <= Config.WeaponInfo.WeaponSkill.HPTrigger &&
+                                    IsFighting && TargetData.TargetUnit.Distance < Config.WeaponInfo.WeaponSkill.DistanceTrigger &&
+                                    Config.WeaponInfo.WeaponSkill.Ability.IsValidName;
             }
         }
 
-        /// <summary>
-        /// Returns true if we can not cast a spell.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsCastingBlocked
-        {
-            get
-            {
-                StatusEffect[] effectsThatBlock = 
-            {
-                StatusEffect.Silence,
-                StatusEffect.Mute
-            };
+        
 
-                // If we have effects that block,
-                // return true.
-                bool unableToCast = effectsThatBlock
-                    .Intersect(this.Engine.FFInstance.Instance.Player.StatusEffects)
-                    .Count() != 0;
-
-                // 
-                bool unableToReact = IsUnable;
-
-                return unableToCast || unableToReact;
-            }
-        }
-
-        /// <summary>
-        /// Returns true if we have effects that inhibit us
-        /// from taking any kind of action.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsUnable
-        {
-            get
-            {
-                StatusEffect[] effectsThatBlock = 
-            {
-                StatusEffect.Charm1, StatusEffect.Charm2, 
-                StatusEffect.Petrification, StatusEffect.Sleep, 
-                StatusEffect.Sleep2, StatusEffect.Stun, 
-                StatusEffect.Chocobo, StatusEffect.Terror, 
-            };
-
-                bool IsPlayerUnable = effectsThatBlock
-                    .Intersect(Engine.FFInstance.Instance.Player.StatusEffects)
-                    .Count() != 0;
-
-                return IsPlayerUnable;
-            }
-        }
-
-        /// <summary>
-        /// Can we use job abilities?
-        /// </summary>
-        public bool IsAbilitiesBlocked
-        {
-            get
-            {
-                StatusEffect[] effectsThatBlock = 
-            {
-                StatusEffect.Amnesia
-            };
-
-                bool IsAbilitiesBlocked = effectsThatBlock
-                    .Intersect(Engine.FFInstance.Instance.Player.StatusEffects)
-                    .Count() != 0;
-
-                return IsAbilitiesBlocked || IsUnable;
-            }
-        }
+        
 
         /// <summary>
         /// Determines low hp status.
@@ -299,7 +197,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.FFInstance.Instance.Player.HPPCurrent <= Engine.Config.LowHP;
+                return PlayerTools.HPPCurrent <= Config.RestingInfo.LowHP;
             }
         }
 
@@ -311,7 +209,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.Units.HasAggro;
+                return Units.HasAggro;
             }
         }
 
@@ -335,7 +233,7 @@ namespace EasyFarm.Classes
                 StatusEffect.Lullaby
             };
 
-                return RestBlockingDebuffs.Intersect(Engine.FFInstance.Instance.Player.StatusEffects).Count() != 0;
+                return RestBlockingDebuffs.Intersect(PlayerTools.StatusEffects).Count() != 0;
             }
         }
 
@@ -360,10 +258,8 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Engine.FFInstance.Instance.Player.Status == Status.Fighting;
+                return PlayerTools.Status == Status.Fighting;
             }
         }
-
-        private GameEngine Engine { get; set; }
     }
 }
