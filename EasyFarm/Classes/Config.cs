@@ -34,11 +34,9 @@ namespace EasyFarm.Classes
     public class Config : ObservableObject
     {
         private string m_statusBarText;
-        private GameEngine GameEngine;
        
-        public Config(ref GameEngine Engine)
+        public Config()
         {
-            this.GameEngine = Engine;
             SetDefaults();
         }
 

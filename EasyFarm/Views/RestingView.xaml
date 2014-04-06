@@ -10,7 +10,7 @@
         <GroupBox Header="HP" Foreground="White" Background="#FF2B2B2B">
             <StackPanel Orientation="Horizontal">
                 <!--Do we want to rest hp?-->
-                <CheckBox Content="Enabled" Foreground="White" VerticalAlignment="Center" IsChecked="{Binding IsRestingHPEnabled}"/>
+                <CheckBox Content="Enabled" Foreground="White" VerticalAlignment="Center" IsChecked="{Binding HPEnabled}"/>
                 <!--When should we sit down?-->
                 <Label Content="Down" VerticalAlignment="Center"/>
                 <Slider Margin="10" VerticalAlignment="Center" Maximum="100" Width="90" Value="{Binding LowHP}"/>
@@ -23,7 +23,7 @@
         <GroupBox Header="MP" Foreground="White" Background="#FF2B2B2B">
             <StackPanel Orientation="Horizontal">
                 <!--Do we want to rest mp?-->
-                <CheckBox Content="Enabled" Foreground="White" VerticalAlignment="Center" IsChecked="{Binding IsRestingMPEnabled}"/>
+                <CheckBox Content="Enabled" Foreground="White" VerticalAlignment="Center" IsChecked="{Binding MPEnabled}"/>
                 <!--When should we sit down?-->
                 <Label Content="Down" VerticalAlignment="Center"/>
                 <Slider Margin="10" VerticalAlignment="Center" Maximum="100" Width="90" Value="{Binding LowMP}"/>

@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 ﻿using EasyFarm.Classes;
 using EasyFarm.PathingTools;
 using EasyFarm.UtilityTools;
+using FFACETools;
 using System;
 using System.Diagnostics;
 
@@ -94,14 +95,24 @@ namespace EasyFarm.Classes
         /// </summary>
         private RestingService m_resting = null;
         
-        private FilterInfo m_mobfilters;
-        
+        /// <summary>
+        /// Contains the methods needed for executing actions
+        /// </summary>
         private AbilityExecutor m_abilityExecutor;
         
+        /// <summary>
+        /// Contains all of the player's potential moves.
+        /// </summary>
         private PlayerActions m_playerActions;
         
+        /// <summary>
+        /// Retrieves ability objects.
+        /// </summary>
         private AbilityService m_abilityService;
         
+        /// <summary>
+        /// Determines with an action can be used.
+        /// </summary>
         private ActionBlocked m_ActionBlocked;
 
         #endregion
@@ -119,8 +130,7 @@ namespace EasyFarm.Classes
             m_process = Process;
             m_ffinstance = new FFInstance(this.m_process);
             m_stateMachine = new FiniteStateEngine(ref m_gameEngine);
-            m_config = new Config(ref m_gameEngine);
-            m_mobfilters = new FilterInfo();
+            m_config = new Config();
             m_pathing = new Pathing(ref m_gameEngine);
             m_units = new UnitService(ref m_gameEngine);
             m_combat = new CombatService(ref m_gameEngine);
@@ -214,11 +224,6 @@ namespace EasyFarm.Classes
         public RestingService Resting
         { 
             get { return m_resting; } 
-        }
-
-        public FilterInfo MobFilters 
-        {
-            get { return m_config.FilterInfo; }
         }
 
         public PlayerActions PlayerActions 

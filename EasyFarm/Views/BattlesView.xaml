@@ -16,11 +16,11 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <!--Tells us what list to add the textbox item to.-->
-        <RadioButton x:Name="radStartingAction" Height="Auto" Grid.Row="1" Margin="10" VerticalAlignment="Top" IsChecked="{Binding StartListSelected}" Content="Start" Padding="1" />
-        <RadioButton x:Name="radBattleAction" Height="Auto" Grid.Row="1" Margin="10,30,10,10" VerticalAlignment="Top" IsChecked="{Binding BattleListSelected}" Content="Battle" Padding="1" />
-        <RadioButton x:Name="radEndingAction" Height="Auto" Grid.Row="1" Margin="10,50,10,10" VerticalAlignment="Top" IsChecked="{Binding EndListSelected}" Content="End" Padding="1" />
+        <RadioButton x:Name="radStartingAction" Height="Auto" Grid.Row="1" Margin="10" VerticalAlignment="Top" IsChecked="{Binding StartSelected}" Content="Start" Padding="1" />
+        <RadioButton x:Name="radBattleAction" Height="Auto" Grid.Row="1" Margin="10,30,10,10" VerticalAlignment="Top" IsChecked="{Binding BattleSelected}" Content="Battle" Padding="1" />
+        <RadioButton x:Name="radEndingAction" Height="Auto" Grid.Row="1" Margin="10,50,10,10" VerticalAlignment="Top" IsChecked="{Binding EndSelected}" Content="End" Padding="1" />
         <!--Name of the text box item to add-->
-        <TextBox x:Name="txbAbilityName" Grid.Column="1" Margin="10" Text="{Binding BattleActionName, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="txbAbilityName" Grid.Column="1" Margin="10" Text="{Binding ActionName, UpdateSourceTrigger=PropertyChanged}"/>
         <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Name" Padding="1" />
         <!--The list of ability items. It's source is dependant on the start/end/battle radio buttons and changes when one is selected. -->
         <ListBox x:Name="lstAbilities" Height="Auto" MaxHeight="100" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10,9,10,11" VerticalAlignment="Stretch" Padding="10">

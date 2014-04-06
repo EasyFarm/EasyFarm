@@ -24,6 +24,11 @@ namespace EasyFarm.Classes
     {
         private Ability _ws = new Ability();
 
+        public WeaponAbility()
+        {
+
+        }
+
         public WeaponAbility(String name)
         {
             _ws = new AbilityService().CreateAbility(name);

@@ -13,9 +13,9 @@ namespace EasyFarm.Classes
     public class AbilityExecutor
     {
         private FFACE.WindowerTools WindowerTools;
-        private Classes.GameEngine m_gameEngine;
+        private GameEngine m_gameEngine;
 
-        public AbilityExecutor(ref Classes.GameEngine m_gameEngine)
+        public AbilityExecutor(ref GameEngine m_gameEngine)
         {
             this.m_gameEngine = m_gameEngine;
             this.WindowerTools = m_gameEngine.FFInstance.Instance.Windower;

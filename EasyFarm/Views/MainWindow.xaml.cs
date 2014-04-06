@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *//////////////////////////////////////////////////////////////////// 
 
+using EasyFarm.Classes;
+using EasyFarm.ViewModels;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -30,10 +32,10 @@ namespace EasyFarm
     {
         // private ViewModel Bindings;
        
-        public MainWindow(/*ref ViewModel Bindings*/)
+        public MainWindow()
         {
-            // this.Bindings = Bindings;
             InitializeComponent();
+            this.DataContext = new MainViewModel(ref App.Engine);
         }
     }
 }

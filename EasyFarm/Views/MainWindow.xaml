@@ -56,7 +56,7 @@
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
-        <TabControl x:Name="OptionsTabControl" TabStripPlacement="Left" Background="#FF2C24AD" Grid.Row="1" Grid.ColumnSpan="3">            
+        <TabControl TabStripPlacement="Left" Background="#FF2C24AD" Grid.Row="1" Grid.ColumnSpan="3">            
             <!-- Targets Tab -->
             <TabItem IsSelected="True">
                 <TabItem.Header>Targets</TabItem.Header>
@@ -101,7 +101,7 @@
                 <TabItem.Header>
                     <Border Background="Black" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <!--This button starts the bot-->
-                        <Button Content="Start" Background="Black" Foreground="White" Command="{Binding OnStart}" />
+                        <Button Content="Start" Background="Black" Foreground="White" Command="{Binding StartCommand}" />
                     </Border>
                 </TabItem.Header>
             </TabItem>

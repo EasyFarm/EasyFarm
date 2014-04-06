@@ -34,7 +34,7 @@ namespace EasyFarm.Decision
 
         public override bool CheckState()
         {
-            // return gameEngine.PlayerData.shouldTravel && gameEngine.IsWorking;
+            return gameEngine.PlayerData.shouldTravel && gameEngine.IsWorking;
         }
 
         public override void EnterState()

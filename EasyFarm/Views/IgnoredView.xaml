@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ComboBox x:Name="cboIgnoreList" Width="Auto" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" IsEditable="True" ItemsSource="{Binding Ignored}" Text="{Binding IgnoredName}" />
+        <ComboBox x:Name="cboIgnoreList" Width="Auto" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" IsEditable="True" ItemsSource="{Binding Ignored}" Text="{Binding Name}" />
         <Label Content="Name" />
         <Button x:Name="btnDeleteIgnored" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Content="Delete" Margin="114,11,112,-6" Command="{Binding DeleteIgnoredUnitCommand}" />
         <Button x:Name="btnAddIgnored" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Command="{Binding AddIgnoredUnitCommand}" Content="Add" Margin="10,10,0,-7" />

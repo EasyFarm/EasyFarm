@@ -29,7 +29,7 @@ namespace EasyFarm.FSM
 
         public override bool CheckState()
         {
-            // return gameEngine.PlayerData.shouldFight;
+            return gameEngine.PlayerData.shouldFight;
         }
 
         public override void EnterState()

@@ -52,7 +52,7 @@ namespace EasyFarm.ViewModels
 
         private void AddIgnoredUnit()
         {
-            if (!Ignored.Contains(Name))
+            if(!Ignored.Contains(Name))
                 Ignored.Add(Name);
         }
 
@@ -68,7 +68,7 @@ namespace EasyFarm.ViewModels
 
         public ObservableCollection<String> Ignored
         {
-            get { return GameEngine.MobFilters.IgnoredMobs; }
+            get { return GameEngine.Config.FilterInfo.IgnoredMobs; }
             set
             {
                 GameEngine.Config.FilterInfo.IgnoredMobs = value;

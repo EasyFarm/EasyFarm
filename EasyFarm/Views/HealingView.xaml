@@ -7,7 +7,7 @@
              d:DesignHeight="234.247" d:DesignWidth="404.795">    
     <Grid>
         <!--The list of healing abilities and spells that should be used to recover hp-->
-        <ListBox Name="HealingListBox" HorizontalAlignment="Left" Height="214" Margin="10,10,0,0" VerticalAlignment="Top" Width="283" ItemsSource="{Binding HealingList}">
+        <ListBox Name="HealingListBox" HorizontalAlignment="Left" Height="214" Margin="10,10,0,0" VerticalAlignment="Top" Width="283" ItemsSource="{Binding Healing}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border Background="Navy">

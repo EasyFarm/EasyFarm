@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using MvvmFoundation.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,10 @@ namespace EasyFarm.ViewModels
 {
     public class WeaponsViewModel : ViewModelBase
     {
-        public WeaponsViewModel(ref GameEngine Engine) : base(ref Engine) { }
+        public WeaponsViewModel(ref GameEngine Engine) : base(ref Engine) 
+        {
+            SetCommand = new RelayCommand(SetWeaponSkill);
+        }
 
         public String Name
         {

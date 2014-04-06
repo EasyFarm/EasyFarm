@@ -17,14 +17,14 @@
         </Grid.RowDefinitions>
         <!--Name of the weaponskill that should be used-->
         <Label Margin="10" VerticalAlignment="Top" Content="Name" Padding="5" />
-        <TextBox x:Name="txbWeaponskill" Grid.Column="1" Margin="10" Text="{Binding WeaponSkillName}"/>
+        <TextBox Grid.Column="1" Margin="10" Text="{Binding Name}"/>
         <!--Sets the weaponskill for use in the bot-->
-        <Button x:Name="btnSetWeaponskill" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Command="{Binding SetWeaponSkillCommand}" Content="Set" Margin="0,47,5,-23" />
+        <Button Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Command="{Binding SetCommand}" Content="Set" Margin="0,47,5,-23" />
         <!--These are used to adjust the max distance a weaponskill should be fired.-->
         <Label Grid.Row="1" Content="Distance" Padding="5" />
-        <Slider x:Name="sldDistance" Width="Auto" Height="Auto" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Maximum="17" Padding="5" Value="{Binding WeaponSkillDistance}"/>
+        <Slider Width="Auto" Height="Auto" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Maximum="17" Padding="5" Value="{Binding Distance}"/>
         <!--These are for the health at which the weaponskill should be used-->
         <Label Grid.Row="2" Content="Health" Padding="5" />
-        <Slider x:Name="sldHealthThreshold" Width="Auto" Height="Auto" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Maximum="100" Minimum="1" Padding="5" Value="{Binding WeaponSkillHealth}"/>
+        <Slider Width="Auto" Height="Auto" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Maximum="100" Minimum="1" Padding="5" Value="{Binding Health}"/>
     </Grid>
 </UserControl>

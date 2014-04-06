@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,7 @@ namespace EasyFarm.Views
         public IgnoredView()
         {
             InitializeComponent();
+            this.DataContext = new IgnoredViewModel(ref App.Engine);
         }
     }
 }

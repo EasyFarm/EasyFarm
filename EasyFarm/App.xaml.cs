@@ -17,6 +17,9 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes;
+using EasyFarm.UtilityTools;
+using EasyFarm.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -30,23 +33,38 @@ namespace EasyFarm
     /// </summary>
     public partial class App : Application
     {
-        MainWindow Window = null;
+        public static GameEngine Engine;
 
-        public App()
+        public App() 
         {
-            /*
-            Bindings = new ViewModel();
-            Window = new MainWindow(ref Bindings); 
-            Window.DataContext = Bindings;
+            // Let user select ffxi process
+            frmStartup ProcessSelectionScreen = new frmStartup();
+            ProcessSelectionScreen.ShowDialog();
 
-            Bindings.Engine.LoadSettings();
-            Bindings.RefreshConfig();
-            Window.Show();
 
-            Exit += (s, e) => {
-                Bindings.Engine.SaveSettings(Bindings.Engine);
-            };
-             */
+            // Validate the selection
+            var m_process = ProcessSelectionScreen.POL_Process;
+
+
+            if (m_process == null)
+            {
+                System.Windows.Forms.MessageBox.Show("No valid process was selected: Exiting now.");
+                Environment.Exit(0);
+            }
+
+            // Set up the game engine if valid.
+            Engine = new GameEngine(ProcessSelectionScreen.POL_Process);
+
+            Engine.LoadSettings();
+
+            this.MainWindow = new MainWindow();
+            this.MainWindow.Show();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            Engine.SaveSettings(Engine);
         }
     }
 }

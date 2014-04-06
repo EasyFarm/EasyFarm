@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using MvvmFoundation.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,7 +29,12 @@ namespace EasyFarm.ViewModels
 {
     public class BattlesViewModel : ViewModelBase
     {
-        public BattlesViewModel(ref GameEngine Engine) : base(ref Engine) { }
+        public BattlesViewModel(ref GameEngine Engine) : base(ref Engine) 
+        {
+            AddActionCommand = new RelayCommand<Object>(AddAction, IsBattleActionAddable);
+            DeleteActionCommand = new RelayCommand<Object>(DeleteAction, IsBattleActionRemovable);
+            ClearActionsCommand = new RelayCommand(ClearActions);
+        }
 
         public Ability BattleAction { get; set; }
 

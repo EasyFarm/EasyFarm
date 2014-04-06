@@ -29,20 +29,13 @@ namespace EasyFarm.Classes
     /// </summary>
     public class TargetData
     {
-        public TargetData(ref Classes.GameEngine m_gameEngine)
+        public TargetData(ref GameEngine m_gameEngine)
         {
-            this.m_gameEngine = m_gameEngine;
-
-            this.PlayerActions = m_gameEngine.PlayerActions;
-            this.Units = m_gameEngine.Units;
-            this.TargetTools = m_gameEngine.FFInstance.Instance.Target;
+            this._engine = m_gameEngine;
         }
 
-        private Unit m_targetUnit = null;
-        private UnitService Units;
-        private FFACE.TargetTools TargetTools;
-        private PlayerActions PlayerActions;
-        private GameEngine m_gameEngine;
+        private Unit m_targetUnit = null;       
+        private GameEngine _engine;
 
         /// <summary>
         /// Who we are trying to kill currently
@@ -51,6 +44,7 @@ namespace EasyFarm.Classes
         {
             get
             {
+                var Units = _engine.Units;
                 return m_targetUnit == null ||
                 !Units.IsValid(m_targetUnit) ?
                 m_targetUnit = Units.GetTarget() : m_targetUnit;
@@ -68,6 +62,7 @@ namespace EasyFarm.Classes
         {
             get
             {
+                var PlayerActions = _engine.PlayerActions;
                 return IsTarget && !IsFighting && PlayerActions.HasStartMoves;
             }
         }
@@ -81,6 +76,7 @@ namespace EasyFarm.Classes
         {
             get
             {
+                var TargetTools = _engine.FFInstance.Instance.Target;
                 return TargetTools.ID == TargetUnit.ID;
             }
         }
@@ -114,6 +110,7 @@ namespace EasyFarm.Classes
         {
             get
             {
+                var Units = _engine.Units;
                 return Units.IsValid(TargetUnit);
             }
         }

@@ -44,6 +44,7 @@ namespace EasyFarm.Views
         public RoutesView()
         {            
             InitializeComponent();
+            this.DataContext = new RoutesViewModel(ref App.Engine);
         }
     }
 }
