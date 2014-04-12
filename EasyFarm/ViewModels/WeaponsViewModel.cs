@@ -80,9 +80,9 @@ namespace EasyFarm.ViewModels
         {
             if (!string.IsNullOrWhiteSpace(Name))
             {
-                Skill = new WeaponAbility(Name);
+                Skill = GameEngine.AbilityService.CreateAbility(Name) as WeaponAbility;
 
-                if (Skill.Ability.IsValidName)
+                if (Skill.IsValidName)
                 {
                     Skill.DistanceTrigger = Distance;
                     Skill.HPTrigger = Health;

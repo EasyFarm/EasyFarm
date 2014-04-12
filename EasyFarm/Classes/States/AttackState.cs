@@ -45,7 +45,7 @@ namespace EasyFarm.FSM
 
         public override void ExitState()
         {
-            // gameEngine.Combat.Exit();
+            //gameEngine.Combat.Exit();
         }
     }
 }

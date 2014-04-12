@@ -31,11 +31,7 @@ namespace EasyFarm.Classes
     /// </summary>
     public class Ability
     {
-        public Ability()
-        {
-
-        }
-
+        public Ability() { }
         public int ID { get; set; }
         public int Index { get; set; }
         public int MPCost { get; set; }

@@ -20,19 +20,9 @@ using System;
 
 namespace EasyFarm.Classes
 {
-    public class WeaponAbility
+    public class WeaponAbility : Ability
     {
-        private Ability _ws = new Ability();
-
-        public WeaponAbility()
-        {
-
-        }
-
-        public WeaponAbility(String name)
-        {
-            _ws = new AbilityService().CreateAbility(name);
-        }
+        public WeaponAbility() { }
 
         /// <summary>
         /// Max distance we cna use a weaponskill at
@@ -47,20 +37,11 @@ namespace EasyFarm.Classes
         /// <summary>
         /// What is its name?
         /// </summary>
-        public String Name { get; set; }
+        public String SkillName { get; set; }
 
         /// <summary>
         /// Mob hp needed inorder to use weaponskill
         /// </summary>
         public int HPTrigger { get; set; }
-
-        /// <summary>
-        /// Extra data on the weapon skill
-        /// </summary>
-        public Ability Ability 
-        {
-            get { return _ws; }
-            set { _ws = value; }
-        }
     }
 }

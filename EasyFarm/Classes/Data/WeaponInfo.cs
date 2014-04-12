@@ -7,14 +7,17 @@ namespace EasyFarm.Classes
 {
     public class WeaponInfo
     {
+        AbilityService _abilityService;
+
         public WeaponInfo()
         {
+            _abilityService = new AbilityService();
             SetDefaults();
         }
 
         private void SetDefaults()
         {
-            this.WeaponSkill = new WeaponAbility("");
+            this.WeaponSkill = new WeaponAbility();
             HealthThreshold = 0;
             Name = "";
             Distance = 0;

@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <!--Name of the weaponskill that should be used-->
         <Label Margin="10" VerticalAlignment="Top" Content="Name" Padding="5" />
-        <TextBox Grid.Column="1" Margin="10" Text="{Binding Name}"/>
+        <TextBox Grid.Column="1" Margin="10" Text="{Binding SkillName}"/>
         <!--Sets the weaponskill for use in the bot-->
         <Button Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Command="{Binding SetCommand}" Content="Set" Margin="0,47,5,-23" />
         <!--These are used to adjust the max distance a weaponskill should be fired.-->

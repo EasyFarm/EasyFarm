@@ -183,7 +183,7 @@ namespace EasyFarm.Classes
 
                 // Execute the weaponskill
                 else if (PlayerData.CanWeaponskill) {
-                    AbilityExecutor.ExecuteActions(new List<Ability>() { Config.WeaponInfo.WeaponSkill.Ability }, MaintainHeading);
+                    AbilityExecutor.ExecuteActions(new List<Ability>() { Config.WeaponInfo.WeaponSkill }, MaintainHeading);
                 }
             }
         }
