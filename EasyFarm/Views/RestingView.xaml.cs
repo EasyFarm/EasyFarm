@@ -42,7 +42,7 @@ namespace EasyFarm.Views
         public RestingView()
         {
             InitializeComponent();
-            this.DataContext = new RestingViewModel(ref App.Engine);
+            this.DataContext = new RestingViewModel(ref App.Engine, App.EventAggregator);
         }
     }
 }

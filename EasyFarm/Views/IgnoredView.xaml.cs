@@ -42,7 +42,7 @@ namespace EasyFarm.Views
         public IgnoredView()
         {
             InitializeComponent();
-            this.DataContext = new IgnoredViewModel(ref App.Engine);
+            this.DataContext = new IgnoredViewModel(ref App.Engine, App.EventAggregator);
         }
     }
 }

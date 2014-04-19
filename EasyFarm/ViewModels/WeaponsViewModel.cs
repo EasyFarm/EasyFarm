@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Classes;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,8 @@ namespace EasyFarm.ViewModels
 {
     public class WeaponsViewModel : ViewModelBase
     {
-        public WeaponsViewModel(ref GameEngine Engine)
-            : base(ref Engine)
+        public WeaponsViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) :
+            base(ref Engine, eventAggregator) 
         {
             SetCommand = new DelegateCommand<Object>(SetWeaponSkill);
         }
@@ -53,6 +54,7 @@ namespace EasyFarm.ViewModels
             {
                 GameEngine.Config.WeaponInfo.Distance = value;
                 this.OnPropertyChanged(() => this.Distance);
+                InformUser("Distance set to " + this.Distance);
             }
         }
 
@@ -63,6 +65,7 @@ namespace EasyFarm.ViewModels
             {
                 GameEngine.Config.WeaponInfo.HealthThreshold = value;
                 this.OnPropertyChanged(() => this.Health);
+                InformUser("Health set to " + this.Health);
             }
         }
 
@@ -85,7 +88,7 @@ namespace EasyFarm.ViewModels
 
             if (string.IsNullOrWhiteSpace(Name) || !WeaponSkill.Ability.IsValidName)
             {
-                // (StatusBar as Label).Content = "Failed to set weaponskill.";
+                InformUser("Failed to set weaponskill.");
                 return;
             }
 
@@ -95,6 +98,7 @@ namespace EasyFarm.ViewModels
             WeaponSkill.Name = Name;
 
             GameEngine.Config.WeaponInfo.WeaponSkill = WeaponSkill;
+            InformUser("Weaponskill set.");
         }
     }
 }

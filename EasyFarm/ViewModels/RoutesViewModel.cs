@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License
 using EasyFarm.Classes;
 using FFACETools;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,7 +36,8 @@ namespace EasyFarm.ViewModels
         DispatcherTimer WaypointRecorder = new DispatcherTimer();
         FFACE.Position LastPosition = new FFACE.Position();
         
-        public RoutesViewModel(ref GameEngine Engine) : base(ref Engine) 
+        public RoutesViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) : 
+            base(ref Engine, eventAggregator) 
         {
             WaypointRecorder.Tick += new EventHandler(RouteRecorder_Tick);
             WaypointRecorder.Interval = new TimeSpan(0, 0, 1);

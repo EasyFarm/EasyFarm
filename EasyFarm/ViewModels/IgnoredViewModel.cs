@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Classes;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,8 +32,8 @@ namespace EasyFarm.ViewModels
 {
     public class IgnoredViewModel : ViewModelBase
     {
-        public IgnoredViewModel(ref GameEngine Engine)
-            : base(ref Engine)
+        public IgnoredViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) :
+            base(ref Engine, eventAggregator) 
         {
             AddIgnoredUnitCommand = new DelegateCommand(AddIgnoredUnit);
             DeleteIgnoredUnitCommand = new DelegateCommand(DeleteIgnoredUnit);

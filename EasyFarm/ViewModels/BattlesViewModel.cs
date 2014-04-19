@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Classes;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -30,11 +31,11 @@ namespace EasyFarm.ViewModels
 {
     public class BattlesViewModel : ViewModelBase
     {
-        public BattlesViewModel(ref GameEngine Engine) : base(ref Engine) 
+        public BattlesViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) : base(ref Engine, eventAggregator) 
         {
             AddActionCommand = new DelegateCommand<Object>(AddAction, IsBattleActionAddable);
             DeleteActionCommand = new DelegateCommand<Object>(DeleteAction, IsBattleActionRemovable);
-            ClearActionsCommand = new DelegateCommand(ClearActions);
+            ClearActionsCommand = new DelegateCommand(ClearActions);            
         }
 
         public Ability BattleAction { get; set; }

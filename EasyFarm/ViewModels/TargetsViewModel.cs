@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License
 using EasyFarm.Classes;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -28,7 +29,8 @@ namespace EasyFarm.ViewModels
 {
     public class TargetsViewModel : ViewModelBase
     {
-        public TargetsViewModel(ref GameEngine Engine) : base(ref Engine) 
+        public TargetsViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) : 
+            base(ref Engine, eventAggregator) 
         {
             this.AddCommand = new DelegateCommand(AddTargetCommand);
             this.DeleteCommand = new DelegateCommand(DeleteTargetCommand);

@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,8 @@ namespace EasyFarm.ViewModels
 {
     public class RestingViewModel : ViewModelBase
     {
-        public RestingViewModel(ref GameEngine Engine) : base(ref Engine) { }
+        public RestingViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) : 
+            base(ref Engine, eventAggregator) { }
 
         public int LowHP
         {
@@ -36,6 +38,7 @@ namespace EasyFarm.ViewModels
             {
                 GameEngine.Config.RestingInfo.LowHP = value;
                 this.OnPropertyChanged(() => this.LowHP);
+                InformUser("Low hp set to " + this.LowHP);
             }
         }
 
@@ -46,6 +49,7 @@ namespace EasyFarm.ViewModels
             {
                 GameEngine.Config.RestingInfo.HighHP = value;
                 this.OnPropertyChanged(() => this.HighHP);
+                InformUser("High hp set to " + this.HighHP);
             }
         }
 
@@ -56,6 +60,7 @@ namespace EasyFarm.ViewModels
             {
                 GameEngine.Config.RestingInfo.LowMP = value;
                 this.OnPropertyChanged(() => this.LowHP);
+                InformUser("Low mp set to " + this.LowMP);
             }
         }
 
@@ -66,6 +71,7 @@ namespace EasyFarm.ViewModels
             {
                 GameEngine.Config.RestingInfo.HighMP = value;
                 this.OnPropertyChanged(() => this.HighMP);
+                InformUser("High mp set to " + this.HighMP);
             }
         }
 

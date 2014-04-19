@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License
 using EasyFarm.Classes;
 using EasyFarm.UtilityTools;
 using EasyFarm.ViewModels;
+using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -34,9 +35,14 @@ namespace EasyFarm
     public partial class App : Application
     {
         public static GameEngine Engine;
+        public static IEventAggregator EventAggregator;
 
         public App() 
         {
+            // Set up the event aggregator for updates to the status bar from 
+            // multiple view models.
+            EventAggregator = new EventAggregator();
+
             // Let user select ffxi process
             frmStartup ProcessSelectionScreen = new frmStartup();
             ProcessSelectionScreen.ShowDialog();
@@ -65,6 +71,6 @@ namespace EasyFarm
         {
             base.OnExit(e);
             Engine.SaveSettings(Engine);
-        }
+        }        
     }
 }

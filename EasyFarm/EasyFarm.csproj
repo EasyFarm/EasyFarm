@@ -149,7 +149,6 @@
     <Compile Include="Classes\Game Data\GameState.cs" />
     <Compile Include="Classes\Decision\States\HealingState.cs" />
     <Compile Include="Classes\User Settings\ActionInfo.cs" />
-    <Compile Include="ViewModels\DomainObject.cs" />
     <Compile Include="Classes\User Settings\RestingInfo.cs" />
     <Compile Include="Classes\Decision\Sequence.cs" />
     <Compile Include="Classes\User Settings\WeaponInfo.cs" />
@@ -169,6 +168,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RestingViewModel.cs" />
     <Compile Include="ViewModels\RoutesViewModel.cs" />
+    <Compile Include="ViewModels\StatusBarUpdateEvent.cs" />
     <Compile Include="ViewModels\TargetsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Classes\Game Data\Waypoint.cs" />
@@ -313,9 +313,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

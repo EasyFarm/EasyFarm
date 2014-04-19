@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Classes;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,8 +31,8 @@ namespace EasyFarm.ViewModels
 {
     public class HealingViewModel : ViewModelBase
     {
-        public HealingViewModel(ref GameEngine Engine)
-            : base(ref Engine)
+        public HealingViewModel(ref GameEngine Engine, IEventAggregator eventAggregator)
+            : base(ref Engine, eventAggregator)
         {
             AddHealingCommand = new DelegateCommand(AddHealingItem);
             DeleteHealingCommand = new DelegateCommand<Object>(DeleteHealing);
