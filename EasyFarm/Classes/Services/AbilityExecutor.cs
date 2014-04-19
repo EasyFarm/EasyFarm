@@ -12,13 +12,11 @@ namespace EasyFarm.Classes
 
     public class AbilityExecutor
     {
-        private FFACE.WindowerTools WindowerTools;
-        private GameEngine m_gameEngine;
+        private GameEngine _engine;
 
-        public AbilityExecutor(ref GameEngine m_gameEngine)
+        public AbilityExecutor(ref GameEngine gameEngine)
         {
-            this.m_gameEngine = m_gameEngine;
-            this.WindowerTools = m_gameEngine.FFInstance.Instance.Windower;
+            this._engine = gameEngine;
         }
 
         /// <summary>
@@ -50,7 +48,7 @@ namespace EasyFarm.Classes
             System.Threading.Thread.Sleep(1000);
 
             // Send it to the game
-            WindowerTools.SendString(Ability.ToString());
+            _engine.FFInstance.Instance.Windower.SendString(Ability.ToString());
 
             // Sleep for the cast duration
             System.Threading.Thread.Sleep(SleepDuration);

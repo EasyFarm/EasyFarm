@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EasyFarm.MVVM
+namespace EasyFarm.ViewModels
 {
     public class ListItem<T> : ObservableObject
     {
@@ -37,8 +37,7 @@ namespace EasyFarm.MVVM
 
         public T Item 
         {             
-            get {  return item;  }
-            
+            get {  return item;  }            
             set {  item = value;  RaisePropertyChanged("Item");  }
         }
     }

@@ -23,15 +23,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace EasyFarm.ViewModels
 {
     public class WeaponsViewModel : ViewModelBase
     {
-        public WeaponsViewModel(ref GameEngine Engine) : base(ref Engine) 
+        public WeaponsViewModel(ref GameEngine Engine)
+            : base(ref Engine)
         {
-            SetCommand = new RelayCommand(SetWeaponSkill);
+            SetCommand = new RelayCommand<Object>(SetWeaponSkill);
         }
 
         public String Name
@@ -76,19 +78,23 @@ namespace EasyFarm.ViewModels
 
         public ICommand SetCommand { get; set; }
 
-        private void SetWeaponSkill()
+        private void SetWeaponSkill(Object StatusBar)
         {
-            if (!string.IsNullOrWhiteSpace(Name))
-            {
-                Skill = GameEngine.AbilityService.CreateAbility(Name) as WeaponAbility;
+            WeaponAbility WeaponSkill = 
+                new WeaponAbility(GameEngine.AbilityService.CreateAbility(Name));
 
-                if (Skill.IsValidName)
-                {
-                    Skill.DistanceTrigger = Distance;
-                    Skill.HPTrigger = Health;
-                    Skill.Name = Name;
-                }
+            if (string.IsNullOrWhiteSpace(Name) || !WeaponSkill.Ability.IsValidName)
+            {
+                // (StatusBar as Label).Content = "Failed to set weaponskill.";
+                return;
             }
+
+            WeaponSkill.DistanceTrigger = Distance;
+            WeaponSkill.HPTrigger = Health;
+            WeaponSkill.IsEnabled = true;
+            WeaponSkill.Name = Name;
+
+            GameEngine.Config.WeaponInfo.WeaponSkill = WeaponSkill;
         }
     }
 }

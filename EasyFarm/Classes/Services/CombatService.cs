@@ -57,9 +57,9 @@ namespace EasyFarm.Classes
         const int RUN_DURATION = 3;
         private GameEngine _engine;
 
-        public CombatService(ref GameEngine Engine)
+        public CombatService(ref GameEngine engine)
         {
-            this._engine = Engine;
+            this._engine = engine;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,7 +183,7 @@ namespace EasyFarm.Classes
 
                 // Execute the weaponskill
                 else if (PlayerData.CanWeaponskill) {
-                    AbilityExecutor.ExecuteActions(new List<Ability>() { Config.WeaponInfo.WeaponSkill }, MaintainHeading);
+                    AbilityExecutor.ExecuteActions(new List<Ability>() { Config.WeaponInfo.WeaponSkill.Ability }, MaintainHeading);
                 }
             }
         }

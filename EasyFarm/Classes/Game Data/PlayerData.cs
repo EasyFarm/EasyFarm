@@ -238,7 +238,7 @@ namespace EasyFarm.Classes
                 return PlayerTools.TPCurrent >= 100 &&
                                     TargetData.TargetUnit.HPPCurrent <= Config.WeaponInfo.WeaponSkill.HPTrigger &&
                                     IsFighting && TargetData.TargetUnit.Distance < Config.WeaponInfo.WeaponSkill.DistanceTrigger &&
-                                    Config.WeaponInfo.WeaponSkill.IsValidName;
+                                    Config.WeaponInfo.WeaponSkill.Ability.IsValidName;
             }
         }
 

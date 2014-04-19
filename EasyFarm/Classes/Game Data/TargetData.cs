@@ -29,9 +29,9 @@ namespace EasyFarm.Classes
     /// </summary>
     public class TargetData
     {
-        public TargetData(ref GameEngine m_gameEngine)
+        public TargetData(ref GameEngine gameEngine)
         {
-            this._engine = m_gameEngine;
+            this._engine = gameEngine;
         }
 
         private Unit m_targetUnit = null;       

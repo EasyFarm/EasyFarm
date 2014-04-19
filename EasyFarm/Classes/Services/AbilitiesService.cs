@@ -55,7 +55,9 @@ namespace EasyFarm.Classes
         /// <returns>A list of actions with that name</returns>
         public List<Ability> GetAbilitiesWithName(String name)
         {
-            return ParseAbilities(name);
+            return GetJobAbilitiesByName(name)
+                .Union(GetSpellAbilitiesByName(name))
+                .ToList();
         }
 
         /// <summary>
@@ -78,7 +80,7 @@ namespace EasyFarm.Classes
         /// 
         public List<Ability> GetSpellAbilitiesByName(string name)
         {
-            return ParseAbilities(name).FindAll(x => x.IsSpell = true);
+            return ParseSpells(name).FindAll(x => x.IsSpell = true);
         }  
     }
 }

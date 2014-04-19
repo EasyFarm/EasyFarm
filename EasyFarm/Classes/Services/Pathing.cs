@@ -55,9 +55,11 @@ namespace EasyFarm.PathingTools
         /// </summary>
         /// <param name="Route"></param>
         /// <returns></returns>
-        public FFACE.Position GetNearestPoint()
+        public Waypoint GetNearestPoint()
         {
-            return Engine.Config.Waypoints.Where(x => Engine.FFInstance.Instance.Navigator.DistanceTo(x) < 50).Min();
+            return Engine.Config.Waypoints
+                .Where(x => Engine.FFInstance.Instance.Navigator.DistanceTo(x.Position) < 50)
+                .Min();
         }
 
         /// <summary>
@@ -68,14 +70,14 @@ namespace EasyFarm.PathingTools
         /// Alters the internal list of waypoints!
         /// </summary>
         /// <returns></returns>
-        public IList<FFACE.Position> GetPath()
+        public IList<Waypoint> GetPath()
         {
             if (Engine.Config.Waypoints.Count <= 0)
             {
                 return Engine.Config.Waypoints;
             }
 
-            if (Engine.FFInstance.Instance.Navigator.DistanceTo(Engine.Config.Waypoints.Last()) < 5)
+            if (Engine.FFInstance.Instance.Navigator.DistanceTo(Engine.Config.Waypoints.Last().Position) < 5)
             {
                 return Engine.Config.Waypoints.Reverse().ToArray();
             }
@@ -110,7 +112,7 @@ namespace EasyFarm.PathingTools
 
             if (!LastPosition.Equals(Current))
             {
-                Engine.Config.Waypoints.Add(Current);
+                Engine.Config.Waypoints.Add(new Waypoint(Current));
                 LastPosition = Current;
             }
         }
@@ -118,7 +120,7 @@ namespace EasyFarm.PathingTools
 
         public IList<FFACE.Position> GetRemainingPath()
         {
-            FFACE.Position NearestPoint = GetNearestPoint();
+            Waypoint NearestPoint = GetNearestPoint();
 
             if (NearestPoint == null)
             {

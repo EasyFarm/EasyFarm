@@ -44,7 +44,7 @@ namespace EasyFarm.ViewModels
             RecordRouteCommand = new RelayCommand<Object>(RecordRoute);
         }
 
-        public ObservableCollection<FFACE.Position> Route
+        public ObservableCollection<Waypoint> Route
         {
             get { return GameEngine.Config.Waypoints; }
             set
@@ -60,7 +60,7 @@ namespace EasyFarm.ViewModels
 
         public void ClearRoute()
         {
-            Route = new ObservableCollection<FFACE.Position>();
+            Route = new ObservableCollection<Waypoint>();
         }
 
         public void RecordRoute(Object RecordButton)
@@ -83,7 +83,7 @@ namespace EasyFarm.ViewModels
 
             if (!Point.Equals(LastPosition))
             {
-                GameEngine.Config.Waypoints.Add(Point);
+                GameEngine.Config.Waypoints.Add(new Waypoint(Point));
                 LastPosition = Point;
             }
         }

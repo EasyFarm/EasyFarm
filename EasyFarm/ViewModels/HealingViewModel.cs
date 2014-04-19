@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.MVVM;
 using MvvmFoundation.Wpf;
 using System;
 using System.Collections.Generic;
@@ -67,8 +66,7 @@ namespace EasyFarm.ViewModels
 
         private void AddHealingItem()
         {
-            Healing.Add(new ListItem<HealingAbility>
-                (new HealingAbility() { IsEnabled = false, Name = "Empty", TriggerLevel = 0 }));
+            Healing.Add(new ListItem<HealingAbility>(new HealingAbility()));
         }
     }
 }

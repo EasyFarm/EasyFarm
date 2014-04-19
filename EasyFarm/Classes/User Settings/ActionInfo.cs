@@ -1,4 +1,4 @@
-﻿using EasyFarm.MVVM;
+﻿using EasyFarm.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

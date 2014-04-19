@@ -28,22 +28,15 @@ namespace EasyFarm.Classes
         #region Members
         private static Unit[] UnitArray;
         private const short MOBARRAY_MAX = 768;
-        private FilterInfo MobFilters;
-        private GameEngine m_gameEngine;
+        private GameEngine _gameEngine;
 
         #endregion
 
-        public UnitService(FFACE Session, FilterInfo Filters)
+        public UnitService(ref GameEngine gameEngine)
         {
+            this._gameEngine = gameEngine;
 
-        }
-
-        public UnitService(ref Classes.GameEngine m_gameEngine)
-        {
-            this.m_gameEngine = m_gameEngine;
-
-            Unit.Session = m_gameEngine.FFInstance.Instance;
-            this.MobFilters = m_gameEngine.Config.FilterInfo;
+            Unit.Session = gameEngine.FFInstance.Instance;
             UnitArray = new Unit[MOBARRAY_MAX];
 
             // Create units
@@ -115,7 +108,7 @@ namespace EasyFarm.Classes
                 {
                     return PotentialTargets
                             // Get all of the party claimed mobs
-                            .Where(mob => MobFilters.PartyFilter && mob.PartyClaim)
+                            .Where(mob => _gameEngine.Config.FilterInfo.PartyFilter && mob.PartyClaim)
                             .OrderBy(mob => mob.Distance)
                         .Concat(PotentialTargets
                             // Get all of my claimed mobs.
@@ -123,11 +116,11 @@ namespace EasyFarm.Classes
                             .OrderBy(mob => mob.Distance))
                         .Concat(PotentialTargets
                             // Get all of the aggroed mobs
-                            .Where(mob => MobFilters.AggroFilter && mob.HasAggroed)
+                            .Where(mob => _gameEngine.Config.FilterInfo.AggroFilter && mob.HasAggroed)
                             .OrderBy(mob => mob.Distance))
                         .Concat(PotentialTargets
                             // Get all of the unclaimed mobs
-                            .Where(mob => MobFilters.UnclaimedFilter && !mob.IsClaimed)
+                            .Where(mob => _gameEngine.Config.FilterInfo.UnclaimedFilter && !mob.IsClaimed)
                             .OrderBy(mob => mob.Distance))                            
                         .First();                    
                 }
@@ -150,7 +143,7 @@ namespace EasyFarm.Classes
             bool ValidMob =
                 ((unit.IsActive) && (unit.Distance < 17) && (unit.YDifference < 5) && (unit.NPCBit != 0) && (!unit.IsDead) && (unit.NPCType == NPCType.Mob))
                 &&
-                (((MobFilters.TargetedMobs.Contains(unit.Name) && !unit.IsClaimed) || (MobFilters.TargetedMobs.Count == 0 && !MobFilters.IgnoredMobs.Contains(unit.Name)))
+                (((_gameEngine.Config.FilterInfo.TargetedMobs.Contains(unit.Name) && !unit.IsClaimed) || (_gameEngine.Config.FilterInfo.TargetedMobs.Count == 0 && !_gameEngine.Config.FilterInfo.IgnoredMobs.Contains(unit.Name)))
                 ||
                 ((unit.HasAggroed) || (unit.MyClaim) || (unit.PartyClaim)));
 

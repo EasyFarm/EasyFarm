@@ -13,18 +13,18 @@ namespace EasyFarm.Classes
     /// </summary>
     public class AbilityParser
     {
-        private const string abils = "abils.xml";
-        private const string spells = "spells.xml";
-        protected static XElement SpellsDoc = null;
-        protected static XElement AbilsDoc = null;
+        private const string ABILS = "abils.xml";
+        private const string SPELLS = "spells.xml";
+        protected static XElement _spelldoc = null;
+        protected static XElement _abilsdoc = null;
 
         /// <summary>
         /// Class load time initializer
         /// </summary>
         static AbilityParser()
         {
-            AbilsDoc = LoadResource(abils);
-            SpellsDoc = LoadResource(spells);
+            _abilsdoc = LoadResource(ABILS);
+            _spelldoc = LoadResource(SPELLS);
         }
 
         /// <summary>
@@ -63,11 +63,31 @@ namespace EasyFarm.Classes
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
+        protected List<Ability> ParseActions(String name)
+        {
+            return ParseResources("s", _spelldoc, name)
+                .Union(ParseResources("a", _abilsdoc, name))
+                .ToList();
+        }
+
+        /// <summary>
+        /// Grabs all abilities from the resource files with the specified name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         protected List<Ability> ParseAbilities(String name)
         {
-            return ParseResources("s", SpellsDoc, name)
-                .Union(ParseResources("a", AbilsDoc, name))
-                .ToList();
+            return ParseResources("a", _abilsdoc, name);
+        }
+
+        /// <summary>
+        /// Grabs all abilities from the resource files with the specified name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        protected List<Ability> ParseSpells(String name)
+        {
+            return ParseResources("s", _spelldoc, name);
         }
 
         /// <summary>

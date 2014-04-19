@@ -16,32 +16,43 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace EasyFarm.Classes
 {
-    public class WeaponAbility : Ability
+    /// <summary>
+    /// Class for Healing Abilities
+    /// </summary>
+    public class HealingAbility
     {
-        public WeaponAbility() { }
+        public HealingAbility()
+        {
+            SetDefaults();
+        }
+
+        public void SetDefaults()
+        { 
+            IsEnabled = false;
+            Name = "Empty";
+            TriggerLevel = 0;
+        }
 
         /// <summary>
-        /// Max distance we cna use a weaponskill at
-        /// </summary>
-        public double DistanceTrigger { get; set; }
-
-        /// <summary>
-        /// Can we use the weaponskill?
+        /// Can we use this abilitiy?
         /// </summary>
         public bool IsEnabled { get; set; }
 
         /// <summary>
         /// What is its name?
         /// </summary>
-        public String SkillName { get; set; }
+        public String Name { get; set; }
 
         /// <summary>
-        /// Mob hp needed inorder to use weaponskill
+        /// The level to which we should use the ability
         /// </summary>
-        public int HPTrigger { get; set; }
+        public int TriggerLevel { get; set; }
     }
 }

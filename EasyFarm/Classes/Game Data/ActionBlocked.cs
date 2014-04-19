@@ -8,15 +8,11 @@ namespace EasyFarm.Classes
 {
     public class ActionBlocked
     {
-        private FFACE.PlayerTools PlayerTools;
         private Classes.GameEngine m_gameEngine;
 
-        public ActionBlocked(ref Classes.GameEngine m_gameEngine)
+        public ActionBlocked(ref Classes.GameEngine gameEngine)
         {
-            // TODO: Complete member initialization
-            this.m_gameEngine = m_gameEngine;
-
-            this.PlayerTools = m_gameEngine.FFInstance.Instance.Player;
+            this.m_gameEngine = gameEngine;
         }
 
         /// <summary>
@@ -36,7 +32,7 @@ namespace EasyFarm.Classes
                 // If we have effects that block,
                 // return true.
                 bool unableToCast = effectsThatBlock
-                    .Intersect(this.PlayerTools.StatusEffects)
+                    .Intersect(m_gameEngine.FFInstance.Instance.Player.StatusEffects)
                     .Count() != 0;
 
                 // 
@@ -59,7 +55,7 @@ namespace EasyFarm.Classes
             };
 
                 bool IsAbilitiesBlocked = effectsThatBlock
-                    .Intersect(PlayerTools.StatusEffects)
+                    .Intersect(m_gameEngine.FFInstance.Instance.Player.StatusEffects)
                     .Count() != 0;
 
                 return IsAbilitiesBlocked || IsUnable;
@@ -84,7 +80,7 @@ namespace EasyFarm.Classes
             };
 
                 bool IsPlayerUnable = effectsThatBlock
-                    .Intersect(PlayerTools.StatusEffects)
+                    .Intersect(m_gameEngine.FFInstance.Instance.Player.StatusEffects)
                     .Count() != 0;
 
                 return IsPlayerUnable;

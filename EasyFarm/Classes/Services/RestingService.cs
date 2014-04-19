@@ -37,17 +37,11 @@ namespace EasyFarm.Classes
         /// </summary>
         const string RESTING_OFF = "/heal off";
         
-        private Config Config;
-        private FFACETools.FFACE.WindowerTools WTools;
-        private PlayerData PlayerData;
-        private Classes.GameEngine m_gameEngine;
+        private GameEngine _gameEngine;
 
-        public RestingService(ref Classes.GameEngine m_gameEngine)
+        public RestingService(ref GameEngine gameEngine)
         {
-            this.m_gameEngine = m_gameEngine;
-            this.PlayerData = m_gameEngine.PlayerData;
-            this.WTools = m_gameEngine.FFInstance.Instance.Windower;
-            this.Config = m_gameEngine.Config;
+            this._gameEngine = gameEngine;
         }
 
         /// <summary>
@@ -55,7 +49,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public void Off()
         {
-            if (PlayerData.IsResting) { WTools.SendString(RESTING_OFF); }
+            if (_gameEngine.PlayerData.IsResting) { _gameEngine.FFInstance.Instance.Windower.SendString(RESTING_OFF); }
         }
 
         /// <summary>
@@ -63,7 +57,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public void On()
         {
-            if (!PlayerData.IsResting) { WTools.SendString(RESTING_ON); }
+            if (!_gameEngine.PlayerData.IsResting) { _gameEngine.FFInstance.Instance.Windower.SendString(RESTING_ON); }
         }
     }
 }

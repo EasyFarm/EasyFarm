@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
 ﻿using EasyFarm.Classes;
-using EasyFarm.PathingTools;
 using EasyFarm.UtilityTools;
 using FFACETools;
 using System;
@@ -35,113 +34,113 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The process of the current FFXI Instance
         /// </summary>
-        private Process m_process = null;
+        private Process _process = null;
 
         /// <summary>
         /// The FFACE and Process Instance of the current FFXI Instance
         /// </summary>
-        private FFInstance m_ffinstance = null;      
+        private FFInstance _ffinstance = null;      
         
         /// <summary>
         /// The engine to run the bot. Contains all the information the bot 
         /// needs to perform its job.
         /// </summary>
-        private GameEngine m_gameEngine = null;
+        private GameEngine _engine = null;
         
         /// <summary>
         /// The decision making machinery for the bot
         /// </summary>
-        private FiniteStateEngine m_stateMachine = null;
+        private FiniteStateEngine _statemachine = null;
 
         /// <summary>
         /// Contains the user's preferences that he makes through 
         /// his user interface.
         /// </summary>
-        private Config m_config = null;
+        private Config _config = null;
         
         /// <summary>
         /// Contains the code for moving the bot along a path.
         /// </summary>
-        private Pathing m_pathing = null;
+        // private Pathing m_pathing = null;
         
         /// <summary>
         /// Contains data on Creatures/NPCS in the environment. 
         /// Does not contain player information.
         /// </summary>
-        private UnitService m_units = null;
+        private UnitService _units = null;
 
         /// <summary>
         /// Contains method for combat and player status info.
         /// </summary>
-        private CombatService m_combat = null;
+        private CombatService _combat = null;
 
         /// <summary>
         /// The current target the bot is trying to kill.
         /// </summary>
-        private Unit m_target = null;
+        private Unit _target = null;
 
         /// <summary>
         /// Some base information about the player like if they are injured or fighting.
         /// </summary>
-        private PlayerData m_playerData = null;
+        private PlayerData _playerData = null;
 
         /// <summary>
         /// Details about our current target.
         /// </summary>
-        private TargetData m_targetData = null;
+        private TargetData _targetData = null;
 
         /// <summary>
         /// Functions and details for resting.
         /// </summary>
-        private RestingService m_resting = null;
+        private RestingService _resting = null;
         
         /// <summary>
         /// Contains the methods needed for executing actions
         /// </summary>
-        private AbilityExecutor m_abilityExecutor;
+        private AbilityExecutor _abilityExecutor;
         
         /// <summary>
         /// Contains all of the player's potential moves.
         /// </summary>
-        private PlayerActions m_playerActions;
+        private PlayerActions _playerActions;
         
         /// <summary>
         /// Retrieves ability objects.
         /// </summary>
-        private AbilityService m_abilityService;
+        private AbilityService _abilityService;
         
         /// <summary>
         /// Determines with an action can be used.
         /// </summary>
-        private ActionBlocked m_ActionBlocked;
+        private ActionBlocked _actionBlocked;
 
         #endregion
 
         #region Constructors
         private GameEngine()
         {
-            m_gameEngine = this;
+            _engine = this;
             IsWorking = false;
         }
 
-        public GameEngine(Process Process)
+        public GameEngine(Process process)
             : this()
         {
-            m_process = Process;
-            m_ffinstance = new FFInstance(this.m_process);
-            m_stateMachine = new FiniteStateEngine(ref m_gameEngine);
-            m_config = new Config();
-            m_pathing = new Pathing(ref m_gameEngine);
-            m_units = new UnitService(ref m_gameEngine);
-            m_combat = new CombatService(ref m_gameEngine);
-            m_target = Unit.CreateUnit(0);
-            m_playerData = new PlayerData(ref m_gameEngine);
-            m_targetData = new TargetData(ref m_gameEngine);
-            m_resting = new RestingService(ref m_gameEngine);
-            m_abilityExecutor = new AbilityExecutor(ref m_gameEngine);
-            m_playerActions = new PlayerActions(ref m_gameEngine);
-            m_ActionBlocked = new ActionBlocked(ref m_gameEngine);
-            m_abilityService = new AbilityService();
+            _process = process;
+            _ffinstance = new FFInstance(this._process);
+            _statemachine = new FiniteStateEngine(ref _engine);
+            _config = new Config();
+            //m_pathing = new Pathing(ref m_gameEngine);
+            _units = new UnitService(ref _engine);
+            _combat = new CombatService(ref _engine);
+            _target = Unit.CreateUnit(0);
+            _playerData = new PlayerData(ref _engine);
+            _targetData = new TargetData(ref _engine);
+            _resting = new RestingService(ref _engine);
+            _abilityExecutor = new AbilityExecutor(ref _engine);
+            _playerActions = new PlayerActions(ref _engine);
+            _actionBlocked = new ActionBlocked(ref _engine);
+            _abilityService = new AbilityService();
         }
         #endregion
 
@@ -151,7 +150,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public Process Process
         {
-            get { return m_process; }
+            get { return _process; }
         }
 
         /// <summary>
@@ -159,7 +158,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public FFInstance FFInstance
         {
-            get { return m_ffinstance; }
+            get { return _ffinstance; }
         }
         
         /// <summary>
@@ -167,7 +166,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public FiniteStateEngine FiniteStateEngine
         {
-            get { return m_stateMachine; }
+            get { return _statemachine; }
         }
 
         /// <summary>
@@ -175,23 +174,23 @@ namespace EasyFarm.Classes
         /// </summary>
         public Config Config
         {
-            get { return m_config; }
+            get { return _config; }
         }
         
         /// <summary>
         /// Contains the methods used for moving the bot around
         /// </summary>
-        public Pathing Pathing
-        {
-            get { return m_pathing; }
-        }
+        //public Pathing Pathing
+        //{
+        //    get { return m_pathing; }
+        //}
 
         /// <summary>
         /// Contains the mob array excluding surrounding players.
         /// </summary>
         public UnitService Units
         {
-            get { return m_units; }
+            get { return _units; }
         }
 
         /// <summary>
@@ -199,7 +198,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public CombatService Combat
         {
-            get { return m_combat; }
+            get { return _combat; }
         }
 
         /// <summary>
@@ -207,7 +206,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public PlayerData PlayerData
         {
-            get { return m_playerData; }
+            get { return _playerData; }
         }
 
         /// <summary>
@@ -215,7 +214,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public TargetData TargetData
         {
-            get { return m_targetData; }
+            get { return _targetData; }
         }
 
         /// <summary>
@@ -223,27 +222,27 @@ namespace EasyFarm.Classes
         /// </summary>
         public RestingService Resting
         { 
-            get { return m_resting; } 
+            get { return _resting; } 
         }
 
         public PlayerActions PlayerActions 
         {
-            get { return m_playerActions; }
+            get { return _playerActions; }
         }
 
         public AbilityExecutor AbilityExecutor 
         {
-            get { return m_abilityExecutor; }
+            get { return _abilityExecutor; }
         }
 
         public AbilityService AbilityService 
         {
-            get { return m_abilityService; }
+            get { return _abilityService; }
         }
 
         public ActionBlocked ActionBlocked 
         {
-            get { return m_ActionBlocked; }
+            get { return _actionBlocked; }
         }
 
         #endregion
@@ -254,7 +253,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public void Start()
         {
-            m_stateMachine.Start();
+            _statemachine.Start();
             IsWorking = true;
         }
 
@@ -263,7 +262,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public void Stop()
         {
-            m_stateMachine.Stop();
+            _statemachine.Stop();
             IsWorking = false;
         }
 
@@ -288,7 +287,7 @@ namespace EasyFarm.Classes
         public void LoadSettings()
         {
             String Filename = FFInstance.Instance.Player.Name + "_UserPref.xml";
-            m_config = Utilities.Deserialize(Filename, Config);
+            _config = Utilities.Deserialize(Filename, Config);
         }
         #endregion
     }

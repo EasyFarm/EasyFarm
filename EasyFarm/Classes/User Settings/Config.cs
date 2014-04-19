@@ -22,7 +22,6 @@ using FFACETools;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 using MvvmFoundation.Wpf;
-using EasyFarm.MVVM;
 using EasyFarm.Classes;
 
 namespace EasyFarm.Classes
@@ -46,13 +45,13 @@ namespace EasyFarm.Classes
             WeaponInfo = new WeaponInfo();
             RestingInfo = new RestingInfo();
             ActionInfo = new ActionInfo();
-            Waypoints = new ObservableCollection<FFACE.Position>();
+            Waypoints = new ObservableCollection<Waypoint>();
         }        
         
         /// <summary>
         /// List of all waypoints that make up the bots path
         /// </summary>
-        public ObservableCollection<FFACE.Position> Waypoints { get; set; }                      
+        public ObservableCollection<Waypoint> Waypoints { get; set; }                      
         
         /// <summary>
         /// The text dislayed at the bottom of the screen

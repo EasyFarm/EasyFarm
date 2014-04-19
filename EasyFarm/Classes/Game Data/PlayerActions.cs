@@ -11,23 +11,12 @@ namespace EasyFarm.Classes
     /// </summary>
     public class PlayerActions
     {
-        private Config Config;
-        private FFACE.PlayerTools PlayerTools;
-        private FFACE.TimerTools TimerTools;
-        private AbilityService AbilityService;
-        private ActionBlocked ActionBlocked;
         private GameEngine m_gameEngine;
 
 
         public PlayerActions(ref GameEngine m_gameEngine)
         {
             this.m_gameEngine = m_gameEngine;
-
-            this.AbilityService = m_gameEngine.AbilityService;
-            this.Config = m_gameEngine.Config;
-            this.ActionBlocked = m_gameEngine.ActionBlocked;
-            this.TimerTools = m_gameEngine.FFInstance.Instance.Timer;
-            this.PlayerTools = m_gameEngine.FFInstance.Instance.Player;
         }
 
         /// <summary>
@@ -35,7 +24,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public List<Ability> StartList
         {
-            get { return FilterValidActions(Config.ActionInfo.StartList); }
+            get { return FilterValidActions(m_gameEngine.Config.ActionInfo.StartList); }
         }
 
         /// <summary>
@@ -43,7 +32,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public List<Ability> EndList
         {
-            get { return FilterValidActions(Config.ActionInfo.EndList); }
+            get { return FilterValidActions(m_gameEngine.Config.ActionInfo.EndList); }
         }
 
         /// <summary>
@@ -51,7 +40,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public List<Ability> BattleList
         {
-            get { return FilterValidActions(Config.ActionInfo.BattleList); }
+            get { return FilterValidActions(m_gameEngine.Config.ActionInfo.BattleList); }
         }
 
         /// <summary>
@@ -62,13 +51,19 @@ namespace EasyFarm.Classes
             get
             {
                 return FilterValidActions(
-                        Config.ActionInfo.HealingList
+                        m_gameEngine.Config.ActionInfo.HealingList
                             .Where(x => x.Item.IsEnabled)
-                            .Where(x => x.Item.TriggerLevel >= PlayerTools.HPPCurrent)
-                            .Select(x => AbilityService.CreateAbility(x.Item.Name))
+                            .Where(x => x.Item.TriggerLevel >= m_gameEngine.FFInstance.Instance.Player.HPPCurrent)
+                            .Select(x => m_gameEngine.AbilityService.CreateAbility(x.Item.Name))
                             .ToList()
                     );
             }
+        }
+
+        public WeaponAbility WeaponSkill
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -110,11 +105,17 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public List<Ability> FilterValidActions(IList<Ability> Actions)
         {
+            var a = Actions.Where(x => x.IsValidName).ToList();
+            var b = a.Where(x => AbilityRecastable(x));
+            var c = b.Where(x => x.MPCost <= m_gameEngine.FFInstance.Instance.Player.MPCurrent && x.TPCost <= m_gameEngine.FFInstance.Instance.Player.TPCurrent).ToList();
+            var d = c.Where(x => (x.IsSpell && !m_gameEngine.ActionBlocked.IsCastingBlocked) || (x.IsAbility && !m_gameEngine.ActionBlocked.IsAbilitiesBlocked)).ToList();
+            var e = d.ToList();
+
             return Actions
                     .Where(x => x.IsValidName)
                     .Where(x => AbilityRecastable(x))
-                    .Where(x => x.MPCost <= PlayerTools.MPCurrent && x.TPCost <= PlayerTools.TPCurrent)
-                    .Where(x => (x.IsSpell && !ActionBlocked.IsCastingBlocked) || (x.IsAbility && !ActionBlocked.IsAbilitiesBlocked))
+                    .Where(x => x.MPCost <= m_gameEngine.FFInstance.Instance.Player.MPCurrent && x.TPCost <= m_gameEngine.FFInstance.Instance.Player.TPCurrent)
+                    .Where(x => (x.IsSpell && !m_gameEngine.ActionBlocked.IsCastingBlocked) || (x.IsAbility && !m_gameEngine.ActionBlocked.IsAbilitiesBlocked))
                     .ToList();
         }
 
@@ -130,11 +131,11 @@ namespace EasyFarm.Classes
 
             if (value.IsSpell)
             {
-                Recast = TimerTools.GetSpellRecast((SpellList)value.Index);
+                Recast = m_gameEngine.FFInstance.Instance.Timer.GetSpellRecast((SpellList)value.Index);
             }
             else
             {
-                Recast = TimerTools.GetAbilityRecast((AbilityList)value.Index);
+                Recast = m_gameEngine.FFInstance.Instance.Timer.GetAbilityRecast((AbilityList)value.Index);
             }
 
             return 0 == Recast;

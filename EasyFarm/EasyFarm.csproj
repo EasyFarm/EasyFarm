@@ -111,36 +111,36 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\Ability\AbilitiesService.cs" />
-    <Compile Include="Classes\Ability\AbilityExecutor.cs" />
-    <Compile Include="Classes\Ability\AbilityParser.cs" />
-    <Compile Include="Classes\ActionBlocked.cs" />
-    <Compile Include="Classes\States\AttackState.cs" />
-    <Compile Include="Classes\States\BaseState.cs" />
-    <Compile Include="Classes\Behavior.cs" />
-    <Compile Include="Classes\CombatService.cs" />
-    <Compile Include="Classes\States\DeadState.cs" />
-    <Compile Include="Classes\FiniteStateMachine.cs" />
-    <Compile Include="Classes\GameState.cs" />
-    <Compile Include="Classes\HealingState.cs" />
-    <Compile Include="Classes\Data\ActionInfo.cs" />
-    <Compile Include="Classes\Data\RestingInfo.cs" />
-    <Compile Include="Classes\Sequence.cs" />
-    <Compile Include="Classes\Data\WeaponInfo.cs" />
-    <Compile Include="Classes\Data\MobFilters.cs" />
-    <Compile Include="Classes\PlayerActions.cs" />
-    <Compile Include="Classes\PlayerData.cs" />
-    <Compile Include="Classes\RestingService.cs" />
-    <Compile Include="Classes\States\RestState.cs" />
-    <Compile Include="Classes\TargetData.cs" />
-    <Compile Include="Classes\States\TravelState.cs" />
-    <Compile Include="Classes\UnitService.cs" />
+    <Compile Include="Classes\Services\AbilitiesService.cs" />
+    <Compile Include="Classes\Services\AbilityExecutor.cs" />
+    <Compile Include="Classes\Services\AbilityParser.cs" />
+    <Compile Include="Classes\Game Data\ActionBlocked.cs" />
+    <Compile Include="Classes\Decision\States\AttackState.cs" />
+    <Compile Include="Classes\Decision\States\BaseState.cs" />
+    <Compile Include="Classes\Decision\Behavior.cs" />
+    <Compile Include="Classes\Services\CombatService.cs" />
+    <Compile Include="Classes\Decision\States\DeadState.cs" />
+    <Compile Include="Classes\Decision\FiniteStateMachine.cs" />
+    <Compile Include="Classes\Game Data\GameState.cs" />
+    <Compile Include="Classes\Decision\States\HealingState.cs" />
+    <Compile Include="Classes\User Settings\ActionInfo.cs" />
+    <Compile Include="Classes\User Settings\RestingInfo.cs" />
+    <Compile Include="Classes\Decision\Sequence.cs" />
+    <Compile Include="Classes\User Settings\WeaponInfo.cs" />
+    <Compile Include="Classes\User Settings\MobFilters.cs" />
+    <Compile Include="Classes\Game Data\PlayerActions.cs" />
+    <Compile Include="Classes\Game Data\PlayerData.cs" />
+    <Compile Include="Classes\Services\RestingService.cs" />
+    <Compile Include="Classes\Decision\States\RestState.cs" />
+    <Compile Include="Classes\Game Data\TargetData.cs" />
+    <Compile Include="Classes\Decision\States\TravelState.cs" />
+    <Compile Include="Classes\Services\UnitService.cs" />
     <Compile Include="MvvmFoundation\Messenger.cs" />
     <Compile Include="MvvmFoundation\ObservableObject.cs" />
     <Compile Include="MvvmFoundation\PropertyObserver.cs" />
     <Compile Include="MvvmFoundation\RelayCommand.cs" />
-    <Compile Include="Classes\GameEngine.cs" />
-    <Compile Include="Classes\Data\Config.cs" />
+    <Compile Include="Classes\Services\GameEngine.cs" />
+    <Compile Include="Classes\User Settings\Config.cs" />
     <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="ViewModels\HealingViewModel.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
@@ -149,6 +149,7 @@
     <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="ViewModels\TargetsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Classes\Game Data\Waypoint.cs" />
     <Compile Include="ViewModels\WeaponsViewModel.cs" />
     <Compile Include="Views\BattlesView.xaml.cs">
       <DependentUpon>BattlesView.xaml</DependentUpon>
@@ -164,20 +165,19 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\ListItem.cs" />
-    <Compile Include="Classes\Pathing.cs" />
-    <Compile Include="Classes\Waypoint.cs" />
-    <Compile Include="Classes\Ability\Ability.cs" />
-    <Compile Include="Classes\HealingAbility.cs" />
-    <Compile Include="Classes\WeaponAbility.cs" />
-    <Compile Include="Classes\FFInstance.cs" />
-    <Compile Include="Classes\Unit.cs" />
+    <None Include="Classes\Services\Pathing.cs" />
+    <Compile Include="Classes\Game Data\Ability.cs" />
+    <Compile Include="Classes\Game Data\HealingAbility.cs" />
+    <Compile Include="Classes\Game Data\WeaponAbility.cs" />
+    <Compile Include="Classes\Game Data\FFInstance.cs" />
+    <Compile Include="Classes\Game Data\Unit.cs" />
     <Compile Include="Views\frmStartup.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\frmStartup.designer.cs">
       <DependentUpon>frmStartup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Utilities.cs" />
+    <Compile Include="Classes\Services\Utilities.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -291,9 +291,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Classes\Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
