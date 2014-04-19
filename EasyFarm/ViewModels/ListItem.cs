@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using MvvmFoundation.Wpf;
+using Microsoft.Practices.Prism.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,7 @@ using System.Text;
 
 namespace EasyFarm.ViewModels
 {
-    public class ListItem<T> : ObservableObject
+    public class ListItem<T> : NotificationObject
     {
         private T item;
 

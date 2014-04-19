@@ -96,6 +96,7 @@
       <HintPath>bin\Release\FFACETools.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.Prism, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -135,10 +136,6 @@
     <Compile Include="Classes\Game Data\TargetData.cs" />
     <Compile Include="Classes\Decision\States\TravelState.cs" />
     <Compile Include="Classes\Services\UnitService.cs" />
-    <Compile Include="MvvmFoundation\Messenger.cs" />
-    <Compile Include="MvvmFoundation\ObservableObject.cs" />
-    <Compile Include="MvvmFoundation\PropertyObserver.cs" />
-    <Compile Include="MvvmFoundation\RelayCommand.cs" />
     <Compile Include="Classes\Services\GameEngine.cs" />
     <Compile Include="Classes\User Settings\Config.cs" />
     <Compile Include="ViewModels\BattlesViewModel.cs" />
@@ -291,7 +288,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using MvvmFoundation.Wpf;
+using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -29,9 +29,9 @@ namespace EasyFarm.ViewModels
     {
         public TargetsViewModel(ref GameEngine Engine) : base(ref Engine) 
         {
-            this.AddCommand = new RelayCommand(AddTargetCommand);
-            this.DeleteCommand = new RelayCommand(DeleteTargetCommand);
-            this.ClearCommand = new RelayCommand(ClearTargetsCommand);
+            this.AddCommand = new DelegateCommand(AddTargetCommand);
+            this.DeleteCommand = new DelegateCommand(DeleteTargetCommand);
+            this.ClearCommand = new DelegateCommand(ClearTargetsCommand);
         }
 
         private void ClearTargetsCommand()

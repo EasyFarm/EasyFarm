@@ -21,8 +21,8 @@ using System.Collections.Generic;
 using FFACETools;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
-using MvvmFoundation.Wpf;
 using EasyFarm.Classes;
+using Microsoft.Practices.Prism.ViewModel;
 
 namespace EasyFarm.Classes
 {
@@ -30,7 +30,7 @@ namespace EasyFarm.Classes
     /// A configuration file for the user to edit through his GUI.
     /// Gives the bot access to allow of his decisions.
     /// </summary>
-    public class Config : ObservableObject
+    public class Config : NotificationObject
     {
         private string m_statusBarText;
        

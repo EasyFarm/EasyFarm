@@ -1,5 +1,5 @@
 ﻿using EasyFarm.Classes;
-using MvvmFoundation.Wpf;
+using Microsoft.Practices.Prism.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 
 namespace EasyFarm.ViewModels
 {
-    public class ViewModelBase : ObservableObject
+    public class ViewModelBase : NotificationObject
     {
         protected GameEngine GameEngine;              
 

@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using MvvmFoundation.Wpf;
+using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,9 +33,9 @@ namespace EasyFarm.ViewModels
         public HealingViewModel(ref GameEngine Engine)
             : base(ref Engine)
         {
-            AddHealingCommand = new RelayCommand(AddHealingItem);
-            DeleteHealingCommand = new RelayCommand<Object>(DeleteHealing);
-            ClearHealingCommand = new RelayCommand(ClearHealing);
+            AddHealingCommand = new DelegateCommand(AddHealingItem);
+            DeleteHealingCommand = new DelegateCommand<Object>(DeleteHealing);
+            ClearHealingCommand = new DelegateCommand(ClearHealing);
         }
 
         public ObservableCollection<ListItem<HealingAbility>> Healing

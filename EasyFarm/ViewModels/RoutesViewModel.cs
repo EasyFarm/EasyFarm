@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Classes;
 using FFACETools;
-using MvvmFoundation.Wpf;
+using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,8 +40,8 @@ namespace EasyFarm.ViewModels
             WaypointRecorder.Tick += new EventHandler(RouteRecorder_Tick);
             WaypointRecorder.Interval = new TimeSpan(0, 0, 1);
 
-            ClearRouteCommand = new RelayCommand(ClearRoute);
-            RecordRouteCommand = new RelayCommand<Object>(RecordRoute);
+            ClearRouteCommand = new DelegateCommand(ClearRoute);
+            RecordRouteCommand = new DelegateCommand<Object>(RecordRoute);
         }
 
         public ObservableCollection<Waypoint> Route

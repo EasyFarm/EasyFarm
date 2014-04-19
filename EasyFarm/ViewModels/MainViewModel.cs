@@ -1,5 +1,5 @@
 ﻿using EasyFarm.Classes;
-using MvvmFoundation.Wpf;
+using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace EasyFarm.ViewModels
             : base(ref Engine)
         {
             StatusBarText = "Bot Loaded: " + Engine.FFInstance.Instance.Player.Name;
-            StartCommand = new RelayCommand(Start);
+            StartCommand = new DelegateCommand(Start);
         }
 
         public String StatusBarText
