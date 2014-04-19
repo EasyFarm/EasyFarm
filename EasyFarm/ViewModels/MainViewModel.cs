@@ -23,7 +23,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.StatusBarText = value;
-                this.RaisePropertyChanged("StatusBarText");
+                this.OnPropertyChanged(() => this.StatusBarText);
             }
         }
 

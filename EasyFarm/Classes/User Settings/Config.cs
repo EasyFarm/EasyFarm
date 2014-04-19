@@ -23,6 +23,7 @@ using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 using EasyFarm.Classes;
 using Microsoft.Practices.Prism.ViewModel;
+using Microsoft.Practices.Prism.Mvvm;
 
 namespace EasyFarm.Classes
 {
@@ -30,7 +31,7 @@ namespace EasyFarm.Classes
     /// A configuration file for the user to edit through his GUI.
     /// Gives the bot access to allow of his decisions.
     /// </summary>
-    public class Config : NotificationObject
+    public class Config : BindableBase
     {
         private string m_statusBarText;
        
@@ -67,7 +68,7 @@ namespace EasyFarm.Classes
             set 
             {
                 this.m_statusBarText = value;
-                RaisePropertyChanged("StatusBarText");
+                OnPropertyChanged(() => this.StatusBarText);
             }
         }
 

@@ -62,7 +62,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.FilterInfo.IgnoredName = value;
-                this.RaisePropertyChanged("Name");
+                this.OnPropertyChanged(() => this.Name);
             }
         }
 
@@ -71,8 +71,8 @@ namespace EasyFarm.ViewModels
             get { return GameEngine.Config.FilterInfo.IgnoredMobs; }
             set
             {
+                OnPropertyChanged(() => this.Ignored);
                 GameEngine.Config.FilterInfo.IgnoredMobs = value;
-                this.RaisePropertyChanged("Ignored");
             }
         }
 

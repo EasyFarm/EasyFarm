@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Classes;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -57,7 +58,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.FilterInfo.TargetName = value;
-                this.RaisePropertyChanged("TargetsName");
+                this.OnPropertyChanged(() => this.TargetsName);
             }
         }
 
@@ -67,7 +68,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.FilterInfo.TargetedMobs = value;
-                this.RaisePropertyChanged("Targets");
+                this.OnPropertyChanged(() => this.Targets);
             }
         }
 
@@ -77,7 +78,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.FilterInfo.AggroFilter = value;
-                this.RaisePropertyChanged("Aggro");
+                this.OnPropertyChanged(() => this.Aggro);
             }
         }
 
@@ -87,7 +88,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.FilterInfo.UnclaimedFilter = value;
-                this.RaisePropertyChanged("Unclaimed");
+                this.OnPropertyChanged(() => this.Unclaimed);
             }
         }
 
@@ -97,7 +98,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.FilterInfo.PartyFilter = value;
-                this.RaisePropertyChanged("PartyClaimed");
+                this.OnPropertyChanged(() => this.PartyClaimed);
             }
         }
 

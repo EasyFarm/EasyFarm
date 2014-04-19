@@ -42,7 +42,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.WeaponInfo.Name = value;
-                this.RaisePropertyChanged("Name");
+                this.OnPropertyChanged(() => this.Name);
             }
         }
 
@@ -52,7 +52,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.WeaponInfo.Distance = value;
-                this.RaisePropertyChanged("Distance");
+                this.OnPropertyChanged(() => this.Distance);
             }
         }
 
@@ -62,7 +62,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.WeaponInfo.HealthThreshold = value;
-                this.RaisePropertyChanged("Health");
+                this.OnPropertyChanged(() => this.Health);
             }
         }
 
@@ -72,7 +72,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 this.GameEngine.Config.WeaponInfo.WeaponSkill = value;
-                this.RaisePropertyChanged("Skill");
+                this.OnPropertyChanged(() => this.Skill);
             }
         }
 

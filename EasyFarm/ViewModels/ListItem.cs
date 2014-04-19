@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
+using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ using System.Text;
 
 namespace EasyFarm.ViewModels
 {
-    public class ListItem<T> : NotificationObject
+    public class ListItem<T> : BindableBase
     {
         private T item;
 
@@ -38,7 +39,7 @@ namespace EasyFarm.ViewModels
         public T Item 
         {             
             get {  return item;  }            
-            set {  item = value;  RaisePropertyChanged("Item");  }
+            set {  item = value;  OnPropertyChanged(() => this.Item);  }
         }
     }
 }

@@ -35,7 +35,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.RestingInfo.LowHP = value;
-                this.RaisePropertyChanged("LowHP");
+                this.OnPropertyChanged(() => this.LowHP);
             }
         }
 
@@ -45,7 +45,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.RestingInfo.HighHP = value;
-                this.RaisePropertyChanged("HighHP");
+                this.OnPropertyChanged(() => this.HighHP);
             }
         }
 
@@ -55,7 +55,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.RestingInfo.LowMP = value;
-                this.RaisePropertyChanged("LowMP");
+                this.OnPropertyChanged(() => this.LowHP);
             }
         }
 
@@ -65,7 +65,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.RestingInfo.HighMP = value;
-                this.RaisePropertyChanged("HighMP");
+                this.OnPropertyChanged(() => this.HighMP);
             }
         }
 
@@ -75,7 +75,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.RestingInfo.IsRestingHPEnabled = value;
-                this.RaisePropertyChanged("HPEnabled");
+                this.OnPropertyChanged(() => this.HPEnabled);
             }
         }
 
@@ -85,7 +85,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.RestingInfo.IsRestingMPEnabled = value;
-                this.RaisePropertyChanged("MPEnabled");
+                this.OnPropertyChanged(() => this.MPEnabled);
             }
         }
     }

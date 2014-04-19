@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Classes;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,7 +45,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.ActionInfo.StartList = value;
-                this.RaisePropertyChanged("StartList");
+                this.OnPropertyChanged(() => this.StartList);
             }
         }
         
@@ -54,7 +55,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.ActionInfo.BattleList = value;
-                this.RaisePropertyChanged("BattleList");
+                this.OnPropertyChanged(() => this.BattleList);
             }
         }
         
@@ -64,7 +65,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.ActionInfo.EndList = value;
-                this.RaisePropertyChanged("EndSelected");
+                this.OnPropertyChanged(() => this.EndList);
             }
 
         }
@@ -75,7 +76,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.ActionInfo.BattleListSelected = value;
-                this.RaisePropertyChanged("BattleSelected");
+                this.OnPropertyChanged(() => this.BattleSelected);
             }
         }
 
@@ -85,7 +86,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.ActionInfo.StartListSelected= value;
-                this.RaisePropertyChanged("StartSelected");
+                this.OnPropertyChanged(() => this.StartSelected);
             }
         }
 
@@ -93,7 +94,7 @@ namespace EasyFarm.ViewModels
         {
             get { return GameEngine.Config.ActionInfo.EndListSelected; }
             set { GameEngine.Config.ActionInfo.EndListSelected = value;
-            this.RaisePropertyChanged("EndSelected");
+            this.OnPropertyChanged(() => this.EndSelected);
             }
         }
 
@@ -103,7 +104,7 @@ namespace EasyFarm.ViewModels
             set 
             {
                 GameEngine.Config.ActionInfo.BattleActionName = value;
-                this.RaisePropertyChanged("ActionName");
+                this.OnPropertyChanged(() => this.ActionName);
                 BattleAction = GameEngine.AbilityService.CreateAbility(ActionName);
             }            
         }

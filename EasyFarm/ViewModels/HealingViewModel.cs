@@ -44,7 +44,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.ActionInfo.HealingList = value;
-                this.RaisePropertyChanged("Healing");
+                this.OnPropertyChanged(() => this.Healing);
             }
         }
 

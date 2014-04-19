@@ -50,7 +50,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 GameEngine.Config.Waypoints = value;
-                this.RaisePropertyChanged("Route");
+                this.OnPropertyChanged(() => this.Route);
             }
         }
 
