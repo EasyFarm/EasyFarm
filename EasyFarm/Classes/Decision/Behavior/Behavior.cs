@@ -26,10 +26,10 @@ namespace EasyFarm.Classes
 {
     public abstract class Behavior
     {
-        protected ProgressStatus ProgressStatus { get; set; }
-        protected TerminationStatus TerminationStatus { get; set; }
-        protected abstract TerminationStatus Execute();
-        protected abstract bool CanExecute();
+        public ProgressStatus ProgressStatus { get; set; }
+        public TerminationStatus TerminationStatus { get; set; }
+        public abstract TerminationStatus Execute();
+        public abstract bool CanExecute();
     }
 
     public enum ProgressStatus

@@ -24,23 +24,29 @@ using System.Text;
 
 namespace EasyFarm.Classes
 {
-    public class Sequence : Behavior
+    public abstract class Sequence : Behavior
     {
-        Queue<Behavior> Behaviors;
+        public List<Behavior> _behaviors;
 
-        public Sequence()
+        public Sequence() { _behaviors = new List<Behavior>(); }
+
+        public override TerminationStatus Execute()
         {
-            Behaviors = new Queue<Behavior>();
+            foreach (var child in _behaviors)
+            {
+                if (child.CanExecute())
+                {
+                    var status = child.Execute();
+                    if (!status.Equals(TerminationStatus.Success))
+                    {
+                        return status;
+                    }
+                }
+            }
+
+            return TerminationStatus.Success;
         }
 
-        protected override TerminationStatus Execute()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override bool CanExecute()
-        {
-            throw new NotImplementedException();
-        }
+        public override bool CanExecute() { return true; }
     }
 }

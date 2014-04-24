@@ -39,7 +39,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The FFACE and Process Instance of the current FFXI Instance
         /// </summary>
-        private FFInstance _ffinstance = null;      
+        private Session _ffinstance = null;      
         
         /// <summary>
         /// The engine to run the bot. Contains all the information the bot 
@@ -127,7 +127,7 @@ namespace EasyFarm.Classes
             : this()
         {
             _process = process;
-            _ffinstance = new FFInstance(this._process);
+            _ffinstance = new Session(this._process);
             _statemachine = new FiniteStateEngine(ref _engine);
             _config = new Config();
             //m_pathing = new Pathing(ref m_gameEngine);
@@ -156,7 +156,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// Contains process and FFACE Methods and information
         /// </summary>
-        public FFInstance FFInstance
+        public Session FFInstance
         {
             get { return _ffinstance; }
         }

@@ -32,7 +32,7 @@ namespace EasyFarm.Classes
     {
         private GameEngine _engine;
 
-        public PlayerData(ref Classes.GameEngine m_gameEngine)
+        public PlayerData(ref GameEngine m_gameEngine)
         {
             this._engine = m_gameEngine;
         }
@@ -319,18 +319,11 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var NavTools = _engine.FFInstance.Instance.Navigator;
-                var TargetTools = _engine.FFInstance.Instance.Target;
-                var TargetData = _engine.TargetData;
-                var AbilityExecutor = _engine.AbilityExecutor;
-                var PlayerActions = _engine.PlayerActions;
-                var WindowerTools = _engine.FFInstance.Instance.Windower;
-                var PlayerData = _engine.PlayerData;
-                var Units = _engine.Units;
                 var PlayerTools = _engine.FFInstance.Instance.Player;
-                var Config = _engine.Config;
                 return PlayerTools.Status == Status.Fighting;
             }
         }
+
+
     }
 }

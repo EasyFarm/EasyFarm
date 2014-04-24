@@ -36,10 +36,11 @@ public class FiniteStateEngine
 
     // Timer loop, check the State list.
     private Timer Heartbeat = new Timer();
-    private GameEngine Engine;
-
-
+    private GameEngine _engine;
     private Task m_thread;
+    
+    // private BehaviorTree _behaviorTree;
+    
     public Task Thread
     {
         get
@@ -61,20 +62,22 @@ public class FiniteStateEngine
         });
     }
 
-    public FiniteStateEngine(ref GameEngine Engine)
+    public FiniteStateEngine(ref GameEngine engine)
         : this()
     {
-        this.Engine = Engine;
+        this._engine = engine;
 
         //Create the states
-        AddState(new RestState(ref this.Engine));
-        AddState(new AttackState(ref this.Engine));
-        AddState(new TravelState(ref this.Engine));
-        AddState(new HealingState(ref this.Engine));
-        AddState(new DeadState(ref this.Engine));
+        AddState(new RestState(ref this._engine));
+        AddState(new AttackState(ref this._engine));
+        AddState(new TravelState(ref this._engine));
+        AddState(new HealingState(ref this._engine));
+        AddState(new DeadState(ref this._engine));
 
         foreach (var b in this.Brains)
             b.Enabled = true;
+
+        // _behaviorTree = new BehaviorTree(ref _engine);
     }
 
     // Handles the updating.
@@ -82,6 +85,9 @@ public class FiniteStateEngine
     {
         lock (Brains)
         {
+            /*if (_behaviorTree.CanExecute())
+                _behaviorTree.Execute();*/
+                       
             // Sort the List, States may have updated Priorities.
             Brains.Sort();
 

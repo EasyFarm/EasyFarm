@@ -1,4 +1,4 @@
-
+﻿
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013 - 2014>  <Zerolimits>
@@ -14,38 +14,40 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace EasyFarm.FSM
+namespace EasyFarm.Classes.Game_Data
 {
-    /// <summary>
-    /// A class for defeating monsters.
-    /// </summary>
-    class AttackState : BaseState
+    public class Data
     {
-        public AttackState(ref GameEngine gameEngine) : base(ref gameEngine) { }
+        GameEngine _engine;
+        PlayerData _pdata;
+        TargetData _tdata;
 
-        public override bool CheckState()
+        public Data(ref GameEngine engine)
         {
-            return gameEngine.PlayerData.shouldFight;
+            _engine = engine;
+            _pdata = new PlayerData(ref engine);
+            _tdata = new TargetData(ref engine);
         }
 
-        public override void EnterState()
+        public PlayerData Player 
         {
-            // gameEngine.Combat.Enter();
-            gameEngine.Resting.Off();
+            get { return _pdata; }
+            set { this._pdata = value; }
         }
 
-        public override void RunState()
+        public TargetData Target
         {
-            gameEngine.Combat.Battle();
-        }
-
-        public override void ExitState()
-        {
-            //gameEngine.Combat.Exit();
+            get { return _tdata; }
+            set { this._tdata = value; }
         }
     }
 }
