@@ -148,6 +148,7 @@
     <Compile Include="Classes\Decision\Behavior\TargetBehavior.cs" />
     <Compile Include="Classes\Decision\Behavior\WeaponSkillBehavior.cs" />
     <Compile Include="Classes\Game Data\Data.cs" />
+    <Compile Include="Classes\Game Data\Player.cs" />
     <Compile Include="Classes\Services\AbilitiesService.cs" />
     <Compile Include="Classes\Services\AbilityExecutor.cs" />
     <Compile Include="Classes\Services\AbilityParser.cs" />
@@ -325,6 +326,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BehaviorLibrary\BehaviorLibrary\BehaviorLibrary.csproj">
+      <Project>{cc824b6f-6145-485f-9604-fb94f0ecaca7}</Project>
+      <Name>BehaviorLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

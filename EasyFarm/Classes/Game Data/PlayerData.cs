@@ -123,7 +123,7 @@ namespace EasyFarm.Classes
             {
                 var PlayerTools = _engine.FFInstance.Instance.Player;
                 var Config = _engine.Config;
-                return PlayerTools.HPPCurrent <= Config.RestingInfo.LowHP;
+                return PlayerTools.HPPCurrent <= Config.RestingInfo.Health.Low;
             }
         }
 
@@ -133,7 +133,7 @@ namespace EasyFarm.Classes
             {
                 var PlayerTools = _engine.FFInstance.Instance.Player;
                 var Config = _engine.Config;
-                return PlayerTools.MPPCurrent <= Config.RestingInfo.LowMP;
+                return PlayerTools.MPPCurrent <= Config.RestingInfo.Magic.Low;
             }
         }
 
@@ -143,7 +143,7 @@ namespace EasyFarm.Classes
             {
                 var PlayerTools = _engine.FFInstance.Instance.Player;
                 var Config = _engine.Config;
-                return IsResting && PlayerTools.HPPCurrent < Config.RestingInfo.HighHP;
+                return IsResting && PlayerTools.HPPCurrent < Config.RestingInfo.Health.High;
             }
         }
 
@@ -153,7 +153,7 @@ namespace EasyFarm.Classes
             {
                 var PlayerTools = _engine.FFInstance.Instance.Player;
                 var Config = _engine.Config;
-                return IsResting && PlayerTools.MPPCurrent < Config.RestingInfo.HighMP;
+                return IsResting && PlayerTools.MPPCurrent < Config.RestingInfo.Magic.High;
             }
         }
 
@@ -170,7 +170,7 @@ namespace EasyFarm.Classes
             get
             {
                 var Config = _engine.Config;
-                return Config.RestingInfo.IsRestingHPEnabled;
+                return Config.RestingInfo.Health.Enabled;
             }
         }
 
@@ -179,7 +179,7 @@ namespace EasyFarm.Classes
             get
             {
                 var Config = _engine.Config;
-                return Config.RestingInfo.IsRestingMPEnabled;
+                return Config.RestingInfo.Health.Enabled;
             }
         }
 
@@ -256,7 +256,7 @@ namespace EasyFarm.Classes
             {
                 var PlayerTools = _engine.FFInstance.Instance.Player;
                 var Config = _engine.Config;
-                return PlayerTools.HPPCurrent <= Config.RestingInfo.LowHP;
+                return PlayerTools.HPPCurrent <= Config.RestingInfo.Health.Low;
             }
         }
 
@@ -323,7 +323,5 @@ namespace EasyFarm.Classes
                 return PlayerTools.Status == Status.Fighting;
             }
         }
-
-
     }
 }

@@ -28,47 +28,30 @@ namespace EasyFarm.Classes
     {
         public RestingInfo()
         {
+            this.Magic = new Magic();
+            this.Health = new Health();
+
             SetDefaults();
         }
 
         private void SetDefaults()
         {
-            LowHP = 0;
-            LowMP = 0;
-            HighHP = 0;
-            HighMP = 0;
-            IsRestingHPEnabled = false;
-            IsRestingMPEnabled = false;
+            Health.Low = 0;
+            Magic.Low = 0;
+            Health.High = 0;
+            Magic.High = 0;
+            Health.Enabled = false;
+            Magic.Enabled = false;
         }
 
         /// <summary>
-        /// The value we should rest mp at
+        /// Data for HP
         /// </summary>
-        public int LowMP { get; set; }
-
+        public Health Health { get; set; }
+        
         /// <summary>
-        /// The value we can get up from resting mp
+        /// Data for MP
         /// </summary>
-        public int HighMP { get; set; }
-
-        /// <summary>
-        /// The value we can get up from resting hp
-        /// </summary>
-        public int HighHP { get; set; }
-
-        /// <summary>
-        /// The value we should rest hp at.
-        /// </summary>
-        public int LowHP { get; set; }
-
-        /// <summary>
-        /// Should we rest hp at all?
-        /// </summary>
-        public bool IsRestingHPEnabled { get; set; }
-
-        /// <summary>
-        /// Should we rest mp at all?
-        /// </summary>
-        public bool IsRestingMPEnabled { get; set; }
+        public Magic Magic { get; set; }      
     }
 }

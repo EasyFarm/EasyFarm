@@ -17,14 +17,7 @@ namespace EasyFarm.Classes
         public override bool CanExecute()
         {
             return 
-
-                // In order to weaponskill you need.
-                // to be engaged.
-                // to be in range.
-                // have the weaponskill.
-                // 
-
-                _engine.PlayerData.IsFighting
+                _engine.FFInstance.Instance.Player.Status == FFACETools.Status.Fighting
                 && _engine.FFInstance.Instance.Player.TPCurrent >= 100                                 
                 && _engine.Config.WeaponInfo.WeaponSkill.Ability.IsValidName
                 && _engine.TargetData.TargetUnit.HPPCurrent <= _engine.Config.WeaponInfo.WeaponSkill.HPTrigger 
