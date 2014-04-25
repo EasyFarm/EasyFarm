@@ -43,7 +43,7 @@ namespace EasyFarm.Classes
         public void SetDefaults()
         {
             FilterInfo = new FilterInfo();
-            WeaponInfo = new WeaponInfo();
+            WeaponInfo = new WeaponAbility();
             RestingInfo = new RestingInfo();
             ActionInfo = new ActionInfo();
             Waypoints = new ObservableCollection<Waypoint>();
@@ -76,7 +76,7 @@ namespace EasyFarm.Classes
 
         public FilterInfo FilterInfo { get; set; }
 
-        public WeaponInfo WeaponInfo { get; set; }
+        public WeaponAbility WeaponInfo { get; set; }
 
         public RestingInfo RestingInfo { get; set; }
     }

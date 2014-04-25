@@ -8,8 +8,8 @@ namespace EasyFarm.Classes
 {
     public class Health
     {
-        public bool Enabled { get; set; }
-        public int High { get; set; }
-        public int Low { get; set; }
+        public bool Enabled = false;
+        public int High = 100;
+        public int Low = 50;
     }
 }

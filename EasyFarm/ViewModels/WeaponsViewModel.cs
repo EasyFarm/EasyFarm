@@ -60,22 +60,22 @@ namespace EasyFarm.ViewModels
 
         public int Health
         {
-            get { return GameEngine.Config.WeaponInfo.HealthThreshold; }
+            get { return GameEngine.Config.WeaponInfo.Health; }
             set
             {
-                GameEngine.Config.WeaponInfo.HealthThreshold = value;
+                GameEngine.Config.WeaponInfo.Health = value;
                 this.OnPropertyChanged(() => this.Health);
                 InformUser("Health set to " + this.Health);
             }
         }
 
-        public WeaponAbility Skill
+        public WeaponAbility Ability
         {
-            get { return GameEngine.Config.WeaponInfo.WeaponSkill; }
+            get { return GameEngine.Config.WeaponInfo; }
             set
             {
-                this.GameEngine.Config.WeaponInfo.WeaponSkill = value;
-                this.OnPropertyChanged(() => this.Skill);
+                this.GameEngine.Config.WeaponInfo = value;
+                this.OnPropertyChanged(() => this.Ability);
             }
         }
 
@@ -83,21 +83,20 @@ namespace EasyFarm.ViewModels
 
         private void SetWeaponSkill(Object StatusBar)
         {
-            WeaponAbility WeaponSkill = 
-                new WeaponAbility(GameEngine.AbilityService.CreateAbility(Name));
+            var weaponSkill = GameEngine.AbilityService.CreateAbility(Name);
 
-            if (string.IsNullOrWhiteSpace(Name) || !WeaponSkill.Ability.IsValidName)
+            if (string.IsNullOrWhiteSpace(Name) || !weaponSkill.IsValidName)
             {
                 InformUser("Failed to set weaponskill.");
                 return;
             }
 
-            WeaponSkill.DistanceTrigger = Distance;
-            WeaponSkill.HPTrigger = Health;
-            WeaponSkill.IsEnabled = true;
-            WeaponSkill.Name = Name;
+            this.Ability.Ability = weaponSkill;
+            this.Ability.Distance = Distance;
+            this.Ability.Health = Health;
+            this.Ability.Enabled = true;
+            this.Ability.Name = Name;
 
-            GameEngine.Config.WeaponInfo.WeaponSkill = WeaponSkill;
             InformUser("Weaponskill set.");
         }
     }

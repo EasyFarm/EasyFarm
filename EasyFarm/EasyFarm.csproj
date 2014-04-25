@@ -136,6 +136,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Configuration.cs" />
     <Compile Include="Classes\Decision\Behavior\AcquireMobBehavior.cs" />
     <Compile Include="Classes\Decision\Behavior\ActionsBehavior.cs" />
     <Compile Include="Classes\Decision\Behavior\AttackSequence.cs" />
@@ -147,8 +148,6 @@
     <Compile Include="Classes\Decision\Behavior\Selector.cs" />
     <Compile Include="Classes\Decision\Behavior\TargetBehavior.cs" />
     <Compile Include="Classes\Decision\Behavior\WeaponSkillBehavior.cs" />
-    <Compile Include="Classes\Game Data\Data.cs" />
-    <Compile Include="Classes\Game Data\Player.cs" />
     <Compile Include="Classes\Services\AbilitiesService.cs" />
     <Compile Include="Classes\Services\AbilityExecutor.cs" />
     <Compile Include="Classes\Services\AbilityParser.cs" />
@@ -159,12 +158,12 @@
     <Compile Include="Classes\Services\CombatService.cs" />
     <Compile Include="Classes\Decision\State\DeadState.cs" />
     <Compile Include="Classes\Decision\State\FiniteStateMachine.cs" />
-    <Compile Include="Classes\Game Data\GameState.cs" />
     <Compile Include="Classes\Decision\State\HealingState.cs" />
     <Compile Include="Classes\User Settings\ActionInfo.cs" />
+    <Compile Include="Classes\User Settings\Health.cs" />
+    <Compile Include="Classes\User Settings\Magic.cs" />
     <Compile Include="Classes\User Settings\RestingInfo.cs" />
     <Compile Include="Classes\Decision\Behavior\Sequence.cs" />
-    <Compile Include="Classes\User Settings\WeaponInfo.cs" />
     <Compile Include="Classes\User Settings\MobFilters.cs" />
     <Compile Include="Classes\Game Data\PlayerActions.cs" />
     <Compile Include="Classes\Game Data\PlayerData.cs" />
@@ -175,6 +174,7 @@
     <Compile Include="Classes\Services\UnitService.cs" />
     <Compile Include="Classes\Services\GameEngine.cs" />
     <Compile Include="Classes\User Settings\Config.cs" />
+    <Compile Include="Models\BattleModel.cs" />
     <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="ViewModels\HealingViewModel.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
@@ -204,7 +204,7 @@
     <Compile Include="Classes\Game Data\Ability.cs" />
     <Compile Include="Classes\Game Data\HealingAbility.cs" />
     <Compile Include="Classes\Game Data\WeaponAbility.cs" />
-    <Compile Include="Classes\Game Data\FFInstance.cs" />
+    <Compile Include="Classes\Game Data\Session.cs" />
     <Compile Include="Classes\Game Data\Unit.cs" />
     <Compile Include="Views\frmStartup.cs">
       <SubType>Form</SubType>

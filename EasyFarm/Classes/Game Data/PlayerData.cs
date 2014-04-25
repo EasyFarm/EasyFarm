@@ -236,9 +236,9 @@ namespace EasyFarm.Classes
                 var PlayerTools = _engine.FFInstance.Instance.Player;
                 var Config = _engine.Config;
                 return PlayerTools.TPCurrent >= 100 &&
-                                    TargetData.TargetUnit.HPPCurrent <= Config.WeaponInfo.WeaponSkill.HPTrigger &&
-                                    IsFighting && TargetData.TargetUnit.Distance < Config.WeaponInfo.WeaponSkill.DistanceTrigger &&
-                                    Config.WeaponInfo.WeaponSkill.Ability.IsValidName;
+                                    TargetData.TargetUnit.HPPCurrent <= Config.WeaponInfo.Health &&
+                                    IsFighting && TargetData.TargetUnit.Distance < Config.WeaponInfo.Distance &&
+                                    Config.WeaponInfo.Ability.IsValidName;
             }
         }
 

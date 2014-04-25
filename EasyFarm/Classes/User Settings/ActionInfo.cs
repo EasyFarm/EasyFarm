@@ -28,61 +28,39 @@ namespace EasyFarm.Classes
 {
     public class ActionInfo
     {
-        public ActionInfo()
-        {
-            SetDefaults();
-        }
-
-        private void SetDefaults()
-        {
-            BattleList = new ObservableCollection<Ability>();
-            StartList = new ObservableCollection<Ability>();
-            EndList = new ObservableCollection<Ability>();
-            HealingList = new ObservableCollection<ListItem<HealingAbility>>();
-
-            StartListSelected = true;
-            BattleListSelected = false;
-            EndListSelected = false;
-        }
-
         /// <summary>
         /// List of actions that should be used before battle
         /// </summary>
-        public ObservableCollection<Ability> StartList { get; set; }
+        public ObservableCollection<Ability> StartList = new ObservableCollection<Ability>();
 
         /// <summary>
         /// List of actions taht should be used at the end of battle
         /// </summary>
-        public ObservableCollection<Ability> EndList { get; set; }
+        public ObservableCollection<Ability> EndList = new ObservableCollection<Ability>();
 
         /// <summary>
         /// List of actions that should be used in battle
         /// </summary>
-        public ObservableCollection<Ability> BattleList { get; set; }
+        public ObservableCollection<Ability> BattleList = new ObservableCollection<Ability>();
 
         /// <summary>
         /// List of actions that should be used when injured
         /// </summary>
-        public ObservableCollection<ListItem<HealingAbility>> HealingList { get; set; }
+        public ObservableCollection<ListItem<HealingAbility>> HealingList = new ObservableCollection<ListItem<HealingAbility>>();
 
         /// <summary>
         /// Is the BattleList Selected in the battle tab?
         /// </summary>
-        public bool BattleListSelected { get; set; }
+        public bool BattleListSelected = true;
 
         /// <summary>
         /// Is the StartList selected in the battle tab?
         /// </summary>
-        public bool StartListSelected { get; set; }
+        public bool StartListSelected = false;
 
         /// <summary>
         /// Is the End list selected in the battle tab?
         /// </summary>
-        public bool EndListSelected { get; set; }
-
-        /// <summary>
-        /// The name of the ability going to be added to either the Battle/Start/End Action Lists
-        /// </summary>
-        public string BattleActionName { get; set; }                          
+        public bool EndListSelected = false;
     }
 }

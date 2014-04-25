@@ -19,9 +19,9 @@ namespace EasyFarm.Classes
             return 
                 _engine.FFInstance.Instance.Player.Status == FFACETools.Status.Fighting
                 && _engine.FFInstance.Instance.Player.TPCurrent >= 100                                 
-                && _engine.Config.WeaponInfo.WeaponSkill.Ability.IsValidName
-                && _engine.TargetData.TargetUnit.HPPCurrent <= _engine.Config.WeaponInfo.WeaponSkill.HPTrigger 
-                && _engine.TargetData.TargetUnit.Distance < _engine.Config.WeaponInfo.WeaponSkill.DistanceTrigger;
+                && _engine.Config.WeaponInfo.Ability.IsValidName
+                && _engine.TargetData.TargetUnit.HPPCurrent <= _engine.Config.WeaponInfo.Health 
+                && _engine.TargetData.TargetUnit.Distance < _engine.Config.WeaponInfo.Distance;
         }
 
         public override TerminationStatus Execute()

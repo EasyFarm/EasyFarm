@@ -29,58 +29,40 @@ namespace EasyFarm.Classes
     /// Contains the data needed to filter out creatures.
     /// </summary>
     public class FilterInfo
-    {
-        public FilterInfo()
-        {
-            SetDefaults();
-        }
-
-        /// <summary>
-        /// Sets the defaults settings for targeting creatures.
-        /// </summary>
-        private void SetDefaults()
-        {
-            this.AggroFilter = true;
-            this.PartyFilter = true;
-            this.UnclaimedFilter = true;
-
-            this.IgnoredMobs = new ObservableCollection<string>();
-            this.TargetedMobs = new ObservableCollection<string>();
-        }
-        
+    {        
         /// <summary>
         /// Name of the mob to be attacked
         /// </summary>
-        public string TargetName { get; set; }
+        public string TargetName = String.Empty;
 
         /// <summary>
         /// Name of the mob to be ignored
         /// </summary>
-        public string IgnoredName { get; set; }
+        public string IgnoredName = String.Empty;
 
         /// <summary>
         /// Used to filter out aggroed mobs.
         /// </summary>
-        public bool AggroFilter { get; set; }
+        public bool AggroFilter = true;
         
         /// <summary>
         /// Used to filter out party claimed mobs.
         /// </summary>
-        public bool PartyFilter { get; set; }
+        public bool PartyFilter = true;
 
         /// <summary>
         /// Used to filter out unclaimed mobs.
         /// </summary>
-        public bool UnclaimedFilter { get; set; }
+        public bool UnclaimedFilter = true;
 
         /// <summary>
         /// A list of mobs that we should ignore.
         /// </summary>
-        public ObservableCollection<String> IgnoredMobs { get; set; }
+        public ObservableCollection<String> IgnoredMobs = new ObservableCollection<string>();
 
         /// <summary>
         /// A list of mobs that we should only kill.
         /// </summary>
-        public ObservableCollection<String> TargetedMobs { get; set; }        
+        public ObservableCollection<String> TargetedMobs = new ObservableCollection<string>();
     }
 }

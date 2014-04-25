@@ -99,15 +99,16 @@ namespace EasyFarm.ViewModels
             }
         }
 
+        private String actionName;
+
         public String ActionName
         {
-            get { return GameEngine.Config.ActionInfo.BattleActionName; }
+            get { return actionName; }
             set 
-            {
-                GameEngine.Config.ActionInfo.BattleActionName = value;
-                this.OnPropertyChanged(() => this.ActionName);
-                BattleAction = GameEngine.AbilityService.CreateAbility(ActionName);
-            }            
+            { 
+                SetProperty(ref this.actionName, value);
+                BattleAction = GameEngine.AbilityService.CreateAbility(actionName);
+            }
         }
 
         public ICommand AddActionCommand { get; set; }

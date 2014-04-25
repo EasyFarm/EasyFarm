@@ -22,35 +22,25 @@ namespace EasyFarm.Classes
 {
     public class WeaponAbility
     {
-        public WeaponAbility()
-        {
-
-        }
-
-        public WeaponAbility(Ability ability)
-        {
-            this.Ability = ability;
-        }
-
-        /// <summary>
-        /// Max distance we cna use a weaponskill at
-        /// </summary>
-        public double DistanceTrigger { get; set; }
-
-        /// <summary>
-        /// Can we use the weaponskill?
-        /// </summary>
-        public bool IsEnabled { get; set; }
-
         /// <summary>
         /// What is its name?
         /// </summary>
         public String Name { get; set; }
 
         /// <summary>
+        /// Max distance we cna use a weaponskill at
+        /// </summary>
+        public double Distance { get; set; }
+
+        /// <summary>
+        /// Can we use the weaponskill?
+        /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
         /// Mob hp needed inorder to use weaponskill
         /// </summary>
-        public int HPTrigger { get; set; }
+        public int Health { get; set; }
 
         /// <summary>
         /// The weaponskill

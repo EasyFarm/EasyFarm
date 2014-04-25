@@ -26,32 +26,14 @@ namespace EasyFarm.Classes
 {
     public class RestingInfo
     {
-        public RestingInfo()
-        {
-            this.Magic = new Magic();
-            this.Health = new Health();
-
-            SetDefaults();
-        }
-
-        private void SetDefaults()
-        {
-            Health.Low = 0;
-            Magic.Low = 0;
-            Health.High = 0;
-            Magic.High = 0;
-            Health.Enabled = false;
-            Magic.Enabled = false;
-        }
-
         /// <summary>
         /// Data for HP
         /// </summary>
-        public Health Health { get; set; }
+        public Health Health = new Health();
         
         /// <summary>
         /// Data for MP
         /// </summary>
-        public Magic Magic { get; set; }      
+        public Magic Magic = new Magic();  
     }
 }

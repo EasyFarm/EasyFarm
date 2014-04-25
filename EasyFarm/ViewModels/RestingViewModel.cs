@@ -33,10 +33,10 @@ namespace EasyFarm.ViewModels
 
         public int LowHP
         {
-            get { return GameEngine.Config.RestingInfo.LowHP; }
+            get { return GameEngine.Config.RestingInfo.Health.Low; }
             set
             {
-                GameEngine.Config.RestingInfo.LowHP = value;
+                GameEngine.Config.RestingInfo.Health.Low = value;
                 this.OnPropertyChanged(() => this.LowHP);
                 InformUser("Low hp set to " + this.LowHP);
             }
@@ -44,10 +44,10 @@ namespace EasyFarm.ViewModels
 
         public int HighHP
         {
-            get { return GameEngine.Config.RestingInfo.HighHP; }
+            get { return GameEngine.Config.RestingInfo.Health.High; }
             set
             {
-                GameEngine.Config.RestingInfo.HighHP = value;
+                GameEngine.Config.RestingInfo.Health.High = value;
                 this.OnPropertyChanged(() => this.HighHP);
                 InformUser("High hp set to " + this.HighHP);
             }
@@ -55,10 +55,10 @@ namespace EasyFarm.ViewModels
 
         public int LowMP
         {
-            get { return GameEngine.Config.RestingInfo.LowMP; }
+            get { return GameEngine.Config.RestingInfo.Magic.Low; }
             set
             {
-                GameEngine.Config.RestingInfo.LowMP = value;
+                GameEngine.Config.RestingInfo.Magic.Low = value;
                 this.OnPropertyChanged(() => this.LowHP);
                 InformUser("Low mp set to " + this.LowMP);
             }
@@ -66,10 +66,10 @@ namespace EasyFarm.ViewModels
 
         public int HighMP
         {
-            get { return GameEngine.Config.RestingInfo.HighMP; }
+            get { return GameEngine.Config.RestingInfo.Magic.High; }
             set
             {
-                GameEngine.Config.RestingInfo.HighMP = value;
+                GameEngine.Config.RestingInfo.Magic.High = value;
                 this.OnPropertyChanged(() => this.HighMP);
                 InformUser("High mp set to " + this.HighMP);
             }
@@ -77,20 +77,20 @@ namespace EasyFarm.ViewModels
 
         public bool HPEnabled
         {
-            get { return GameEngine.Config.RestingInfo.IsRestingHPEnabled; }
+            get { return GameEngine.Config.RestingInfo.Health.Enabled; }
             set
             {
-                GameEngine.Config.RestingInfo.IsRestingHPEnabled = value;
+                GameEngine.Config.RestingInfo.Health.Enabled = value;
                 this.OnPropertyChanged(() => this.HPEnabled);
             }
         }
 
         public bool MPEnabled
         {
-            get { return GameEngine.Config.RestingInfo.IsRestingMPEnabled; }
+            get { return GameEngine.Config.RestingInfo.Magic.Enabled; }
             set
             {
-                GameEngine.Config.RestingInfo.IsRestingMPEnabled = value;
+                GameEngine.Config.RestingInfo.Magic.Enabled = value;
                 this.OnPropertyChanged(() => this.MPEnabled);
             }
         }
