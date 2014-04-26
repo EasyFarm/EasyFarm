@@ -29,70 +29,58 @@ namespace EasyFarm.ViewModels
     public class RestingViewModel : ViewModelBase
     {
         public RestingViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) : 
-            base(ref Engine, eventAggregator) { }
+            base(ref Engine, eventAggregator)  {  }
 
         public int LowHP
         {
-            get { return GameEngine.Config.RestingInfo.Health.Low; }
+            get { return GameEngine.UserSettings.RestingInfo.Health.Low; }
             set
             {
-                GameEngine.Config.RestingInfo.Health.Low = value;
-                this.OnPropertyChanged(() => this.LowHP);
+                SetProperty(ref GameEngine.UserSettings.RestingInfo.Health.Low, value);
                 InformUser("Low hp set to " + this.LowHP);
             }
         }
 
         public int HighHP
         {
-            get { return GameEngine.Config.RestingInfo.Health.High; }
+            get { return GameEngine.UserSettings.RestingInfo.Health.High; }
             set
             {
-                GameEngine.Config.RestingInfo.Health.High = value;
-                this.OnPropertyChanged(() => this.HighHP);
+                SetProperty(ref GameEngine.UserSettings.RestingInfo.Health.High, value);
                 InformUser("High hp set to " + this.HighHP);
             }
         }
 
         public int LowMP
         {
-            get { return GameEngine.Config.RestingInfo.Magic.Low; }
+            get { return GameEngine.UserSettings.RestingInfo.Magic.Low; }
             set
             {
-                GameEngine.Config.RestingInfo.Magic.Low = value;
-                this.OnPropertyChanged(() => this.LowHP);
+                SetProperty(ref GameEngine.UserSettings.RestingInfo.Magic.Low, value);
                 InformUser("Low mp set to " + this.LowMP);
             }
         }
 
         public int HighMP
         {
-            get { return GameEngine.Config.RestingInfo.Magic.High; }
+            get { return GameEngine.UserSettings.RestingInfo.Magic.High; }
             set
             {
-                GameEngine.Config.RestingInfo.Magic.High = value;
-                this.OnPropertyChanged(() => this.HighMP);
+                SetProperty(ref GameEngine.UserSettings.RestingInfo.Magic.High, value);
                 InformUser("High mp set to " + this.HighMP);
             }
         }
 
         public bool HPEnabled
         {
-            get { return GameEngine.Config.RestingInfo.Health.Enabled; }
-            set
-            {
-                GameEngine.Config.RestingInfo.Health.Enabled = value;
-                this.OnPropertyChanged(() => this.HPEnabled);
-            }
+            get { return GameEngine.UserSettings.RestingInfo.Health.Enabled; }
+            set { SetProperty(ref GameEngine.UserSettings.RestingInfo.Health.Enabled, value); }
         }
 
         public bool MPEnabled
         {
-            get { return GameEngine.Config.RestingInfo.Magic.Enabled; }
-            set
-            {
-                GameEngine.Config.RestingInfo.Magic.Enabled = value;
-                this.OnPropertyChanged(() => this.MPEnabled);
-            }
+            get { return GameEngine.UserSettings.RestingInfo.Magic.Enabled; }
+            set { SetProperty(ref GameEngine.UserSettings.RestingInfo.Magic.Enabled, value); }
         }
     }
 }

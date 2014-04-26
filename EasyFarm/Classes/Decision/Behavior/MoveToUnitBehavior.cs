@@ -23,16 +23,16 @@ namespace EasyFarm.Classes
         public override TerminationStatus Execute()
         {
             // Save the old tolerance
-            var OldTolerance = _engine.FFInstance.Instance.Navigator.DistanceTolerance;
+            var OldTolerance = _engine.Session.Instance.Navigator.DistanceTolerance;
 
             // Use the new one
-            _engine.FFInstance.Instance.Navigator.DistanceTolerance = DIST_MIN;
+            _engine.Session.Instance.Navigator.DistanceTolerance = DIST_MIN;
 
             // Got to the npc
-            _engine.FFInstance.Instance.Navigator.GotoNPC(_engine.TargetData.TargetUnit.ID, 10);
+            _engine.Session.Instance.Navigator.GotoNPC(_engine.TargetData.TargetUnit.ID, 10);
 
             // Restore the old tolerance.
-            _engine.FFInstance.Instance.Navigator.DistanceTolerance = OldTolerance;
+            _engine.Session.Instance.Navigator.DistanceTolerance = OldTolerance;
 
             return TerminationStatus.Success;
         }
@@ -40,7 +40,7 @@ namespace EasyFarm.Classes
         public override bool CanExecute()
         {
             // Run to the unit while we are out of distance. 
-            return _engine.FFInstance.Instance.Navigator
+            return _engine.Session.Instance.Navigator
                 .DistanceTo(_engine.TargetData.Position) >= DIST_MIN;
         }
     }

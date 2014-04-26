@@ -37,7 +37,7 @@ namespace EasyFarm.Decision.FSM
 
         public override void RunState() { 
             gameEngine.Stop();
-            gameEngine.Config.StatusBarText = "Stopped!";
+            gameEngine.UserSettings.StatusBarText = "Stopped!";
         }
 
         public override void ExitState() { }

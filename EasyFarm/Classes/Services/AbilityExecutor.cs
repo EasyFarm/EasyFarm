@@ -67,7 +67,7 @@ namespace EasyFarm.Classes
             System.Threading.Thread.Sleep(1000);
 
             // Send it to the game
-            _engine.FFInstance.Instance.Windower.SendString(Ability.ToString());
+            _engine.Session.Instance.Windower.SendString(Ability.ToString());
 
             // Sleep for the cast duration
             System.Threading.Thread.Sleep(SleepDuration);

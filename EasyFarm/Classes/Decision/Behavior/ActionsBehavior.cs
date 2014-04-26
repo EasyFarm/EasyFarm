@@ -23,7 +23,7 @@ namespace EasyFarm.Classes
         {
             var skill = _engine.PlayerActions.BattleList.First();
 
-            _engine.Combat.MaintainHeading();
+            _engine.CombatService.MaintainHeading();
             _engine.AbilityExecutor.UseAbility(skill);
             
             if (_engine.PlayerActions.AbilityRecastable(skill))

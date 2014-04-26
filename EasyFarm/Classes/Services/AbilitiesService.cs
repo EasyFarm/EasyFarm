@@ -81,6 +81,16 @@ namespace EasyFarm.Classes
         public List<Ability> GetSpellAbilitiesByName(string name)
         {
             return ParseSpells(name).FindAll(x => x.IsSpell = true);
-        }  
+        }
+
+        /// <summary>
+        /// Returns whether abilities with the given name.
+        /// </summary>
+        /// <param name="actionName"></param>
+        /// <returns></returns>
+        public bool Exists(string actionName)
+        {
+            return GetAbilitiesWithName(actionName).Count > 0;
+        }
     }
 }

@@ -51,7 +51,7 @@ namespace EasyFarm.Classes
                 // If we have effects that block,
                 // return true.
                 bool unableToCast = effectsThatBlock
-                    .Intersect(m_gameEngine.FFInstance.Instance.Player.StatusEffects)
+                    .Intersect(m_gameEngine.Session.Instance.Player.StatusEffects)
                     .Count() != 0;
 
                 // 
@@ -74,7 +74,7 @@ namespace EasyFarm.Classes
             };
 
                 bool IsAbilitiesBlocked = effectsThatBlock
-                    .Intersect(m_gameEngine.FFInstance.Instance.Player.StatusEffects)
+                    .Intersect(m_gameEngine.Session.Instance.Player.StatusEffects)
                     .Count() != 0;
 
                 return IsAbilitiesBlocked || IsUnable;
@@ -99,7 +99,7 @@ namespace EasyFarm.Classes
             };
 
                 bool IsPlayerUnable = effectsThatBlock
-                    .Intersect(m_gameEngine.FFInstance.Instance.Player.StatusEffects)
+                    .Intersect(m_gameEngine.Session.Instance.Player.StatusEffects)
                     .Count() != 0;
 
                 return IsPlayerUnable;

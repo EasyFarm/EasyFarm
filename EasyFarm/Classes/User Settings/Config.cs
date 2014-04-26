@@ -32,52 +32,24 @@ namespace EasyFarm.Classes
     /// Gives the bot access to allow of his decisions.
     /// </summary>
     public class Config : BindableBase
-    {
-        private string m_statusBarText;
-       
-        public Config()
-        {
-            SetDefaults();
-        }
-
-        public void SetDefaults()
-        {
-            FilterInfo = new FilterInfo();
-            WeaponInfo = new WeaponAbility();
-            RestingInfo = new RestingInfo();
-            ActionInfo = new ActionInfo();
-            Waypoints = new ObservableCollection<Waypoint>();
-        }        
-        
-        /// <summary>
-        /// List of all waypoints that make up the bots path
-        /// </summary>
-        public ObservableCollection<Waypoint> Waypoints { get; set; }                      
-        
+    {                       
         /// <summary>
         /// The text dislayed at the bottom of the screen
         /// </summary>
         [XmlIgnore]
-        public string StatusBarText 
-        {
-            get 
-            { 
-                return m_statusBarText; 
-            }
-            
-            set 
-            {
-                this.m_statusBarText = value;
-                OnPropertyChanged(() => this.StatusBarText);
-            }
-        }
+        public String StatusBarText = String.Empty;
 
-        public ActionInfo ActionInfo { get; set; }
+        /// <summary>
+        /// List of all waypoints that make up the bots path
+        /// </summary>
+        public ObservableCollection<Waypoint> Waypoints = new ObservableCollection<Waypoint>();
 
-        public FilterInfo FilterInfo { get; set; }
+        public ActionInfo ActionInfo = new ActionInfo();
 
-        public WeaponAbility WeaponInfo { get; set; }
+        public FilterInfo FilterInfo = new FilterInfo();
 
-        public RestingInfo RestingInfo { get; set; }
+        public WeaponAbility WeaponInfo = new WeaponAbility();
+
+        public RestingInfo RestingInfo = new RestingInfo();
     }
 }

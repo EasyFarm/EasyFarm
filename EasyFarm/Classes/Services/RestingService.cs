@@ -49,7 +49,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public void Off()
         {
-            if (_gameEngine.PlayerData.IsResting) { _gameEngine.FFInstance.Instance.Windower.SendString(RESTING_OFF); }
+            if (_gameEngine.PlayerData.IsResting) { _gameEngine.Session.Instance.Windower.SendString(RESTING_OFF); }
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public void On()
         {
-            if (!_gameEngine.PlayerData.IsResting) { _gameEngine.FFInstance.Instance.Windower.SendString(RESTING_ON); }
+            if (!_gameEngine.PlayerData.IsResting) { _gameEngine.Session.Instance.Windower.SendString(RESTING_ON); }
         }
     }
 }

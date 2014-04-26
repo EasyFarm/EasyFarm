@@ -19,7 +19,7 @@ namespace EasyFarm.Classes
 
         public override TerminationStatus Execute()
         {
-            _engine.FFInstance.Instance.Target.SetNPCTarget
+            _engine.Session.Instance.Target.SetNPCTarget
                 (_engine.TargetData.TargetUnit.ID);
 
             System.Threading.Thread.Sleep(50);

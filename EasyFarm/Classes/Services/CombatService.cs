@@ -74,7 +74,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return _engine.FFInstance.Instance.Navigator
+                return _engine.Session.Instance.Navigator
                     .DistanceTo(_engine.TargetData.TargetUnit.Position) <= DIST_MAX;
             }
         }
@@ -90,7 +90,7 @@ namespace EasyFarm.Classes
         /// <param name="unit"></param>
         public void MoveToUnit()
         {
-            var NavTools = _engine.FFInstance.Instance.Navigator;
+            var NavTools = _engine.Session.Instance.Navigator;
             var TargetData = _engine.TargetData;
 
             // Save the old tolerance
@@ -112,7 +112,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public void Target()
         {
-            var TargetTools = _engine.FFInstance.Instance.Target;
+            var TargetTools = _engine.Session.Instance.Target;
             var TargetData = _engine.TargetData;
 
             if (!TargetData.IsTarget)
@@ -145,7 +145,7 @@ namespace EasyFarm.Classes
         public void Engage()
         {
             var TargetData = _engine.TargetData;
-            var WindowerTools = _engine.FFInstance.Instance.Windower;
+            var WindowerTools = _engine.Session.Instance.Windower;
             var PlayerData = _engine.PlayerData;
 
             // if we have a correct target and our player isn't currently fighting...
@@ -172,7 +172,7 @@ namespace EasyFarm.Classes
             var AbilityExecutor = _engine.AbilityExecutor;
             var PlayerActions = _engine.PlayerActions;
             var PlayerData = _engine.PlayerData;
-            var Config = _engine.Config;
+            var Config = _engine.UserSettings;
 
             if (PlayerData.IsFighting && TargetData.IsTarget)
             {
@@ -195,7 +195,7 @@ namespace EasyFarm.Classes
         public void MaintainHeading()
         {
             var TargetData = _engine.TargetData;
-            var NavTools = _engine.FFInstance.Instance.Navigator;
+            var NavTools = _engine.Session.Instance.Navigator;
             NavTools.FaceHeading(TargetData.Position);
         }
 
@@ -204,7 +204,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public void Disengage()
         {
-            var WindowerTools = _engine.FFInstance.Instance.Windower;
+            var WindowerTools = _engine.Session.Instance.Windower;
             var PlayerData = _engine.PlayerData;
 
             if (PlayerData.IsEngaged) {

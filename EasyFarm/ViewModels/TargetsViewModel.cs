@@ -56,52 +56,32 @@ namespace EasyFarm.ViewModels
 
         public String TargetsName
         {
-            get { return GameEngine.Config.FilterInfo.TargetName; }
-            set
-            {
-                GameEngine.Config.FilterInfo.TargetName = value;
-                this.OnPropertyChanged(() => this.TargetsName);
-            }
+            get { return GameEngine.UserSettings.FilterInfo.TargetName; }
+            set { SetProperty(ref this.GameEngine.UserSettings.FilterInfo.TargetName, value); }
         }
 
         public ObservableCollection<String> Targets
         {
-            get { return GameEngine.Config.FilterInfo.TargetedMobs; }
-            set
-            {
-                GameEngine.Config.FilterInfo.TargetedMobs = value;
-                this.OnPropertyChanged(() => this.Targets);
-            }
+            get { return GameEngine.UserSettings.FilterInfo.TargetedMobs; }
+            set { SetProperty(ref this.GameEngine.UserSettings.FilterInfo.TargetedMobs, value); }
         }
 
         public bool Aggro
         {
-            get { return GameEngine.Config.FilterInfo.AggroFilter; }
-            set
-            {
-                GameEngine.Config.FilterInfo.AggroFilter = value;
-                this.OnPropertyChanged(() => this.Aggro);
-            }
+            get { return GameEngine.UserSettings.FilterInfo.AggroFilter; }
+            set { SetProperty(ref this.GameEngine.UserSettings.FilterInfo.AggroFilter, value); }
         }
 
         public bool Unclaimed
         {
-            get { return GameEngine.Config.FilterInfo.UnclaimedFilter; }
-            set
-            {
-                GameEngine.Config.FilterInfo.UnclaimedFilter = value;
-                this.OnPropertyChanged(() => this.Unclaimed);
-            }
+            get { return GameEngine.UserSettings.FilterInfo.UnclaimedFilter; }
+            set { SetProperty(ref this.GameEngine.UserSettings.FilterInfo.UnclaimedFilter, value); }
         }
 
         public bool PartyClaimed
         {
-            get { return GameEngine.Config.FilterInfo.PartyFilter; }
-            set
-            {
-                GameEngine.Config.FilterInfo.PartyFilter = value;
-                this.OnPropertyChanged(() => this.PartyClaimed);
-            }
+            get { return GameEngine.UserSettings.FilterInfo.PartyFilter; }
+            set { SetProperty(ref this.GameEngine.UserSettings.FilterInfo.PartyFilter, value); }
         }
 
         public ICommand AddCommand { get; set; }

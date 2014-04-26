@@ -20,7 +20,7 @@ namespace EasyFarm.Classes
 
         public override TerminationStatus Execute()
         {
-            _engine.FFInstance.Instance.Navigator.FaceHeading(_engine.TargetData.Position);
+            _engine.Session.Instance.Navigator.FaceHeading(_engine.TargetData.Position);
             return TerminationStatus.Success;
         }
 

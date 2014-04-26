@@ -76,7 +76,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var TargetTools = _engine.FFInstance.Instance.Target;
+                var TargetTools = _engine.Session.Instance.Target;
                 return TargetTools.ID == TargetUnit.ID;
             }
         }

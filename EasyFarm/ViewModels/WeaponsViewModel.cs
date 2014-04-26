@@ -39,44 +39,32 @@ namespace EasyFarm.ViewModels
 
         public String Name
         {
-            get { return GameEngine.Config.WeaponInfo.Name; }
-            set
-            {
-                GameEngine.Config.WeaponInfo.Name = value;
-                this.OnPropertyChanged(() => this.Name);
-            }
+            get { return GameEngine.UserSettings.WeaponInfo.Name; }
+            set { SetProperty(ref this.GameEngine.UserSettings.WeaponInfo.Name, value); }
         }
 
         public double Distance
         {
-            get { return GameEngine.Config.WeaponInfo.Distance; }
-            set
-            {
-                GameEngine.Config.WeaponInfo.Distance = value;
-                this.OnPropertyChanged(() => this.Distance);
-                InformUser("Distance set to " + this.Distance);
+            get { return GameEngine.UserSettings.WeaponInfo.Distance; }
+            set { SetProperty(ref this.GameEngine.UserSettings.WeaponInfo.Distance, value); 
+                    InformUser("Distance set to " + this.Distance);
             }
         }
 
         public int Health
         {
-            get { return GameEngine.Config.WeaponInfo.Health; }
+            get { return GameEngine.UserSettings.WeaponInfo.Health; }
             set
             {
-                GameEngine.Config.WeaponInfo.Health = value;
-                this.OnPropertyChanged(() => this.Health);
+                SetProperty(ref this.GameEngine.UserSettings.WeaponInfo.Health, value); 
                 InformUser("Health set to " + this.Health);
             }
         }
 
         public WeaponAbility Ability
         {
-            get { return GameEngine.Config.WeaponInfo; }
-            set
-            {
-                this.GameEngine.Config.WeaponInfo = value;
-                this.OnPropertyChanged(() => this.Ability);
-            }
+            get { return GameEngine.UserSettings.WeaponInfo; }
+            set { SetProperty(ref this.GameEngine.UserSettings.WeaponInfo, value); }
         }
 
         public ICommand SetCommand { get; set; }

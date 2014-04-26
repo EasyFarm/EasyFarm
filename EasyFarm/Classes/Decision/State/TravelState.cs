@@ -39,30 +39,30 @@ namespace EasyFarm.Decision
 
         public override void EnterState()
         {
-            gameEngine.Resting.Off();
-            gameEngine.Combat.Disengage();
+            gameEngine.RestingService.Off();
+            gameEngine.CombatService.Disengage();
 
-            gameEngine.FFInstance.Instance.Navigator.DistanceTolerance = 1;
-            gameEngine.FFInstance.Instance.Navigator.HeadingTolerance = 1;
+            gameEngine.Session.Instance.Navigator.DistanceTolerance = 1;
+            gameEngine.Session.Instance.Navigator.HeadingTolerance = 1;
         }
 
         public override void RunState()
         {
             // If we've reached the end of the path....
-            if (position > gameEngine.Config.Waypoints.Count - 1)
+            if (position > gameEngine.UserSettings.Waypoints.Count - 1)
             {
                 // Turn around and run the path in reverse with the old end being the new starting point
-                gameEngine.Config.Waypoints = new ObservableCollection<Waypoint>(gameEngine.Config.Waypoints.Reverse());
+                gameEngine.UserSettings.Waypoints = new ObservableCollection<Waypoint>(gameEngine.UserSettings.Waypoints.Reverse());
                 position = 0;                
             }
 
             // If we are more than 10 yalms away from the nearest point...
-            if (gameEngine.FFInstance.Instance.Navigator.DistanceTo(gameEngine.Config.Waypoints[position].Position) > 10)
+            if (gameEngine.Session.Instance.Navigator.DistanceTo(gameEngine.UserSettings.Waypoints[position].Position) > 10)
             {
                 SetPositionToNearestPoint();
             }
 
-            gameEngine.FFInstance.Instance.Navigator.Goto(gameEngine.Config.Waypoints[position].Position, false);
+            gameEngine.Session.Instance.Navigator.Goto(gameEngine.UserSettings.Waypoints[position].Position, false);
             position++;
         }
 
@@ -70,25 +70,25 @@ namespace EasyFarm.Decision
         {
             // Find the closest point and ...
             FFACE.Position closest = null;
-            foreach (var current in gameEngine.Config.Waypoints)
+            foreach (var current in gameEngine.UserSettings.Waypoints)
             {
                 if (closest == null) { closest = current.Position; }
 
-                else if (gameEngine.FFInstance.Instance.Navigator.DistanceTo(current.Position) <
-                    gameEngine.FFInstance.Instance.Navigator.DistanceTo(closest))
+                else if (gameEngine.Session.Instance.Navigator.DistanceTo(current.Position) <
+                    gameEngine.Session.Instance.Navigator.DistanceTo(closest))
                     closest = current.Position;
             }
 
             // Get its index in the array of points, then ...
             if (closest != null)
             {
-                position = gameEngine.Config.Waypoints.IndexOf(new Waypoint(closest));
+                position = gameEngine.UserSettings.Waypoints.IndexOf(new Waypoint(closest));
             }
         }
 
         public override void ExitState()
         {
-            gameEngine.FFInstance.Instance.Navigator.Reset();
+            gameEngine.Session.Instance.Navigator.Reset();
         }
     }
 }

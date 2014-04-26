@@ -17,17 +17,17 @@ namespace EasyFarm.Classes
         public override bool CanExecute()
         {
             return 
-                _engine.FFInstance.Instance.Player.Status == FFACETools.Status.Fighting
-                && _engine.FFInstance.Instance.Player.TPCurrent >= 100                                 
-                && _engine.Config.WeaponInfo.Ability.IsValidName
-                && _engine.TargetData.TargetUnit.HPPCurrent <= _engine.Config.WeaponInfo.Health 
-                && _engine.TargetData.TargetUnit.Distance < _engine.Config.WeaponInfo.Distance;
+                _engine.Session.Instance.Player.Status == FFACETools.Status.Fighting
+                && _engine.Session.Instance.Player.TPCurrent >= 100                                 
+                && _engine.UserSettings.WeaponInfo.Ability.IsValidName
+                && _engine.TargetData.TargetUnit.HPPCurrent <= _engine.UserSettings.WeaponInfo.Health 
+                && _engine.TargetData.TargetUnit.Distance < _engine.UserSettings.WeaponInfo.Distance;
         }
 
         public override TerminationStatus Execute()
         {
             var skill = _engine.PlayerActions.WeaponSkill.Ability;
-            _engine.Combat.MaintainHeading();
+            _engine.CombatService.MaintainHeading();
             _engine.AbilityExecutor.UseAbility(skill);
 
             if (CanExecute())

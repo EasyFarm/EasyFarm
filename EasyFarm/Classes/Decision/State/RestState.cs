@@ -27,21 +27,15 @@ class RestState : BaseState
         return gameEngine.PlayerData.shouldRest && gameEngine.IsWorking;
     }
 
-    public override void EnterState()
-    {
-
-    }
+    public override void EnterState() { }
 
     public override void RunState()
     {
         if (!gameEngine.PlayerData.IsResting)
         {
-            gameEngine.Resting.On();
+            gameEngine.RestingService.On();
         }
     }
 
-    public override void ExitState()
-    {
-
-    }
+    public override void ExitState() { }
 }

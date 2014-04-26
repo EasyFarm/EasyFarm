@@ -41,12 +41,8 @@ namespace EasyFarm.ViewModels
 
         public ObservableCollection<ListItem<HealingAbility>> Healing
         {
-            get { return GameEngine.Config.ActionInfo.HealingList; }
-            set
-            {
-                GameEngine.Config.ActionInfo.HealingList = value;
-                this.OnPropertyChanged(() => this.Healing);
-            }
+            get { return GameEngine.UserSettings.ActionInfo.HealingList; }
+            set { SetProperty(ref this.GameEngine.UserSettings.ActionInfo.HealingList, value); }
         }
 
         public ICommand AddHealingCommand { get; set; }

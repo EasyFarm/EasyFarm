@@ -35,7 +35,7 @@ namespace EasyFarm.FSM
         public override void EnterState()
         {
             // gameEngine.Combat.Enter();
-            gameEngine.Resting.Off();
+            gameEngine.RestingService.Off();
         }
 
         public override void RunState()
@@ -49,7 +49,7 @@ namespace EasyFarm.FSM
             }
             */
 
-            gameEngine.Combat.Battle();
+            gameEngine.CombatService.Battle();
         }
 
         public override void ExitState()

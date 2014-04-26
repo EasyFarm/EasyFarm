@@ -43,7 +43,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public List<Ability> StartList
         {
-            get { return FilterValidActions(m_gameEngine.Config.ActionInfo.StartList); }
+            get { return FilterValidActions(m_gameEngine.UserSettings.ActionInfo.StartList); }
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public List<Ability> EndList
         {
-            get { return FilterValidActions(m_gameEngine.Config.ActionInfo.EndList); }
+            get { return FilterValidActions(m_gameEngine.UserSettings.ActionInfo.EndList); }
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public List<Ability> BattleList
         {
-            get { return FilterValidActions(m_gameEngine.Config.ActionInfo.BattleList); }
+            get { return FilterValidActions(m_gameEngine.UserSettings.ActionInfo.BattleList); }
         }
 
         /// <summary>
@@ -70,9 +70,9 @@ namespace EasyFarm.Classes
             get
             {
                 return FilterValidActions(
-                        m_gameEngine.Config.ActionInfo.HealingList
+                        m_gameEngine.UserSettings.ActionInfo.HealingList
                             .Where(x => x.Item.IsEnabled)
-                            .Where(x => x.Item.TriggerLevel >= m_gameEngine.FFInstance.Instance.Player.HPPCurrent)
+                            .Where(x => x.Item.TriggerLevel >= m_gameEngine.Session.Instance.Player.HPPCurrent)
                             .Select(x => m_gameEngine.AbilityService.CreateAbility(x.Item.Name))
                             .ToList()
                     );
@@ -126,14 +126,14 @@ namespace EasyFarm.Classes
         {
             var a = Actions.Where(x => x.IsValidName).ToList();
             var b = a.Where(x => AbilityRecastable(x));
-            var c = b.Where(x => x.MPCost <= m_gameEngine.FFInstance.Instance.Player.MPCurrent && x.TPCost <= m_gameEngine.FFInstance.Instance.Player.TPCurrent).ToList();
+            var c = b.Where(x => x.MPCost <= m_gameEngine.Session.Instance.Player.MPCurrent && x.TPCost <= m_gameEngine.Session.Instance.Player.TPCurrent).ToList();
             var d = c.Where(x => (x.IsSpell && !m_gameEngine.ActionBlocked.IsCastingBlocked) || (x.IsAbility && !m_gameEngine.ActionBlocked.IsAbilitiesBlocked)).ToList();
             var e = d.ToList();
 
             return Actions
                     .Where(x => x.IsValidName)
                     .Where(x => AbilityRecastable(x))
-                    .Where(x => x.MPCost <= m_gameEngine.FFInstance.Instance.Player.MPCurrent && x.TPCost <= m_gameEngine.FFInstance.Instance.Player.TPCurrent)
+                    .Where(x => x.MPCost <= m_gameEngine.Session.Instance.Player.MPCurrent && x.TPCost <= m_gameEngine.Session.Instance.Player.TPCurrent)
                     .Where(x => (x.IsSpell && !m_gameEngine.ActionBlocked.IsCastingBlocked) || (x.IsAbility && !m_gameEngine.ActionBlocked.IsAbilitiesBlocked))
                     .ToList();
         }
@@ -150,11 +150,11 @@ namespace EasyFarm.Classes
 
             if (value.IsSpell)
             {
-                Recast = m_gameEngine.FFInstance.Instance.Timer.GetSpellRecast((SpellList)value.Index);
+                Recast = m_gameEngine.Session.Instance.Timer.GetSpellRecast((SpellList)value.Index);
             }
             else
             {
-                Recast = m_gameEngine.FFInstance.Instance.Timer.GetAbilityRecast((AbilityList)value.Index);
+                Recast = m_gameEngine.Session.Instance.Timer.GetAbilityRecast((AbilityList)value.Index);
             }
 
             return 0 == Recast;

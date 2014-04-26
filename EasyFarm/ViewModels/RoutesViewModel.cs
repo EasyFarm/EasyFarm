@@ -48,12 +48,8 @@ namespace EasyFarm.ViewModels
 
         public ObservableCollection<Waypoint> Route
         {
-            get { return GameEngine.Config.Waypoints; }
-            set
-            {
-                GameEngine.Config.Waypoints = value;
-                this.OnPropertyChanged(() => this.Route);
-            }
+            get { return GameEngine.UserSettings.Waypoints; }
+            set { SetProperty(ref this.GameEngine.UserSettings.Waypoints, value); }
         }
 
         public ICommand RecordRouteCommand { get; set; }
@@ -81,11 +77,11 @@ namespace EasyFarm.ViewModels
 
         void RouteRecorder_Tick(object sender, EventArgs e)
         {
-            var Point = GameEngine.FFInstance.Instance.Player.Position;
+            var Point = GameEngine.Session.Instance.Player.Position;
 
             if (!Point.Equals(LastPosition))
             {
-                GameEngine.Config.Waypoints.Add(new Waypoint(Point));
+                GameEngine.UserSettings.Waypoints.Add(new Waypoint(Point));
                 LastPosition = Point;
             }
         }

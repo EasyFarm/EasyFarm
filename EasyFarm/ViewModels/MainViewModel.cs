@@ -33,38 +33,22 @@ namespace EasyFarm.ViewModels
         public MainViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) :
             base(ref Engine, eventAggregator) 
         {
-            InformUser("Bot Loaded: " + Engine.FFInstance.Instance.Player.Name);
+            // Tell the user the program has loaded the player's data
+            InformUser("Bot Loaded: " + Engine.Session.Instance.Player.Name);
+            
+            // Create start command handler.
             StartCommand = new DelegateCommand(Start);
-
+            
+            // Get events from view models to update the status bar's text.
             eventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe((a) => { StatusBarText = a; });
         }
 
         public String StatusBarText
         {
-            get { return GameEngine.Config.StatusBarText; }
-            set
-            {
-                GameEngine.Config.StatusBarText = value;
-                this.OnPropertyChanged(() => this.StatusBarText);
-            }
+            get { return GameEngine.UserSettings.StatusBarText; }
+            set { this.SetProperty(ref GameEngine.UserSettings.StatusBarText, value); }
         }
-
-        /*
-        public String CategoryDescription
-        {
-            get { return this.Get<String>("CategoryDescription"); }
-            set { this.Set<String>("CategoryDescription", value); }
-        }
-        */
-
-        /*
-        public String CategoryName
-        {
-            get { return this.Get<String>("CategoryName"); }
-            set { this.Set<String>("CategoryName", value); }
-        }
-        */
-
+       
         public ICommand StartCommand { get; set; }
 
         public void Start()

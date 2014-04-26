@@ -26,7 +26,7 @@ namespace EasyFarm.Classes
 
         public override TerminationStatus Execute()
         {
-            _engine.FFInstance.Instance.Windower.SendString(ATTACK_TARGET);
+            _engine.Session.Instance.Windower.SendString(ATTACK_TARGET);
             if (CanExecute())
                 return TerminationStatus.Success;
             else

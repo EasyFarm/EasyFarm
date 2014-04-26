@@ -21,7 +21,7 @@ namespace EasyFarm.Classes
         public override TerminationStatus Execute()
         {
             _engine.AbilityExecutor.ExecuteActions(_engine.PlayerActions.StartList, 
-                () => _engine.Combat.MaintainHeading());
+                () => _engine.CombatService.MaintainHeading());
 
             return TerminationStatus.Success;
         }

@@ -44,7 +44,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerTools = _engine.FFInstance.Instance.Player;
+                var PlayerTools = _engine.Session.Instance.Player;
                 return PlayerTools.Status == Status.Dead1 ||
                     PlayerTools.Status == Status.Dead2;
             }
@@ -97,7 +97,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return _engine.Config.Waypoints.Count > 0 && !shouldFight && !shouldRest && !shouldHeal && !_engine.ActionBlocked.IsUnable;
+                return _engine.UserSettings.Waypoints.Count > 0 && !shouldFight && !shouldRest && !shouldHeal && !_engine.ActionBlocked.IsUnable;
             }
         }
 
@@ -121,8 +121,8 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerTools = _engine.FFInstance.Instance.Player;
-                var Config = _engine.Config;
+                var PlayerTools = _engine.Session.Instance.Player;
+                var Config = _engine.UserSettings;
                 return PlayerTools.HPPCurrent <= Config.RestingInfo.Health.Low;
             }
         }
@@ -131,8 +131,8 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerTools = _engine.FFInstance.Instance.Player;
-                var Config = _engine.Config;
+                var PlayerTools = _engine.Session.Instance.Player;
+                var Config = _engine.UserSettings;
                 return PlayerTools.MPPCurrent <= Config.RestingInfo.Magic.Low;
             }
         }
@@ -141,8 +141,8 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerTools = _engine.FFInstance.Instance.Player;
-                var Config = _engine.Config;
+                var PlayerTools = _engine.Session.Instance.Player;
+                var Config = _engine.UserSettings;
                 return IsResting && PlayerTools.HPPCurrent < Config.RestingInfo.Health.High;
             }
         }
@@ -151,8 +151,8 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerTools = _engine.FFInstance.Instance.Player;
-                var Config = _engine.Config;
+                var PlayerTools = _engine.Session.Instance.Player;
+                var Config = _engine.UserSettings;
                 return IsResting && PlayerTools.MPPCurrent < Config.RestingInfo.Magic.High;
             }
         }
@@ -169,7 +169,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var Config = _engine.Config;
+                var Config = _engine.UserSettings;
                 return Config.RestingInfo.Health.Enabled;
             }
         }
@@ -178,7 +178,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var Config = _engine.Config;
+                var Config = _engine.UserSettings;
                 return Config.RestingInfo.Health.Enabled;
             }
         }
@@ -192,7 +192,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerTools = _engine.FFInstance.Instance.Player;
+                var PlayerTools = _engine.Session.Instance.Player;
                 return PlayerTools.HPCurrent > 0;
             }
         }
@@ -205,7 +205,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerTools = _engine.FFInstance.Instance.Player;
+                var PlayerTools = _engine.Session.Instance.Player;
                 return PlayerTools.Status == Status.Healing;
             }
         }
@@ -218,7 +218,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerTools = _engine.FFInstance.Instance.Player;
+                var PlayerTools = _engine.Session.Instance.Player;
                 return PlayerTools.Status == Status.Fighting;
             }
         }
@@ -233,8 +233,8 @@ namespace EasyFarm.Classes
             get
             {
                 var TargetData = _engine.TargetData;
-                var PlayerTools = _engine.FFInstance.Instance.Player;
-                var Config = _engine.Config;
+                var PlayerTools = _engine.Session.Instance.Player;
+                var Config = _engine.UserSettings;
                 return PlayerTools.TPCurrent >= 100 &&
                                     TargetData.TargetUnit.HPPCurrent <= Config.WeaponInfo.Health &&
                                     IsFighting && TargetData.TargetUnit.Distance < Config.WeaponInfo.Distance &&
@@ -254,8 +254,8 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerTools = _engine.FFInstance.Instance.Player;
-                var Config = _engine.Config;
+                var PlayerTools = _engine.Session.Instance.Player;
+                var Config = _engine.UserSettings;
                 return PlayerTools.HPPCurrent <= Config.RestingInfo.Health.Low;
             }
         }
@@ -282,7 +282,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerTools = _engine.FFInstance.Instance.Player;
+                var PlayerTools = _engine.Session.Instance.Player;
                 var RestBlockingDebuffs = new List<StatusEffect>() 
             { 
                 StatusEffect.Poison, StatusEffect.Bio, StatusEffect.Sleep, 
@@ -319,7 +319,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerTools = _engine.FFInstance.Instance.Player;
+                var PlayerTools = _engine.Session.Instance.Player;
                 return PlayerTools.Status == Status.Fighting;
             }
         }

@@ -35,7 +35,7 @@ namespace EasyFarm.FSM
 
         public override void EnterState()
         {
-            gameEngine.Resting.Off();
+            gameEngine.RestingService.Off();
         }
 
         public override void RunState()
