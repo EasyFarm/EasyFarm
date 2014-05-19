@@ -73,7 +73,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return shouldRestForHP || shouldRestForMP;
+                return !_engine.Units.HasAggro && (shouldRestForHP || shouldRestForMP);
             }
         }
 
@@ -123,7 +123,7 @@ namespace EasyFarm.Classes
             {
                 var PlayerTools = _engine.Session.Instance.Player;
                 var Config = _engine.UserSettings;
-                return PlayerTools.HPPCurrent <= Config.RestingInfo.Health.Low;
+                return PlayerTools.HPPCurrent < Config.RestingInfo.Health.Low;
             }
         }
 
@@ -133,7 +133,7 @@ namespace EasyFarm.Classes
             {
                 var PlayerTools = _engine.Session.Instance.Player;
                 var Config = _engine.UserSettings;
-                return PlayerTools.MPPCurrent <= Config.RestingInfo.Magic.Low;
+                return PlayerTools.MPPCurrent < Config.RestingInfo.Magic.Low;
             }
         }
 
@@ -179,7 +179,7 @@ namespace EasyFarm.Classes
             get
             {
                 var Config = _engine.UserSettings;
-                return Config.RestingInfo.Health.Enabled;
+                return Config.RestingInfo.Magic.Enabled;
             }
         }
 

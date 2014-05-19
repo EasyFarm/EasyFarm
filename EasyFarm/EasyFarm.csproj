@@ -98,23 +98,28 @@
       <HintPath>bin\Release\FFACETools.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Practices.Prism.Composition">
+    <Reference Include="Microsoft.Practices.Prism.Composition, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Prism.Composition.5.0.0\lib\NET45\Microsoft.Practices.Prism.Composition.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Prism.Interactivity.5.0.0\lib\NET45\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism.Mvvm">
+    <Reference Include="Microsoft.Practices.Prism.Mvvm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism.Mvvm.Desktop">
+    <Reference Include="Microsoft.Practices.Prism.Mvvm.Desktop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.Desktop.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism.PubSubEvents">
+    <Reference Include="Microsoft.Practices.Prism.PubSubEvents, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Prism.PubSubEvents.1.0.0\lib\portable-sl4+wp7+windows8+net40\Microsoft.Practices.Prism.PubSubEvents.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism.SharedInterfaces">
+    <Reference Include="Microsoft.Practices.Prism.SharedInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -125,18 +130,6 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Reactive.Core">
-      <HintPath>..\packages\Rx-Core.2.2.2\lib\net45\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\packages\Rx-Interfaces.2.2.2\lib\net45\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq">
-      <HintPath>..\packages\Rx-Linq.2.2.2\lib\net45\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices">
-      <HintPath>..\packages\Rx-PlatformServices.2.2.3\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.XML" />
@@ -151,54 +144,73 @@
     <Compile Include="Classes\Decision\Behavior\AcquireMobBehavior.cs" />
     <Compile Include="Classes\Decision\Behavior\ActionsBehavior.cs" />
     <Compile Include="Classes\Decision\Behavior\AttackSequence.cs" />
+    <Compile Include="Classes\Decision\Behavior\Behavior.cs" />
     <Compile Include="Classes\Decision\Behavior\BehaviorTree.cs" />
     <Compile Include="Classes\Decision\Behavior\EngageBehavior.cs" />
     <Compile Include="Classes\Decision\Behavior\EngageSequence.cs" />
     <Compile Include="Classes\Decision\Behavior\FaceMobBehavior.cs" />
     <Compile Include="Classes\Decision\Behavior\MoveToUnitBehavior.cs" />
     <Compile Include="Classes\Decision\Behavior\Selector.cs" />
+    <Compile Include="Classes\Decision\Behavior\Sequence.cs" />
     <Compile Include="Classes\Decision\Behavior\TargetBehavior.cs" />
     <Compile Include="Classes\Decision\Behavior\WeaponSkillBehavior.cs" />
-    <Compile Include="Classes\Services\AbilitiesService.cs" />
-    <Compile Include="Classes\Services\AbilityExecutor.cs" />
-    <Compile Include="Classes\Services\AbilityParser.cs" />
-    <Compile Include="Classes\Game Data\ActionBlocked.cs" />
     <Compile Include="Classes\Decision\State\AttackState.cs" />
     <Compile Include="Classes\Decision\State\BaseState.cs" />
-    <Compile Include="Classes\Decision\Behavior\Behavior.cs" />
-    <Compile Include="Classes\Services\CombatService.cs" />
     <Compile Include="Classes\Decision\State\DeadState.cs" />
     <Compile Include="Classes\Decision\State\FiniteStateMachine.cs" />
     <Compile Include="Classes\Decision\State\HealingState.cs" />
-    <Compile Include="Classes\User Settings\ActionInfo.cs" />
-    <Compile Include="Classes\User Settings\Health.cs" />
-    <Compile Include="Classes\User Settings\Magic.cs" />
-    <Compile Include="Classes\User Settings\RestingInfo.cs" />
-    <Compile Include="Classes\Decision\Behavior\Sequence.cs" />
-    <Compile Include="Classes\User Settings\MobFilters.cs" />
+    <Compile Include="Classes\Decision\State\RestState.cs" />
+    <Compile Include="Classes\Decision\State\TravelState.cs" />
+    <Compile Include="Classes\Game Data\Ability.cs" />
+    <Compile Include="Classes\Game Data\ActionBlocked.cs" />
+    <Compile Include="Classes\Game Data\HealingAbility.cs" />
     <Compile Include="Classes\Game Data\PlayerActions.cs" />
     <Compile Include="Classes\Game Data\PlayerData.cs" />
-    <Compile Include="Classes\Services\RestingService.cs" />
-    <Compile Include="Classes\Decision\State\RestState.cs" />
+    <Compile Include="Classes\Game Data\Session.cs" />
     <Compile Include="Classes\Game Data\TargetData.cs" />
-    <Compile Include="Classes\Decision\State\TravelState.cs" />
-    <Compile Include="Classes\Services\UnitService.cs" />
+    <Compile Include="Classes\Game Data\Unit.cs" />
+    <Compile Include="Classes\Game Data\Waypoint.cs" />
+    <Compile Include="Classes\Game Data\WeaponAbility.cs" />
+    <Compile Include="Classes\Services\AbilitiesService.cs" />
+    <Compile Include="Classes\Services\AbilityExecutor.cs" />
+    <Compile Include="Classes\Services\AbilityParser.cs" />
+    <Compile Include="Classes\Services\CombatService.cs" />
     <Compile Include="Classes\Services\GameEngine.cs" />
+    <Compile Include="Classes\Services\RestingService.cs" />
+    <Compile Include="Classes\Services\UnitService.cs" />
+    <Compile Include="Classes\Services\Utilities.cs" />
+    <Compile Include="Classes\User Settings\ActionInfo.cs" />
     <Compile Include="Classes\User Settings\Config.cs" />
-    <Compile Include="Models\BattleModel.cs" />
+    <Compile Include="Classes\User Settings\Health.cs" />
+    <Compile Include="Classes\User Settings\Magic.cs" />
+    <Compile Include="Classes\User Settings\MobFilters.cs" />
+    <Compile Include="Classes\User Settings\RestingInfo.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="ViewModels\HealingViewModel.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
+    <Compile Include="ViewModels\ListItem.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RestingViewModel.cs" />
     <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="ViewModels\StatusBarUpdateEvent.cs" />
     <Compile Include="ViewModels\TargetsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Classes\Game Data\Waypoint.cs" />
     <Compile Include="ViewModels\WeaponsViewModel.cs" />
+    <Compile Include="Views\AbilitySelectionBox.xaml.cs">
+      <DependentUpon>AbilitySelectionBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BattlesView.xaml.cs">
       <DependentUpon>BattlesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmStartup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmStartup.designer.cs">
+      <DependentUpon>frmStartup.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\HealingView.xaml.cs">
       <DependentUpon>HealingView.xaml</DependentUpon>
@@ -208,25 +220,6 @@
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ViewModels\ListItem.cs" />
-    <None Include="Classes\Services\Pathing.cs" />
-    <Compile Include="Classes\Game Data\Ability.cs" />
-    <Compile Include="Classes\Game Data\HealingAbility.cs" />
-    <Compile Include="Classes\Game Data\WeaponAbility.cs" />
-    <Compile Include="Classes\Game Data\Session.cs" />
-    <Compile Include="Classes\Game Data\Unit.cs" />
-    <Compile Include="Views\frmStartup.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\frmStartup.designer.cs">
-      <DependentUpon>frmStartup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\Services\Utilities.cs" />
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\ProcessView.xaml.cs">
       <DependentUpon>ProcessView.xaml</DependentUpon>
@@ -243,46 +236,6 @@
     <Compile Include="Views\WeaponsView.xaml.cs">
       <DependentUpon>WeaponsView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\BattlesView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ControlStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\HealingView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\IgnoredView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ProcessView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\RestingView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\RoutesView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TargetsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\WeaponsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -339,10 +292,70 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BehaviorLibrary\BehaviorLibrary\BehaviorLibrary.csproj">
-      <Project>{cc824b6f-6145-485f-9604-fb94f0ecaca7}</Project>
-      <Name>BehaviorLibrary</Name>
-    </ProjectReference>
+    <Page Include="Views\AbilitySelectionBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\BattlesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\ControlStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\HealingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\IgnoredView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\ProcessView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\RestingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\RoutesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\TargetsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\WeaponsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

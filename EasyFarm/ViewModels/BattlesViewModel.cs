@@ -14,9 +14,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using EasyFarm.Views;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.ViewModel;
@@ -31,11 +33,12 @@ namespace EasyFarm.ViewModels
 {
     public class BattlesViewModel : ViewModelBase
     {
-        public BattlesViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) : base(ref Engine, eventAggregator) 
+        public BattlesViewModel(ref GameEngine Engine, IEventAggregator eventAggregator)
+            : base(ref Engine, eventAggregator)
         {
             AddActionCommand = new DelegateCommand<Object>(AddAction);
             DeleteActionCommand = new DelegateCommand<Object>(DeleteAction);
-            ClearActionsCommand = new DelegateCommand(ClearActions);            
+            ClearActionsCommand = new DelegateCommand(ClearActions);
         }
 
         private Ability battleAction;
@@ -43,13 +46,8 @@ namespace EasyFarm.ViewModels
         public Ability BattleAction
         {
             get { return battleAction; }
-            set 
-            {
-                SetProperty(ref this.battleAction, value);
-                (AddActionCommand as DelegateCommand<object>).RaiseCanExecuteChanged();
-            }
+            set { SetProperty(ref this.battleAction, value); }
         }
-
 
         /// <summary>
         /// The list of moves to use before battle.
@@ -59,7 +57,7 @@ namespace EasyFarm.ViewModels
             get { return GameEngine.UserSettings.ActionInfo.StartList; }
             set { SetProperty(ref this.GameEngine.UserSettings.ActionInfo.StartList, value); }
         }
-        
+
         /// <summary>
         /// The list of moves to use during battle.
         /// </summary>
@@ -68,7 +66,7 @@ namespace EasyFarm.ViewModels
             get { return GameEngine.UserSettings.ActionInfo.BattleList; }
             set { SetProperty(ref this.GameEngine.UserSettings.ActionInfo.BattleList, value); }
         }
-        
+
         /// <summary>
         /// The list of moves to use after battle.
         /// </summary>
@@ -82,7 +80,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         /// When selected displays the battle moves list.
         /// </summary>
-        public bool BattleSelected 
+        public bool BattleSelected
         {
             get { return GameEngine.UserSettings.ActionInfo.BattleListSelected; }
             set { SetProperty(ref this.GameEngine.UserSettings.ActionInfo.BattleListSelected, value); }
@@ -117,11 +115,7 @@ namespace EasyFarm.ViewModels
         public String ActionName
         {
             get { return actionName; }
-            set { 
-                SetProperty(ref this.actionName, value);
-                if (GameEngine.AbilityService.Exists(actionName))
-                    BattleAction = GameEngine.AbilityService.CreateAbility(actionName);
-            }
+            set { SetProperty(ref this.actionName, value); }
         }
 
         /// <summary>
@@ -144,7 +138,7 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private ObservableCollection<Ability> SelectedList
         {
-            get 
+            get
             {
                 if (StartSelected)
                     return StartList;
@@ -163,7 +157,11 @@ namespace EasyFarm.ViewModels
         /// <param name="obj"></param>
         private void AddAction(object obj)
         {
-            SelectedList.Add(BattleAction);
+            String name = obj as String;
+            if (GameEngine.AbilityService.GetAbilitiesWithName(name).Count > 1)
+                SelectedList.Add(new AbilitySelectionBox(name).SelectedAbility);
+            else if (GameEngine.AbilityService.Exists(name))
+                SelectedList.Add(GameEngine.AbilityService.CreateAbility(name));
         }
 
         /// <summary>
@@ -190,7 +188,7 @@ namespace EasyFarm.ViewModels
         /// <returns></returns>
         private bool IsBattleActionAddable(object obj)
         {
-            if (BattleAction != null  && BattleAction.IsValidName && !SelectedList.Contains(BattleAction))
+            if (BattleAction != null && BattleAction.IsValidName && !SelectedList.Contains(BattleAction))
                 return true;
             else
                 return false;
@@ -201,9 +199,9 @@ namespace EasyFarm.ViewModels
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        private bool IsBattleActionRemovable(object obj) 
-        { 
-            return !IsBattleActionAddable(obj); 
+        private bool IsBattleActionRemovable(object obj)
+        {
+            return !IsBattleActionAddable(obj);
         }
     }
 }
