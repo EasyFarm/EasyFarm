@@ -31,13 +31,13 @@ namespace EasyFarm.Decision.FSM
     {
         public DeadState(ref GameEngine gameEngine) : base(ref gameEngine) { }
 
-        public override bool CheckState() { return gameEngine.PlayerData.IsDead; }
+        public override bool CheckState() { return _engine.PlayerData.IsDead; }
 
         public override void EnterState() { }
 
         public override void RunState() { 
-            gameEngine.Stop();
-            gameEngine.UserSettings.StatusBarText = "Stopped!";
+            _engine.Stop();
+            _engine.UserSettings.StatusBarText = "Stopped!";
         }
 
         public override void ExitState() { }

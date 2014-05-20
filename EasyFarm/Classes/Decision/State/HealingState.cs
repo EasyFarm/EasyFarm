@@ -30,24 +30,24 @@ namespace EasyFarm.FSM
 
         public override bool CheckState()
         {
-            return gameEngine.PlayerData.shouldHeal && !gameEngine.PlayerData.shouldRest;
+            return _engine.PlayerData.shouldHeal && !_engine.PlayerData.shouldRest;
         }
 
         public override void EnterState()
         {
-            gameEngine.RestingService.Off();
+            _engine.RestingService.Off();
         }
 
         public override void RunState()
         {
             // Use an ability to heal from the healing list if we can
-            if(gameEngine.PlayerActions.HealingList.Count > 0)
+            if(_engine.PlayerActions.HealingList.Count > 0)
             {
                 // Check for actions available
-                var act = gameEngine.PlayerActions.HealingList.FirstOrDefault();
+                var act = _engine.PlayerActions.HealingList.FirstOrDefault();
                 if (act == null) { return; }
                 //
-                else { gameEngine.AbilityExecutor.UseAbility(act); }
+                else { _engine.AbilityExecutor.UseAbility(act); }
             }
         }
 

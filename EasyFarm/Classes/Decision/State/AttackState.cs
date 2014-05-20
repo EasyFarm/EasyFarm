@@ -29,32 +29,22 @@ namespace EasyFarm.FSM
 
         public override bool CheckState()
         {
-            return gameEngine.PlayerData.shouldFight;
+            return _engine.PlayerData.shouldFight;
         }
 
         public override void EnterState()
         {
-            // gameEngine.Combat.Enter();
-            gameEngine.RestingService.Off();
+            _engine.RestingService.Off();
         }
 
         public override void RunState()
         {
-            /*
-            AttackSequence AtkSqc = new AttackSequence(ref gameEngine);
-
-            while (AtkSqc.CanExecute())
-            {
-                AtkSqc.Execute();
-            }
-            */
-
-            gameEngine.CombatService.Battle();
+            _engine.CombatService.Battle();
         }
 
         public override void ExitState()
         {
-            //gameEngine.Combat.Exit();
+
         }
     }
 }

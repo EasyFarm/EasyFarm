@@ -28,6 +28,7 @@ using EasyFarm.FSM;
 using System.Threading.Tasks;
 using EasyFarm.Decision.FSM;
 using EasyFarm.Decision;
+using EasyFarm.Classes.Decision.State;
 
 public class FiniteStateEngine
 {
@@ -73,6 +74,8 @@ public class FiniteStateEngine
         AddState(new TravelState(ref this._engine));
         AddState(new HealingState(ref this._engine));
         AddState(new DeadState(ref this._engine));
+        AddState(new PostBattle(ref this._engine));
+        AddState(new TargetInvalid(ref this._engine));
 
         foreach (var b in this.Brains)
             b.Enabled = true;
@@ -109,7 +112,6 @@ public class FiniteStateEngine
 
                     // Run this State and stop.
                     BS.RunState();
-                    return;
                 }
             }
         }

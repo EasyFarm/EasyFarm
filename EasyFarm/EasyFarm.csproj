@@ -141,25 +141,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\Decision\Behavior\AcquireMobBehavior.cs" />
-    <Compile Include="Classes\Decision\Behavior\ActionsBehavior.cs" />
-    <Compile Include="Classes\Decision\Behavior\AttackSequence.cs" />
-    <Compile Include="Classes\Decision\Behavior\Behavior.cs" />
-    <Compile Include="Classes\Decision\Behavior\BehaviorTree.cs" />
-    <Compile Include="Classes\Decision\Behavior\EngageBehavior.cs" />
-    <Compile Include="Classes\Decision\Behavior\EngageSequence.cs" />
-    <Compile Include="Classes\Decision\Behavior\FaceMobBehavior.cs" />
-    <Compile Include="Classes\Decision\Behavior\MoveToUnitBehavior.cs" />
-    <Compile Include="Classes\Decision\Behavior\Selector.cs" />
-    <Compile Include="Classes\Decision\Behavior\Sequence.cs" />
-    <Compile Include="Classes\Decision\Behavior\TargetBehavior.cs" />
-    <Compile Include="Classes\Decision\Behavior\WeaponSkillBehavior.cs" />
     <Compile Include="Classes\Decision\State\AttackState.cs" />
     <Compile Include="Classes\Decision\State\BaseState.cs" />
     <Compile Include="Classes\Decision\State\DeadState.cs" />
     <Compile Include="Classes\Decision\State\FiniteStateMachine.cs" />
     <Compile Include="Classes\Decision\State\HealingState.cs" />
+    <Compile Include="Classes\Decision\State\PostBattle.cs" />
     <Compile Include="Classes\Decision\State\RestState.cs" />
+    <Compile Include="Classes\Decision\State\TargetInvalid.cs" />
     <Compile Include="Classes\Decision\State\TravelState.cs" />
     <Compile Include="Classes\Game Data\Ability.cs" />
     <Compile Include="Classes\Game Data\ActionBlocked.cs" />

@@ -23,16 +23,16 @@ public abstract class BaseState : IComparable<BaseState>
 {
     public bool Enabled;
     public int Priority;
-    protected GameEngine gameEngine;
+    protected GameEngine _engine;
     
     public abstract bool CheckState();
     public abstract void EnterState();
     public abstract void RunState();
     public abstract void ExitState();
 
-    public BaseState(ref GameEngine gameEngine)
+    public BaseState(ref GameEngine engine)
     {
-        this.gameEngine = gameEngine;
+        this._engine = engine;
     }
 
     public int CompareTo(BaseState other)

@@ -34,7 +34,7 @@ namespace EasyFarm.Classes
             this._engine = gameEngine;
         }
 
-        private Unit m_targetUnit = null;       
+        private Unit _targetUnit = Unit.CreateUnit(0);
         private GameEngine _engine;
 
         /// <summary>
@@ -42,15 +42,8 @@ namespace EasyFarm.Classes
         /// </summary>
         public Unit TargetUnit
         {
-            get
-            {
-                var Units = _engine.Units;
-                return m_targetUnit == null ||
-                !Units.IsValid(m_targetUnit) ?
-                m_targetUnit = Units.GetTarget() : m_targetUnit;
-            }
-
-            set { this.TargetUnit = value; }
+            get { return _targetUnit; }
+            set { this._targetUnit = value; }
         }
 
         /// <summary>
@@ -98,7 +91,7 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public bool IsDead
         {
-            get { return TargetUnit.HPPCurrent <= 0; }
+            get { return TargetUnit.Status.Equals(Status.Dead1) || TargetUnit.Status.Equals(Status.Dead2); }
         }
 
         /// <summary>

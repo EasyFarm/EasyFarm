@@ -24,16 +24,16 @@ class RestState : BaseState
 
     public override bool CheckState()
     {
-        return gameEngine.PlayerData.shouldRest && gameEngine.IsWorking;
+        return _engine.PlayerData.shouldRest && _engine.IsWorking;
     }
 
     public override void EnterState() { }
 
     public override void RunState()
     {
-        if (!gameEngine.PlayerData.IsResting)
+        if (!_engine.PlayerData.IsResting)
         {
-            gameEngine.RestingService.On();
+            _engine.RestingService.On();
         }
     }
 
