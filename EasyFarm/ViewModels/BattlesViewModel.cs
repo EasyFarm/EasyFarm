@@ -54,8 +54,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Ability> StartList
         {
-            get { return GameEngine.UserSettings.ActionInfo.StartList; }
-            set { SetProperty(ref this.GameEngine.UserSettings.ActionInfo.StartList, value); }
+            get { return _engine.UserSettings.ActionInfo.StartList; }
+            set { SetProperty(ref this._engine.UserSettings.ActionInfo.StartList, value); }
         }
 
         /// <summary>
@@ -63,8 +63,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Ability> BattleList
         {
-            get { return GameEngine.UserSettings.ActionInfo.BattleList; }
-            set { SetProperty(ref this.GameEngine.UserSettings.ActionInfo.BattleList, value); }
+            get { return _engine.UserSettings.ActionInfo.BattleList; }
+            set { SetProperty(ref this._engine.UserSettings.ActionInfo.BattleList, value); }
         }
 
         /// <summary>
@@ -72,8 +72,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Ability> EndList
         {
-            get { return GameEngine.UserSettings.ActionInfo.EndList; }
-            set { SetProperty(ref this.GameEngine.UserSettings.ActionInfo.EndList, value); }
+            get { return _engine.UserSettings.ActionInfo.EndList; }
+            set { SetProperty(ref this._engine.UserSettings.ActionInfo.EndList, value); }
 
         }
 
@@ -82,8 +82,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool BattleSelected
         {
-            get { return GameEngine.UserSettings.ActionInfo.BattleListSelected; }
-            set { SetProperty(ref this.GameEngine.UserSettings.ActionInfo.BattleListSelected, value); }
+            get { return _engine.UserSettings.ActionInfo.BattleListSelected; }
+            set { SetProperty(ref this._engine.UserSettings.ActionInfo.BattleListSelected, value); }
         }
 
         /// <summary>
@@ -91,8 +91,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool StartSelected
         {
-            get { return GameEngine.UserSettings.ActionInfo.StartListSelected; }
-            set { SetProperty(ref this.GameEngine.UserSettings.ActionInfo.StartListSelected, value); }
+            get { return _engine.UserSettings.ActionInfo.StartListSelected; }
+            set { SetProperty(ref this._engine.UserSettings.ActionInfo.StartListSelected, value); }
         }
 
         /// <summary>
@@ -100,8 +100,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool EndSelected
         {
-            get { return GameEngine.UserSettings.ActionInfo.EndListSelected; }
-            set { SetProperty(ref this.GameEngine.UserSettings.ActionInfo.EndListSelected, value); }
+            get { return _engine.UserSettings.ActionInfo.EndListSelected; }
+            set { SetProperty(ref this._engine.UserSettings.ActionInfo.EndListSelected, value); }
         }
 
         /// <summary>
@@ -158,10 +158,10 @@ namespace EasyFarm.ViewModels
         private void AddAction(object obj)
         {
             String name = obj as String;
-            if (GameEngine.AbilityService.GetAbilitiesWithName(name).Count > 1)
+            if (_engine.AbilityService.GetAbilitiesWithName(name).Count > 1)
                 SelectedList.Add(new AbilitySelectionBox(name).SelectedAbility);
-            else if (GameEngine.AbilityService.Exists(name))
-                SelectedList.Add(GameEngine.AbilityService.CreateAbility(name));
+            else if (_engine.AbilityService.Exists(name))
+                SelectedList.Add(_engine.AbilityService.CreateAbility(name));
         }
 
         /// <summary>

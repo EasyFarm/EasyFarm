@@ -21,9 +21,11 @@ using EasyFarm.Classes;
 using FFACETools;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -44,17 +46,23 @@ namespace EasyFarm.ViewModels
 
             ClearRouteCommand = new DelegateCommand(ClearRoute);
             RecordRouteCommand = new DelegateCommand<Object>(RecordRoute);
+            SaveCommand = new DelegateCommand(SaveRoute);
+            LoadCommand = new DelegateCommand(LoadRoute);
         }
 
         public ObservableCollection<Waypoint> Route
         {
-            get { return GameEngine.UserSettings.Waypoints; }
-            set { SetProperty(ref this.GameEngine.UserSettings.Waypoints, value); }
+            get { return _engine.UserSettings.Waypoints; }
+            set { SetProperty(ref this._engine.UserSettings.Waypoints, value); }
         }
 
         public ICommand RecordRouteCommand { get; set; }
 
         public ICommand ClearRouteCommand { get; set; }
+
+        public ICommand SaveCommand { get; set; }
+
+        public ICommand LoadCommand { get; set; }
 
         public void ClearRoute()
         {
@@ -75,13 +83,39 @@ namespace EasyFarm.ViewModels
             }
         }
 
+        private void SaveRoute()
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.InitialDirectory = Directory.GetCurrentDirectory();
+            sfd.DefaultExt = ".wpl";
+            sfd.Filter = "Waypoint lists (.wpl)|*.wpl";
+
+            if (sfd.ShowDialog() == true)
+            {
+                Utilities.Serialize(sfd.SafeFileName, Route);
+            }
+        }
+
+        private void LoadRoute()
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.InitialDirectory = Directory.GetCurrentDirectory();
+            ofd.DefaultExt = ".wpl";
+            ofd.Filter = "Waypoint lists (.wpl)|*.wpl";
+            
+            if (ofd.ShowDialog() == true)
+            {
+                Route = Utilities.Deserialize(ofd.SafeFileName, Route);
+            }
+        }
+
         void RouteRecorder_Tick(object sender, EventArgs e)
         {
-            var Point = GameEngine.Session.Instance.Player.Position;
+            var Point = _engine.Session.Instance.Player.Position;
 
             if (!Point.Equals(LastPosition))
             {
-                GameEngine.UserSettings.Waypoints.Add(new Waypoint(Point));
+                _engine.UserSettings.Waypoints.Add(new Waypoint(Point));
                 LastPosition = Point;
             }
         }

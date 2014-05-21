@@ -56,32 +56,32 @@ namespace EasyFarm.ViewModels
 
         public String TargetsName
         {
-            get { return GameEngine.UserSettings.FilterInfo.TargetName; }
-            set { SetProperty(ref this.GameEngine.UserSettings.FilterInfo.TargetName, value); }
+            get { return _engine.UserSettings.FilterInfo.TargetName; }
+            set { SetProperty(ref this._engine.UserSettings.FilterInfo.TargetName, value); }
         }
 
         public ObservableCollection<String> Targets
         {
-            get { return GameEngine.UserSettings.FilterInfo.TargetedMobs; }
-            set { SetProperty(ref this.GameEngine.UserSettings.FilterInfo.TargetedMobs, value); }
+            get { return _engine.UserSettings.FilterInfo.TargetedMobs; }
+            set { SetProperty(ref this._engine.UserSettings.FilterInfo.TargetedMobs, value); }
         }
 
         public bool Aggro
         {
-            get { return GameEngine.UserSettings.FilterInfo.AggroFilter; }
-            set { SetProperty(ref this.GameEngine.UserSettings.FilterInfo.AggroFilter, value); }
+            get { return _engine.UserSettings.FilterInfo.AggroFilter; }
+            set { SetProperty(ref this._engine.UserSettings.FilterInfo.AggroFilter, value); }
         }
 
         public bool Unclaimed
         {
-            get { return GameEngine.UserSettings.FilterInfo.UnclaimedFilter; }
-            set { SetProperty(ref this.GameEngine.UserSettings.FilterInfo.UnclaimedFilter, value); }
+            get { return _engine.UserSettings.FilterInfo.UnclaimedFilter; }
+            set { SetProperty(ref this._engine.UserSettings.FilterInfo.UnclaimedFilter, value); }
         }
 
         public bool PartyClaimed
         {
-            get { return GameEngine.UserSettings.FilterInfo.PartyFilter; }
-            set { SetProperty(ref this.GameEngine.UserSettings.FilterInfo.PartyFilter, value); }
+            get { return _engine.UserSettings.FilterInfo.PartyFilter; }
+            set { SetProperty(ref this._engine.UserSettings.FilterInfo.PartyFilter, value); }
         }
 
         public ICommand AddCommand { get; set; }

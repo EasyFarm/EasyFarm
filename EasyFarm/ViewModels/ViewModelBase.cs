@@ -32,13 +32,13 @@ namespace EasyFarm.ViewModels
 {
     public class ViewModelBase : BindableBase
     {
-        protected GameEngine GameEngine;
+        protected GameEngine _engine;
         protected IEventAggregator eventAggregator;
 
         protected ViewModelBase(ref GameEngine Engine, IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
-            this.GameEngine = Engine;
+            this._engine = Engine;
         }
 
         /// <summary>

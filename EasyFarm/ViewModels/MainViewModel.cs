@@ -45,23 +45,23 @@ namespace EasyFarm.ViewModels
 
         public String StatusBarText
         {
-            get { return GameEngine.UserSettings.StatusBarText; }
-            set { this.SetProperty(ref GameEngine.UserSettings.StatusBarText, value); }
+            get { return _engine.UserSettings.StatusBarText; }
+            set { this.SetProperty(ref _engine.UserSettings.StatusBarText, value); }
         }
        
         public ICommand StartCommand { get; set; }
 
         public void Start()
         {
-            if (GameEngine.IsWorking)
+            if (_engine.IsWorking)
             {
                 InformUser("Program paused.");
-                GameEngine.Stop();
+                _engine.Stop();
             }
             else
             {
                 InformUser("Program running.");
-                GameEngine.Start();
+                _engine.Start();
             }
         }
     }

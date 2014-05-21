@@ -33,54 +33,54 @@ namespace EasyFarm.ViewModels
 
         public int LowHP
         {
-            get { return GameEngine.UserSettings.RestingInfo.Health.Low; }
+            get { return _engine.UserSettings.RestingInfo.Health.Low; }
             set
             {
-                SetProperty(ref GameEngine.UserSettings.RestingInfo.Health.Low, value);
+                SetProperty(ref _engine.UserSettings.RestingInfo.Health.Low, value);
                 InformUser("Low hp set to " + this.LowHP);
             }
         }
 
         public int HighHP
         {
-            get { return GameEngine.UserSettings.RestingInfo.Health.High; }
+            get { return _engine.UserSettings.RestingInfo.Health.High; }
             set
             {
-                SetProperty(ref GameEngine.UserSettings.RestingInfo.Health.High, value);
+                SetProperty(ref _engine.UserSettings.RestingInfo.Health.High, value);
                 InformUser("High hp set to " + this.HighHP);
             }
         }
 
         public int LowMP
         {
-            get { return GameEngine.UserSettings.RestingInfo.Magic.Low; }
+            get { return _engine.UserSettings.RestingInfo.Magic.Low; }
             set
             {
-                SetProperty(ref GameEngine.UserSettings.RestingInfo.Magic.Low, value);
+                SetProperty(ref _engine.UserSettings.RestingInfo.Magic.Low, value);
                 InformUser("Low mp set to " + this.LowMP);
             }
         }
 
         public int HighMP
         {
-            get { return GameEngine.UserSettings.RestingInfo.Magic.High; }
+            get { return _engine.UserSettings.RestingInfo.Magic.High; }
             set
             {
-                SetProperty(ref GameEngine.UserSettings.RestingInfo.Magic.High, value);
+                SetProperty(ref _engine.UserSettings.RestingInfo.Magic.High, value);
                 InformUser("High mp set to " + this.HighMP);
             }
         }
 
         public bool HPEnabled
         {
-            get { return GameEngine.UserSettings.RestingInfo.Health.Enabled; }
-            set { SetProperty(ref GameEngine.UserSettings.RestingInfo.Health.Enabled, value); }
+            get { return _engine.UserSettings.RestingInfo.Health.Enabled; }
+            set { SetProperty(ref _engine.UserSettings.RestingInfo.Health.Enabled, value); }
         }
 
         public bool MPEnabled
         {
-            get { return GameEngine.UserSettings.RestingInfo.Magic.Enabled; }
-            set { SetProperty(ref GameEngine.UserSettings.RestingInfo.Magic.Enabled, value); }
+            get { return _engine.UserSettings.RestingInfo.Magic.Enabled; }
+            set { SetProperty(ref _engine.UserSettings.RestingInfo.Magic.Enabled, value); }
         }
     }
 }

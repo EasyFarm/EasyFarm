@@ -59,14 +59,14 @@ namespace EasyFarm.ViewModels
 
         public String Name
         {
-            get { return GameEngine.UserSettings.FilterInfo.IgnoredName; }
-            set { SetProperty(ref this.GameEngine.UserSettings.FilterInfo.IgnoredName, value); }
+            get { return _engine.UserSettings.FilterInfo.IgnoredName; }
+            set { SetProperty(ref this._engine.UserSettings.FilterInfo.IgnoredName, value); }
         }
 
         public ObservableCollection<String> Ignored
         {
-            get { return GameEngine.UserSettings.FilterInfo.IgnoredMobs; }
-            set { SetProperty(ref this.GameEngine.UserSettings.FilterInfo.IgnoredMobs, value); }
+            get { return _engine.UserSettings.FilterInfo.IgnoredMobs; }
+            set { SetProperty(ref this._engine.UserSettings.FilterInfo.IgnoredMobs, value); }
         }
 
         public ICommand AddIgnoredUnitCommand { get; set; }

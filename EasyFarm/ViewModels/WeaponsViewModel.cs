@@ -39,39 +39,39 @@ namespace EasyFarm.ViewModels
 
         public String Name
         {
-            get { return GameEngine.UserSettings.WeaponInfo.Name; }
-            set { SetProperty(ref this.GameEngine.UserSettings.WeaponInfo.Name, value); }
+            get { return _engine.UserSettings.WeaponInfo.Name; }
+            set { SetProperty(ref this._engine.UserSettings.WeaponInfo.Name, value); }
         }
 
         public double Distance
         {
-            get { return GameEngine.UserSettings.WeaponInfo.Distance; }
-            set { SetProperty(ref this.GameEngine.UserSettings.WeaponInfo.Distance, value); 
+            get { return _engine.UserSettings.WeaponInfo.Distance; }
+            set { SetProperty(ref this._engine.UserSettings.WeaponInfo.Distance, value); 
                     InformUser("Distance set to " + this.Distance);
             }
         }
 
         public int Health
         {
-            get { return GameEngine.UserSettings.WeaponInfo.Health; }
+            get { return _engine.UserSettings.WeaponInfo.Health; }
             set
             {
-                SetProperty(ref this.GameEngine.UserSettings.WeaponInfo.Health, value); 
+                SetProperty(ref this._engine.UserSettings.WeaponInfo.Health, value); 
                 InformUser("Health set to " + this.Health);
             }
         }
 
         public WeaponAbility Ability
         {
-            get { return GameEngine.UserSettings.WeaponInfo; }
-            set { SetProperty(ref this.GameEngine.UserSettings.WeaponInfo, value); }
+            get { return _engine.UserSettings.WeaponInfo; }
+            set { SetProperty(ref this._engine.UserSettings.WeaponInfo, value); }
         }
 
         public ICommand SetCommand { get; set; }
 
         private void SetWeaponSkill(Object StatusBar)
         {
-            var weaponSkill = GameEngine.AbilityService.CreateAbility(Name);
+            var weaponSkill = _engine.AbilityService.CreateAbility(Name);
 
             if (string.IsNullOrWhiteSpace(Name) || !weaponSkill.IsValidName)
             {
