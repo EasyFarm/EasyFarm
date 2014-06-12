@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 
 namespace EasyFarm
@@ -38,6 +39,11 @@ namespace EasyFarm
         public static IEventAggregator EventAggregator;
 
         public App() 
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;            
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
         {
             // Set up the event aggregator for updates to the status bar from 
             // multiple view models.
@@ -62,15 +68,37 @@ namespace EasyFarm
             Engine = new GameEngine(ProcessSelectionScreen.POL_Process);
 
             Engine.LoadSettings();
-
-            this.MainWindow = new MainWindow();
-            this.MainWindow.Show();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            base.OnExit(e);
             Engine.SaveSettings(Engine);
-        }        
+        }
+
+        // Thanks to atom0s for assembly embedding code!
+
+        /// <summary>
+        /// Assembly resolve event callback to load embedded libraries.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        private static Assembly CurrentDomainOnAssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            var dllName = args.Name.Contains(",") ? args.Name.Substring(0, args.Name.IndexOf(",", System.StringComparison.InvariantCultureIgnoreCase)) : args.Name.Replace(".dll", "");
+            if (dllName.ToLower().EndsWith(".resources"))
+                return null;
+
+            var fullName = string.Format("EasyFarm.Embedded.{0}.dll", new AssemblyName(args.Name).Name);
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fullName))
+            {
+                if (stream == null)
+                    return null;
+
+                var data = new byte[stream.Length];
+                stream.Read(data, 0, (int)stream.Length);
+                return Assembly.Load(data);
+            }
+        }
     }
 }

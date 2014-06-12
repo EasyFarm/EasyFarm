@@ -14,7 +14,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
 ﻿using System;
 using System.Linq;
@@ -74,7 +75,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                foreach(var Monster in ValidMobs)
+                foreach (var Monster in ValidMobs)
                 {
                     if (Monster.IsClaimed)
                     {
@@ -88,7 +89,7 @@ namespace EasyFarm.Classes
         public Unit[] ValidMobs
         {
             get
-            {                
+            {
                 return UnitArray
                     .Where(x => !x.Name.Equals(String.Empty))
                     .Where(x => IsValid(x))
@@ -98,38 +99,38 @@ namespace EasyFarm.Classes
 
         public Unit GetTarget()
         {
-                // Create a blank target
-                Unit MainTarget = Unit.CreateUnit(0);
+            // Create a blank target
+            Unit MainTarget = Unit.CreateUnit(0);
 
-                // Create a copy of the valid mobs
-                Unit[] PotentialTargets = ValidMobs;
+            // Create a copy of the valid mobs
+            Unit[] PotentialTargets = ValidMobs;
 
-                try
-                {
-                    return PotentialTargets
-                            // Get all of the party claimed mobs
-                            .Where(mob => _gameEngine.UserSettings.FilterInfo.PartyFilter && mob.PartyClaim)
-                            .OrderBy(mob => mob.Distance)
-                        .Concat(PotentialTargets
-                            // Get all of my claimed mobs.
-                            .Where(mob => mob.MyClaim)
-                            .OrderBy(mob => mob.Distance))
-                        .Concat(PotentialTargets
-                            // Get all of the aggroed mobs
-                            .Where(mob => _gameEngine.UserSettings.FilterInfo.AggroFilter && mob.HasAggroed)
-                            .OrderBy(mob => mob.Distance))
-                        .Concat(PotentialTargets
-                            // Get all of the unclaimed mobs
-                            .Where(mob => _gameEngine.UserSettings.FilterInfo.UnclaimedFilter && !mob.IsClaimed)
-                            .OrderBy(mob => mob.Distance))                            
-                        .First();                    
-                }
-                catch (InvalidOperationException)
-                {
-                    // Do Nothing, let bot retry
-                }
+            try
+            {
+                return PotentialTargets
+                    // Get all of the party claimed mobs
+                        .Where(mob => _gameEngine.UserSettings.FilterInfo.PartyFilter && mob.PartyClaim)
+                        .OrderBy(mob => mob.Distance)
+                    .Concat(PotentialTargets
+                    // Get all of my claimed mobs.
+                        .Where(mob => mob.MyClaim)
+                        .OrderBy(mob => mob.Distance))
+                    .Concat(PotentialTargets
+                    // Get all of the aggroed mobs
+                        .Where(mob => _gameEngine.UserSettings.FilterInfo.AggroFilter && mob.HasAggroed)
+                        .OrderBy(mob => mob.Distance))
+                    .Concat(PotentialTargets
+                    // Get all of the unclaimed mobs
+                        .Where(mob => _gameEngine.UserSettings.FilterInfo.UnclaimedFilter && !mob.IsClaimed)
+                        .OrderBy(mob => mob.Distance))
+                    .First();
+            }
+            catch (InvalidOperationException)
+            {
+                // Do Nothing, let bot retry
+            }
 
-                return MainTarget;
+            return MainTarget;
         }
 
         #endregion

@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="EasyFarm.Views.UnitFilteringView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Left" Width="100">
+            <Button>
+                
+            </Button>
+        </StackPanel>
+        <UniformGrid Columns="3" VerticalAlignment="Top" DockPanel.Dock="Right">
+            <CheckBox>IsActive</CheckBox>
+            <WrapPanel>
+                <CheckBox>Distance lt 17</CheckBox>
+                <Slider HorizontalAlignment="Stretch"></Slider>
+            </WrapPanel>
+
+            <WrapPanel>
+                <CheckBox>Y Difference lt 5</CheckBox>
+                <Slider HorizontalAlignment="Stretch" Value="5"></Slider>
+            </WrapPanel>
+
+            <CheckBox>NPCBit not equ 0</CheckBox>
+            <CheckBox>Not Dead</CheckBox>
+            <CheckBox>NPCType = Mob</CheckBox>
+            <CheckBox>Targeted Mobs Contains Name and Ignored does not</CheckBox>
+            <CheckBox>Aggroed</CheckBox>
+            <CheckBox>MyClaim</CheckBox>
+            <CheckBox>PartyClaim</CheckBox>
+        </UniformGrid>
+    </DockPanel>
+</UserControl>

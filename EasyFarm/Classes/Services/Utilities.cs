@@ -62,23 +62,5 @@ namespace EasyFarm.Classes
 
             return value;
         }
-
-        public static FFACE GetFFACESession()
-        {
-            // Let user select ffxi process
-            frmStartup ProcessSelectionScreen = new frmStartup();
-            ProcessSelectionScreen.ShowDialog();
-
-            // Validate the selection
-            var m_process = ProcessSelectionScreen.POL_Process;
-
-            if (m_process == null)
-            {
-                System.Windows.Forms.MessageBox.Show("No valid process was selected: Exiting now.");
-                Environment.Exit(0);
-            }
-
-            return ProcessSelectionScreen.FFXI_Session;
-        }
     }
 }
