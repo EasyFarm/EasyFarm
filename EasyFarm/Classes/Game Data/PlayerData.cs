@@ -235,7 +235,7 @@ namespace EasyFarm.Classes
                 var TargetData = _engine.TargetData;
                 var PlayerTools = _engine.Session.Instance.Player;
                 var Config = _engine.UserSettings;
-                return PlayerTools.TPCurrent >= 100 &&
+                return PlayerTools.TPCurrent >= 1000 &&
                                     TargetData.TargetUnit.HPPCurrent <= Config.WeaponInfo.Health &&
                                     IsFighting && TargetData.TargetUnit.Distance < Config.WeaponInfo.Distance &&
                                     Config.WeaponInfo.Ability.IsValidName;
