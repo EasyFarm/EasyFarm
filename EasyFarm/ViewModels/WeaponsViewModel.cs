@@ -34,7 +34,7 @@ namespace EasyFarm.ViewModels
         public WeaponsViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) :
             base(ref Engine, eventAggregator) 
         {
-            SetCommand = new DelegateCommand<Object>(SetWeaponSkill);
+            SetCommand = new DelegateCommand(SetWeaponSkill);
         }
 
         public String Name
@@ -69,7 +69,7 @@ namespace EasyFarm.ViewModels
 
         public ICommand SetCommand { get; set; }
 
-        private void SetWeaponSkill(Object StatusBar)
+        private void SetWeaponSkill()
         {
             var weaponSkill = _engine.AbilityService.CreateAbility(Name);
 
