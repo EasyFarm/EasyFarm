@@ -93,10 +93,8 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FFACETools, Version=1.3.1.18, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Release\FFACETools.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="FFACETools">
+      <HintPath>Embedded\FFACETools.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
@@ -355,6 +353,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Release\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
@@ -372,6 +371,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.PubSubEvents.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Embedded\FFACETools.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
