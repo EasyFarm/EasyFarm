@@ -14,12 +14,14 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
 ﻿using EasyFarm.Classes;
 using EasyFarm.UtilityTools;
 using FFACETools;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace EasyFarm.Classes
@@ -39,14 +41,8 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The FFACE and Process Instance of the current FFXI Instance
         /// </summary>
-        public Session Session;
-        
-        /// <summary>
-        /// The engine to run the bot. Contains all the information the bot 
-        /// needs to perform its job.
-        /// </summary>
-        public GameEngine Engine;
-        
+        public FFInstance Session;
+
         /// <summary>
         /// The decision making machinery for the bot
         /// </summary>
@@ -56,8 +52,8 @@ namespace EasyFarm.Classes
         /// Contains the user's preferences that he makes through 
         /// his user interface.
         /// </summary>
-        public Config UserSettings = new Config();      
-        
+        public Config UserSettings = new Config();
+
         /// <summary>
         /// Contains data on Creatures/NPCS in the environment. 
         /// Does not contain player information.
@@ -83,22 +79,22 @@ namespace EasyFarm.Classes
         /// Functions and details for resting.
         /// </summary>
         public RestingService RestingService;
-        
+
         /// <summary>
         /// Contains the methods needed for executing actions
         /// </summary>
         public AbilityExecutor AbilityExecutor;
-        
+
         /// <summary>
         /// Contains all of the player's potential moves.
         /// </summary>
         public PlayerActions PlayerActions;
-        
+
         /// <summary>
         /// Retrieves ability objects.
         /// </summary>
         public AbilityService AbilityService = new AbilityService();
-        
+
         /// <summary>
         /// Determines with an action can be used.
         /// </summary>
@@ -108,28 +104,77 @@ namespace EasyFarm.Classes
         /// Tells us whether the bot is working or not.
         /// </summary>
         public bool IsWorking = false;
+        
+        /// <summary>
+        /// Our game engine singleton instance
+        /// </summary>
+        private static GameEngine _engine;
         #endregion
 
         #region Constructors
-        public GameEngine(Process process)
+        private GameEngine(Process process)
         {
-            Engine = this;
-            Process = process;
-            Session = new Session(this.Process);
-            StateMachine = new FiniteStateEngine(ref Engine);
-            Units = new UnitService(ref Engine);
-            CombatService = new CombatService(ref Engine);
-            PlayerData = new PlayerData(ref Engine);
-            TargetData = new TargetData(ref Engine);
-            RestingService = new RestingService(ref Engine);
-            AbilityExecutor = new AbilityExecutor(ref Engine);
-            PlayerActions = new PlayerActions(ref Engine);
-            ActionBlocked = new ActionBlocked(ref Engine);
-            AbilityService = new AbilityService();
+            SetProcess(process);
+        }
+
+        private GameEngine()
+        {
+                
         }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Assumes the user will supply a process object later on.
+        /// </summary>
+        /// <returns></returns>
+        public static GameEngine GetInstance()
+        {
+            return _engine ?? new GameEngine();
+        }
+
+        /// <summary>
+        /// Returns/Creates a game engine object for the supplied process
+        /// </summary>
+        /// <returns></returns>
+        public static GameEngine GetInstance(Process process)
+        {
+            if (_engine == null)
+            {
+                return new GameEngine(process);
+            }
+            else if (_engine.Process != process)
+            {
+                _engine.SetProcess(process);
+                return _engine;
+            }
+            else 
+            {
+                return _engine;
+            }
+        }
+
+        /// <summary>
+        /// Sets up the game engine for a given process object.
+        /// </summary>
+        /// <param name="process"></param>
+        public void SetProcess(Process process)
+        {
+            _engine = this;
+            Process = process;
+            Session = new FFInstance(this.Process);
+            StateMachine = new FiniteStateEngine(ref _engine);
+            Units = UnitService.GetInstance(this.Session.Instance);
+            CombatService = new CombatService(ref _engine);
+            PlayerData = new PlayerData(ref _engine);
+            TargetData = new TargetData(ref _engine);
+            RestingService = RestingService.GetInstance(this.Session.Instance);
+            AbilityExecutor = new AbilityExecutor(ref _engine);
+            PlayerActions = new PlayerActions(ref _engine);
+            ActionBlocked = new ActionBlocked(ref _engine);
+            AbilityService = new AbilityService();
+        }
+
         /// <summary>
         /// Start the bot up
         /// </summary>
@@ -154,6 +199,7 @@ namespace EasyFarm.Classes
         /// <param name="Engine"></param>
         public void SaveSettings(GameEngine Engine)
         {
+            UserSettings.FilterInfo = UnitService.GetInstance().FilterInfo;
             String Filename = Session.Instance.Player.Name + "_UserPref.xml";
             Utilities.Serialize(Filename, UserSettings);
         }
@@ -165,6 +211,7 @@ namespace EasyFarm.Classes
         {
             String Filename = Session.Instance.Player.Name + "_UserPref.xml";
             UserSettings = Utilities.Deserialize(Filename, UserSettings);
+            UnitService.GetInstance().FilterInfo = UserSettings.FilterInfo;
         }
         #endregion
     }

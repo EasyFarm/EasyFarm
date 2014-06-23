@@ -65,7 +65,7 @@ namespace EasyFarm
             }
 
             // Set up the game engine if valid.
-            Engine = new GameEngine(ProcessSelectionScreen.POL_Process);
+            Engine = GameEngine.GetInstance(ProcessSelectionScreen.POL_Process);
 
             Engine.LoadSettings();
         }

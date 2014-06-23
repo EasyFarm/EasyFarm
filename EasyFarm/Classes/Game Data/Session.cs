@@ -8,13 +8,13 @@ using FFACETools;
 
 namespace EasyFarm.Classes
 {
-    public class Session
+    public class FFInstance
     {
         public Process MyProcess { get; private set; }
         public FFACE Instance { get; private set; }
 
         #region Constructor
-        public Session(Process proc)
+        public FFInstance(Process proc)
         {
             MyProcess = proc;
             Instance = new FFACE(MyProcess.Id);
@@ -42,7 +42,7 @@ namespace EasyFarm.Classes
         #region Equals Override
         public override bool Equals(object obj)
         {
-            Session temp = obj as Session;
+            FFInstance temp = obj as FFInstance;
             if (temp == null) { return false; }
             return MyProcess.Id == temp.MyProcess.Id;
         }

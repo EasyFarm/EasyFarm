@@ -205,8 +205,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerTools = _engine.Session.Instance.Player;
-                return PlayerTools.Status == Status.Healing;
+                return RestingService.GetInstance().IsResting;
             }
         }
 
@@ -237,9 +236,6 @@ namespace EasyFarm.Classes
                 var Config = _engine.UserSettings;
 
                 var WeaponSkillTP = 1000;
-#if DEBUG
-                WeaponSkillTP = 100;
-#endif
 
                 return PlayerTools.TPCurrent >= WeaponSkillTP &&
                                     TargetData.TargetUnit.HPPCurrent <= Config.WeaponInfo.Health &&

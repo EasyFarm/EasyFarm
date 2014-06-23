@@ -36,12 +36,33 @@ namespace EasyFarm.Classes
         /// Command for stopping resting
         /// </summary>
         const string RESTING_OFF = "/heal off";
-        
-        private GameEngine _gameEngine;
 
-        public RestingService(ref GameEngine gameEngine)
+        public FFACE Session { get; set; }
+
+        private static RestingService _restingService;
+
+        private RestingService(ref FFACE session)
         {
-            this._gameEngine = gameEngine;
+            this.Session = session;
+        }
+
+        /// <summary>
+        /// Returns the resting service set to this version of fface
+        /// </summary>
+        /// <param name="session"></param>
+        /// <returns></returns>
+        public static RestingService GetInstance(FFACE session)
+        {
+            return _restingService ?? (_restingService = new RestingService(ref session));
+        }
+
+        /// <summary>
+        /// Returns a resting service object that may not have it's fface session set.
+        /// </summary>
+        /// <returns></returns>
+        public static RestingService GetInstance()
+        {
+            return _restingService;
         }
 
         /// <summary>
@@ -49,7 +70,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public void Off()
         {
-            if (_gameEngine.PlayerData.IsResting) { _gameEngine.Session.Instance.Windower.SendString(RESTING_OFF); }
+            if (IsResting) { Session.Windower.SendString(RESTING_OFF); }
         }
 
         /// <summary>
@@ -57,7 +78,18 @@ namespace EasyFarm.Classes
         /// </summary>
         public void On()
         {
-            if (!_gameEngine.PlayerData.IsResting) { _gameEngine.Session.Instance.Windower.SendString(RESTING_ON); }
+            if (!IsResting) { Session.Windower.SendString(RESTING_ON); }
+        }
+
+        /// <summary>
+        /// Is our player resting?
+        /// </summary>
+        public bool IsResting 
+        {
+            get
+            {
+                return Session.Player.Status == Status.Healing;
+            }
         }
     }
 }
