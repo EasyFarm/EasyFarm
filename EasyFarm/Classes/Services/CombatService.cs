@@ -41,15 +41,6 @@ namespace EasyFarm.Classes
         /// </summary>
         const string ATTACK_ON = "/attack on";
         
-        /// <summary>
-        /// Min distance we need to maintain from the enemy
-        /// </summary>
-        const int DIST_MIN = 3;
-        
-        /// <summary>
-        /// Max distance we can be from the enemy
-        /// </summary>
-        const int DIST_MAX = 5;
 
         /// <summary>
         /// Max time used to spend running to a mob before timing out.
@@ -75,7 +66,7 @@ namespace EasyFarm.Classes
             get
             {
                 return _engine.Session.Instance.Navigator
-                    .DistanceTo(_engine.TargetData.TargetUnit.Position) <= DIST_MAX;
+                    .DistanceTo(_engine.TargetData.TargetUnit.Position) <= _engine.UserSettings.MiscSettings.MaxMeleeDistance;
             }
         }
 
@@ -97,10 +88,10 @@ namespace EasyFarm.Classes
             var OldTolerance = NavTools.DistanceTolerance;
 
             // Use the new one
-            NavTools.DistanceTolerance = DIST_MIN;
+            NavTools.DistanceTolerance = _engine.UserSettings.MiscSettings.MinMeleeDistance;
 
             // Run to the unit while we are out of distance. 
-            if (NavTools.DistanceTo(TargetData.Position) >= DIST_MIN)
+            if (NavTools.DistanceTo(TargetData.Position) >= _engine.UserSettings.MiscSettings.MinMeleeDistance)
                 NavTools.GotoNPC(TargetData.TargetUnit.ID, 10);
 
             // Restore the old tolerance.

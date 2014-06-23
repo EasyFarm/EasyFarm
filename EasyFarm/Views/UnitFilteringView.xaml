@@ -5,31 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel>
-        <StackPanel DockPanel.Dock="Left" Width="100">
-            <Button>
-                
-            </Button>
-        </StackPanel>
-        <UniformGrid Columns="3" VerticalAlignment="Top" DockPanel.Dock="Right">
-            <CheckBox>IsActive</CheckBox>
-            <WrapPanel>
-                <CheckBox>Distance lt 17</CheckBox>
-                <Slider HorizontalAlignment="Stretch"></Slider>
-            </WrapPanel>
-
-            <WrapPanel>
-                <CheckBox>Y Difference lt 5</CheckBox>
-                <Slider HorizontalAlignment="Stretch" Value="5"></Slider>
-            </WrapPanel>
-
-            <CheckBox>NPCBit not equ 0</CheckBox>
-            <CheckBox>Not Dead</CheckBox>
-            <CheckBox>NPCType = Mob</CheckBox>
-            <CheckBox>Targeted Mobs Contains Name and Ignored does not</CheckBox>
-            <CheckBox>Aggroed</CheckBox>
-            <CheckBox>MyClaim</CheckBox>
-            <CheckBox>PartyClaim</CheckBox>
-        </UniformGrid>
-    </DockPanel>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <GroupBox Header="Misc Settings" Foreground="White" Background="#FF2B2B2B" Margin="10">
+            <StackPanel>
+                <Label>Detection Distance</Label>
+                <Slider Minimum="0" Maximum="100" Value="{Binding DetectionDistance}"></Slider>
+                <Label>Height Threshold</Label>
+                <Slider Minimum="0" Maximum="100" Value="{Binding HeightThreshold}"></Slider>
+                <Label>Min Melee Distance</Label>
+                <Slider Minimum="0" Maximum="100" Value="{Binding MinMeleeDistance}"></Slider>
+                <Label>Max Melee Distance</Label>
+                <Slider Minimum="0" Maximum="100" Value="{Binding MaxMeleeDistance}"></Slider>
+            </StackPanel>
+        </GroupBox>
+    </ScrollViewer>
 </UserControl>

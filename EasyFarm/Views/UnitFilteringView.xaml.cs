@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyFarm.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace EasyFarm.Views
         public UnitFilteringView()
         {
             InitializeComponent();
+            this.DataContext = new UnitFilteringViewModel(ref App.Engine, App.EventAggregator);
         }
     }
 }

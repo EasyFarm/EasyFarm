@@ -177,7 +177,7 @@
     <Compile Include="Classes\Game Data\HealingAbility.cs" />
     <Compile Include="Classes\Game Data\PlayerActions.cs" />
     <Compile Include="Classes\Game Data\PlayerData.cs" />
-    <Compile Include="Classes\Game Data\Session.cs" />
+    <Compile Include="Classes\Game Data\FFInstance.cs" />
     <Compile Include="Classes\Game Data\TargetData.cs" />
     <Compile Include="Classes\Game Data\Unit.cs" />
     <Compile Include="Classes\Game Data\Waypoint.cs" />
@@ -194,6 +194,7 @@
     <Compile Include="Classes\User Settings\Config.cs" />
     <Compile Include="Classes\User Settings\Health.cs" />
     <Compile Include="Classes\User Settings\Magic.cs" />
+    <Compile Include="Classes\User Settings\MiscSettings.cs" />
     <Compile Include="Classes\User Settings\MobFilters.cs" />
     <Compile Include="Classes\User Settings\RestingInfo.cs" />
     <Compile Include="App.xaml.cs">
@@ -210,6 +211,7 @@
     <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="ViewModels\StatusBarUpdateEvent.cs" />
     <Compile Include="ViewModels\TargetsViewModel.cs" />
+    <Compile Include="ViewModels\UnitFilteringViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WeaponsViewModel.cs" />
     <Compile Include="Views\AbilitySelectionBox.xaml.cs">
@@ -353,7 +355,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Release\" />
+    <Folder Include="bin\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

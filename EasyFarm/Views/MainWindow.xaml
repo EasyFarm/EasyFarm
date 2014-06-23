@@ -96,6 +96,10 @@
                 <TabItem.Header>Healing</TabItem.Header>
                 <vw:HealingView></vw:HealingView>
             </TabItem>
+            <TabItem>
+                <TabItem.Header>Misc Settings</TabItem.Header>
+                <vw:UnitFilteringView></vw:UnitFilteringView>
+            </TabItem>
             <!--Start Tab-->
             <TabItem >
                 <TabItem.Header>

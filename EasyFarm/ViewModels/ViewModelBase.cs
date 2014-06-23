@@ -45,9 +45,9 @@ namespace EasyFarm.ViewModels
         /// Update the user on what's happening.
         /// </summary>
         /// <param name="message">The message to display in the statusbar</param>
-        public void InformUser(String message)
+        public void InformUser(String message, params object[] values)
         {
-            eventAggregator.GetEvent<StatusBarUpdateEvent>().Publish(message);
+            eventAggregator.GetEvent<StatusBarUpdateEvent>().Publish(String.Format(message, values));
         }
     }
 }

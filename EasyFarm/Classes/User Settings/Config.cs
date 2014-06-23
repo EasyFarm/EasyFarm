@@ -24,6 +24,7 @@ using System.Xml.Serialization;
 using EasyFarm.Classes;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Mvvm;
+using EasyFarm.Classes.User_Settings;
 
 namespace EasyFarm.Classes
 {
@@ -51,5 +52,7 @@ namespace EasyFarm.Classes
         public WeaponAbility WeaponInfo = new WeaponAbility();
 
         public RestingInfo RestingInfo = new RestingInfo();
+
+        public MiscSettings MiscSettings = new MiscSettings();
     }
 }

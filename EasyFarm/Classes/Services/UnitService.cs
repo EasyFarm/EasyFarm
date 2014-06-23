@@ -162,7 +162,7 @@ namespace EasyFarm.Classes
             }
 
             bool ValidMob =
-                ((unit.YDifference < 5) && (unit.NPCBit != 0) && (!unit.IsDead) && (unit.NPCType == NPCType.Mob))
+                ((unit.YDifference < App.Engine.UserSettings.MiscSettings.HeightThreshold) && (unit.Distance <= App.Engine.UserSettings.MiscSettings.DetectionDistance)&& (unit.NPCBit != 0) && (!unit.IsDead) && (unit.NPCType == NPCType.Mob))
                 &&
                 (((FilterInfo.TargetedMobs.Contains(unit.Name) && !unit.IsClaimed) || (FilterInfo.TargetedMobs.Count == 0 && !FilterInfo.IgnoredMobs.Contains(unit.Name)))
                 ||
