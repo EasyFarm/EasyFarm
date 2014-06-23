@@ -235,7 +235,13 @@ namespace EasyFarm.Classes
                 var TargetData = _engine.TargetData;
                 var PlayerTools = _engine.Session.Instance.Player;
                 var Config = _engine.UserSettings;
-                return PlayerTools.TPCurrent >= 1000 &&
+
+                var WeaponSkillTP = 1000;
+#if DEBUG
+                WeaponSkillTP = 100;
+#endif
+
+                return PlayerTools.TPCurrent >= WeaponSkillTP &&
                                     TargetData.TargetUnit.HPPCurrent <= Config.WeaponInfo.Health &&
                                     IsFighting && TargetData.TargetUnit.Distance < Config.WeaponInfo.Distance &&
                                     Config.WeaponInfo.Ability.IsValidName;

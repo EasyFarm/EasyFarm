@@ -38,6 +38,7 @@ public class FiniteStateEngine
     // Timer loop, check the State list.
     private Timer Heartbeat = new Timer();
     private GameEngine _engine;
+
     private Task m_thread;
     
     // private BehaviorTree _behaviorTree;
@@ -108,6 +109,7 @@ public class FiniteStateEngine
                         LastRan.ExitState();
                         LastRan = BS;
                         BS.EnterState();
+                        return; // We'll pick back up next cycle.
                     }
 
                     // Run this State and stop.

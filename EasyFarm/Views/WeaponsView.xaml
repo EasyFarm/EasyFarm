@@ -25,6 +25,6 @@
         <Slider Width="Auto" Height="Auto" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Maximum="17" Padding="5" Value="{Binding Distance}"/>
         <!--These are for the health at which the weaponskill should be used-->
         <Label Grid.Row="2" Content="Health" Padding="5" />
-        <Slider Width="Auto" Height="Auto" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Maximum="1000" Minimum="1" Padding="5" Value="{Binding Health}"/>
+        <Slider Width="Auto" Height="Auto" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Maximum="100" Minimum="1" Padding="5" Value="{Binding Health}"/>
     </Grid>
 </UserControl>
