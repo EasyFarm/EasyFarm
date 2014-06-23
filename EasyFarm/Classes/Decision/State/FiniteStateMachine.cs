@@ -109,7 +109,6 @@ public class FiniteStateEngine
                         LastRan.ExitState();
                         LastRan = BS;
                         BS.EnterState();
-                        return; // We'll pick back up next cycle.
                     }
 
                     // Run this State and stop.

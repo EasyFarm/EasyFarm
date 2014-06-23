@@ -248,10 +248,6 @@ namespace EasyFarm.Classes
             }
         }
 
-
-
-
-
         /// <summary>
         /// Determines low hp status.
         /// </summary>

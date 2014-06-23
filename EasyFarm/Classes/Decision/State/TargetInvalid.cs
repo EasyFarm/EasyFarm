@@ -15,7 +15,7 @@ namespace EasyFarm.Classes.Decision.State
 
         public override bool CheckState()
         {
-            return !_engine.Units.IsValid(_engine.TargetData.TargetUnit) && !_engine.TargetData.IsDead;
+            return !_engine.Units.IsValid(_engine.TargetData.TargetUnit);
         }
 
         public override void EnterState() { }

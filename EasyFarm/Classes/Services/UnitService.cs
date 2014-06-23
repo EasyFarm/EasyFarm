@@ -91,7 +91,6 @@ namespace EasyFarm.Classes
             get
             {
                 return UnitArray
-                    .Where(x => !x.Name.Equals(String.Empty))
                     .Where(x => IsValid(x))
                     .ToArray();
             }
@@ -138,11 +137,14 @@ namespace EasyFarm.Classes
 
         public bool IsValid(Unit unit)
         {
-            // If what was passed in is null, its not valid.
-            if (unit == null) return false;
+            // Gain performance by only checking mobs that are active
+            if (!unit.IsActive)
+            {
+                return false;
+            }
 
             bool ValidMob =
-                ((unit.IsActive) && (unit.Distance < 17) && (unit.YDifference < 5) && (unit.NPCBit != 0) && (!unit.IsDead) && (unit.NPCType == NPCType.Mob))
+                ((unit.YDifference < 5) && (unit.NPCBit != 0) && (!unit.IsDead) && (unit.NPCType == NPCType.Mob))
                 &&
                 (((_gameEngine.UserSettings.FilterInfo.TargetedMobs.Contains(unit.Name) && !unit.IsClaimed) || (_gameEngine.UserSettings.FilterInfo.TargetedMobs.Count == 0 && !_gameEngine.UserSettings.FilterInfo.IgnoredMobs.Contains(unit.Name)))
                 ||
