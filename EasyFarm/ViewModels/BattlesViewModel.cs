@@ -18,23 +18,19 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
 using EasyFarm.Views;
 using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.PubSubEvents;
-using Microsoft.Practices.Prism.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 
 namespace EasyFarm.ViewModels
 {
     public class BattlesViewModel : ViewModelBase
     {
-        public BattlesViewModel(ref GameEngine Engine, IEventAggregator eventAggregator)
-            : base(ref Engine, eventAggregator)
+        public BattlesViewModel(FarmingTools farmingTools)
+            : base(farmingTools) 
         {
             AddActionCommand = new DelegateCommand<Object>(AddAction);
             DeleteActionCommand = new DelegateCommand<Object>(DeleteAction);
@@ -54,8 +50,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Ability> StartList
         {
-            get { return _engine.UserSettings.ActionInfo.StartList; }
-            set { SetProperty(ref this._engine.UserSettings.ActionInfo.StartList, value); }
+            get { return farmingTools.UserSettings.ActionInfo.StartList; }
+            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.StartList, value); }
         }
 
         /// <summary>
@@ -63,8 +59,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Ability> BattleList
         {
-            get { return _engine.UserSettings.ActionInfo.BattleList; }
-            set { SetProperty(ref this._engine.UserSettings.ActionInfo.BattleList, value); }
+            get { return farmingTools.UserSettings.ActionInfo.BattleList; }
+            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.BattleList, value); }
         }
 
         /// <summary>
@@ -72,8 +68,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Ability> EndList
         {
-            get { return _engine.UserSettings.ActionInfo.EndList; }
-            set { SetProperty(ref this._engine.UserSettings.ActionInfo.EndList, value); }
+            get { return farmingTools.UserSettings.ActionInfo.EndList; }
+            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.EndList, value); }
 
         }
 
@@ -82,8 +78,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool BattleSelected
         {
-            get { return _engine.UserSettings.ActionInfo.BattleListSelected; }
-            set { SetProperty(ref this._engine.UserSettings.ActionInfo.BattleListSelected, value); }
+            get { return farmingTools.UserSettings.ActionInfo.BattleListSelected; }
+            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.BattleListSelected, value); }
         }
 
         /// <summary>
@@ -91,8 +87,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool StartSelected
         {
-            get { return _engine.UserSettings.ActionInfo.StartListSelected; }
-            set { SetProperty(ref this._engine.UserSettings.ActionInfo.StartListSelected, value); }
+            get { return farmingTools.UserSettings.ActionInfo.StartListSelected; }
+            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.StartListSelected, value); }
         }
 
         /// <summary>
@@ -100,8 +96,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool EndSelected
         {
-            get { return _engine.UserSettings.ActionInfo.EndListSelected; }
-            set { SetProperty(ref this._engine.UserSettings.ActionInfo.EndListSelected, value); }
+            get { return farmingTools.UserSettings.ActionInfo.EndListSelected; }
+            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.EndListSelected, value); }
         }
 
         /// <summary>
@@ -158,10 +154,10 @@ namespace EasyFarm.ViewModels
         private void AddAction(object obj)
         {
             String name = obj as String;
-            if (_engine.AbilityService.GetAbilitiesWithName(name).Count > 1)
+            if (farmingTools.AbilityService.GetAbilitiesWithName(name).Count > 1)
                 SelectedList.Add(new AbilitySelectionBox(name).SelectedAbility);
-            else if (_engine.AbilityService.Exists(name))
-                SelectedList.Add(_engine.AbilityService.CreateAbility(name));
+            else if (farmingTools.AbilityService.Exists(name))
+                SelectedList.Add(farmingTools.AbilityService.CreateAbility(name));
         }
 
         /// <summary>

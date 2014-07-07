@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
@@ -32,8 +33,7 @@ namespace EasyFarm.ViewModels
 {
     public class IgnoredViewModel : ViewModelBase
     {
-        public IgnoredViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) :
-            base(ref Engine, eventAggregator) 
+        public IgnoredViewModel(FarmingTools farmingTools) : base(farmingTools) 
         {
             AddIgnoredUnitCommand = new DelegateCommand(AddIgnoredUnit);
             DeleteIgnoredUnitCommand = new DelegateCommand(DeleteIgnoredUnit);
@@ -59,14 +59,14 @@ namespace EasyFarm.ViewModels
 
         public String Name
         {
-            get { return UnitService.GetInstance().FilterInfo.IgnoredName; }
-            set { SetProperty(ref UnitService.GetInstance().FilterInfo.IgnoredName, value); }
+            get { return farmingTools.UnitService.FilterInfo.IgnoredName; }
+            set { SetProperty(ref farmingTools.UnitService.FilterInfo.IgnoredName, value); }
         }
 
         public ObservableCollection<String> Ignored
         {
-            get { return UnitService.GetInstance().FilterInfo.IgnoredMobs; }
-            set { SetProperty(ref UnitService.GetInstance().FilterInfo.IgnoredMobs, value); }
+            get { return farmingTools.UnitService.FilterInfo.IgnoredMobs; }
+            set { SetProperty(ref farmingTools.UnitService.FilterInfo.IgnoredMobs, value); }
         }
 
         public ICommand AddIgnoredUnitCommand { get; set; }

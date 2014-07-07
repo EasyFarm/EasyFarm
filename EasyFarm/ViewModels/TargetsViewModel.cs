@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -29,8 +30,7 @@ namespace EasyFarm.ViewModels
 {
     public class TargetsViewModel : ViewModelBase
     {
-        public TargetsViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) : 
-            base(ref Engine, eventAggregator) 
+        public TargetsViewModel(FarmingTools farmingTools) : base(farmingTools) 
         {
             this.AddCommand = new DelegateCommand(AddTargetCommand);
             this.DeleteCommand = new DelegateCommand(DeleteTargetCommand);
@@ -56,32 +56,32 @@ namespace EasyFarm.ViewModels
 
         public String TargetsName
         {
-            get { return UnitService.GetInstance().FilterInfo.TargetName; }
-            set { SetProperty(ref UnitService.GetInstance().FilterInfo.TargetName, value); }
+            get { return farmingTools.UnitService.FilterInfo.TargetName; }
+            set { SetProperty(ref farmingTools.UnitService.FilterInfo.TargetName, value); }
         }
 
         public ObservableCollection<String> Targets
         {
-            get { return UnitService.GetInstance().FilterInfo.TargetedMobs; }
-            set { SetProperty(ref UnitService.GetInstance().FilterInfo.TargetedMobs, value); }
+            get { return farmingTools.UnitService.FilterInfo.TargetedMobs; }
+            set { SetProperty(ref farmingTools.UnitService.FilterInfo.TargetedMobs, value); }
         }
 
         public bool Aggro
         {
-            get { return UnitService.GetInstance().FilterInfo.AggroFilter; }
-            set { SetProperty(ref UnitService.GetInstance().FilterInfo.AggroFilter, value); }
+            get { return farmingTools.UnitService.FilterInfo.AggroFilter; }
+            set { SetProperty(ref farmingTools.UnitService.FilterInfo.AggroFilter, value); }
         }
 
         public bool Unclaimed
         {
-            get { return UnitService.GetInstance().FilterInfo.UnclaimedFilter; }
-            set { SetProperty(ref UnitService.GetInstance().FilterInfo.UnclaimedFilter, value); }
+            get { return farmingTools.UnitService.FilterInfo.UnclaimedFilter; }
+            set { SetProperty(ref farmingTools.UnitService.FilterInfo.UnclaimedFilter, value); }
         }
 
         public bool PartyClaimed
         {
-            get { return UnitService.GetInstance().FilterInfo.PartyFilter; }
-            set { SetProperty(ref UnitService.GetInstance().FilterInfo.PartyFilter, value); }
+            get { return farmingTools.UnitService.FilterInfo.PartyFilter; }
+            set { SetProperty(ref farmingTools.UnitService.FilterInfo.PartyFilter, value); }
         }
 
         public ICommand AddCommand { get; set; }

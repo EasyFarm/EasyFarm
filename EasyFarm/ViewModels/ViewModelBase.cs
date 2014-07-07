@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.ViewModel;
@@ -32,22 +33,11 @@ namespace EasyFarm.ViewModels
 {
     public class ViewModelBase : BindableBase
     {
-        protected GameEngine _engine;
-        protected IEventAggregator eventAggregator;
+        protected FarmingTools farmingTools;
 
-        protected ViewModelBase(ref GameEngine Engine, IEventAggregator eventAggregator)
+        protected ViewModelBase(FarmingTools farmingTools)
         {
-            this.eventAggregator = eventAggregator;
-            this._engine = Engine;
-        }
-
-        /// <summary>
-        /// Update the user on what's happening.
-        /// </summary>
-        /// <param name="message">The message to display in the statusbar</param>
-        public void InformUser(String message, params object[] values)
-        {
-            eventAggregator.GetEvent<StatusBarUpdateEvent>().Publish(String.Format(message, values));
+            this.farmingTools = farmingTools;
         }
     }
 }

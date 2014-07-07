@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
 ﻿using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
+using FFACETools;
 
 namespace EasyFarm.FSM
 {
@@ -25,21 +27,24 @@ namespace EasyFarm.FSM
     /// </summary>
     class AttackState : BaseState
     {
-        public AttackState(ref GameEngine gameEngine) : base(ref gameEngine) { }
+        public AttackState(FFACE fface) : base(fface) { }
 
         public override bool CheckState()
         {
-            return _engine.PlayerData.shouldFight;
+            return FarmingTools.GetInstance(fface)
+                .PlayerData.shouldFight;
         }
 
         public override void EnterState()
         {
-            _engine.RestingService.Off();
+            FarmingTools.GetInstance(fface)
+                .RestingService.Off();
         }
 
         public override void RunState()
         {
-            _engine.CombatService.Battle();
+            FarmingTools.GetInstance(fface)
+                .CombatService.Battle();
         }
 
         public override void ExitState()

@@ -24,7 +24,7 @@ namespace EasyFarm.Views
         public UnitFilteringView()
         {
             InitializeComponent();
-            this.DataContext = new UnitFilteringViewModel(ref App.Engine, App.EventAggregator);
+            this.DataContext = new UnitFilteringViewModel(App.FarmingTools);
         }
     }
 }

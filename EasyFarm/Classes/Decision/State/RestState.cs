@@ -17,23 +17,25 @@ You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
 ﻿using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
+using FFACETools;
 
 class RestState : BaseState
 {
-    public RestState(ref GameEngine gameEngine) : base(ref gameEngine) { }
+    public RestState(FFACE fface) : base(fface) { }
 
     public override bool CheckState()
     {
-        return _engine.PlayerData.shouldRest && _engine.IsWorking;
+        return FarmingTools.GetInstance(fface).PlayerData.shouldRest && FarmingTools.GetInstance(fface).GameEngine.IsWorking;
     }
 
     public override void EnterState() { }
 
     public override void RunState()
     {
-        if (!_engine.PlayerData.IsResting)
+        if (!FarmingTools.GetInstance(fface).PlayerData.IsResting)
         {
-            _engine.RestingService.On();
+            FarmingTools.GetInstance(fface).RestingService.On();
         }
     }
 

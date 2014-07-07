@@ -14,7 +14,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
 ﻿// Author: Myrmidon
 // Site: FFEVO.net
@@ -29,6 +30,8 @@ using System.Threading.Tasks;
 using EasyFarm.Decision.FSM;
 using EasyFarm.Decision;
 using EasyFarm.Classes.Decision.State;
+using System.ComponentModel;
+using FFACETools;
 
 public class FiniteStateEngine
 {
@@ -37,67 +40,34 @@ public class FiniteStateEngine
 
     // Timer loop, check the State list.
     private Timer Heartbeat = new Timer();
-    private GameEngine _engine;
+    private FFACE _fface;
 
-    private Task m_thread;
-    
-    // private BehaviorTree _behaviorTree;
-    
-    public Task Thread
-    {
-        get
-        {
-            return 
-                m_thread == null || !m_thread.Status.Equals(TaskStatus.Running) ?
-                m_thread = new Task(() => Heartbeat_Tick(null, null)) : m_thread;
-        }    
-    }
+    private BackgroundWorker worker = new BackgroundWorker();
 
     // Constructor.
     public FiniteStateEngine()
     {
         Heartbeat.Interval = 100; // Check State list ten times per second.
-        Heartbeat.Tick += new EventHandler((X, Y) => 
-        {
-            if(Thread.Status != TaskStatus.Running) 
-                Thread.Start(); 
-        });
+        Heartbeat.Tick += Heartbeat_Tick;
+        worker.DoWork += worker_DoWork;
     }
 
-    public FiniteStateEngine(ref GameEngine engine)
-        : this()
-    {
-        this._engine = engine;
-
-        //Create the states
-        AddState(new RestState(ref this._engine));
-        AddState(new AttackState(ref this._engine));
-        AddState(new TravelState(ref this._engine));
-        AddState(new HealingState(ref this._engine));
-        AddState(new DeadState(ref this._engine));
-        AddState(new PostBattle(ref this._engine));
-        AddState(new TargetInvalid(ref this._engine));
-
-        foreach (var b in this.Brains)
-            b.Enabled = true;
-
-        // _behaviorTree = new BehaviorTree(ref _engine);
-    }
-
-    // Handles the updating.
-    public void Heartbeat_Tick(object sender, EventArgs e)
+    void worker_DoWork(object sender, DoWorkEventArgs e)
     {
         lock (Brains)
         {
-            /*if (_behaviorTree.CanExecute())
-                _behaviorTree.Execute();*/
-                       
             // Sort the List, States may have updated Priorities.
             Brains.Sort();
 
             // Find a State that says it needs to run.
             foreach (BaseState BS in Brains)
             {
+                // Cancel operations if pause pending.
+                if (worker.CancellationPending)
+                {
+                    worker.CancelAsync();
+                }
+
                 if (BS.Enabled == false) { continue; } // Skip disabled States.
                 if (BS.CheckState() == true)
                 {
@@ -116,6 +86,35 @@ public class FiniteStateEngine
                 }
             }
         }
+    }
+
+    public FiniteStateEngine(FFACE fface)
+        : this()
+    {
+        this._fface = fface;
+
+        //Create the states
+        AddState(new RestState(fface));
+        AddState(new AttackState(fface));
+        AddState(new TravelState(fface));
+        AddState(new HealingState(fface));
+        AddState(new DeadState(fface));
+        AddState(new PostBattle(fface));
+        AddState(new TargetInvalid(fface));
+
+        foreach (var b in this.Brains)
+            b.Enabled = true;
+
+        // _behaviorTree = new BehaviorTree(ref _engine);
+    }
+
+    // Handles the updating.
+    public void Heartbeat_Tick(object sender, EventArgs e)
+    {
+        if (!worker.IsBusy)
+	    {
+            worker.RunWorkerAsync();
+    	}        
     }
 
     // Start and stop.

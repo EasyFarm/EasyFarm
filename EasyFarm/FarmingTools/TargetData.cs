@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes.Services;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -29,13 +30,14 @@ namespace EasyFarm.Classes
     /// </summary>
     public class TargetData
     {
-        public TargetData(ref GameEngine gameEngine)
-        {
-            this._engine = gameEngine;
-        }
+        private FFACE _fface;
 
         private Unit _targetUnit = Unit.CreateUnit(0);
-        private GameEngine _engine;
+
+        public TargetData(FFACE fface)
+        {
+            this._fface = fface;
+        }
 
         /// <summary>
         /// Who we are trying to kill currently
@@ -55,8 +57,9 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var PlayerActions = _engine.PlayerActions;
-                return IsTarget && !IsFighting && PlayerActions.HasStartMoves;
+                return IsTarget && 
+                    !IsFighting && 
+                    FarmingTools.GetInstance(_fface).PlayerActions.HasStartMoves;
             }
         }
 
@@ -69,8 +72,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var TargetTools = _engine.Session.Instance.Target;
-                return TargetTools.ID == TargetUnit.ID;
+                return _fface.Target.ID == TargetUnit.ID;
             }
         }
 
@@ -103,8 +105,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                var Units = _engine.Units;
-                return Units.IsValid(TargetUnit);
+                return FarmingTools.GetInstance(_fface).UnitService.IsValid(TargetUnit);
             }
         }
 

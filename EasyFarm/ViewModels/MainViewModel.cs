@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
@@ -30,38 +31,37 @@ namespace EasyFarm.ViewModels
 {
     class MainViewModel : ViewModelBase
     {
-        public MainViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) :
-            base(ref Engine, eventAggregator) 
+        public MainViewModel(FarmingTools farmingTools) : base(farmingTools)
         {
             // Tell the user the program has loaded the player's data
-            InformUser("Bot Loaded: " + Engine.Session.Instance.Player.Name);
+            App.InformUser("Bot Loaded: " + farmingTools.FFACE.Player.Name);
             
             // Create start command handler.
             StartCommand = new DelegateCommand(Start);
             
             // Get events from view models to update the status bar's text.
-            eventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe((a) => { StatusBarText = a; });
+            App.EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe((a) => { StatusBarText = a; });
         }
 
         public String StatusBarText
         {
-            get { return _engine.UserSettings.StatusBarText; }
-            set { this.SetProperty(ref _engine.UserSettings.StatusBarText, value); }
+            get { return farmingTools.UserSettings.StatusBarText; }
+            set { this.SetProperty(ref farmingTools.UserSettings.StatusBarText, value); }
         }
        
         public ICommand StartCommand { get; set; }
 
         public void Start()
         {
-            if (_engine.IsWorking)
+            if (farmingTools.GameEngine.IsWorking)
             {
-                InformUser("Program paused.");
-                _engine.Stop();
+                App.InformUser("Program paused.");
+                farmingTools.GameEngine.Stop();
             }
             else
             {
-                InformUser("Program running.");
-                _engine.Start();
+                App.InformUser("Program running.");
+                farmingTools.GameEngine.Start();
             }
         }
     }

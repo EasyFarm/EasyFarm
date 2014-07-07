@@ -17,14 +17,12 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
 using EasyFarm.UtilityTools;
 using EasyFarm.ViewModels;
+using FFACETools;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 using System.Reflection;
 using System.Windows;
 
@@ -35,7 +33,15 @@ namespace EasyFarm
     /// </summary>
     public partial class App : Application
     {
-        public static GameEngine Engine;
+        private static FFACE _fface;
+        private static FarmingTools _farmingTools;
+        
+        public static FarmingTools FarmingTools
+        {
+            get { return _farmingTools?? (_farmingTools = FarmingTools.GetInstance(_fface)); }
+            set { _farmingTools= value; }
+        }
+
         public static IEventAggregator EventAggregator;
 
         public App() 
@@ -64,15 +70,24 @@ namespace EasyFarm
                 Environment.Exit(0);
             }
 
-            // Set up the game engine if valid.
-            Engine = GameEngine.GetInstance(ProcessSelectionScreen.POL_Process);
+            _fface = ProcessSelectionScreen.FFXI_Session;
 
-            Engine.LoadSettings();
+            // Set up the game engine if valid.
+            FarmingTools.LoadSettings();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            Engine.SaveSettings(Engine);
+            FarmingTools.SaveSettings();
+        }
+
+        /// <summary>
+        /// Update the user on what's happening.
+        /// </summary>
+        /// <param name="message">The message to display in the statusbar</param>
+        public static void InformUser(String message, params object[] values)
+        {
+            EventAggregator.GetEvent<StatusBarUpdateEvent>().Publish(String.Format(message, values));
         }
 
         // Thanks to atom0s for assembly embedding code!

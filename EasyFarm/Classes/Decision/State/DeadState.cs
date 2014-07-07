@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
 ﻿using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
+using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,15 +31,15 @@ namespace EasyFarm.Decision.FSM
     /// </summary>
     class DeadState : BaseState
     {
-        public DeadState(ref GameEngine gameEngine) : base(ref gameEngine) { }
+        public DeadState(FFACE fface) : base(fface) { }
 
-        public override bool CheckState() { return _engine.PlayerData.IsDead; }
+        public override bool CheckState() { return FarmingTools.GetInstance(fface).PlayerData.IsDead; }
 
         public override void EnterState() { }
 
-        public override void RunState() { 
-            _engine.Stop();
-            _engine.UserSettings.StatusBarText = "Stopped!";
+        public override void RunState() {
+            FarmingTools.GetInstance(fface).GameEngine.Stop();
+            FarmingTools.GetInstance(fface).UserSettings.StatusBarText = "Stopped!";
         }
 
         public override void ExitState() { }

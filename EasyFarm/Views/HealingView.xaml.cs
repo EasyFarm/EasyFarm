@@ -42,7 +42,7 @@ namespace EasyFarm.Views
         public HealingView()
         {
             InitializeComponent();
-            this.DataContext = new HealingViewModel(ref App.Engine, App.EventAggregator);
+            this.DataContext = new HealingViewModel(App.FarmingTools);
         }
     }
 }

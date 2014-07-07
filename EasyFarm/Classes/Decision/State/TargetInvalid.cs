@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EasyFarm.Classes.Services;
+using FFACETools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,18 +13,20 @@ namespace EasyFarm.Classes.Decision.State
     /// </summary>
     public class TargetInvalid : BaseState
     {
-        public TargetInvalid(ref GameEngine engine) : base(ref engine) { }
+        public TargetInvalid(FFACE fface) : base(fface) { }
 
         public override bool CheckState()
         {
-            return !_engine.Units.IsValid(_engine.TargetData.TargetUnit);
+            return !FarmingTools.GetInstance(fface).UnitService
+                .IsValid(FarmingTools.GetInstance(fface).TargetData.TargetUnit);
         }
 
         public override void EnterState() { }
 
         public override void RunState()
         {
-            _engine.TargetData.TargetUnit = _engine.Units.GetTarget();
+            FarmingTools.GetInstance(fface).TargetData.TargetUnit = 
+                FarmingTools.GetInstance(fface).UnitService.GetTarget();
         }
 
         public override void ExitState() { }

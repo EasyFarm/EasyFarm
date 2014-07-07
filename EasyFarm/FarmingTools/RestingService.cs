@@ -37,32 +37,11 @@ namespace EasyFarm.Classes
         /// </summary>
         const string RESTING_OFF = "/heal off";
 
-        public FFACE Session { get; set; }
+        FFACE _session;
 
-        private static RestingService _restingService;
-
-        private RestingService(ref FFACE session)
+        public RestingService(FFACE session)
         {
-            this.Session = session;
-        }
-
-        /// <summary>
-        /// Returns the resting service set to this version of fface
-        /// </summary>
-        /// <param name="session"></param>
-        /// <returns></returns>
-        public static RestingService GetInstance(FFACE session)
-        {
-            return _restingService ?? (_restingService = new RestingService(ref session));
-        }
-
-        /// <summary>
-        /// Returns a resting service object that may not have it's fface session set.
-        /// </summary>
-        /// <returns></returns>
-        public static RestingService GetInstance()
-        {
-            return _restingService;
+            this._session = session;
         }
 
         /// <summary>
@@ -70,7 +49,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public void Off()
         {
-            if (IsResting) { Session.Windower.SendString(RESTING_OFF); }
+            if (IsResting) { _session.Windower.SendString(RESTING_OFF); }
         }
 
         /// <summary>
@@ -78,7 +57,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public void On()
         {
-            if (!IsResting) { Session.Windower.SendString(RESTING_ON); }
+            if (!IsResting) { _session.Windower.SendString(RESTING_ON); }
         }
 
         /// <summary>
@@ -88,7 +67,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Session.Player.Status == Status.Healing;
+                return _session.Player.Status == Status.Healing;
             }
         }
     }

@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
 ﻿using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
+using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,28 +28,29 @@ namespace EasyFarm.FSM
 {
     class HealingState : BaseState
     {
-        public HealingState(ref GameEngine gameEngine) : base(ref gameEngine) { }
+        public HealingState(FFACE fface) : base(fface) { }
 
         public override bool CheckState()
         {
-            return _engine.PlayerData.shouldHeal && !_engine.PlayerData.shouldRest;
+            return FarmingTools.GetInstance(fface).PlayerData.shouldHeal && 
+                !FarmingTools.GetInstance(fface).PlayerData.shouldRest;
         }
 
         public override void EnterState()
         {
-            _engine.RestingService.Off();
+            FarmingTools.GetInstance(fface).RestingService.Off();
         }
 
         public override void RunState()
         {
             // Use an ability to heal from the healing list if we can
-            if(_engine.PlayerActions.HealingList.Count > 0)
+            if (FarmingTools.GetInstance(fface).PlayerActions.HealingList.Count > 0)
             {
                 // Check for actions available
-                var act = _engine.PlayerActions.HealingList.FirstOrDefault();
+                var act = FarmingTools.GetInstance(fface).PlayerActions.HealingList.FirstOrDefault();
                 if (act == null) { return; }
                 //
-                else { _engine.AbilityExecutor.UseAbility(act); }
+                else { FarmingTools.GetInstance(fface).AbilityExecutor.UseAbility(act); }
             }
         }
 

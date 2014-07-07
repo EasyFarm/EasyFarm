@@ -1,4 +1,5 @@
 ﻿using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections.Generic;
@@ -10,46 +11,45 @@ namespace EasyFarm.ViewModels
 {
     public class UnitFilteringViewModel : ViewModelBase
     {
-        public UnitFilteringViewModel(ref GameEngine Engine, IEventAggregator eventAggregator)
-            : base(ref Engine, eventAggregator) { }
+        public UnitFilteringViewModel(FarmingTools farmingTools) : base(farmingTools) { }
 
         public double DetectionDistance
         {
-            get { return _engine.UserSettings.MiscSettings.DetectionDistance; }
+            get { return farmingTools.UserSettings.MiscSettings.DetectionDistance; }
             set 
             { 
-                SetProperty<double>(ref _engine.UserSettings.MiscSettings.DetectionDistance, value);
-                InformUser("Detection Distance Set: {0}.", value);
+                SetProperty<double>(ref farmingTools.UserSettings.MiscSettings.DetectionDistance, value);
+                App.InformUser("Detection Distance Set: {0}.", value);
             }
         }
 
         public double HeightThreshold
         {
-            get { return _engine.UserSettings.MiscSettings.HeightThreshold; }
+            get { return farmingTools.UserSettings.MiscSettings.HeightThreshold; }
             set
             {
-                SetProperty<double>(ref _engine.UserSettings.MiscSettings.HeightThreshold, value);
-                InformUser("Height Threshold Set: {0}.", value);
+                SetProperty<double>(ref farmingTools.UserSettings.MiscSettings.HeightThreshold, value);
+                App.InformUser("Height Threshold Set: {0}.", value);
             }
         }
 
         public double MaxMeleeDistance
         {
-            get { return _engine.UserSettings.MiscSettings.MaxMeleeDistance; }
+            get { return farmingTools.UserSettings.MiscSettings.MaxMeleeDistance; }
             set
             {
-                SetProperty<double>(ref _engine.UserSettings.MiscSettings.MaxMeleeDistance, value);
-                InformUser("Max Melee Distance Set: {0}.", value);
+                SetProperty<double>(ref farmingTools.UserSettings.MiscSettings.MaxMeleeDistance, value);
+                App.InformUser("Max Melee Distance Set: {0}.", value);
             }
         }
 
         public double MinMeleeDistance
         {
-            get { return _engine.UserSettings.MiscSettings.MinMeleeDistance; }
+            get { return farmingTools.UserSettings.MiscSettings.MinMeleeDistance; }
             set
             {
-                SetProperty<double>(ref _engine.UserSettings.MiscSettings.MinMeleeDistance, value);
-                InformUser("Min Melee Distance Set: {0}.", value);
+                SetProperty<double>(ref farmingTools.UserSettings.MiscSettings.MinMeleeDistance, value);
+                App.InformUser("Min Melee Distance Set: {0}.", value);
             }
         }
     }

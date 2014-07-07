@@ -46,7 +46,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// List of actions that should be used when injured
         /// </summary>
-        public ObservableCollection<ListItem<HealingAbility>> HealingList = new ObservableCollection<ListItem<HealingAbility>>();
+        public ObservableCollection<HealingAbility> HealingList = new ObservableCollection<HealingAbility>();
 
         /// <summary>
         /// Is the BattleList Selected in the battle tab?

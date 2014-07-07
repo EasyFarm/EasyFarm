@@ -35,7 +35,7 @@ namespace EasyFarm
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel(ref App.Engine, App.EventAggregator);
+            this.DataContext = new MainViewModel(App.FarmingTools);
         }
     }
 }

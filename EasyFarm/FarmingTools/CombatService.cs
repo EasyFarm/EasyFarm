@@ -21,6 +21,7 @@ using System.Linq;
 using FFACETools;
 using System;
 using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
 
 namespace EasyFarm.Classes
 {
@@ -41,16 +42,16 @@ namespace EasyFarm.Classes
         /// </summary>
         const string ATTACK_ON = "/attack on";
         
-
         /// <summary>
         /// Max time used to spend running to a mob before timing out.
         /// </summary>
         const int RUN_DURATION = 3;
-        private GameEngine _engine;
 
-        public CombatService(ref GameEngine engine)
+        private FFACE _fface;
+
+        public CombatService(FFACE fface)
         {
-            this._engine = engine;
+            this._fface = fface;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,8 +66,9 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return _engine.Session.Instance.Navigator
-                    .DistanceTo(_engine.TargetData.TargetUnit.Position) <= _engine.UserSettings.MiscSettings.MaxMeleeDistance;
+                return _fface.Navigator
+                    .DistanceTo(FarmingTools.GetInstance(_fface).TargetData.TargetUnit.Position) <= 
+                    FarmingTools.GetInstance(_fface).UserSettings.MiscSettings.MaxMeleeDistance;
             }
         }
 
@@ -81,21 +83,22 @@ namespace EasyFarm.Classes
         /// <param name="unit"></param>
         public void MoveToUnit()
         {
-            var NavTools = _engine.Session.Instance.Navigator;
-            var TargetData = _engine.TargetData;
-
             // Save the old tolerance
-            var OldTolerance = NavTools.DistanceTolerance;
+            var OldTolerance = _fface.Navigator.DistanceTolerance;
 
             // Use the new one
-            NavTools.DistanceTolerance = _engine.UserSettings.MiscSettings.MinMeleeDistance;
+            _fface.Navigator.DistanceTolerance = FarmingTools.GetInstance(_fface)
+                .UserSettings.MiscSettings.MinMeleeDistance;
 
             // Run to the unit while we are out of distance. 
-            if (NavTools.DistanceTo(TargetData.Position) >= _engine.UserSettings.MiscSettings.MinMeleeDistance)
-                NavTools.GotoNPC(TargetData.TargetUnit.ID, 10);
+            if (_fface.Navigator.DistanceTo(FarmingTools.GetInstance(_fface).TargetData.Position) >=
+                FarmingTools.GetInstance(_fface).UserSettings.MiscSettings.MinMeleeDistance)
+            {
+                _fface.Navigator.GotoNPC(FarmingTools.GetInstance(_fface).TargetData.TargetUnit.ID, 10);
+            }
 
             // Restore the old tolerance.
-            NavTools.DistanceTolerance = OldTolerance;
+            _fface.Navigator.DistanceTolerance = OldTolerance;
         }
 
         /// <summary>
@@ -103,12 +106,9 @@ namespace EasyFarm.Classes
         /// </summary>
         public void Target()
         {
-            var TargetTools = _engine.Session.Instance.Target;
-            var TargetData = _engine.TargetData;
-
-            if (!TargetData.IsTarget)
+            if (!FarmingTools.GetInstance(_fface).TargetData.IsTarget)
             {
-                TargetTools.SetNPCTarget(TargetData.TargetUnit.ID);
+                _fface.Target.SetNPCTarget(FarmingTools.GetInstance(_fface).TargetData.TargetUnit.ID);
                 System.Threading.Thread.Sleep(50);
             }
         }
@@ -119,13 +119,12 @@ namespace EasyFarm.Classes
         /// <param name="unit"></param>
         public void Pull()
         {
-            var TargetData = _engine.TargetData;
-            var AbilityExecutor = _engine.AbilityExecutor;
-            var PlayerActions = _engine.PlayerActions;
-
-            if (TargetData.IsPullable) 
+            if (FarmingTools.GetInstance(_fface).TargetData.IsPullable) 
             { 
-                AbilityExecutor.ExecuteActions(PlayerActions.StartList, MaintainHeading); 
+                FarmingTools.GetInstance(_fface).AbilityExecutor.ExecuteActions(
+                        FarmingTools.GetInstance(_fface).PlayerActions.StartList, 
+                        MaintainHeading
+                    ); 
             }
         }
 
@@ -135,18 +134,17 @@ namespace EasyFarm.Classes
         /// <param name="unit"></param>
         public void Engage()
         {
-            var TargetData = _engine.TargetData;
-            var WindowerTools = _engine.Session.Instance.Windower;
-            var PlayerData = _engine.PlayerData;
-
             // if we have a correct target and our player isn't currently fighting...
-            if (TargetData.IsTarget && !PlayerData.IsFighting)
+            if (FarmingTools.GetInstance(_fface).TargetData.IsTarget && 
+                !FarmingTools.GetInstance(_fface).PlayerData.IsFighting) 
             {
-                WindowerTools.SendString(ATTACK_TARGET);
+                
+                _fface.Windower.SendString(ATTACK_TARGET);
             }
 
             // Wrong Target Attacked
-            else if (!TargetData.IsTarget && PlayerData.IsFighting)
+            else if (!FarmingTools.GetInstance(_fface).TargetData.IsTarget && 
+                FarmingTools.GetInstance(_fface).PlayerData.IsFighting)
             {
                 Disengage();
             }
@@ -159,22 +157,23 @@ namespace EasyFarm.Classes
         /// <param name="unit"></param>
         public void Kill()
         {
-            var TargetData = _engine.TargetData;
-            var AbilityExecutor = _engine.AbilityExecutor;
-            var PlayerActions = _engine.PlayerActions;
-            var PlayerData = _engine.PlayerData;
-            var Config = _engine.UserSettings;
-
-            if (PlayerData.IsFighting && TargetData.IsTarget)
+            if (FarmingTools.GetInstance(_fface).PlayerData.IsFighting && 
+                FarmingTools.GetInstance(_fface).TargetData.IsTarget)
             {
                 // Execute all the battle moves
-                if (PlayerActions.HasBattleMoves) {
-                    AbilityExecutor.ExecuteActions(PlayerActions.BattleList, MaintainHeading); 
+                if (FarmingTools.GetInstance(_fface).PlayerActions.HasBattleMoves) {
+                    FarmingTools.GetInstance(_fface).AbilityExecutor.ExecuteActions(
+                        FarmingTools.GetInstance(_fface).PlayerActions.BattleList, 
+                        MaintainHeading); 
                 }
 
                 // Execute the weaponskill
-                else if (PlayerData.CanWeaponskill) {
-                    AbilityExecutor.ExecuteActions(new List<Ability>() { Config.WeaponInfo.Ability }, MaintainHeading);
+                else if (FarmingTools.GetInstance(_fface).PlayerData.CanWeaponskill) {
+                    FarmingTools.GetInstance(_fface).AbilityExecutor.ExecuteActions(new List<Ability>() 
+                    { 
+                        FarmingTools.GetInstance(_fface).UserSettings.WeaponInfo.Ability 
+                    },
+                    MaintainHeading);
                 }
             }
         }
@@ -185,9 +184,7 @@ namespace EasyFarm.Classes
         /// <param name="unit"></param>
         public void MaintainHeading()
         {
-            var TargetData = _engine.TargetData;
-            var NavTools = _engine.Session.Instance.Navigator;
-            NavTools.FaceHeading(TargetData.Position);
+            _fface.Navigator.FaceHeading(FarmingTools.GetInstance(_fface).TargetData.Position);
         }
 
         /// <summary>
@@ -195,11 +192,8 @@ namespace EasyFarm.Classes
         /// </summary>
         public void Disengage()
         {
-            var WindowerTools = _engine.Session.Instance.Windower;
-            var PlayerData = _engine.PlayerData;
-
-            if (PlayerData.IsEngaged) {
-                WindowerTools.SendString(ATTACK_OFF);
+            if (FarmingTools.GetInstance(_fface).PlayerData.IsEngaged) {
+                _fface.Windower.SendString(ATTACK_OFF);
             }
         }
 
@@ -220,8 +214,7 @@ namespace EasyFarm.Classes
 
         public void ExecuteActions(List<Ability> actions)
         {
-            var AbilityExecutor = _engine.AbilityExecutor;
-            AbilityExecutor.ExecuteActions(actions, MaintainHeading);
+            FarmingTools.GetInstance(_fface).AbilityExecutor.ExecuteActions(actions, MaintainHeading);
         }
     }
 }

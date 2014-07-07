@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EasyFarm.Classes.Services;
+using FFACETools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +10,23 @@ namespace EasyFarm.Classes.Decision.State
 {
     public class PostBattle : BaseState
     {
-        public PostBattle(ref GameEngine engine) : base(ref engine) { }
+        public PostBattle(FFACE fface) : base(fface) { }
 
         public override bool CheckState()
         {
-            return _engine.TargetData.IsDead;
+            return FarmingTools.GetInstance(fface)
+                .TargetData.IsDead;
         }
 
         public override void EnterState() { }
 
         public override void RunState()
         {
-            _engine.TargetData.TargetUnit = _engine.Units.GetTarget();
-            _engine.CombatService.ExecuteActions(_engine.PlayerActions.EndList);
+            FarmingTools.GetInstance(fface).TargetData.TargetUnit = 
+                FarmingTools.GetInstance(fface).UnitService.GetTarget();
+
+            FarmingTools.GetInstance(fface).CombatService
+                .ExecuteActions(FarmingTools.GetInstance(fface).PlayerActions.EndList);
         }
 
         public override void ExitState() { }

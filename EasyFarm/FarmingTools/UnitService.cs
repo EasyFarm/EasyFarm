@@ -21,6 +21,7 @@ You should have received a copy of the GNU General Public License
 using System.Linq;
 using EasyFarm.Classes;
 using FFACETools;
+using EasyFarm.Classes.Services;
 
 namespace EasyFarm.Classes
 {
@@ -35,7 +36,7 @@ namespace EasyFarm.Classes
 
         #endregion
 
-        private UnitService(ref FFACE session)
+        public UnitService(FFACE session)
         {
             this._session = session;
             Unit.Session = this._session;
@@ -49,22 +50,7 @@ namespace EasyFarm.Classes
 
             this.FilterInfo = new FilterInfo();
         }
-
-        private UnitService()
-        {
-
-        }
-
-        public static UnitService GetInstance()
-        {
-            return _unitService ?? (_unitService = new UnitService());
-        }
-
-        public static UnitService GetInstance(FFACE session)
-        {
-            return _unitService ?? (_unitService = new UnitService(ref session));
-        }
-
+        
         #region Properties
 
         /// <summary>
@@ -162,7 +148,7 @@ namespace EasyFarm.Classes
             }
 
             bool ValidMob =
-                ((unit.YDifference < App.Engine.UserSettings.MiscSettings.HeightThreshold) && (unit.Distance <= App.Engine.UserSettings.MiscSettings.DetectionDistance)&& (unit.NPCBit != 0) && (!unit.IsDead) && (unit.NPCType == NPCType.Mob))
+                ((unit.YDifference < FarmingTools.GetInstance(_session).UserSettings.MiscSettings.HeightThreshold) && (unit.Distance <= FarmingTools.GetInstance(_session).UserSettings.MiscSettings.DetectionDistance) && (unit.NPCBit != 0) && (!unit.IsDead) && (unit.NPCType == NPCType.Mob))
                 &&
                 (((FilterInfo.TargetedMobs.Contains(unit.Name) && !unit.IsClaimed) || (FilterInfo.TargetedMobs.Count == 0 && !FilterInfo.IgnoredMobs.Contains(unit.Name)))
                 ||

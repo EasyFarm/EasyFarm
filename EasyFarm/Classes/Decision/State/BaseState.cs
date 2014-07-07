@@ -18,21 +18,22 @@ You should have received a copy of the GNU General Public License
 
 ﻿using System;
 using EasyFarm.Classes;
+using FFACETools;
 
 public abstract class BaseState : IComparable<BaseState>
 {
     public bool Enabled;
     public int Priority;
-    protected GameEngine _engine;
+    protected FFACE fface;
     
     public abstract bool CheckState();
     public abstract void EnterState();
     public abstract void RunState();
     public abstract void ExitState();
 
-    public BaseState(ref GameEngine engine)
+    public BaseState(FFACE fface)
     {
-        this._engine = engine;
+        this.fface = fface;
     }
 
     public int CompareTo(BaseState other)

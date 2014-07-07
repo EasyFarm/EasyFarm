@@ -43,7 +43,7 @@ namespace EasyFarm.Views
         public TargetsView()
         {
             InitializeComponent();
-            this.DataContext = new TargetsViewModel(ref App.Engine, App.EventAggregator);
+            this.DataContext = new TargetsViewModel(App.FarmingTools);
         }
     }
 }

@@ -31,11 +31,11 @@ namespace EasyFarm.Classes
 
     public class AbilityExecutor
     {
-        private GameEngine _engine;
+        FFACE _fface;
 
-        public AbilityExecutor(ref GameEngine gameEngine)
+        public AbilityExecutor(FFACE fface)
         {
-            this._engine = gameEngine;
+            this._fface = fface;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace EasyFarm.Classes
             System.Threading.Thread.Sleep(1000);
 
             // Send it to the game
-            _engine.Session.Instance.Windower.SendString(Ability.ToString());
+            _fface.Windower.SendString(Ability.ToString());
 
             // Sleep for the cast duration
             System.Threading.Thread.Sleep(SleepDuration);

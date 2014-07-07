@@ -42,7 +42,7 @@ namespace EasyFarm.Views
         public BattlesView()
         {
             InitializeComponent();
-            this.DataContext = new BattlesViewModel(ref App.Engine, App.EventAggregator);
+            this.DataContext = new BattlesViewModel(App.FarmingTools);
         }
     }
 }

@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections.Generic;
@@ -28,59 +29,58 @@ namespace EasyFarm.ViewModels
 {
     public class RestingViewModel : ViewModelBase
     {
-        public RestingViewModel(ref GameEngine Engine, IEventAggregator eventAggregator) : 
-            base(ref Engine, eventAggregator)  {  }
+        public RestingViewModel(FarmingTools farmingTools) : base(farmingTools) { }
 
         public int LowHP
         {
-            get { return _engine.UserSettings.RestingInfo.Health.Low; }
+            get { return farmingTools.UserSettings.RestingInfo.Health.Low; }
             set
             {
-                SetProperty(ref _engine.UserSettings.RestingInfo.Health.Low, value);
-                InformUser("Low hp set to " + this.LowHP);
+                SetProperty(ref farmingTools.UserSettings.RestingInfo.Health.Low, value);
+                App.InformUser("Low hp set to " + this.LowHP);
             }
         }
 
         public int HighHP
         {
-            get { return _engine.UserSettings.RestingInfo.Health.High; }
+            get { return farmingTools.UserSettings.RestingInfo.Health.High; }
             set
             {
-                SetProperty(ref _engine.UserSettings.RestingInfo.Health.High, value);
-                InformUser("High hp set to " + this.HighHP);
+                SetProperty(ref farmingTools.UserSettings.RestingInfo.Health.High, value);
+                App.InformUser("High hp set to " + this.HighHP);
             }
         }
 
         public int LowMP
         {
-            get { return _engine.UserSettings.RestingInfo.Magic.Low; }
+            get { return farmingTools.UserSettings.RestingInfo.Magic.Low; }
             set
             {
-                SetProperty(ref _engine.UserSettings.RestingInfo.Magic.Low, value);
-                InformUser("Low mp set to " + this.LowMP);
+                SetProperty(ref farmingTools.UserSettings.RestingInfo.Magic.Low, value);
+                App.InformUser("Low mp set to " + this.LowMP);
             }
         }
 
         public int HighMP
         {
-            get { return _engine.UserSettings.RestingInfo.Magic.High; }
+            get { return farmingTools.UserSettings.RestingInfo.Magic.High; }
             set
             {
-                SetProperty(ref _engine.UserSettings.RestingInfo.Magic.High, value);
-                InformUser("High mp set to " + this.HighMP);
+                SetProperty(ref farmingTools.UserSettings.RestingInfo.Magic.High, value);
+                App.InformUser("High mp set to " + this.HighMP);
             }
         }
 
         public bool HPEnabled
         {
-            get { return _engine.UserSettings.RestingInfo.Health.Enabled; }
-            set { SetProperty(ref _engine.UserSettings.RestingInfo.Health.Enabled, value); }
+            get { return farmingTools.UserSettings.RestingInfo.Health.Enabled; }
+            set { SetProperty(ref farmingTools.UserSettings.RestingInfo.Health.Enabled, value); }
         }
 
         public bool MPEnabled
         {
-            get { return _engine.UserSettings.RestingInfo.Magic.Enabled; }
-            set { SetProperty(ref _engine.UserSettings.RestingInfo.Magic.Enabled, value); }
+            get { return farmingTools.UserSettings.RestingInfo.Magic.Enabled; }
+            set { SetProperty(ref farmingTools.UserSettings.RestingInfo.Magic.Enabled, value); }
         }
     }
 }

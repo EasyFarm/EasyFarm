@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using EasyFarm.Classes.Services;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
@@ -31,18 +32,18 @@ namespace EasyFarm.ViewModels
 {
     public class HealingViewModel : ViewModelBase
     {
-        public HealingViewModel(ref GameEngine Engine, IEventAggregator eventAggregator)
-            : base(ref Engine, eventAggregator)
+        public HealingViewModel(FarmingTools farmingTools)
+            : base(farmingTools) 
         {
             AddHealingCommand = new DelegateCommand(AddHealingItem);
             DeleteHealingCommand = new DelegateCommand<Object>(DeleteHealing);
             ClearHealingCommand = new DelegateCommand(ClearHealing);
         }
 
-        public ObservableCollection<ListItem<HealingAbility>> Healing
+        public ObservableCollection<HealingAbility> Healing
         {
-            get { return _engine.UserSettings.ActionInfo.HealingList; }
-            set { SetProperty(ref this._engine.UserSettings.ActionInfo.HealingList, value); }
+            get { return farmingTools.UserSettings.ActionInfo.HealingList; }
+            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.HealingList, value); }
         }
 
         public ICommand AddHealingCommand { get; set; }
@@ -58,12 +59,12 @@ namespace EasyFarm.ViewModels
 
         private void DeleteHealing(object obj)
         {
-            Healing.Remove(obj as ListItem<HealingAbility>);
+            Healing.Remove(obj as HealingAbility);
         }
 
         private void AddHealingItem()
         {
-            Healing.Add(new ListItem<HealingAbility>(new HealingAbility()));
+            Healing.Add(new HealingAbility());
         }
     }
 }
