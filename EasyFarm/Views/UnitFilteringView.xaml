@@ -16,6 +16,7 @@
                 <Slider Minimum="0" Maximum="100" Value="{Binding MinMeleeDistance}"></Slider>
                 <Label>Max Melee Distance</Label>
                 <Slider Minimum="0" Maximum="100" Value="{Binding MaxMeleeDistance}"></Slider>
+                <Button Width="Auto" Margin="10" Command="{Binding RestoreDefaultsCommand}">Restore Defaults</Button>
             </StackPanel>
         </GroupBox>
     </ScrollViewer>

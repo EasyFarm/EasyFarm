@@ -47,20 +47,20 @@ namespace EasyFarm.Classes
 
         public float Y
         {
-            get { return _position.X; }
-            set { _position.X = value; }
+            get { return _position.Y; }
+            set { _position.Y = value; }
         }
 
         public float Z
         {
-            get { return _position.X; }
-            set { _position.X = value; }
+            get { return _position.Z; }
+            set { _position.Z = value; }
         }
 
         public float H
         {
-            get { return _position.X; }
-            set { _position.X = value; }
+            get { return _position.H; }
+            set { _position.H = value; }
         }
 
         public FFACE.Position Position

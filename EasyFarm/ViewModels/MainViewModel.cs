@@ -29,18 +29,18 @@ using System.Windows.Input;
 
 namespace EasyFarm.ViewModels
 {
-    class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         public MainViewModel(FarmingTools farmingTools) : base(farmingTools)
         {
+            // Get events from view models to update the status bar's text.
+            App.EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe((a) => { StatusBarText = a; });
+
             // Tell the user the program has loaded the player's data
             App.InformUser("Bot Loaded: " + farmingTools.FFACE.Player.Name);
             
             // Create start command handler.
             StartCommand = new DelegateCommand(Start);
-            
-            // Get events from view models to update the status bar's text.
-            App.EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe((a) => { StatusBarText = a; });
         }
 
         public String StatusBarText

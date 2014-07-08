@@ -1,17 +1,33 @@
 ﻿using EasyFarm.Classes;
 using EasyFarm.Classes.Services;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace EasyFarm.ViewModels
 {
     public class UnitFilteringViewModel : ViewModelBase
     {
-        public UnitFilteringViewModel(FarmingTools farmingTools) : base(farmingTools) { }
+        public UnitFilteringViewModel(FarmingTools farmingTools) : base(farmingTools) 
+        {
+            RestoreDefaultsCommand = new DelegateCommand(RestoreDefaults);
+        }
+
+        public ICommand RestoreDefaultsCommand { get; set; }
+        
+        private void RestoreDefaults()
+        {
+            DetectionDistance = 17;
+            HeightThreshold = 5;
+            MinMeleeDistance = 3;
+            MaxMeleeDistance = 5;
+            App.InformUser("Defaults have been restored.");
+        }
 
         public double DetectionDistance
         {

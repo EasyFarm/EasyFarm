@@ -2,7 +2,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-        xmlns:vw="clr-namespace:EasyFarm.Views"
+        xmlns:Views="clr-namespace:EasyFarm.Views"
+        xmlns:ViewModels="clr-namespace:EasyFarm.ViewModels"
         x:Name="MainForm" 
         x:Class="EasyFarm.MainWindow" 
         Width="510" 
@@ -15,30 +16,7 @@
         HorizontalAlignment="Left" 
         VerticalAlignment="Top">
     <Window.Resources>
-        <Style TargetType="{x:Type TabItem}">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="Foreground" Value="Black" />
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="False">
-                    <Setter Property="Background" Value="Black" />
-                    <Setter Property="Foreground" Value="White" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style TargetType="{x:Type RadioButton}">
-            <Setter Property="Foreground" Value="White" />
-        </Style>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Height" Value="23" />
-            <Setter Property="Width" Value="75" />
-            <Setter Property="Foreground" Value="Black" />
-        </Style>
-        <Style TargetType="{x:Type Label}">
-            <Setter Property="Height" Value="Auto" />
-            <Setter Property="Width" Value="Auto" />
-            <Setter Property="Margin" Value="10" />
-            <Setter Property="Foreground" Value="White" />
-        </Style>
+        <ResourceDictionary Source="ControlStyles.xaml" />
     </Window.Resources>
     <Window.Background>
         <RadialGradientBrush>
@@ -56,49 +34,48 @@
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
-        <TabControl TabStripPlacement="Left" Background="#FF2C24AD" Grid.Row="1" Grid.ColumnSpan="3">            
+        <TabControl TabStripPlacement="Left" Background="#FF2C24AD" Grid.Row="1" Grid.ColumnSpan="3">
             <!-- Targets Tab -->
-            <TabItem IsSelected="True">
+            <TabItem>
                 <TabItem.Header>Targets</TabItem.Header>
-                <vw:TargetsView></vw:TargetsView>
-            </TabItem>
-            
+                <Views:TargetsView></Views:TargetsView>
+            </TabItem>            
             <!--Ignored Tab-->
             <TabItem>
                 <TabItem.Header>Ignored</TabItem.Header>
-                <vw:IgnoredView></vw:IgnoredView>
+                <Views:IgnoredView></Views:IgnoredView>
             </TabItem>
             
             <!--Routes Tab-->
             <TabItem >
                 <TabItem.Header>Routes</TabItem.Header>
-                <vw:RoutesView></vw:RoutesView>
+                <Views:RoutesView></Views:RoutesView>
             </TabItem>
 
             <!--Battle Tab-->
             <TabItem >
                 <TabItem.Header>Battle</TabItem.Header>
-                <vw:BattlesView></vw:BattlesView>
+                <Views:BattlesView></Views:BattlesView>
             </TabItem>
             
             <!--Resting Tab-->
             <TabItem >
                 <TabItem.Header>Resting</TabItem.Header>
-                <vw:RestingView></vw:RestingView>
+                <Views:RestingView></Views:RestingView>
             </TabItem>
             <!--Weaponskill Tab-->
             <TabItem >
                 <TabItem.Header>Weaponskill</TabItem.Header>
-                <vw:WeaponsView></vw:WeaponsView>
+                <Views:WeaponsView></Views:WeaponsView>
             </TabItem>
             <!--Healing Tab-->
             <TabItem>
                 <TabItem.Header>Healing</TabItem.Header>
-                <vw:HealingView></vw:HealingView>
+                <Views:HealingView></Views:HealingView>
             </TabItem>
             <TabItem>
                 <TabItem.Header>Misc Settings</TabItem.Header>
-                <vw:UnitFilteringView></vw:UnitFilteringView>
+                <Views:UnitFilteringView></Views:UnitFilteringView>
             </TabItem>
             <!--Start Tab-->
             <TabItem >

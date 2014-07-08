@@ -67,7 +67,7 @@ namespace EasyFarm.Classes
             get
             {
                 return _fface.Navigator
-                    .DistanceTo(FarmingTools.GetInstance(_fface).TargetData.TargetUnit.Position) <= 
+                    .DistanceTo(FarmingTools.GetInstance().TargetData.TargetUnit.Position) <= 
                     FarmingTools.GetInstance(_fface).UserSettings.MiscSettings.MaxMeleeDistance;
             }
         }

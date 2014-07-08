@@ -104,8 +104,6 @@ public class FiniteStateEngine
 
         foreach (var b in this.Brains)
             b.Enabled = true;
-
-        // _behaviorTree = new BehaviorTree(ref _engine);
     }
 
     // Handles the updating.
