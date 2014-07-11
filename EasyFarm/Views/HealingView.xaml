@@ -13,13 +13,13 @@
                     <Border Background="Navy">
                         <StackPanel Orientation="Horizontal">
                             <!--Is the abilities current enabled?-->
-                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=Item.IsEnabled}"/>
+                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=IsEnabled}"/>
                             <!--The name of the ability-->
-                            <TextBox VerticalAlignment="Center" Width="100" Text="{Binding Path=Item.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox VerticalAlignment="Center" Width="100" Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"/>
                             <!--The health percentage at which it should be used-->
-                            <Slider VerticalAlignment="Center" Width="100" IsSnapToTickEnabled="True" TickFrequency="1" Maximum="100" Value="{Binding Path = Item.TriggerLevel}"/>
+                            <Slider VerticalAlignment="Center" Width="100" IsSnapToTickEnabled="True" TickFrequency="1" Maximum="100" Value="{Binding Path = TriggerLevel}"/>
                             <!--Friendly label that displays the health percentage-->
-                            <Label VerticalAlignment="Center" Content="{Binding Path=Item.TriggerLevel}"/>
+                            <Label VerticalAlignment="Center" Content="{Binding Path=TriggerLevel}"/>
                         </StackPanel>
                     </Border>
                 </DataTemplate>

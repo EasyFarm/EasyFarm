@@ -39,7 +39,7 @@ namespace EasyFarm.Decision.FSM
 
         public override void RunState() {
             FarmingTools.GetInstance(fface).GameEngine.Stop();
-            FarmingTools.GetInstance(fface).UserSettings.StatusBarText = "Stopped!";
+            App.InformUser("Stopped!");
         }
 
         public override void ExitState() { }

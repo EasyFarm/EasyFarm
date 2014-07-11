@@ -26,6 +26,7 @@ namespace EasyFarm.Classes.Services
             this.TargetData = new TargetData(fface);
             this.PlayerActions = new PlayerActions(fface);
             this.ActionBlocked = new ActionBlocked(fface);
+            this.UserSettings = new Config();
         }
 
         public static FarmingTools GetInstance()
@@ -35,14 +36,15 @@ namespace EasyFarm.Classes.Services
 
         public static FarmingTools GetInstance(FFACE fface)
         {
-            if (_farmingTools == null || !_fface.Equals(fface)) {
-                _farmingTools = new FarmingTools(fface); 
+            if (_farmingTools == null || !_fface.Equals(fface))
+            {
+                _farmingTools = new FarmingTools(fface);
             }
 
             return _farmingTools;
         }
 
-        public FFACE FFACE 
+        public FFACE FFACE
         {
             get { return _fface; }
             set { _fface = value; }
@@ -70,7 +72,7 @@ namespace EasyFarm.Classes.Services
 
         public ActionBlocked ActionBlocked { get; set; }
 
-        public Config UserSettings { get; set; }       
+        public Config UserSettings { get; set; }
 
         /// <summary>
         /// Saves the settings of Config object to file for later retrieval.
