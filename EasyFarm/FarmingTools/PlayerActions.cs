@@ -74,15 +74,10 @@ namespace EasyFarm.Classes
                             .Where(x => x.IsEnabled)
                             .Where(x => x.TriggerLevel >= _fface.Player.HPPCurrent)
                             .Select(x => FarmingTools.GetInstance(_fface).AbilityService.CreateAbility(x.Name))
+                            .Where(x => IsActionValid(x))
                             .ToList()
                     );
             }
-        }
-
-        public WeaponAbility WeaponSkill
-        {
-            get;
-            set;
         }
 
         /// <summary>
@@ -125,12 +120,34 @@ namespace EasyFarm.Classes
         public List<Ability> FilterValidActions(IList<Ability> Actions)
         {
             return Actions
-                    .Where(x => x.IsValidName)
-                    .Where(x => AbilityRecastable(x))
-                    .Where(x => x.MPCost <= _fface.Player.MPCurrent && x.TPCost <= _fface.Player.TPCurrent)
-                    .Where(x => (x.IsSpell && !FarmingTools.GetInstance(_fface).ActionBlocked.IsCastingBlocked) || 
-                        (x.IsAbility && !FarmingTools.GetInstance(_fface).ActionBlocked.IsAbilitiesBlocked))
+                .Where(x => IsActionValid(x))
                     .ToList();
+        }
+
+        /// <summary>
+        /// Determines whether a spell or ability can be used based on...
+        /// 1) It retrieved a non-null ability/spell from the resource files.
+        /// 2) The ability is recastable.
+        /// 3) The user has the mp or tp for the move.
+        /// 4) We don't have a debuff like amnesia that stops us from using it. 
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns>True for usable, False for unusable</returns>
+        public bool IsActionValid(Ability action)
+        {
+            // We found the skill and its name is valid.
+            if (action.IsValidName)
+                // The recast for the ability is up.
+                if (AbilityRecastable(action))
+                    // We have the mp and tp to use it. 
+                    if (action.MPCost <= _fface.Player.MPCurrent && action.TPCost <= _fface.Player.TPCurrent)
+                        // We don't have a debuff that prevents its use.
+                        if ((action.IsSpell && !FarmingTools.GetInstance(_fface).ActionBlocked.IsCastingBlocked) ||
+                                    (action.IsAbility && !FarmingTools.GetInstance(_fface).ActionBlocked.IsAbilitiesBlocked))
+                            return true;
+
+            // We failed one of the checks and we can't use the move.
+            return false;
         }
 
         /// <summary>

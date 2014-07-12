@@ -356,6 +356,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Scripting\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Embedded\Microsoft.Practices.EnterpriseLibrary.Common.dll" />
