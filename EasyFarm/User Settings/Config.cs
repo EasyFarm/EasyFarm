@@ -16,17 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using System;
-using System.Collections.Generic;
-using FFACETools;
+﻿using EasyFarm.GameData;
+using EasyFarm.UserSettings.User_Settings;
+using Microsoft.Practices.Prism.Mvvm;
+using System;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
-using EasyFarm.Classes;
-using Microsoft.Practices.Prism.ViewModel;
-using Microsoft.Practices.Prism.Mvvm;
-using EasyFarm.Classes.User_Settings;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.UserSettings
 {
     /// <summary>
     /// A configuration file for the user to edit through his GUI.

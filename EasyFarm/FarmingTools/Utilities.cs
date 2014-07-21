@@ -16,23 +16,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.UtilityTools;
-using EasyFarm.ViewModels;
-using FFACETools;
-using Microsoft.Practices.Prism.PubSubEvents;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace EasyFarm.Classes
+namespace ZeroLimits.FarmingTool
 {
     /// <summary>
     /// This class is essential the code graveyard. Any code that I would rather not dispose

@@ -17,23 +17,32 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using FFACETools;
+using ZeroLimits.FarmingTool;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.State
 {
-    public class RestingInfo
+    public class PostBattle : BaseState
     {
-        /// <summary>
-        /// Data for HP
-        /// </summary>
-        public Health Health = new Health();
-        
-        /// <summary>
-        /// Data for MP
-        /// </summary>
-        public Magic Magic = new Magic();  
+        public PostBattle(FFACE fface) : base(fface) { }
+
+        public override bool CheckState()
+        {
+            return FarmingTools.GetInstance(fface)
+                .TargetData.IsDead;
+        }
+
+        public override void EnterState() { }
+
+        public override void RunState()
+        {
+            FarmingTools.GetInstance(fface).TargetData.TargetUnit = 
+                FarmingTools.GetInstance(fface).UnitService.GetTarget();
+
+            FarmingTools.GetInstance(fface).CombatService
+                .ExecuteActions(FarmingTools.GetInstance(fface).PlayerActions.EndList);
+        }
+
+        public override void ExitState() { }
     }
 }

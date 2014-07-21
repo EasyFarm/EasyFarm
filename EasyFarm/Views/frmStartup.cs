@@ -17,15 +17,14 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using FFACETools;
-using System.IO;
 
-namespace EasyFarm.UtilityTools
+namespace EasyFarm.Views
 {
     public partial class frmStartup : Form
     {

@@ -14,30 +14,33 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
 ﻿using System;
-using EasyFarm.Classes;
 using FFACETools;
 
-public abstract class BaseState : IComparable<BaseState>
+namespace EasyFarm.State
 {
-    public bool Enabled;
-    public int Priority;
-    protected FFACE fface;
-    
-    public abstract bool CheckState();
-    public abstract void EnterState();
-    public abstract void RunState();
-    public abstract void ExitState();
-
-    public BaseState(FFACE fface)
+    public abstract class BaseState : IComparable<BaseState>
     {
-        this.fface = fface;
-    }
+        public bool Enabled;
+        public int Priority;
+        protected FFACE fface;
 
-    public int CompareTo(BaseState other)
-    {
-        return -this.Priority.CompareTo(other.Priority);
+        public abstract bool CheckState();
+        public abstract void EnterState();
+        public abstract void RunState();
+        public abstract void ExitState();
+
+        public BaseState(FFACE fface)
+        {
+            this.fface = fface;
+        }
+
+        public int CompareTo(BaseState other)
+        {
+            return -this.Priority.CompareTo(other.Priority);
+        }
     }
 }

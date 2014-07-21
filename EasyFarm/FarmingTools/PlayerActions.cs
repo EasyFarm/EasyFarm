@@ -17,14 +17,15 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes.Services;
+
 using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EasyFarm.GameData;
 
-namespace EasyFarm.Classes
+namespace ZeroLimits.FarmingTool
 {
     /// <summary>
     /// This class is responsible for holding all of the abilities our character may use in battle.

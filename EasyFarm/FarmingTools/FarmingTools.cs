@@ -1,12 +1,9 @@
-﻿using FFACETools;
-using Microsoft.Practices.Prism.PubSubEvents;
+﻿using EasyFarm.State;
+using EasyFarm.UserSettings;
+using FFACETools;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace EasyFarm.Classes.Services
+namespace ZeroLimits.FarmingTool
 {
     public class FarmingTools
     {
@@ -26,7 +23,6 @@ namespace EasyFarm.Classes.Services
             this.AbilityExecutor = new AbilityExecutor(fface);
             this.AbilityService = new AbilityService();
             this.CombatService = new CombatService(fface);
-            this.GameEngine = new GameEngine(fface);
             this.RestingService = new RestingService(fface);
             this.UnitService = new UnitService(fface);
             this.PlayerData = new PlayerData(fface);
@@ -87,11 +83,6 @@ namespace EasyFarm.Classes.Services
         /// Provides methods for performing battle.
         /// </summary>
         public CombatService CombatService { get; set; }
-
-        /// <summary>
-        /// Provides access to the finite state machine that controls our character.
-        /// </summary>
-        public GameEngine GameEngine { get; set; }
 
         /// <summary>
         /// Provides methods for resting our character.

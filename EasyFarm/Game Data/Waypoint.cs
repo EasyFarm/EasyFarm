@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.GameData
 {
     public class Waypoint
     {

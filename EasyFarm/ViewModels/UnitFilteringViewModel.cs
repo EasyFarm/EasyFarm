@@ -1,5 +1,23 @@
-﻿using EasyFarm.Classes;
-using EasyFarm.Classes.Services;
+﻿
+/*///////////////////////////////////////////////////////////////////
+<EasyFarm, general farming utility for FFXI.>
+Copyright (C) <2013 - 2014>  <Zerolimits>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+*/
+///////////////////////////////////////////////////////////////////
+
+using EasyFarm.ViewModels;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
@@ -8,6 +26,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ZeroLimits.FarmingTool;
+
 
 namespace EasyFarm.ViewModels
 {
@@ -22,10 +42,9 @@ namespace EasyFarm.ViewModels
         
         private void RestoreDefaults()
         {
-            DetectionDistance = 17;
-            HeightThreshold = 5;
-            MinMeleeDistance = 3;
-            MaxMeleeDistance = 5;
+            DetectionDistance = Constants.DETECTION_DISTANCE;
+            HeightThreshold = Constants.HEIGHT_THRESHOLD;
+            MeleeDistance = Constants.MELEE_DISTANCE;
             App.InformUser("Defaults have been restored.");
         }
 
@@ -49,22 +68,12 @@ namespace EasyFarm.ViewModels
             }
         }
 
-        public double MaxMeleeDistance
+        public double MeleeDistance
         {
-            get { return farmingTools.UserSettings.MiscSettings.MaxMeleeDistance; }
+            get { return farmingTools.UserSettings.MiscSettings.MeleeDistance; }
             set
             {
-                SetProperty<double>(ref farmingTools.UserSettings.MiscSettings.MaxMeleeDistance, value);
-                App.InformUser("Max Melee Distance Set: {0}.", value);
-            }
-        }
-
-        public double MinMeleeDistance
-        {
-            get { return farmingTools.UserSettings.MiscSettings.MinMeleeDistance; }
-            set
-            {
-                SetProperty<double>(ref farmingTools.UserSettings.MiscSettings.MinMeleeDistance, value);
+                SetProperty<double>(ref farmingTools.UserSettings.MiscSettings.MeleeDistance, value);
                 App.InformUser("Min Melee Distance Set: {0}.", value);
             }
         }

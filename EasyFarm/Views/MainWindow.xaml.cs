@@ -16,16 +16,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *//////////////////////////////////////////////////////////////////// 
 
-using EasyFarm.Classes;
 using EasyFarm.ViewModels;
-using FFACETools;
-using System;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Threading;
 
-namespace EasyFarm
+namespace EasyFarm.Views
 {
     // Members and Constructors
     public partial class MainWindow : Window

@@ -5,7 +5,7 @@
         xmlns:Views="clr-namespace:EasyFarm.Views"
         xmlns:ViewModels="clr-namespace:EasyFarm.ViewModels"
         x:Name="MainForm" 
-        x:Class="EasyFarm.MainWindow" 
+        x:Class="EasyFarm.Views.MainWindow" 
         Width="510" 
         Height="330" 
         Title="EasyFarm" 

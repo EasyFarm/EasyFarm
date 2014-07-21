@@ -1,4 +1,4 @@
-﻿
+
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013 - 2014>  <Zerolimits>
@@ -14,35 +14,42 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*/
-///////////////////////////////////////////////////////////////////
-
-using EasyFarm.GameData;
-using System;
-using System.Windows;
+*////////////////////////////////////////////////////////////////////
 
 
-namespace EasyFarm.Views
+using FFACETools;
+using ZeroLimits.FarmingTool;
+
+namespace EasyFarm.State
 {
     /// <summary>
-    /// Interaction logic for AbilitySelectionBox.xaml
+    /// A class for defeating monsters.
     /// </summary>
-    public partial class AbilitySelectionBox : Window
+    class AttackState : BaseState
     {
-        public Ability SelectedAbility { get; set; }
+        public AttackState(FFACE fface) : base(fface) { }
 
-        public AbilitySelectionBox(String name)
+        public override bool CheckState()
         {
-            InitializeComponent();
-            this.CompleteSelectionButton.Click += CompleteSelectionButton_Click;
-            this.AbilityListBox.ItemsSource = App.FarmingTools.AbilityService.GetAbilitiesWithName(name);
-            this.ShowDialog();
+            return FarmingTools.GetInstance(fface)
+                .PlayerData.shouldFight;
         }
 
-        void CompleteSelectionButton_Click(object sender, RoutedEventArgs e)
+        public override void EnterState()
         {
-            SelectedAbility = AbilityListBox.SelectedValue as Ability;
-            this.Close();
+            FarmingTools.GetInstance(fface)
+                .RestingService.Off();
+        }
+
+        public override void RunState()
+        {
+            FarmingTools.GetInstance(fface)
+                .CombatService.Battle();
+        }
+
+        public override void ExitState()
+        {
+
         }
     }
 }

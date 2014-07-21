@@ -1,4 +1,4 @@
-
+﻿
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013 - 2014>  <Zerolimits>
@@ -14,37 +14,26 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.UserSettings
 {
-    public class WeaponAbility
+    public class RestingInfo
     {
         /// <summary>
-        /// What is its name?
+        /// Data for HP
         /// </summary>
-        public String Name = String.Empty;
-
+        public Health Health = new Health();
+        
         /// <summary>
-        /// Max distance we cna use a weaponskill at
+        /// Data for MP
         /// </summary>
-        public double Distance = 0;
-
-        /// <summary>
-        /// Can we use the weaponskill?
-        /// </summary>
-        public bool Enabled = false;
-
-        /// <summary>
-        /// Mob hp needed inorder to use weaponskill
-        /// </summary>
-        public int Health = 0;
-
-        /// <summary>
-        /// The weaponskill
-        /// </summary>
-        public Ability Ability = new Ability();
+        public Magic Magic = new Magic();  
     }
 }

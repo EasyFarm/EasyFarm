@@ -1,0 +1,12 @@
+﻿<Window x:Class="EasyFarm.Debugging.DebugSpellCasting"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DebugSpellCasting" Height="300" Width="300">
+    <StackPanel DockPanel.Dock="Right">
+        <Label Name="lblCastMax" Content="{Binding CastMax, Mode=TwoWay}"></Label>
+        <Label Name="lblCastCountDown" Content="{Binding CastCountDown, Mode=TwoWay}"/>
+        <TextBox Name="txbSpellName" Text="{Binding SpellName, Mode=TwoWay}"></TextBox>
+        <ProgressBar Value="{Binding CastPercent, Mode=TwoWay}"/>
+        <Button Name="btnCastSpell" Command="{Binding CastSpellCommand}">Cast Spell</Button>
+    </StackPanel>
+</Window>

@@ -18,9 +18,9 @@ You should have received a copy of the GNU General Public License
 
 ﻿using System;
 using FFACETools;
-using EasyFarm.Classes;
+using EasyFarm.GameData;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.GameData
 {
     public class Unit
     {

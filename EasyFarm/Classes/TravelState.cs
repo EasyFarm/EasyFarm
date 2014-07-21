@@ -20,12 +20,13 @@ You should have received a copy of the GNU General Public License
 using System.Collections.ObjectModel;
 using FFACETools;
 using System;
-using EasyFarm.Classes;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using EasyFarm.Classes.Services;
+using ZeroLimits.FarmingTool;
+using EasyFarm.GameData;
 
-namespace EasyFarm.Decision
+
+namespace EasyFarm.State
 {
     class TravelState : BaseState
     {
@@ -35,8 +36,7 @@ namespace EasyFarm.Decision
 
         public override bool CheckState()
         {
-            return FarmingTools.GetInstance(fface).PlayerData.shouldTravel && 
-                FarmingTools.GetInstance(fface).GameEngine.IsWorking;
+            return FarmingTools.GetInstance(fface).PlayerData.shouldTravel;
         }
 
         public override void EnterState()
@@ -65,7 +65,20 @@ namespace EasyFarm.Decision
                 SetPositionToNearestPoint();
             }
 
+            bool isCanceled = false;
+            var KeepFromRestingTask = new Task(() => {
+                while (!isCanceled)
+                {
+                    if (FarmingTools.GetInstance(fface).RestingService.IsResting)
+                    {
+                        FarmingTools.GetInstance(fface).RestingService.Off();
+                    }
+                }
+            });
+
+            KeepFromRestingTask.Start();
             fface.Navigator.Goto(FarmingTools.GetInstance(fface).UserSettings.Waypoints[position].Position, false);
+            isCanceled = true;
             position++;
         }
 

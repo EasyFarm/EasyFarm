@@ -16,28 +16,35 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.Classes;
-using EasyFarm.Classes.Services;
-using FFACETools;
+using System;
 
-class RestState : BaseState
+namespace EasyFarm.GameData
 {
-    public RestState(FFACE fface) : base(fface) { }
-
-    public override bool CheckState()
+    public class WeaponAbility
     {
-        return FarmingTools.GetInstance(fface).PlayerData.shouldRest && FarmingTools.GetInstance(fface).GameEngine.IsWorking;
+        /// <summary>
+        /// What is its name?
+        /// </summary>
+        public String Name = String.Empty;
+
+        /// <summary>
+        /// Max distance we cna use a weaponskill at
+        /// </summary>
+        public double Distance = 0;
+
+        /// <summary>
+        /// Can we use the weaponskill?
+        /// </summary>
+        public bool Enabled = false;
+
+        /// <summary>
+        /// Mob hp needed inorder to use weaponskill
+        /// </summary>
+        public int Health = 0;
+
+        /// <summary>
+        /// The weaponskill
+        /// </summary>
+        public Ability Ability = new Ability();
     }
-
-    public override void EnterState() { }
-
-    public override void RunState()
-    {
-        if (!FarmingTools.GetInstance(fface).PlayerData.IsResting)
-        {
-            FarmingTools.GetInstance(fface).RestingService.On();
-        }
-    }
-
-    public override void ExitState() { }
 }

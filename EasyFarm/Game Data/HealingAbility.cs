@@ -16,59 +16,43 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using ZeroLimits.FarmingTool;
-using FFACETools;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ZeroLimits.FarmingTool
+namespace EasyFarm.GameData
 {
-    public class RestingService
+    /// <summary>
+    /// Class for Healing Abilities
+    /// </summary>
+    public class HealingAbility
     {
-        /// <summary>
-        /// Command for resting
-        /// </summary>
-        const string RESTING_ON = "/heal on";
-
-        /// <summary>
-        /// Command for stopping resting
-        /// </summary>
-        const string RESTING_OFF = "/heal off";
-
-        FFACE _session;
-
-        public RestingService(FFACE session)
+        public HealingAbility()
         {
-            this._session = session;
+            SetDefaults();
+        }
+
+        public void SetDefaults()
+        { 
+            IsEnabled = false;
+            Name = "Empty";
+            TriggerLevel = 0;
         }
 
         /// <summary>
-        /// Makes the character stop resting
+        /// Can we use this abilitiy?
         /// </summary>
-        public void Off()
-        {
-            if (IsResting) { _session.Windower.SendString(RESTING_OFF); }
-        }
+        public bool IsEnabled { get; set; }
 
         /// <summary>
-        /// Makes the character rest
+        /// What is its name?
         /// </summary>
-        public void On()
-        {
-            if (!IsResting) { _session.Windower.SendString(RESTING_ON); }
-        }
+        public String Name { get; set; }
 
         /// <summary>
-        /// Is our player resting?
+        /// The level to which we should use the ability
         /// </summary>
-        public bool IsResting 
-        {
-            get
-            {
-                return _session.Player.Status == Status.Healing;
-            }
-        }
+        public int TriggerLevel { get; set; }
     }
 }

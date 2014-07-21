@@ -1,4 +1,4 @@
-
+﻿
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013 - 2014>  <Zerolimits>
@@ -14,45 +14,41 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
-﻿using System;
+using FFACETools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using ZeroLimits.FarmingTool;
 
-namespace EasyFarm.Classes
+
+namespace EasyFarm.State
 {
     /// <summary>
-    /// Class for Healing Abilities
+    /// Changes our target once the target becomes invalid
     /// </summary>
-    public class HealingAbility
+    public class TargetInvalid : BaseState
     {
-        public HealingAbility()
+        public TargetInvalid(FFACE fface) : base(fface) { }
+
+        public override bool CheckState()
         {
-            SetDefaults();
+            return !FarmingTools.GetInstance(fface).UnitService
+                .IsValid(FarmingTools.GetInstance(fface).TargetData.TargetUnit);
         }
 
-        public void SetDefaults()
-        { 
-            IsEnabled = false;
-            Name = "Empty";
-            TriggerLevel = 0;
+        public override void EnterState() { }
+
+        public override void RunState()
+        {
+            FarmingTools.GetInstance(fface).TargetData.TargetUnit = 
+                FarmingTools.GetInstance(fface).UnitService.GetTarget();
         }
 
-        /// <summary>
-        /// Can we use this abilitiy?
-        /// </summary>
-        public bool IsEnabled { get; set; }
-
-        /// <summary>
-        /// What is its name?
-        /// </summary>
-        public String Name { get; set; }
-
-        /// <summary>
-        /// The level to which we should use the ability
-        /// </summary>
-        public int TriggerLevel { get; set; }
+        public override void ExitState() { }
     }
 }

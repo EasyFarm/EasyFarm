@@ -163,41 +163,48 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\Decision\State\AttackState.cs" />
-    <Compile Include="Classes\Decision\State\BaseState.cs" />
-    <Compile Include="Classes\Decision\State\DeadState.cs" />
-    <Compile Include="Classes\Decision\State\FiniteStateMachine.cs" />
-    <Compile Include="Classes\Decision\State\HealingState.cs" />
-    <Compile Include="Classes\Decision\State\PostBattle.cs" />
-    <Compile Include="Classes\Decision\State\RestState.cs" />
-    <Compile Include="Classes\Decision\State\TargetInvalid.cs" />
-    <Compile Include="Classes\Decision\State\TravelState.cs" />
-    <Compile Include="Classes\Game Data\Ability.cs" />
+    <Compile Include="Classes\AttackState.cs" />
+    <Compile Include="Classes\BaseState.cs" />
+    <Compile Include="Classes\DeadState.cs" />
+    <Compile Include="Classes\FiniteStateMachine.cs" />
+    <Compile Include="Classes\GameEngine.cs" />
+    <Compile Include="Classes\HealingState.cs" />
+    <Compile Include="Classes\PostBattle.cs" />
+    <Compile Include="Classes\RestState.cs" />
+    <Compile Include="Classes\TargetInvalid.cs" />
+    <Compile Include="Classes\TravelState.cs" />
+    <Compile Include="FarmingTools\Constants.cs" />
+    <Compile Include="Game Data\Ability.cs" />
+    <Compile Include="Debugging\DebugCreatures.xaml.cs">
+      <DependentUpon>DebugCreatures.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Debugging\DebugSpellCasting.xaml.cs">
+      <DependentUpon>DebugSpellCasting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FarmingTools\ActionBlocked.cs" />
-    <Compile Include="Classes\Game Data\HealingAbility.cs" />
+    <Compile Include="Game Data\HealingAbility.cs" />
     <Compile Include="FarmingTools\PlayerActions.cs" />
     <Compile Include="FarmingTools\PlayerData.cs" />
-    <Compile Include="Classes\Game Data\FFInstance.cs" />
+    <Compile Include="Game Data\FFInstance.cs" />
     <Compile Include="FarmingTools\TargetData.cs" />
-    <Compile Include="Classes\Game Data\Unit.cs" />
-    <Compile Include="Classes\Game Data\Waypoint.cs" />
-    <Compile Include="Classes\Game Data\WeaponAbility.cs" />
+    <Compile Include="Game Data\Unit.cs" />
+    <Compile Include="Game Data\Waypoint.cs" />
+    <Compile Include="Game Data\WeaponAbility.cs" />
     <Compile Include="FarmingTools\AbilitiesService.cs" />
     <Compile Include="FarmingTools\AbilityExecutor.cs" />
     <Compile Include="FarmingTools\AbilityParser.cs" />
     <Compile Include="FarmingTools\CombatService.cs" />
     <Compile Include="FarmingTools\FarmingTools.cs" />
-    <Compile Include="FarmingTools\GameEngine.cs" />
     <Compile Include="FarmingTools\RestingService.cs" />
     <Compile Include="FarmingTools\UnitService.cs" />
     <Compile Include="FarmingTools\Utilities.cs" />
-    <Compile Include="Classes\User Settings\ActionInfo.cs" />
-    <Compile Include="Classes\User Settings\Config.cs" />
-    <Compile Include="Classes\User Settings\Health.cs" />
-    <Compile Include="Classes\User Settings\Magic.cs" />
-    <Compile Include="Classes\User Settings\MiscSettings.cs" />
-    <Compile Include="Classes\User Settings\MobFilters.cs" />
-    <Compile Include="Classes\User Settings\RestingInfo.cs" />
+    <Compile Include="User Settings\ActionInfo.cs" />
+    <Compile Include="User Settings\Config.cs" />
+    <Compile Include="User Settings\Health.cs" />
+    <Compile Include="User Settings\Magic.cs" />
+    <Compile Include="User Settings\MiscSettings.cs" />
+    <Compile Include="User Settings\MobFilters.cs" />
+    <Compile Include="User Settings\RestingInfo.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -285,6 +292,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Debugging\DebugCreatures.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Debugging\DebugSpellCasting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\AbilitySelectionBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -356,7 +371,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="Scripting\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Embedded\Microsoft.Practices.EnterpriseLibrary.Common.dll" />

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.UserSettings
 {
     public class Magic
     {

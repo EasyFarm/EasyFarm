@@ -12,10 +12,8 @@
                 <Slider Minimum="0" Maximum="100" Value="{Binding DetectionDistance}"></Slider>
                 <Label>Height Threshold</Label>
                 <Slider Minimum="0" Maximum="100" Value="{Binding HeightThreshold}"></Slider>
-                <Label>Min Melee Distance</Label>
-                <Slider Minimum="0" Maximum="100" Value="{Binding MinMeleeDistance}"></Slider>
-                <Label>Max Melee Distance</Label>
-                <Slider Minimum="0" Maximum="100" Value="{Binding MaxMeleeDistance}"></Slider>
+                <Label>Melee Distance</Label>
+                <Slider Minimum="0" Maximum="100" Value="{Binding MeleeDistance}"></Slider>
                 <Button Width="Auto" Margin="10" Command="{Binding RestoreDefaultsCommand}">Restore Defaults</Button>
             </StackPanel>
         </GroupBox>

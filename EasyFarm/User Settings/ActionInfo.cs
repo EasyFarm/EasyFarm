@@ -17,52 +17,46 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
+using EasyFarm.GameData;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.UserSettings
 {
-    /// <summary>
-    /// Contains the data needed to filter out creatures.
-    /// </summary>
-    public class FilterInfo
-    {        
+    public class ActionInfo
+    {
         /// <summary>
-        /// Name of the mob to be attacked
+        /// List of actions that should be used before battle
         /// </summary>
-        public string TargetName = String.Empty;
+        public ObservableCollection<Ability> StartList = new ObservableCollection<Ability>();
 
         /// <summary>
-        /// Name of the mob to be ignored
+        /// List of actions taht should be used at the end of battle
         /// </summary>
-        public string IgnoredName = String.Empty;
+        public ObservableCollection<Ability> EndList = new ObservableCollection<Ability>();
 
         /// <summary>
-        /// Used to filter out aggroed mobs.
+        /// List of actions that should be used in battle
         /// </summary>
-        public bool AggroFilter = true;
-        
-        /// <summary>
-        /// Used to filter out party claimed mobs.
-        /// </summary>
-        public bool PartyFilter = true;
+        public ObservableCollection<Ability> BattleList = new ObservableCollection<Ability>();
 
         /// <summary>
-        /// Used to filter out unclaimed mobs.
+        /// List of actions that should be used when injured
         /// </summary>
-        public bool UnclaimedFilter = true;
+        public ObservableCollection<HealingAbility> HealingList = new ObservableCollection<HealingAbility>();
 
         /// <summary>
-        /// A list of mobs that we should ignore.
+        /// Is the BattleList Selected in the battle tab?
         /// </summary>
-        public ObservableCollection<String> IgnoredMobs = new ObservableCollection<string>();
+        public bool BattleListSelected = true;
 
         /// <summary>
-        /// A list of mobs that we should only kill.
+        /// Is the StartList selected in the battle tab?
         /// </summary>
-        public ObservableCollection<String> TargetedMobs = new ObservableCollection<string>();
+        public bool StartListSelected = false;
+
+        /// <summary>
+        /// Is the End list selected in the battle tab?
+        /// </summary>
+        public bool EndListSelected = false;
     }
 }

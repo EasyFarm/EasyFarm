@@ -17,13 +17,12 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.GameData;
 using FFACETools;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace EasyFarm.Classes
+namespace ZeroLimits.FarmingTool
 {
     /// <summary>
     /// A class for using abilties.

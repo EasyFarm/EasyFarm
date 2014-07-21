@@ -6,7 +6,7 @@
 using System.Diagnostics;
 using FFACETools;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.GameData
 {
     public class FFInstance
     {

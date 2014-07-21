@@ -17,20 +17,17 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using EasyFarm.Classes.Services;
+using EasyFarm.GameData;
 using FFACETools;
 using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using ZeroLimits.FarmingTool;
 
 namespace EasyFarm.ViewModels
 {

@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes.Services;
+
 using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EasyFarm.Classes
+namespace ZeroLimits.FarmingTool
 {
     /// <summary>
     /// A class that contains the data specific to the player.
@@ -85,8 +85,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return FarmingTools.GetInstance(_fface).GameEngine.IsWorking && !IsDead &&
-                    FarmingTools.GetInstance(_fface).PlayerActions.HasHealingMoves;
+                return !IsDead && FarmingTools.GetInstance(_fface).PlayerActions.HasHealingMoves;
             }
         }
 
@@ -115,7 +114,7 @@ namespace EasyFarm.Classes
                 bool IsAttacking = !IsDead && (IsAttackable && (IsFighting || IsAggroed || (IsFighting || !shouldRest)));
 
 
-                return IsAttacking && FarmingTools.GetInstance(_fface).GameEngine.IsWorking;
+                return IsAttacking;
             }
         }
 

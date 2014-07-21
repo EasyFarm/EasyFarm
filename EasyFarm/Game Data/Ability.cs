@@ -23,7 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.GameData
 {
     /// <summary>
     /// An action to be used on a target unit or player.

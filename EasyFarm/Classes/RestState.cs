@@ -14,34 +14,37 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.Classes;
-using EasyFarm.Classes.Services;
+﻿
 using FFACETools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using ZeroLimits.FarmingTool;
 
-namespace EasyFarm.Decision.FSM
+namespace EasyFarm.State
 {
-    /// <summary>
-    /// A state to pause the bot if it is dead.
-    /// </summary>
-    class DeadState : BaseState
+    class RestState : BaseState
     {
-        public DeadState(FFACE fface) : base(fface) { }
+        public RestState(FFACE fface) : base(fface) { }
 
-        public override bool CheckState() { return FarmingTools.GetInstance(fface).PlayerData.IsDead; }
+        public override bool CheckState()
+        {
+            return FarmingTools.GetInstance(fface).PlayerData.shouldRest && !fface.Navigator.IsRunning();
+        }
 
         public override void EnterState() { }
 
-        public override void RunState() {
-            FarmingTools.GetInstance(fface).GameEngine.Stop();
-            App.InformUser("Stopped!");
+        public override void RunState()
+        {
+            if (!fface.Player.Status.Equals(Status.Healing))
+            {
+                FarmingTools.GetInstance(fface).RestingService.On();
+            }
         }
 
-        public override void ExitState() { }
+        public override void ExitState()
+        {
+
+        }
     }
 }

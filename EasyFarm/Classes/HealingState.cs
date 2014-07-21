@@ -16,15 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.Classes;
-using EasyFarm.Classes.Services;
-using FFACETools;
-using System;
-using System.Collections.Generic;
+﻿using FFACETools;
+using ZeroLimits.FarmingTool;
 using System.Linq;
-using System.Text;
 
-namespace EasyFarm.FSM
+namespace EasyFarm.State
 {
     class HealingState : BaseState
     {

@@ -17,14 +17,12 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.Classes;
-using EasyFarm.UtilityTools;
 using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.State
 {
     /// <summary>
     /// An object that controls the bot and contains all the data. 

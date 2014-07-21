@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.GameData;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +26,7 @@ using System.Text;
 using System.Windows;
 using System.Xml.Linq;
 
-namespace EasyFarm.Classes
+namespace ZeroLimits.FarmingTool
 {
     /// <summary>
     /// This class is responsible for retrieving job abilties and spells.

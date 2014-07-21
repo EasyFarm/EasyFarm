@@ -17,14 +17,16 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes.Services;
-using EasyFarm.UtilityTools;
+using EasyFarm.State;
+
 using EasyFarm.ViewModels;
+using EasyFarm.Views;
 using FFACETools;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Reflection;
 using System.Windows;
+using ZeroLimits.FarmingTool;
 
 namespace EasyFarm
 {
@@ -44,6 +46,8 @@ namespace EasyFarm
 
         public static IEventAggregator EventAggregator;
 
+        public static GameEngine GameEngine { get; set;}
+
         public App() 
         {
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;            
@@ -59,7 +63,6 @@ namespace EasyFarm
             frmStartup ProcessSelectionScreen = new frmStartup();
             ProcessSelectionScreen.ShowDialog();
 
-
             // Validate the selection
             var m_process = ProcessSelectionScreen.POL_Process;
 
@@ -71,6 +74,8 @@ namespace EasyFarm
             }
 
             _fface = ProcessSelectionScreen.FFXI_Session;
+
+            GameEngine = new GameEngine(_fface);
 
             // Set up the game engine if valid.
             FarmingTools.LoadSettings();

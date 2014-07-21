@@ -16,14 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes.Services;
-using FFACETools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace EasyFarm.Classes
+using EasyFarm.GameData;
+using FFACETools;
+
+namespace ZeroLimits.FarmingTool
 {
     /// <summary>
     /// A class about the players target. 

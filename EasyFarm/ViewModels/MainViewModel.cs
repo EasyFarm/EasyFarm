@@ -17,15 +17,10 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using EasyFarm.Classes.Services;
 using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.PubSubEvents;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
+using ZeroLimits.FarmingTool;
 
 namespace EasyFarm.ViewModels
 {
@@ -53,15 +48,15 @@ namespace EasyFarm.ViewModels
 
         public void Start()
         {
-            if (farmingTools.GameEngine.IsWorking)
+            if (App.GameEngine.IsWorking)
             {
                 App.InformUser("Program paused.");
-                farmingTools.GameEngine.Stop();
+                App.GameEngine.Stop();
             }
             else
             {
                 App.InformUser("Program running.");
-                farmingTools.GameEngine.Start();
+                App.GameEngine.Start();
             }
         }
     }

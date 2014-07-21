@@ -16,40 +16,37 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.Classes;
-using EasyFarm.Classes.Services;
+﻿
 using FFACETools;
+using ZeroLimits.FarmingTool;
 
-namespace EasyFarm.FSM
+namespace EasyFarm.State
 {
     /// <summary>
-    /// A class for defeating monsters.
+    /// A state to pause the bot if it is dead.
     /// </summary>
-    class AttackState : BaseState
+    class DeadState : BaseState
     {
-        public AttackState(FFACE fface) : base(fface) { }
+        public DeadState(FFACE fface) : base(fface) { }
 
-        public override bool CheckState()
-        {
-            return FarmingTools.GetInstance(fface)
-                .PlayerData.shouldFight;
+        public override bool CheckState() { return FarmingTools.GetInstance(fface).PlayerData.IsDead; }
+
+        public override void EnterState() { }
+
+        public override void RunState() {
+            // Stop the finite state machine from 
+            // processing  more states. 
+            App.GameEngine.Stop();
+            
+            // Inform the user through the status bar 
+            // we've stopped. 
+            App.InformUser("Stopped!");
+            
+            // Stop moving towards waypoints if we 
+            // were currently moving.
+            fface.Navigator.Reset();
         }
 
-        public override void EnterState()
-        {
-            FarmingTools.GetInstance(fface)
-                .RestingService.Off();
-        }
-
-        public override void RunState()
-        {
-            FarmingTools.GetInstance(fface)
-                .CombatService.Battle();
-        }
-
-        public override void ExitState()
-        {
-
-        }
+        public override void ExitState() { }
     }
 }

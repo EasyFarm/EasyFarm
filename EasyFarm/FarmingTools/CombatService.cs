@@ -16,14 +16,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using EasyFarm.GameData;
 using FFACETools;
-using System;
-using EasyFarm.Classes;
-using EasyFarm.Classes.Services;
+using System.Collections.Generic;
 
-namespace EasyFarm.Classes
+
+namespace ZeroLimits.FarmingTool
 {
     public class CombatService
     {               
@@ -68,7 +66,7 @@ namespace EasyFarm.Classes
             {
                 return _fface.Navigator
                     .DistanceTo(FarmingTools.GetInstance(_fface).TargetData.TargetUnit.Position) <= 
-                    FarmingTools.GetInstance(_fface).UserSettings.MiscSettings.MaxMeleeDistance;
+                    FarmingTools.GetInstance(_fface).UserSettings.MiscSettings.MeleeDistance;
             }
         }
 
@@ -88,11 +86,11 @@ namespace EasyFarm.Classes
 
             // Use the new one
             _fface.Navigator.DistanceTolerance = FarmingTools.GetInstance(_fface)
-                .UserSettings.MiscSettings.MinMeleeDistance;
+                .UserSettings.MiscSettings.MeleeDistance;
 
             // Run to the unit while we are out of distance. 
             if (_fface.Navigator.DistanceTo(FarmingTools.GetInstance(_fface).TargetData.Position) >=
-                FarmingTools.GetInstance(_fface).UserSettings.MiscSettings.MinMeleeDistance)
+                FarmingTools.GetInstance(_fface).UserSettings.MiscSettings.MeleeDistance)
             {
                 _fface.Navigator.GotoNPC(FarmingTools.GetInstance(_fface).TargetData.TargetUnit.ID, 10);
             }
