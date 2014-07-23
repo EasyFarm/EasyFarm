@@ -14,11 +14,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
 ﻿using FFACETools;
 using ZeroLimits.FarmingTool;
 using System.Linq;
+using ZeroLimits.XITools;
 
 namespace EasyFarm.State
 {
@@ -28,25 +30,25 @@ namespace EasyFarm.State
 
         public override bool CheckState()
         {
-            return FarmingTools.GetInstance(fface).PlayerData.shouldHeal && 
-                !FarmingTools.GetInstance(fface).PlayerData.shouldRest;
+            return ftools.PlayerData.shouldHeal &&
+                !ftools.PlayerData.shouldRest;
         }
 
         public override void EnterState()
         {
-            FarmingTools.GetInstance(fface).RestingService.Off();
+            ftools.RestingService.EndResting();
         }
 
         public override void RunState()
         {
             // Use an ability to heal from the healing list if we can
-            if (FarmingTools.GetInstance(fface).PlayerActions.HealingList.Count > 0)
+            if (ftools.PlayerActions.HealingList.Count > 0)
             {
                 // Check for actions available
-                var act = FarmingTools.GetInstance(fface).PlayerActions.HealingList.FirstOrDefault();
+                var act = ftools.PlayerActions.HealingList.FirstOrDefault();
                 if (act == null) { return; }
                 //
-                else { FarmingTools.GetInstance(fface).AbilityExecutor.UseAbility(act); }
+                else { ftools.AbilityExecutor.UseAbility(act, Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN); }
             }
         }
 

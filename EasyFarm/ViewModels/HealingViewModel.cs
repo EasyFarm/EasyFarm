@@ -39,8 +39,8 @@ namespace EasyFarm.ViewModels
 
         public ObservableCollection<HealingAbility> Healing
         {
-            get { return farmingTools.UserSettings.ActionInfo.HealingList; }
-            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.HealingList, value); }
+            get { return ftools.UserSettings.ActionInfo.HealingList; }
+            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.HealingList, value); }
         }
 
         public ICommand AddHealingCommand { get; set; }

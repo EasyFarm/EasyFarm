@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License
 using EasyFarm.GameData;
 using System;
 using System.Windows;
+using ZeroLimits.XITools;
 
 
 namespace EasyFarm.Views

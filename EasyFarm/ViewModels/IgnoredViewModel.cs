@@ -54,14 +54,14 @@ namespace EasyFarm.ViewModels
 
         public String Name
         {
-            get { return farmingTools.UnitService.FilterInfo.IgnoredName; }
-            set { SetProperty(ref farmingTools.UnitService.FilterInfo.IgnoredName, value); }
+            get { return ftools.UserSettings.FilterInfo.IgnoredName; }
+            set { SetProperty(ref ftools.UserSettings.FilterInfo.IgnoredName, value); }
         }
 
         public ObservableCollection<String> Ignored
         {
-            get { return farmingTools.UnitService.FilterInfo.IgnoredMobs; }
-            set { SetProperty(ref farmingTools.UnitService.FilterInfo.IgnoredMobs, value); }
+            get { return ftools.UserSettings.FilterInfo.IgnoredMobs; }
+            set { SetProperty(ref ftools.UserSettings.FilterInfo.IgnoredMobs, value); }
         }
 
         public ICommand AddIgnoredUnitCommand { get; set; }

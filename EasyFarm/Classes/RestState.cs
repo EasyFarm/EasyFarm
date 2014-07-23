@@ -29,7 +29,8 @@ namespace EasyFarm.State
 
         public override bool CheckState()
         {
-            return FarmingTools.GetInstance(fface).PlayerData.shouldRest && !fface.Navigator.IsRunning();
+            bool isResting = ftools.PlayerData.shouldRest;
+            return isResting;
         }
 
         public override void EnterState() { }
@@ -38,7 +39,7 @@ namespace EasyFarm.State
         {
             if (!fface.Player.Status.Equals(Status.Healing))
             {
-                FarmingTools.GetInstance(fface).RestingService.On();
+                ftools.RestingService.StartResting();
             }
         }
 

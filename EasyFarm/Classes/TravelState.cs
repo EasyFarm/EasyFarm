@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ZeroLimits.FarmingTool;
 using EasyFarm.GameData;
+using System.Diagnostics;
 
 
 namespace EasyFarm.State
@@ -36,13 +37,13 @@ namespace EasyFarm.State
 
         public override bool CheckState()
         {
-            return FarmingTools.GetInstance(fface).PlayerData.shouldTravel;
+            return ftools.PlayerData.shouldTravel;
         }
 
         public override void EnterState()
         {
-            FarmingTools.GetInstance(fface).RestingService.Off();
-            FarmingTools.GetInstance(fface).CombatService.Disengage();
+            ftools.RestingService.EndResting();
+            ftools.CombatService.Disengage();
 
             fface.Navigator.DistanceTolerance = 1;
             fface.Navigator.HeadingTolerance = 1;
@@ -51,16 +52,16 @@ namespace EasyFarm.State
         public override void RunState()
         {
             // If we've reached the end of the path....
-            if (position > FarmingTools.GetInstance(fface).UserSettings.Waypoints.Count - 1)
+            if (position > ftools.UserSettings.Waypoints.Count - 1)
             {
                 // Turn around and run the path in reverse with the old end being the new starting point
-                FarmingTools.GetInstance(fface).UserSettings.Waypoints =
-                    new ObservableCollection<Waypoint>(FarmingTools.GetInstance(fface).UserSettings.Waypoints.Reverse());
+                ftools.UserSettings.Waypoints =
+                    new ObservableCollection<Waypoint>(ftools.UserSettings.Waypoints.Reverse());
                 position = 0;                
             }
 
             // If we are more than 10 yalms away from the nearest point...
-            if (fface.Navigator.DistanceTo(FarmingTools.GetInstance(fface).UserSettings.Waypoints[position].Position) > 10)
+            if (fface.Navigator.DistanceTo(ftools.UserSettings.Waypoints[position].Position) > 10)
             {
                 SetPositionToNearestPoint();
             }
@@ -69,15 +70,15 @@ namespace EasyFarm.State
             var KeepFromRestingTask = new Task(() => {
                 while (!isCanceled)
                 {
-                    if (FarmingTools.GetInstance(fface).RestingService.IsResting)
+                    if (fface.Player.Status.Equals(Status.Healing))
                     {
-                        FarmingTools.GetInstance(fface).RestingService.Off();
+                        ftools.RestingService.EndResting();
                     }
                 }
             });
 
             KeepFromRestingTask.Start();
-            fface.Navigator.Goto(FarmingTools.GetInstance(fface).UserSettings.Waypoints[position].Position, false);
+            fface.Navigator.Goto(ftools.UserSettings.Waypoints[position].Position, true);
             isCanceled = true;
             position++;
         }
@@ -86,8 +87,10 @@ namespace EasyFarm.State
         {
             // Find the closest point and ...
             FFACE.Position closest = null;
-            foreach (var current in FarmingTools.GetInstance(fface).UserSettings.Waypoints)
+            foreach (var current in ftools.UserSettings.Waypoints)
             {
+                if(closest != null) Debug.WriteLine("Distance: " + fface.Navigator.DistanceTo(closest));
+
                 if (closest == null) { closest = current.Position; }
 
                 else if (fface.Navigator.DistanceTo(current.Position) <
@@ -98,7 +101,8 @@ namespace EasyFarm.State
             // Get its index in the array of points, then ...
             if (closest != null)
             {
-                position = FarmingTools.GetInstance(fface).UserSettings.Waypoints.IndexOf(new Waypoint(closest));
+                Debug.WriteLine("Distance: " + fface.Navigator.DistanceTo(closest));
+                position = ftools.UserSettings.Waypoints.IndexOf(new Waypoint(closest));
             }
         }
 

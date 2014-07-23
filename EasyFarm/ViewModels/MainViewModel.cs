@@ -40,8 +40,8 @@ namespace EasyFarm.ViewModels
 
         public String StatusBarText
         {
-            get { return farmingTools.UserSettings.StatusBarText; }
-            set { this.SetProperty(ref farmingTools.UserSettings.StatusBarText, value); }
+            get { return ftools.UserSettings.StatusBarText; }
+            set { this.SetProperty(ref ftools.UserSettings.StatusBarText, value); }
         }
        
         public ICommand StartCommand { get; set; }

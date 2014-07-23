@@ -35,39 +35,39 @@ namespace EasyFarm.ViewModels
 
         public String Name
         {
-            get { return farmingTools.UserSettings.WeaponInfo.Name; }
-            set { SetProperty(ref this.farmingTools.UserSettings.WeaponInfo.Name, value); }
+            get { return ftools.UserSettings.WeaponInfo.Name; }
+            set { SetProperty(ref this.ftools.UserSettings.WeaponInfo.Name, value); }
         }
 
         public double Distance
         {
-            get { return farmingTools.UserSettings.WeaponInfo.Distance; }
-            set { SetProperty(ref this.farmingTools.UserSettings.WeaponInfo.Distance, value); 
+            get { return ftools.UserSettings.WeaponInfo.Distance; }
+            set { SetProperty(ref this.ftools.UserSettings.WeaponInfo.Distance, value); 
                     App.InformUser("Distance set to " + this.Distance);
             }
         }
 
         public int Health
         {
-            get { return farmingTools.UserSettings.WeaponInfo.Health; }
+            get { return ftools.UserSettings.WeaponInfo.Health; }
             set
             {
-                SetProperty(ref this.farmingTools.UserSettings.WeaponInfo.Health, value); 
+                SetProperty(ref this.ftools.UserSettings.WeaponInfo.Health, value); 
                 App.InformUser("Health set to " + this.Health);
             }
         }
 
         public WeaponAbility Ability
         {
-            get { return farmingTools.UserSettings.WeaponInfo; }
-            set { SetProperty(ref this.farmingTools.UserSettings.WeaponInfo, value); }
+            get { return ftools.UserSettings.WeaponInfo; }
+            set { SetProperty(ref this.ftools.UserSettings.WeaponInfo, value); }
         }
 
         public ICommand SetCommand { get; set; }
 
         private void SetWeaponSkill()
         {
-            var weaponSkill = farmingTools.AbilityService.CreateAbility(Name);
+            var weaponSkill = ftools.AbilityService.CreateAbility(Name);
 
             if (string.IsNullOrWhiteSpace(Name) || !weaponSkill.IsValidName)
             {

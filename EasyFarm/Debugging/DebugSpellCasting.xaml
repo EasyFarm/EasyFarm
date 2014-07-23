@@ -5,8 +5,9 @@
     <StackPanel DockPanel.Dock="Right">
         <Label Name="lblCastMax" Content="{Binding CastMax, Mode=TwoWay}"></Label>
         <Label Name="lblCastCountDown" Content="{Binding CastCountDown, Mode=TwoWay}"/>
+        <Label Name="lblSuccess" Content="{Binding Success, Mode=TwoWay}"/>
         <TextBox Name="txbSpellName" Text="{Binding SpellName, Mode=TwoWay}"></TextBox>
-        <ProgressBar Value="{Binding CastPercent, Mode=TwoWay}"/>
+        <ProgressBar Height="10" Value="{Binding CastPercent, Mode=TwoWay}"/>
         <Button Name="btnCastSpell" Command="{Binding CastSpellCommand}">Cast Spell</Button>
     </StackPanel>
 </Window>

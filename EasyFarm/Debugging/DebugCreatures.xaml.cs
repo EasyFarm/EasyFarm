@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using ZeroLimits.FarmingTool;
 using System.Linq;
+using ZeroLimits.XITools;
 
 namespace EasyFarm.Debugging
 {

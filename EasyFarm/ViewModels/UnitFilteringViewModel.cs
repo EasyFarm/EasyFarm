@@ -27,6 +27,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ZeroLimits.FarmingTool;
+using ZeroLimits.XITools;
 
 
 namespace EasyFarm.ViewModels
@@ -50,30 +51,30 @@ namespace EasyFarm.ViewModels
 
         public double DetectionDistance
         {
-            get { return farmingTools.UserSettings.MiscSettings.DetectionDistance; }
+            get { return ftools.UserSettings.MiscSettings.DetectionDistance; }
             set 
             { 
-                SetProperty<double>(ref farmingTools.UserSettings.MiscSettings.DetectionDistance, value);
+                SetProperty<double>(ref ftools.UserSettings.MiscSettings.DetectionDistance, value);
                 App.InformUser("Detection Distance Set: {0}.", value);
             }
         }
 
         public double HeightThreshold
         {
-            get { return farmingTools.UserSettings.MiscSettings.HeightThreshold; }
+            get { return ftools.UserSettings.MiscSettings.HeightThreshold; }
             set
             {
-                SetProperty<double>(ref farmingTools.UserSettings.MiscSettings.HeightThreshold, value);
+                SetProperty<double>(ref ftools.UserSettings.MiscSettings.HeightThreshold, value);
                 App.InformUser("Height Threshold Set: {0}.", value);
             }
         }
 
         public double MeleeDistance
         {
-            get { return farmingTools.UserSettings.MiscSettings.MeleeDistance; }
+            get { return ftools.UserSettings.MiscSettings.MeleeDistance; }
             set
             {
-                SetProperty<double>(ref farmingTools.UserSettings.MiscSettings.MeleeDistance, value);
+                SetProperty<double>(ref ftools.UserSettings.MiscSettings.MeleeDistance, value);
                 App.InformUser("Min Melee Distance Set: {0}.", value);
             }
         }

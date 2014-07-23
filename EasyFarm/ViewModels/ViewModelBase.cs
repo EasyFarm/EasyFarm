@@ -25,11 +25,11 @@ namespace EasyFarm.ViewModels
 {
     public class ViewModelBase : BindableBase
     {
-        protected FarmingTools farmingTools;
+        protected FarmingTools ftools;
 
         protected ViewModelBase(FarmingTools farmingTools)
         {
-            this.farmingTools = farmingTools;
+            this.ftools = farmingTools;
         }
     }
 }

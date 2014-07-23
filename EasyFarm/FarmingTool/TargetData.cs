@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.GameData;
 using FFACETools;
+using ZeroLimits.XITools;
 
 namespace ZeroLimits.FarmingTool
 {

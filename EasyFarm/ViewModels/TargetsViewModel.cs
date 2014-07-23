@@ -54,32 +54,32 @@ namespace EasyFarm.ViewModels
 
         public String TargetsName
         {
-            get { return farmingTools.UnitService.FilterInfo.TargetName; }
-            set { SetProperty(ref farmingTools.UnitService.FilterInfo.TargetName, value); }
+            get { return ftools.UserSettings.FilterInfo.TargetName; }
+            set { SetProperty(ref ftools.UserSettings.FilterInfo.TargetName, value); }
         }
 
         public ObservableCollection<String> Targets
         {
-            get { return farmingTools.UnitService.FilterInfo.TargetedMobs; }
-            set { SetProperty(ref farmingTools.UnitService.FilterInfo.TargetedMobs, value); }
+            get { return ftools.UserSettings.FilterInfo.TargetedMobs; }
+            set { SetProperty(ref ftools.UserSettings.FilterInfo.TargetedMobs, value); }
         }
 
         public bool Aggro
         {
-            get { return farmingTools.UnitService.FilterInfo.AggroFilter; }
-            set { SetProperty(ref farmingTools.UnitService.FilterInfo.AggroFilter, value); }
+            get { return ftools.UserSettings.FilterInfo.AggroFilter; }
+            set { SetProperty(ref ftools.UserSettings.FilterInfo.AggroFilter, value); }
         }
 
         public bool Unclaimed
         {
-            get { return farmingTools.UnitService.FilterInfo.UnclaimedFilter; }
-            set { SetProperty(ref farmingTools.UnitService.FilterInfo.UnclaimedFilter, value); }
+            get { return ftools.UserSettings.FilterInfo.UnclaimedFilter; }
+            set { SetProperty(ref ftools.UserSettings.FilterInfo.UnclaimedFilter, value); }
         }
 
         public bool PartyClaimed
         {
-            get { return farmingTools.UnitService.FilterInfo.PartyFilter; }
-            set { SetProperty(ref farmingTools.UnitService.FilterInfo.PartyFilter, value); }
+            get { return ftools.UserSettings.FilterInfo.PartyFilter; }
+            set { SetProperty(ref ftools.UserSettings.FilterInfo.PartyFilter, value); }
         }
 
         public ICommand AddCommand { get; set; }

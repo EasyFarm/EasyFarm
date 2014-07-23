@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Debugging;
 using EasyFarm.State;
-
 using EasyFarm.ViewModels;
 using EasyFarm.Views;
 using FFACETools;
@@ -75,10 +75,14 @@ namespace EasyFarm
 
             _fface = ProcessSelectionScreen.FFXI_Session;
 
-            GameEngine = new GameEngine(_fface);
-
             // Set up the game engine if valid.
             FarmingTools.LoadSettings();
+
+            GameEngine = new GameEngine(_fface);
+
+            // new DebugSpellCasting(_fface).Show();
+
+            // new DebugCreatures(_fface, FarmingTools.UnitService).Show();
         }
 
         protected override void OnExit(ExitEventArgs e)

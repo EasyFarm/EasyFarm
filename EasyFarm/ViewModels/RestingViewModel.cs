@@ -28,54 +28,54 @@ namespace EasyFarm.ViewModels
 
         public int LowHP
         {
-            get { return farmingTools.UserSettings.RestingInfo.Health.Low; }
+            get { return ftools.UserSettings.RestingInfo.Health.Low; }
             set
             {
-                SetProperty(ref farmingTools.UserSettings.RestingInfo.Health.Low, value);
+                SetProperty(ref ftools.UserSettings.RestingInfo.Health.Low, value);
                 App.InformUser("Low hp set to " + this.LowHP);
             }
         }
 
         public int HighHP
         {
-            get { return farmingTools.UserSettings.RestingInfo.Health.High; }
+            get { return ftools.UserSettings.RestingInfo.Health.High; }
             set
             {
-                SetProperty(ref farmingTools.UserSettings.RestingInfo.Health.High, value);
+                SetProperty(ref ftools.UserSettings.RestingInfo.Health.High, value);
                 App.InformUser("High hp set to " + this.HighHP);
             }
         }
 
         public int LowMP
         {
-            get { return farmingTools.UserSettings.RestingInfo.Magic.Low; }
+            get { return ftools.UserSettings.RestingInfo.Magic.Low; }
             set
             {
-                SetProperty(ref farmingTools.UserSettings.RestingInfo.Magic.Low, value);
+                SetProperty(ref ftools.UserSettings.RestingInfo.Magic.Low, value);
                 App.InformUser("Low mp set to " + this.LowMP);
             }
         }
 
         public int HighMP
         {
-            get { return farmingTools.UserSettings.RestingInfo.Magic.High; }
+            get { return ftools.UserSettings.RestingInfo.Magic.High; }
             set
             {
-                SetProperty(ref farmingTools.UserSettings.RestingInfo.Magic.High, value);
+                SetProperty(ref ftools.UserSettings.RestingInfo.Magic.High, value);
                 App.InformUser("High mp set to " + this.HighMP);
             }
         }
 
         public bool HPEnabled
         {
-            get { return farmingTools.UserSettings.RestingInfo.Health.Enabled; }
-            set { SetProperty(ref farmingTools.UserSettings.RestingInfo.Health.Enabled, value); }
+            get { return ftools.UserSettings.RestingInfo.Health.Enabled; }
+            set { SetProperty(ref ftools.UserSettings.RestingInfo.Health.Enabled, value); }
         }
 
         public bool MPEnabled
         {
-            get { return farmingTools.UserSettings.RestingInfo.Magic.Enabled; }
-            set { SetProperty(ref farmingTools.UserSettings.RestingInfo.Magic.Enabled, value); }
+            get { return ftools.UserSettings.RestingInfo.Magic.Enabled; }
+            set { SetProperty(ref ftools.UserSettings.RestingInfo.Magic.Enabled, value); }
         }
     }
 }

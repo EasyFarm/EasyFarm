@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.GameData;
 using System.Collections.ObjectModel;
+using ZeroLimits.XITools;
 
 namespace EasyFarm.UserSettings
 {

@@ -29,7 +29,7 @@ namespace EasyFarm.State
     {
         public DeadState(FFACE fface) : base(fface) { }
 
-        public override bool CheckState() { return FarmingTools.GetInstance(fface).PlayerData.IsDead; }
+        public override bool CheckState() { return ftools.PlayerData.IsDead; }
 
         public override void EnterState() { }
 

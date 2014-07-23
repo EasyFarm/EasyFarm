@@ -24,6 +24,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ZeroLimits.FarmingTool;
+using ZeroLimits.XITools;
 
 namespace EasyFarm.ViewModels
 {
@@ -50,8 +51,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Ability> StartList
         {
-            get { return farmingTools.UserSettings.ActionInfo.StartList; }
-            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.StartList, value); }
+            get { return ftools.UserSettings.ActionInfo.StartList; }
+            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.StartList, value); }
         }
 
         /// <summary>
@@ -59,8 +60,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Ability> BattleList
         {
-            get { return farmingTools.UserSettings.ActionInfo.BattleList; }
-            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.BattleList, value); }
+            get { return ftools.UserSettings.ActionInfo.BattleList; }
+            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.BattleList, value); }
         }
 
         /// <summary>
@@ -68,8 +69,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Ability> EndList
         {
-            get { return farmingTools.UserSettings.ActionInfo.EndList; }
-            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.EndList, value); }
+            get { return ftools.UserSettings.ActionInfo.EndList; }
+            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.EndList, value); }
 
         }
 
@@ -78,8 +79,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool BattleSelected
         {
-            get { return farmingTools.UserSettings.ActionInfo.BattleListSelected; }
-            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.BattleListSelected, value); }
+            get { return ftools.UserSettings.ActionInfo.BattleListSelected; }
+            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.BattleListSelected, value); }
         }
 
         /// <summary>
@@ -87,8 +88,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool StartSelected
         {
-            get { return farmingTools.UserSettings.ActionInfo.StartListSelected; }
-            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.StartListSelected, value); }
+            get { return ftools.UserSettings.ActionInfo.StartListSelected; }
+            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.StartListSelected, value); }
         }
 
         /// <summary>
@@ -96,8 +97,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool EndSelected
         {
-            get { return farmingTools.UserSettings.ActionInfo.EndListSelected; }
-            set { SetProperty(ref this.farmingTools.UserSettings.ActionInfo.EndListSelected, value); }
+            get { return ftools.UserSettings.ActionInfo.EndListSelected; }
+            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.EndListSelected, value); }
         }
 
         /// <summary>
@@ -154,10 +155,10 @@ namespace EasyFarm.ViewModels
         private void AddAction(object obj)
         {
             String name = obj as String;
-            if (farmingTools.AbilityService.GetAbilitiesWithName(name).Count > 1)
+            if (ftools.AbilityService.GetAbilitiesWithName(name).Count > 1)
                 SelectedList.Add(new AbilitySelectionBox(name).SelectedAbility);
-            else if (farmingTools.AbilityService.Exists(name))
-                SelectedList.Add(farmingTools.AbilityService.CreateAbility(name));
+            else if (ftools.AbilityService.Exists(name))
+                SelectedList.Add(ftools.AbilityService.CreateAbility(name));
         }
 
         /// <summary>

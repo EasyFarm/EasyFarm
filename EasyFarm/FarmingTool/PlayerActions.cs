@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EasyFarm.GameData;
+using ZeroLimits.XITools;
 
 namespace ZeroLimits.FarmingTool
 {
@@ -33,6 +34,7 @@ namespace ZeroLimits.FarmingTool
     public class PlayerActions
     {
         private FFACE _fface;
+        private FarmingTools _ftools { get { return FarmingTools.GetInstance(_fface); } }
 
         public PlayerActions(FFACE fface)
         {
@@ -44,7 +46,7 @@ namespace ZeroLimits.FarmingTool
         /// </summary>
         public List<Ability> StartList
         {
-            get { return FilterValidActions(FarmingTools.GetInstance(_fface).UserSettings.ActionInfo.StartList); }
+            get { return FilterValidActions(_ftools.UserSettings.ActionInfo.StartList); }
         }
 
         /// <summary>
@@ -52,7 +54,7 @@ namespace ZeroLimits.FarmingTool
         /// </summary>
         public List<Ability> EndList
         {
-            get { return FilterValidActions(FarmingTools.GetInstance(_fface).UserSettings.ActionInfo.EndList); }
+            get { return FilterValidActions(_ftools.UserSettings.ActionInfo.EndList); }
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace ZeroLimits.FarmingTool
         /// </summary>
         public List<Ability> BattleList
         {
-            get { return FilterValidActions(FarmingTools.GetInstance(_fface).UserSettings.ActionInfo.BattleList); }
+            get { return FilterValidActions(_ftools.UserSettings.ActionInfo.BattleList); }
         }
 
         /// <summary>
@@ -71,11 +73,11 @@ namespace ZeroLimits.FarmingTool
             get
             {
                 return FilterValidActions(
-                        FarmingTools.GetInstance(_fface).UserSettings.ActionInfo.HealingList
+                        _ftools.UserSettings.ActionInfo.HealingList
                             .Where(x => x.IsEnabled)
                             .Where(x => x.TriggerLevel >= _fface.Player.HPPCurrent)
-                            .Select(x => FarmingTools.GetInstance(_fface).AbilityService.CreateAbility(x.Name))
-                            .Where(x => IsActionValid(x))
+                            .Select(x => _ftools.AbilityService.CreateAbility(x.Name))
+                            .Where(x => _ftools.AbilityExecutor.IsActionValid(x))
                             .ToList()
                     );
             }
@@ -121,56 +123,8 @@ namespace ZeroLimits.FarmingTool
         public List<Ability> FilterValidActions(IList<Ability> Actions)
         {
             return Actions
-                .Where(x => IsActionValid(x))
+                .Where(x => _ftools.AbilityExecutor.IsActionValid(x))
                     .ToList();
-        }
-
-        /// <summary>
-        /// Determines whether a spell or ability can be used based on...
-        /// 1) It retrieved a non-null ability/spell from the resource files.
-        /// 2) The ability is recastable.
-        /// 3) The user has the mp or tp for the move.
-        /// 4) We don't have a debuff like amnesia that stops us from using it. 
-        /// </summary>
-        /// <param name="action"></param>
-        /// <returns>True for usable, False for unusable</returns>
-        public bool IsActionValid(Ability action)
-        {
-            // We found the skill and its name is valid.
-            if (action.IsValidName)
-                // The recast for the ability is up.
-                if (AbilityRecastable(action))
-                    // We have the mp and tp to use it. 
-                    if (action.MPCost <= _fface.Player.MPCurrent && action.TPCost <= _fface.Player.TPCurrent)
-                        // We don't have a debuff that prevents its use.
-                        if ((action.IsSpell && !FarmingTools.GetInstance(_fface).ActionBlocked.IsCastingBlocked) ||
-                                    (action.IsAbility && !FarmingTools.GetInstance(_fface).ActionBlocked.IsAbilitiesBlocked))
-                            return true;
-
-            // We failed one of the checks and we can't use the move.
-            return false;
-        }
-
-        /// <summary>
-        /// Checks to  see if we can cast/use 
-        /// a job ability or spell.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public bool AbilityRecastable(Ability value)
-        {
-            int Recast = -1;
-
-            if (value.IsSpell)
-            {
-                Recast = _fface.Timer.GetSpellRecast((SpellList)value.Index);
-            }
-            else
-            {
-                Recast = _fface.Timer.GetAbilityRecast((AbilityList)value.Index);
-            }
-
-            return 0 == Recast;
         }
     }
 }

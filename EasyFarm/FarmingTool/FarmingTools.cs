@@ -2,6 +2,7 @@
 using EasyFarm.UserSettings;
 using FFACETools;
 using System;
+using ZeroLimits.XITools;
 
 namespace ZeroLimits.FarmingTool
 {
@@ -126,9 +127,8 @@ namespace ZeroLimits.FarmingTool
         /// <param name="Engine"></param>
         public void SaveSettings()
         {
-            UserSettings.FilterInfo = UnitService.FilterInfo;
             String Filename = FFACE.Player.Name + "_UserPref.xml";
-            Utilities.Serialize(Filename, UserSettings);
+            Serialization.Serialize(Filename, UserSettings);
         }
 
         /// <summary>
@@ -137,8 +137,7 @@ namespace ZeroLimits.FarmingTool
         public void LoadSettings()
         {
             String Filename = FFACE.Player.Name + "_UserPref.xml";
-            UserSettings = Utilities.Deserialize(Filename, UserSettings);
-            UnitService.FilterInfo = UserSettings.FilterInfo;
+            UserSettings = Serialization.Deserialize(Filename, UserSettings);
         }
     }
 }

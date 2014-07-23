@@ -17,8 +17,11 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.FarmingTool;
 using FFACETools;
+using System;
 using ZeroLimits.FarmingTool;
+using ZeroLimits.XITools;
 
 namespace EasyFarm.State
 {
@@ -28,19 +31,25 @@ namespace EasyFarm.State
 
         public override bool CheckState()
         {
-            return FarmingTools.GetInstance(fface)
+            return ftools.TargetData.TargetUnit != null && ftools
                 .TargetData.IsDead;
         }
 
         public override void EnterState() { }
 
         public override void RunState()
-        {
-            FarmingTools.GetInstance(fface).TargetData.TargetUnit = 
-                FarmingTools.GetInstance(fface).UnitService.GetTarget();
+        {                      
+            // Cast all spells making sure they land. Keeping  
+            ftools.AbilityExecutor.EnsureSpellsCast(ftools.TargetData.TargetUnit, ftools.PlayerActions.EndList, 
+                Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
 
-            FarmingTools.GetInstance(fface).CombatService
-                .ExecuteActions(FarmingTools.GetInstance(fface).PlayerActions.EndList);
+            // Get the next target.
+            var target = ftools.UnitService.GetTarget(UnitFilters.MobFilter(fface));            
+
+            // Set our new target at the end so that we don't accidentaly cast on a 
+            // new target. 
+            ftools.TargetData.TargetUnit = target;
+
         }
 
         public override void ExitState() { }

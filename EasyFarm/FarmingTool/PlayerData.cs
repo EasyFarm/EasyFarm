@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ZeroLimits.XITools;
 
 namespace ZeroLimits.FarmingTool
 {
@@ -32,6 +33,7 @@ namespace ZeroLimits.FarmingTool
     public class PlayerData
     {
         private FFACE _fface;
+        private FarmingTools _ftools { get { return FarmingTools.GetInstance(_fface); } }
 
         public PlayerData(FFACE fface)
         {
@@ -85,7 +87,7 @@ namespace ZeroLimits.FarmingTool
         {
             get
             {
-                return !IsDead && FarmingTools.GetInstance(_fface).PlayerActions.HasHealingMoves;
+                return !IsDead && _ftools.PlayerActions.HasHealingMoves;
             }
         }
 
@@ -97,9 +99,9 @@ namespace ZeroLimits.FarmingTool
         {
             get
             {
-                return FarmingTools.GetInstance(_fface).UserSettings.Waypoints.Count > 0 &&
+                return _ftools.UserSettings.Waypoints.Count > 0 &&
                     !shouldFight && !shouldRest && !shouldHeal &&
-                    !FarmingTools.GetInstance(_fface).ActionBlocked.IsUnable;
+                    !_ftools.ActionBlocked.IsUnable;
             }
         }
 
@@ -109,7 +111,7 @@ namespace ZeroLimits.FarmingTool
             get
             {
                 // Can we battle the unit?
-                bool IsAttackable = FarmingTools.GetInstance(_fface).TargetData.IsValid;
+                bool IsAttackable = _ftools.TargetData.IsValid;
                 // Should we attack?
                 bool IsAttacking = !IsDead && (IsAttackable && (IsFighting || IsAggroed || (IsFighting || !shouldRest)));
 
@@ -124,7 +126,7 @@ namespace ZeroLimits.FarmingTool
             get
             {
                 return _fface.Player.HPPCurrent <
-                    FarmingTools.GetInstance(_fface).UserSettings.RestingInfo.Health.Low;
+                    _ftools.UserSettings.RestingInfo.Health.Low;
             }
         }
 
@@ -133,7 +135,7 @@ namespace ZeroLimits.FarmingTool
             get
             {
                 return _fface.Player.MPPCurrent <
-                    FarmingTools.GetInstance(_fface).UserSettings.RestingInfo.Magic.Low;
+                    _ftools.UserSettings.RestingInfo.Magic.Low;
             }
         }
 
@@ -142,7 +144,7 @@ namespace ZeroLimits.FarmingTool
             get
             {
                 return IsResting && _fface.Player.HPPCurrent <
-                    FarmingTools.GetInstance(_fface).UserSettings.RestingInfo.Health.High;
+                    _ftools.UserSettings.RestingInfo.Health.High;
             }
         }
 
@@ -151,7 +153,7 @@ namespace ZeroLimits.FarmingTool
             get
             {
                 return IsResting && _fface.Player.MPPCurrent <
-                    FarmingTools.GetInstance(_fface).UserSettings.RestingInfo.Magic.High;
+                    _ftools.UserSettings.RestingInfo.Magic.High;
             }
         }
 
@@ -167,7 +169,7 @@ namespace ZeroLimits.FarmingTool
         {
             get
             {
-                return FarmingTools.GetInstance(_fface).UserSettings.RestingInfo.Health.Enabled;
+                return _ftools.UserSettings.RestingInfo.Health.Enabled;
             }
         }
 
@@ -175,7 +177,7 @@ namespace ZeroLimits.FarmingTool
         {
             get
             {
-                return FarmingTools.GetInstance(_fface).UserSettings.RestingInfo.Magic.Enabled;
+                return _ftools.UserSettings.RestingInfo.Magic.Enabled;
             }
         }
 
@@ -200,7 +202,7 @@ namespace ZeroLimits.FarmingTool
         {
             get
             {
-                return FarmingTools.GetInstance(_fface).RestingService.IsResting;
+                return _fface.Player.Status.Equals(Status.Healing);
             }
         }
 
@@ -225,14 +227,22 @@ namespace ZeroLimits.FarmingTool
         {
             get
             {
-                var WeaponSkillTP = 1000;
+                // Weaponskill a valid ability?
+                if (!_ftools.UserSettings.WeaponInfo.Ability.IsValidName) return false;
 
-                return _fface.Player.TPCurrent >= WeaponSkillTP &&
-                    FarmingTools.GetInstance(_fface).TargetData.TargetUnit.HPPCurrent <=
-                    FarmingTools.GetInstance(_fface).UserSettings.WeaponInfo.Health &&
-                    IsFighting && FarmingTools.GetInstance(_fface).TargetData.TargetUnit.Distance <
-                    FarmingTools.GetInstance(_fface).UserSettings.WeaponInfo.Distance &&
-                    FarmingTools.GetInstance(_fface).UserSettings.WeaponInfo.Ability.IsValidName;
+                // Not enough tp. 
+                if (_fface.Player.TPCurrent < Constants.WEAPONSKILL_TP) return false;
+
+                // Not engaged. 
+                if (!_fface.Player.Status.Equals(Status.Fighting)) return false;
+
+                // Do not meet mob hp requirements. 
+                if (_ftools.TargetData.TargetUnit.HPPCurrent > _ftools.UserSettings.WeaponInfo.Health) return false;
+
+                // Don not meet distance requirements. 
+                if (_ftools.TargetData.TargetUnit.Distance > _ftools.UserSettings.WeaponInfo.Distance) return false;
+
+                return true;
             }
         }
 
@@ -244,8 +254,8 @@ namespace ZeroLimits.FarmingTool
         {
             get
             {
-                return _fface.Player.HPPCurrent <= 
-                    FarmingTools.GetInstance(_fface).UserSettings.RestingInfo.Health.Low;
+                return _fface.Player.HPPCurrent <=
+                    _ftools.UserSettings.RestingInfo.Health.Low;
             }
         }
 
@@ -257,7 +267,7 @@ namespace ZeroLimits.FarmingTool
         {
             get
             {
-                return FarmingTools.GetInstance(_fface).UnitService.HasAggro;
+                return _ftools.UnitService.HasAggro;
             }
         }
 

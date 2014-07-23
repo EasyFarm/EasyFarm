@@ -173,31 +173,20 @@
     <Compile Include="Classes\RestState.cs" />
     <Compile Include="Classes\TargetInvalid.cs" />
     <Compile Include="Classes\TravelState.cs" />
-    <Compile Include="FarmingTools\Constants.cs" />
-    <Compile Include="Game Data\Ability.cs" />
     <Compile Include="Debugging\DebugCreatures.xaml.cs">
       <DependentUpon>DebugCreatures.xaml</DependentUpon>
     </Compile>
     <Compile Include="Debugging\DebugSpellCasting.xaml.cs">
       <DependentUpon>DebugSpellCasting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FarmingTools\ActionBlocked.cs" />
+    <Compile Include="FarmingTool\UnitFilters.cs" />
     <Compile Include="Game Data\HealingAbility.cs" />
-    <Compile Include="FarmingTools\PlayerActions.cs" />
-    <Compile Include="FarmingTools\PlayerData.cs" />
-    <Compile Include="Game Data\FFInstance.cs" />
-    <Compile Include="FarmingTools\TargetData.cs" />
-    <Compile Include="Game Data\Unit.cs" />
+    <Compile Include="FarmingTool\PlayerActions.cs" />
+    <Compile Include="FarmingTool\PlayerData.cs" />
+    <Compile Include="FarmingTool\TargetData.cs" />
     <Compile Include="Game Data\Waypoint.cs" />
     <Compile Include="Game Data\WeaponAbility.cs" />
-    <Compile Include="FarmingTools\AbilitiesService.cs" />
-    <Compile Include="FarmingTools\AbilityExecutor.cs" />
-    <Compile Include="FarmingTools\AbilityParser.cs" />
-    <Compile Include="FarmingTools\CombatService.cs" />
-    <Compile Include="FarmingTools\FarmingTools.cs" />
-    <Compile Include="FarmingTools\RestingService.cs" />
-    <Compile Include="FarmingTools\UnitService.cs" />
-    <Compile Include="FarmingTools\Utilities.cs" />
+    <Compile Include="FarmingTool\FarmingTools.cs" />
     <Compile Include="User Settings\ActionInfo.cs" />
     <Compile Include="User Settings\Config.cs" />
     <Compile Include="User Settings\Health.cs" />
@@ -390,6 +379,17 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Embedded\FFACETools.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\XI-Tools\XI-Tools\XI-Tools.csproj">
+      <Project>{be0bf2c6-3db4-415c-be21-c3f6b696c335}</Project>
+      <Name>XI-Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FFACE.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

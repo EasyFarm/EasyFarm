@@ -28,6 +28,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using ZeroLimits.FarmingTool;
+using ZeroLimits.XITools;
 
 namespace EasyFarm.ViewModels
 {
@@ -49,8 +50,8 @@ namespace EasyFarm.ViewModels
 
         public ObservableCollection<Waypoint> Route
         {
-            get { return farmingTools.UserSettings.Waypoints; }
-            set { SetProperty(ref this.farmingTools.UserSettings.Waypoints, value); }
+            get { return ftools.UserSettings.Waypoints; }
+            set { SetProperty(ref this.ftools.UserSettings.Waypoints, value); }
         }
 
         public ICommand RecordRouteCommand { get; set; }
@@ -89,7 +90,7 @@ namespace EasyFarm.ViewModels
 
             if (sfd.ShowDialog() == true)
             {
-                Utilities.Serialize(sfd.SafeFileName, Route);
+                Serialization.Serialize(sfd.SafeFileName, Route);
             }
         }
 
@@ -102,17 +103,17 @@ namespace EasyFarm.ViewModels
             
             if (ofd.ShowDialog() == true)
             {
-                Route = Utilities.Deserialize(ofd.SafeFileName, Route);
+                Route = Serialization.Deserialize(ofd.SafeFileName, Route);
             }
         }
 
         void RouteRecorder_Tick(object sender, EventArgs e)
         {
-            var Point = farmingTools.FFACE.Player.Position;
+            var Point = ftools.FFACE.Player.Position;
 
             if (!Point.Equals(LastPosition))
             {
-                farmingTools.UserSettings.Waypoints.Add(new Waypoint(Point));
+                ftools.UserSettings.Waypoints.Add(new Waypoint(Point));
                 LastPosition = Point;
             }
         }

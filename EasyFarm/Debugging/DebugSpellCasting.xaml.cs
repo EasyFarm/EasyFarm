@@ -2,9 +2,12 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Windows.Forms;
 using System.Windows;
 using System.Windows.Input;
 using ZeroLimits.FarmingTool;
+using ZeroLimits.XITools;
+using System.Threading.Tasks;
 
 namespace EasyFarm.Debugging
 {
@@ -14,13 +17,13 @@ namespace EasyFarm.Debugging
     public partial class DebugSpellCasting : Window
     {
         private FFACE _fface;
-        private FarmingTools _ftools;
+        private XITools _XITools;
 
         public DebugSpellCasting(FFACE fface)
         {
             InitializeComponent();
             this._fface = fface;
-            this._ftools = FarmingTools.GetInstance(fface);
+            this._XITools = XITools.GetInstance(fface);
             this.DataContext = new CastingViewModel(fface);
         }
 
@@ -30,6 +33,8 @@ namespace EasyFarm.Debugging
             private FFACE _fface;
 
             private CastingModel _castingModel;
+
+            private Timer timer = new Timer();
 
             public CastingViewModel(FFACE fface)
             {
@@ -41,6 +46,17 @@ namespace EasyFarm.Debugging
                     var success = _castingModel.CastSpell();
                     Success = success;
                 });
+
+                timer.Tick += timer_Tick;
+                timer.Interval = 50;
+                timer.Enabled = true;
+            }
+
+            void timer_Tick(object sender, EventArgs e)
+            {
+                this.CastCountDown = _fface.Player.CastCountDown;
+                this.CastMax = _fface.Player.CastMax;
+                this.CastPercent = _fface.Player.CastPercentEx;
             }
 
             public CastingModel CastingModel
@@ -62,7 +78,7 @@ namespace EasyFarm.Debugging
                 get { return _castingModel.CastMax; }
                 set
                 {
-                    _castingModel.CastMax = _fface.Player.CastMax;
+                    _castingModel.CastMax = value;
                     RaisePropertyChanged("CastMax");
                 }
             }
@@ -72,7 +88,7 @@ namespace EasyFarm.Debugging
                 get { return _castingModel.CastPercent; }
                 set
                 {
-                    _castingModel.CastPercent = _fface.Player.CastPercentEx;
+                    _castingModel.CastPercent = value;
                     RaisePropertyChanged("CastPercent");
                 }
             }
@@ -82,8 +98,8 @@ namespace EasyFarm.Debugging
                 get { return _castingModel.CastCountDown; }
                 set
                 {
-                        _castingModel.CastCountDown = _fface.Player.CastCountDown;
-                        RaisePropertyChanged("CastCountDown");
+                    _castingModel.CastCountDown = value;
+                    RaisePropertyChanged("CastCountDown");
                 }
             }
 
@@ -127,7 +143,7 @@ namespace EasyFarm.Debugging
         /// <summary>
         /// Models player's casting information. 
         /// </summary>
-        public class CastingModel
+        public class CastingModel : INotifyPropertyChanged
         {
             private String _spellName = "";
             private bool _success = false;
@@ -153,6 +169,7 @@ namespace EasyFarm.Debugging
                 set
                 {
                     _castMax = value;
+                    this.RaisePropertyChanged("CastMax");
                 }
             }
 
@@ -165,6 +182,7 @@ namespace EasyFarm.Debugging
                 set
                 {
                     this._castCountDown = value;
+                    this.RaisePropertyChanged("CastCountDown");
                 }
             }
 
@@ -177,6 +195,7 @@ namespace EasyFarm.Debugging
                 set
                 {
                     _castPercent = value;
+                    this.RaisePropertyChanged("CastPercent");
                 }
             }
 
@@ -189,6 +208,7 @@ namespace EasyFarm.Debugging
                 set
                 {
                     _spellName = value;
+                    this.RaisePropertyChanged("SpellName");
                 }
             }
 
@@ -201,6 +221,7 @@ namespace EasyFarm.Debugging
                 set
                 {
                     this._success = value;
+                    this.RaisePropertyChanged("Success");
                 }
             }
 
@@ -216,11 +237,23 @@ namespace EasyFarm.Debugging
 
                 if (ability.IsValidName)
                 {
-                    //bool valid = _ftools.PlayerActions.IsActionValid(ability);
-                    //success = _ftools.AbilityExecutor.UseAbility(ability);
+                    bool valid = XITools.GetInstance(_fface).AbilityExecutor.IsActionValid(ability);
+                    success = _ftools.AbilityExecutor.UseAbility(ability, Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
                 }
 
                 return success;
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            public void RaisePropertyChanged(String name)
+            {
+                PropertyChangedEventHandler handler = PropertyChanged;
+
+                if (handler != null)
+                {
+                    handler(this, new PropertyChangedEventArgs(name));
+                }
             }
         }
         #endregion

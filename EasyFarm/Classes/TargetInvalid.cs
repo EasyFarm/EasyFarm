@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.FarmingTool;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZeroLimits.FarmingTool;
+using ZeroLimits.XITools;
 
 
 namespace EasyFarm.State
@@ -37,16 +39,14 @@ namespace EasyFarm.State
 
         public override bool CheckState()
         {
-            return !FarmingTools.GetInstance(fface).UnitService
-                .IsValid(FarmingTools.GetInstance(fface).TargetData.TargetUnit);
+            return ftools.TargetData.TargetUnit == null || !ftools.UnitService.IsValid(ftools.TargetData.TargetUnit);
         }
 
         public override void EnterState() { }
 
         public override void RunState()
         {
-            FarmingTools.GetInstance(fface).TargetData.TargetUnit = 
-                FarmingTools.GetInstance(fface).UnitService.GetTarget();
+            ftools.TargetData.TargetUnit = ftools.UnitService.GetTarget(UnitFilters.MobFilter(fface));
         }
 
         public override void ExitState() { }
