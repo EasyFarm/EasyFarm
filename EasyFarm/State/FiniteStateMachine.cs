@@ -100,8 +100,7 @@ namespace EasyFarm.State
             AddState(new PostBattle(fface));
             AddState(new TargetInvalid(fface));
 
-            foreach (var b in this.Brains)
-                b.Enabled = true;
+            foreach (var b in this.Brains) b.Enabled = true;
         }
 
         // Handles the updating.
@@ -110,6 +109,15 @@ namespace EasyFarm.State
             if (!worker.IsBusy)
             {
                 worker.RunWorkerAsync();
+            }
+
+            /*Please remove this code when you're done.*/
+            if (!_fface.Player.ViewMode.Equals(ViewMode.ThirdPerson))
+            {
+                if (!_fface.Navigator.IsRunning())
+                {
+                    _fface.Navigator.SetViewMode(ViewMode.ThirdPerson);
+                }
             }
         }
 

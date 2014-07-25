@@ -12,9 +12,7 @@
         MaxHeight="330" 
         MaxWidth="510" 
         SizeToContent="WidthAndHeight" 
-        WindowStartupLocation="CenterOwner" 
-        HorizontalAlignment="Left" 
-        VerticalAlignment="Top">
+        WindowStartupLocation="CenterOwner" >
     <Window.Resources>
         <ResourceDictionary Source="ControlStyles.xaml" />
     </Window.Resources>

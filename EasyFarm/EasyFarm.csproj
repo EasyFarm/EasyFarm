@@ -163,16 +163,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\AttackState.cs" />
-    <Compile Include="Classes\BaseState.cs" />
-    <Compile Include="Classes\DeadState.cs" />
-    <Compile Include="Classes\FiniteStateMachine.cs" />
-    <Compile Include="Classes\GameEngine.cs" />
-    <Compile Include="Classes\HealingState.cs" />
-    <Compile Include="Classes\PostBattle.cs" />
-    <Compile Include="Classes\RestState.cs" />
-    <Compile Include="Classes\TargetInvalid.cs" />
-    <Compile Include="Classes\TravelState.cs" />
+    <Compile Include="State\AttackState.cs" />
+    <Compile Include="State\BaseState.cs" />
+    <Compile Include="State\DeadState.cs" />
+    <Compile Include="State\FiniteStateMachine.cs" />
+    <Compile Include="State\GameEngine.cs" />
+    <Compile Include="State\HealingState.cs" />
+    <Compile Include="State\PostBattle.cs" />
+    <Compile Include="State\RestState.cs" />
+    <Compile Include="State\TargetInvalid.cs" />
+    <Compile Include="State\TravelState.cs" />
     <Compile Include="Debugging\DebugCreatures.xaml.cs">
       <DependentUpon>DebugCreatures.xaml</DependentUpon>
     </Compile>

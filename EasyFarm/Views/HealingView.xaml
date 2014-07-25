@@ -4,32 +4,41 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="234.247" d:DesignWidth="404.795">    
-    <Grid>
-        <!--The list of healing abilities and spells that should be used to recover hp-->
-        <ListBox Name="HealingListBox" HorizontalAlignment="Left" Height="214" Margin="10,10,0,0" VerticalAlignment="Top" Width="283" ItemsSource="{Binding Healing}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border Background="Navy">
-                        <StackPanel Orientation="Horizontal">
-                            <!--Is the abilities current enabled?-->
-                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=IsEnabled}"/>
-                            <!--The name of the ability-->
-                            <TextBox VerticalAlignment="Center" Width="100" Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"/>
-                            <!--The health percentage at which it should be used-->
-                            <Slider VerticalAlignment="Center" Width="100" IsSnapToTickEnabled="True" TickFrequency="1" Maximum="100" Value="{Binding Path = TriggerLevel}"/>
-                            <!--Friendly label that displays the health percentage-->
-                            <Label VerticalAlignment="Center" Content="{Binding Path=TriggerLevel}"/>
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <!--Adds an healing ability control to the list-->
-        <Button Content="Add" HorizontalAlignment="Left" Margin="298,10,0,0" VerticalAlignment="Top" Width="99" Command="{Binding AddHealingCommand}"/>
-        <!--Deletes the selected control from the list-->
-        <Button Content="Delete" HorizontalAlignment="Left" Margin="298,38,0,0" VerticalAlignment="Top" Width="99" Command="{Binding DeleteHealingCommand}" CommandParameter="{Binding ElementName=HealingListBox, Path=SelectedItem}"/>
-        <!--Clears all controls from the list-->
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="298,66,0,0" VerticalAlignment="Top" Width="99" Command="{Binding ClearHealingCommand}"/>
-    </Grid>
+             d:DesignHeight="234.247" d:DesignWidth="404.795">
+    <GroupBox Header="Healing" Background="#FF2B2B2B" Margin="10" Foreground="White">
+        <DockPanel>
+            <!--The list of healing abilities and spells that should be used to recover hp-->
+            <ListBox Name="HealingListBox" DockPanel.Dock="Top" ItemsSource="{Binding Healing}" MinWidth="100" MinHeight="100" MaxHeight="100" Margin="10">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="Navy">
+                            <StackPanel Orientation="Horizontal">
+                                <!--Is the abilities current enabled?-->
+                                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=IsEnabled}"/>
+                                <!--The name of the ability-->
+                                <TextBox VerticalAlignment="Center" Width="100" Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                <!--The health percentage at which it should be used-->
+                                <Slider VerticalAlignment="Center" Width="100" IsSnapToTickEnabled="True" TickFrequency="1" Maximum="100" Value="{Binding Path = TriggerLevel}"/>
+                                <!--Friendly label that displays the health percentage-->
+                                <Label VerticalAlignment="Center" Content="{Binding Path=TriggerLevel}"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <!--Adds an healing ability control to the list-->
+                <Button Grid.Column="0" Content="Add" Command="{Binding AddHealingCommand}"/>
+                <!--Deletes the selected control from the list-->
+                <Button Grid.Column="1" Content="Delete" Command="{Binding DeleteHealingCommand}" CommandParameter="{Binding SelectedItem, ElementName=HealingListBox}"/>
+                <!--Clears all controls from the list-->
+                <Button Grid.Column="2" Content="Clear" Command="{Binding ClearHealingCommand}"/>
+            </Grid>
+        </DockPanel>
+    </GroupBox>
 </UserControl>

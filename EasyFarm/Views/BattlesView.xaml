@@ -16,14 +16,17 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <!--Tells us what list to add the textbox item to.-->
-        <RadioButton x:Name="radStartingAction" Height="Auto" Grid.Row="1" Margin="10" VerticalAlignment="Top" IsChecked="{Binding StartSelected}" Content="Start" Padding="1" />
-        <RadioButton x:Name="radBattleAction" Height="Auto" Grid.Row="1" Margin="10,30,10,10" VerticalAlignment="Top" IsChecked="{Binding BattleSelected}" Content="Battle" Padding="1" />
-        <RadioButton x:Name="radEndingAction" Height="Auto" Grid.Row="1" Margin="10,50,10,10" VerticalAlignment="Top" IsChecked="{Binding EndSelected}" Content="End" Padding="1" />
+        <StackPanel Grid.Row="1" Margin="10" VerticalAlignment="Center">
+            <RadioButton x:Name="radStartingAction" IsChecked="{Binding StartSelected}" >Start</RadioButton>
+            <RadioButton x:Name="radPullingAction" IsChecked="{Binding PullSelected}">Pull</RadioButton>
+            <RadioButton x:Name="radBattleAction" IsChecked="{Binding BattleSelected}">Battle</RadioButton>
+            <RadioButton x:Name="radEndingAction" IsChecked="{Binding EndSelected}">End</RadioButton>            
+        </StackPanel>
         <!--Name of the text box item to add-->
         <TextBox x:Name="txbAbilityName" Grid.Column="1" Margin="10" Text="{Binding ActionName, UpdateSourceTrigger=PropertyChanged}"/>
         <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Name" Padding="1" />
         <!--The list of ability items. It's source is dependant on the start/end/battle radio buttons and changes when one is selected. -->
-        <ListBox x:Name="lstAbilities" Height="Auto" MaxHeight="100" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10,9,10,11" VerticalAlignment="Stretch" Padding="10">
+        <ListBox x:Name="lstAbilities" Height="Auto" MaxHeight="100" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" Padding="10" Width="276" MinHeight="100">
             <ListBox.Style>
                 <Style>
                     <Style.Triggers>
@@ -35,6 +38,9 @@
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=radEndingAction, Path=IsChecked}" Value="True">
                             <Setter Property="ListBox.ItemsSource" Value="{Binding EndList}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=radPullingAction, Path=IsChecked}" Value="True">
+                            <Setter Property="ListBox.ItemsSource" Value="{Binding PullList}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

@@ -50,6 +50,10 @@ namespace EasyFarm.State
             // new target. 
             ftools.TargetData.TargetUnit = target;
 
+            // Set to false in order to use starting moves again in the 
+            // attack state. 
+            AttackState.fightStarted = false;
+
         }
 
         public override void ExitState() { }

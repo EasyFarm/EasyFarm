@@ -29,12 +29,13 @@ namespace EasyFarm.State
     /// </summary>
     class AttackState : BaseState
     {
+        public static bool fightStarted = false;
+
         public AttackState(FFACE fface) : base(fface) { }
 
         public override bool CheckState()
         {
-            return ftools
-                .PlayerData.shouldFight;
+            return ftools.PlayerData.shouldFight;
         }
 
         public override void EnterState()
@@ -47,16 +48,13 @@ namespace EasyFarm.State
             // Get the target
             var target = ftools.TargetData.TargetUnit;
 
-            // Ensure third person. 
-            fface.Navigator.SetViewMode(ViewMode.ThirdPerson);
-
-            if (fface.Navigator.DistanceTo(target.Position) > 21)
+            if (fface.Navigator.DistanceTo(target.Position) > Constants.SPELL_CAST_DISTANCE)
             {
                 // Save old tolerance
                 var old = fface.Navigator.DistanceTolerance;
                 
                 // Set to max engagement distance. 
-                fface.Navigator.DistanceTolerance = 21;
+                fface.Navigator.DistanceTolerance = Constants.SPELL_CAST_DISTANCE;
 
                 // Goto target at max engagement distance.
                 fface.Navigator.Goto(target.Position, false);
@@ -75,15 +73,33 @@ namespace EasyFarm.State
             // Check correct target
             if (target.ID != fface.Target.ID) return;
             
+            /* 
+             * Cast the starting moves. Used to buff the character. 
+             * Will cast until all spells are successfully casted.  
+             *
+             * IsDead check added to prevent casting protect when the mobs dies and 
+             * PostBattle state sets fightStarted back to true. *
+             */
+
+            if (!fightStarted && !target.IsDead)
+            {
+                ftools.AbilityExecutor.EnsureSpellsCast(target, ftools.PlayerActions.StartList,
+                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
+            }
+
+            // set to true so that we do not cast starting spells again. 
+            fightStarted = true;
+            
             // Pull the target casting each spell only once. 
             if (!target.Status.Equals(Status.Fighting)) 
             {
-                ftools.AbilityExecutor.ExecuteActions(target, ftools.PlayerActions.StartList, 
+                ftools.AbilityExecutor.ExecuteActions(target, ftools.PlayerActions.PullList, 
                     Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
             }
 
+            // *Removed: target does not have to be engaged for us to fight it. *
             // Check pull
-            if (!target.Status.Equals(Status.Fighting)) return;
+            // if (!target.Status.Equals(Status.Fighting)) return;
             
             // Engage the target
             if (!fface.Player.Status.Equals(Status.Fighting))
@@ -95,17 +111,20 @@ namespace EasyFarm.State
             if (!fface.Player.Status.Equals(Status.Fighting)) return; 
             
             // Move to the target
-            if (fface.Navigator.DistanceTo(target.Position) > Constants.MELEE_DISTANCE)
+            /*
+             * Fixed bug that used Constants.MeleeDistance instead of the user 
+             * settings for distance tolerance. 
+             * 
+             * Fixed bug were the old tolerance was being overwritten by the new tolerance
+             * before it was properly saved. 
+             */
+            if (fface.Navigator.DistanceTo(target.Position) > ftools.UserSettings.MiscSettings.MeleeDistance)
             {
-                fface.Navigator.DistanceTolerance = Constants.MELEE_DISTANCE;
                 var old = fface.Navigator.DistanceTolerance;
-                fface.Navigator.Goto(target.Position, false);
+                fface.Navigator.DistanceTolerance = ftools.UserSettings.MiscSettings.MeleeDistance;                
+                fface.Navigator.GotoNPC(target.ID);
                 fface.Navigator.DistanceTolerance = old;
             }
-
-            // Cast all battle moves
-            ftools.AbilityExecutor.ExecuteActions(target, ftools.PlayerActions.BattleList,
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
 
             // Weaponskill
             if (ftools.PlayerData.CanWeaponskill)
@@ -114,6 +133,10 @@ namespace EasyFarm.State
                 // spell do in regards to wait times. So I'm using zero's here. 
                 ftools.AbilityExecutor.UseAbility(ftools.UserSettings.WeaponInfo.Ability, 0, 0);
             }
+
+            // Cast all battle moves
+            ftools.AbilityExecutor.ExecuteActions(target, ftools.PlayerActions.BattleList,
+                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
         }
 
         public override void ExitState()

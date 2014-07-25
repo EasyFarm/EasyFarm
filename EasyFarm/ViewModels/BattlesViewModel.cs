@@ -74,6 +74,12 @@ namespace EasyFarm.ViewModels
 
         }
 
+        public ObservableCollection<Ability> PullList
+        {
+            get { return ftools.UserSettings.ActionInfo.PullList; }
+            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.PullList, value); }
+        }
+
         /// <summary>
         /// When selected displays the battle moves list.
         /// </summary>
@@ -99,6 +105,15 @@ namespace EasyFarm.ViewModels
         {
             get { return ftools.UserSettings.ActionInfo.EndListSelected; }
             set { SetProperty(ref this.ftools.UserSettings.ActionInfo.EndListSelected, value); }
+        }
+
+        /// <summary>
+        /// When selected displays the ending moves list.
+        /// </summary>
+        public bool PullSelected
+        {
+            get { return ftools.UserSettings.ActionInfo.PullListSelected; }
+            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.PullListSelected, value); }
         }
 
         /// <summary>
@@ -143,6 +158,8 @@ namespace EasyFarm.ViewModels
                     return BattleList;
                 else if (EndSelected)
                     return EndList;
+                else if (PullSelected)
+                    return PullList;
                 else
                     return new ObservableCollection<Ability>();
             }

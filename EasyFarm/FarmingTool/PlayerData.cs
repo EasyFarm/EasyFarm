@@ -236,6 +236,9 @@ namespace ZeroLimits.FarmingTool
                 // Not engaged. 
                 if (!_fface.Player.Status.Equals(Status.Fighting)) return false;
 
+                // We want to weaponskill when the mobs hp is <= our settings hp 
+                // ... mobs distance < settings
+
                 // Do not meet mob hp requirements. 
                 if (_ftools.TargetData.TargetUnit.HPPCurrent > _ftools.UserSettings.WeaponInfo.Health) return false;
 

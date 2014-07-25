@@ -66,6 +66,14 @@ namespace ZeroLimits.FarmingTool
         }
 
         /// <summary>
+        /// Returns the list of usable pulling abilities and spells. 
+        /// </summary>
+        public List<Ability> PullList
+        {
+            get { return FilterValidActions(_ftools.UserSettings.ActionInfo.PullList); }
+        }
+
+        /// <summary>
         /// Returns the list of currently usuable Healing Abilities and Spells.
         /// </summary>
         public List<Ability> HealingList

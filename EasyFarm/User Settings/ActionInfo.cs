@@ -41,6 +41,11 @@ namespace EasyFarm.UserSettings
         public ObservableCollection<Ability> BattleList = new ObservableCollection<Ability>();
 
         /// <summary>
+        /// List of moves that should be used to pull a creature. 
+        /// </summary>
+        public ObservableCollection<Ability> PullList = new ObservableCollection<Ability>();
+
+        /// <summary>
         /// List of actions that should be used when injured
         /// </summary>
         public ObservableCollection<HealingAbility> HealingList = new ObservableCollection<HealingAbility>();
@@ -54,6 +59,11 @@ namespace EasyFarm.UserSettings
         /// Is the StartList selected in the battle tab?
         /// </summary>
         public bool StartListSelected = false;
+
+        /// <summary>
+        /// Is the Pulling list selected in the battle tab?
+        /// </summary>
+        public bool PullListSelected = false;
 
         /// <summary>
         /// Is the End list selected in the battle tab?
