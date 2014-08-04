@@ -55,6 +55,8 @@ namespace EasyFarm.Debugging
             }
 
             lstMobNames.SelectedItem = selectedItem;
+
+            _zone = _fface.Player.Zone;
         }
 
         private void lstMobNames_SelectionChanged(object sender, SelectionChangedEventArgs e)

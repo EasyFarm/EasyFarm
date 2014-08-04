@@ -56,6 +56,11 @@ namespace EasyFarm.UserSettings
         public bool UnclaimedFilter = true;
 
         /// <summary>
+        /// Used to include claimed mobs in the filter. 
+        /// </summary>
+        public bool ClaimedFilter = false;
+
+        /// <summary>
         /// A list of mobs that we should ignore.
         /// </summary>
         public ObservableCollection<String> IgnoredMobs = new ObservableCollection<string>();

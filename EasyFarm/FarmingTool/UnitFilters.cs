@@ -21,6 +21,11 @@ namespace EasyFarm.FarmingTool
                 // No fface? Bail. 
                 if (fface == null) return false;
 
+                //FIXED: Added null check to avoid certain states
+                // secretly throwing null pointer exceptions. 
+                // If the mob is null, bail.
+                if (x == null) return false;
+
                 // Mob not active
                 if (!x.IsActive) return false;
 
@@ -37,7 +42,12 @@ namespace EasyFarm.FarmingTool
                 if (x.YDifference > ftools.UserSettings.MiscSettings.HeightThreshold) return false;
 
                 // The mob is claimed but it is not our claim.
-                if (x.IsClaimed && x.ClaimedID != fface.Player.ID) return false;
+                if (x.IsClaimed && x.ClaimedID != fface.Player.ID)
+                {
+                    // and the claim filter is off, invalid. if the filter is on
+                    // the program will attack claimed mobs. 
+                    if (!ftools.UserSettings.FilterInfo.ClaimedFilter) return false;
+                }
 
                 // Has aggroed and user doesn't want to kill aggro
                 if (x.HasAggroed && !ftools.UserSettings.FilterInfo.AggroFilter) return false;
@@ -46,7 +56,7 @@ namespace EasyFarm.FarmingTool
                 if (x.PartyClaim && !ftools.UserSettings.FilterInfo.PartyFilter) return false;
 
                 // Mob not claimed but we don't want to kill unclaimed mobs. 
-                if (!x.IsClaimed && !ftools.UserSettings.FilterInfo.UnclaimedFilter) return false;
+                if (!x.IsClaimed && !ftools.UserSettings.FilterInfo.UnclaimedFilter) return false;                
 
                 // If mob is on the ignored list ignore it. 
                 if (ftools.UserSettings.FilterInfo.IgnoredMobs.Contains(x.Name)) return false;

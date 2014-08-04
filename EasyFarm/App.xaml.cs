@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Debugging;
+using EasyFarm.FarmingTool;
 using EasyFarm.State;
 using EasyFarm.ViewModels;
 using EasyFarm.Views;
@@ -66,18 +67,24 @@ namespace EasyFarm
             // Validate the selection
             var m_process = ProcessSelectionScreen.POL_Process;
 
-
+            // Check if the user made a selection. 
             if (m_process == null)
             {
                 System.Windows.Forms.MessageBox.Show("No valid process was selected: Exiting now.");
                 Environment.Exit(0);
             }
 
+            // Save the selected fface instance. 
             _fface = ProcessSelectionScreen.FFXI_Session;
 
             // Set up the game engine if valid.
             FarmingTools.LoadSettings();
 
+            // Set up UnitService to use this mob filter instead of its
+            // default mob filter. 
+            FarmingTools.UnitService.MobFilter = UnitFilters.MobFilter(_fface);
+
+            // Create a new game engine to control our character. 
             GameEngine = new GameEngine(_fface);
 
             // new DebugSpellCasting(_fface).Show();

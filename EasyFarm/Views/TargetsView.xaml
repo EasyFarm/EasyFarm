@@ -23,14 +23,29 @@
                             Delete will delete the currently selected item. 
                             Add will add the comboboxes text to the list of items
                             Clear will remove all items. -->
-        <Button x:Name="btnDeleteTarget" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Content="Delete" Margin="114,11,112,0" VerticalAlignment="Top" Height="22" Command="{Binding DeleteCommand}" />
-        <Button x:Name="btnAddTarget" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Content="Add" Margin="10,10,0,2" Command="{Binding AddCommand}" />
-        <Button x:Name="btnClearTarget" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Content="Clear" Margin="0,10,10,4" Command="{Binding ClearCommand}" />
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Grid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="5"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnDeleteTarget" Grid.Column="0" Content="Delete" Command="{Binding DeleteCommand}" />
+            <Button x:Name="btnAddTarget" Grid.Column="1" Content="Add" Command="{Binding AddCommand}" />
+            <Button x:Name="btnClearTarget" Grid.Column="2" Content="Clear" Command="{Binding ClearCommand}" />
+        </Grid>
         <!--Used to filter what types of creatures we want to kill. 
-                    Do we want to only kill things are party attack for example?-->
-        <CheckBox x:Name="chkKillAggro" Height="16" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="11,15,0,0" VerticalAlignment="Top" Content="Aggro" Foreground="White" IsChecked="{Binding Aggro}" />
-        <CheckBox x:Name="chkKillPartyClaimed" Height="16" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="99,15,0,0" VerticalAlignment="Top" Content="Party Claimed" Foreground="White" IsChecked="{Binding PartyClaimed}" />
-        <CheckBox x:Name="chkKillUnclaimed" Height="16" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="218,15,0,0" VerticalAlignment="Top" Content="Unclaimed" Foreground="White" IsChecked="{Binding Unclaimed}" />
+        Do we want to only kill things are party attack for example?-->
+        <UniformGrid Grid.Row="2" Grid.Column="1" Margin="10">
+            <CheckBox x:Name="chkKillAggro" Grid.Column="0" Content="Aggro" Foreground="White" IsChecked="{Binding Aggro}" />
+            <CheckBox x:Name="chkKillPartyClaimed" Grid.Column="1" Content="Party Claimed" Foreground="White" IsChecked="{Binding PartyClaimed}" />
+            <CheckBox x:Name="chkKillUnclaimed" Grid.Column="2" Content="Unclaimed" Foreground="White" IsChecked="{Binding Unclaimed}" />
+            <CheckBox x:Name="chkKillClaimed" Grid.Column="3" Content="Claimed" Foreground="White" IsChecked="{Binding Claimed}" />
+        </UniformGrid>
         <Label x:Name="label1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Kill" />
     </Grid>
 </UserControl>

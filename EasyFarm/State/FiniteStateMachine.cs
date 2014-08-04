@@ -43,11 +43,25 @@ namespace EasyFarm.State
         private BackgroundWorker worker = new BackgroundWorker();
 
         // Constructor.
-        public FiniteStateEngine()
+        public FiniteStateEngine(FFACE fface)
         {
             Heartbeat.Interval = 100; // Check State list ten times per second.
             Heartbeat.Tick += Heartbeat_Tick;
             worker.DoWork += worker_DoWork;
+            worker.WorkerSupportsCancellation = true;
+
+            this._fface = fface;
+
+            //Create the states
+            AddState(new RestState(fface));
+            AddState(new AttackState(fface));
+            AddState(new TravelState(fface));
+            AddState(new HealingState(fface));
+            AddState(new DeadState(fface));
+            AddState(new PostBattle(fface));
+            AddState(new TargetInvalid(fface));
+
+            foreach (var b in this.Brains) b.Enabled = true;
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
@@ -61,9 +75,9 @@ namespace EasyFarm.State
                 foreach (BaseState BS in Brains)
                 {
                     // Cancel operations if pause pending.
-                    if (worker.CancellationPending)
-                    {
-                        worker.CancelAsync();
+                    if (worker.CancellationPending) {
+                        e.Cancel = true;
+                        return; 
                     }
 
                     if (BS.Enabled == false) { continue; } // Skip disabled States.
@@ -86,44 +100,26 @@ namespace EasyFarm.State
             }
         }
 
-        public FiniteStateEngine(FFACE fface)
-            : this()
-        {
-            this._fface = fface;
-
-            //Create the states
-            AddState(new RestState(fface));
-            AddState(new AttackState(fface));
-            AddState(new TravelState(fface));
-            AddState(new HealingState(fface));
-            AddState(new DeadState(fface));
-            AddState(new PostBattle(fface));
-            AddState(new TargetInvalid(fface));
-
-            foreach (var b in this.Brains) b.Enabled = true;
-        }
-
         // Handles the updating.
         public void Heartbeat_Tick(object sender, EventArgs e)
         {
-            if (!worker.IsBusy)
-            {
-                worker.RunWorkerAsync();
-            }
-
-            /*Please remove this code when you're done.*/
-            if (!_fface.Player.ViewMode.Equals(ViewMode.ThirdPerson))
-            {
-                if (!_fface.Navigator.IsRunning())
-                {
-                    _fface.Navigator.SetViewMode(ViewMode.ThirdPerson);
-                }
-            }
+            if (!worker.IsBusy) { worker.RunWorkerAsync(); }
         }
 
         // Start and stop.
-        public void Start() { Heartbeat.Start(); }
-        public void Stop() { Heartbeat.Stop(); }
+        public void Start() 
+        { 
+            Heartbeat.Start();
+        }
+        
+        public void Stop() 
+        { 
+            // Stop next round of states. 
+            Heartbeat.Stop();
+            
+            // Prevent next states from executing.
+            worker.CancelAsync();
+        }
 
         // Add and remove States.
         public void AddState(BaseState ToAdd) { lock (Brains) { Brains.Add(ToAdd); } }

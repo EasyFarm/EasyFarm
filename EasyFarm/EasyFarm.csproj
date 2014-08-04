@@ -176,7 +176,6 @@
     <Compile Include="FarmingTool\ChatLine.cs" />
     <Compile Include="FarmingTool\ChatLog.cs" />
     <Compile Include="FarmingTool\FarmingTools.cs" />
-    <Compile Include="FarmingTool\GameSessions.cs" />
     <Compile Include="FarmingTool\PlayerActions.cs" />
     <Compile Include="FarmingTool\PlayerData.cs" />
     <Compile Include="FarmingTool\TargetData.cs" />
@@ -216,7 +215,6 @@
     <Compile Include="ViewModels\HealingViewModel.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\ProcessViewModel.cs" />
     <Compile Include="ViewModels\RestingViewModel.cs" />
     <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="ViewModels\StatusBarUpdateEvent.cs" />

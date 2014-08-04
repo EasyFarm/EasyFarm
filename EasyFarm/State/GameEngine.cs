@@ -20,7 +20,9 @@ You should have received a copy of the GNU General Public License
 using FFACETools;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace EasyFarm.State
 {
@@ -30,21 +32,76 @@ namespace EasyFarm.State
     /// </summary>
     public class GameEngine
     {
-        #region Members        
-
-        public FiniteStateEngine StateMachine { get; set; }
-
         /// <summary>
         /// Tells us whether the bot is working or not.
         /// </summary>
         public bool IsWorking = false;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Stops the bot on zone and re-enables it on re-zone. 
+        /// </summary>
+        private Timer ZoneTimer = new Timer();
+
+        /// <summary>
+        /// Keeps the gui thread from freezing. 
+        /// </summary>
+        private BackgroundWorker Worker = new BackgroundWorker();
+
+        /// <summary>
+        /// Holds the previous zone. Used to stop the bot on zone. 
+        /// </summary>
+        private Zone _zone = new Zone();
+
+        private FFACE _fface;
+
         public GameEngine(FFACE fface)
         {
+            this._fface = fface;
+            this._zone = fface.Player.Zone;
+
             StateMachine = new FiniteStateEngine(fface);
+            ZoneTimer.Tick += ZoneTimer_Tick;
+            ZoneTimer.Enabled = true;
+            ZoneTimer.Interval = 100;
+            Worker.DoWork += Worker_DoWork;
         }
+
+        void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            // If the program is not running or the zone is the same
+            // bail out. 
+            if (!IsWorking || _zone == _fface.Player.Zone)
+            {
+                _zone = _fface.Player.Zone;
+                return;
+            }
+
+            App.InformUser("Program Paused");
+
+            // Stop the state machine.
+            StateMachine.Stop();
+
+            // Set up waiting of 5 seconds to be our current time + 10 seconds. 
+            var waitDelay = DateTime.Now.Add(TimeSpan.FromSeconds(10));
+
+            // Wait for five seconds after zoning. 
+            while (DateTime.Now < waitDelay) { }
+
+            // Start up the state machine again. 
+            StateMachine.Start();
+
+            // Set our zone to our new zone. 
+            _zone = _fface.Player.Zone;
+
+            App.InformUser("Program Resumed");
+        }
+
+        void ZoneTimer_Tick(object sender, EventArgs e)
+        {
+            if (!Worker.IsBusy) Worker.RunWorkerAsync();
+        }
+
+        public FiniteStateEngine StateMachine { get; set; }
 
         /// <summary>
         /// Start the bot up
@@ -63,6 +120,5 @@ namespace EasyFarm.State
             StateMachine.Stop();
             IsWorking = false;
         }
-        #endregion
     }
 }

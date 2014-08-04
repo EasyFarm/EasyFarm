@@ -28,7 +28,8 @@ namespace EasyFarm.ViewModels
 {
     public class TargetsViewModel : ViewModelBase
     {
-        public TargetsViewModel(FarmingTools farmingTools) : base(farmingTools) 
+        public TargetsViewModel(FarmingTools farmingTools)
+            : base(farmingTools)
         {
             this.AddCommand = new DelegateCommand(AddTargetCommand);
             this.DeleteCommand = new DelegateCommand(DeleteTargetCommand);
@@ -48,7 +49,7 @@ namespace EasyFarm.ViewModels
 
         private void AddTargetCommand()
         {
-            if(!Targets.Contains(TargetsName))
+            if (!Targets.Contains(TargetsName))
                 Targets.Add(TargetsName);
         }
 
@@ -80,6 +81,12 @@ namespace EasyFarm.ViewModels
         {
             get { return ftools.UserSettings.FilterInfo.PartyFilter; }
             set { SetProperty(ref ftools.UserSettings.FilterInfo.PartyFilter, value); }
+        }
+
+        public bool Claimed
+        {
+            get { return ftools.UserSettings.FilterInfo.ClaimedFilter; }
+            set { SetProperty(ref ftools.UserSettings.FilterInfo.ClaimedFilter, value); }
         }
 
         public ICommand AddCommand { get; set; }
