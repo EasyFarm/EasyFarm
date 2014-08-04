@@ -144,6 +144,16 @@
       <HintPath>..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
@@ -163,6 +173,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FarmingTool\ChatLine.cs" />
+    <Compile Include="FarmingTool\ChatLog.cs" />
+    <Compile Include="FarmingTool\FarmingTools.cs" />
+    <Compile Include="FarmingTool\GameSessions.cs" />
+    <Compile Include="FarmingTool\PlayerActions.cs" />
+    <Compile Include="FarmingTool\PlayerData.cs" />
+    <Compile Include="FarmingTool\TargetData.cs" />
+    <Compile Include="FarmingTool\UnitFilters.cs" />
     <Compile Include="State\AttackState.cs" />
     <Compile Include="State\BaseState.cs" />
     <Compile Include="State\DeadState.cs" />
@@ -179,14 +197,9 @@
     <Compile Include="Debugging\DebugSpellCasting.xaml.cs">
       <DependentUpon>DebugSpellCasting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FarmingTool\UnitFilters.cs" />
     <Compile Include="Game Data\HealingAbility.cs" />
-    <Compile Include="FarmingTool\PlayerActions.cs" />
-    <Compile Include="FarmingTool\PlayerData.cs" />
-    <Compile Include="FarmingTool\TargetData.cs" />
     <Compile Include="Game Data\Waypoint.cs" />
     <Compile Include="Game Data\WeaponAbility.cs" />
-    <Compile Include="FarmingTool\FarmingTools.cs" />
     <Compile Include="User Settings\ActionInfo.cs" />
     <Compile Include="User Settings\Config.cs" />
     <Compile Include="User Settings\Health.cs" />
@@ -203,6 +216,7 @@
     <Compile Include="ViewModels\HealingViewModel.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\ProcessViewModel.cs" />
     <Compile Include="ViewModels\RestingViewModel.cs" />
     <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="ViewModels\StatusBarUpdateEvent.cs" />
@@ -215,6 +229,9 @@
     </Compile>
     <Compile Include="Views\BattlesView.xaml.cs">
       <DependentUpon>BattlesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChatLogView.xaml.cs">
+      <DependentUpon>ChatLogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\frmStartup.cs">
       <SubType>Form</SubType>
@@ -301,6 +318,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ChatLogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ControlStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
