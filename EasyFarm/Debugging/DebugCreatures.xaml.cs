@@ -33,9 +33,9 @@ namespace EasyFarm.Debugging
             this.Show();
         }
 
-        public List<Unit> Units
+        public Unit[] Units
         {
-            get { return new List<Unit>(_units.ValidMobs); }
+            get { return _units.ValidMobs; }
         }
 
         void Timer_Tick(object sender, EventArgs e)

@@ -55,7 +55,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
@@ -93,8 +93,9 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FFACETools">
-      <HintPath>Embedded\FFACETools.dll</HintPath>
+    <Reference Include="FFACETools, Version=1.3.1.18, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\FFACETools.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
@@ -397,9 +398,6 @@
     <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.PubSubEvents.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Embedded\FFACETools.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\XI-Tools\XI-Tools\XI-Tools.csproj">
       <Project>{be0bf2c6-3db4-415c-be21-c3f6b696c335}</Project>
       <Name>XI-Tools</Name>
@@ -409,6 +407,7 @@
     <Content Include="FFACE.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="FFACETools.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

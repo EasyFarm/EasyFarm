@@ -29,25 +29,20 @@ namespace EasyFarm.FarmingTool
                 // Mob not active
                 if (!x.IsActive) return false;
 
+                // INFO: fixes trying to attack dead mob problem. 
+                // Mob is dead
+                if (x.IsDead) return false;
+
+                if (x.NPCBit.Equals(0)) return false;
+
                 // Type is not mob 
                 if (!x.NPCType.Equals(NPCType.Mob)) return false;
-
-                // Mob is not visible
-                if (!x.NPCBit.Equals(8)) return false;
 
                 // Mob is out of range
                 if (!(x.Distance < ftools.UserSettings.MiscSettings.DetectionDistance)) return false;
 
                 // Mob too high out of reach. 
                 if (x.YDifference > ftools.UserSettings.MiscSettings.HeightThreshold) return false;
-
-                // The mob is claimed but it is not our claim.
-                if (x.IsClaimed && x.ClaimedID != fface.Player.ID)
-                {
-                    // and the claim filter is off, invalid. if the filter is on
-                    // the program will attack claimed mobs. 
-                    if (!ftools.UserSettings.FilterInfo.ClaimedFilter) return false;
-                }
 
                 // Has aggroed and user doesn't want to kill aggro
                 if (x.HasAggroed && !ftools.UserSettings.FilterInfo.AggroFilter) return false;
@@ -56,13 +51,26 @@ namespace EasyFarm.FarmingTool
                 if (x.PartyClaim && !ftools.UserSettings.FilterInfo.PartyFilter) return false;
 
                 // Mob not claimed but we don't want to kill unclaimed mobs. 
-                if (!x.IsClaimed && !ftools.UserSettings.FilterInfo.UnclaimedFilter) return false;                
+                if (!x.IsClaimed && !ftools.UserSettings.FilterInfo.UnclaimedFilter) return false;
 
                 // If mob is on the ignored list ignore it. 
                 if (ftools.UserSettings.FilterInfo.IgnoredMobs.Contains(x.Name)) return false;
 
                 // Not on our targets list.
                 if (!ftools.UserSettings.FilterInfo.TargetedMobs.Contains(x.Name) && ftools.UserSettings.FilterInfo.TargetedMobs.Count > 0) return false;
+
+                //INFO: claimid is broken on the private server so keep id checks off. 
+                // The mob is claimed but it is not our claim.
+
+                //FIX: Temporary fix until player.serverid is fixed. 
+                if (x.IsClaimed && x.ClaimedID != fface.PartyMember[0].ServerID)
+                {
+
+                    // and the claim filter is off, invalid. if the filter is on
+                    // the program will attack claimed mobs. 
+                    if (!ftools.UserSettings.FilterInfo.ClaimedFilter) return false;
+
+                }
 
                 // Mob is valid
                 return true;

@@ -39,6 +39,7 @@ Global
 		{BE0BF2C6-3DB4-415C-BE21-C3F6B696C335}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{BE0BF2C6-3DB4-415C-BE21-C3F6B696C335}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BE0BF2C6-3DB4-415C-BE21-C3F6B696C335}.Release|x86.ActiveCfg = Release|Any CPU
+		{BE0BF2C6-3DB4-415C-BE21-C3F6B696C335}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
