@@ -33,7 +33,9 @@ namespace EasyFarm.FarmingTool
                 // Mob is dead
                 if (x.IsDead) return false;
 
-                if (x.NPCBit.Equals(0)) return false;
+                // Allow for mobs with an npc bit of sometimes 4 (colibri) 
+                // and ignore mobs that are invisible npcbit = 0
+                if (x.NPCBit <= 0 || x.NPCBit >= 16) return false;
 
                 // Type is not mob 
                 if (!x.NPCType.Equals(NPCType.Mob)) return false;

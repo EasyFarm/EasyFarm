@@ -216,11 +216,13 @@
     <Compile Include="ViewModels\HealingViewModel.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\UnitFilteringViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ViewModels\RestingViewModel.cs" />
     <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="ViewModels\StatusBarUpdateEvent.cs" />
     <Compile Include="ViewModels\TargetsViewModel.cs" />
-    <Compile Include="ViewModels\UnitFilteringViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WeaponsViewModel.cs" />
     <Compile Include="Views\AbilitySelectionBox.xaml.cs">
