@@ -48,13 +48,55 @@ namespace EasyFarm.State
             // Get the target
             var target = ftools.TargetData.TargetUnit;
 
-            if (fface.Navigator.DistanceTo(target.Position) > Constants.SPELL_CAST_DISTANCE)
+            bool offensiveSpellsInStartList = false;
+            bool rangedInStartList = false;
+
+            bool offensiveSpellsInPullList = false;
+            bool rangedInPullList = false;
+
+            bool offensiveSpellsInStartOrPullList = false;
+            bool rangedInStartOrPullList = false;
+
+            for (int i = 0; i < ftools.PlayerActions.StartList.Count; ++i)
+            {
+                offensiveSpellsInStartList |= (  ftools.PlayerActions.StartList[i].IsSpell
+                                              && ftools.PlayerActions.StartList[i].Postfix == "<t>"
+                                              );
+                rangedInStartList |= (ftools.PlayerActions.StartList[i].Prefix == "/range");
+            }
+
+            for (int i = 0; i < ftools.PlayerActions.PullList.Count; ++i)
+            {
+                offensiveSpellsInPullList |= (  ftools.PlayerActions.PullList[i].IsSpell
+                                             && ftools.PlayerActions.PullList[i].Postfix == "<t>"
+                                             );
+                rangedInPullList |= (ftools.PlayerActions.PullList[i].Prefix == "/range");
+            }
+
+            offensiveSpellsInStartOrPullList = (offensiveSpellsInPullList || offensiveSpellsInStartList);
+            rangedInStartOrPullList = (rangedInPullList || rangedInStartList);
+
+            double startPullDistance;
+            if (offensiveSpellsInStartOrPullList)
+            {
+                startPullDistance = Constants.SPELL_CAST_DISTANCE;
+            }
+            else if (rangedInStartOrPullList)
+            {
+                startPullDistance = Constants.RANGED_ATTACK_MAX_DISTANCE;
+            }
+            else
+            {
+                startPullDistance = fface.Navigator.DistanceTo(target.Position);
+            }
+
+            if (fface.Navigator.DistanceTo(target.Position) > startPullDistance)
             {
                 // Save old tolerance
                 var old = fface.Navigator.DistanceTolerance;
                 
-                // Set to max engagement distance. 
-                fface.Navigator.DistanceTolerance = Constants.SPELL_CAST_DISTANCE;
+                // Set to max engagement distance.
+                fface.Navigator.DistanceTolerance = startPullDistance;
 
                 // Goto target at max engagement distance.
                 fface.Navigator.Goto(target.Position, false);
@@ -89,12 +131,34 @@ namespace EasyFarm.State
 
             // set to true so that we do not cast starting spells again. 
             fightStarted = true;
-            
-            // Pull the target casting each spell only once. 
-            if (!target.Status.Equals(Status.Fighting)) 
+
+            if (ftools.PlayerActions.PullList.Count > 0 && (rangedInPullList || offensiveSpellsInPullList))
             {
-                ftools.AbilityExecutor.ExecuteActions(target, ftools.PlayerActions.PullList, 
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
+                // Pull the target casting each spell once until the target is claimed
+                while (!target.Status.Equals(Status.Fighting) && !target.IsDead)
+                {
+                    // If out of range, stop trying to pull
+                    if (fface.Navigator.DistanceTo(target.Position) > startPullDistance)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        ftools.AbilityExecutor.ExecuteActions(target
+                                                             ,ftools.PlayerActions.PullList
+                                                             ,Constants.SPELL_CAST_LATENCY
+                                                             ,Constants.GLOBAL_SPELL_COOLDOWN
+                                                             );
+                    }
+                }
+            }
+            else if (!target.Status.Equals(Status.Fighting))
+            {
+                ftools.AbilityExecutor.ExecuteActions(target
+                                                     ,ftools.PlayerActions.PullList
+                                                     ,Constants.SPELL_CAST_LATENCY
+                                                     ,Constants.GLOBAL_SPELL_COOLDOWN
+                                                     );
             }
 
             // *Removed: target does not have to be engaged for us to fight it. *

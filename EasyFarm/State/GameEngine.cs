@@ -87,7 +87,7 @@ namespace EasyFarm.State
             // Wait for five seconds after zoning. 
             while (DateTime.Now < waitDelay) { }
 
-            // Start up the state machine again. 
+            // Start up the state machine again.
             StateMachine.Start();
 
             // Set our zone to our new zone. 
