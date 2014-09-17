@@ -77,6 +77,12 @@ namespace EasyFarm.State
                     // Cancel operations if pause pending.
                     if (worker.CancellationPending) {
                         e.Cancel = true;
+
+                        // Make the last state clean up and exit (stops running if travelling)
+                        if (LastRan != null)
+                        {
+                            LastRan.ExitState();
+                        }
                         return; 
                     }
 

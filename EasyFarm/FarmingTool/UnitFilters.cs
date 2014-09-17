@@ -35,7 +35,7 @@ namespace EasyFarm.FarmingTool
 
                 // Allow for mobs with an npc bit of sometimes 4 (colibri) 
                 // and ignore mobs that are invisible npcbit = 0
-                if (x.NPCBit <= 0 || x.NPCBit >= 16) return false;
+                if (x.NPCBit >= 16) return false;
 
                 // Type is not mob 
                 if (!x.NPCType.Equals(NPCType.Mob)) return false;
@@ -56,7 +56,14 @@ namespace EasyFarm.FarmingTool
                 if (!x.IsClaimed && !ftools.UserSettings.FilterInfo.UnclaimedFilter) return false;
 
                 // If mob is on the ignored list ignore it. 
-                if (ftools.UserSettings.FilterInfo.IgnoredMobs.Contains(x.Name)) return false;
+                if (ftools.UserSettings.FilterInfo.IgnoredMobs.Contains(x.Name))
+                {
+                    return false;
+                }
+                else if (x.HasAggroed && ftools.UserSettings.FilterInfo.AggroFilter)
+                {
+                    return true;
+                }
 
                 // Not on our targets list.
                 if (!ftools.UserSettings.FilterInfo.TargetedMobs.Contains(x.Name) && ftools.UserSettings.FilterInfo.TargetedMobs.Count > 0) return false;
