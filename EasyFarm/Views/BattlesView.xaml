@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="164.384" d:DesignWidth="427.397">
+             d:DesignHeight="216.384" d:DesignWidth="480.397">
     <Grid Width="Auto" Height="Auto" FlowDirection="LeftToRight" ShowGridLines="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
@@ -20,7 +20,7 @@
             <RadioButton x:Name="radStartingAction" IsChecked="{Binding StartSelected}" >Start</RadioButton>
             <RadioButton x:Name="radPullingAction" IsChecked="{Binding PullSelected}">Pull</RadioButton>
             <RadioButton x:Name="radBattleAction" IsChecked="{Binding BattleSelected}">Battle</RadioButton>
-            <RadioButton x:Name="radEndingAction" IsChecked="{Binding EndSelected}">End</RadioButton>            
+            <RadioButton x:Name="radEndingAction" IsChecked="{Binding EndSelected}">End</RadioButton>
         </StackPanel>
         <!--Name of the text box item to add-->
         <TextBox x:Name="txbAbilityName" Grid.Column="1" Margin="10" Text="{Binding ActionName, UpdateSourceTrigger=PropertyChanged}"/>

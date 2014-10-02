@@ -1,7 +1,7 @@
 
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
-Copyright (C) <2013 - 2014>  <Zerolimits>
+Copyright (C) <2013>  <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -53,13 +53,13 @@ namespace EasyFarm.State
             this._fface = fface;
 
             //Create the states
-            AddState(new RestState(fface));
-            AddState(new AttackState(fface));
-            AddState(new TravelState(fface));
-            AddState(new HealingState(fface));
-            AddState(new DeadState(fface));
-            AddState(new PostBattle(fface));
-            AddState(new TargetInvalid(fface));
+            AddState(new RestState(fface) { Priority = 2 });
+            AddState(new AttackState(fface) { Priority = 1 });
+            AddState(new TravelState(fface) { Priority = 1 });
+            AddState(new HealingState(fface) { Priority = 2 });
+            AddState(new DeadState(fface) { Priority = 3 });
+            AddState(new PostBattle(fface) { Priority = 3 });
+            AddState(new TargetInvalid(fface) { Priority = 3 });
 
             foreach (var b in this.Brains) b.Enabled = true;
         }
@@ -75,7 +75,8 @@ namespace EasyFarm.State
                 foreach (BaseState BS in Brains)
                 {
                     // Cancel operations if pause pending.
-                    if (worker.CancellationPending) {
+                    if (worker.CancellationPending)
+                    {
                         e.Cancel = true;
 
                         // Make the last state clean up and exit (stops running if travelling)
@@ -83,7 +84,7 @@ namespace EasyFarm.State
                         {
                             LastRan.ExitState();
                         }
-                        return; 
+                        return;
                     }
 
                     if (BS.Enabled == false) { continue; } // Skip disabled States.
@@ -113,16 +114,16 @@ namespace EasyFarm.State
         }
 
         // Start and stop.
-        public void Start() 
-        { 
+        public void Start()
+        {
             Heartbeat.Start();
         }
-        
-        public void Stop() 
-        { 
+
+        public void Stop()
+        {
             // Stop next round of states. 
             Heartbeat.Stop();
-            
+
             // Prevent next states from executing.
             worker.CancelAsync();
         }

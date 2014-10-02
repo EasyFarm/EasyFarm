@@ -1,7 +1,7 @@
 
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
-Copyright (C) <2013 - 2014>  <Zerolimits>
+Copyright (C) <2013>  <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.FarmingTool;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -38,70 +39,74 @@ namespace EasyFarm.State
         public bool IsWorking = false;
 
         /// <summary>
-        /// Stops the bot on zone and re-enables it on re-zone. 
+        /// Monitors for zone changes and allows for pausing / resuming
+        /// the program after zoning. 
         /// </summary>
-        private Timer ZoneTimer = new Timer();
+        private ZoneMonitor _zoneMonitor;
 
         /// <summary>
-        /// Keeps the gui thread from freezing. 
+        /// Monitors for players nearby and allows for pausing / resuming
+        /// the program on detection. 
         /// </summary>
-        private BackgroundWorker Worker = new BackgroundWorker();
-
-        /// <summary>
-        /// Holds the previous zone. Used to stop the bot on zone. 
-        /// </summary>
-        private Zone _zone = new Zone();
+        private PlayerMonitor _playerMonitor;
 
         private FFACE _fface;
 
         public GameEngine(FFACE fface)
         {
             this._fface = fface;
-            this._zone = fface.Player.Zone;
+            this._zoneMonitor = new ZoneMonitor(fface);
+            this._playerMonitor = new PlayerMonitor(fface);
+            this.StateMachine = new FiniteStateEngine(fface);
 
-            StateMachine = new FiniteStateEngine(fface);
-            ZoneTimer.Tick += ZoneTimer_Tick;
-            ZoneTimer.Enabled = true;
-            ZoneTimer.Interval = 100;
-            Worker.DoWork += Worker_DoWork;
+            _zoneMonitor.Changed += ZoneMonitor_ZoneChanged;
+            _zoneMonitor.Start();
+
+            _playerMonitor.Changed += PlayerMonitor_DetectedChanged;
+            _playerMonitor.Start();
         }
 
-        void Worker_DoWork(object sender, DoWorkEventArgs e)
+        private void PlayerMonitor_DetectedChanged(object sender, EventArgs e)
         {
-            // If the program is not running or the zone is the same
-            // bail out. 
-            if (!IsWorking || _zone == _fface.Player.Zone)
+            // If the program is not running then bail out. 
+            if (!IsWorking) { return; }
+
+            var args = (e as MonitorArgs<bool>);
+            if (args.Status)
             {
-                _zone = _fface.Player.Zone;
-                return;
+                App.InformUser("Program Paused");
+                Stop();
             }
+            else 
+            {
+                App.InformUser("Program Resumed");
+                Start();
+            }
+        }
+
+        private void ZoneMonitor_ZoneChanged(object sender, EventArgs e)
+        {
+            var args = (e as MonitorArgs<Zone>);
+
+            // If the program is not running then bail out. 
+            if (!IsWorking) { return; }
 
             App.InformUser("Program Paused");
 
             // Stop the state machine.
-            StateMachine.Stop();
+            Stop();
 
             // Set up waiting of 5 seconds to be our current time + 10 seconds. 
             var waitDelay = DateTime.Now.Add(TimeSpan.FromSeconds(10));
 
             // Wait for five seconds after zoning. 
-            while (DateTime.Now < waitDelay) { }
+            while (DateTime.Now < waitDelay)  { }
 
             // Start up the state machine again.
-            StateMachine.Start();
-
-            // Set our zone to our new zone. 
-            _zone = _fface.Player.Zone;
+            Start();
 
             App.InformUser("Program Resumed");
         }
-
-        void ZoneTimer_Tick(object sender, EventArgs e)
-        {
-            if (!Worker.IsBusy) Worker.RunWorkerAsync();
-        }
-
-        public FiniteStateEngine StateMachine { get; set; }
 
         /// <summary>
         /// Start the bot up
@@ -120,5 +125,7 @@ namespace EasyFarm.State
             StateMachine.Stop();
             IsWorking = false;
         }
+
+        public FiniteStateEngine StateMachine { get; set; }
     }
 }

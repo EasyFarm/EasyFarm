@@ -33,9 +33,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="btnDeleteTarget" Grid.Column="0" Content="Delete" Command="{Binding DeleteCommand}" />
-            <Button x:Name="btnAddTarget" Grid.Column="1" Content="Add" Command="{Binding AddCommand}" />
+            </Grid.ColumnDefinitions>            
+            <Button x:Name="btnAddTarget" Grid.Column="0" Content="Add" Command="{Binding AddCommand}" />
+            <Button x:Name="btnDeleteTarget" Grid.Column="1" Content="Delete" Command="{Binding DeleteCommand}" />
             <Button x:Name="btnClearTarget" Grid.Column="2" Content="Clear" Command="{Binding ClearCommand}" />
         </Grid>
         <!--Used to filter what types of creatures we want to kill. 

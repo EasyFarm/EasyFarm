@@ -11,6 +11,7 @@ namespace EasyFarm.FarmingTool
 {
     public class UnitFilters
     {
+        #region MOBFilter
         public static Func<Unit, bool> MobFilter(FFACE fface)
         {
             var ftools = FarmingTools.GetInstance(fface);
@@ -82,6 +83,36 @@ namespace EasyFarm.FarmingTool
                 }
 
                 // Mob is valid
+                return true;
+            });
+        } 
+        #endregion
+
+        public static Func<Unit, bool> PCFilter(FFACE fface)
+        {
+            var ftools = FarmingTools.GetInstance(fface);
+
+            // Function to use to filter surrounding mobs by.
+            return new Func<Unit, bool>((Unit x) =>
+            {
+                // No fface? Bail. 
+                if (fface == null) return false;
+
+                // PC is null, bail
+                // Null check must be kept or null occurs will be thrown
+                // secretly by the FSM. 
+                if (x == null) return false;
+
+                // PC is not active but in memory
+                if (!x.IsActive) return false;
+
+                // Type is not mob 
+                if (!x.NPCType.Equals(NPCType.PC)) return false;
+
+                // PC is out of range
+                if (x.Distance >= 50) return false;
+
+                // PC can see us...
                 return true;
             });
         }

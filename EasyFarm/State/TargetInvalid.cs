@@ -46,7 +46,7 @@ namespace EasyFarm.State
 
         public override void RunState()
         {
-            ftools.TargetData.TargetUnit = ftools.UnitService.GetTarget(UnitFilters.MobFilter(fface));
+            ftools.TargetData.TargetUnit = ftools.UnitService.GetTarget(UnitFilters.MobFilter(fface), x => x.Distance);
         }
 
         public override void ExitState() { }

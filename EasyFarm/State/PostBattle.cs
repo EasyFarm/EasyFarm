@@ -44,7 +44,7 @@ namespace EasyFarm.State
                 Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
 
             // Get the next target.
-            var target = ftools.UnitService.GetTarget(UnitFilters.MobFilter(fface));            
+            var target = ftools.UnitService.GetTarget(UnitFilters.MobFilter(fface), x => x.Distance);            
 
             // Set our new target at the end so that we don't accidentaly cast on a 
             // new target. 

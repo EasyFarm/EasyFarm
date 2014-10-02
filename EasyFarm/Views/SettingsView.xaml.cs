@@ -25,12 +25,12 @@ namespace EasyFarm.Views
     /// <summary>
     /// Interaction logic for UnitFilteringView.xaml
     /// </summary>
-    public partial class UnitFilteringView : UserControl
+    public partial class SettingsView : UserControl
     {
-        public UnitFilteringView()
+        public SettingsView()
         {
             InitializeComponent();
-            this.DataContext = new UnitFilteringViewModel(App.FarmingTools);
+            this.DataContext = new SettingsViewModel(App.FarmingTools);
         }
     }
 }

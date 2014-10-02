@@ -1,7 +1,7 @@
 ﻿
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
-Copyright (C) <2013 - 2014>  <Zerolimits>
+Copyright (C) <2013>  <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ namespace EasyFarm
 
             // Set up UnitService to use this mob filter instead of its
             // default mob filter. 
-            FarmingTools.UnitService.MobFilter = UnitFilters.MobFilter(_fface);
+            FarmingTools.UnitService.UnitFilter = UnitFilters.MobFilter(_fface);
 
             // Create a new game engine to control our character. 
             GameEngine = new GameEngine(_fface);
@@ -90,6 +90,9 @@ namespace EasyFarm
             // new DebugSpellCasting(_fface).Show();
 
             // new DebugCreatures(_fface, FarmingTools.UnitService).Show();
+
+            var dbc = new DebugCreatures(FarmingTools.FFACE, FarmingTools.UnitService);
+            dbc.Show();
         }
 
         protected override void OnExit(ExitEventArgs e)

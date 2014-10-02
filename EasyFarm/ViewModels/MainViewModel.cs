@@ -17,10 +17,13 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Views;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using System;
 using System.Windows.Input;
 using ZeroLimits.FarmingTool;
+using System.Linq;
 
 namespace EasyFarm.ViewModels
 {
@@ -28,14 +31,30 @@ namespace EasyFarm.ViewModels
     {
         public MainViewModel(FarmingTools farmingTools) : base(farmingTools)
         {
+            // Tell the user the program has loaded the player's data
+            App.InformUser("Bot Loaded: " + farmingTools.FFACE.Player.Name);
+        }
+
+        public MainViewModel()
+        {
+            this.ftools = FarmingTools.GetInstance();
+
             // Get events from view models to update the status bar's text.
             App.EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe((a) => { StatusBarText = a; });
 
-            // Tell the user the program has loaded the player's data
-            App.InformUser("Bot Loaded: " + farmingTools.FFACE.Player.Name);
-            
             // Create start command handler.
             StartCommand = new DelegateCommand(Start);
+
+            ExitCommand = new DelegateCommand(Exit);
+
+            SaveCommand = new DelegateCommand(Save);
+
+            SettingsCommand = new DelegateCommand(Settings);
+        }
+
+        private void Settings()
+        {
+            
         }
 
         public String StatusBarText
@@ -45,6 +64,12 @@ namespace EasyFarm.ViewModels
         }
        
         public ICommand StartCommand { get; set; }
+
+        public ICommand ExitCommand { get; set; }
+
+        public DelegateCommand SaveCommand { get; set; }
+
+        public DelegateCommand SettingsCommand { get; set; }
 
         public void Start()
         {
@@ -59,5 +84,17 @@ namespace EasyFarm.ViewModels
                 App.GameEngine.Start();
             }
         }
+
+        private void Save()
+        {
+            App.FarmingTools.SaveSettings();
+        }
+
+        private void Exit()
+        {
+            App.Current.Shutdown();
+        }
+
+        public string InteractionResultMessage { get; set; }
     }
 }

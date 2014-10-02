@@ -31,5 +31,7 @@ namespace EasyFarm.ViewModels
         {
             this.ftools = farmingTools;
         }
+
+        protected ViewModelBase() { }
     }
 }

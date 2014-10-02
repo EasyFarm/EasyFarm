@@ -4,6 +4,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:Views="clr-namespace:EasyFarm.Views"
         xmlns:ViewModels="clr-namespace:EasyFarm.ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance ViewModels:MainViewModel, IsDesignTimeCreatable=True}"
         x:Name="MainForm" 
         x:Class="EasyFarm.Views.MainWindow" 
         Width="510" 
@@ -31,49 +33,61 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="400" />
-        </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>        
+        <Menu Grid.ColumnSpan="2" Background="Black" Foreground="White">
+            <MenuItem Header="_File" Foreground="White">
+                <MenuItem.Resources>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Foreground" Value="Black"></Setter>
+                    </Style>
+                </MenuItem.Resources>
+                <MenuItem Header="_Save" Command="{Binding SaveCommand}"/>
+                <MenuItem Header ="Se_ttings..." Command="{Binding SettingsCommand}"/>
+                <MenuItem Header="E_xit" Command="{Binding ExitCommand}"/>
+            </MenuItem>
+        </Menu>
         <TabControl TabStripPlacement="Left" Background="#FF2C24AD" Grid.Row="1" Grid.ColumnSpan="3">
             <!-- Targets Tab -->
             <TabItem>
                 <TabItem.Header>Targets</TabItem.Header>
-                <Views:TargetsView></Views:TargetsView>
-            </TabItem>            
+                <Views:TargetsView/>
+            </TabItem>
             <!--Ignored Tab-->
             <TabItem>
                 <TabItem.Header>Ignored</TabItem.Header>
-                <Views:IgnoredView></Views:IgnoredView>
+                <Views:IgnoredView/>
             </TabItem>
-            
+
             <!--Routes Tab-->
             <TabItem >
                 <TabItem.Header>Routes</TabItem.Header>
-                <Views:RoutesView></Views:RoutesView>
+                <Views:RoutesView/>
             </TabItem>
 
             <!--Battle Tab-->
             <TabItem >
                 <TabItem.Header>Battle</TabItem.Header>
-                <Views:BattlesView></Views:BattlesView>
+                <Views:BattlesView/>
             </TabItem>
-            
+
             <!--Resting Tab-->
             <TabItem >
                 <TabItem.Header>Resting</TabItem.Header>
-                <Views:RestingView></Views:RestingView>
+                <Views:RestingView/>
             </TabItem>
             <!--Weaponskill Tab-->
             <TabItem >
                 <TabItem.Header>Weaponskill</TabItem.Header>
-                <Views:WeaponsView></Views:WeaponsView>
+                <Views:WeaponsView/>
             </TabItem>
             <!--Healing Tab-->
             <TabItem>
                 <TabItem.Header>Healing</TabItem.Header>
-                <Views:HealingView></Views:HealingView>
+                <Views:HealingView/>
             </TabItem>
             <TabItem>
                 <TabItem.Header>Misc Settings</TabItem.Header>
-                <Views:UnitFilteringView></Views:UnitFilteringView>
+                <Views:SettingsView/>
             </TabItem>
             <!--Start Tab-->
             <TabItem >
@@ -85,9 +99,6 @@
                 </TabItem.Header>
             </TabItem>
         </TabControl>
-        <!--These labels display user friendly information to the user. They are labels used to update the user about changes.-->
-        <Label Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" Background="Black" Content="{Binding CatagoryName}" FontFamily="Segoe UI" FontSize="12" FontStyle="Normal" FontWeight="Normal" Foreground="White" Opacity="1" Padding="5" HorizontalContentAlignment="Stretch" Height="30" />
-        <Label Grid.Column="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" Background="Black" Content="{Binding CatagoryDesc}" FontFamily="Segoe UI" FontSize="12" FontStretch="Normal" FontStyle="Normal" FontWeight="Normal" Foreground="White" Opacity="1" Padding="5" HorizontalContentAlignment="Stretch" Height="30" />
-        <Label Name="lblStatusBar" Height="30" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" Background="Black" Content="{Binding StatusBarText, NotifyOnSourceUpdated=True}" FontFamily="Segoe UI" FontSize="12" FontStyle="Normal" FontWeight="Normal" Foreground="White" HorizontalContentAlignment="Center" Opacity="1" />
+        <Label Name="lblStatusBar" Height="30" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" Margin="0" Background="Black" Content="{Binding StatusBarText, NotifyOnSourceUpdated=True}" Foreground="White" HorizontalContentAlignment="Center" />
     </Grid>
 </Window>

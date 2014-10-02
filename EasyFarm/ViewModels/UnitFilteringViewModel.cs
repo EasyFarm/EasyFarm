@@ -32,9 +32,9 @@ using ZeroLimits.XITools;
 
 namespace EasyFarm.ViewModels
 {
-    public class UnitFilteringViewModel : ViewModelBase
+    public class SettingsViewModel : ViewModelBase
     {
-        public UnitFilteringViewModel(FarmingTools farmingTools) : base(farmingTools) 
+        public SettingsViewModel(FarmingTools farmingTools) : base(farmingTools) 
         {
             RestoreDefaultsCommand = new DelegateCommand(RestoreDefaults);
         }
