@@ -1,4 +1,4 @@
-﻿
+
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -14,41 +14,45 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*/
-///////////////////////////////////////////////////////////////////
+*////////////////////////////////////////////////////////////////////
 
-using EasyFarm.FarmingTool;
-using FFACETools;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ZeroLimits.FarmingTool;
-using ZeroLimits.XITools;
 
-
-namespace EasyFarm.State
+namespace EasyFarm.GameData
 {
     /// <summary>
-    /// Changes our target once the target becomes invalid
+    /// Class for Healing Abilities
     /// </summary>
-    public class TargetInvalid : BaseState
+    public class HealingAbility
     {
-        public TargetInvalid(FFACE fface) : base(fface) { }
-
-        public override bool CheckState()
+        public HealingAbility()
         {
-            return ftools.TargetData.TargetUnit == null || !ftools.UnitService.IsValid(ftools.TargetData.TargetUnit);
+            SetDefaults();
         }
 
-        public override void EnterState() { }
-
-        public override void RunState()
-        {
-            ftools.TargetData.TargetUnit = ftools.UnitService.GetTarget(UnitFilters.MobFilter(fface), x => x.Distance);
+        public void SetDefaults()
+        { 
+            IsEnabled = false;
+            Name = "Empty";
+            TriggerLevel = 0;
         }
 
-        public override void ExitState() { }
+        /// <summary>
+        /// Can we use this abilitiy?
+        /// </summary>
+        public bool IsEnabled { get; set; }
+
+        /// <summary>
+        /// What is its name?
+        /// </summary>
+        public String Name { get; set; }
+
+        /// <summary>
+        /// The level to which we should use the ability
+        /// </summary>
+        public int TriggerLevel { get; set; }
     }
 }

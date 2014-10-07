@@ -1,7 +1,7 @@
 ﻿
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
-Copyright (C) <2013 - 2014>  <Zerolimits>
+Copyright (C) <2013>  <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,78 +17,123 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.FarmingTool;
 using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EasyFarm.Views
 {
+    /// <summary>
+    /// Allows the user to select his desired pol process and saves
+    /// an FFACE session related to his selected process. 
+    /// </summary>
     public partial class frmStartup : Form
     {
+        /// <summary>
+        /// Name of the application to monitor
+        /// </summary>
         public string AppName = "pol";
-        private FFACE _session;
-        private List<Process> _processes;
-        private Process _process;
 
-        public List<Process> POL_Processes 
-        {
-            get { return Process.GetProcessesByName(AppName).ToList(); }
-            set { _processes = value; }
-        }
-
-        public Process POL_Process
-        {
-            get
-            {
-                return POL_Processes
-                    .Where(x => x.MainWindowTitle.Equals(SessionsListBox.SelectedItem))
-                    .FirstOrDefault();
-            }
-
-            set { _process = value; }
-        }
-
-        public FFACE FFXI_Session
-        {
-            get { return new FFACE(POL_Process.Id); }
-            set { _session = value; }
-        }
-
+        /// <summary>
+        /// Monitors new processes or exited processes. 
+        /// Will fire events when processes enter and exit the system. 
+        /// </summary>
+        public ProcessWatcher ProcessWatcher;
+        
+        /// <summary>
+        /// Form initialization.
+        /// </summary>
         public frmStartup()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Setup the process monitor to the pol program.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Startup_Load(object sender, EventArgs e)
         {
-            if (POL_Processes.Count <= 0)
-            {
-                MessageBox.Show("FFXI Instances not detected, shutting down...");
-                System.Environment.Exit(0);
-            }
+            ProcessWatcher = new ProcessWatcher(AppName);
+            ProcessWatcher.Entry += ProcessWatcher_Entry;
+            ProcessWatcher.Exit += ProcessWatcher_Exit;
+            ProcessWatcher.Start();
+        }
 
-            //Cull all the FFXI Processes, and add their names to my listbox on the startup form
-            var Query = POL_Processes.Select(x=> x.MainWindowTitle);
-            
-            foreach (var item in Query)
+        /// <summary>
+        /// Removes processes from the list box when they exit. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ProcessWatcher_Exit(object sender, EventArgs e)
+        {
+            App.Current.Dispatcher.Invoke(() =>
             {
-                if (!SessionsListBox.Items.Contains(item))
-                {
-                    SessionsListBox.Items.Add(item);
-                }
+                this.SessionsListBox.Items.Remove(ProcessFormat((e as ProcessEventArgs).Process));
+            });
+        }
+
+        /// <summary>
+        /// Adds processes to the list box when they are added to the system. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ProcessWatcher_Entry(object sender, EventArgs e)
+        {
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                this.SessionsListBox.Items.Add(ProcessFormat((e as ProcessEventArgs).Process));
+            });
+        }
+
+        /// <summary>
+        /// Exits the form when a user picks a process. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SessionsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SessionsListBox.SelectedIndex == -1) return;
+            this.Close();
+        }
+
+        /// <summary>
+        /// Returns the process as a string in a consistent fashion. 
+        /// Windows Title: ID
+        /// </summary>
+        /// <param name="process"></param>
+        /// <returns></returns>
+        public String ProcessFormat(Process process)
+        {
+            return process.MainWindowTitle + ": " + process.Id;
+        }
+
+        /// <summary>
+        /// The currently selected pol instance. 
+        /// </summary>
+        public Process SelectedProcess
+        {
+            get
+            {
+                return Process.GetProcessesByName(AppName)
+                    .Where(x => ProcessFormat(x).Equals(SessionsListBox.SelectedItem))
+                    .FirstOrDefault();
             }
         }
 
-        //Triggers when a user makes a selection
-        private void SessionsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// The currently selected FFACE Instance. 
+        /// </summary>
+        public FFACE SelectedSession
         {
-            if (SessionsListBox.SelectedIndex == -1)
-                return;
-
-            this.Close();
+            get { return new FFACE(SelectedProcess.Id); }
         }
     }
 }

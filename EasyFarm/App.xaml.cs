@@ -25,9 +25,11 @@ using EasyFarm.Views;
 using FFACETools;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
+using System.IO;
 using System.Reflection;
 using System.Windows;
 using ZeroLimits.FarmingTool;
+using System.Linq;
 
 namespace EasyFarm
 {
@@ -38,34 +40,56 @@ namespace EasyFarm
     {
         private static FFACE _fface;
         private static FarmingTools _farmingTools;
-        
+
         public static FarmingTools FarmingTools
         {
-            get { return _farmingTools?? (_farmingTools = FarmingTools.GetInstance(_fface)); }
-            set { _farmingTools= value; }
+            get { return _farmingTools ?? (_farmingTools = FarmingTools.GetInstance(_fface)); }
+            set { _farmingTools = value; }
         }
 
         public static IEventAggregator EventAggregator;
 
-        public static GameEngine GameEngine { get; set;}
+        public static GameEngine GameEngine { get; set; }
 
-        public App() 
+        public static readonly String[] resources = { "spells.xml", "abils.xml" };
+
+        public const String resourcesUrl = "http://www.ffevo.net/topic/2923-ashita-and-ffacetools-missing-resource-files/";
+
+        public App()
         {
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;            
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            // Set up the event aggregator for updates to the status bar from 
-            // multiple view models.
-            EventAggregator = new EventAggregator();
+            // Check if the resource files exist.
+            if (!Directory.Exists("resources"))
+            {
+                MessageBox.Show(
+                    String.Format("You're missing the resources folder. You can download it from : {0}", resourcesUrl
+                    ));
+                Environment.Exit(0);
+            }
+
+            if (resources.Any(x => !File.Exists(Path.Combine("resources", x))))
+            {
+                String[] missing = resources.Where(x => !File.Exists(Path.Combine("resources", x))).ToArray();
+
+                String message = String.Join(" , ", missing);
+
+                MessageBox.Show(
+                    String.Format("You're missing {0} resource files. You can download them from : {1}.",
+                    message, resourcesUrl));
+
+                Environment.Exit(0);
+            }
 
             // Let user select ffxi process
             frmStartup ProcessSelectionScreen = new frmStartup();
             ProcessSelectionScreen.ShowDialog();
 
             // Validate the selection
-            var m_process = ProcessSelectionScreen.POL_Process;
+            var m_process = ProcessSelectionScreen.SelectedProcess;
 
             // Check if the user made a selection. 
             if (m_process == null)
@@ -74,8 +98,12 @@ namespace EasyFarm
                 Environment.Exit(0);
             }
 
+            // Set up the event aggregator for updates to the status bar from 
+            // multiple view models.
+            EventAggregator = new EventAggregator();
+
             // Save the selected fface instance. 
-            _fface = ProcessSelectionScreen.FFXI_Session;
+            _fface = ProcessSelectionScreen.SelectedSession;
 
             // Set up the game engine if valid.
             FarmingTools.LoadSettings();
@@ -91,8 +119,8 @@ namespace EasyFarm
 
             // new DebugCreatures(_fface, FarmingTools.UnitService).Show();
 
-            var dbc = new DebugCreatures(FarmingTools.FFACE, FarmingTools.UnitService);
-            dbc.Show();
+            // var dbc = new DebugCreatures(FarmingTools.FFACE, FarmingTools.UnitService);
+            // dbc.Show();
         }
 
         protected override void OnExit(ExitEventArgs e)

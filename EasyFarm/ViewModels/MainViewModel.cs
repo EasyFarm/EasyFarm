@@ -1,7 +1,7 @@
 ﻿
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
-Copyright (C) <2013 - 2014>  <Zerolimits>
+Copyright (C) <2013>  <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,16 +31,13 @@ namespace EasyFarm.ViewModels
     {
         public MainViewModel(FarmingTools farmingTools) : base(farmingTools)
         {
-            // Tell the user the program has loaded the player's data
-            App.InformUser("Bot Loaded: " + farmingTools.FFACE.Player.Name);
-        }
-
-        public MainViewModel()
-        {
             this.ftools = FarmingTools.GetInstance();
 
             // Get events from view models to update the status bar's text.
             App.EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe((a) => { StatusBarText = a; });
+
+            // Tell the user the program has loaded the player's data
+            App.InformUser("Bot Loaded: " + farmingTools.FFACE.Player.Name);
 
             // Create start command handler.
             StartCommand = new DelegateCommand(Start);
@@ -48,13 +45,6 @@ namespace EasyFarm.ViewModels
             ExitCommand = new DelegateCommand(Exit);
 
             SaveCommand = new DelegateCommand(Save);
-
-            SettingsCommand = new DelegateCommand(Settings);
-        }
-
-        private void Settings()
-        {
-            
         }
 
         public String StatusBarText
@@ -62,14 +52,18 @@ namespace EasyFarm.ViewModels
             get { return ftools.UserSettings.StatusBarText; }
             set { this.SetProperty(ref ftools.UserSettings.StatusBarText, value); }
         }
+
+        public bool IsWorking 
+        {
+            get { return App.GameEngine.IsWorking; }
+            set { SetProperty(ref App.GameEngine.IsWorking, value); }
+        }
        
         public ICommand StartCommand { get; set; }
 
         public ICommand ExitCommand { get; set; }
 
         public DelegateCommand SaveCommand { get; set; }
-
-        public DelegateCommand SettingsCommand { get; set; }
 
         public void Start()
         {
@@ -94,7 +88,5 @@ namespace EasyFarm.ViewModels
         {
             App.Current.Shutdown();
         }
-
-        public string InteractionResultMessage { get; set; }
     }
 }

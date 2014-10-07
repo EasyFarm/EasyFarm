@@ -1,7 +1,7 @@
 ﻿
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
-Copyright (C) <2013 - 2014>  <Zerolimits>
+Copyright (C) <2013>  <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -130,9 +130,7 @@ namespace ZeroLimits.FarmingTool
         /// <returns></returns>
         public List<Ability> FilterValidActions(IList<Ability> Actions)
         {
-            return Actions
-                .Where(x => _ftools.AbilityExecutor.IsActionValid(x))
-                    .ToList();
+            return Actions.Where(x => _ftools.AbilityExecutor.IsActionValid(x)).ToList();
         }
     }
 }

@@ -1,4 +1,4 @@
-
+﻿
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -17,35 +17,23 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-﻿
-using FFACETools;
-using ZeroLimits.FarmingTool;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace EasyFarm.State
+namespace EasyFarm.UserSettings
 {
-    class RestState : BaseState
+    public class RestingInfo
     {
-        public RestState(FFACE fface) : base(fface) { }
-
-        public override bool CheckState()
-        {
-            bool isResting = ftools.PlayerData.shouldRest;
-            return isResting;
-        }
-
-        public override void EnterState() { }
-
-        public override void RunState()
-        {
-            if (!fface.Player.Status.Equals(Status.Healing))
-            {
-                ftools.RestingService.StartResting();
-            }
-        }
-
-        public override void ExitState()
-        {
-
-        }
+        /// <summary>
+        /// Data for HP
+        /// </summary>
+        public Health Health = new Health();
+        
+        /// <summary>
+        /// Data for MP
+        /// </summary>
+        public Magic Magic = new Magic();  
     }
 }

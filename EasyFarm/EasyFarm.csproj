@@ -49,19 +49,21 @@
     <DocumentationFile>
     </DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;RELEASE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <DocumentationFile>
     </DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>EasyFarm.App</StartupObject>
@@ -101,58 +103,32 @@
       <HintPath>.\FFACETools.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
-      <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging">
-      <HintPath>..\packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.SemanticLogging">
-      <HintPath>..\packages\EnterpriseLibrary.SemanticLogging.1.1.1403.1\lib\net45\Microsoft.Practices.EnterpriseLibrary.SemanticLogging.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Prism.Composition, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Practices.Prism.Composition">
       <HintPath>..\packages\Prism.Composition.5.0.0\lib\NET45\Microsoft.Practices.Prism.Composition.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity">
       <HintPath>..\packages\Prism.Interactivity.5.0.0\lib\NET45\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism.Mvvm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm">
       <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism.Mvvm.Desktop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm.Desktop">
       <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.Desktop.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism.PubSubEvents, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Practices.Prism.PubSubEvents">
       <HintPath>..\packages\Prism.PubSubEvents.1.0.0\lib\portable-sl4+wp7+windows8+net40\Microsoft.Practices.Prism.PubSubEvents.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism.SharedInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Practices.Prism.SharedInterfaces">
       <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -170,12 +146,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Debugging\GameMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FarmingTool\BaseMonitor.cs" />
     <Compile Include="FarmingTool\ChatLine.cs" />
     <Compile Include="FarmingTool\ChatLog.cs" />
+    <Compile Include="FarmingTool\DeadMonitor.cs" />
     <Compile Include="FarmingTool\FarmingTools.cs" />
     <Compile Include="FarmingTool\PlayerActions.cs" />
     <Compile Include="FarmingTool\PlayerData.cs" />
+    <Compile Include="FarmingTool\ProcessWatcher.cs" />
     <Compile Include="FarmingTool\ZoneMonitor.cs" />
     <Compile Include="FarmingTool\PlayerMonitor.cs" />
     <Compile Include="FarmingTool\TargetData.cs" />
@@ -197,21 +178,20 @@
     <Compile Include="Debugging\DebugSpellCasting.xaml.cs">
       <DependentUpon>DebugSpellCasting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Game Data\HealingAbility.cs" />
-    <Compile Include="Game Data\Waypoint.cs" />
-    <Compile Include="Game Data\WeaponAbility.cs" />
-    <Compile Include="User Settings\ActionInfo.cs" />
-    <Compile Include="User Settings\Config.cs" />
-    <Compile Include="User Settings\Health.cs" />
-    <Compile Include="User Settings\Magic.cs" />
-    <Compile Include="User Settings\MiscSettings.cs" />
-    <Compile Include="User Settings\MobFilters.cs" />
-    <Compile Include="User Settings\RestingInfo.cs" />
+    <Compile Include="GameData\HealingAbility.cs" />
+    <Compile Include="GameData\Waypoint.cs" />
+    <Compile Include="GameData\WeaponAbility.cs" />
+    <Compile Include="UserSettings\ActionInfo.cs" />
+    <Compile Include="UserSettings\Config.cs" />
+    <Compile Include="UserSettings\Health.cs" />
+    <Compile Include="UserSettings\Magic.cs" />
+    <Compile Include="UserSettings\MiscSettings.cs" />
+    <Compile Include="UserSettings\MobFilters.cs" />
+    <Compile Include="UserSettings\RestingInfo.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Logging\EasyFarmEventSource.cs" />
     <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="ViewModels\HealingViewModel.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
@@ -273,7 +253,9 @@
       <DependentUpon>frmStartup.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <AppDesigner Include="Properties\" />
     <None Include="Properties\app.manifest" />
   </ItemGroup>
@@ -383,28 +365,19 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.EnterpriseLibrary.Common.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.EnterpriseLibrary.Logging.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.EnterpriseLibrary.SemanticLogging.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Composition.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Interactivity.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Mvvm.Desktop.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Mvvm.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.SharedInterfaces.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.ServiceLocation.dll" />
-    <EmbeddedResource Include="Embedded\Newtonsoft.Json.dll" />
-    <EmbeddedResource Include="Embedded\System.Windows.Interactivity.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.PubSubEvents.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\XI-Tools\XI-Tools\XI-Tools.csproj">
       <Project>{be0bf2c6-3db4-415c-be21-c3f6b696c335}</Project>
       <Name>XI-Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Composition.dll" />
+    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Interactivity.dll" />
+    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Mvvm.Desktop.dll" />
+    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Mvvm.dll" />
+    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.PubSubEvents.dll" />
+    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.SharedInterfaces.dll" />
+    <EmbeddedResource Include="Embedded\Microsoft.Practices.ServiceLocation.dll" />
     <Content Include="FFACE.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

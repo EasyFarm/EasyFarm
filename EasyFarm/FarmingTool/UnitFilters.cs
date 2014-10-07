@@ -1,4 +1,5 @@
-﻿using FFACETools;
+﻿using EasyFarm.ViewModels;
+using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,7 +80,6 @@ namespace EasyFarm.FarmingTool
                     // and the claim filter is off, invalid. if the filter is on
                     // the program will attack claimed mobs. 
                     if (!ftools.UserSettings.FilterInfo.ClaimedFilter) return false;
-
                 }
 
                 // Mob is valid

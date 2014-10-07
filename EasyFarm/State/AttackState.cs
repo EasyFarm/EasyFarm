@@ -1,7 +1,7 @@
 
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
-Copyright (C) <2013 - 2014>  <Zerolimits>
+Copyright (C) <2013>  <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ using System.Threading;
 using ZeroLimits.FarmingTool;
 using ZeroLimits.XITools;
 using System.Linq;
+using System.Collections.Generic;
+using System;
 
 namespace EasyFarm.State
 {
@@ -50,54 +52,23 @@ namespace EasyFarm.State
             // Get the target
             var target = ftools.TargetData.TargetUnit;
 
-            /* 
-             * I've replaced the for loops with the linq queries.
-             * It combines the two lists and then checks for the requirements the same as before. 
-             */ 
-            
             // True when there exists an ability that is an offensive spell.
-            bool offensiveInLists = ftools.PlayerActions.StartList
-                .Union(ftools.PlayerActions.PullList)
-                .Any(x => x.IsSpell && x.Postfix == "<t>");
-            
+            bool offensiveInLists = ftools.PlayerActions.PullList.Any(x => x.IsSpell && x.Postfix == "<t>");
+
             // True when there exists an ability that is a ranged attack. 
-            bool rangedInLists = ftools.PlayerActions.StartList
-                .Union(ftools.PlayerActions.PullList)
-                .Any(x => x.Prefix == "/range");
+            bool rangedInLists = ftools.PlayerActions.PullList.Any(x => x.Prefix == "/range");
 
-            // The our new pull distance determined by what moves 
-            // we have in the list.
-            double startPullDistance;
+            // List of pulling moves + distances.
+            var pullMoves = SetDistances(ftools.PlayerActions.PullList, target);
 
-            // If we have a spell in the lists, set pull distance to spell distance. 
-            if (offensiveInLists) { startPullDistance = Constants.SPELL_CAST_DISTANCE; }
-            // If we have a ranged attack in the lists, set pull distance to ranged distance. 
-            else if (rangedInLists) { startPullDistance = Constants.RANGED_ATTACK_MAX_DISTANCE; }
-            // Set pull distance to target's distance. 
-            else { startPullDistance = fface.Navigator.DistanceTo(target.Position); }
-
-            // If the target is out of range move into range.
-            if (fface.Navigator.DistanceTo(target.Position) > startPullDistance)
-            {
-                // Save old tolerance
-                var old = fface.Navigator.DistanceTolerance;
-
-                // Set to max engagement distance.
-                fface.Navigator.DistanceTolerance = startPullDistance;
-
-                // Goto target at max engagement distance.
-                fface.Navigator.Goto(target.Position, false);
-
-                // Restore old tolerance. 
-                fface.Navigator.DistanceTolerance = old;
-            }
+            // List of start moves + distances. 
+            var startMoves = SetDistances(ftools.PlayerActions.StartList, target);
 
             // Face the target
             fface.Navigator.FaceHeading(target.ID);
 
             // Target the target
-            if (target.ID != fface.Target.ID)
-                ftools.CombatService.TargetUnit(target);
+            if (target.ID != fface.Target.ID) ftools.CombatService.TargetUnit(target);
 
             // Check correct target
             if (target.ID != fface.Target.ID) return;
@@ -110,43 +81,45 @@ namespace EasyFarm.State
              * PostBattle state sets fightStarted back to true. *
              */
 
-            if (!fightStarted && !target.IsDead)
+            // Cast only when there is a move ready. 
+            if (startMoves.Any(x => ftools.AbilityExecutor.IsActionValid(x.Item1)))
             {
-                ftools.AbilityExecutor.EnsureSpellsCast(target, ftools.PlayerActions.StartList,
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
+                if (!fightStarted && !target.IsDead)
+                {
+                    ftools.AbilityExecutor.EnsureSpellsCast(target, startMoves,
+                        Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
+                }
             }
 
             // set to true so that we do not cast starting spells again. 
             fightStarted = true;
 
-            // If the pull list is not empty and we have a ranged or offensive move to use (prefix = <t>)
-            if (ftools.PlayerActions.PullList.Count > 0 && (rangedInLists|| offensiveInLists))
+            // Cast only when there is a move ready. 
+            if (pullMoves.Any(x => ftools.AbilityExecutor.IsActionValid(x.Item1)))
             {
-                // Pull the target casting each spell once until the target is claimed
-                while (!target.Status.Equals(Status.Fighting) && !target.IsDead)
+                // If the pull list is not empty and we have a ranged or offensive move to use (prefix = <t>)
+                if (pullMoves.Count > 0 && (rangedInLists || offensiveInLists))
                 {
-                    // If out of range, stop trying to pull
-                    if (fface.Navigator.DistanceTo(target.Position) > startPullDistance) { return; }
-                    else
+                    // Pull the target casting each spell once until the target is claimed
+                    if (!target.Status.Equals(Status.Fighting) && !target.IsDead)
                     {
-                        ftools.AbilityExecutor.ExecuteActions(target, ftools.PlayerActions.PullList,
+                        // If out of range, stop trying to pull
+                        // if (fface.Navigator.DistanceTo(target.Position) > startPullDistance) return;
+
+                        ftools.AbilityExecutor.ExecuteActions(target, pullMoves, 
                             Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
                     }
                 }
+                else if (!target.Status.Equals(Status.Fighting))
+                {
+                    ftools.AbilityExecutor.ExecuteActions(target, pullMoves,
+                        Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
+                }
             }
-
-            else if (!target.Status.Equals(Status.Fighting))
-            {
-                ftools.AbilityExecutor.ExecuteActions(target, ftools.PlayerActions.PullList, 
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
-            }
-
-            // *Removed: target does not have to be engaged for us to fight it. *
-            // Check pull
-            // if (!target.Status.Equals(Status.Fighting)) return;
 
             // Engage the target
-            if (!fface.Player.Status.Equals(Status.Fighting))
+            int engageCount = 0;
+            while (!fface.Player.Status.Equals(Status.Fighting) && engageCount++ < 3)
             {
                 ftools.CombatService.Engage();
             }
@@ -155,20 +128,7 @@ namespace EasyFarm.State
             if (!fface.Player.Status.Equals(Status.Fighting)) return;
 
             // Move to the target
-            /*
-             * Fixed bug that used Constants.MeleeDistance instead of the user 
-             * settings for distance tolerance. 
-             * 
-             * Fixed bug were the old tolerance was being overwritten by the new tolerance
-             * before it was properly saved. 
-             */
-            if (fface.Navigator.DistanceTo(target.Position) > ftools.UserSettings.MiscSettings.MeleeDistance)
-            {
-                var old = fface.Navigator.DistanceTolerance;
-                fface.Navigator.DistanceTolerance = ftools.UserSettings.MiscSettings.MeleeDistance;
-                fface.Navigator.GotoNPC(target.ID);
-                fface.Navigator.DistanceTolerance = old;
-            }
+            ftools.CombatService.MoveToUnit(target, ftools.UserSettings.MiscSettings.MeleeDistance);
 
             // Weaponskill
             if (ftools.PlayerData.CanWeaponskill)
@@ -183,9 +143,35 @@ namespace EasyFarm.State
                     Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
         }
 
-        public override void ExitState()
+        public List<Tuple<Ability, double>> SetDistances(List<Ability> moves, Unit unit)
         {
+            var temp = new List<Tuple<Ability, double>>();
 
+            foreach (var action in moves)
+            {
+                temp.Add(new Tuple<Ability, double>(action, GetApproachDistance(action, unit)));
+            }
+
+            return temp;
         }
+
+        public double GetApproachDistance(Ability move, Unit unit)
+        {
+            // The distance we should approach from. 
+            double approach = 0;
+
+            // If we have a spell in the lists, set pull distance to spell distance. 
+            if (move.IsSpell) { approach = Constants.SPELL_CAST_DISTANCE; }
+            // If we have a ranged attack in the lists, set pull distance to ranged distance. 
+            else if (move.Prefix == "/range") { approach = Constants.RANGED_ATTACK_MAX_DISTANCE; }
+            // Set pull distance to target's distance. 
+            //FIXED: We want to pull at the melee distance on fail, not at the distance 
+            // we are currently standing at. 
+            else { approach = fface.Navigator.DistanceTo(unit.Position); }
+
+            return approach;
+        }
+
+        public override void ExitState() { }
     }
 }

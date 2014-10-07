@@ -28,7 +28,7 @@ namespace EasyFarm.Debugging
             this._units = units;
 
             _timer.Tick += new EventHandler(Timer_Tick);
-            _timer.Interval = new TimeSpan(0, 0, 0, 1);
+            _timer.Interval = new TimeSpan(0, 0, 0, 0, 30);
             _timer.Start();
             this.Show();
         }

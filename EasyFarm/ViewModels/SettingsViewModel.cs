@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Models;
 using EasyFarm.ViewModels;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -34,7 +35,9 @@ namespace EasyFarm.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        public SettingsViewModel(FarmingTools farmingTools) : base(farmingTools) 
+        public static SettingsModel SettingsModel { get; set; }
+
+        public SettingsViewModel() 
         {
             RestoreDefaultsCommand = new DelegateCommand(RestoreDefaults);
         }
@@ -43,39 +46,36 @@ namespace EasyFarm.ViewModels
         
         private void RestoreDefaults()
         {
-            DetectionDistance = Constants.DETECTION_DISTANCE;
-            HeightThreshold = Constants.HEIGHT_THRESHOLD;
-            MeleeDistance = Constants.MELEE_DISTANCE;
-            App.InformUser("Defaults have been restored.");
+            MainViewModel.MainModel.InformUser("Defaults have been restored.");
         }
 
         public double DetectionDistance
         {
-            get { return ftools.UserSettings.MiscSettings.DetectionDistance; }
+            get { return SettingsModel.DetectionDistance; }
             set 
-            { 
-                SetProperty<double>(ref ftools.UserSettings.MiscSettings.DetectionDistance, value);
-                App.InformUser("Detection Distance Set: {0}.", value);
+            {
+                SetProperty(ref SettingsModel.DetectionDistance, value);
+                MainViewModel.MainModel.InformUser("Detection Distance Set: {0}.", value);
             }
         }
 
         public double HeightThreshold
         {
-            get { return ftools.UserSettings.MiscSettings.HeightThreshold; }
+            get { return SettingsModel.HeightThreshold; }
             set
             {
-                SetProperty<double>(ref ftools.UserSettings.MiscSettings.HeightThreshold, value);
-                App.InformUser("Height Threshold Set: {0}.", value);
+                SetProperty(ref SettingsModel.HeightThreshold, value);
+                MainViewModel.MainModel.InformUser("Height Threshold Set: {0}.", value);
             }
         }
 
         public double MeleeDistance
         {
-            get { return ftools.UserSettings.MiscSettings.MeleeDistance; }
+            get { return SettingsModel.MeleeDistance; }
             set
             {
-                SetProperty<double>(ref ftools.UserSettings.MiscSettings.MeleeDistance, value);
-                App.InformUser("Min Melee Distance Set: {0}.", value);
+                SetProperty(ref SettingsModel.MeleeDistance, value);
+                MainViewModel.MainModel.InformUser("Min Melee Distance Set: {0}.", value);
             }
         }
     }

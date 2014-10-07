@@ -1,7 +1,7 @@
 
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
-Copyright (C) <2013 - 2014>  <Zerolimits>
+Copyright (C) <2013>  <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,12 +29,12 @@ namespace EasyFarm.ViewModels
 {
     public class HealingViewModel : ViewModelBase
     {
-        public HealingViewModel(FarmingTools farmingTools)
-            : base(farmingTools) 
+        public HealingViewModel(FarmingTools farmingTools) : base(farmingTools) 
         {
             AddHealingCommand = new DelegateCommand(AddHealingItem);
             DeleteHealingCommand = new DelegateCommand<Object>(DeleteHealing);
             ClearHealingCommand = new DelegateCommand(ClearHealing);
+            EnsureOneHealingAbility();
         }
 
         public ObservableCollection<HealingAbility> Healing
@@ -51,17 +51,34 @@ namespace EasyFarm.ViewModels
 
         private void ClearHealing()
         {
+            // Clear all current items.
             Healing.Clear();
+            
+            // Leave on so that the interface looks better and
+            // it makes it easier for the user to add one. 
+            EnsureOneHealingAbility();
         }
 
         private void DeleteHealing(object obj)
         {
             Healing.Remove(obj as HealingAbility);
+            EnsureOneHealingAbility();
         }
 
         private void AddHealingItem()
         {
             Healing.Add(new HealingAbility());
+        }
+
+        /// <summary>
+        /// Adds a healing ability to healing if none is present. 
+        /// </summary>
+        private void EnsureOneHealingAbility()
+        {
+            if (Healing.Count <= 0)
+            {
+                Healing.Add(new HealingAbility());
+            }
         }
     }
 }

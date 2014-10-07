@@ -50,6 +50,12 @@ namespace EasyFarm.State
         /// </summary>
         private PlayerMonitor _playerMonitor;
 
+        /// <summary>
+        /// Monitors the player's status for dead and shuts down the 
+        /// program when he is. 
+        /// </summary>
+        private DeadMonitor _statusMonitor;
+
         private FFACE _fface;
 
         public GameEngine(FFACE fface)
@@ -57,13 +63,30 @@ namespace EasyFarm.State
             this._fface = fface;
             this._zoneMonitor = new ZoneMonitor(fface);
             this._playerMonitor = new PlayerMonitor(fface);
+            this._statusMonitor = new DeadMonitor(fface);
             this.StateMachine = new FiniteStateEngine(fface);
 
             _zoneMonitor.Changed += ZoneMonitor_ZoneChanged;
             _zoneMonitor.Start();
 
-            _playerMonitor.Changed += PlayerMonitor_DetectedChanged;
-            _playerMonitor.Start();
+            _statusMonitor.Changed += StatusMonitor_StatusChanged;
+            _statusMonitor.Start();
+        }
+
+        private void StatusMonitor_StatusChanged(object sender, EventArgs e)
+        {
+            // Do nothing if the engine is not running already. 
+            if (!IsWorking) { return; }
+
+            // Stop program from running to next waypoint. 
+            _fface.Navigator.Reset();
+
+            // Tell the use we paused the program. 
+            App.InformUser("Program Paused");
+
+            // Stop the engine from running. 
+            Stop();
+
         }
 
         private void PlayerMonitor_DetectedChanged(object sender, EventArgs e)
