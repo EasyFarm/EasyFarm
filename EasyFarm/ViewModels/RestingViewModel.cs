@@ -18,64 +18,65 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 
+using EasyFarm.UserSettings;
 using ZeroLimits.FarmingTool;
 
 namespace EasyFarm.ViewModels
 {
     public class RestingViewModel : ViewModelBase
     {
-        public RestingViewModel(FarmingTools farmingTools) : base(farmingTools) { }
+        public RestingViewModel() { }
 
         public int LowHP
         {
-            get { return ftools.UserSettings.RestingInfo.Health.Low; }
+            get { return Config.Instance.RestingInfo.Health.Low; }
             set
             {
-                SetProperty(ref ftools.UserSettings.RestingInfo.Health.Low, value);
-                App.InformUser("Low hp set to " + this.LowHP);
+                SetProperty(ref Config.Instance.RestingInfo.Health.Low, value);
+                InformUser("Low hp set to " + this.LowHP);
             }
         }
 
         public int HighHP
         {
-            get { return ftools.UserSettings.RestingInfo.Health.High; }
+            get { return Config.Instance.RestingInfo.Health.High; }
             set
             {
-                SetProperty(ref ftools.UserSettings.RestingInfo.Health.High, value);
-                App.InformUser("High hp set to " + this.HighHP);
+                SetProperty(ref Config.Instance.RestingInfo.Health.High, value);
+                InformUser("High hp set to " + this.HighHP);
             }
         }
 
         public int LowMP
         {
-            get { return ftools.UserSettings.RestingInfo.Magic.Low; }
+            get { return Config.Instance.RestingInfo.Magic.Low; }
             set
             {
-                SetProperty(ref ftools.UserSettings.RestingInfo.Magic.Low, value);
-                App.InformUser("Low mp set to " + this.LowMP);
+                SetProperty(ref Config.Instance.RestingInfo.Magic.Low, value);
+                InformUser("Low mp set to " + this.LowMP);
             }
         }
 
         public int HighMP
         {
-            get { return ftools.UserSettings.RestingInfo.Magic.High; }
+            get { return Config.Instance.RestingInfo.Magic.High; }
             set
             {
-                SetProperty(ref ftools.UserSettings.RestingInfo.Magic.High, value);
-                App.InformUser("High mp set to " + this.HighMP);
+                SetProperty(ref Config.Instance.RestingInfo.Magic.High, value);
+                InformUser("High mp set to " + this.HighMP);
             }
         }
 
         public bool HPEnabled
         {
-            get { return ftools.UserSettings.RestingInfo.Health.Enabled; }
-            set { SetProperty(ref ftools.UserSettings.RestingInfo.Health.Enabled, value); }
+            get { return Config.Instance.RestingInfo.Health.Enabled; }
+            set { SetProperty(ref Config.Instance.RestingInfo.Health.Enabled, value); }
         }
 
         public bool MPEnabled
         {
-            get { return ftools.UserSettings.RestingInfo.Magic.Enabled; }
-            set { SetProperty(ref ftools.UserSettings.RestingInfo.Magic.Enabled, value); }
+            get { return Config.Instance.RestingInfo.Magic.Enabled; }
+            set { SetProperty(ref Config.Instance.RestingInfo.Magic.Enabled, value); }
         }
     }
 }

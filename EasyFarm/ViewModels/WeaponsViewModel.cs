@@ -19,59 +19,63 @@ You should have received a copy of the GNU General Public License
 
 
 using EasyFarm.GameData;
+using EasyFarm.UserSettings;
 using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Windows.Input;
 using ZeroLimits.FarmingTool;
+using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.ViewModels
 {
     public class WeaponsViewModel : ViewModelBase
     {
-        public WeaponsViewModel(FarmingTools farmingTools) : base(farmingTools) 
+        AbilityService AbilityService = new AbilityService();
+
+        public WeaponsViewModel() 
         {
             SetCommand = new DelegateCommand(SetWeaponSkill);
         }
 
         public String Name
         {
-            get { return ftools.UserSettings.WeaponInfo.Name; }
-            set { SetProperty(ref this.ftools.UserSettings.WeaponInfo.Name, value); }
+            get { return Config.Instance.WeaponSkill.Name; }
+            set { SetProperty(ref Config.Instance.WeaponSkill.Name, value); }
         }
 
         public double Distance
         {
-            get { return ftools.UserSettings.WeaponInfo.Distance; }
-            set { SetProperty(ref this.ftools.UserSettings.WeaponInfo.Distance, value); 
-                    App.InformUser("Distance set to " + this.Distance);
+            get { return Config.Instance.WeaponSkill.Distance; }
+            set { SetProperty(ref Config.Instance.WeaponSkill.Distance, value); 
+                    InformUser("Distance set to " + this.Distance);
             }
         }
 
         public int Health
         {
-            get { return ftools.UserSettings.WeaponInfo.Health; }
+            get { return Config.Instance.WeaponSkill.Health; }
             set
             {
-                SetProperty(ref this.ftools.UserSettings.WeaponInfo.Health, value); 
-                App.InformUser("Health set to " + this.Health);
+                SetProperty(ref Config.Instance.WeaponSkill.Health, value); 
+                InformUser("Health set to " + this.Health);
             }
         }
 
-        public WeaponAbility Ability
+        public WeaponSkill Ability
         {
-            get { return ftools.UserSettings.WeaponInfo; }
-            set { SetProperty(ref this.ftools.UserSettings.WeaponInfo, value); }
+            get { return Config.Instance.WeaponSkill; }
+            set { SetProperty(ref Config.Instance.WeaponSkill, value); }
         }
 
         public ICommand SetCommand { get; set; }
 
         private void SetWeaponSkill()
         {
-            var weaponSkill = ftools.AbilityService.CreateAbility(Name);
+            var weaponSkill = AbilityService.CreateAbility(Name);
 
             if (string.IsNullOrWhiteSpace(Name) || !weaponSkill.IsValidName)
             {
-                App.InformUser("Failed to set weaponskill.");
+                InformUser("Failed to set weaponskill.");
                 return;
             }
 
@@ -81,7 +85,7 @@ namespace EasyFarm.ViewModels
             this.Ability.Enabled = true;
             this.Ability.Name = Name;
 
-            App.InformUser("Weaponskill set.");
+            InformUser("Weaponskill set.");
         }
     }
 }

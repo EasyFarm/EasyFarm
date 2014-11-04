@@ -6,8 +6,9 @@ using System.Windows.Forms;
 using System.Windows;
 using System.Windows.Input;
 using ZeroLimits.FarmingTool;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool;
 using System.Threading.Tasks;
+using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.Debugging
 {
@@ -17,13 +18,11 @@ namespace EasyFarm.Debugging
     public partial class DebugSpellCasting : Window
     {
         private FFACE _fface;
-        private XITools _XITools;
 
         public DebugSpellCasting(FFACE fface)
         {
             InitializeComponent();
             this._fface = fface;
-            this._XITools = XITools.GetInstance(fface);
             this.DataContext = new CastingViewModel(fface);
         }
 
@@ -157,7 +156,7 @@ namespace EasyFarm.Debugging
             public CastingModel(FFACE fface)
             {
                 this._fface = fface;
-                this._ftools = FarmingTools.GetInstance(fface);
+                this._ftools = new FarmingTools(fface);
             }
 
             public float CastMax
@@ -237,7 +236,7 @@ namespace EasyFarm.Debugging
 
                 if (ability.IsValidName)
                 {
-                    bool valid = XITools.GetInstance(_fface).AbilityExecutor.IsActionValid(ability);
+                    bool valid = new AbilityExecutor(_fface).IsActionValid(ability);
                     success = _ftools.AbilityExecutor.UseAbility(ability, Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
                 }
 

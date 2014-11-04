@@ -18,10 +18,13 @@ namespace EasyFarm.FarmingTool
         protected Object m_lock = new Object();
         protected FFACE m_fface;
 
-        protected BaseMonitor(FFACE fface)
+        protected BaseMonitor(FFACE fface) : this()
         {
             this.m_fface = fface;
+        }
 
+        protected BaseMonitor()
+        {
             m_timer.Elapsed += CheckStatus;
             m_timer.AutoReset = true;
             m_timer.Interval = 30;

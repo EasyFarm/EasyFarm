@@ -18,20 +18,23 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.GameData;
+using EasyFarm.UserSettings;
 using EasyFarm.Views;
 using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ZeroLimits.FarmingTool;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool;
+using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.ViewModels
 {
     public class BattlesViewModel : ViewModelBase
     {
-        public BattlesViewModel(FarmingTools farmingTools)
-            : base(farmingTools) 
+        AbilityService AbilityService = new AbilityService();
+
+        public BattlesViewModel()
         {
             AddActionCommand = new DelegateCommand<Object>(AddAction);
             DeleteActionCommand = new DelegateCommand<Object>(DeleteAction);
@@ -51,8 +54,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Ability> StartList
         {
-            get { return ftools.UserSettings.ActionInfo.StartList; }
-            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.StartList, value); }
+            get { return Config.Instance.ActionInfo.StartList; }
+            set { SetProperty(ref Config.Instance.ActionInfo.StartList, value); }
         }
 
         /// <summary>
@@ -60,8 +63,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Ability> BattleList
         {
-            get { return ftools.UserSettings.ActionInfo.BattleList; }
-            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.BattleList, value); }
+            get { return Config.Instance.ActionInfo.BattleList; }
+            set { SetProperty(ref Config.Instance.ActionInfo.BattleList, value); }
         }
 
         /// <summary>
@@ -69,15 +72,15 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Ability> EndList
         {
-            get { return ftools.UserSettings.ActionInfo.EndList; }
-            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.EndList, value); }
+            get { return Config.Instance.ActionInfo.EndList; }
+            set { SetProperty(ref Config.Instance.ActionInfo.EndList, value); }
 
         }
 
         public ObservableCollection<Ability> PullList
         {
-            get { return ftools.UserSettings.ActionInfo.PullList; }
-            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.PullList, value); }
+            get { return Config.Instance.ActionInfo.PullList; }
+            set { SetProperty(ref Config.Instance.ActionInfo.PullList, value); }
         }
 
         /// <summary>
@@ -85,8 +88,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool BattleSelected
         {
-            get { return ftools.UserSettings.ActionInfo.BattleListSelected; }
-            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.BattleListSelected, value); }
+            get { return Config.Instance.ActionInfo.BattleListSelected; }
+            set { SetProperty(ref Config.Instance.ActionInfo.BattleListSelected, value); }
         }
 
         /// <summary>
@@ -94,8 +97,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool StartSelected
         {
-            get { return ftools.UserSettings.ActionInfo.StartListSelected; }
-            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.StartListSelected, value); }
+            get { return Config.Instance.ActionInfo.StartListSelected; }
+            set { SetProperty(ref Config.Instance.ActionInfo.StartListSelected, value); }
         }
 
         /// <summary>
@@ -103,8 +106,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool EndSelected
         {
-            get { return ftools.UserSettings.ActionInfo.EndListSelected; }
-            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.EndListSelected, value); }
+            get { return Config.Instance.ActionInfo.EndListSelected; }
+            set { SetProperty(ref Config.Instance.ActionInfo.EndListSelected, value); }
         }
 
         /// <summary>
@@ -112,8 +115,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool PullSelected
         {
-            get { return ftools.UserSettings.ActionInfo.PullListSelected; }
-            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.PullListSelected, value); }
+            get { return Config.Instance.ActionInfo.PullListSelected; }
+            set { SetProperty(ref Config.Instance.ActionInfo.PullListSelected, value); }
         }
 
         /// <summary>
@@ -172,10 +175,10 @@ namespace EasyFarm.ViewModels
         private void AddAction(object obj)
         {
             String name = obj as String;
-            if (ftools.AbilityService.GetAbilitiesWithName(name).Count > 1)
+            if (AbilityService.GetAbilitiesWithName(name).Count > 1)
                 SelectedList.Add(new AbilitySelectionBox(name).SelectedAbility);
-            else if (ftools.AbilityService.Exists(name))
-                SelectedList.Add(ftools.AbilityService.CreateAbility(name));
+            else if (AbilityService.Exists(name))
+                SelectedList.Add(AbilityService.CreateAbility(name));
         }
 
         /// <summary>

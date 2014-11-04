@@ -19,7 +19,11 @@ You should have received a copy of the GNU General Public License
 
 ﻿
 using FFACETools;
+using System.Collections.Generic;
 using ZeroLimits.FarmingTool;
+using System.Linq;
+using EasyFarm.ViewModels;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.State
 {
@@ -29,23 +33,55 @@ namespace EasyFarm.State
 
         public override bool CheckState()
         {
-            bool isResting = ftools.PlayerData.shouldRest;
-            return isResting;
+            if (ftools.UnitService.HasAggro) return false;
+
+            if (ftools.ActionBlocked.IsRestingBlocked) return false;
+
+            if (FFACE.Player.Status == Status.Fighting) return false;
+
+            if (Config.Instance.RestingInfo.Health
+                .ShouldRest(FFACE.Player.HPPCurrent, FFACE.Player.Status)) return true;
+
+            if (Config.Instance.RestingInfo.Magic
+                .ShouldRest(FFACE.Player.MPPCurrent, FFACE.Player.Status)) return true;
+
+            return false;
         }
 
         public override void EnterState() { }
 
         public override void RunState()
         {
-            if (!fface.Player.Status.Equals(Status.Healing))
+            if (!FFACE.Player.Status.Equals(Status.Healing))
             {
                 ftools.RestingService.StartResting();
             }
         }
 
-        public override void ExitState()
-        {
+        public override void ExitState() { }
 
+        /// <summary>
+        /// Does our player have a status effect that prevents him
+        /// </summary>
+        /// <param name="playerStatusEffects"></param>
+        /// <returns></returns>
+        public bool IsRestingBlocked
+        {
+            get
+            {
+                var RestBlockingDebuffs = new List<StatusEffect>() 
+            { 
+                StatusEffect.Poison, StatusEffect.Bio, StatusEffect.Sleep, 
+                StatusEffect.Sleep2, StatusEffect.Poison, StatusEffect.Petrification,
+                StatusEffect.Stun, StatusEffect.Charm1, StatusEffect.Charm2, 
+                StatusEffect.Terror, StatusEffect.Frost, StatusEffect.Burn, 
+                StatusEffect.Choke, StatusEffect.Rasp, StatusEffect.Shock, 
+                StatusEffect.Drown, StatusEffect.Dia, StatusEffect.Requiem, 
+                StatusEffect.Lullaby
+            };
+
+                return RestBlockingDebuffs.Intersect(FFACE.Player.StatusEffects).Count() != 0;
+            }
         }
     }
 }

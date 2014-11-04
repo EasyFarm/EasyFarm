@@ -17,14 +17,16 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-
 using FFACETools;
 using System.Threading;
 using ZeroLimits.FarmingTool;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using ZeroLimits.XITool.Classes;
+using EasyFarm.ViewModels;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.State
 {
@@ -35,11 +37,36 @@ namespace EasyFarm.State
     {
         public static bool fightStarted = false;
 
+        private static Unit _targetUnit = Unit.CreateUnit(0);
+
+        /// <summary>
+        /// Who we are trying to kill currently
+        /// </summary>
+        public static Unit TargetUnit
+        {
+            get { return _targetUnit; }
+            set { _targetUnit = value; }
+        }
+
         public AttackState(FFACE fface) : base(fface) { }
 
         public override bool CheckState()
         {
-            return ftools.PlayerData.shouldFight;
+            // If the target is not valid. 
+            if (!ftools.UnitService.IsValid(TargetUnit)) return false;
+
+            // We're dead. 
+            if (FFACE.Player.Status.Equals(Status.Dead1 | Status.Dead2)) return false;
+
+            // If we're injured  
+            if (new RestState(FFACE).CheckState())
+            {
+                if (FFACE.Player.Status != Status.Fighting) return false;
+                if (!ftools.UnitService.HasAggro) return false;
+            }
+
+            // Should we attack?
+            return true;
         }
 
         public override void EnterState()
@@ -49,127 +76,124 @@ namespace EasyFarm.State
 
         public override void RunState()
         {
-            // Get the target
-            var target = ftools.TargetData.TargetUnit;
-
-            // True when there exists an ability that is an offensive spell.
-            bool offensiveInLists = ftools.PlayerActions.PullList.Any(x => x.IsSpell && x.Postfix == "<t>");
-
-            // True when there exists an ability that is a ranged attack. 
-            bool rangedInLists = ftools.PlayerActions.PullList.Any(x => x.Prefix == "/range");
-
-            // List of pulling moves + distances.
-            var pullMoves = SetDistances(ftools.PlayerActions.PullList, target);
-
-            // List of start moves + distances. 
-            var startMoves = SetDistances(ftools.PlayerActions.StartList, target);
-
             // Face the target
-            fface.Navigator.FaceHeading(target.ID);
-
-            // Target the target
-            if (target.ID != fface.Target.ID) ftools.CombatService.TargetUnit(target);
+            FFACE.Navigator.FaceHeading(TargetUnit.ID);
 
             // Check correct target
-            if (target.ID != fface.Target.ID) return;
+            if (TargetUnit.ID != FFACE.Target.ID)
+                ftools.CombatService.Disengage();
 
-            /* 
-             * Cast the starting moves. Used to buff the character. 
-             * Will cast until all spells are successfully casted.  
-             *
-             * IsDead check added to prevent casting protect when the mobs dies and 
-             * PostBattle state sets fightStarted back to true. *
-             */
+            // Target the target
+            if (TargetUnit.ID != FFACE.Target.ID) 
+                ftools.CombatService.TargetUnit(TargetUnit);
+
+            ///////////////////////////////////////////////////////////////////
+            // Buff Player
+            ///////////////////////////////////////////////////////////////////
 
             // Cast only when there is a move ready. 
-            if (startMoves.Any(x => ftools.AbilityExecutor.IsActionValid(x.Item1)))
+            if (!fightStarted && !TargetUnit.IsDead)
             {
-                if (!fightStarted && !target.IsDead)
-                {
-                    ftools.AbilityExecutor.EnsureSpellsCast(target, startMoves,
-                        Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
-                }
+                var UsableStartingMoves = Config.Instance.ActionInfo.StartList
+                    .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
+                    .ToList();
+
+                ftools.AbilityExecutor.EnsureSpellsCast(TargetUnit, UsableStartingMoves,
+                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
+            }
+
+            ///////////////////////////////////////////////////////////////////
+            // Engage Enemy. 
+            ///////////////////////////////////////////////////////////////////
+
+            // Attempt to engage the target up to three times. 
+            int engageCount = 0;
+            while (!FFACE.Player.Status.Equals(Status.Fighting) && engageCount++ < 3)
+            {
+                ftools.CombatService.Engage();
+            }
+
+            ///////////////////////////////////////////////////////////////////
+            // Pull Enemy. 
+            ///////////////////////////////////////////////////////////////////
+
+            // Cast only when there is a move ready. 
+
+            // Pull the target casting each spell once until the target is claimed
+            if (!fightStarted && !TargetUnit.Status.Equals(Status.Fighting) && !TargetUnit.IsDead)
+            {
+                var UsablePullingMoves = Config.Instance.ActionInfo.PullList
+                    .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
+                    .ToList();
+
+                ftools.AbilityExecutor.ExecuteActions(TargetUnit, UsablePullingMoves,
+                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
             }
 
             // set to true so that we do not cast starting spells again. 
             fightStarted = true;
 
-            // Cast only when there is a move ready. 
-            if (pullMoves.Any(x => ftools.AbilityExecutor.IsActionValid(x.Item1)))
-            {
-                // If the pull list is not empty and we have a ranged or offensive move to use (prefix = <t>)
-                if (pullMoves.Count > 0 && (rangedInLists || offensiveInLists))
-                {
-                    // Pull the target casting each spell once until the target is claimed
-                    if (!target.Status.Equals(Status.Fighting) && !target.IsDead)
-                    {
-                        // If out of range, stop trying to pull
-                        // if (fface.Navigator.DistanceTo(target.Position) > startPullDistance) return;
-
-                        ftools.AbilityExecutor.ExecuteActions(target, pullMoves, 
-                            Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
-                    }
-                }
-                else if (!target.Status.Equals(Status.Fighting))
-                {
-                    ftools.AbilityExecutor.ExecuteActions(target, pullMoves,
-                        Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
-                }
-            }
-
-            // Engage the target
-            int engageCount = 0;
-            while (!fface.Player.Status.Equals(Status.Fighting) && engageCount++ < 3)
-            {
-                ftools.CombatService.Engage();
-            }
-
-            // Check engaged
-            if (!fface.Player.Status.Equals(Status.Fighting)) return;
+            ///////////////////////////////////////////////////////////////////
+            // Move to Enemy. 
+            ///////////////////////////////////////////////////////////////////
 
             // Move to the target
-            ftools.CombatService.MoveToUnit(target, ftools.UserSettings.MiscSettings.MeleeDistance);
+            ftools.CombatService.MoveToUnit(TargetUnit, Config.Instance.MiscSettings.MeleeDistance);
 
-            // Weaponskill
-            if (ftools.PlayerData.CanWeaponskill)
+            ///////////////////////////////////////////////////////////////////
+            // Battle Enemy. 
+            ///////////////////////////////////////////////////////////////////
+
+            // Check engaged
+            // FIXED: no longer return on not engage but don't execute 
+            // these moves instead. Fixes the bot not attacking things 
+            // from move than 30 yalms problem. 
+            if (FFACE.Player.Status.Equals(Status.Fighting))
             {
-                // Not sure if weapon skills or job abilities endure the same penalties that 
-                // spell do in regards to wait times. So I'm using zero's here. 
-                ftools.AbilityExecutor.UseAbility(ftools.UserSettings.WeaponInfo.Ability, 0, 0);
-            }
+                // Weaponskill
+                if (ShouldWeaponSkill)
+                {
+                    // Not sure if weapon skills or job abilities endure the same penalties that 
+                    // spell do in regards to wait times. So I'm using zero's here. 
+                    ftools.AbilityExecutor.UseAbility(Config.Instance.WeaponSkill.Ability, 0, 0);
+                }
 
-            // Cast all battle moves
-            ftools.AbilityExecutor.ExecuteActions(target, ftools.PlayerActions.BattleList,
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
+                var UsableBattleMoves = Config.Instance.ActionInfo.BattleList
+                    .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
+                    .ToList();
+
+                // Cast all battle moves
+                ftools.AbilityExecutor.ExecuteActions(TargetUnit, UsableBattleMoves,
+                        Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
+            }
         }
 
-        public List<Tuple<Ability, double>> SetDistances(List<Ability> moves, Unit unit)
+        /// <summary>
+        /// Can we perform our weaponskill on the target unit?
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public bool ShouldWeaponSkill
         {
-            var temp = new List<Tuple<Ability, double>>();
-
-            foreach (var action in moves)
+            get
             {
-                temp.Add(new Tuple<Ability, double>(action, GetApproachDistance(action, unit)));
+                // Weaponskill a valid ability?
+                if (!Config.Instance.WeaponSkill.Ability.IsValidName) return false;
+
+                // Not enough tp. 
+                if (FFACE.Player.TPCurrent < Constants.WEAPONSKILL_TP) return false;
+
+                // Not engaged. 
+                if (!FFACE.Player.Status.Equals(Status.Fighting)) return false;
+
+                // Do not meet mob hp requirements. 
+                if (TargetUnit.HPPCurrent > Config.Instance.WeaponSkill.Health) return false;
+
+                // Do not meet distance requirements. 
+                if (TargetUnit.Distance > Config.Instance.WeaponSkill.Distance) return false;
+
+                return true;
             }
-
-            return temp;
-        }
-
-        public double GetApproachDistance(Ability move, Unit unit)
-        {
-            // The distance we should approach from. 
-            double approach = 0;
-
-            // If we have a spell in the lists, set pull distance to spell distance. 
-            if (move.IsSpell) { approach = Constants.SPELL_CAST_DISTANCE; }
-            // If we have a ranged attack in the lists, set pull distance to ranged distance. 
-            else if (move.Prefix == "/range") { approach = Constants.RANGED_ATTACK_MAX_DISTANCE; }
-            // Set pull distance to target's distance. 
-            //FIXED: We want to pull at the melee distance on fail, not at the distance 
-            // we are currently standing at. 
-            else { approach = fface.Navigator.DistanceTo(unit.Position); }
-
-            return approach;
         }
 
         public override void ExitState() { }

@@ -17,11 +17,12 @@ You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
 using System;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool;
+using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.GameData
 {
-    public class WeaponAbility
+    public class WeaponSkill
     {
         /// <summary>
         /// What is its name?

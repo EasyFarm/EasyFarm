@@ -16,11 +16,6 @@ namespace ZeroLimits.FarmingTool
         public ObservableCollection<ChatLine> ChatLines;
         public bool IsWorking = false;
 
-        private FarmingTools _ftools 
-        {
-            get { return FarmingTools.GetInstance(_fface); }
-        }
-
         public ChatLog(FFACE fface)
         {
             this._fface = fface;

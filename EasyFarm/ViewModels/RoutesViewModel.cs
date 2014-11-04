@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.GameData;
+using EasyFarm.UserSettings;
 using FFACETools;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Win32;
@@ -28,7 +29,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using ZeroLimits.FarmingTool;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool;
+using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.ViewModels
 {
@@ -37,7 +39,7 @@ namespace EasyFarm.ViewModels
         DispatcherTimer WaypointRecorder = new DispatcherTimer();
         FFACE.Position LastPosition = new FFACE.Position();
         
-        public RoutesViewModel(FarmingTools farmingTools) : base(farmingTools) 
+        public RoutesViewModel() 
         {
             WaypointRecorder.Tick += new EventHandler(RouteRecorder_Tick);
             WaypointRecorder.Interval = new TimeSpan(0, 0, 1);
@@ -50,8 +52,8 @@ namespace EasyFarm.ViewModels
 
         public ObservableCollection<Waypoint> Route
         {
-            get { return ftools.UserSettings.Waypoints; }
-            set { SetProperty(ref this.ftools.UserSettings.Waypoints, value); }
+            get { return Config.Instance.Waypoints; }
+            set { SetProperty(ref Config.Instance.Waypoints, value); }
         }
 
         public ICommand RecordRouteCommand { get; set; }
@@ -109,11 +111,11 @@ namespace EasyFarm.ViewModels
 
         void RouteRecorder_Tick(object sender, EventArgs e)
         {
-            var Point = ftools.FFACE.Player.Position;
+            var Point = ViewModelBase.FFACE.Player.Position;
 
             if (!Point.Equals(LastPosition))
             {
-                ftools.UserSettings.Waypoints.Add(new Waypoint(Point));
+                Config.Instance.Waypoints.Add(new Waypoint(Point));
                 LastPosition = Point;
             }
         }

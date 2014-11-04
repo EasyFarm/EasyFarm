@@ -21,7 +21,10 @@ using EasyFarm.FarmingTool;
 using FFACETools;
 using System;
 using ZeroLimits.FarmingTool;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool.Classes;
+using System.Linq;
+using EasyFarm.ViewModels;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.State
 {
@@ -31,24 +34,35 @@ namespace EasyFarm.State
 
         public override bool CheckState()
         {
-            return ftools.TargetData.TargetUnit != null && ftools
-                .TargetData.IsDead;
+            if(AttackState.TargetUnit == null) return true;
+
+            if (AttackState.TargetUnit.Status.Equals(Status.Dead1 | Status.Dead2)) return true;
+            
+            return false;
         }
 
         public override void EnterState() { }
 
         public override void RunState()
-        {                      
-            // Cast all spells making sure they land. Keeping  
-            ftools.AbilityExecutor.EnsureSpellsCast(ftools.TargetData.TargetUnit, ftools.PlayerActions.EndList, 
-                Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
+        {
+            // Only execute post battle moves when we have a non-null target.
+            if (AttackState.TargetUnit != null)
+            {
+                var UsableEndingMoves = Config.Instance.ActionInfo.StartList
+                    .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
+                    .ToList();
+
+                // Cast all spells making sure they land. Keeping  
+                ftools.AbilityExecutor.EnsureSpellsCast(AttackState.TargetUnit, UsableEndingMoves,
+                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
+            }
 
             // Get the next target.
-            var target = ftools.UnitService.GetTarget(UnitFilters.MobFilter(fface), x => x.Distance);            
+            var target = ftools.UnitService.GetTarget(UnitFilters.MobFilter(FFACE), x => x.Distance);            
 
             // Set our new target at the end so that we don't accidentaly cast on a 
             // new target. 
-            ftools.TargetData.TargetUnit = target;
+            AttackState.TargetUnit = target;
 
             // Set to false in order to use starting moves again in the 
             // attack state. 

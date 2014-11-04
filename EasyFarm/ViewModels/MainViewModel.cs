@@ -24,20 +24,19 @@ using System;
 using System.Windows.Input;
 using ZeroLimits.FarmingTool;
 using System.Linq;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        public MainViewModel(FarmingTools farmingTools) : base(farmingTools)
+        public MainViewModel()
         {
-            this.ftools = FarmingTools.GetInstance();
-
             // Get events from view models to update the status bar's text.
-            App.EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe((a) => { StatusBarText = a; });
+            EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe((a) => { StatusBarText = a; });
 
             // Tell the user the program has loaded the player's data
-            App.InformUser("Bot Loaded: " + farmingTools.FFACE.Player.Name);
+            InformUser("Bot Loaded: " + FFACE.Player.Name);
 
             // Create start command handler.
             StartCommand = new DelegateCommand(Start);
@@ -49,14 +48,14 @@ namespace EasyFarm.ViewModels
 
         public String StatusBarText
         {
-            get { return ftools.UserSettings.StatusBarText; }
-            set { this.SetProperty(ref ftools.UserSettings.StatusBarText, value); }
+            get { return Config.Instance.StatusBarText; }
+            set { this.SetProperty(ref Config.Instance.StatusBarText, value); }
         }
 
         public bool IsWorking 
         {
-            get { return App.GameEngine.IsWorking; }
-            set { SetProperty(ref App.GameEngine.IsWorking, value); }
+            get { return GameEngine.IsWorking; }
+            set { SetProperty(ref GameEngine.IsWorking, value); }
         }
        
         public ICommand StartCommand { get; set; }
@@ -67,21 +66,21 @@ namespace EasyFarm.ViewModels
 
         public void Start()
         {
-            if (App.GameEngine.IsWorking)
+            if (GameEngine.IsWorking)
             {
-                App.InformUser("Program paused.");
-                App.GameEngine.Stop();
+                InformUser("Program paused.");
+                GameEngine.Stop();
             }
             else
             {
-                App.InformUser("Program running.");
-                App.GameEngine.Start();
+                InformUser("Program running.");
+                GameEngine.Start();
             }
         }
 
         private void Save()
         {
-            App.FarmingTools.SaveSettings();
+            Config.Instance.SaveSettings();
         }
 
         private void Exit()

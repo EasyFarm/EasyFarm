@@ -29,7 +29,7 @@ namespace EasyFarm.Views
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel(App.FarmingTools);
+            this.DataContext = new MainViewModel();
         }
     }
 }

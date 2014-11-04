@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarm", "EasyFarm\EasyFa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XI-Tools", "..\XI-Tools\XI-Tools\XI-Tools.csproj", "{BE0BF2C6-3DB4-415C-BE21-C3F6B696C335}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarmTests", "EasyFarmTests\EasyFarmTests.csproj", "{A55B26A6-570A-49D8-B524-51B075D126ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,17 @@ Global
 		{BE0BF2C6-3DB4-415C-BE21-C3F6B696C335}.Release|Mixed Platforms.Build.0 = Release|x86
 		{BE0BF2C6-3DB4-415C-BE21-C3F6B696C335}.Release|x86.ActiveCfg = Release|x86
 		{BE0BF2C6-3DB4-415C-BE21-C3F6B696C335}.Release|x86.Build.0 = Release|x86
+		{A55B26A6-570A-49D8-B524-51B075D126ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A55B26A6-570A-49D8-B524-51B075D126ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A55B26A6-570A-49D8-B524-51B075D126ED}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A55B26A6-570A-49D8-B524-51B075D126ED}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A55B26A6-570A-49D8-B524-51B075D126ED}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A55B26A6-570A-49D8-B524-51B075D126ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A55B26A6-570A-49D8-B524-51B075D126ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A55B26A6-570A-49D8-B524-51B075D126ED}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A55B26A6-570A-49D8-B524-51B075D126ED}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A55B26A6-570A-49D8-B524-51B075D126ED}.Release|x86.ActiveCfg = Release|x86
+		{A55B26A6-570A-49D8-B524-51B075D126ED}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

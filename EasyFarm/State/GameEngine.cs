@@ -18,18 +18,20 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.FarmingTool;
+using EasyFarm.ViewModels;
 using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
+using ZeroLimits.FarmingTool;
 
 namespace EasyFarm.State
 {
     /// <summary>
-    /// An object that controls the bot and contains all the data. 
-    /// The bot can access everything it needs from this object.
+    /// Controls whether or not the bot should run. Basically anything 
+    /// that can pause or resume the bot's engine should be here. 
     /// </summary>
     public class GameEngine
     {
@@ -56,6 +58,15 @@ namespace EasyFarm.State
         /// </summary>
         private DeadMonitor _statusMonitor;
 
+        /// <summary>
+        /// Monitors the player tos ee if he's stuck agains a wall and 
+        /// if so stops the engine. 
+        /// </summary>
+        private StuckMonitor _stuckMonitor;
+
+        /// <summary>
+        /// Provides information about game data. 
+        /// </summary>
         private FFACE _fface;
 
         public GameEngine(FFACE fface)
@@ -64,6 +75,7 @@ namespace EasyFarm.State
             this._zoneMonitor = new ZoneMonitor(fface);
             this._playerMonitor = new PlayerMonitor(fface);
             this._statusMonitor = new DeadMonitor(fface);
+            this._stuckMonitor = new StuckMonitor(fface);
             this.StateMachine = new FiniteStateEngine(fface);
 
             _zoneMonitor.Changed += ZoneMonitor_ZoneChanged;
@@ -73,6 +85,38 @@ namespace EasyFarm.State
             _statusMonitor.Start();
         }
 
+        /// <summary>
+        /// The engine that controls player actions. 
+        /// </summary>
+        public FiniteStateEngine StateMachine { get; set; }
+
+        /// <summary>
+        /// Monitors engine status for player being stuck and 
+        /// shuts it down when detected. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StuckMonitor_StuckChanged(object sender, EventArgs e)
+        {
+            // Do nothing if the engine is not running already. 
+            if (!IsWorking) { return; }
+
+            // Stop program from running to next waypoint. 
+            _fface.Navigator.Reset();
+
+            // Tell the use we paused the program. 
+            ViewModelBase.InformUser("Program Paused");
+
+            // Stop the engine from running. 
+            Stop();
+        }
+
+        /// <summary>
+        /// Monitors engine stats for player dead status 
+        /// and then shuts down the engine. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StatusMonitor_StatusChanged(object sender, EventArgs e)
         {
             // Do nothing if the engine is not running already. 
@@ -82,13 +126,18 @@ namespace EasyFarm.State
             _fface.Navigator.Reset();
 
             // Tell the use we paused the program. 
-            App.InformUser("Program Paused");
+            ViewModelBase.InformUser("Program Paused");
 
             // Stop the engine from running. 
             Stop();
-
         }
 
+        /// <summary>
+        /// Stops the engine when another player is detected and 
+        /// resumes afterwards. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PlayerMonitor_DetectedChanged(object sender, EventArgs e)
         {
             // If the program is not running then bail out. 
@@ -97,16 +146,22 @@ namespace EasyFarm.State
             var args = (e as MonitorArgs<bool>);
             if (args.Status)
             {
-                App.InformUser("Program Paused");
+                ViewModelBase.InformUser("Program Paused");
                 Stop();
             }
             else 
             {
-                App.InformUser("Program Resumed");
+                ViewModelBase.InformUser("Program Resumed");
                 Start();
             }
         }
 
+        /// <summary>
+        /// Pauses the engine when the player zones and
+        /// resumes after. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ZoneMonitor_ZoneChanged(object sender, EventArgs e)
         {
             var args = (e as MonitorArgs<Zone>);
@@ -114,7 +169,7 @@ namespace EasyFarm.State
             // If the program is not running then bail out. 
             if (!IsWorking) { return; }
 
-            App.InformUser("Program Paused");
+            ViewModelBase.InformUser("Program Paused");
 
             // Stop the state machine.
             Stop();
@@ -128,7 +183,7 @@ namespace EasyFarm.State
             // Start up the state machine again.
             Start();
 
-            App.InformUser("Program Resumed");
+            ViewModelBase.InformUser("Program Resumed");
         }
 
         /// <summary>
@@ -148,7 +203,5 @@ namespace EasyFarm.State
             StateMachine.Stop();
             IsWorking = false;
         }
-
-        public FiniteStateEngine StateMachine { get; set; }
     }
 }

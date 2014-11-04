@@ -15,7 +15,8 @@ namespace EasyFarm.UserSettings
 
         public bool ShouldRest(int health, Status status)
         {
-            return (Enabled && (IsHealthLow(health) || IsHealthHigh(health, status) && status == Status.Healing));
+            // Rest while low and while not high
+            return (Enabled && (IsHealthLow(health) || !IsHealthHigh(health) && status == Status.Healing));
         }
 
         public bool IsHealthLow(int health)
@@ -23,9 +24,9 @@ namespace EasyFarm.UserSettings
             return health <= Low;
         }
 
-        public bool IsHealthHigh(int health, Status status)
+        public bool IsHealthHigh(int health)
         {
-            return health < High;
+            return health >= High;
         }
     }
 }

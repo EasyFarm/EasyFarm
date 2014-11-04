@@ -122,8 +122,10 @@ namespace EasyFarm.Views
         {
             get
             {
+                if (SessionsListBox.SelectedItem == null) return null;
+                
                 return Process.GetProcessesByName(AppName)
-                    .Where(x => ProcessFormat(x).Equals(SessionsListBox.SelectedItem))
+                    .Where(x => SessionsListBox.SelectedItem.ToString().Contains(x.Id.ToString()))
                     .FirstOrDefault();
             }
         }

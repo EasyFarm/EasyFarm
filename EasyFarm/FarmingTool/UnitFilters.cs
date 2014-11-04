@@ -1,25 +1,47 @@
-﻿using EasyFarm.ViewModels;
+﻿using EasyFarm.UserSettings;
+using EasyFarm.ViewModels;
 using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ZeroLimits.FarmingTool;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool;
+using ZeroLimits.XITool.Classes;
+using ZeroLimits.XITool.Interfaces;
 
 namespace EasyFarm.FarmingTool
 {
     public class UnitFilters
     {
         #region MOBFilter
-        public static Func<Unit, bool> MobFilter(FFACE fface)
-        {
-            var ftools = FarmingTools.GetInstance(fface);
 
+        /// <summary>
+        /// This function should weed out any creatures with bad values.
+        /// Aftewards it will check our filtering. 
+        ///     If its on the ignored list, ignore it. 
+        ///     If its not on the targets list and there is a list, ignore it
+        ///     If its on the targets list check
+        ///         If the mob is our claim and is checked, attack it.
+        ///         if the mob is our partys claimand is checked, attack it.
+        ///         if the mob is unclaimed and is checked, attack it.
+        ///         if the mob is claimed and not our claimed and 
+        ///         claimed checked attack it.
+        ///
+        /// The function will not attack mobs that have aggroed but
+        /// are not on the target's list or 
+        /// </summary>
+        /// <param name="fface"></param>
+        /// <returns></returns>
+        public static Func<IUnit, bool> MobFilter(FFACE fface)
+        {
             // Function to use to filter surrounding mobs by.
-            return new Func<Unit, bool>((Unit x) =>
-            {
+            return new Func<IUnit, bool>((IUnit x) =>
+            {            
+                // General Mob Filtering Criteria
+
                 // No fface? Bail. 
                 if (fface == null) return false;
 
@@ -43,55 +65,59 @@ namespace EasyFarm.FarmingTool
                 if (!x.NPCType.Equals(NPCType.Mob)) return false;
 
                 // Mob is out of range
-                if (!(x.Distance < ftools.UserSettings.MiscSettings.DetectionDistance)) return false;
+                if (!(x.Distance < Config.Instance.MiscSettings.DetectionDistance)) return false;
 
                 // Mob too high out of reach. 
-                if (x.YDifference > ftools.UserSettings.MiscSettings.HeightThreshold) return false;
+                if (x.YDifference > Config.Instance.MiscSettings.HeightThreshold) return false;
 
-                // Has aggroed and user doesn't want to kill aggro
-                if (x.HasAggroed && !ftools.UserSettings.FilterInfo.AggroFilter) return false;
-
-                // Party has claim but we don't want to kill party mobs. 
-                if (x.PartyClaim && !ftools.UserSettings.FilterInfo.PartyFilter) return false;
-
-                // Mob not claimed but we don't want to kill unclaimed mobs. 
-                if (!x.IsClaimed && !ftools.UserSettings.FilterInfo.UnclaimedFilter) return false;
+                
+                // User Specific Filtering
+                
 
                 // If mob is on the ignored list ignore it. 
-                if (ftools.UserSettings.FilterInfo.IgnoredMobs.Contains(x.Name))
+                if (Config.Instance.FilterInfo.IgnoredMobs.Contains(x.Name)) return false;
+
+                // Kill aggro if aggro's checked regardless of target's list but follows 
+                // the ignored list. 
+                if (x.HasAggroed && Config.Instance.FilterInfo.AggroFilter) return true;
+
+                // There is a target's list but the mob is not on it. 
+                if (Config.Instance.FilterInfo.TargetedMobs.Count > 0 &&
+                    !Config.Instance.FilterInfo.TargetedMobs.Contains(x.Name)) return false;
+
+                // Mob on our targets list.
+                if (Config.Instance.FilterInfo.TargetedMobs.Contains(x.Name))
                 {
+                    // Kill the creature if it has aggroed and aggro is checked. 
+                    if (x.HasAggroed && Config.Instance.FilterInfo.AggroFilter) return true;
+
+                    // Kill the creature if it is claimed by party and party is checked. 
+                    if (x.PartyClaim && Config.Instance.FilterInfo.PartyFilter) return true;
+
+                    // Kill the creature if it's not claimed and unclaimed is checked. 
+                    if (!x.IsClaimed && Config.Instance.FilterInfo.UnclaimedFilter) return true;
+
+                    // Kill the creature if it's claimed and we we don't have claim but
+                    // claim is checked. 
+                    //FIX: Temporary fix until player.serverid is fixed. 
+                    if (x.IsClaimed && x.ClaimedID != fface.PartyMember[0].ServerID)
+                    {
+                        // Kill creature if claim is checked. 
+                        if (Config.Instance.FilterInfo.ClaimedFilter) return true;
+                    }
+
                     return false;
                 }
-                else if (x.HasAggroed && ftools.UserSettings.FilterInfo.AggroFilter)
-                {
-                    return true;
-                }
 
-                // Not on our targets list.
-                if (!ftools.UserSettings.FilterInfo.TargetedMobs.Contains(x.Name) && ftools.UserSettings.FilterInfo.TargetedMobs.Count > 0) return false;
-
-                //INFO: claimid is broken on the private server so keep id checks off. 
-                // The mob is claimed but it is not our claim.
-
-                //FIX: Temporary fix until player.serverid is fixed. 
-                if (x.IsClaimed && x.ClaimedID != fface.PartyMember[0].ServerID)
-                {
-
-                    // and the claim filter is off, invalid. if the filter is on
-                    // the program will attack claimed mobs. 
-                    if (!ftools.UserSettings.FilterInfo.ClaimedFilter) return false;
-                }
-
-                // Mob is valid
+                // True for all mobs that are not on ignore / target lists
+                // and meet the general criteria for being a valid mob. 
                 return true;
             });
-        } 
+        }
         #endregion
 
         public static Func<Unit, bool> PCFilter(FFACE fface)
         {
-            var ftools = FarmingTools.GetInstance(fface);
-
             // Function to use to filter surrounding mobs by.
             return new Func<Unit, bool>((Unit x) =>
             {

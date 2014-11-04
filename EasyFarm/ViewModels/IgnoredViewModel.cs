@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.UserSettings;
 using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
@@ -28,7 +29,7 @@ namespace EasyFarm.ViewModels
 {
     public class IgnoredViewModel : ViewModelBase
     {
-        public IgnoredViewModel(FarmingTools farmingTools) : base(farmingTools) 
+        public IgnoredViewModel() 
         {
             AddIgnoredUnitCommand = new DelegateCommand(AddIgnoredUnit);
             DeleteIgnoredUnitCommand = new DelegateCommand(DeleteIgnoredUnit);
@@ -54,14 +55,14 @@ namespace EasyFarm.ViewModels
 
         public String Name
         {
-            get { return ftools.UserSettings.FilterInfo.IgnoredName; }
-            set { SetProperty(ref ftools.UserSettings.FilterInfo.IgnoredName, value); }
+            get { return Config.Instance.FilterInfo.IgnoredName; }
+            set { SetProperty(ref Config.Instance.FilterInfo.IgnoredName, value); }
         }
 
         public ObservableCollection<String> Ignored
         {
-            get { return ftools.UserSettings.FilterInfo.IgnoredMobs; }
-            set { SetProperty(ref ftools.UserSettings.FilterInfo.IgnoredMobs, value); }
+            get { return Config.Instance.FilterInfo.IgnoredMobs; }
+            set { SetProperty(ref Config.Instance.FilterInfo.IgnoredMobs, value); }
         }
 
         public ICommand AddIgnoredUnitCommand { get; set; }

@@ -154,17 +154,15 @@
     <Compile Include="FarmingTool\ChatLog.cs" />
     <Compile Include="FarmingTool\DeadMonitor.cs" />
     <Compile Include="FarmingTool\FarmingTools.cs" />
-    <Compile Include="FarmingTool\PlayerActions.cs" />
-    <Compile Include="FarmingTool\PlayerData.cs" />
+    <Compile Include="FarmingTool\ActionFilters.cs" />
     <Compile Include="FarmingTool\ProcessWatcher.cs" />
+    <Compile Include="FarmingTool\StuckMonitor.cs" />
     <Compile Include="FarmingTool\ZoneMonitor.cs" />
     <Compile Include="FarmingTool\PlayerMonitor.cs" />
-    <Compile Include="FarmingTool\TargetData.cs" />
     <Compile Include="FarmingTool\UnitFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="State\AttackState.cs" />
     <Compile Include="State\BaseState.cs" />
-    <Compile Include="State\DeadState.cs" />
     <Compile Include="State\FiniteStateMachine.cs" />
     <Compile Include="State\GameEngine.cs" />
     <Compile Include="State\HealingState.cs" />
@@ -229,9 +227,6 @@
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProcessView.xaml.cs">
-      <DependentUpon>ProcessView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\RestingView.xaml.cs">
       <DependentUpon>RestingView.xaml</DependentUpon>
     </Compile>
@@ -244,6 +239,10 @@
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UnitsView.xaml.cs">
+      <DependentUpon>UnitsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\UnitsViewModel.cs" />
     <Compile Include="Views\WeaponsView.xaml.cs">
       <DependentUpon>WeaponsView.xaml</DependentUpon>
     </Compile>
@@ -330,12 +329,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\ProcessView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Views\RestingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -358,12 +351,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UnitsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\WeaponsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\XI-Tools\XI-Tools\XI-Tools.csproj">
       <Project>{be0bf2c6-3db4-415c-be21-c3f6b696c335}</Project>

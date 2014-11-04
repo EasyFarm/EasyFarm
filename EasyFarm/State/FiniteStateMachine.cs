@@ -57,7 +57,6 @@ namespace EasyFarm.State
             AddState(new AttackState(fface) { Priority = 1 });
             AddState(new TravelState(fface) { Priority = 1 });
             AddState(new HealingState(fface) { Priority = 2 });
-            AddState(new DeadState(fface) { Priority = 3 });
             AddState(new PostBattle(fface) { Priority = 3 });
             AddState(new TargetInvalid(fface) { Priority = 3 });
 

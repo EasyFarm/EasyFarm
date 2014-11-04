@@ -15,7 +15,7 @@ namespace EasyFarm.UserSettings
 
         public bool ShouldRest(int magic, Status status)
         {
-            return (Enabled && (IsMagicLow(magic) || IsMagicHigh(magic, status) && status == Status.Healing));
+            return (Enabled && (IsMagicLow(magic) || !IsMagicHigh(magic) && status == Status.Healing));
         }
 
         public bool IsMagicLow(int magic)
@@ -23,9 +23,9 @@ namespace EasyFarm.UserSettings
             return magic <= Low;
         }
 
-        public bool IsMagicHigh(int magic, Status status)
+        public bool IsMagicHigh(int magic)
         {
-            return magic < High;
+            return magic >= High;
         }
     }
 }

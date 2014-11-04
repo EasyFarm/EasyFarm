@@ -25,7 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZeroLimits.FarmingTool;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool;
 
 
 namespace EasyFarm.State
@@ -39,14 +39,16 @@ namespace EasyFarm.State
 
         public override bool CheckState()
         {
-            return ftools.TargetData.TargetUnit == null || !ftools.UnitService.IsValid(ftools.TargetData.TargetUnit);
+            if(AttackState.TargetUnit == null) return true;
+            if(!ftools.UnitService.IsValid(AttackState.TargetUnit)) return true;
+            return false;
         }
 
         public override void EnterState() { }
 
         public override void RunState()
         {
-            ftools.TargetData.TargetUnit = ftools.UnitService.GetTarget(UnitFilters.MobFilter(fface), x => x.Distance);
+            AttackState.TargetUnit = ftools.UnitService.GetTarget(UnitFilters.MobFilter(FFACE), x => x.Distance);
         }
 
         public override void ExitState() { }

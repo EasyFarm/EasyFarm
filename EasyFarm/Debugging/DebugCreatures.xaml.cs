@@ -7,7 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using ZeroLimits.FarmingTool;
 using System.Linq;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool;
+using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.Debugging
 {
@@ -33,7 +34,7 @@ namespace EasyFarm.Debugging
             this.Show();
         }
 
-        public Unit[] Units
+        public ICollection<Unit> Units
         {
             get { return _units.UnitArray; }
         }

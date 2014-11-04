@@ -30,7 +30,7 @@ namespace EasyFarm.Views
         public IgnoredView()
         {
             InitializeComponent();
-            this.DataContext = new IgnoredViewModel(App.FarmingTools);
+            this.DataContext = new IgnoredViewModel();
         }
     }
 }

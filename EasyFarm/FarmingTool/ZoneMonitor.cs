@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool;
 
 namespace EasyFarm.FarmingTool
 {

@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.GameData;
+using EasyFarm.UserSettings;
 using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
@@ -29,7 +30,7 @@ namespace EasyFarm.ViewModels
 {
     public class HealingViewModel : ViewModelBase
     {
-        public HealingViewModel(FarmingTools farmingTools) : base(farmingTools) 
+        public HealingViewModel() 
         {
             AddHealingCommand = new DelegateCommand(AddHealingItem);
             DeleteHealingCommand = new DelegateCommand<Object>(DeleteHealing);
@@ -39,8 +40,8 @@ namespace EasyFarm.ViewModels
 
         public ObservableCollection<HealingAbility> Healing
         {
-            get { return ftools.UserSettings.ActionInfo.HealingList; }
-            set { SetProperty(ref this.ftools.UserSettings.ActionInfo.HealingList, value); }
+            get { return Config.Instance.ActionInfo.HealingList; }
+            set { SetProperty(ref Config.Instance.ActionInfo.HealingList, value); }
         }
 
         public ICommand AddHealingCommand { get; set; }

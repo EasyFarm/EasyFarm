@@ -20,7 +20,10 @@ You should have received a copy of the GNU General Public License
 ﻿using FFACETools;
 using ZeroLimits.FarmingTool;
 using System.Linq;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool;
+using ZeroLimits.XITool.Classes;
+using EasyFarm.ViewModels;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.State
 {
@@ -30,8 +33,13 @@ namespace EasyFarm.State
 
         public override bool CheckState()
         {
-            return ftools.PlayerData.shouldHeal &&
-                !ftools.PlayerData.shouldRest;
+            if (new RestState(FFACE).CheckState()) return false;
+
+            if (!Config.Instance.ActionInfo.HealingList
+                .Any(x => ActionFilters.HealingFilter(FFACE)(x))) 
+                return false;
+
+            return true;
         }
 
         public override void EnterState()
@@ -41,14 +49,22 @@ namespace EasyFarm.State
 
         public override void RunState()
         {
-            // Use an ability to heal from the healing list if we can
-            if (ftools.PlayerActions.HealingList.Count > 0)
+            // Get the list of healing abilities that can be used.
+            var UsableHealingMoves = Config.Instance.ActionInfo.HealingList
+                .Where(x => ActionFilters.HealingFilter(FFACE)(x))
+                .ToList();
+
+            // Check if we have any moves to use. 
+            if (UsableHealingMoves.Count > 0)
             {
                 // Check for actions available
-                var act = ftools.PlayerActions.HealingList.FirstOrDefault();
-                if (act == null) { return; }
-                //
-                else { ftools.AbilityExecutor.UseAbility(act, Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN); }
+                var Action = UsableHealingMoves.FirstOrDefault();
+                if (Action == null) { return; }
+
+                // Create an ability from the name and launch the move. 
+                var HealingMove = new AbilityService().CreateAbility(Action.Name);
+                ftools.AbilityExecutor.UseAbility(HealingMove, 
+                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
             }
         }
 

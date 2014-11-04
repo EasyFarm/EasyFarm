@@ -20,6 +20,8 @@ You should have received a copy of the GNU General Public License
 ﻿using System;
 using FFACETools;
 using ZeroLimits.FarmingTool;
+using EasyFarm.FarmingTool;
+using EasyFarm.ViewModels;
 
 namespace EasyFarm.State
 {
@@ -27,8 +29,8 @@ namespace EasyFarm.State
     {
         public bool Enabled;
         public int Priority;
-        protected FFACE fface;
-        protected FarmingTools ftools;
+        protected static FFACE FFACE;
+        protected static FarmingTools ftools;
 
         public abstract bool CheckState();
         public abstract void EnterState();
@@ -37,8 +39,12 @@ namespace EasyFarm.State
 
         public BaseState(FFACE fface)
         {
-            this.fface = fface;
-            this.ftools = FarmingTools.GetInstance(fface);
+            if (FFACE == null) FFACE = fface;
+            if (ftools == null)
+            {
+                ftools = new FarmingTools(fface);
+                ftools.UnitService.UnitFilter = UnitFilters.MobFilter(fface);
+            }
         }
 
         public int CompareTo(BaseState other)

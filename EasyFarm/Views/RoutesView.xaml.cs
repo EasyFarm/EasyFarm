@@ -30,7 +30,7 @@ namespace EasyFarm.Views
         public RoutesView()
         {            
             InitializeComponent();
-            this.DataContext = new RoutesViewModel(App.FarmingTools);
+            this.DataContext = new RoutesViewModel();
         }
     }
 }

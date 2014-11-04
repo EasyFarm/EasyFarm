@@ -17,11 +17,13 @@ You should have received a copy of the GNU General Public License
 *////////////////////////////////////////////////////////////////////
 
 ﻿using EasyFarm.GameData;
-using EasyFarm.UserSettings.User_Settings;
+using EasyFarm.ViewModels;
+using FFACETools;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
+using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.UserSettings
 {
@@ -30,7 +32,29 @@ namespace EasyFarm.UserSettings
     /// Gives the bot access to allow of his decisions.
     /// </summary>
     public class Config : BindableBase
-    {                       
+    {
+        [XmlIgnore]
+        private static Lazy<Config> lazy = 
+            new Lazy<Config>(() => new Config());
+
+        [XmlIgnore]
+        public FFACE FFACE { get; set; }
+
+        private Config() { }
+
+        [XmlIgnore]
+        public static Config Instance 
+        { 
+            get 
+            { 
+                return lazy.Value; 
+            }
+            set 
+            {
+                lazy = new Lazy<Config>(() => value);
+            }
+        }
+             
         /// <summary>
         /// The text dislayed at the bottom of the screen
         /// </summary>
@@ -42,14 +66,49 @@ namespace EasyFarm.UserSettings
         /// </summary>
         public ObservableCollection<Waypoint> Waypoints = new ObservableCollection<Waypoint>();
 
+        /// <summary>
+        /// List of player usable moves. 
+        /// </summary>
         public ActionInfo ActionInfo = new ActionInfo();
 
+        /// <summary>
+        /// List of options for filtering units. 
+        /// </summary>
         public FilterInfo FilterInfo = new FilterInfo();
 
-        public WeaponAbility WeaponInfo = new WeaponAbility();
+        /// <summary>
+        /// Contains weaponskill info. 
+        /// </summary>
+        public WeaponSkill WeaponSkill = new WeaponSkill();
 
+        /// <summary>
+        /// Contains information for resting.
+        /// </summary>
         public RestingInfo RestingInfo = new RestingInfo();
 
+        /// <summary>
+        /// Contains the misc settings. 
+        /// </summary>
         public MiscSettings MiscSettings = new MiscSettings();
+
+        /// <summary>
+        /// Saves the settings of Config object to file for later retrieval.
+        /// </summary>
+        /// <param name="Engine"></param>
+        public void SaveSettings()
+        {   
+            String Filename = ViewModelBase.FFACE.Player.Name + "_UserPref.xml";
+            Serialization.Serialize(Filename, Instance);
+        }
+
+        /// <summary>
+        /// Loads the settings from the player specific configuration file to the Config obj.
+        /// </summary>
+        public void LoadSettings()
+        {
+            String Filename = ViewModelBase.FFACE.Player.Name + "_UserPref.xml";
+            Instance = Serialization.Deserialize(Filename, Instance);
+            Instance.FFACE = ViewModelBase.FFACE;
+        }
     }
 }

@@ -18,9 +18,11 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.GameData;
+using EasyFarm.ViewModels;
 using System;
 using System.Windows;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool;
+using ZeroLimits.XITool.Classes;
 
 
 namespace EasyFarm.Views
@@ -36,7 +38,7 @@ namespace EasyFarm.Views
         {
             InitializeComponent();
             this.CompleteSelectionButton.Click += CompleteSelectionButton_Click;
-            this.AbilityListBox.ItemsSource = App.FarmingTools.AbilityService.GetAbilitiesWithName(name);
+            this.AbilityListBox.ItemsSource = ViewModelBase.FarmingTools.AbilityService.GetAbilitiesWithName(name);
             this.ShowDialog();
         }
 

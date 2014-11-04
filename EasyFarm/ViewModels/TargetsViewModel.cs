@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.UserSettings;
 using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
@@ -28,8 +29,7 @@ namespace EasyFarm.ViewModels
 {
     public class TargetsViewModel : ViewModelBase
     {
-        public TargetsViewModel(FarmingTools farmingTools)
-            : base(farmingTools)
+        public TargetsViewModel()
         {
             this.AddCommand = new DelegateCommand(AddTargetCommand);
             this.DeleteCommand = new DelegateCommand(DeleteTargetCommand);
@@ -55,38 +55,38 @@ namespace EasyFarm.ViewModels
 
         public String TargetsName
         {
-            get { return ftools.UserSettings.FilterInfo.TargetName; }
-            set { SetProperty(ref ftools.UserSettings.FilterInfo.TargetName, value); }
+            get { return Config.Instance.FilterInfo.TargetName; }
+            set { SetProperty(ref Config.Instance.FilterInfo.TargetName, value); }
         }
 
         public ObservableCollection<String> Targets
         {
-            get { return ftools.UserSettings.FilterInfo.TargetedMobs; }
-            set { SetProperty(ref ftools.UserSettings.FilterInfo.TargetedMobs, value); }
+            get { return Config.Instance.FilterInfo.TargetedMobs; }
+            set { SetProperty(ref Config.Instance.FilterInfo.TargetedMobs, value); }
         }
 
         public bool Aggro
         {
-            get { return ftools.UserSettings.FilterInfo.AggroFilter; }
-            set { SetProperty(ref ftools.UserSettings.FilterInfo.AggroFilter, value); }
+            get { return Config.Instance.FilterInfo.AggroFilter; }
+            set { SetProperty(ref Config.Instance.FilterInfo.AggroFilter, value); }
         }
 
         public bool Unclaimed
         {
-            get { return ftools.UserSettings.FilterInfo.UnclaimedFilter; }
-            set { SetProperty(ref ftools.UserSettings.FilterInfo.UnclaimedFilter, value); }
+            get { return Config.Instance.FilterInfo.UnclaimedFilter; }
+            set { SetProperty(ref Config.Instance.FilterInfo.UnclaimedFilter, value); }
         }
 
         public bool PartyClaimed
         {
-            get { return ftools.UserSettings.FilterInfo.PartyFilter; }
-            set { SetProperty(ref ftools.UserSettings.FilterInfo.PartyFilter, value); }
+            get { return Config.Instance.FilterInfo.PartyFilter; }
+            set { SetProperty(ref Config.Instance.FilterInfo.PartyFilter, value); }
         }
 
         public bool Claimed
         {
-            get { return ftools.UserSettings.FilterInfo.ClaimedFilter; }
-            set { SetProperty(ref ftools.UserSettings.FilterInfo.ClaimedFilter, value); }
+            get { return Config.Instance.FilterInfo.ClaimedFilter; }
+            set { SetProperty(ref Config.Instance.FilterInfo.ClaimedFilter, value); }
         }
 
         public ICommand AddCommand { get; set; }
