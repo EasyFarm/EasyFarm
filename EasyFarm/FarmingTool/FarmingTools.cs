@@ -7,7 +7,7 @@ using ZeroLimits.XITool.Classes;
 
 namespace ZeroLimits.FarmingTool
 {
-    public class FarmingTools
+    public class FTools
     {
         /// <summary>
         /// The current fface instance bound to farming tools. 
@@ -16,7 +16,7 @@ namespace ZeroLimits.FarmingTool
 
         private XITools XITools;
 
-        public FarmingTools(FFACE fface)
+        public FTools(FFACE fface)
         {
             _fface = fface;
 

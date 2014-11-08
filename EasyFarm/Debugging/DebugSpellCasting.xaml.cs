@@ -151,12 +151,12 @@ namespace EasyFarm.Debugging
             private short _castPercent = 0;
 
             private FFACE _fface;
-            private FarmingTools _ftools;
+            private FTools _ftools;
 
             public CastingModel(FFACE fface)
             {
                 this._fface = fface;
-                this._ftools = new FarmingTools(fface);
+                this._ftools = new FTools(fface);
             }
 
             public float CastMax

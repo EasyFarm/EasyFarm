@@ -38,7 +38,7 @@ namespace EasyFarm.Views
         {
             InitializeComponent();
             this.CompleteSelectionButton.Click += CompleteSelectionButton_Click;
-            this.AbilityListBox.ItemsSource = ViewModelBase.FarmingTools.AbilityService.GetAbilitiesWithName(name);
+            this.AbilityListBox.ItemsSource = ViewModelBase.FTools.AbilityService.GetAbilitiesWithName(name);
             this.ShowDialog();
         }
 

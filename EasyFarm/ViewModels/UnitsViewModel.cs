@@ -20,7 +20,7 @@ namespace EasyFarm.ViewModels
         public UnitsViewModel()
         {
             Units = new ListCollectionView(
-                ViewModelBase.FarmingTools.UnitService.FilteredArray.ToList());
+                ViewModelBase.FTools.UnitService.FilteredArray.ToList());
             Units.CurrentChanged += Units_CurrentChanged;
 
             AddTargetCommand = new DelegateCommand(AddToTargets);

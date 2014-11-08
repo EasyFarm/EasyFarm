@@ -30,7 +30,7 @@ namespace EasyFarm.State
         public bool Enabled;
         public int Priority;
         protected static FFACE FFACE;
-        protected static FarmingTools ftools;
+        protected static FTools ftools;
 
         public abstract bool CheckState();
         public abstract void EnterState();
@@ -42,7 +42,7 @@ namespace EasyFarm.State
             if (FFACE == null) FFACE = fface;
             if (ftools == null)
             {
-                ftools = new FarmingTools(fface);
+                ftools = new FTools(fface);
                 ftools.UnitService.UnitFilter = UnitFilters.MobFilter(fface);
             }
         }

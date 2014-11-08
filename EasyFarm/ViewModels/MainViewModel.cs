@@ -38,12 +38,21 @@ namespace EasyFarm.ViewModels
             // Tell the user the program has loaded the player's data
             InformUser("Bot Loaded: " + FFACE.Player.Name);
 
+            // Set the main window's title to the player's name. 
+            this.MainWindowTitle = "EasyFarm - " + FFACE.Player.Name;
+
             // Create start command handler.
             StartCommand = new DelegateCommand(Start);
 
             ExitCommand = new DelegateCommand(Exit);
 
             SaveCommand = new DelegateCommand(Save);
+        }
+
+        public String MainWindowTitle 
+        {
+            get { return Config.Instance.MainWindowTitle; }
+            set { this.SetProperty(ref Config.Instance.MainWindowTitle, value); }
         }
 
         public String StatusBarText

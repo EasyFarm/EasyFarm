@@ -34,7 +34,7 @@ namespace EasyFarm.ViewModels
 
         public static IEventAggregator EventAggregator { get; set; }
 
-        public static FarmingTools FarmingTools { get; set; }
+        public static FTools FTools { get; set; }
 
         public static GameEngine GameEngine { get; set; }
 
@@ -60,7 +60,7 @@ namespace EasyFarm.ViewModels
             FFACE = fface;
 
             // Create FarmngTools object. 
-            FarmingTools = new FarmingTools(FFACE);
+            FTools = new FTools(FFACE);
 
             // Create a new game engine to control our character. 
             GameEngine = new GameEngine(FFACE);

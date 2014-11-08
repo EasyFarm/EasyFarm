@@ -61,6 +61,12 @@ namespace EasyFarm.UserSettings
         public bool ClaimedFilter = false;
 
         /// <summary>
+        /// Used to control whether we should use npc bit checking
+        /// in mob validation. 
+        /// </summary>
+        public bool BitCheck = true;
+
+        /// <summary>
         /// A list of mobs that we should ignore.
         /// </summary>
         public ObservableCollection<String> IgnoredMobs = new ObservableCollection<string>();

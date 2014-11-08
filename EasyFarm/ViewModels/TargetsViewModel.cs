@@ -89,6 +89,12 @@ namespace EasyFarm.ViewModels
             set { SetProperty(ref Config.Instance.FilterInfo.ClaimedFilter, value); }
         }
 
+        public bool BitCheck
+        {
+            get { return Config.Instance.FilterInfo.BitCheck; }
+            set { SetProperty(ref Config.Instance.FilterInfo.BitCheck, value); }
+        }
+
         public ICommand AddCommand { get; set; }
 
         public ICommand DeleteCommand { get; set; }

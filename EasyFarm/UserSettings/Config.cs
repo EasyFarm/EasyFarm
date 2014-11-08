@@ -14,7 +14,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
 ﻿using EasyFarm.GameData;
 using EasyFarm.ViewModels;
@@ -34,8 +35,7 @@ namespace EasyFarm.UserSettings
     public class Config : BindableBase
     {
         [XmlIgnore]
-        private static Lazy<Config> lazy = 
-            new Lazy<Config>(() => new Config());
+        private static Lazy<Config> lazy = new Lazy<Config>(() => new Config());
 
         [XmlIgnore]
         public FFACE FFACE { get; set; }
@@ -43,18 +43,18 @@ namespace EasyFarm.UserSettings
         private Config() { }
 
         [XmlIgnore]
-        public static Config Instance 
-        { 
-            get 
-            { 
-                return lazy.Value; 
+        public static Config Instance
+        {
+            get
+            {
+                return lazy.Value;
             }
-            set 
+            set
             {
                 lazy = new Lazy<Config>(() => value);
             }
         }
-             
+
         /// <summary>
         /// The text dislayed at the bottom of the screen
         /// </summary>
@@ -92,11 +92,16 @@ namespace EasyFarm.UserSettings
         public MiscSettings MiscSettings = new MiscSettings();
 
         /// <summary>
+        /// The window's name: player's name. 
+        /// </summary>
+        public string MainWindowTitle = "Default";
+
+        /// <summary>
         /// Saves the settings of Config object to file for later retrieval.
         /// </summary>
         /// <param name="Engine"></param>
         public void SaveSettings()
-        {   
+        {
             String Filename = ViewModelBase.FFACE.Player.Name + "_UserPref.xml";
             Serialization.Serialize(Filename, Instance);
         }
