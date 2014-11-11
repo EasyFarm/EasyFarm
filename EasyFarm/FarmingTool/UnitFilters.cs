@@ -1,4 +1,23 @@
-﻿using EasyFarm.UserSettings;
+﻿
+/*///////////////////////////////////////////////////////////////////
+<EasyFarm, general farming utility for FFXI.>
+Copyright (C) <2013>  <Zerolimits>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+*/
+///////////////////////////////////////////////////////////////////
+
+using EasyFarm.UserSettings;
 using EasyFarm.ViewModels;
 using FFACETools;
 using System;
@@ -39,11 +58,11 @@ namespace EasyFarm.FarmingTool
         {
             // Function to use to filter surrounding mobs by.
             return new Func<IUnit, bool>((IUnit mob) =>
-            {            
+            {
                 // General Mob Filtering Criteria
 
                 // No fface? Bail. 
-                if (fface == null) return false;
+                // if (fface == null) return false;
 
                 //FIXED: Added null check to avoid certain states
                 // secretly throwing null pointer exceptions. 
@@ -59,7 +78,7 @@ namespace EasyFarm.FarmingTool
 
                 // Allow for mobs with an npc bit of sometimes 4 (colibri) 
                 // and ignore mobs that are invisible npcbit = 0
-                if(Config.Instance.FilterInfo.BitCheck)
+                if (Config.Instance.FilterInfo.BitCheck)
                     if (mob.NPCBit >= 16) return false;
 
                 // Type is not mob 
@@ -70,13 +89,13 @@ namespace EasyFarm.FarmingTool
 
                 // Mob too high out of reach. 
                 if (mob.YDifference > Config.Instance.MiscSettings.HeightThreshold) return false;
-                
+
                 // User Specific Filtering
-               
+
                 // Performs a case insensitve match on the mob's name. 
                 // If any part of the mob's name is in the ignored list,
                 // we will not attack it. 
-                if (MatchAny(mob.Name, Config.Instance.FilterInfo.IgnoredMobs, 
+                if (MatchAny(mob.Name, Config.Instance.FilterInfo.IgnoredMobs,
                     RegexOptions.IgnoreCase)) return false;
 
                 // Kill aggro if aggro's checked regardless of target's list but follows 
@@ -84,37 +103,36 @@ namespace EasyFarm.FarmingTool
                 if (mob.HasAggroed && Config.Instance.FilterInfo.AggroFilter) return true;
 
                 // There is a target's list but the mob is not on it. 
-                if (!MatchAny(mob.Name, Config.Instance.FilterInfo.TargetedMobs,RegexOptions.IgnoreCase) && 
-                    Config.Instance.FilterInfo.TargetedMobs.Any()) 
+                if (!MatchAny(mob.Name, Config.Instance.FilterInfo.TargetedMobs, RegexOptions.IgnoreCase) &&
+                    Config.Instance.FilterInfo.TargetedMobs.Any())
                     return false;
 
-                // Mob on our targets list.
-                if (MatchAny(mob.Name, Config.Instance.FilterInfo.TargetedMobs,RegexOptions.IgnoreCase))
+                // Mob on our targets list or not on our ignore list. 
+
+                // Kill the creature if it has aggroed and aggro is checked. 
+                if (mob.HasAggroed && Config.Instance.FilterInfo.AggroFilter) return true;
+
+                // Kill the creature if it is claimed by party and party is checked. 
+                if (mob.PartyClaim && Config.Instance.FilterInfo.PartyFilter) return true;
+
+                // Kill the creature if it's not claimed and unclaimed is checked. 
+                if (!mob.IsClaimed && Config.Instance.FilterInfo.UnclaimedFilter) return true;
+
+                // Kill the creature if it's claimed and we we don't have claim but
+                // claim is checked. 
+                //FIX: Temporary fix until player.serverid is fixed. 
+                if (fface != null)
                 {
-                    // Kill the creature if it has aggroed and aggro is checked. 
-                    if (mob.HasAggroed && Config.Instance.FilterInfo.AggroFilter) return true;
-
-                    // Kill the creature if it is claimed by party and party is checked. 
-                    if (mob.PartyClaim && Config.Instance.FilterInfo.PartyFilter) return true;
-
-                    // Kill the creature if it's not claimed and unclaimed is checked. 
-                    if (!mob.IsClaimed && Config.Instance.FilterInfo.UnclaimedFilter) return true;
-
-                    // Kill the creature if it's claimed and we we don't have claim but
-                    // claim is checked. 
-                    //FIX: Temporary fix until player.serverid is fixed. 
                     if (mob.IsClaimed && mob.ClaimedID != fface.PartyMember[0].ServerID)
                     {
                         // Kill creature if claim is checked. 
                         if (Config.Instance.FilterInfo.ClaimedFilter) return true;
                     }
-
-                    return false;
                 }
 
                 // True for all mobs that are not on ignore / target lists
                 // and meet the general criteria for being a valid mob. 
-                return true;
+                return false;
             });
         }
 

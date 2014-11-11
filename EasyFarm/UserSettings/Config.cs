@@ -30,17 +30,36 @@ namespace EasyFarm.UserSettings
 {
     /// <summary>
     /// A configuration file for the user to edit through his GUI.
-    /// Gives the bot access to allow of his decisions.
+    /// Gives the bot access to all of his decisions.
     /// </summary>
     public class Config : BindableBase
     {
+        /// <summary>
+        /// Whether we are debugging this class. 
+        /// </summary>
+        public bool DebugEnabled { get; set; }
+
         [XmlIgnore]
         private static Lazy<Config> lazy = new Lazy<Config>(() => new Config());
 
         [XmlIgnore]
         public FFACE FFACE { get; set; }
 
-        private Config() { }
+        /// <summary>
+        /// Sets up the default values for player settings. 
+        /// Used also for unit testing purposes. 
+        /// </summary>
+        public Config()
+        {
+            this.ActionInfo = new ActionInfo();
+            this.FilterInfo = new FilterInfo();
+            this.MainWindowTitle = "Default";
+            this.MiscSettings = new MiscSettings();
+            this.RestingInfo = new RestingInfo();
+            this.StatusBarText = String.Empty;
+            this.Waypoints = new ObservableCollection<Waypoint>();
+            this.WeaponSkill = new WeaponSkill();
+        }
 
         [XmlIgnore]
         public static Config Instance
@@ -59,42 +78,43 @@ namespace EasyFarm.UserSettings
         /// The text dislayed at the bottom of the screen
         /// </summary>
         [XmlIgnore]
-        public String StatusBarText = String.Empty;
+        public String StatusBarText;
 
         /// <summary>
         /// List of all waypoints that make up the bots path
         /// </summary>
-        public ObservableCollection<Waypoint> Waypoints = new ObservableCollection<Waypoint>();
+        public ObservableCollection<Waypoint> Waypoints;
 
         /// <summary>
         /// List of player usable moves. 
         /// </summary>
-        public ActionInfo ActionInfo = new ActionInfo();
+        public ActionInfo ActionInfo;
 
         /// <summary>
         /// List of options for filtering units. 
         /// </summary>
-        public FilterInfo FilterInfo = new FilterInfo();
+        public FilterInfo FilterInfo;
 
         /// <summary>
         /// Contains weaponskill info. 
         /// </summary>
-        public WeaponSkill WeaponSkill = new WeaponSkill();
+        public WeaponSkill WeaponSkill;
 
         /// <summary>
         /// Contains information for resting.
         /// </summary>
-        public RestingInfo RestingInfo = new RestingInfo();
+        public RestingInfo RestingInfo;
 
         /// <summary>
         /// Contains the misc settings. 
         /// </summary>
-        public MiscSettings MiscSettings = new MiscSettings();
+        public MiscSettings MiscSettings;
 
         /// <summary>
         /// The window's name: player's name. 
         /// </summary>
-        public string MainWindowTitle = "Default";
+        [XmlIgnore]
+        public string MainWindowTitle;
 
         /// <summary>
         /// Saves the settings of Config object to file for later retrieval.
@@ -102,8 +122,17 @@ namespace EasyFarm.UserSettings
         /// <param name="Engine"></param>
         public void SaveSettings()
         {
-            String Filename = ViewModelBase.FFACE.Player.Name + "_UserPref.xml";
-            Serialization.Serialize(Filename, Instance);
+            // Default file name for when fface is null. 
+            string fileName = "UserPref.xml";
+
+            // Get the filename in which to save the player's settings. 
+            if (FFACE != null)
+            {
+                fileName = ViewModelBase.FFACE.Player.Name + "_UserPref.xml";
+            }
+
+            // Save all user settings under PlayerName_UserPref.xml. 
+            Serialization.Serialize(fileName, Instance);
         }
 
         /// <summary>
@@ -111,9 +140,22 @@ namespace EasyFarm.UserSettings
         /// </summary>
         public void LoadSettings()
         {
-            String Filename = ViewModelBase.FFACE.Player.Name + "_UserPref.xml";
-            Instance = Serialization.Deserialize(Filename, Instance);
-            Instance.FFACE = ViewModelBase.FFACE;
+            // Default file name when fface is null
+            string fileName = "UserPref.xml";
+
+            // Set filename to PlayerName_UserPref.xml when fface is found. 
+            if (FFACE != null)
+            {
+                fileName = ViewModelBase.FFACE.Player.Name + "_UserPref.xml";
+            }
+
+            // Read the configuration from file for a given player. 
+            // Note: this will wipe out your prevous fface instance for the object. 
+            Instance = Serialization.Deserialize(fileName, Instance);
+
+            // Reset the fface instance. 
+            if (!DebugEnabled)
+                Instance.FFACE = ViewModelBase.FFACE;
         }
     }
 }

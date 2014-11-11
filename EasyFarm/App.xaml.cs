@@ -17,18 +17,12 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Debugging;
-using EasyFarm.FarmingTool;
-using EasyFarm.State;
 using EasyFarm.ViewModels;
 using EasyFarm.Views;
-using FFACETools;
-using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Windows;
-using ZeroLimits.FarmingTool;
 using System.Linq;
 using EasyFarm.UserSettings;
 
