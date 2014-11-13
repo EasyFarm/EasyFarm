@@ -83,6 +83,9 @@ namespace EasyFarm.State
 
             _statusMonitor.Changed += StatusMonitor_StatusChanged;
             _statusMonitor.Start();
+
+            _stuckMonitor.Changed += StuckMonitor_StuckChanged;
+            _stuckMonitor.Start();
         }
 
         /// <summary>

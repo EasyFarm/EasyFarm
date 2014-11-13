@@ -40,16 +40,14 @@
                         <Label>Melee Distance</Label>
                         <Slider Grid.Column="1" Minimum="0" Maximum="50" Value="{Binding MeleeDistance}"></Slider>
                     </Grid>
-                    <!--
                     <Grid Grid.Row="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="7*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label>Ranged Attack Delay</Label>
-                        <Slider Grid.Column="1" Minimum="0" Maximum="15" Value="{Binding RangedAttackDelay}"></Slider>
+                        <Label>Wander Distance</Label>
+                        <Slider Grid.Column="1" Minimum="0" Maximum="50" Value="{Binding WanderDistance}"></Slider>
                     </Grid>
-                    -->
                 </Grid>
                 <Button DockPanel.Dock="Bottom" Width="Auto" Margin="10" Command="{Binding RestoreDefaultsCommand}">Restore Defaults</Button>
             </DockPanel>

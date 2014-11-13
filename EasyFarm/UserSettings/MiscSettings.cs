@@ -48,5 +48,10 @@ namespace EasyFarm.UserSettings
         /// ranged weapon. 
         /// </summary>
         public double RangedAttackDelay = 3;
+
+        /// <summary>
+        /// How far to go of the path for a unit. 
+        /// </summary>
+        public double WanderDistance = Constants.DETECTION_DISTANCE;
     }
 }

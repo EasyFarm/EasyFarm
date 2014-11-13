@@ -26,6 +26,8 @@ using FFACETools;
 using EasyFarm.FarmingTool;
 using ZeroLimits.XITool.Test;
 using EasyFarm.ViewModels;
+using System.Collections.Generic;
+using EasyFarm.GameData;
 
 namespace EasyFarmTests
 {
@@ -53,7 +55,7 @@ namespace EasyFarmTests
             conf.SaveSettings();
             conf.LoadSettings();
             Assert.IsFalse(conf.FilterInfo.PartyFilter);
-            
+
             // Wipe all static changed data. 
             conf = new Config();
         }
@@ -66,7 +68,7 @@ namespace EasyFarmTests
             Config.Instance.SaveSettings();
             Config.Instance.LoadSettings();
             Assert.IsTrue(Config.Instance.FilterInfo.PartyFilter);
-            
+
             // Wipe all static changed data. 
             Config.Instance = new Config();
         }
@@ -74,9 +76,15 @@ namespace EasyFarmTests
         [TestMethod]
         public void TestUnitFilter()
         {
+            // Reset config
+            var conf = new Config();
+
+            // Add point at (10, 10)
+            Config.Instance.Waypoints.Add(new Waypoint() { X = 20, Z = 20 });
+
             TestUnit Unit = new TestUnit()
             {
-                Status = Status.Dead1,
+                Status = Status.Standing,
                 Distance = 0, 
                 IsActive = true,
                 NPCType = NPCType.Mob,
@@ -86,9 +94,21 @@ namespace EasyFarmTests
                 HPPCurrent = 100,
             };
 
+            // Generic filtering. 
+            Assert.IsFalse(UnitFilters.MobFilter(null)(Unit));
+
+            // Test waypoint wander distance. 
+            Config.Instance.Waypoints.Add(new Waypoint() { X = 0, Z = 0 });
+
             Assert.IsTrue(UnitFilters.MobFilter(null)(Unit));
+
+            // Test is Claimed Filter. 
             Unit.IsClaimed = true;
             Assert.IsFalse(UnitFilters.MobFilter(null)(Unit));
+
+            // Test Claimed Filter 
+            Config.Instance.FilterInfo.ClaimedFilter = true;
+            Assert.IsTrue(UnitFilters.MobFilter(null)(Unit));            
         }
     }
 }

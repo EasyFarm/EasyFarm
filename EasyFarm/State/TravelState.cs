@@ -40,15 +40,21 @@ namespace EasyFarm.State
 
         public override bool CheckState()
         {
-            if(Config.Instance.Waypoints.Count <= 0) return false;
+            // Waypoint list is empty.
+            if (Config.Instance.Waypoints.Count <= 0) return false;
 
-            if(new AttackState(FFACE).CheckState()) return false;
+            // We are not able to attack any creatures. 
+            if (new AttackState(FFACE).CheckState()) return false;
 
-            if(new RestState(FFACE).CheckState()) return false;
+            // We don't have to rest. 
+            if (new RestState(FFACE).CheckState()) return false;
 
-            if(new HealingState(FFACE).CheckState()) return false;
+            // We don't have to heal. 
+            if (new HealingState(FFACE).CheckState()) return false;
 
-            if(ftools.ActionBlocked.IsUnable) return false;
+            // We are not bound or struck by an other movement
+            // disabling condition. 
+            if (ftools.ActionBlocked.IsUnable) return false;
 
             return true;
         }
@@ -68,8 +74,9 @@ namespace EasyFarm.State
             if (position > Config.Instance.Waypoints.Count - 1)
             {
                 // Turn around and run the path in reverse with the old end being the new starting point
-                Config.Instance.Waypoints =
-                    new ObservableCollection<Waypoint>(Config.Instance.Waypoints.Reverse());
+                Config.Instance.Waypoints = new ObservableCollection<Waypoint>
+                    (Config.Instance.Waypoints.Reverse());
+                
                 position = 0;
             }
 
@@ -97,27 +104,21 @@ namespace EasyFarm.State
             position++;
         }
 
+        /// <summary>
+        /// Set the position to nearest point. 
+        /// </summary>
         private void SetPositionToNearestPoint()
         {
-            // Find the closest point and ...
-            FFACE.Position closest = null;
-            foreach (var current in Config.Instance.Waypoints)
-            {
-                if (closest != null) Debug.WriteLine("Distance: " + FFACE.Navigator.DistanceTo(closest));
+            // Get the nearest waypoint to the player. 
+            var nearest = Config.Instance.Waypoints
+                .OrderBy(x => FFACE.Navigator.DistanceTo(x.Position))
+                .FirstOrDefault();
 
-                if (closest == null) { closest = current.Position; }
-
-                else if (FFACE.Navigator.DistanceTo(current.Position) <
-                    FFACE.Navigator.DistanceTo(closest))
-                    closest = current.Position;
-            }
+            // Return if the list is empty; 
+            if (nearest == null) return;
 
             // Get its index in the array of points, then ...
-            if (closest != null)
-            {
-                Debug.WriteLine("Distance: " + FFACE.Navigator.DistanceTo(closest));
-                position = Config.Instance.Waypoints.IndexOf(new Waypoint(closest));
-            }
+            position = Config.Instance.Waypoints.IndexOf(nearest);
         }
 
         public override void ExitState()

@@ -48,6 +48,7 @@ namespace EasyFarm.ViewModels
             DetectionDistance = Constants.DETECTION_DISTANCE;
             HeightThreshold = Constants.HEIGHT_THRESHOLD;
             MeleeDistance = Constants.MELEE_DISTANCE;
+            WanderDistance = Constants.DETECTION_DISTANCE;
             InformUser("Defaults have been restored.");
         }
 
@@ -56,8 +57,8 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.MiscSettings.DetectionDistance; }
             set 
             { 
-                SetProperty<double>(ref Config.Instance.MiscSettings.DetectionDistance, value);
-                InformUser("Detection Distance Set: {0}.", value);
+                SetProperty<double>(ref Config.Instance.MiscSettings.DetectionDistance, (int)value);
+                InformUser("Detection Distance Set: {0}.", (int)value);
             }
         }
 
@@ -88,6 +89,16 @@ namespace EasyFarm.ViewModels
             {
                 SetProperty<double>(ref Config.Instance.MiscSettings.RangedAttackDelay, value);
                 InformUser("Ranged Attack Distance Set: {0}.", value);
+            }
+        }
+
+        public double WanderDistance
+        {
+            get { return Config.Instance.MiscSettings.WanderDistance; }
+            set
+            {
+                SetProperty<double>(ref Config.Instance.MiscSettings.WanderDistance, (int)value);
+                InformUser("Wander Distance Set: {0}.", (int)value);
             }
         }
     }

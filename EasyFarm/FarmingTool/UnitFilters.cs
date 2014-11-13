@@ -87,6 +87,13 @@ namespace EasyFarm.FarmingTool
                 // Mob is out of range
                 if (!(mob.Distance < Config.Instance.MiscSettings.DetectionDistance)) return false;
 
+                // If any unit is within the wander distance then the 
+                if (Config.Instance.Waypoints.Any())
+                {
+                    if (!(Config.Instance.Waypoints.Any(waypoint => Distance(mob, waypoint) <=
+                        Config.Instance.MiscSettings.WanderDistance))) return false;
+                }
+
                 // Mob too high out of reach. 
                 if (mob.YDifference > Config.Instance.MiscSettings.HeightThreshold) return false;
 
@@ -121,19 +128,24 @@ namespace EasyFarm.FarmingTool
                 // Kill the creature if it's claimed and we we don't have claim but
                 // claim is checked. 
                 //FIX: Temporary fix until player.serverid is fixed. 
-                if (fface != null)
+                if (mob.IsClaimed && Config.Instance.FilterInfo.ClaimedFilter)
                 {
-                    if (mob.IsClaimed && mob.ClaimedID != fface.PartyMember[0].ServerID)
-                    {
-                        // Kill creature if claim is checked. 
-                        if (Config.Instance.FilterInfo.ClaimedFilter) return true;
-                    }
+                    // Kill creature if claim is checked. 
+                    if (fface != null) return mob.ClaimedID != fface.PartyMember[0].ServerID;
+
+                    // For Testing Purposes. 
+                    if(fface == null) return true;
                 }
 
                 // True for all mobs that are not on ignore / target lists
                 // and meet the general criteria for being a valid mob. 
                 return false;
             });
+        }
+
+        private static double Distance(IUnit mob, GameData.Waypoint waypoint)
+        {
+            return Math.Sqrt(Math.Pow(waypoint.X - mob.PosX, 2) + Math.Pow(waypoint.Z - mob.PosZ, 2));
         }
 
         /// <summary>
