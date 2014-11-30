@@ -85,12 +85,14 @@
                     <Views:WeaponsView />
                 </DataTemplate>
             </TabControl.Resources>
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <TabItem Header="{Binding VMName}"
-                             Content="{Binding ElementName=MainTabControl, Path=SelectedTab}" />
-                </DataTemplate>
-            </TabControl.ItemTemplate>
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="TabItem">
+                    <Setter Property="Header"
+                            Value="{Binding VMName}" />
+                    <Setter Property="ContentTemplate"
+                            Value="{Binding ElementName=MainTabControl, Path=SelectedTab}" />
+                </Style>
+            </TabControl.ItemContainerStyle>
         </TabControl>
         <StatusBar Grid.ColumnSpan="3"
                    Grid.Row="2"

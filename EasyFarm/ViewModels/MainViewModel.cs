@@ -46,7 +46,7 @@ namespace EasyFarm.ViewModels
 
         public int SelectedIndex
         {
-            get { return m_selectedIndex = 1; }
+            get { return m_selectedIndex; }
             set { SetProperty(ref m_selectedIndex, value); }
         }
 
@@ -54,7 +54,8 @@ namespace EasyFarm.ViewModels
         {
             // Get all enabled view models. 
             this.ViewModels = new ObservableCollection<ViewModelBase>(
-                ViewModelLocator.GetEnabledViewModels());
+                ViewModelLocator.GetEnabledViewModels()
+                .OrderBy(x => x.VMName));
 
             // Get events from view models to update the status bar's text.
             EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe((a) => { StatusBarText = a; });
