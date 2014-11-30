@@ -28,6 +28,7 @@ using ZeroLimits.FarmingTool;
 
 namespace EasyFarm.ViewModels
 {
+    [ViewModelAttribute("Healing")]
     public class HealingViewModel : ViewModelBase
     {
         public HealingViewModel() 

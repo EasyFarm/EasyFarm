@@ -27,6 +27,7 @@ using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.ViewModels
 {
+    [ViewModelAttribute("WeaponSkill")]
     public class WeaponsViewModel : ViewModelBase
     {
         AbilityService AbilityService = new AbilityService();

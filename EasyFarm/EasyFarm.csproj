@@ -201,7 +201,9 @@
     <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="ViewModels\StatusBarUpdateEvent.cs" />
     <Compile Include="ViewModels\TargetsViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelAttribute.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WeaponsViewModel.cs" />
     <Compile Include="Views\AbilitySelectionBox.xaml.cs">
       <DependentUpon>AbilitySelectionBox.xaml</DependentUpon>

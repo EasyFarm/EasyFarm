@@ -30,10 +30,11 @@ using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.ViewModels
 {
+    [ViewModelAttribute("Battles")]
     public class BattlesViewModel : ViewModelBase
     {
         AbilityService AbilityService = new AbilityService();
-
+        
         public BattlesViewModel()
         {
             AddActionCommand = new DelegateCommand<Object>(AddAction);

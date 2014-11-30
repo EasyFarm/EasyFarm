@@ -32,6 +32,7 @@ using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.ViewModels
 {
+    [ViewModelAttribute("Units", false)]
     public class UnitsViewModel : ViewModelBase
     {
         public ICollectionView Units { get; private set; }

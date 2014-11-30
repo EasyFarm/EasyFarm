@@ -30,7 +30,6 @@ namespace EasyFarm.Views
         public UnitsView()
         {
             InitializeComponent();
-            this.DataContext = new UnitsViewModel();
         }
     }
 }

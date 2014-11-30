@@ -1,11 +1,26 @@
-﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Views="clr-namespace:EasyFarm.Views" xmlns:ViewModels="clr-namespace:EasyFarm.ViewModels" mc:Ignorable="d" x:Name="MainForm" x:Class="EasyFarm.Views.MainWindow" Width="{Binding ElementName=MainForm, Path=MaxWidth}" Height="{Binding ElementName=MainForm, Path=MaxHeight}" Title="{Binding MainWindowTitle}" MaxHeight="340" MaxWidth="510" WindowStartupLocation="CenterOwner">
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Views="clr-namespace:EasyFarm.Views"
+        xmlns:ViewModels="clr-namespace:EasyFarm.ViewModels"
+        mc:Ignorable="d"
+        x:Name="MainForm"
+        x:Class="EasyFarm.Views.MainWindow"
+        Width="{Binding ElementName=MainForm, Path=MaxWidth}"
+        Height="{Binding ElementName=MainForm, Path=MaxHeight}"
+        Title="{Binding MainWindowTitle}"
+        MaxHeight="340"
+        MaxWidth="510"
+        WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <ResourceDictionary Source="ControlStyles.xaml" />
     </Window.Resources>
     <Window.Background>
         <RadialGradientBrush>
             <GradientStop Color="Black" />
-            <GradientStop Color="#FFB8B8B8" Offset="1" />
+            <GradientStop Color="#FFB8B8B8"
+                          Offset="1" />
         </RadialGradientBrush>
     </Window.Background>
     <Grid>
@@ -17,63 +32,75 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="400" />
-        </Grid.ColumnDefinitions>       
-        
-        <Menu Grid.ColumnSpan="3" Background="Black" Foreground="White">
-            <MenuItem Header="_File" Foreground="White">
+        </Grid.ColumnDefinitions>
+        <Menu Grid.ColumnSpan="3"
+              Background="Black"
+              Foreground="White">
+            <MenuItem Header="_File"
+                      Foreground="White">
                 <MenuItem.Resources>
                     <Style TargetType="MenuItem">
-                        <Setter Property="Foreground" Value="Black"></Setter>
+                        <Setter Property="Foreground"
+                                Value="Black"></Setter>
                     </Style>
                 </MenuItem.Resources>
-                <MenuItem x:Name="StartMenuItem" Header="St_art" Command="{Binding StartCommand}" />
-                <MenuItem Header="_Save" Command="{Binding SaveCommand}" />
-                <MenuItem Header="E_xit" Command="{Binding ExitCommand}" />
+                <MenuItem x:Name="StartMenuItem"
+                          Header="St_art"
+                          Command="{Binding StartCommand}" />
+                <MenuItem Header="_Save"
+                          Command="{Binding SaveCommand}" />
+                <MenuItem Header="E_xit"
+                          Command="{Binding ExitCommand}" />
             </MenuItem>
         </Menu>
-        <TabControl Background="#FF2C24AD" Grid.Row="1" Grid.ColumnSpan="2">
-            <!-- Targets Tab -->
-            <TabItem>
-                <TabItem.Header>Targets</TabItem.Header>
-                <Views:TargetsView />
-            </TabItem>
-            <!--Ignored Tab-->
-            <TabItem>
-                <TabItem.Header>Ignored</TabItem.Header>
-                <Views:IgnoredView />
-            </TabItem>
-            <!--Routes Tab-->
-            <TabItem>
-                <TabItem.Header>Routes</TabItem.Header>
-                <Views:RoutesView />
-            </TabItem>
-            <!--Battle Tab-->
-            <TabItem>
-                <TabItem.Header>Battle</TabItem.Header>
-                <Views:BattlesView />
-            </TabItem>
-            <!--Resting Tab-->
-            <TabItem>
-                <TabItem.Header>Resting</TabItem.Header>
-                <Views:RestingView />
-            </TabItem>
-            <!--Weaponskill Tab-->
-            <TabItem>
-                <TabItem.Header>Weaponskill</TabItem.Header>
-                <Views:WeaponsView />
-            </TabItem>
-            <!--Healing Tab-->
-            <TabItem>
-                <TabItem.Header>Healing</TabItem.Header>
-                <Views:HealingView />
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>Misc Settings</TabItem.Header>
-                <Views:SettingsView />
-            </TabItem>
+        <TabControl x:Name="MainTabControl"
+                    Background="#FF2C24AD"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    ItemsSource="{Binding ViewModels}"
+                    SelectedIndex="{Binding SelectedIndex}">
+            <TabControl.Resources>
+                <DataTemplate DataType="{x:Type ViewModels:BattlesViewModel}">
+                    <Views:BattlesView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type ViewModels:HealingViewModel}">
+                    <Views:HealingView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type ViewModels:IgnoredViewModel}">
+                    <Views:IgnoredView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type ViewModels:RestingViewModel}">
+                    <Views:RestingView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type ViewModels:RoutesViewModel}">
+                    <Views:RoutesView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type ViewModels:SettingsViewModel}">
+                    <Views:SettingsView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type ViewModels:TargetsViewModel}">
+                    <Views:TargetsView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type ViewModels:WeaponsViewModel}">
+                    <Views:WeaponsView />
+                </DataTemplate>
+            </TabControl.Resources>
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TabItem Header="{Binding VMName}"
+                             Content="{Binding ElementName=MainTabControl, Path=SelectedTab}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
         </TabControl>
-        <StatusBar Grid.ColumnSpan="3" Grid.Row="2" Foreground="White" Background="Black" HorizontalContentAlignment="Center">
-            <Label Name="lblStatusBar" Margin="0" Height="30" Content="{Binding StatusBarText, NotifyOnSourceUpdated=True}" />
+        <StatusBar Grid.ColumnSpan="3"
+                   Grid.Row="2"
+                   Foreground="White"
+                   Background="Black"
+                   HorizontalContentAlignment="Center">
+            <Label Name="lblStatusBar"
+                   Margin="0"
+                   Height="30"
+                   Content="{Binding StatusBarText, NotifyOnSourceUpdated=True}" />
         </StatusBar>
     </Grid>
 </Window>

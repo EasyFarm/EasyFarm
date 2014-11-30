@@ -27,6 +27,7 @@ using ZeroLimits.FarmingTool;
 
 namespace EasyFarm.ViewModels
 {
+    [ViewModelAttribute("Targets")]
     public class TargetsViewModel : ViewModelBase
     {
         public TargetsViewModel()

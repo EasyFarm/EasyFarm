@@ -22,6 +22,7 @@ using ZeroLimits.FarmingTool;
 
 namespace EasyFarm.ViewModels
 {
+    [ViewModelAttribute("Resting")]
     public class RestingViewModel : ViewModelBase
     {
         public RestingViewModel() { }

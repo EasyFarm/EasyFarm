@@ -33,17 +33,32 @@ namespace EasyFarm
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// The files we currently use for AbilityService's resource file parsing. 
+        /// </summary>
         public static readonly String[] resources = 
             { "spells.xml", "abils.xml" };
         
+        /// <summary>
+        /// The url where the resources may be downloaded. 
+        /// </summary>
         public const String resourcesUrl = 
             "http://www.ffevo.net/topic/2923-ashita-and-ffacetools-missing-resource-files/";
 
+        /// <summary>
+        /// Set up the assembly resolution code to find embedded dll files. 
+        /// Reduces the amount of dll files in the executable's working directory. 
+        /// </summary>
         public App()
         {
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
         }
 
+        /// <summary>
+        /// Gets the user's selected FFACE Session and 
+        /// starts up the program. 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
             // Check if the resource files exist.
@@ -90,6 +105,10 @@ namespace EasyFarm
             // dbc.Show();
         }
 
+        /// <summary>
+        /// Save the settings to file via an XML Serializer. 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
             Config.Instance.SaveSettings();

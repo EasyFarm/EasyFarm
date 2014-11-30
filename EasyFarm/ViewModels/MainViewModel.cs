@@ -25,13 +25,37 @@ using System.Windows.Input;
 using ZeroLimits.FarmingTool;
 using System.Linq;
 using EasyFarm.UserSettings;
+using System.Collections.ObjectModel;
 
 namespace EasyFarm.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private ObservableCollection<ViewModelBase> m_ViewModels;
+
+        public ObservableCollection<ViewModelBase> ViewModels
+        {
+            get { return m_ViewModels; }
+            set 
+            {
+                this.SetProperty(ref m_ViewModels, value);
+            }
+        }
+
+        private int m_selectedIndex = 2;
+
+        public int SelectedIndex
+        {
+            get { return m_selectedIndex = 1; }
+            set { SetProperty(ref m_selectedIndex, value); }
+        }
+
         public MainViewModel()
         {
+            // Get all enabled view models. 
+            this.ViewModels = new ObservableCollection<ViewModelBase>(
+                ViewModelLocator.GetEnabledViewModels());
+
             // Get events from view models to update the status bar's text.
             EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe((a) => { StatusBarText = a; });
 

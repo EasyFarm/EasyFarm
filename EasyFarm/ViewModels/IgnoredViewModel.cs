@@ -27,6 +27,7 @@ using ZeroLimits.FarmingTool;
 
 namespace EasyFarm.ViewModels
 {
+    [ViewModelAttribute("Ignored")]
     public class IgnoredViewModel : ViewModelBase
     {
         public IgnoredViewModel() 

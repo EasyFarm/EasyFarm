@@ -23,18 +23,38 @@ using FFACETools;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
+using System.Reflection;
 using ZeroLimits.FarmingTool;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace EasyFarm.ViewModels
 {
     public class ViewModelBase : BindableBase
     {
+        /// <summary>
+        /// View Model name for header in tabcontrol item. 
+        /// </summary>
+        public String VMName { get; set; }
+
+        /// <summary>
+        /// Solo FFACE instance for current player. 
+        /// </summary>
         public static FFACE FFACE { get; set; }
 
+        /// <summary>
+        /// Sends messages mostly to the status bar. 
+        /// </summary>
         public static IEventAggregator EventAggregator { get; set; }
 
+        /// <summary>
+        /// Provides access to XITools / FarmingTools classes. 
+        /// </summary>
         public static FTools FTools { get; set; }
 
+        /// <summary>
+        /// The game engine that runs the bot; controls the player's actions. 
+        /// </summary>
         public static GameEngine GameEngine { get; set; }
 
         static ViewModelBase()

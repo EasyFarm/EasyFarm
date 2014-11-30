@@ -30,7 +30,6 @@ namespace EasyFarm.Views
         public RestingView()
         {
             InitializeComponent();
-            this.DataContext = new RestingViewModel();
         }
     }
 }

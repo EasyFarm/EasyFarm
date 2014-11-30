@@ -34,6 +34,7 @@ using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.ViewModels
 {
+    [ViewModelAttribute("Routes")]
     public class RoutesViewModel : ViewModelBase
     {
         DispatcherTimer WaypointRecorder = new DispatcherTimer();

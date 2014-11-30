@@ -30,7 +30,6 @@ namespace EasyFarm.Views
         public SettingsView()
         {
             InitializeComponent();
-            this.DataContext = new SettingsViewModel();
         }
     }
 }
