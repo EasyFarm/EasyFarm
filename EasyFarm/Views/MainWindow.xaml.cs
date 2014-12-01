@@ -17,12 +17,13 @@ You should have received a copy of the GNU General Public License
 *//////////////////////////////////////////////////////////////////// 
 
 using EasyFarm.ViewModels;
+using MahApps.Metro.Controls;
 using System.Windows;
 
 namespace EasyFarm.Views
 {
     // Members and Constructors
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         // private ViewModel Bindings;
        

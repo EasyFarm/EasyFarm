@@ -1,35 +1,60 @@
 ﻿<UserControl x:Class="EasyFarm.Views.RestingView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="136.644" d:DesignWidth="435.617">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="136.644"
+             d:DesignWidth="435.617">
     <StackPanel>
         <!-- Controls for resting HP-->
-        <GroupBox Header="HP" Foreground="White" Background="#FF2B2B2B">
+        <GroupBox Header="HP">
             <StackPanel Orientation="Horizontal">
                 <!--Do we want to rest hp?-->
-                <CheckBox Content="Enabled" Foreground="White" VerticalAlignment="Center" IsChecked="{Binding HPEnabled}"/>
+                <CheckBox Content="Enabled"
+                          VerticalAlignment="Center"
+                          IsChecked="{Binding HPEnabled}" />
                 <!--When should we sit down?-->
-                <Label Content="Down" VerticalAlignment="Center"/>
-                <Slider Margin="10" VerticalAlignment="Center" Maximum="100" Width="90" Value="{Binding LowHP}"/>
+                <Label Content="Down"
+                       VerticalAlignment="Center" />
+                <Slider Margin="10"
+                        VerticalAlignment="Center"
+                        Maximum="100"
+                        Width="90"
+                        Value="{Binding LowHP}" />
                 <!--When should we stand up?-->
-                <Label Content="Up" VerticalAlignment="Center"/>
-                <Slider Margin="10" VerticalAlignment="Center" Maximum="100" Width="90" Value="{Binding HighHP}"/>
+                <Label Content="Up"
+                       VerticalAlignment="Center" />
+                <Slider Margin="10"
+                        VerticalAlignment="Center"
+                        Maximum="100"
+                        Width="90"
+                        Value="{Binding HighHP}" />
             </StackPanel>
         </GroupBox>
         <!--Controls for resting mp-->
-        <GroupBox Header="MP" Foreground="White" Background="#FF2B2B2B">
+        <GroupBox Header="MP">
             <StackPanel Orientation="Horizontal">
                 <!--Do we want to rest mp?-->
-                <CheckBox Content="Enabled" Foreground="White" VerticalAlignment="Center" IsChecked="{Binding MPEnabled}"/>
+                <CheckBox Content="Enabled"
+                          VerticalAlignment="Center"
+                          IsChecked="{Binding MPEnabled}" />
                 <!--When should we sit down?-->
-                <Label Content="Down" VerticalAlignment="Center"/>
-                <Slider Margin="10" VerticalAlignment="Center" Maximum="100" Width="90" Value="{Binding LowMP}"/>
+                <Label Content="Down"
+                       VerticalAlignment="Center" />
+                <Slider Margin="10"
+                        VerticalAlignment="Center"
+                        Maximum="100"
+                        Width="90"
+                        Value="{Binding LowMP}" />
                 <!--When should we stand up?-->
-                <Label Content="Up" VerticalAlignment="Center"/>
-                <Slider Margin="10" VerticalAlignment="Center" Maximum="100" Width="90" Value="{Binding HighMP}"/>
+                <Label Content="Up"
+                       VerticalAlignment="Center" />
+                <Slider Margin="10"
+                        VerticalAlignment="Center"
+                        Maximum="100"
+                        Width="90"
+                        Value="{Binding HighMP}" />
             </StackPanel>
         </GroupBox>
     </StackPanel>

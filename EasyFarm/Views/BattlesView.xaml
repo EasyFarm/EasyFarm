@@ -1,11 +1,15 @@
 ﻿<UserControl x:Class="EasyFarm.Views.BattlesView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="216.384" d:DesignWidth="480.397">
-    <Grid Width="Auto" Height="Auto" FlowDirection="LeftToRight" ShowGridLines="False">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="216.384"
+             d:DesignWidth="480.397">
+    <Grid Width="Auto"
+          Height="Auto"
+          FlowDirection="LeftToRight"
+          ShowGridLines="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="300" />
@@ -16,39 +20,89 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <!--Tells us what list to add the textbox item to.-->
-        <StackPanel Grid.Row="1" Margin="10" VerticalAlignment="Center">
-            <RadioButton x:Name="radStartingAction" IsChecked="{Binding StartSelected}" >Start</RadioButton>
-            <RadioButton x:Name="radPullingAction" IsChecked="{Binding PullSelected}">Pull</RadioButton>
-            <RadioButton x:Name="radBattleAction" IsChecked="{Binding BattleSelected}">Battle</RadioButton>
-            <RadioButton x:Name="radEndingAction" IsChecked="{Binding EndSelected}">End</RadioButton>
+        <StackPanel Grid.Row="1"
+                    Margin="10"
+                    VerticalAlignment="Center">
+            <RadioButton x:Name="radStartingAction"
+                         IsChecked="{Binding StartSelected}">Start</RadioButton>
+            <RadioButton x:Name="radPullingAction"
+                         IsChecked="{Binding PullSelected}">Pull</RadioButton>
+            <RadioButton x:Name="radBattleAction"
+                         IsChecked="{Binding BattleSelected}">Battle</RadioButton>
+            <RadioButton x:Name="radEndingAction"
+                         IsChecked="{Binding EndSelected}">End</RadioButton>
         </StackPanel>
         <!--Name of the text box item to add-->
-        <TextBox x:Name="txbAbilityName" Grid.Column="1" Margin="10" Text="{Binding ActionName, UpdateSourceTrigger=PropertyChanged}"/>
-        <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Name" Padding="1" />
+        <TextBox x:Name="txbAbilityName"
+                 Grid.Column="1"
+                 Margin="10"
+                 Text="{Binding ActionName, UpdateSourceTrigger=PropertyChanged}" />
+        <Label HorizontalAlignment="Stretch"
+               VerticalAlignment="Stretch"
+               Content="Name"
+               Padding="1" />
         <!--The list of ability items. It's source is dependant on the start/end/battle radio buttons and changes when one is selected. -->
-        <ListBox x:Name="lstAbilities" Height="Auto" MaxHeight="100" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" Padding="10" Width="276" MinHeight="100">
+        <ListBox x:Name="lstAbilities"
+                 Height="Auto"
+                 MaxHeight="100"
+                 Grid.Column="1"
+                 Grid.Row="1"
+                 HorizontalAlignment="Stretch"
+                 Margin="10"
+                 VerticalAlignment="Stretch"
+                 Padding="10"
+                 Width="276"
+                 MinHeight="100">
             <ListBox.Style>
                 <Style>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=radStartingAction, Path=IsChecked}" Value="True">
-                            <Setter Property="ListBox.ItemsSource" Value="{Binding StartList}" />
+                        <DataTrigger Binding="{Binding ElementName=radStartingAction, Path=IsChecked}"
+                                     Value="True">
+                            <Setter Property="ListBox.ItemsSource"
+                                    Value="{Binding StartList}" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ElementName=radBattleAction, Path=IsChecked}" Value="True">
-                            <Setter Property="ListBox.ItemsSource" Value="{Binding BattleList}" />
+                        <DataTrigger Binding="{Binding ElementName=radBattleAction, Path=IsChecked}"
+                                     Value="True">
+                            <Setter Property="ListBox.ItemsSource"
+                                    Value="{Binding BattleList}" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ElementName=radEndingAction, Path=IsChecked}" Value="True">
-                            <Setter Property="ListBox.ItemsSource" Value="{Binding EndList}" />
+                        <DataTrigger Binding="{Binding ElementName=radEndingAction, Path=IsChecked}"
+                                     Value="True">
+                            <Setter Property="ListBox.ItemsSource"
+                                    Value="{Binding EndList}" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ElementName=radPullingAction, Path=IsChecked}" Value="True">
-                            <Setter Property="ListBox.ItemsSource" Value="{Binding PullList}" />
+                        <DataTrigger Binding="{Binding ElementName=radPullingAction, Path=IsChecked}"
+                                     Value="True">
+                            <Setter Property="ListBox.ItemsSource"
+                                    Value="{Binding PullList}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </ListBox.Style>
         </ListBox>
         <!--Used to manipulate the Abilities list-->
-        <Button x:Name="btnAddAbility" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Command="{Binding AddActionCommand}" CommandParameter="{Binding ElementName=txbAbilityName, Path=Text}" Content="Add" Margin="10,1,0,0" />
-        <Button x:Name="btnDeleteAbility" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Command="{Binding DeleteActionCommand}" CommandParameter="{Binding ElementName=lstAbilities, Path=SelectedItem}" Content="Delete" Margin="111,2,115,1" />
-        <Button x:Name="btnClearAbilities" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Command="{Binding ClearActionsCommand}"  Content="Clear" Margin="0,2,10,1" />
+        <Button x:Name="btnAddAbility"
+                Grid.Column="1"
+                Grid.Row="2"
+                HorizontalAlignment="Left"
+                Command="{Binding AddActionCommand}"
+                CommandParameter="{Binding ElementName=txbAbilityName, Path=Text}"
+                Content="Add"
+                Margin="10,1,0,0" />
+        <Button x:Name="btnDeleteAbility"
+                Grid.Column="1"
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                Command="{Binding DeleteActionCommand}"
+                CommandParameter="{Binding ElementName=lstAbilities, Path=SelectedItem}"
+                Content="Delete"
+                Margin="111,2,115,1" />
+        <Button x:Name="btnClearAbilities"
+                Grid.Column="1"
+                Grid.Row="2"
+                HorizontalAlignment="Right"
+                Command="{Binding ClearActionsCommand}"
+                Content="Clear"
+                Margin="0,2,10,1" />
     </Grid>
 </UserControl>
