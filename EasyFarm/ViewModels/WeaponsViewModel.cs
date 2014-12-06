@@ -51,17 +51,27 @@ namespace EasyFarm.ViewModels
             }
         }
 
-        public int Health
+        public int UpperHealth
         {
-            get { return Config.Instance.WeaponSkill.Health; }
+            get { return Config.Instance.WeaponSkill.UpperHealth; }
             set
             {
-                SetProperty(ref Config.Instance.WeaponSkill.Health, value); 
-                InformUser("Health set to " + this.Health);
+                SetProperty(ref Config.Instance.WeaponSkill.UpperHealth, value);
+                InformUser("Upper health set to " + this.UpperHealth);
             }
         }
 
-        public WeaponSkill Ability
+        public int LowerHealth
+        {
+            get { return Config.Instance.WeaponSkill.LowerHealth; }
+            set
+            {
+                SetProperty(ref Config.Instance.WeaponSkill.LowerHealth, value);
+                InformUser("Lower health set to " + this.LowerHealth);
+            }
+        }
+
+        public WeaponSkill WeaponSkill
         {
             get { return Config.Instance.WeaponSkill; }
             set { SetProperty(ref Config.Instance.WeaponSkill, value); }
@@ -79,11 +89,12 @@ namespace EasyFarm.ViewModels
                 return;
             }
 
-            this.Ability.Ability = weaponSkill;
-            this.Ability.Distance = Distance;
-            this.Ability.Health = Health;
-            this.Ability.Enabled = true;
-            this.Ability.Name = Name;
+            this.WeaponSkill.Ability = weaponSkill;
+            this.WeaponSkill.Distance = Distance;
+            this.WeaponSkill.UpperHealth = UpperHealth;
+            this.WeaponSkill.LowerHealth = LowerHealth;
+            this.WeaponSkill.Enabled = true;
+            this.WeaponSkill.Name = Name;
 
             InformUser("Weaponskill set.");
         }

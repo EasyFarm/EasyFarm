@@ -28,6 +28,7 @@ using ZeroLimits.XITool.Test;
 using EasyFarm.ViewModels;
 using System.Collections.Generic;
 using EasyFarm.GameData;
+using ZeroLimits.FarmingTool;
 
 namespace EasyFarmTests
 {
@@ -109,6 +110,36 @@ namespace EasyFarmTests
             // Test Claimed Filter 
             Config.Instance.FilterInfo.ClaimedFilter = true;
             Assert.IsTrue(UnitFilters.MobFilter(null)(Unit));            
+        }
+
+        [TestMethod]
+        public void TestWeaponSkillTrigger()
+        {
+            WeaponSkill skill = new WeaponSkill()
+            {
+                Distance = 4,
+                Enabled = true,
+                LowerHealth = 25,
+                UpperHealth = 75,
+                Ability = new Ability() { Name = "Raging Axe"}
+            };
+
+            TestUnit unit = new TestUnit()
+            {
+                HPPCurrent = 50,
+                Distance = 3
+            };
+
+            // Test for success
+            Assert.IsTrue(ActionFilters.WeaponSkillFilter(null)(skill, unit));
+
+            // Test for failure on low hp. 
+            unit.HPPCurrent = 0;
+            Assert.IsFalse(ActionFilters.WeaponSkillFilter(null)(skill, unit));
+
+            // Test for failure on high hp. 
+            unit.HPPCurrent = 100;
+            Assert.IsFalse(ActionFilters.WeaponSkillFilter(null)(skill, unit));
         }
     }
 }

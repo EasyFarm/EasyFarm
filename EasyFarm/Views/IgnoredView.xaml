@@ -16,35 +16,42 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ComboBox x:Name="cboIgnoreList"
-                  Width="Auto"
+                  Margin="5"
                   Grid.Column="1"
-                  HorizontalAlignment="Stretch"
-                  Margin="10"
-                  VerticalAlignment="Stretch"
                   IsEditable="True"
                   ItemsSource="{Binding Ignored}"
                   Text="{Binding Name}" />
         <Label Content="Name" />
-        <Button x:Name="btnDeleteIgnored"
-                Grid.Column="1"
-                Grid.Row="1"
-                HorizontalAlignment="Center"
-                Content="Delete"
-                Margin="114,11,112,-6"
-                Command="{Binding DeleteIgnoredUnitCommand}" />
-        <Button x:Name="btnAddIgnored"
-                Grid.Column="1"
-                Grid.Row="1"
-                HorizontalAlignment="Left"
-                Command="{Binding AddIgnoredUnitCommand}"
-                Content="Add"
-                Margin="10,10,0,-7" />
-        <Button x:Name="btnClearIgnored"
-                Grid.Column="1"
-                Grid.Row="1"
-                HorizontalAlignment="Right"
-                Command="{Binding ClearIgnoredUnitsCommand}"
-                Content="Clear"
-                Margin="0,11,10,-6" />
+        <Grid Grid.Row="1"
+              Grid.Column="2">
+            <!--All each button to be in its own column -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <!--Format buttons to be spaced.-->
+            <Grid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin"
+                            Value="5" />
+                </Style>
+            </Grid.Resources>
+            <!--Delete button -->
+            <Button x:Name="btnDeleteIgnored"
+                    Grid.Column="1"
+                    Content="Delete"
+                    Command="{Binding DeleteIgnoredUnitCommand}" />
+            <!--Add button -->
+            <Button x:Name="btnAddIgnored"
+                    Grid.Column="0"
+                    Command="{Binding AddIgnoredUnitCommand}"
+                    Content="Add" />
+            <!--Clear button -->
+            <Button x:Name="btnClearIgnored"
+                    Grid.Column="2"
+                    Command="{Binding ClearIgnoredUnitsCommand}"
+                    Content="Clear" />
+        </Grid>
     </Grid>
 </UserControl>

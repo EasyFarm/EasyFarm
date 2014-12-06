@@ -26,6 +26,9 @@ using EasyFarm.GameData;
 using ZeroLimits.XITool;
 using ZeroLimits.XITool.Classes;
 using EasyFarm.UserSettings;
+using ZeroLimits.XITool.Interfaces;
+using ZeroLimits.XITool.Test;
+using EasyFarm.State;
 
 namespace ZeroLimits.FarmingTool
 {
@@ -61,6 +64,50 @@ namespace ZeroLimits.FarmingTool
                 if(x.TriggerLevel < fface.Player.HPPCurrent) return false;
 
                 if(!AbilityFilter(fface)(new AbilityService().CreateAbility(x.Name))) return false;
+
+                return true;
+            });
+        }
+
+        /// <summary>
+        /// A filter to checking whether we can use a weaponskill or not.  
+        /// </summary>
+        /// <param name="fface"></param>
+        /// <returns></returns>
+        public static Func<WeaponSkill, IUnit, bool> WeaponSkillFilter(FFACE fface)
+        {
+            //////////////////////////////////////////////////////
+            // Code for testing weaponskill filtering.          //
+            //////////////////////////////////////////////////////
+            int TPCurrent = Constants.WEAPONSKILL_TP;
+            Status Status = Status.Fighting;
+
+            if (fface != null)
+            {
+                TPCurrent = fface.Player.TPCurrent;
+                Status = fface.Player.Status;
+            }
+            //////////////////////////////////////////////////////
+
+            return new Func<WeaponSkill, IUnit, bool>((WeaponSkill x, IUnit u) =>
+            {
+                // Weaponskill a valid ability?
+                if (!x.Ability.IsValidName) return false;
+
+                // Not enough tp. 
+                if (TPCurrent < Constants.WEAPONSKILL_TP) return false;
+
+                // Not engaged. 
+                if (!Status.Equals(Status.Fighting)) return false;
+
+                // The target's health is greater than the upper threshold, return false. 
+                if (u.HPPCurrent> x.UpperHealth) return false;
+
+                // Target's health is less than the lower threshold, return false. 
+                if (u.HPPCurrent< x.LowerHealth) return false;
+
+                // Do not meet distance requirements. 
+                if (u.Distance > x.Distance) return false;
 
                 return true;
             });

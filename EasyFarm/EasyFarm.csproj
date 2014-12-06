@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{14508978-627B-46AE-9779-1F6B4FB0611E}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EasyFarm</RootNamespace>
     <AssemblyName>EasyFarm</AssemblyName>
@@ -104,13 +104,16 @@
     </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.14.0.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.SemanticLogging">
       <HintPath>..\packages\EnterpriseLibrary.SemanticLogging.2.0.1406.1\lib\net45\Microsoft.Practices.EnterpriseLibrary.SemanticLogging.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.SemanticLogging.TextFile">
       <HintPath>..\packages\EnterpriseLibrary.SemanticLogging.TextFile.2.0.1406.1\lib\net45\Microsoft.Practices.EnterpriseLibrary.SemanticLogging.TextFile.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.Composition">
       <HintPath>..\packages\Prism.Composition.5.0.0\lib\NET45\Microsoft.Practices.Prism.Composition.dll</HintPath>
@@ -142,6 +145,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -150,6 +154,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity">
       <HintPath>..\packages\MahApps.Metro.0.14.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.XML" />
@@ -191,7 +196,7 @@
     </Compile>
     <Compile Include="Classes\HealingAbility.cs" />
     <Compile Include="Classes\Waypoint.cs" />
-    <Compile Include="Classes\WeaponAbility.cs" />
+    <Compile Include="Classes\WeaponSkill.cs" />
     <Compile Include="SavedData\ActionInfo.cs" />
     <Compile Include="SavedData\Config.cs" />
     <Compile Include="SavedData\Health.cs" />
@@ -238,6 +243,9 @@
     </Compile>
     <Compile Include="Views\IgnoredView.xaml.cs">
       <DependentUpon>IgnoredView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LogSettingsView.xaml.cs">
+      <DependentUpon>LogSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -338,6 +346,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\LogSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -389,13 +401,15 @@
     <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.PubSubEvents.dll" />
     <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.SharedInterfaces.dll" />
     <EmbeddedResource Include="Embedded\Microsoft.Practices.ServiceLocation.dll" />
+    <Content Include="Embedded\MahApps.Metro.dll" />
+    <Content Include="Embedded\Microsoft.Practices.EnterpriseLibrary.SemanticLogging.dll" />
+    <Content Include="Embedded\Microsoft.Practices.EnterpriseLibrary.SemanticLogging.TextFile.dll" />
+    <Content Include="Embedded\Newtonsoft.Json.dll" />
+    <Content Include="Embedded\System.Windows.Interactivity.dll" />
     <Content Include="FFACE.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="FFACETools.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

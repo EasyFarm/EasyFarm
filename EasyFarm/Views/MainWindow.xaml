@@ -14,9 +14,6 @@
                        MaxHeight="340"
                        MaxWidth="510"
                        WindowStartupLocation="CenterOwner">
-    <Window.Resources>
-        <ResourceDictionary Source="ControlStyles.xaml" />
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />

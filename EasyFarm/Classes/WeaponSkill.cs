@@ -40,9 +40,14 @@ namespace EasyFarm.GameData
         public bool Enabled = false;
 
         /// <summary>
-        /// Mob hp needed inorder to use weaponskill
+        /// The health at which to start using weaponskills
         /// </summary>
-        public int Health = 0;
+        public int UpperHealth = 75;
+
+        /// <summary>
+        /// The health at which to stop using weaponskills. 
+        /// </summary>
+        public int LowerHealth = 25;
 
         /// <summary>
         /// The weaponskill

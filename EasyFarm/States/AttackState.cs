@@ -84,7 +84,7 @@ namespace EasyFarm.State
                 ftools.CombatService.Disengage();
 
             // Target the target
-            if (TargetUnit.ID != FFACE.Target.ID) 
+            if (TargetUnit.ID != FFACE.Target.ID)
                 ftools.CombatService.TargetUnit(TargetUnit);
 
             ///////////////////////////////////////////////////////////////////
@@ -177,22 +177,8 @@ namespace EasyFarm.State
         {
             get
             {
-                // Weaponskill a valid ability?
-                if (!Config.Instance.WeaponSkill.Ability.IsValidName) return false;
-
-                // Not enough tp. 
-                if (FFACE.Player.TPCurrent < Constants.WEAPONSKILL_TP) return false;
-
-                // Not engaged. 
-                if (!FFACE.Player.Status.Equals(Status.Fighting)) return false;
-
-                // Do not meet mob hp requirements. 
-                if (TargetUnit.HPPCurrent > Config.Instance.WeaponSkill.Health) return false;
-
-                // Do not meet distance requirements. 
-                if (TargetUnit.Distance > Config.Instance.WeaponSkill.Distance) return false;
-
-                return true;
+                return ActionFilters.WeaponSkillFilter(FFACE)
+                    (Config.Instance.WeaponSkill, TargetUnit);
             }
         }
 

@@ -24,12 +24,12 @@ namespace EasyFarm.Logging
             // Application: 0 - 99
             public const int APPLICATION_START = 1;
             public const int APPLICATION_END = 2;
-            
+
             // Resources: 100 - 199
             public const int RESOURCES_LOCATED = 100;
             public const int RESOURCE_FOLDER_MISSING = 101;
             public const int RESOURCE_FILES_MISSING = 102;
-            
+
             // Processes: 200 - 299
             public const int PROCESS_FOUND = 200;
             public const int PROCESS_NOT_FOUND = 201;
@@ -63,7 +63,7 @@ namespace EasyFarm.Logging
         /// Logs the program's start. 
         /// </summary>
         /// <param name="message"></param>
-        [Event(EventID.APPLICATION_START)]
+        [Event(EventID.APPLICATION_START, Level = EventLevel.Informational)]
         public void ApplicationStart(string message)
         {
             if (this.IsEnabled()) WriteEvent(EventID.APPLICATION_START, message);
@@ -73,7 +73,7 @@ namespace EasyFarm.Logging
         /// Logs the program's end. 
         /// </summary>
         /// <param name="message"></param>
-        [Event(EventID.APPLICATION_END)]
+        [Event(EventID.APPLICATION_END, Level = EventLevel.Informational)]
         public void ApplicationEnd(string message)
         {
             if (this.IsEnabled()) WriteEvent(EventID.APPLICATION_END, message);
@@ -83,7 +83,7 @@ namespace EasyFarm.Logging
         /// Logs the success of finding all resource folders / files. 
         /// </summary>
         /// <param name="message"></param>
-        [Event(EventID.RESOURCES_LOCATED)]
+        [Event(EventID.RESOURCES_LOCATED, Level = EventLevel.Informational)]
         public void ResourcesLocated(string message)
         {
             if (this.IsEnabled()) WriteEvent(EventID.RESOURCES_LOCATED, message);
@@ -93,7 +93,7 @@ namespace EasyFarm.Logging
         /// Logs events for resource files being missing. 
         /// </summary>
         /// <param name="message"></param>
-        [Event(EventID.RESOURCE_FILES_MISSING)]
+        [Event(EventID.RESOURCE_FILES_MISSING, Level = EventLevel.Error)]
         public void ResourceFileMissing(string message)
         {
             if (this.IsEnabled()) WriteEvent(EventID.RESOURCE_FILES_MISSING, message);
@@ -103,37 +103,37 @@ namespace EasyFarm.Logging
         /// Logs events for the resources folder being missing. 
         /// </summary>
         /// <param name="message"></param>
-        [Event(EventID.RESOURCE_FOLDER_MISSING)]
+        [Event(EventID.RESOURCE_FOLDER_MISSING, Level = EventLevel.Error)]
         public void ResourceFolderMissing(string message)
         {
             if (this.IsEnabled()) WriteEvent(EventID.RESOURCE_FOLDER_MISSING, message);
         }
 
-        [Event(EventID.PROCESS_NOT_FOUND)]
+        [Event(EventID.PROCESS_NOT_FOUND, Level = EventLevel.Error)]
         public void ProcessNotFound(string message)
         {
             if (this.IsEnabled()) WriteEvent(EventID.PROCESS_NOT_FOUND, message);
         }
 
-        [Event(EventID.PROCESS_FOUND)]
+        [Event(EventID.PROCESS_FOUND, Level = EventLevel.Error)]
         public void ProcessFound(string message)
         {
             if (this.IsEnabled()) WriteEvent(EventID.PROCESS_FOUND, message);
         }
 
-        [Event(EventID.BOT_START)]
+        [Event(EventID.BOT_START, Level = EventLevel.Informational)]
         public void BotStart(string message)
         {
             if (this.IsEnabled()) WriteEvent(EventID.BOT_START, message);
         }
 
-        [Event(EventID.BOT_STOP)]
+        [Event(EventID.BOT_STOP, Level = EventLevel.Informational)]
         public void BotStop(string message)
         {
             if (this.IsEnabled()) WriteEvent(EventID.BOT_STOP, message);
         }
 
-        [Event(EventID.SETTINGS_SAVE)]
+        [Event(EventID.SETTINGS_SAVE, Level = EventLevel.Informational)]
         public void SaveSettings(string message)
         {
             if (this.IsEnabled()) WriteEvent(EventID.SETTINGS_SAVE, message);

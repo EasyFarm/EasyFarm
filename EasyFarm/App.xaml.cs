@@ -28,6 +28,7 @@ using EasyFarm.UserSettings;
 using EasyFarm.Logging;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using System.Diagnostics.Tracing;
+using System.Collections;
 
 namespace EasyFarm
 {
@@ -39,13 +40,12 @@ namespace EasyFarm
         /// <summary>
         /// The files we currently use for AbilityService's resource file parsing. 
         /// </summary>
-        public static readonly String[] resources = 
-            { "spells.xml", "abils.xml" };
-        
+        public static readonly String[] resources = { "spells.xml", "abils.xml" };
+
         /// <summary>
         /// The url where the resources may be downloaded. 
         /// </summary>
-        public const String resourcesUrl = 
+        public const String resourcesUrl =
             "http://www.ffevo.net/topic/2923-ashita-and-ffacetools-missing-resource-files/";
 
         /// <summary>
@@ -54,12 +54,12 @@ namespace EasyFarm
         /// </summary>
         public App()
         {
-            var EventListener = FlatFileLog.CreateListener(Path.ChangeExtension("Log-" + DateTime.Now.ToFileTime(), ".txt"));
+            var EventListener = new ObservableEventListener();
             EventListener.EnableEvents(Logger.Write, EventLevel.Verbose);
             Logger.Write.ApplicationStart("Application starting");
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
         }
-        
+
         ~App()
         {
             Logger.Write.ApplicationStart("Application exiting");
@@ -82,7 +82,7 @@ namespace EasyFarm
                     ));
 
                 Environment.Exit(0);
-            }            
+            }
 
             if (resources.Any(x => !File.Exists(Path.Combine("resources", x))))
             {
@@ -117,7 +117,7 @@ namespace EasyFarm
             Logger.Write.ProcessFound("Process found");
 
             // Save the selected fface instance. 
-            var FFACE = ProcessSelectionScreen.SelectedSession;            
+            var FFACE = ProcessSelectionScreen.SelectedSession;
 
             ViewModelBase.SetSession(FFACE);
 
@@ -132,7 +132,7 @@ namespace EasyFarm
         /// </summary>
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
-        {            
+        {
             Config.Instance.SaveSettings();
         }
 

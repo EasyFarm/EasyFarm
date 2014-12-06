@@ -3,62 +3,60 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d"
-             d:DesignHeight="157.191"
+             d:DesignHeight="108.191"
              d:DesignWidth="408.904">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
-            <ColumnDefinition Width="300" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <!--Name of the weaponskill that should be used-->
-        <Label Margin="10"
-               VerticalAlignment="Top"
-               Content="Name"
-               Padding="5" />
-        <TextBox Grid.Column="1"
-                 Margin="10"
-                 Text="{Binding Name}" />
+    <DockPanel>
         <!--Sets the weaponskill for use in the bot-->
-        <Button Grid.Column="1"
-                Grid.Row="2"
-                HorizontalAlignment="Right"
+        <Button DockPanel.Dock="Bottom"
                 Command="{Binding SetCommand}"
-                Content="Set"
-                Margin="0,47,5,-23" />
-        <!--These are used to adjust the max distance a weaponskill should be fired.-->
-        <Label Grid.Row="1"
-               Content="Distance"
-               Padding="5" />
-        <Slider Width="Auto"
-                Height="Auto"
-                Grid.Column="1"
-                Grid.Row="1"
-                HorizontalAlignment="Stretch"
-                Margin="5"
-                VerticalAlignment="Stretch"
-                Maximum="17"
-                Padding="5"
-                Value="{Binding Distance}" />
-        <!--These are for the health at which the weaponskill should be used-->
-        <Label Grid.Row="2"
-               Content="Health"
-               Padding="5" />
-        <Slider Width="Auto"
-                Height="Auto"
-                Grid.Column="1"
-                Grid.Row="2"
-                HorizontalAlignment="Stretch"
-                Margin="5"
-                VerticalAlignment="Stretch"
-                Maximum="100"
-                Minimum="1"
-                Padding="5"
-                Value="{Binding Health}" />
-    </Grid>
+                Content="Set" />
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style TargetType="Grid">
+                    <Setter Property="Margin"
+                            Value="10" />
+                </Style>
+            </StackPanel.Resources>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="300" />
+                </Grid.ColumnDefinitions>
+                <!--Name of the weaponskill that should be used-->
+                <Label Content="Name" />
+                <TextBox Grid.Column="1"
+                         Text="{Binding Name}" />
+            </Grid>
+            <!--These are used to adjust the max distance a weaponskill should be fired.-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="300" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="1"
+                       Content="Distance" />
+                <Slider Grid.Column="1"
+                        Grid.Row="1"
+                        Maximum="17"
+                        Value="{Binding Distance}" />
+            </Grid>
+            <!--These are for the health at which the weaponskill should be used-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="300" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="2"
+                       Content="Health" />
+                <Controls:RangeSlider Grid.Column="1"
+                                      Grid.Row="2"
+                                      Maximum="100"
+                                      Minimum="0"
+                                      LowerValue="{Binding LowerHealth}"
+                                      UpperValue="{Binding UpperHealth}" />
+            </Grid>
+        </StackPanel>
+    </DockPanel>
 </UserControl>
