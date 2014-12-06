@@ -26,13 +26,20 @@ using ZeroLimits.FarmingTool;
 using System.Linq;
 using EasyFarm.UserSettings;
 using System.Collections.ObjectModel;
+using EasyFarm.Logging;
 
 namespace EasyFarm.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Internal list of view models. 
+        /// </summary>
         private ObservableCollection<ViewModelBase> m_ViewModels;
 
+        /// <summary>
+        /// List of dynamically found view models. 
+        /// </summary>
         public ObservableCollection<ViewModelBase> ViewModels
         {
             get { return m_ViewModels; }
@@ -42,8 +49,14 @@ namespace EasyFarm.ViewModels
             }
         }
 
-        private int m_selectedIndex = 2;
+        /// <summary>
+        /// Interal stating index for the currently focused tab.
+        /// </summary>
+        private int m_selectedIndex = 0;
 
+        /// <summary>
+        /// Index for the currently focused tab. 
+        /// </summary>
         public int SelectedIndex
         {
             get { return m_selectedIndex; }
@@ -74,49 +87,79 @@ namespace EasyFarm.ViewModels
             SaveCommand = new DelegateCommand(Save);
         }
 
+        /// <summary>
+        /// Bind for the title bar's text. 
+        /// </summary>
         public String MainWindowTitle 
         {
             get { return Config.Instance.MainWindowTitle; }
             set { this.SetProperty(ref Config.Instance.MainWindowTitle, value); }
         }
 
+        /// <summary>
+        /// Binding for the status bar's text. 
+        /// </summary>
         public String StatusBarText
         {
             get { return Config.Instance.StatusBarText; }
             set { this.SetProperty(ref Config.Instance.StatusBarText, value); }
         }
 
+        /// <summary>
+        /// Tells whether the bot is working or not. 
+        /// </summary>
         public bool IsWorking 
         {
             get { return GameEngine.IsWorking; }
             set { SetProperty(ref GameEngine.IsWorking, value); }
         }
        
+        /// <summary>
+        /// Command to start the bot. 
+        /// </summary>
         public ICommand StartCommand { get; set; }
 
+        /// <summary>
+        /// Command to shut down the program. 
+        /// </summary>
         public ICommand ExitCommand { get; set; }
 
+        /// <summary>
+        /// Command to save the user's settings. 
+        /// </summary>
         public DelegateCommand SaveCommand { get; set; }
 
+        /// <summary>
+        /// Tells the program to start farming. 
+        /// </summary>
         public void Start()
         {
             if (GameEngine.IsWorking)
             {
-                InformUser("Program paused.");
+                Logger.Write.BotStop("Bot now paused");
+                InformUser("Program paused.");                
                 GameEngine.Stop();
             }
             else
             {
+                Logger.Write.BotStart("Bot now running");
                 InformUser("Program running.");
                 GameEngine.Start();
             }
         }
 
+        /// <summary>
+        /// Saves the player's data to file. 
+        /// </summary>
         private void Save()
         {
+            Logger.Write.SaveSettings("Settings saved");
             Config.Instance.SaveSettings();
         }
 
+        /// <summary>
+        /// Shutsdown the program. 
+        /// </summary>
         private void Exit()
         {
             App.Current.Shutdown();

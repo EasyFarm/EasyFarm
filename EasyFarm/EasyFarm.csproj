@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{14508978-627B-46AE-9779-1F6B4FB0611E}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EasyFarm</RootNamespace>
     <AssemblyName>EasyFarm</AssemblyName>
@@ -106,6 +106,12 @@
       <HintPath>..\packages\MahApps.Metro.0.14.0.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.SemanticLogging">
+      <HintPath>..\packages\EnterpriseLibrary.SemanticLogging.2.0.1406.1\lib\net45\Microsoft.Practices.EnterpriseLibrary.SemanticLogging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.SemanticLogging.TextFile">
+      <HintPath>..\packages\EnterpriseLibrary.SemanticLogging.TextFile.2.0.1406.1\lib\net45\Microsoft.Practices.EnterpriseLibrary.SemanticLogging.TextFile.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Prism.Composition">
       <HintPath>..\packages\Prism.Composition.5.0.0\lib\NET45\Microsoft.Practices.Prism.Composition.dll</HintPath>
       <Private>False</Private>
@@ -134,6 +140,9 @@
       <HintPath>..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -152,46 +161,44 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Debugging\GameMap.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FarmingTool\BaseMonitor.cs" />
-    <Compile Include="FarmingTool\ChatLine.cs" />
-    <Compile Include="FarmingTool\ChatLog.cs" />
-    <Compile Include="FarmingTool\DeadMonitor.cs" />
-    <Compile Include="FarmingTool\FarmingTools.cs" />
-    <Compile Include="FarmingTool\ActionFilters.cs" />
-    <Compile Include="FarmingTool\ProcessWatcher.cs" />
-    <Compile Include="FarmingTool\StuckMonitor.cs" />
-    <Compile Include="FarmingTool\ZoneMonitor.cs" />
-    <Compile Include="FarmingTool\PlayerMonitor.cs" />
-    <Compile Include="FarmingTool\UnitFilters.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Monitors\BaseMonitor.cs" />
+    <Compile Include="Classes\ChatLine.cs" />
+    <Compile Include="Classes\ChatLog.cs" />
+    <Compile Include="Monitors\DeadMonitor.cs" />
+    <Compile Include="Classes\FarmingTools.cs" />
+    <Compile Include="Classes\ActionFilters.cs" />
+    <Compile Include="Monitors\ProcessWatcher.cs" />
+    <Compile Include="Monitors\StuckMonitor.cs" />
+    <Compile Include="Monitors\ZoneMonitor.cs" />
+    <Compile Include="Monitors\PlayerMonitor.cs" />
+    <Compile Include="Classes\UnitFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="State\AttackState.cs" />
-    <Compile Include="State\BaseState.cs" />
-    <Compile Include="State\FiniteStateMachine.cs" />
-    <Compile Include="State\GameEngine.cs" />
-    <Compile Include="State\HealingState.cs" />
-    <Compile Include="State\PostBattle.cs" />
-    <Compile Include="State\RestState.cs" />
-    <Compile Include="State\TargetInvalid.cs" />
-    <Compile Include="State\TravelState.cs" />
+    <Compile Include="States\AttackState.cs" />
+    <Compile Include="States\BaseState.cs" />
+    <Compile Include="States\FiniteStateMachine.cs" />
+    <Compile Include="States\GameEngine.cs" />
+    <Compile Include="States\HealingState.cs" />
+    <Compile Include="States\PostBattle.cs" />
+    <Compile Include="States\RestState.cs" />
+    <Compile Include="States\TargetInvalid.cs" />
+    <Compile Include="States\TravelState.cs" />
     <Compile Include="Debugging\DebugCreatures.xaml.cs">
       <DependentUpon>DebugCreatures.xaml</DependentUpon>
     </Compile>
     <Compile Include="Debugging\DebugSpellCasting.xaml.cs">
       <DependentUpon>DebugSpellCasting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameData\HealingAbility.cs" />
-    <Compile Include="GameData\Waypoint.cs" />
-    <Compile Include="GameData\WeaponAbility.cs" />
-    <Compile Include="UserSettings\ActionInfo.cs" />
-    <Compile Include="UserSettings\Config.cs" />
-    <Compile Include="UserSettings\Health.cs" />
-    <Compile Include="UserSettings\Magic.cs" />
-    <Compile Include="UserSettings\MiscSettings.cs" />
-    <Compile Include="UserSettings\MobFilters.cs" />
-    <Compile Include="UserSettings\RestingInfo.cs" />
+    <Compile Include="Classes\HealingAbility.cs" />
+    <Compile Include="Classes\Waypoint.cs" />
+    <Compile Include="Classes\WeaponAbility.cs" />
+    <Compile Include="SavedData\ActionInfo.cs" />
+    <Compile Include="SavedData\Config.cs" />
+    <Compile Include="SavedData\Health.cs" />
+    <Compile Include="SavedData\Magic.cs" />
+    <Compile Include="SavedData\MiscSettings.cs" />
+    <Compile Include="SavedData\MobFilters.cs" />
+    <Compile Include="SavedData\RestingInfo.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -386,6 +393,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="FFACETools.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

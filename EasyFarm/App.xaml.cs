@@ -25,6 +25,9 @@ using System.Reflection;
 using System.Windows;
 using System.Linq;
 using EasyFarm.UserSettings;
+using EasyFarm.Logging;
+using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
+using System.Diagnostics.Tracing;
 
 namespace EasyFarm
 {
@@ -51,7 +54,15 @@ namespace EasyFarm
         /// </summary>
         public App()
         {
+            var EventListener = FlatFileLog.CreateListener(Path.ChangeExtension("Log-" + DateTime.Now.ToFileTime(), ".txt"));
+            EventListener.EnableEvents(Logger.Write, EventLevel.Verbose);
+            Logger.Write.ApplicationStart("Application starting");
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
+        }
+        
+        ~App()
+        {
+            Logger.Write.ApplicationStart("Application exiting");
         }
 
         /// <summary>
@@ -64,21 +75,29 @@ namespace EasyFarm
             // Check if the resource files exist.
             if (!Directory.Exists("resources"))
             {
+                Logger.Write.ResourceFolderMissing("Resource folder missing");
+
                 MessageBox.Show(
                     String.Format("You're missing the resources folder. You can download it from : {0}", resourcesUrl
                     ));
+
                 Environment.Exit(0);
-            }
+            }            
 
             if (resources.Any(x => !File.Exists(Path.Combine("resources", x))))
             {
                 String[] missing = resources.Where(x => !File.Exists(Path.Combine("resources", x))).ToArray();
                 String message = String.Join(" , ", missing);
+
+                Logger.Write.ResourceFileMissing("Resources missing " + String.Join(" , ", missing));
+
                 MessageBox.Show(
                     String.Format("You're missing {0} resource files. You can download them from : {1}.",
                     message, resourcesUrl));
                 Environment.Exit(0);
             }
+
+            Logger.Write.ResourcesLocated("Resources located");
 
             // Let user select ffxi process
             frmStartup ProcessSelectionScreen = new frmStartup();
@@ -90,12 +109,15 @@ namespace EasyFarm
             // Check if the user made a selection. 
             if (m_process == null)
             {
-                System.Windows.Forms.MessageBox.Show("No valid process was selected: Exiting now.");
+                Logger.Write.ProcessNotFound("Process not found");
+                MessageBox.Show("No valid process was selected: Exiting now.");
                 Environment.Exit(0);
             }
 
+            Logger.Write.ProcessFound("Process found");
+
             // Save the selected fface instance. 
-            var FFACE = ProcessSelectionScreen.SelectedSession;
+            var FFACE = ProcessSelectionScreen.SelectedSession;            
 
             ViewModelBase.SetSession(FFACE);
 
@@ -110,7 +132,7 @@ namespace EasyFarm
         /// </summary>
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
-        {
+        {            
             Config.Instance.SaveSettings();
         }
 
