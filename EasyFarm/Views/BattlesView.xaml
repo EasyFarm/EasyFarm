@@ -19,6 +19,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin"
+                        Value="5" />
+            </Style>
+        </Grid.Resources>
         <!--Tells us what list to add the textbox item to.-->
         <StackPanel Grid.Row="1"
                     Margin="10"
@@ -81,28 +87,26 @@
             </ListBox.Style>
         </ListBox>
         <!--Used to manipulate the Abilities list-->
-        <Button x:Name="btnAddAbility"
-                Grid.Column="1"
-                Grid.Row="2"
-                HorizontalAlignment="Left"
-                Command="{Binding AddActionCommand}"
-                CommandParameter="{Binding ElementName=txbAbilityName, Path=Text}"
-                Content="Add"
-                Margin="10,1,0,0" />
-        <Button x:Name="btnDeleteAbility"
-                Grid.Column="1"
-                Grid.Row="2"
-                HorizontalAlignment="Center"
-                Command="{Binding DeleteActionCommand}"
-                CommandParameter="{Binding ElementName=lstAbilities, Path=SelectedItem}"
-                Content="Delete"
-                Margin="111,2,115,1" />
-        <Button x:Name="btnClearAbilities"
-                Grid.Column="1"
-                Grid.Row="2"
-                HorizontalAlignment="Right"
-                Command="{Binding ClearActionsCommand}"
-                Content="Clear"
-                Margin="0,2,10,1" />
+        <Grid Grid.Column="2" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnAddAbility"
+                    Grid.Column="0"
+                    Command="{Binding AddActionCommand}"
+                    CommandParameter="{Binding ElementName=txbAbilityName, Path=Text}"
+                    Content="Add" />
+            <Button x:Name="btnDeleteAbility"
+                    Grid.Column="1"
+                    Command="{Binding DeleteActionCommand}"
+                    CommandParameter="{Binding ElementName=lstAbilities, Path=SelectedItem}"
+                    Content="Delete" />
+            <Button x:Name="btnClearAbilities"
+                    Grid.Column="2"
+                    Command="{Binding ClearActionsCommand}"
+                    Content="Clear" />
+        </Grid>
     </Grid>
 </UserControl>
