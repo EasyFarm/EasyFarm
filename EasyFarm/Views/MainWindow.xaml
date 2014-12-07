@@ -13,7 +13,8 @@
                        Title="{Binding MainWindowTitle}"
                        MaxHeight="340"
                        MaxWidth="510"
-                       WindowStartupLocation="CenterOwner">
+                       WindowStartupLocation="CenterOwner"
+                       Topmost="{Binding IsChecked, ElementName=mnuAlwaysOnTop, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
@@ -24,24 +25,37 @@
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
-        <Menu Grid.ColumnSpan="3"
-              Background="Black"
-              Foreground="White">
+        <Grid.Resources>
+            <Style TargetType="Menu">
+                <Setter Property="Background"
+                        Value="Black" />
+                <Setter Property="Foreground"
+                        Value="White" />
+            </Style>
+            <Style TargetType="MenuItem">
+                <Setter Property="Foreground"
+                        Value="White" />
+                <Setter Property="Foreground"
+                        Value="Black" />
+            </Style>
+        </Grid.Resources>
+        <Menu Grid.ColumnSpan="3">
             <MenuItem Header="_File"
-                      Foreground="White">
-                <MenuItem.Resources>
-                    <Style TargetType="MenuItem">
-                        <Setter Property="Foreground"
-                                Value="Black"></Setter>
-                    </Style>
-                </MenuItem.Resources>
-                <MenuItem x:Name="StartMenuItem"
-                          Header="St_art"
+                      Foreground="White"
+                      Background="Black">
+                <MenuItem Header="St_art"
                           Command="{Binding StartCommand}" />
                 <MenuItem Header="_Save"
                           Command="{Binding SaveCommand}" />
                 <MenuItem Header="E_xit"
                           Command="{Binding ExitCommand}" />
+            </MenuItem>
+            <MenuItem Header="_Options"
+                      Foreground="White"
+                      Background="Black">
+                <MenuItem Name="mnuAlwaysOnTop"
+                          Header="_Always on top"
+                          IsCheckable="True" />
             </MenuItem>
         </Menu>
         <TabControl x:Name="MainTabControl"
