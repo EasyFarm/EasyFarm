@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.BehaviorTree;
 using EasyFarm.FarmingTool;
 using EasyFarm.ViewModels;
 using FFACETools;
@@ -24,8 +25,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Forms;
 using ZeroLimits.FarmingTool;
+using System.Linq;
 
 namespace EasyFarm.Components
 {
@@ -35,6 +38,12 @@ namespace EasyFarm.Components
     /// </summary>
     public class GameEngine
     {
+        // Notice this matches FilterDelegate from the TreeBase class:
+        // We use an empty delegate so later on we don't have to use the
+        // "if (OnFilterTree != null)" syntax dozens of times. Slight performance
+        // hit? Yes. Willing to trade for code readability? Absolutely.
+        public event FilterDelegate OnFilterTree;
+
         /// <summary>
         /// Tells us whether the bot is working or not.
         /// </summary>
@@ -152,7 +161,7 @@ namespace EasyFarm.Components
                 ViewModelBase.InformUser("Program Paused");
                 Stop();
             }
-            else 
+            else
             {
                 ViewModelBase.InformUser("Program Resumed");
                 Start();
@@ -181,7 +190,7 @@ namespace EasyFarm.Components
             var waitDelay = DateTime.Now.Add(TimeSpan.FromSeconds(10));
 
             // Wait for five seconds after zoning. 
-            while (DateTime.Now < waitDelay)  { }
+            while (DateTime.Now < waitDelay) { }
 
             // Start up the state machine again.
             Start();
@@ -194,8 +203,53 @@ namespace EasyFarm.Components
         /// </summary>
         public void Start()
         {
-            StateMachine.Start();
-            IsWorking = true;
+            var WorkingClasses = new List<TreeBase>();
+
+            Assembly.GetExecutingAssembly()
+           .GetTypes()
+           .Where(x => x.IsClass)
+           .Where(x => x.GetCustomAttributes(typeof(BehaviorAttribute), false).Any())
+           .ToList().ForEach(item =>
+           {
+               // Get a constructor inside the class we understand. TreeBase
+               // uses (double MyValue, uint behaviormask) so look for that.
+               ConstructorInfo CI = item.GetConstructor(new Type[] { typeof(double), typeof(BehaviorType) });
+               if (CI != null)
+               {
+                   // Save the Influences on this particular class.
+                   BehaviorType mask = BehaviorType.None;
+                   foreach (BehaviorAttribute B in item.GetCustomAttributes(typeof(BehaviorAttribute), false))
+                   {
+                       mask = B.Influences;
+                   }
+
+                   // And build the class.
+                   TreeBase check = (TreeBase)CI.Invoke(new object[] { 1.0, mask });
+                   if (check != null)
+                   {
+                       WorkingClasses.Add(check);
+                       OnFilterTree += check.FilterSwitch;
+                   }
+               }
+           });
+
+            var world = new GameState(this._fface);
+
+            // StateMachine.Start();
+            while (true)
+            {
+                world.Update();
+                WorkingClasses.Sort();
+                OnFilterTree(BehaviorType.Curing);
+
+                foreach (var TB in WorkingClasses)
+                {
+                    if (!TB.Enabled) continue;
+                    TB.Execute(ref world);
+                }
+            }
+
+            // IsWorking = true;
         }
 
         /// <summary>
@@ -206,5 +260,13 @@ namespace EasyFarm.Components
             StateMachine.Stop();
             IsWorking = false;
         }
+
+        // And this matches the MessageDelegate syntax:
+        public void AcceptOutput(string one_message)
+        {
+            // You could print this message out to a logging file or TextBox if you preferred.
+            System.Diagnostics.Debug.Print(one_message);
+        }
     }
+
 }
