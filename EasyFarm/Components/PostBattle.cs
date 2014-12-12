@@ -26,34 +26,34 @@ using System.Linq;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 
-namespace EasyFarm.State
+namespace EasyFarm.Components
 {
-    public class PostBattle : BaseState
+    public class PostBattle : BaseComponent
     {
         public PostBattle(FFACE fface) : base(fface) { }
 
-        public override bool CheckState()
+        public override bool CheckComponent()
         {
-            if(AttackState.TargetUnit == null) return true;
+            if(AttackComponent.TargetUnit == null) return true;
 
-            if (AttackState.TargetUnit.Status.Equals(Status.Dead1 | Status.Dead2)) return true;
+            if (AttackComponent.TargetUnit.Status.Equals(Status.Dead1 | Status.Dead2)) return true;
             
             return false;
         }
 
-        public override void EnterState() { }
+        public override void EnterComponent() { }
 
-        public override void RunState()
+        public override void RunComponent()
         {
             // Only execute post battle moves when we have a non-null target.
-            if (AttackState.TargetUnit != null)
+            if (AttackComponent.TargetUnit != null)
             {
                 var UsableEndingMoves = Config.Instance.ActionInfo.StartList
                     .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
                     .ToList();
 
                 // Cast all spells making sure they land. Keeping  
-                ftools.AbilityExecutor.EnsureSpellsCast(AttackState.TargetUnit, UsableEndingMoves,
+                ftools.AbilityExecutor.EnsureSpellsCast(AttackComponent.TargetUnit, UsableEndingMoves,
                     Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
             }
 
@@ -62,14 +62,14 @@ namespace EasyFarm.State
 
             // Set our new target at the end so that we don't accidentaly cast on a 
             // new target. 
-            AttackState.TargetUnit = target;
+            AttackComponent.TargetUnit = target;
 
             // Set to false in order to use starting moves again in the 
-            // attack state. 
-            AttackState.fightStarted = false;
+            // attack Component. 
+            AttackComponent.fightStarted = false;
 
         }
 
-        public override void ExitState() { }
+        public override void ExitComponent() { }
     }
 }

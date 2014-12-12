@@ -17,40 +17,26 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.FarmingTool;
-using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZeroLimits.FarmingTool;
-using ZeroLimits.XITool;
 
-
-namespace EasyFarm.State
+namespace EasyFarm.Components
 {
-    /// <summary>
-    /// Changes our target once the target becomes invalid
-    /// </summary>
-    public class TargetInvalid : BaseState
+    public abstract class MachineController : MachineContainer, IMachineController
     {
-        public TargetInvalid(FFACE fface) : base(fface) { }
+        public abstract override bool CheckComponent();
 
-        public override bool CheckState()
-        {
-            if(AttackState.TargetUnit == null) return true;
-            if(!ftools.UnitService.IsValid(AttackState.TargetUnit)) return true;
-            return false;
-        }
+        public abstract override void EnterComponent();
 
-        public override void EnterState() { }
+        public abstract override void RunComponent();
 
-        public override void RunState()
-        {
-            AttackState.TargetUnit = ftools.UnitService.GetTarget(UnitFilters.MobFilter(FFACE), x => x.Distance);
-        }
+        public abstract override void ExitComponent();
 
-        public override void ExitState() { }
+        public abstract void Start();
+
+        public abstract void Stop();
     }
 }

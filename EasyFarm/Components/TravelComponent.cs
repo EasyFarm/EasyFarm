@@ -30,27 +30,27 @@ using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 
 
-namespace EasyFarm.State
+namespace EasyFarm.Components
 {
-    class TravelState : BaseState
+    public class TravelComponent : BaseComponent
     {
-        int position = 0;
+        private int position = 0;
 
-        public TravelState(FFACE fface) : base(fface) { }
+        public TravelComponent(FFACE fface) : base(fface) { }
 
-        public override bool CheckState()
+        public override bool CheckComponent()
         {
             // Waypoint list is empty.
             if (Config.Instance.Waypoints.Count <= 0) return false;
 
             // We are not able to attack any creatures. 
-            if (new AttackState(FFACE).CheckState()) return false;
+            if (new AttackComponent(FFACE).CheckComponent()) return false;
 
             // We don't have to rest. 
-            if (new RestState(FFACE).CheckState()) return false;
+            if (new RestComponent(FFACE).CheckComponent()) return false;
 
             // We don't have to heal. 
-            if (new HealingState(FFACE).CheckState()) return false;
+            if (new HealingComponent(FFACE).CheckComponent()) return false;
 
             // We are not bound or struck by an other movement
             // disabling condition. 
@@ -59,7 +59,7 @@ namespace EasyFarm.State
             return true;
         }
 
-        public override void EnterState()
+        public override void EnterComponent()
         {
             ftools.RestingService.EndResting();
             ftools.CombatService.Disengage();
@@ -68,7 +68,7 @@ namespace EasyFarm.State
             FFACE.Navigator.HeadingTolerance = 1;
         }
 
-        public override void RunState()
+        public override void RunComponent()
         {
             // If we've reached the end of the path....
             if (position > Config.Instance.Waypoints.Count - 1)
@@ -76,7 +76,7 @@ namespace EasyFarm.State
                 // Turn around and run the path in reverse with the old end being the new starting point
                 Config.Instance.Waypoints = new ObservableCollection<Waypoint>
                     (Config.Instance.Waypoints.Reverse());
-                
+
                 position = 0;
             }
 
@@ -104,6 +104,8 @@ namespace EasyFarm.State
             position++;
         }
 
+        public override void ExitComponent() { FFACE.Navigator.Reset(); }
+
         /// <summary>
         /// Set the position to nearest point. 
         /// </summary>
@@ -119,11 +121,6 @@ namespace EasyFarm.State
 
             // Get its index in the array of points, then ...
             position = Config.Instance.Waypoints.IndexOf(nearest);
-        }
-
-        public override void ExitState()
-        {
-            FFACE.Navigator.Reset();
         }
     }
 }

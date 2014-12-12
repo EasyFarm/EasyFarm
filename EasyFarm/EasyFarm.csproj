@@ -179,15 +179,21 @@
     <Compile Include="Monitors\PlayerMonitor.cs" />
     <Compile Include="Classes\UnitFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="States\AttackState.cs" />
-    <Compile Include="States\BaseState.cs" />
-    <Compile Include="States\FiniteStateMachine.cs" />
-    <Compile Include="States\GameEngine.cs" />
-    <Compile Include="States\HealingState.cs" />
-    <Compile Include="States\PostBattle.cs" />
-    <Compile Include="States\RestState.cs" />
-    <Compile Include="States\TargetInvalid.cs" />
-    <Compile Include="States\TravelState.cs" />
+    <Compile Include="Components\AttackComponent.cs" />
+    <Compile Include="Components\Interfaces\BaseComponent.cs" />
+    <Compile Include="Components\FiniteStateMachine.cs" />
+    <Compile Include="Components\GameEngine.cs" />
+    <Compile Include="Components\HealingState.cs" />
+    <Compile Include="Components\Interfaces\IMachineContainer.cs" />
+    <Compile Include="Components\Interfaces\IMachineController.cs" />
+    <Compile Include="Components\Interfaces\IMachineComponent.cs" />
+    <Compile Include="Components\Interfaces\MachineComponent.cs" />
+    <Compile Include="Components\Interfaces\MachineContainer.cs" />
+    <Compile Include="Components\Interfaces\MachineController.cs" />
+    <Compile Include="Components\PostBattle.cs" />
+    <Compile Include="Components\RestComponent.cs" />
+    <Compile Include="Components\TargetInvalid.cs" />
+    <Compile Include="Components\TravelComponent.cs" />
     <Compile Include="Debugging\DebugCreatures.xaml.cs">
       <DependentUpon>DebugCreatures.xaml</DependentUpon>
     </Compile>
