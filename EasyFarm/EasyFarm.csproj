@@ -179,21 +179,21 @@
     <Compile Include="Monitors\PlayerMonitor.cs" />
     <Compile Include="Classes\UnitFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Components\AttackComponent.cs" />
-    <Compile Include="Components\Interfaces\BaseComponent.cs" />
-    <Compile Include="Components\FiniteStateMachine.cs" />
-    <Compile Include="Components\GameEngine.cs" />
-    <Compile Include="Components\HealingComponent.cs" />
+    <Compile Include="Components\Components\AttackComponent.cs" />
+    <Compile Include="Components\Bases\BaseComponent.cs" />
+    <Compile Include="Components\Controllers\FiniteStateMachine.cs" />
+    <Compile Include="Components\Controllers\GameEngine.cs" />
+    <Compile Include="Components\Components\HealingComponent.cs" />
     <Compile Include="Components\Interfaces\IMachineContainer.cs" />
     <Compile Include="Components\Interfaces\IMachineController.cs" />
     <Compile Include="Components\Interfaces\IMachineComponent.cs" />
-    <Compile Include="Components\Interfaces\MachineComponent.cs" />
-    <Compile Include="Components\Interfaces\MachineContainer.cs" />
-    <Compile Include="Components\Interfaces\MachineController.cs" />
-    <Compile Include="Components\PostBattleComponent.cs" />
-    <Compile Include="Components\RestComponent.cs" />
-    <Compile Include="Components\TargetInvalidComponent.cs" />
-    <Compile Include="Components\TravelComponent.cs" />
+    <Compile Include="Components\Bases\MachineComponent.cs" />
+    <Compile Include="Components\Bases\MachineContainer.cs" />
+    <Compile Include="Components\Bases\MachineController.cs" />
+    <Compile Include="Components\Components\PostBattleComponent.cs" />
+    <Compile Include="Components\Components\RestComponent.cs" />
+    <Compile Include="Components\Components\TargetInvalidComponent.cs" />
+    <Compile Include="Components\Components\TravelComponent.cs" />
     <Compile Include="Debugging\DebugCreatures.xaml.cs">
       <DependentUpon>DebugCreatures.xaml</DependentUpon>
     </Compile>
@@ -438,6 +438,7 @@
     </Content>
     <Content Include="FFACETools.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
