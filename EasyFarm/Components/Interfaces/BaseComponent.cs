@@ -23,21 +23,19 @@ using ZeroLimits.FarmingTool;
 using EasyFarm.FarmingTool;
 using EasyFarm.ViewModels;
 
-namespace EasyFarm.State
+namespace EasyFarm.Components
 {
-    public abstract class BaseState : IComparable<BaseState>
+    public abstract class BaseComponent : MachineComponent
     {
-        public bool Enabled;
-        public int Priority;
         protected static FFACE FFACE;
         protected static FTools ftools;
 
-        public abstract bool CheckState();
-        public abstract void EnterState();
-        public abstract void RunState();
-        public abstract void ExitState();
+        public abstract override bool CheckComponent();
+        public abstract override void EnterComponent();
+        public abstract override void RunComponent();
+        public abstract override void ExitComponent();
 
-        public BaseState(FFACE fface)
+        public BaseComponent(FFACE fface)
         {
             if (FFACE == null) FFACE = fface;
             if (ftools == null)
@@ -45,9 +43,9 @@ namespace EasyFarm.State
                 ftools = new FTools(fface);
                 ftools.UnitService.UnitFilter = UnitFilters.MobFilter(fface);
             }
-        }
+        }      
 
-        public int CompareTo(BaseState other)
+        public int CompareTo(BaseComponent other)
         {
             return -this.Priority.CompareTo(other.Priority);
         }

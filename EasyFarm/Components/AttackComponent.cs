@@ -28,13 +28,15 @@ using ZeroLimits.XITool.Classes;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 
-namespace EasyFarm.State
+namespace EasyFarm.Components
 {
     /// <summary>
     /// A class for defeating monsters.
     /// </summary>
-    class AttackState : BaseState
+    public class AttackComponent : BaseComponent
     {
+        public AttackComponent(FFACE fface) : base(fface) { }
+
         public static bool fightStarted = false;
 
         private static Unit _targetUnit = Unit.CreateUnit(0);
@@ -48,9 +50,7 @@ namespace EasyFarm.State
             set { _targetUnit = value; }
         }
 
-        public AttackState(FFACE fface) : base(fface) { }
-
-        public override bool CheckState()
+        public override bool CheckComponent()
         {
             // If the target is not valid. 
             if (!ftools.UnitService.IsValid(TargetUnit)) return false;
@@ -59,7 +59,7 @@ namespace EasyFarm.State
             if (FFACE.Player.Status.Equals(Status.Dead1 | Status.Dead2)) return false;
 
             // If we're injured  
-            if (new RestState(FFACE).CheckState())
+            if (new RestComponent(FFACE).CheckComponent())
             {
                 if (FFACE.Player.Status != Status.Fighting) return false;
                 if (!ftools.UnitService.HasAggro) return false;
@@ -69,12 +69,12 @@ namespace EasyFarm.State
             return true;
         }
 
-        public override void EnterState()
+        public override void EnterComponent()
         {
             ftools.RestingService.EndResting();
         }
 
-        public override void RunState()
+        public override void RunComponent()
         {
             // Face the target
             FFACE.Navigator.FaceHeading(TargetUnit.ID);
@@ -168,6 +168,8 @@ namespace EasyFarm.State
             }
         }
 
+        public override void ExitComponent() { }
+
         /// <summary>
         /// Can we perform our weaponskill on the target unit?
         /// </summary>
@@ -181,7 +183,5 @@ namespace EasyFarm.State
                     (Config.Instance.WeaponSkill, TargetUnit);
             }
         }
-
-        public override void ExitState() { }
     }
 }

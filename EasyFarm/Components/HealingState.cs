@@ -25,15 +25,15 @@ using ZeroLimits.XITool.Classes;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 
-namespace EasyFarm.State
+namespace EasyFarm.Components
 {
-    class HealingState : BaseState
+    public class HealingComponent : BaseComponent
     {
-        public HealingState(FFACE fface) : base(fface) { }
+        public HealingComponent(FFACE fface) : base(fface) { }
 
-        public override bool CheckState()
+        public override bool CheckComponent()
         {
-            if (new RestState(FFACE).CheckState()) return false;
+            if (new RestComponent(FFACE).CheckComponent()) return false;
 
             if (!Config.Instance.ActionInfo.HealingList
                 .Any(x => ActionFilters.HealingFilter(FFACE)(x))) 
@@ -42,12 +42,12 @@ namespace EasyFarm.State
             return true;
         }
 
-        public override void EnterState()
+        public override void EnterComponent()
         {
             ftools.RestingService.EndResting();
         }
 
-        public override void RunState()
+        public override void RunComponent()
         {
             // Get the list of healing abilities that can be used.
             var UsableHealingMoves = Config.Instance.ActionInfo.HealingList
@@ -68,6 +68,6 @@ namespace EasyFarm.State
             }
         }
 
-        public override void ExitState() { }
+        public override void ExitComponent() { }
     }
 }

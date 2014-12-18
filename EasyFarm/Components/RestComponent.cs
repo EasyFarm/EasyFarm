@@ -24,13 +24,13 @@ using System.Linq;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 
-namespace EasyFarm.State
+namespace EasyFarm.Components
 {
-    class RestState : BaseState
+    public class RestComponent : BaseComponent
     {
-        public RestState(FFACE fface) : base(fface) { }
-
-        public override bool CheckState()
+        public RestComponent(FFACE fface) : base(fface) { }
+       
+        public override bool CheckComponent()
         {
             if (ftools.UnitService.HasAggro) return false;
 
@@ -47,9 +47,9 @@ namespace EasyFarm.State
             return false;
         }
 
-        public override void EnterState() { }
+        public override void EnterComponent() { }
 
-        public override void RunState()
+        public override void RunComponent()
         {
             if (!FFACE.Player.Status.Equals(Status.Healing))
             {
@@ -57,7 +57,7 @@ namespace EasyFarm.State
             }
         }
 
-        public override void ExitState() { }
+        public override void ExitComponent() { }
 
         /// <summary>
         /// Does our player have a status effect that prevents him

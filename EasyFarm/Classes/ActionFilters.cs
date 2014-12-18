@@ -28,7 +28,7 @@ using ZeroLimits.XITool.Classes;
 using EasyFarm.UserSettings;
 using ZeroLimits.XITool.Interfaces;
 using ZeroLimits.XITool.Test;
-using EasyFarm.State;
+using EasyFarm.Components;
 
 namespace ZeroLimits.FarmingTool
 {

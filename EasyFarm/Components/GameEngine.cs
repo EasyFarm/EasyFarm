@@ -27,7 +27,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using ZeroLimits.FarmingTool;
 
-namespace EasyFarm.State
+namespace EasyFarm.Components
 {
     /// <summary>
     /// Controls whether or not the bot should run. Basically anything 
