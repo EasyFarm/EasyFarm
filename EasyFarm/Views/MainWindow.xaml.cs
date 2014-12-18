@@ -25,8 +25,6 @@ namespace EasyFarm.Views
     // Members and Constructors
     public partial class MainWindow : MetroWindow
     {
-        // private ViewModel Bindings;
-       
         public MainWindow()
         {
             InitializeComponent();

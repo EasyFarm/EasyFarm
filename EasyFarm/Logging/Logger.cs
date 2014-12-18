@@ -42,6 +42,11 @@ namespace EasyFarm.Logging
             public const int SETTINGS_SAVE = 400;
             public const int SETTINGS_LOAD = 401;
 
+            // Settings: 500 - 599
+            public const int STATE_CHECK = 500;
+            public const int STATE_ENTER = 501;
+            public const int STATE_RUN = 502;
+            public const int STATE_EXIT = 503;
         }
 
         /// <summary>
@@ -66,7 +71,7 @@ namespace EasyFarm.Logging
         [Event(EventID.APPLICATION_START, Level = EventLevel.Informational)]
         public void ApplicationStart(string message)
         {
-            if (this.IsEnabled()) WriteEvent(EventID.APPLICATION_START, message);
+            SimpleWrite(EventID.APPLICATION_START, message);
         }
 
         /// <summary>
@@ -76,7 +81,7 @@ namespace EasyFarm.Logging
         [Event(EventID.APPLICATION_END, Level = EventLevel.Informational)]
         public void ApplicationEnd(string message)
         {
-            if (this.IsEnabled()) WriteEvent(EventID.APPLICATION_END, message);
+            SimpleWrite(EventID.APPLICATION_END, message);
         }
 
         /// <summary>
@@ -86,7 +91,7 @@ namespace EasyFarm.Logging
         [Event(EventID.RESOURCES_LOCATED, Level = EventLevel.Informational)]
         public void ResourcesLocated(string message)
         {
-            if (this.IsEnabled()) WriteEvent(EventID.RESOURCES_LOCATED, message);
+            SimpleWrite(EventID.RESOURCES_LOCATED, message);
         }
 
         /// <summary>
@@ -96,7 +101,7 @@ namespace EasyFarm.Logging
         [Event(EventID.RESOURCE_FILES_MISSING, Level = EventLevel.Error)]
         public void ResourceFileMissing(string message)
         {
-            if (this.IsEnabled()) WriteEvent(EventID.RESOURCE_FILES_MISSING, message);
+            SimpleWrite(EventID.RESOURCE_FILES_MISSING, message);
         }
 
         /// <summary>
@@ -106,37 +111,54 @@ namespace EasyFarm.Logging
         [Event(EventID.RESOURCE_FOLDER_MISSING, Level = EventLevel.Error)]
         public void ResourceFolderMissing(string message)
         {
-            if (this.IsEnabled()) WriteEvent(EventID.RESOURCE_FOLDER_MISSING, message);
+            SimpleWrite(EventID.RESOURCE_FOLDER_MISSING, message);
         }
 
         [Event(EventID.PROCESS_NOT_FOUND, Level = EventLevel.Error)]
         public void ProcessNotFound(string message)
         {
-            if (this.IsEnabled()) WriteEvent(EventID.PROCESS_NOT_FOUND, message);
+            SimpleWrite(EventID.PROCESS_NOT_FOUND, message);
         }
 
         [Event(EventID.PROCESS_FOUND, Level = EventLevel.Error)]
         public void ProcessFound(string message)
         {
-            if (this.IsEnabled()) WriteEvent(EventID.PROCESS_FOUND, message);
+            SimpleWrite(EventID.PROCESS_FOUND, message);
         }
 
         [Event(EventID.BOT_START, Level = EventLevel.Informational)]
         public void BotStart(string message)
         {
-            if (this.IsEnabled()) WriteEvent(EventID.BOT_START, message);
+            SimpleWrite(EventID.BOT_START, message);
         }
 
         [Event(EventID.BOT_STOP, Level = EventLevel.Informational)]
         public void BotStop(string message)
         {
-            if (this.IsEnabled()) WriteEvent(EventID.BOT_STOP, message);
+            SimpleWrite(EventID.BOT_STOP, message);
         }
 
         [Event(EventID.SETTINGS_SAVE, Level = EventLevel.Informational)]
         public void SaveSettings(string message)
         {
-            if (this.IsEnabled()) WriteEvent(EventID.SETTINGS_SAVE, message);
+            SimpleWrite(EventID.SETTINGS_SAVE, message);
+        }
+
+        [Event(EventID.STATE_CHECK, Level = EventLevel.Informational)]
+        public void StateCheck(string message, bool success)
+        {
+            SimpleWrite(EventID.STATE_CHECK, message);
+        }
+
+        [Event(EventID.STATE_RUN, Level = EventLevel.Informational)]
+        public void StateRun(string message)
+        {
+            SimpleWrite(EventID.STATE_CHECK, message);
+        }
+
+        public void SimpleWrite(int id, string message)
+        {
+            if (this.IsEnabled()) WriteEvent(id, message);
         }
     }
 }
