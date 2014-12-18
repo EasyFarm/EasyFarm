@@ -194,6 +194,21 @@
     <Compile Include="Components\RestComponent.cs" />
     <Compile Include="Components\TargetInvalidComponent.cs" />
     <Compile Include="Components\TravelComponent.cs" />
+    <Compile Include="States\AttackState.cs" />
+    <Compile Include="States\BaseState.cs" />
+    <Compile Include="States\ApproachState.cs" />
+    <Compile Include="States\FaceTargetState.cs" />
+    <Compile Include="States\FiniteStateMachine.cs" />
+    <Compile Include="States\GameEngine.cs" />
+    <Compile Include="States\HealingState.cs" />
+    <Compile Include="States\PullState.cs" />
+    <Compile Include="States\PostBattle.cs" />
+    <Compile Include="States\RestState.cs" />
+    <Compile Include="States\StateAttribute.cs" />
+    <Compile Include="States\TargetEnemyState.cs" />
+    <Compile Include="States\BuffState.cs" />
+    <Compile Include="States\TargetInvalid.cs" />
+    <Compile Include="States\TravelState.cs" />
     <Compile Include="Debugging\DebugCreatures.xaml.cs">
       <DependentUpon>DebugCreatures.xaml</DependentUpon>
     </Compile>
@@ -214,9 +229,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="States\EngageState.cs" />
+    <Compile Include="States\WeaponSkillState.cs" />
     <Compile Include="ViewModels\BattlesViewModel.cs" />
+    <Compile Include="ViewModels\DesignDataViewModel.cs" />
     <Compile Include="ViewModels\HealingViewModel.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
+    <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\UnitFilteringViewModel.cs">
       <SubType>Code</SubType>
@@ -227,7 +246,7 @@
     <Compile Include="ViewModels\TargetsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelAttribute.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="ViewModels\Locator.cs" />
     <Compile Include="ViewModels\WeaponsViewModel.cs" />
     <Compile Include="Views\AbilitySelectionBox.xaml.cs">
       <DependentUpon>AbilitySelectionBox.xaml</DependentUpon>
@@ -250,8 +269,8 @@
     <Compile Include="Views\IgnoredView.xaml.cs">
       <DependentUpon>IgnoredView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LogSettingsView.xaml.cs">
-      <DependentUpon>LogSettingsView.xaml</DependentUpon>
+    <Compile Include="Views\LogView.xaml.cs">
+      <DependentUpon>LogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -352,7 +371,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\LogSettingsView.xaml">
+    <Page Include="Views\LogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -412,6 +431,7 @@
     </Content>
     <Content Include="FFACETools.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

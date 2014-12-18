@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.FarmingTool;
+using EasyFarm.Logging;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -28,19 +29,34 @@ using ZeroLimits.FarmingTool;
 using ZeroLimits.XITool;
 
 
+<<<<<<< HEAD:EasyFarm/Components/TargetInvalidComponent.cs
 namespace EasyFarm.Components
 {
     /// <summary>
     /// Changes our target once the target becomes invalid
     /// </summary>
     public class TargetInvalidComponent : BaseComponent
+=======
+namespace EasyFarm.States
+{
+    /// <summary>
+    /// Changes our target once the target becomes invalid
+    /// </summary>    
+    [StateAttribute(priority: 3)]
+    public class TargetInvalid : BaseState
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/TargetInvalid.cs
     {
         public TargetInvalidComponent(FFACE fface) : base(fface) { }
 
         public override bool CheckComponent()
         {
+<<<<<<< HEAD:EasyFarm/Components/TargetInvalidComponent.cs
             if(AttackComponent.TargetUnit == null) return true;
             if(!ftools.UnitService.IsValid(AttackComponent.TargetUnit)) return true;
+=======
+            if (AttackState.TargetUnit == null) return true;
+            if (!ftools.UnitService.IsValid(AttackState.TargetUnit)) return true;
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/TargetInvalid.cs
             return false;
         }
 
@@ -48,9 +64,23 @@ namespace EasyFarm.Components
 
         public override void RunComponent()
         {
+<<<<<<< HEAD:EasyFarm/Components/TargetInvalidComponent.cs
             AttackComponent.TargetUnit = 
                 ftools.UnitService.GetTarget(
                 UnitFilters.MobFilter(FFACE), x => x.Distance);
+=======
+            var target = ftools.UnitService.GetTarget
+                (UnitFilters.MobFilter(FFACE), x => x.Distance);
+
+            if (target != null)
+            {
+                AttackState.TargetUnit = target;
+
+                // Write target to log. 
+                App.Current.Dispatcher.Invoke(() => Logger.Write.StateRun(
+                    String.Join(" ", "Now targeting", target.ID, target.Name)));
+            }
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/TargetInvalid.cs
         }
 
         public override void ExitComponent() { }

@@ -23,7 +23,11 @@ using ZeroLimits.FarmingTool;
 using EasyFarm.FarmingTool;
 using EasyFarm.ViewModels;
 
+<<<<<<< HEAD:EasyFarm/Components/Interfaces/BaseComponent.cs
 namespace EasyFarm.Components
+=======
+namespace EasyFarm.States
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/BaseState.cs
 {
     public abstract class BaseComponent : MachineComponent
     {

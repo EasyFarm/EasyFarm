@@ -29,10 +29,17 @@ using System.Diagnostics;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 
+<<<<<<< HEAD:EasyFarm/Components/TravelComponent.cs
 
 namespace EasyFarm.Components
 {
     public class TravelComponent : BaseComponent
+=======
+namespace EasyFarm.States
+{
+    [StateAttribute(priority: 1)]
+    public class TravelState : BaseState
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/TravelState.cs
     {
         private int position = 0;
 

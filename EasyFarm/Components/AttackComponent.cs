@@ -27,13 +27,24 @@ using System;
 using ZeroLimits.XITool.Classes;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
+using EasyFarm.Logging;
 
+<<<<<<< HEAD:EasyFarm/Components/AttackComponent.cs
 namespace EasyFarm.Components
+=======
+namespace EasyFarm.States
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/AttackState.cs
 {
     /// <summary>
     /// A class for defeating monsters.
     /// </summary>
+<<<<<<< HEAD:EasyFarm/Components/AttackComponent.cs
     public class AttackComponent : BaseComponent
+=======
+
+    [StateAttribute(priority: 1)]
+    public class AttackState : BaseState
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/AttackState.cs
     {
         public AttackComponent(FFACE fface) : base(fface) { }
 
@@ -52,21 +63,26 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            // If the target is not valid. 
-            if (!ftools.UnitService.IsValid(TargetUnit)) return false;
+            bool success = false;
 
-            // We're dead. 
-            if (FFACE.Player.Status.Equals(Status.Dead1 | Status.Dead2)) return false;
-
+<<<<<<< HEAD:EasyFarm/Components/AttackComponent.cs
             // If we're injured  
             if (new RestComponent(FFACE).CheckComponent())
+=======
+            // If we have a valid target
+            if (ftools.UnitService.IsValid(TargetUnit))
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/AttackState.cs
             {
-                if (FFACE.Player.Status != Status.Fighting) return false;
-                if (!ftools.UnitService.HasAggro) return false;
-            }
+                // If we're alive
+                if (!FFACE.Player.Status.Equals(Status.Dead1 | Status.Dead2))
+                {
+                    // If we're not injured
+                    if (!new RestState(FFACE).CheckState())
+                        success = true;
+                }
+            }            
 
-            // Should we attack?
-            return true;
+            return success;
         }
 
         public override void EnterComponent()
@@ -76,6 +92,7 @@ namespace EasyFarm.Components
 
         public override void RunComponent()
         {
+<<<<<<< HEAD:EasyFarm/Components/AttackComponent.cs
             // Face the target
             FFACE.Navigator.FaceHeading(TargetUnit.ID);
 
@@ -138,6 +155,8 @@ namespace EasyFarm.Components
             // Move to the target
             ftools.CombatService.MoveToUnit(TargetUnit, Config.Instance.MiscSettings.MeleeDistance);
 
+=======
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/AttackState.cs
             ///////////////////////////////////////////////////////////////////
             // Battle Enemy. 
             ///////////////////////////////////////////////////////////////////
@@ -148,6 +167,7 @@ namespace EasyFarm.Components
             // from move than 30 yalms problem. 
             if (FFACE.Player.Status.Equals(Status.Fighting))
             {
+<<<<<<< HEAD:EasyFarm/Components/AttackComponent.cs
                 // Weaponskill
                 if (ShouldWeaponSkill)
                 {
@@ -161,12 +181,15 @@ namespace EasyFarm.Components
                     ftools.AbilityExecutor.SetDefaults();
                 }
 
+=======
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/AttackState.cs
                 var UsableBattleMoves = Config.Instance.ActionInfo.BattleList
                     .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
                     .ToList();
 
                 // Cast all battle moves
                 ftools.AbilityExecutor.ExecuteActions(UsableBattleMoves);
+<<<<<<< HEAD:EasyFarm/Components/AttackComponent.cs
             }
         }
 
@@ -183,6 +206,8 @@ namespace EasyFarm.Components
             {
                 return ActionFilters.WeaponSkillFilter(FFACE)
                     (Config.Instance.WeaponSkill, TargetUnit);
+=======
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/AttackState.cs
             }
         }
     }

@@ -25,28 +25,44 @@ using ZeroLimits.XITool.Classes;
 using System.Linq;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
+using EasyFarm.Logging;
 
+<<<<<<< HEAD:EasyFarm/Components/PostBattleComponent.cs
 namespace EasyFarm.Components
 {
     public class PostBattleComponent : BaseComponent
+=======
+namespace EasyFarm.States
+{
+    [StateAttribute(priority: 2)]
+    public class PostBattle : BaseState
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/PostBattle.cs
     {
         public PostBattleComponent(FFACE fface) : base(fface) { }
 
         public override bool CheckComponent()
         {
+<<<<<<< HEAD:EasyFarm/Components/PostBattleComponent.cs
             if(AttackComponent.TargetUnit == null) return true;
 
             if (AttackComponent.TargetUnit.Status.Equals(Status.Dead1 | Status.Dead2)) return true;
             
             return false;
+=======
+            return AttackState.fightStarted && AttackState.TargetUnit != null && AttackState.TargetUnit.IsDead;
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/PostBattle.cs
         }
 
         public override void EnterComponent() { }
 
         public override void RunComponent()
         {
+<<<<<<< HEAD:EasyFarm/Components/PostBattleComponent.cs
             // Only execute post battle moves when we have a non-null target.
             if (AttackComponent.TargetUnit != null)
+=======
+            if (AttackState.fightStarted)
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/PostBattle.cs
             {
                 var UsableEndingMoves = Config.Instance.ActionInfo.StartList
                     .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
@@ -55,6 +71,7 @@ namespace EasyFarm.Components
                 // Cast all spells making sure they land. Keeping  
                 ftools.AbilityExecutor.EnsureSpellsCast(UsableEndingMoves);
             }
+<<<<<<< HEAD:EasyFarm/Components/PostBattleComponent.cs
 
             // Get the next target.
             var target = ftools.UnitService.GetTarget(UnitFilters.MobFilter(FFACE), x => x.Distance);            
@@ -70,5 +87,17 @@ namespace EasyFarm.Components
         }
 
         public override void ExitComponent() { }
+=======
+           
+            // Set to false in order to use starting moves again in the 
+            // attack state. 
+            AttackState.fightStarted = false;
+        }
+
+        public override void ExitState() 
+        { 
+
+        }
+>>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/PostBattle.cs
     }
 }
