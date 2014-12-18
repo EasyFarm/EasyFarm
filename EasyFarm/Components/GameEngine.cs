@@ -27,11 +27,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using ZeroLimits.FarmingTool;
 
-<<<<<<< HEAD:EasyFarm/Components/GameEngine.cs
 namespace EasyFarm.Components
-=======
-namespace EasyFarm.States
->>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/GameEngine.cs
 {
     /// <summary>
     /// Controls whether or not the bot should run. Basically anything 

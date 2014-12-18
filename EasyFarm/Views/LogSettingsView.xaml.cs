@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for LogView.xaml
+    /// Interaction logic for LogSettingsView.xaml
     /// </summary>
-    public partial class LogView : UserControl
+    public partial class LogSettingsView : Window
     {
-        public LogView()
+        public LogSettingsView()
         {
             InitializeComponent();
         }

@@ -24,16 +24,9 @@ using System.Linq;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 
-<<<<<<< HEAD:EasyFarm/Components/RestComponent.cs
 namespace EasyFarm.Components
 {
     public class RestComponent : BaseComponent
-=======
-namespace EasyFarm.States
-{
-    [StateAttribute(priority: 2)]
-    public class RestState : BaseState
->>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/RestState.cs
     {
         public RestComponent(FFACE fface) : base(fface) { }
        

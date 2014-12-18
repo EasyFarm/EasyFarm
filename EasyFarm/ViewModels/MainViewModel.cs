@@ -65,12 +65,9 @@ namespace EasyFarm.ViewModels
 
         public MainViewModel()
         {
-            var Locator = new Locator<ViewModelAttribute, ViewModelBase>();
-
             // Get all enabled view models. 
             this.ViewModels = new ObservableCollection<ViewModelBase>(
-                Locator.GetEnabledViewModels()
-                .Where(x => x != null)
+                ViewModelLocator.GetEnabledViewModels()
                 .OrderBy(x => x.VMName));
 
             // Get events from view models to update the status bar's text.

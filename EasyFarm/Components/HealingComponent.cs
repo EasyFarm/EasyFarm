@@ -25,16 +25,9 @@ using ZeroLimits.XITool.Classes;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 
-<<<<<<< HEAD:EasyFarm/Components/HealingComponent.cs
 namespace EasyFarm.Components
 {
     public class HealingComponent : BaseComponent
-=======
-namespace EasyFarm.States
-{
-    [StateAttribute(priority: 2)]
-    public class HealingState : BaseState
->>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/HealingState.cs
     {
         public HealingComponent(FFACE fface) : base(fface) { }
 

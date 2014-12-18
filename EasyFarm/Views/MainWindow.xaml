@@ -88,9 +88,6 @@
                 <DataTemplate DataType="{x:Type ViewModels:WeaponsViewModel}">
                     <Views:WeaponsView />
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type ViewModels:LogViewModel}">
-                    <Views:LogView />
-                </DataTemplate>
             </TabControl.Resources>
             <TabControl.ItemContainerStyle>
                 <Style TargetType="TabItem">

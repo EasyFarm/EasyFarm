@@ -27,24 +27,13 @@ using System;
 using ZeroLimits.XITool.Classes;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
-using EasyFarm.Logging;
 
-<<<<<<< HEAD:EasyFarm/Components/AttackComponent.cs
 namespace EasyFarm.Components
-=======
-namespace EasyFarm.States
->>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/AttackState.cs
 {
     /// <summary>
     /// A class for defeating monsters.
     /// </summary>
-<<<<<<< HEAD:EasyFarm/Components/AttackComponent.cs
     public class AttackComponent : BaseComponent
-=======
-
-    [StateAttribute(priority: 1)]
-    public class AttackState : BaseState
->>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/AttackState.cs
     {
         public AttackComponent(FFACE fface) : base(fface) { }
 
@@ -63,26 +52,21 @@ namespace EasyFarm.States
 
         public override bool CheckComponent()
         {
-            bool success = false;
+            // If the target is not valid. 
+            if (!ftools.UnitService.IsValid(TargetUnit)) return false;
 
-<<<<<<< HEAD:EasyFarm/Components/AttackComponent.cs
+            // We're dead. 
+            if (FFACE.Player.Status.Equals(Status.Dead1 | Status.Dead2)) return false;
+
             // If we're injured  
             if (new RestComponent(FFACE).CheckComponent())
-=======
-            // If we have a valid target
-            if (ftools.UnitService.IsValid(TargetUnit))
->>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/AttackState.cs
             {
-                // If we're alive
-                if (!FFACE.Player.Status.Equals(Status.Dead1 | Status.Dead2))
-                {
-                    // If we're not injured
-                    if (!new RestState(FFACE).CheckState())
-                        success = true;
-                }
-            }            
+                if (FFACE.Player.Status != Status.Fighting) return false;
+                if (!ftools.UnitService.HasAggro) return false;
+            }
 
-            return success;
+            // Should we attack?
+            return true;
         }
 
         public override void EnterComponent()
@@ -92,7 +76,6 @@ namespace EasyFarm.States
 
         public override void RunComponent()
         {
-<<<<<<< HEAD:EasyFarm/Components/AttackComponent.cs
             // Face the target
             FFACE.Navigator.FaceHeading(TargetUnit.ID);
 
@@ -155,8 +138,6 @@ namespace EasyFarm.States
             // Move to the target
             ftools.CombatService.MoveToUnit(TargetUnit, Config.Instance.MiscSettings.MeleeDistance);
 
-=======
->>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/AttackState.cs
             ///////////////////////////////////////////////////////////////////
             // Battle Enemy. 
             ///////////////////////////////////////////////////////////////////
@@ -167,7 +148,6 @@ namespace EasyFarm.States
             // from move than 30 yalms problem. 
             if (FFACE.Player.Status.Equals(Status.Fighting))
             {
-<<<<<<< HEAD:EasyFarm/Components/AttackComponent.cs
                 // Weaponskill
                 if (ShouldWeaponSkill)
                 {
@@ -181,15 +161,12 @@ namespace EasyFarm.States
                     ftools.AbilityExecutor.SetDefaults();
                 }
 
-=======
->>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/AttackState.cs
                 var UsableBattleMoves = Config.Instance.ActionInfo.BattleList
                     .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
                     .ToList();
 
                 // Cast all battle moves
                 ftools.AbilityExecutor.ExecuteActions(UsableBattleMoves);
-<<<<<<< HEAD:EasyFarm/Components/AttackComponent.cs
             }
         }
 
@@ -206,8 +183,6 @@ namespace EasyFarm.States
             {
                 return ActionFilters.WeaponSkillFilter(FFACE)
                     (Config.Instance.WeaponSkill, TargetUnit);
-=======
->>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor:EasyFarm/States/AttackState.cs
             }
         }
     }

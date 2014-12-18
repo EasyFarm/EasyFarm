@@ -17,11 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-<<<<<<< HEAD
 using EasyFarm.Components;
-=======
-using EasyFarm.States;
->>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor
 using EasyFarm.UserSettings;
 using FFACETools;
 using Microsoft.Practices.Prism.Mvvm;

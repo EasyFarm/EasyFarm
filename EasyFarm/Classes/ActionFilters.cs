@@ -28,11 +28,7 @@ using ZeroLimits.XITool.Classes;
 using EasyFarm.UserSettings;
 using ZeroLimits.XITool.Interfaces;
 using ZeroLimits.XITool.Test;
-<<<<<<< HEAD
 using EasyFarm.Components;
-=======
-using EasyFarm.States;
->>>>>>> VM_and_State_AutoLocate_and_AttackState_Refactor
 
 namespace ZeroLimits.FarmingTool
 {
