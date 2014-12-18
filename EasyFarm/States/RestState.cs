@@ -24,9 +24,10 @@ using System.Linq;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 
-namespace EasyFarm.State
+namespace EasyFarm.States
 {
-    class RestState : BaseState
+    [StateAttribute(priority: 2)]
+    public class RestState : BaseState
     {
         public RestState(FFACE fface) : base(fface) { }
 

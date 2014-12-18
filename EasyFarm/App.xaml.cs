@@ -53,16 +53,8 @@ namespace EasyFarm
         /// Reduces the amount of dll files in the executable's working directory. 
         /// </summary>
         public App()
-        {
-            var EventListener = new ObservableEventListener();
-            EventListener.EnableEvents(Logger.Write, EventLevel.Verbose);
-            Logger.Write.ApplicationStart("Application starting");
+        {            
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
-        }
-
-        ~App()
-        {
-            Logger.Write.ApplicationStart("Application exiting");
         }
 
         /// <summary>
@@ -72,6 +64,8 @@ namespace EasyFarm
         /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
+            Logger.Write.ApplicationStart("Application starting");
+
             // Check if the resource files exist.
             if (!Directory.Exists("resources"))
             {
@@ -134,6 +128,8 @@ namespace EasyFarm
         protected override void OnExit(ExitEventArgs e)
         {
             Config.Instance.SaveSettings();
+
+            Logger.Write.ApplicationStart("Application exiting");
         }
 
         // Thanks to atom0s for assembly embedding code!

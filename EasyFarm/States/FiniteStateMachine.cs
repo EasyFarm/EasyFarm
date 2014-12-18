@@ -24,12 +24,13 @@ You should have received a copy of the GNU General Public License
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using EasyFarm.State;
+using EasyFarm.States;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using FFACETools;
+using EasyFarm.ViewModels;
 
-namespace EasyFarm.State
+namespace EasyFarm.States
 {
     public class FiniteStateEngine
     {
@@ -50,17 +51,17 @@ namespace EasyFarm.State
             worker.DoWork += worker_DoWork;
             worker.WorkerSupportsCancellation = true;
 
+            // Save the fface session. 
             this._fface = fface;
 
-            //Create the states
-            AddState(new RestState(fface) { Priority = 2 });
-            AddState(new AttackState(fface) { Priority = 1 });
-            AddState(new TravelState(fface) { Priority = 1 });
-            AddState(new HealingState(fface) { Priority = 2 });
-            AddState(new PostBattle(fface) { Priority = 3 });
-            AddState(new TargetInvalid(fface) { Priority = 3 });
+            // Create the locator to find states by attribute. 
+            var locator = new Locator<StateAttribute, BaseState>();
 
-            foreach (var b in this.Brains) b.Enabled = true;
+            // Get and create all enabled states. 
+            var states = locator.GetEnabledStates(fface);
+
+            // Add each state to our state machine. 
+            states.ForEach(x => this.AddState(x));
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)

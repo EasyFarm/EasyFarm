@@ -256,7 +256,7 @@ namespace EasyFarm.Debugging
                 if (ability.IsValidName)
                 {
                     bool valid = new AbilityExecutor(_fface).IsActionValid(ability);
-                    success = _ftools.AbilityExecutor.UseAbility(ability, Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
+                    success = _ftools.AbilityExecutor.UseAbility(ability);
                 }
 
                 return success;

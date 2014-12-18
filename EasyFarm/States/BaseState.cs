@@ -23,7 +23,7 @@ using ZeroLimits.FarmingTool;
 using EasyFarm.FarmingTool;
 using EasyFarm.ViewModels;
 
-namespace EasyFarm.State
+namespace EasyFarm.States
 {
     public abstract class BaseState : IComparable<BaseState>
     {

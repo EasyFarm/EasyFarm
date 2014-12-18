@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.FarmingTool;
-using EasyFarm.State;
+using EasyFarm.States;
 using EasyFarm.UserSettings;
 using FFACETools;
 using System;

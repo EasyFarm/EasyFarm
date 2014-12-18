@@ -29,10 +29,10 @@ using System.Diagnostics;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 
-
-namespace EasyFarm.State
+namespace EasyFarm.States
 {
-    class TravelState : BaseState
+    [StateAttribute(priority: 1)]
+    public class TravelState : BaseState
     {
         int position = 0;
 

@@ -18,51 +18,51 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.FarmingTool;
-using EasyFarm.Logging;
 using FFACETools;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZeroLimits.FarmingTool;
-using ZeroLimits.XITool;
-
+using ZeroLimits.XITool.Classes;
+using System.Linq;
+using EasyFarm.ViewModels;
+using EasyFarm.UserSettings;
+using EasyFarm.Logging;
 
 namespace EasyFarm.States
 {
-    /// <summary>
-    /// Changes our target once the target becomes invalid
-    /// </summary>    
-    [StateAttribute(priority: 3)]
-    public class TargetInvalid : BaseState
+    [StateAttribute(priority: 2)]
+    public class PullState : BaseState
     {
-        public TargetInvalid(FFACE fface) : base(fface) { }
+        public Unit Target
+        {
+            get { return AttackState.TargetUnit; }
+            set { AttackState.TargetUnit = value; }
+        }
+
+        public PullState(FFACE fface) : base(fface) { }
 
         public override bool CheckState()
         {
-            if (AttackState.TargetUnit == null) return true;
-            if (!ftools.UnitService.IsValid(AttackState.TargetUnit)) return true;
-            return false;
+            return !AttackState.fightStarted && !Target.Status.Equals(Status.Fighting) && !Target.IsDead;
         }
 
         public override void EnterState() { }
 
         public override void RunState()
         {
-            var target = ftools.UnitService.GetTarget
-                (UnitFilters.MobFilter(FFACE), x => x.Distance);
+            // Pull the target casting each spell once until the target is claimed
+            var UsablePullingMoves = Config.Instance.ActionInfo.PullList
+                .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
+                .ToList();
 
-            if (target != null)
-            {
-                AttackState.TargetUnit = target;
-
-                // Write target to log. 
-                App.Current.Dispatcher.Invoke(() => Logger.Write.StateRun(
-                    String.Join(" ", "Now targeting", target.ID, target.Name)));
-            }
+            ftools.AbilityExecutor.ExecuteActions(UsablePullingMoves);
         }
 
-        public override void ExitState() { }
+        public override void ExitState()
+        {
+            if (Target.Status.Equals(Status.Fighting))
+            {
+                AttackState.fightStarted = true;
+            }
+        }
     }
 }

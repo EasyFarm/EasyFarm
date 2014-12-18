@@ -27,13 +27,16 @@ using System;
 using ZeroLimits.XITool.Classes;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
+using EasyFarm.Logging;
 
-namespace EasyFarm.State
+namespace EasyFarm.States
 {
     /// <summary>
     /// A class for defeating monsters.
     /// </summary>
-    class AttackState : BaseState
+
+    [StateAttribute(priority: 1)]
+    public class AttackState : BaseState
     {
         public static bool fightStarted = false;
 
@@ -52,21 +55,21 @@ namespace EasyFarm.State
 
         public override bool CheckState()
         {
-            // If the target is not valid. 
-            if (!ftools.UnitService.IsValid(TargetUnit)) return false;
+            bool success = false;
 
-            // We're dead. 
-            if (FFACE.Player.Status.Equals(Status.Dead1 | Status.Dead2)) return false;
-
-            // If we're injured  
-            if (new RestState(FFACE).CheckState())
+            // If we have a valid target
+            if (ftools.UnitService.IsValid(TargetUnit))
             {
-                if (FFACE.Player.Status != Status.Fighting) return false;
-                if (!ftools.UnitService.HasAggro) return false;
-            }
+                // If we're alive
+                if (!FFACE.Player.Status.Equals(Status.Dead1 | Status.Dead2))
+                {
+                    // If we're not injured
+                    if (!new RestState(FFACE).CheckState())
+                        success = true;
+                }
+            }            
 
-            // Should we attack?
-            return true;
+            return success;
         }
 
         public override void EnterState()
@@ -76,70 +79,6 @@ namespace EasyFarm.State
 
         public override void RunState()
         {
-            // Face the target
-            FFACE.Navigator.FaceHeading(TargetUnit.ID);
-
-            // Check correct target
-            if (TargetUnit.ID != FFACE.Target.ID)
-                ftools.CombatService.Disengage();
-
-            // Target the target
-            if (TargetUnit.ID != FFACE.Target.ID)
-                ftools.CombatService.TargetUnit(TargetUnit);
-
-            ///////////////////////////////////////////////////////////////////
-            // Buff Player
-            ///////////////////////////////////////////////////////////////////
-
-            // Cast only when there is a move ready. 
-            if (!fightStarted && !TargetUnit.IsDead)
-            {
-                var UsableStartingMoves = Config.Instance.ActionInfo.StartList
-                    .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
-                    .ToList();
-
-                ftools.AbilityExecutor.EnsureSpellsCast(TargetUnit, UsableStartingMoves,
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
-            }
-
-            ///////////////////////////////////////////////////////////////////
-            // Engage Enemy. 
-            ///////////////////////////////////////////////////////////////////
-
-            // Attempt to engage the target up to three times. 
-            int engageCount = 0;
-            while (!FFACE.Player.Status.Equals(Status.Fighting) && engageCount++ < 3)
-            {
-                ftools.CombatService.Engage();
-            }
-
-            ///////////////////////////////////////////////////////////////////
-            // Pull Enemy. 
-            ///////////////////////////////////////////////////////////////////
-
-            // Cast only when there is a move ready. 
-
-            // Pull the target casting each spell once until the target is claimed
-            if (!fightStarted && !TargetUnit.Status.Equals(Status.Fighting) && !TargetUnit.IsDead)
-            {
-                var UsablePullingMoves = Config.Instance.ActionInfo.PullList
-                    .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
-                    .ToList();
-
-                ftools.AbilityExecutor.ExecuteActions(TargetUnit, UsablePullingMoves,
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
-            }
-
-            // set to true so that we do not cast starting spells again. 
-            fightStarted = true;
-
-            ///////////////////////////////////////////////////////////////////
-            // Move to Enemy. 
-            ///////////////////////////////////////////////////////////////////
-
-            // Move to the target
-            ftools.CombatService.MoveToUnit(TargetUnit, Config.Instance.MiscSettings.MeleeDistance);
-
             ///////////////////////////////////////////////////////////////////
             // Battle Enemy. 
             ///////////////////////////////////////////////////////////////////
@@ -150,35 +89,12 @@ namespace EasyFarm.State
             // from move than 30 yalms problem. 
             if (FFACE.Player.Status.Equals(Status.Fighting))
             {
-                // Weaponskill
-                if (ShouldWeaponSkill)
-                {
-                    // Not sure if weapon skills or job abilities endure the same penalties that 
-                    // spell do in regards to wait times. So I'm using zero's here. 
-                    ftools.AbilityExecutor.UseAbility(Config.Instance.WeaponSkill.Ability, 0, 0);
-                }
-
                 var UsableBattleMoves = Config.Instance.ActionInfo.BattleList
                     .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
                     .ToList();
 
                 // Cast all battle moves
-                ftools.AbilityExecutor.ExecuteActions(TargetUnit, UsableBattleMoves,
-                        Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
-            }
-        }
-
-        /// <summary>
-        /// Can we perform our weaponskill on the target unit?
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public bool ShouldWeaponSkill
-        {
-            get
-            {
-                return ActionFilters.WeaponSkillFilter(FFACE)
-                    (Config.Instance.WeaponSkill, TargetUnit);
+                ftools.AbilityExecutor.ExecuteActions(UsableBattleMoves);
             }
         }
 

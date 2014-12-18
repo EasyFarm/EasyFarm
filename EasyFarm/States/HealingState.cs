@@ -25,9 +25,10 @@ using ZeroLimits.XITool.Classes;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 
-namespace EasyFarm.State
+namespace EasyFarm.States
 {
-    class HealingState : BaseState
+    [StateAttribute(priority: 2)]
+    public class HealingState : BaseState
     {
         public HealingState(FFACE fface) : base(fface) { }
 
@@ -63,8 +64,7 @@ namespace EasyFarm.State
 
                 // Create an ability from the name and launch the move. 
                 var HealingMove = new AbilityService().CreateAbility(Action.Name);
-                ftools.AbilityExecutor.UseAbility(HealingMove, 
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
+                ftools.AbilityExecutor.UseAbility(HealingMove);
             }
         }
 

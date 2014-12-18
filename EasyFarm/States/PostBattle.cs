@@ -25,51 +25,42 @@ using ZeroLimits.XITool.Classes;
 using System.Linq;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
+using EasyFarm.Logging;
 
-namespace EasyFarm.State
+namespace EasyFarm.States
 {
+    [StateAttribute(priority: 2)]
     public class PostBattle : BaseState
     {
         public PostBattle(FFACE fface) : base(fface) { }
 
         public override bool CheckState()
         {
-            if(AttackState.TargetUnit == null) return true;
-
-            if (AttackState.TargetUnit.Status.Equals(Status.Dead1 | Status.Dead2)) return true;
-            
-            return false;
+            return AttackState.fightStarted && AttackState.TargetUnit != null && AttackState.TargetUnit.IsDead;
         }
 
         public override void EnterState() { }
 
         public override void RunState()
         {
-            // Only execute post battle moves when we have a non-null target.
-            if (AttackState.TargetUnit != null)
+            if (AttackState.fightStarted)
             {
                 var UsableEndingMoves = Config.Instance.ActionInfo.StartList
                     .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
                     .ToList();
 
                 // Cast all spells making sure they land. Keeping  
-                ftools.AbilityExecutor.EnsureSpellsCast(AttackState.TargetUnit, UsableEndingMoves,
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
+                ftools.AbilityExecutor.EnsureSpellsCast(UsableEndingMoves);
             }
-
-            // Get the next target.
-            var target = ftools.UnitService.GetTarget(UnitFilters.MobFilter(FFACE), x => x.Distance);            
-
-            // Set our new target at the end so that we don't accidentaly cast on a 
-            // new target. 
-            AttackState.TargetUnit = target;
-
+           
             // Set to false in order to use starting moves again in the 
             // attack state. 
             AttackState.fightStarted = false;
-
         }
 
-        public override void ExitState() { }
+        public override void ExitState() 
+        { 
+
+        }
     }
 }
