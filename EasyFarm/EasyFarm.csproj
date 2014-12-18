@@ -183,16 +183,16 @@
     <Compile Include="Components\Interfaces\BaseComponent.cs" />
     <Compile Include="Components\FiniteStateMachine.cs" />
     <Compile Include="Components\GameEngine.cs" />
-    <Compile Include="Components\HealingState.cs" />
+    <Compile Include="Components\HealingComponent.cs" />
     <Compile Include="Components\Interfaces\IMachineContainer.cs" />
     <Compile Include="Components\Interfaces\IMachineController.cs" />
     <Compile Include="Components\Interfaces\IMachineComponent.cs" />
     <Compile Include="Components\Interfaces\MachineComponent.cs" />
     <Compile Include="Components\Interfaces\MachineContainer.cs" />
     <Compile Include="Components\Interfaces\MachineController.cs" />
-    <Compile Include="Components\PostBattle.cs" />
+    <Compile Include="Components\PostBattleComponent.cs" />
     <Compile Include="Components\RestComponent.cs" />
-    <Compile Include="Components\TargetInvalid.cs" />
+    <Compile Include="Components\TargetInvalidComponent.cs" />
     <Compile Include="Components\TravelComponent.cs" />
     <Compile Include="Debugging\DebugCreatures.xaml.cs">
       <DependentUpon>DebugCreatures.xaml</DependentUpon>

@@ -33,9 +33,9 @@ namespace EasyFarm.Components
     /// <summary>
     /// Changes our target once the target becomes invalid
     /// </summary>
-    public class TargetInvalid : BaseComponent
+    public class TargetInvalidComponent : BaseComponent
     {
-        public TargetInvalid(FFACE fface) : base(fface) { }
+        public TargetInvalidComponent(FFACE fface) : base(fface) { }
 
         public override bool CheckComponent()
         {

@@ -98,8 +98,7 @@ namespace EasyFarm.Components
                     .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
                     .ToList();
 
-                ftools.AbilityExecutor.EnsureSpellsCast(TargetUnit, UsableStartingMoves,
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
+                ftools.AbilityExecutor.EnsureSpellsCast(UsableStartingMoves);
             }
 
             ///////////////////////////////////////////////////////////////////
@@ -126,8 +125,7 @@ namespace EasyFarm.Components
                     .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
                     .ToList();
 
-                ftools.AbilityExecutor.ExecuteActions(TargetUnit, UsablePullingMoves,
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
+                ftools.AbilityExecutor.ExecuteActions(UsablePullingMoves);
             }
 
             // set to true so that we do not cast starting spells again. 
@@ -155,7 +153,12 @@ namespace EasyFarm.Components
                 {
                     // Not sure if weapon skills or job abilities endure the same penalties that 
                     // spell do in regards to wait times. So I'm using zero's here. 
-                    ftools.AbilityExecutor.UseAbility(Config.Instance.WeaponSkill.Ability, 0, 0);
+                    ftools.AbilityExecutor.CastLatency = 0;
+                    ftools.AbilityExecutor.GlobalCooldown = 0;
+
+                    ftools.AbilityExecutor.UseAbility(Config.Instance.WeaponSkill.Ability);
+
+                    ftools.AbilityExecutor.SetDefaults();
                 }
 
                 var UsableBattleMoves = Config.Instance.ActionInfo.BattleList
@@ -163,8 +166,7 @@ namespace EasyFarm.Components
                     .ToList();
 
                 // Cast all battle moves
-                ftools.AbilityExecutor.ExecuteActions(TargetUnit, UsableBattleMoves,
-                        Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
+                ftools.AbilityExecutor.ExecuteActions(UsableBattleMoves);
             }
         }
 

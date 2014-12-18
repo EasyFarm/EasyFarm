@@ -63,8 +63,7 @@ namespace EasyFarm.Components
 
                 // Create an ability from the name and launch the move. 
                 var HealingMove = new AbilityService().CreateAbility(Action.Name);
-                ftools.AbilityExecutor.UseAbility(HealingMove, 
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN);
+                ftools.AbilityExecutor.UseAbility(HealingMove);
             }
         }
 

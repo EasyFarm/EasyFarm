@@ -28,9 +28,9 @@ using EasyFarm.UserSettings;
 
 namespace EasyFarm.Components
 {
-    public class PostBattle : BaseComponent
+    public class PostBattleComponent : BaseComponent
     {
-        public PostBattle(FFACE fface) : base(fface) { }
+        public PostBattleComponent(FFACE fface) : base(fface) { }
 
         public override bool CheckComponent()
         {
@@ -53,8 +53,7 @@ namespace EasyFarm.Components
                     .ToList();
 
                 // Cast all spells making sure they land. Keeping  
-                ftools.AbilityExecutor.EnsureSpellsCast(AttackComponent.TargetUnit, UsableEndingMoves,
-                    Constants.SPELL_CAST_LATENCY, Constants.GLOBAL_SPELL_COOLDOWN, 0);
+                ftools.AbilityExecutor.EnsureSpellsCast(UsableEndingMoves);
             }
 
             // Get the next target.
