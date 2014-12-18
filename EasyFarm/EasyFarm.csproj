@@ -166,12 +166,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BehaviorTree\BehaviorAttribute.cs" />
-    <Compile Include="BehaviorTree\GameState.cs" />
-    <Compile Include="BehaviorTree\MaxAttack.cs" />
-    <Compile Include="BehaviorTree\PLBot.cs" />
-    <Compile Include="Components\Interfaces\MachineSelector.cs" />
-    <Compile Include="BehaviorTree\TreeBase.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Monitors\BaseMonitor.cs" />
     <Compile Include="Classes\ChatLine.cs" />
