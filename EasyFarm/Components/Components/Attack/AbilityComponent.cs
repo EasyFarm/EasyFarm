@@ -28,56 +28,68 @@ using ZeroLimits.XITool.Classes;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 using EasyFarm.Logging;
+using EasyFarm.FarmingTool;
 
-namespace EasyFarm.States
+namespace EasyFarm.Components
 {
     /// <summary>
     /// A class for defeating monsters.
     /// </summary>
-
-    [StateAttribute(priority: 1)]
-    public class AttackState : BaseState
+    public class AbilityComponent : MachineComponent
     {
-        public static bool fightStarted = false;
+        public FFACE FFACE { get; set; }
 
-        private static Unit _targetUnit = Unit.CreateUnit(0);
+        public UnitService Units { get; set; }
+
+        public RestingService Resting { get; set; }
+
+        public AbilityExecutor Executor { get; set; }
 
         /// <summary>
         /// Who we are trying to kill currently
         /// </summary>
         public static Unit TargetUnit
         {
-            get { return _targetUnit; }
-            set { _targetUnit = value; }
+            get { return AttackContainer.TargetUnit; }
+            set { AttackContainer.TargetUnit = value; }
         }
 
-        public AttackState(FFACE fface) : base(fface) { }
+        public AbilityComponent(FFACE fface)
+        {
+            this.FFACE = fface;
+            this.Units = new UnitService(fface);
+            this.Resting = new RestingService(fface);
+            this.Executor = new AbilityExecutor(fface);
 
-        public override bool CheckState()
+            // Set default filter to target mobs. 
+            this.Units.UnitFilter = UnitFilters.MobFilter(fface);
+        }
+
+        public override bool CheckComponent()
         {
             bool success = false;
 
             // If we have a valid target
-            if (ftools.UnitService.IsValid(TargetUnit))
+            if (Units.IsValid(TargetUnit))
             {
                 // If we're alive
                 if (!FFACE.Player.Status.Equals(Status.Dead1 | Status.Dead2))
                 {
                     // If we're not injured
-                    if (!new RestState(FFACE).CheckState())
+                    if (!new RestComponent(FFACE).CheckComponent())
                         success = true;
                 }
-            }            
+            }
 
             return success;
         }
 
-        public override void EnterState()
+        public override void EnterComponent()
         {
-            ftools.RestingService.EndResting();
+            Resting.EndResting();
         }
 
-        public override void RunState()
+        public override void RunComponent()
         {
             ///////////////////////////////////////////////////////////////////
             // Battle Enemy. 
@@ -89,15 +101,28 @@ namespace EasyFarm.States
             // from move than 30 yalms problem. 
             if (FFACE.Player.Status.Equals(Status.Fighting))
             {
-                var UsableBattleMoves = Config.Instance.ActionInfo.BattleList
-                    .Where(x => ActionFilters.AbilityFilter(FFACE)(x))
-                    .ToList();
+                var Usable = Config.Instance.ActionInfo.BattleList
+                    .Where(x => x.Enabled && x.IsCastable(FFACE));
 
-                // Cast all battle moves
-                ftools.AbilityExecutor.ExecuteActions(UsableBattleMoves);
+                var Buffs = Usable.Where(x => x.HasEffectWore(FFACE))
+                    .Select(x => x.Ability);
+
+                var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
+                    .Where(x => !x.IsBuff())
+                    .Select(x => x.Ability);
+
+                var move = Buffs.Union(Others).FirstOrDefault();
+                
+                if (move != null) this.Executor.UseAbility(move);
+
+                // Cast buffs when worn off. 
+                // this.Executor.ExecuteActions(Buffs.ToList());
+
+                // Cast other moves on cooldown. 
+                // this.Executor.ExecuteActions(Others.ToList());
             }
         }
 
-        public override void ExitState() { }
+        public override void ExitComponent() { }
     }
 }

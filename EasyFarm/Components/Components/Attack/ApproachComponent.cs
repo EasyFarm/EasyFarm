@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Components;
 using EasyFarm.FarmingTool;
 using EasyFarm.Logging;
 using EasyFarm.UserSettings;
@@ -30,35 +31,42 @@ using ZeroLimits.FarmingTool;
 using ZeroLimits.XITool;
 using ZeroLimits.XITool.Classes;
 
-namespace EasyFarm.States
+namespace EasyFarm.Components
 {
     /// <summary>
-    /// Changes our target once the target becomes invalid
-    /// </summary>    
-    [StateAttribute(priority: 1)]
-    public class ApproachState : BaseState
+    /// Moves to target enemies. 
+    /// </summary>
+    public class ApproachComponent : MachineComponent
     {
+        public FFACE FFACE { get; set; }
+
         public Unit Target
         {
-            get { return AttackState.TargetUnit; }
-            set { AttackState.TargetUnit = value; }
+            get { return AttackContainer.TargetUnit; }
+            set { AttackContainer.TargetUnit = value; }
         }
 
-        public ApproachState(FFACE fface) : base(fface) { }
-
-        public override bool CheckState()
+        public ApproachComponent(FFACE fface)
         {
-            return (Target != null && !AttackState.TargetUnit.IsDead &&
+            this.FFACE = fface;
+        }
+
+        public override bool CheckComponent()
+        {
+            return (Target != null && !AttackContainer.TargetUnit.IsDead &&
                 Target.Distance > Config.Instance.MiscSettings.MeleeDistance);
         }
 
-        public override void EnterState() { }
+        public override void EnterComponent() { }
 
-        public override void RunState()
+        public override void RunComponent()
         {
-            FFACE.Navigator.Goto(Target.Position, false);
+            var OldTolerance = FFACE.Navigator.DistanceTolerance;
+            FFACE.Navigator.DistanceTolerance = Config.Instance.MiscSettings.MeleeDistance;
+            FFACE.Navigator.GotoNPC(Target.ID);
+            FFACE.Navigator.DistanceTolerance = OldTolerance;
         }
 
-        public override void ExitState() { }
+        public override void ExitComponent() {  }
     }
 }

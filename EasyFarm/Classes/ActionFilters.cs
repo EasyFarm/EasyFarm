@@ -29,6 +29,7 @@ using EasyFarm.UserSettings;
 using ZeroLimits.XITool.Interfaces;
 using ZeroLimits.XITool.Test;
 using EasyFarm.Components;
+using EasyFarm.Classes;
 
 namespace ZeroLimits.FarmingTool
 {
@@ -42,12 +43,9 @@ namespace ZeroLimits.FarmingTool
         /// </summary>
         /// <param name="fface"></param>
         /// <returns></returns>
-        public static Func<Ability, bool> AbilityFilter(FFACE fface)
+        public static bool AbilityFilter(FFACE fface, Ability x)
         {
-            return new Func<Ability, bool>((Ability x) => 
-            {
-                return new AbilityExecutor(fface).IsActionValid(x);
-            });
+            return new AbilityExecutor(fface).IsActionValid(x);
         }
 
         /// <summary>
@@ -55,18 +53,18 @@ namespace ZeroLimits.FarmingTool
         /// </summary>
         /// <param name="fface"></param>
         /// <returns></returns>
-        public static Func<HealingAbility, bool> HealingFilter(FFACE fface)
+        public static bool HealingFilter(FFACE fface, HealingAbility x)
         {
-            return new Func<HealingAbility, bool>((HealingAbility x) =>
-            {
-                if(!x.IsEnabled) return false;
+            if (!x.IsEnabled) 
+                return false;
 
-                if(x.TriggerLevel < fface.Player.HPPCurrent) return false;
+            if (x.TriggerLevel < fface.Player.HPPCurrent) 
+                return false;
 
-                if(!AbilityFilter(fface)(new AbilityService().CreateAbility(x.Name))) return false;
+            if (!AbilityFilter(fface, new AbilityService().CreateAbility(x.Name)))
+                return false;
 
-                return true;
-            });
+            return true;
         }
 
         /// <summary>
@@ -101,10 +99,10 @@ namespace ZeroLimits.FarmingTool
                 if (!Status.Equals(Status.Fighting)) return false;
 
                 // The target's health is greater than the upper threshold, return false. 
-                if (u.HPPCurrent> x.UpperHealth) return false;
+                if (u.HPPCurrent > x.UpperHealth) return false;
 
                 // Target's health is less than the lower threshold, return false. 
-                if (u.HPPCurrent< x.LowerHealth) return false;
+                if (u.HPPCurrent < x.LowerHealth) return false;
 
                 // Do not meet distance requirements. 
                 if (u.Distance > x.Distance) return false;

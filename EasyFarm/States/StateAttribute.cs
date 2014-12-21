@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace EasyFarm.States
 {
+    /// <summary>
+    /// Marks state classes for autolocation.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = true)]
-    sealed class StateAttribute : Attribute
+    public sealed class StateAttribute : Attribute
     {
         readonly bool enabled = false;
 

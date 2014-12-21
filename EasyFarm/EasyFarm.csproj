@@ -166,6 +166,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\BattleAbility.cs" />
+    <Compile Include="Components\Containers\SequenceContainer.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Monitors\BaseMonitor.cs" />
     <Compile Include="Classes\ChatLine.cs" />
@@ -179,7 +181,7 @@
     <Compile Include="Monitors\PlayerMonitor.cs" />
     <Compile Include="Classes\UnitFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Components\Components\AttackComponent.cs" />
+    <Compile Include="Components\Components\Attack\AttackContainer.cs" />
     <Compile Include="Components\Bases\BaseComponent.cs" />
     <Compile Include="Components\Controllers\FiniteStateMachine.cs" />
     <Compile Include="Components\Controllers\GameEngine.cs" />
@@ -214,23 +216,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="States\ApproachState.cs" />
-    <Compile Include="States\AttackState.cs" />
-    <Compile Include="States\BaseState.cs" />
-    <Compile Include="States\BuffState.cs" />
-    <Compile Include="States\EngageState.cs" />
-    <Compile Include="States\FaceTargetState.cs" />
-    <Compile Include="States\FiniteStateMachine.cs" />
-    <Compile Include="States\GameEngine.cs" />
-    <Compile Include="States\HealingState.cs" />
-    <Compile Include="States\PostBattle.cs" />
-    <Compile Include="States\PullState.cs" />
-    <Compile Include="States\RestState.cs" />
+    <Compile Include="Components\Components\Attack\ApproachComponent.cs" />
+    <Compile Include="Components\Components\Attack\AbilityComponent.cs" />
+    <Compile Include="Components\Components\Attack\BuffComponent.cs" />
+    <Compile Include="Components\Components\Attack\EngageComponent.cs" />
+    <Compile Include="Components\Components\Attack\FaceTargetComponent.cs" />
+    <Compile Include="Components\Components\Attack\PullComponent.cs" />
     <Compile Include="States\StateAttribute.cs" />
-    <Compile Include="States\TargetEnemyState.cs" />
-    <Compile Include="States\TargetInvalid.cs" />
-    <Compile Include="States\TravelState.cs" />
-    <Compile Include="States\WeaponSkillState.cs" />
+    <Compile Include="Components\Components\Attack\TargetEnemyComponent.cs" />
+    <Compile Include="Components\Components\Attack\WeaponSkillComponent.cs" />
     <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="ViewModels\HealingViewModel.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
@@ -250,6 +244,9 @@
     <Compile Include="ViewModels\WeaponsViewModel.cs" />
     <Compile Include="Views\AbilitySelectionBox.xaml.cs">
       <DependentUpon>AbilitySelectionBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AbilityView.xaml.cs">
+      <DependentUpon>AbilityView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BattlesView.xaml.cs">
       <DependentUpon>BattlesView.xaml</DependentUpon>
@@ -346,6 +343,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\AbilityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BattlesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

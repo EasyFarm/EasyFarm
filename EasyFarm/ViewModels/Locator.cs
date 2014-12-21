@@ -41,6 +41,7 @@ namespace EasyFarm.ViewModels
             return ViewModels.ToList();
         }
 
+        /*
         public List<BaseState> GetEnabledStates(FFACE fface)
         {
             var States = GetMarkedTypes()
@@ -56,7 +57,7 @@ namespace EasyFarm.ViewModels
                     return instance;
                 }));
             return States.ToList();
-        }
+        }*/
 
         /// <summary>
         /// Create an object with a given contructors parameters from a given type.

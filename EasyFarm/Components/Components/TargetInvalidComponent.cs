@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.FarmingTool;
+using EasyFarm.Logging;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ZeroLimits.FarmingTool;
 using ZeroLimits.XITool;
-
 
 namespace EasyFarm.Components
 {
@@ -39,8 +39,8 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            if(AttackComponent.TargetUnit == null) return true;
-            if(!ftools.UnitService.IsValid(AttackComponent.TargetUnit)) return true;
+            if (AttackContainer.TargetUnit == null) return true;
+            if (!ftools.UnitService.IsValid(AttackContainer.TargetUnit)) return true;
             return false;
         }
 
@@ -48,9 +48,13 @@ namespace EasyFarm.Components
 
         public override void RunComponent()
         {
-            AttackComponent.TargetUnit = 
-                ftools.UnitService.GetTarget(
+            var Target = ftools.UnitService.GetTarget(
                 UnitFilters.MobFilter(FFACE), x => x.Distance);
+
+            AttackContainer.TargetUnit = Target;
+
+            App.Current.Dispatcher.Invoke(() =>
+               Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.ID));
         }
 
         public override void ExitComponent() { }

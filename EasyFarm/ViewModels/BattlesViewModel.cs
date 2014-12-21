@@ -27,6 +27,8 @@ using System.Windows.Input;
 using ZeroLimits.FarmingTool;
 using ZeroLimits.XITool;
 using ZeroLimits.XITool.Classes;
+using System.Linq;
+using EasyFarm.Classes;
 
 namespace EasyFarm.ViewModels
 {
@@ -34,17 +36,30 @@ namespace EasyFarm.ViewModels
     public class BattlesViewModel : ViewModelBase
     {
         AbilityService AbilityService = new AbilityService();
-        
+
         public BattlesViewModel()
         {
             AddActionCommand = new DelegateCommand<Object>(AddAction);
-            DeleteActionCommand = new DelegateCommand<Object>(DeleteAction);
+            DeleteActionCommand = new DelegateCommand(DeleteAction);
             ClearActionsCommand = new DelegateCommand(ClearActions);
+            SetCommand = new DelegateCommand(SetAbility);
         }
 
-        private Ability battleAction;
+        public int SelectedIndex { get; set; }
 
-        public Ability BattleAction
+        private void SetAbility()
+        {
+            if (SelectedIndex < 0) return;
+
+            var selected = this.SelectedList.ElementAt(SelectedIndex);
+
+            if (selected.SetAbility()) 
+                ViewModelBase.InformUser(selected.NameX + " set successfully. ");
+        }
+
+        private BattleAbility battleAction;
+
+        public BattleAbility BattleAction
         {
             get { return battleAction; }
             set { SetProperty(ref this.battleAction, value); }
@@ -53,7 +68,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         /// The list of moves to use before battle.
         /// </summary>
-        public ObservableCollection<Ability> StartList
+        public ObservableCollection<BattleAbility> StartList
         {
             get { return Config.Instance.ActionInfo.StartList; }
             set { SetProperty(ref Config.Instance.ActionInfo.StartList, value); }
@@ -62,7 +77,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         /// The list of moves to use during battle.
         /// </summary>
-        public ObservableCollection<Ability> BattleList
+        public ObservableCollection<BattleAbility> BattleList
         {
             get { return Config.Instance.ActionInfo.BattleList; }
             set { SetProperty(ref Config.Instance.ActionInfo.BattleList, value); }
@@ -71,14 +86,14 @@ namespace EasyFarm.ViewModels
         /// <summary>
         /// The list of moves to use after battle.
         /// </summary>
-        public ObservableCollection<Ability> EndList
+        public ObservableCollection<BattleAbility> EndList
         {
             get { return Config.Instance.ActionInfo.EndList; }
             set { SetProperty(ref Config.Instance.ActionInfo.EndList, value); }
 
         }
 
-        public ObservableCollection<Ability> PullList
+        public ObservableCollection<BattleAbility> PullList
         {
             get { return Config.Instance.ActionInfo.PullList; }
             set { SetProperty(ref Config.Instance.ActionInfo.PullList, value); }
@@ -90,7 +105,13 @@ namespace EasyFarm.ViewModels
         public bool BattleSelected
         {
             get { return Config.Instance.ActionInfo.BattleListSelected; }
-            set { SetProperty(ref Config.Instance.ActionInfo.BattleListSelected, value); }
+            set
+            {
+                SetProperty(ref Config.Instance.ActionInfo.BattleListSelected, value);
+                // Ensures our lists have atleast 
+                // one ability item in them. 
+                KeepOne();
+            }
         }
 
         /// <summary>
@@ -99,7 +120,11 @@ namespace EasyFarm.ViewModels
         public bool StartSelected
         {
             get { return Config.Instance.ActionInfo.StartListSelected; }
-            set { SetProperty(ref Config.Instance.ActionInfo.StartListSelected, value); }
+            set
+            {
+                SetProperty(ref Config.Instance.ActionInfo.StartListSelected, value);
+                KeepOne();
+            }
         }
 
         /// <summary>
@@ -108,7 +133,11 @@ namespace EasyFarm.ViewModels
         public bool EndSelected
         {
             get { return Config.Instance.ActionInfo.EndListSelected; }
-            set { SetProperty(ref Config.Instance.ActionInfo.EndListSelected, value); }
+            set
+            {
+                SetProperty(ref Config.Instance.ActionInfo.EndListSelected, value);
+                KeepOne();
+            }
         }
 
         /// <summary>
@@ -117,7 +146,11 @@ namespace EasyFarm.ViewModels
         public bool PullSelected
         {
             get { return Config.Instance.ActionInfo.PullListSelected; }
-            set { SetProperty(ref Config.Instance.ActionInfo.PullListSelected, value); }
+            set
+            {
+                SetProperty(ref Config.Instance.ActionInfo.PullListSelected, value);
+                KeepOne();
+            }
         }
 
         /// <summary>
@@ -150,22 +183,31 @@ namespace EasyFarm.ViewModels
         public ICommand ClearActionsCommand { get; set; }
 
         /// <summary>
+        /// Sets an BattleAbility's ability object using the ability service object
+        /// for lookups. 
+        /// </summary>
+        public ICommand SetCommand { get; set; }
+
+        /// <summary>
         /// Returns the currently selected list.
         /// </summary>
-        private ObservableCollection<Ability> SelectedList
+        private ObservableCollection<BattleAbility> SelectedList
         {
             get
             {
+                var selectedList = new ObservableCollection<BattleAbility>();
+
                 if (StartSelected)
-                    return StartList;
+                    selectedList = StartList;
                 else if (BattleSelected)
-                    return BattleList;
+                    selectedList = BattleList;
                 else if (EndSelected)
-                    return EndList;
+                    selectedList = EndList;
                 else if (PullSelected)
-                    return PullList;
-                else
-                    return new ObservableCollection<Ability>();
+                    selectedList = PullList;
+                else { /* None selected. */}
+
+                return selectedList;
             }
         }
 
@@ -175,20 +217,22 @@ namespace EasyFarm.ViewModels
         /// <param name="obj"></param>
         private void AddAction(object obj)
         {
-            String name = obj as String;
-            if (AbilityService.GetAbilitiesWithName(name).Count > 1)
-                SelectedList.Add(new AbilitySelectionBox(name).SelectedAbility);
-            else if (AbilityService.Exists(name))
-                SelectedList.Add(AbilityService.CreateAbility(name));
+            this.SelectedList.Add(new BattleAbility());
         }
 
         /// <summary>
         /// Remove an move from the currently selected list.
         /// </summary>
         /// <param name="obj"></param>
-        private void DeleteAction(object obj)
+        private void DeleteAction()
         {
-            SelectedList.Remove(obj as Ability);
+            // Check if user selected an object. 
+            if (SelectedIndex >= 0)
+            {
+                SelectedList.RemoveAt(SelectedIndex);
+                // Ensure there is atleast one ability. 
+                KeepOne();
+            }
         }
 
         /// <summary>
@@ -197,6 +241,9 @@ namespace EasyFarm.ViewModels
         private void ClearActions()
         {
             SelectedList.Clear();
+
+            // Ensure there is atleast one ability. 
+            KeepOne();
         }
 
         /// <summary>
@@ -206,7 +253,7 @@ namespace EasyFarm.ViewModels
         /// <returns></returns>
         private bool IsBattleActionAddable(object obj)
         {
-            if (BattleAction != null && BattleAction.IsValidName && !SelectedList.Contains(BattleAction))
+            if (BattleAction != null && BattleAction.Ability.IsValidName && !SelectedList.Contains(BattleAction))
                 return true;
             else
                 return false;
@@ -221,5 +268,15 @@ namespace EasyFarm.ViewModels
         {
             return !IsBattleActionAddable(obj);
         }
+
+        /// <summary>
+        /// Ensures a list has at least one ability item in it. 
+        /// </summary>
+        public void KeepOne()
+        {
+            // Ensure there is atleast one ability. 
+            if (!SelectedList.Any())
+                this.SelectedList.Add(new BattleAbility());
+        }        
     }
 }

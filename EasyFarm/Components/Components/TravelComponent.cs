@@ -29,7 +29,6 @@ using System.Diagnostics;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 
-
 namespace EasyFarm.Components
 {
     public class TravelComponent : BaseComponent
@@ -44,7 +43,7 @@ namespace EasyFarm.Components
             if (Config.Instance.Waypoints.Count <= 0) return false;
 
             // We are not able to attack any creatures. 
-            if (new AttackComponent(FFACE).CheckComponent()) return false;
+            if (new AttackContainer(FFACE).CheckComponent()) return false;
 
             // We don't have to rest. 
             if (new RestComponent(FFACE).CheckComponent()) return false;

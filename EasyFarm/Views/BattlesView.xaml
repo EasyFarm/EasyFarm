@@ -3,30 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Views="clr-namespace:EasyFarm.Views"
              mc:Ignorable="d"
              d:DesignHeight="216.384"
              d:DesignWidth="480.397">
-    <Grid Width="Auto"
-          Height="Auto"
-          FlowDirection="LeftToRight"
-          ShowGridLines="False">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
-            <ColumnDefinition Width="300" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.Resources>
-            <Style TargetType="Button">
-                <Setter Property="Margin"
-                        Value="5" />
-            </Style>
-        </Grid.Resources>
+    <DockPanel>
+        <!--Used to manipulate the Abilities list-->
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin"
+                            Value="10" />
+                    <Setter Property="Height"
+                            Value="23" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnAddAbility"
+                    Grid.Column="0"
+                    Command="{Binding AddActionCommand}"
+                    CommandParameter="{Binding ElementName=txbAbilityName, Path=Text}"
+                    Content="Add" />
+            <Button x:Name="btnDeleteAbility"
+                    Grid.Column="1"
+                    Command="{Binding DeleteActionCommand}"
+                    CommandParameter="{Binding ElementName=lstAbilities, Path=SelectedItem}"
+                    Content="Delete" />
+            <Button x:Name="btnClearAbilities"
+                    Grid.Column="2"
+                    Command="{Binding ClearActionsCommand}"
+                    Content="Clear" />
+        </Grid>
         <!--Tells us what list to add the textbox item to.-->
-        <StackPanel Grid.Row="1"
+        <StackPanel DockPanel.Dock="Left"
                     Margin="10"
                     VerticalAlignment="Center">
             <RadioButton x:Name="radStartingAction"
@@ -39,27 +52,21 @@
                          IsChecked="{Binding EndSelected}">End</RadioButton>
         </StackPanel>
         <!--Name of the text box item to add-->
-        <TextBox x:Name="txbAbilityName"
-                 Grid.Column="1"
-                 Margin="10"
-                 Text="{Binding ActionName, UpdateSourceTrigger=PropertyChanged}" />
-        <Label HorizontalAlignment="Stretch"
-               VerticalAlignment="Stretch"
-               Content="Name"
-               Padding="1" />
         <!--The list of ability items. It's source is dependant on the start/end/battle radio buttons and changes when one is selected. -->
-        <ListBox x:Name="lstAbilities"
-                 Height="Auto"
-                 MaxHeight="100"
-                 Grid.Column="1"
-                 Grid.Row="1"
-                 HorizontalAlignment="Stretch"
-                 Margin="10"
-                 VerticalAlignment="Stretch"
-                 Padding="10"
-                 Width="276"
-                 MinHeight="100">
-            <ListBox.Style>
+        <ListView x:Name="lstAbilities"
+                  Margin="10"
+                  Grid.Column="1"
+                  Grid.Row="0"
+                  SelectedIndex="{Binding SelectedIndex}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="3"
+                            BorderBrush="Black">
+                        <Views:AbilityView Margin="5" />
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Style>
                 <Style>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName=radStartingAction, Path=IsChecked}"
@@ -84,29 +91,7 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </ListBox.Style>
-        </ListBox>
-        <!--Used to manipulate the Abilities list-->
-        <Grid Grid.Column="2" Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Button x:Name="btnAddAbility"
-                    Grid.Column="0"
-                    Command="{Binding AddActionCommand}"
-                    CommandParameter="{Binding ElementName=txbAbilityName, Path=Text}"
-                    Content="Add" />
-            <Button x:Name="btnDeleteAbility"
-                    Grid.Column="1"
-                    Command="{Binding DeleteActionCommand}"
-                    CommandParameter="{Binding ElementName=lstAbilities, Path=SelectedItem}"
-                    Content="Delete" />
-            <Button x:Name="btnClearAbilities"
-                    Grid.Column="2"
-                    Command="{Binding ClearActionsCommand}"
-                    Content="Clear" />
-        </Grid>
-    </Grid>
+            </ListView.Style>
+        </ListView>
+    </DockPanel>
 </UserControl>

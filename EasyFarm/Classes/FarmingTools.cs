@@ -51,10 +51,6 @@ namespace ZeroLimits.FarmingTool
             // Set up UnitService to use this mob filter instead of its
             // default mob filter. 
             this.UnitService.UnitFilter = UnitFilters.MobFilter(_fface);
-
-            // Allow the ability service to set the distance on abilities
-            // on their creation. 
-            this.AbilityService.IsDistanceEnabled = true;
         }
 
         /// <summary>

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes;
 using EasyFarm.GameData;
 using System.Collections.ObjectModel;
 using ZeroLimits.XITool;
@@ -29,27 +30,32 @@ namespace EasyFarm.UserSettings
         /// <summary>
         /// List of actions that should be used before battle
         /// </summary>
-        public ObservableCollection<Ability> StartList = new ObservableCollection<Ability>();
+        public ObservableCollection<BattleAbility> StartList = 
+            new ObservableCollection<BattleAbility>();
 
         /// <summary>
         /// List of actions taht should be used at the end of battle
         /// </summary>
-        public ObservableCollection<Ability> EndList = new ObservableCollection<Ability>();
+        public ObservableCollection<BattleAbility> EndList = 
+            new ObservableCollection<BattleAbility>();
 
         /// <summary>
         /// List of actions that should be used in battle
         /// </summary>
-        public ObservableCollection<Ability> BattleList = new ObservableCollection<Ability>();
+        public ObservableCollection<BattleAbility> BattleList = 
+            new ObservableCollection<BattleAbility>();
 
         /// <summary>
         /// List of moves that should be used to pull a creature. 
         /// </summary>
-        public ObservableCollection<Ability> PullList = new ObservableCollection<Ability>();
+        public ObservableCollection<BattleAbility> PullList = 
+            new ObservableCollection<BattleAbility>();
 
         /// <summary>
         /// List of actions that should be used when injured
         /// </summary>
-        public ObservableCollection<HealingAbility> HealingList = new ObservableCollection<HealingAbility>();
+        public ObservableCollection<HealingAbility> HealingList = 
+            new ObservableCollection<HealingAbility>();
 
         /// <summary>
         /// Is the BattleList Selected in the battle tab?

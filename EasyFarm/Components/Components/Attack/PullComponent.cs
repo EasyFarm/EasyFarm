@@ -29,41 +29,40 @@ using EasyFarm.Logging;
 
 namespace EasyFarm.Components
 {
-    public class PostBattleComponent : BaseComponent
+    public class PullComponent : MachineComponent
     {
+        public FFACE FFACE { get; set; }
+
         public AbilityExecutor Executor { get; set; }
 
-        public UnitService Units { get; set; }
-
-        public PostBattleComponent(FFACE fface)
-            : base(fface)
+        public Unit Target
         {
-            this.Executor = new AbilityExecutor(fface);
-            this.Units = new UnitService(fface);
+            get { return AttackContainer.TargetUnit; }
+            set { AttackContainer.TargetUnit = value; }
+        }
 
-            // Set default filter to target mobs. 
-            this.Units.UnitFilter = UnitFilters.MobFilter(fface);
+        public PullComponent(FFACE fface)
+        {
+            this.FFACE = fface;
+            this.Executor = new AbilityExecutor(fface);
         }
 
         public override bool CheckComponent()
         {
-            if (AttackContainer.TargetUnit == null) return true;
+            var TargetValid = Target != null && !Target.Status.Equals(Status.Fighting) && !Target.IsDead;
 
-            if (AttackContainer.TargetUnit.Status.Equals(Status.Dead1 | Status.Dead2)) return true;
-
-            return false;
+            return !AttackContainer.FightStarted && TargetValid;
         }
 
         public override void EnterComponent() { }
 
         public override void RunComponent()
         {
-            var Usable = Config.Instance.ActionInfo.EndList
+            var Usable = Config.Instance.ActionInfo.PullList
                     .Where(x => x.Enabled && x.IsCastable(FFACE));
 
             // Only cast buffs when their status effects are not on the player. 
-            var Buffs = Usable
-                .Where(x => x.HasEffectWore(FFACE))
+            var Buffs = Usable.Where(x => x.HasEffectWore(FFACE))
                 .Select(x => x.Ability);
 
             // Cast the other abilities on cooldown. 
@@ -76,23 +75,14 @@ namespace EasyFarm.Components
 
             // Recast others on cooldown. 
             this.Executor.EnsureSpellsCast(Others.ToList());
-
-            // Get the next target by distance to the player. 
-            var Target = ftools.UnitService.GetTarget(
-                UnitFilters.MobFilter(FFACE), x => x.Distance);
-
-            // Set our new target at the end so that we don't accidentaly cast on a 
-            // new target. 
-            AttackContainer.TargetUnit = Target;
-
-            // Set to false in order to use starting moves again in the 
-            // attack Component. 
-            AttackContainer.FightStarted = false;
-
-            App.Current.Dispatcher.Invoke(() =>
-                Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.ID));
         }
 
-        public override void ExitComponent() { }
+        public override void ExitComponent()
+        {
+            if (Target.Status.Equals(Status.Fighting))
+            {
+                AttackContainer.FightStarted = true;
+            }
+        }
     }
 }

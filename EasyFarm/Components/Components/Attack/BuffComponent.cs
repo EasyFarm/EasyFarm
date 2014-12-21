@@ -18,47 +18,46 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.FarmingTool;
+using EasyFarm.Logging;
+using EasyFarm.UserSettings;
 using FFACETools;
 using System;
-using ZeroLimits.FarmingTool;
-using ZeroLimits.XITool.Classes;
+using System.Collections.Generic;
 using System.Linq;
-using EasyFarm.ViewModels;
-using EasyFarm.UserSettings;
-using EasyFarm.Logging;
+using System.Text;
+using System.Threading.Tasks;
+using ZeroLimits.FarmingTool;
+using ZeroLimits.XITool;
+using ZeroLimits.XITool.Classes;
+
 
 namespace EasyFarm.Components
 {
-    public class PostBattleComponent : BaseComponent
+    /// <summary>
+    /// Buffs the player. 
+    /// </summary>
+    public class BuffComponent : MachineComponent
     {
+        public FFACE FFACE { get; set; }
+
         public AbilityExecutor Executor { get; set; }
 
-        public UnitService Units { get; set; }
-
-        public PostBattleComponent(FFACE fface)
-            : base(fface)
+        public BuffComponent(FFACE fface)
         {
+            this.FFACE = fface;
             this.Executor = new AbilityExecutor(fface);
-            this.Units = new UnitService(fface);
-
-            // Set default filter to target mobs. 
-            this.Units.UnitFilter = UnitFilters.MobFilter(fface);
         }
 
         public override bool CheckComponent()
         {
-            if (AttackContainer.TargetUnit == null) return true;
-
-            if (AttackContainer.TargetUnit.Status.Equals(Status.Dead1 | Status.Dead2)) return true;
-
-            return false;
+            return (Target != null && !AttackContainer.FightStarted && !Target.IsDead);
         }
 
         public override void EnterComponent() { }
 
         public override void RunComponent()
         {
-            var Usable = Config.Instance.ActionInfo.EndList
+            var Usable = Config.Instance.ActionInfo.StartList
                     .Where(x => x.Enabled && x.IsCastable(FFACE));
 
             // Only cast buffs when their status effects are not on the player. 
@@ -76,23 +75,14 @@ namespace EasyFarm.Components
 
             // Recast others on cooldown. 
             this.Executor.EnsureSpellsCast(Others.ToList());
-
-            // Get the next target by distance to the player. 
-            var Target = ftools.UnitService.GetTarget(
-                UnitFilters.MobFilter(FFACE), x => x.Distance);
-
-            // Set our new target at the end so that we don't accidentaly cast on a 
-            // new target. 
-            AttackContainer.TargetUnit = Target;
-
-            // Set to false in order to use starting moves again in the 
-            // attack Component. 
-            AttackContainer.FightStarted = false;
-
-            App.Current.Dispatcher.Invoke(() =>
-                Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.ID));
         }
 
         public override void ExitComponent() { }
+
+        public Unit Target
+        {
+            get { return AttackContainer.TargetUnit; }
+            set { AttackContainer.TargetUnit = value; }
+        }
     }
 }

@@ -8,27 +8,39 @@ using System.Threading.Tasks;
 using ZeroLimits.FarmingTool;
 using ZeroLimits.XITool.Classes;
 
-namespace EasyFarm.States
+namespace EasyFarm.Components
 {
-    [StateAttribute(priority: 1)]
-    public class WeaponSkillState : BaseState
+    /// <summary>
+    /// Performs weaponskills on targets. 
+    /// </summary>
+    public class WeaponSkillComponent : MachineComponent
     {
-        public WeaponSkillState(FFACE fface) : base(fface) { }
+        public FFACE FFACE { get; set; }
+
+        public AbilityExecutor Executor { get; set; }
+
+        public WeaponSkillComponent(FFACE fface)
+        {
+            this.FFACE = fface;
+            this.Executor = new AbilityExecutor(fface);
+        }
 
         public Unit Target
         {
-            get { return AttackState.TargetUnit; }
-            set { AttackState.TargetUnit = value; }
+            get { return AttackContainer.TargetUnit; }
+            set { AttackContainer.TargetUnit = value; }
         }
 
-        public override bool CheckState()
+        public override bool CheckComponent()
         {
-            return Target != null && FFACE.Player.Status.Equals(Status.Fighting) && !Target.IsDead;
+            return Target != null && 
+                FFACE.Player.Status.Equals(Status.Fighting) && 
+                !Target.IsDead;
         }
 
-        public override void EnterState() { }
+        public override void EnterComponent() { }
 
-        public override void RunState()
+        public override void RunComponent()
         {
             // Check engaged
             // FIXED: no longer return on not engage but don't execute 
@@ -41,19 +53,19 @@ namespace EasyFarm.States
                 {
                     // Not sure if weapon skills or job abilities endure the same penalties that 
                     // spell do in regards to wait times. So I'm using zero's here. 
-                    ftools.AbilityExecutor.CastLatency = 0;
-                    ftools.AbilityExecutor.GlobalCooldown = 0;
+                    this.Executor.CastLatency = 0;
+                    this.Executor.GlobalCooldown = 0;
 
                     // Cast the weaponskill. 
-                    ftools.AbilityExecutor.UseAbility(Config.Instance.WeaponSkill.Ability);
+                    this.Executor.UseAbility(Config.Instance.WeaponSkill.Ability);
 
                     // Rest casting parameters. 
-                    ftools.AbilityExecutor.SetDefaults();
+                    this.Executor.SetDefaults();
                 }
             }
         }
 
-        public override void ExitState() { }
+        public override void ExitComponent() { }
 
         /// <summary>
         /// Can we perform our weaponskill on the target unit?
