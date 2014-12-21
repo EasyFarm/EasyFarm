@@ -57,22 +57,11 @@ namespace EasyFarm.Components
 
             //Create the states
             AddComponent(new RestComponent(fface) { Priority = 2 });
-            // AddComponent(new AttackContainer(fface) { Priority = 1 });
+            AddComponent(new AttackContainer(fface) { Priority = 1 });
             AddComponent(new TravelComponent(fface) { Priority = 1 });
             AddComponent(new HealingComponent(fface) { Priority = 2 });
             AddComponent(new PostBattleComponent(fface) { Priority = 3 });
             AddComponent(new TargetInvalidComponent(fface) { Priority = 3 });
-
-
-            // Add components. 
-            this.AddComponent(new AbilityComponent(fface) { Priority = 1 });
-            this.AddComponent(new ApproachComponent(fface) { Priority = 1 });
-            this.AddComponent(new BuffComponent(fface) { Priority = 1 });
-            this.AddComponent(new EngageComponent(fface) { Priority = 1 });
-            this.AddComponent(new FaceTargetComponent(fface) { Priority = 1 });
-            this.AddComponent(new PullComponent(fface) { Priority = 1 });
-            this.AddComponent(new TargetEnemyComponent(fface) { Priority = 1 });
-            this.AddComponent(new WeaponSkillComponent(fface) { Priority = 1 });
 
             foreach (var b in this.Components) b.Enabled = true;
         }

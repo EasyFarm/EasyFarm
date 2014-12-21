@@ -54,7 +54,12 @@ namespace EasyFarm.Components
             AttackContainer.TargetUnit = Target;
 
             App.Current.Dispatcher.Invoke(() =>
-               Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.ID));
+            {
+                if (Target != null)
+                {
+                    Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.ID);
+                }
+            });
         }
 
         public override void ExitComponent() { }
