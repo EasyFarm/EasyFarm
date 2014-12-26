@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Models;
+using EasyFarm.UserSettings;
 using EasyFarm.ViewModels;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -28,16 +28,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ZeroLimits.FarmingTool;
-using ZeroLimits.XITools;
+using ZeroLimits.XITool;
+using ZeroLimits.XITool.Classes;
 
 
 namespace EasyFarm.ViewModels
 {
+    [ViewModelAttribute("Settings")]
     public class SettingsViewModel : ViewModelBase
     {
-        public static SettingsModel SettingsModel { get; set; }
-
-        public SettingsViewModel() 
+        public SettingsViewModel()
         {
             RestoreDefaultsCommand = new DelegateCommand(RestoreDefaults);
         }
@@ -46,36 +46,84 @@ namespace EasyFarm.ViewModels
         
         private void RestoreDefaults()
         {
-            MainViewModel.MainModel.InformUser("Defaults have been restored.");
+            DetectionDistance = Constants.DETECTION_DISTANCE;
+            HeightThreshold = Constants.HEIGHT_THRESHOLD;
+            MeleeDistance = Constants.MELEE_DISTANCE;
+            WanderDistance = Constants.DETECTION_DISTANCE;
+            CastLatency = Constants.SPELL_CAST_LATENCY;
+            GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
+            InformUser("Defaults have been restored.");
         }
 
         public double DetectionDistance
         {
-            get { return SettingsModel.DetectionDistance; }
+            get { return Config.Instance.MiscSettings.DetectionDistance; }
             set 
-            {
-                SetProperty(ref SettingsModel.DetectionDistance, value);
-                MainViewModel.MainModel.InformUser("Detection Distance Set: {0}.", value);
+            { 
+                SetProperty<double>(ref Config.Instance.MiscSettings.DetectionDistance, (int)value);
+                InformUser("Detection Distance Set: {0}.", (int)value);
             }
         }
 
         public double HeightThreshold
         {
-            get { return SettingsModel.HeightThreshold; }
+            get { return Config.Instance.MiscSettings.HeightThreshold; }
             set
             {
-                SetProperty(ref SettingsModel.HeightThreshold, value);
-                MainViewModel.MainModel.InformUser("Height Threshold Set: {0}.", value);
+                SetProperty<double>(ref Config.Instance.MiscSettings.HeightThreshold, value);
+                InformUser("Height Threshold Set: {0}.", value);
             }
         }
 
         public double MeleeDistance
         {
-            get { return SettingsModel.MeleeDistance; }
+            get { return Config.Instance.MiscSettings.MeleeDistance; }
             set
             {
-                SetProperty(ref SettingsModel.MeleeDistance, value);
-                MainViewModel.MainModel.InformUser("Min Melee Distance Set: {0}.", value);
+                SetProperty<double>(ref Config.Instance.MiscSettings.MeleeDistance, value);
+                InformUser("Min Melee Distance Set: {0}.", value);
+            }
+        }
+
+        public double RangedAttackDelay
+        {
+            get { return Config.Instance.MiscSettings.RangedAttackDelay; }
+            set
+            {
+                SetProperty<double>(ref Config.Instance.MiscSettings.RangedAttackDelay, value);
+                InformUser("Ranged Attack Distance Set: {0}.", value);
+            }
+        }
+
+        public double WanderDistance
+        {
+            get { return Config.Instance.MiscSettings.WanderDistance; }
+            set
+            {
+                SetProperty<double>(ref Config.Instance.MiscSettings.WanderDistance, (int)value);
+                InformUser("Wander Distance Set: {0}.", (int)value);
+            }
+        }
+
+        public int CastLatency
+        {
+            get { return Config.Instance.MiscSettings.CastLatency; }
+            set
+            {
+                SetProperty(ref Config.Instance.MiscSettings.CastLatency, (int)value);
+                AbilityExecutor.CastLatency = (int)value;
+                InformUser("Cast Latency Set: {0}.", (int)value);
+            }
+        }
+
+        public int GlobalCooldown
+        {
+            get { return Config.Instance.MiscSettings.GlobalCooldown; }
+            set
+            {
+                SetProperty(ref Config.Instance.MiscSettings.GlobalCooldown, (int)value);
+                AbilityExecutor.GlobalCooldown = (int)value;
+                InformUser("Global Cooldown Set: {0}.", (int)value);
             }
         }
     }

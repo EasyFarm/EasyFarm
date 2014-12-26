@@ -53,8 +53,8 @@ namespace EasyFarm.Components
                 {
                     // Not sure if weapon skills or job abilities endure the same penalties that 
                     // spell do in regards to wait times. So I'm using zero's here. 
-                    this.Executor.CastLatency = 0;
-                    this.Executor.GlobalCooldown = 0;
+                    AbilityExecutor.CastLatency = 0;
+                    AbilityExecutor.GlobalCooldown = 0;
 
                     // Cast the weaponskill. 
                     this.Executor.UseAbility(Config.Instance.WeaponSkill.Ability);

@@ -53,5 +53,8 @@ namespace EasyFarm.UserSettings
         /// How far to go of the path for a unit. 
         /// </summary>
         public double WanderDistance = Constants.DETECTION_DISTANCE;
+
+        public int CastLatency = Constants.SPELL_CAST_LATENCY;
+        public int GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
     }
 }

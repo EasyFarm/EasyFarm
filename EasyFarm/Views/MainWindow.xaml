@@ -8,38 +8,40 @@
                        mc:Ignorable="d"
                        x:Name="MainForm"
                        x:Class="EasyFarm.Views.MainWindow"
-                       Width="{Binding ElementName=MainForm, Path=MaxWidth}"
-                       Height="{Binding ElementName=MainForm, Path=MaxHeight}"
+                       Width="510"
+                       Height="340"
                        Title="{Binding MainWindowTitle}"
-                       MaxHeight="340"
-                       MaxWidth="510"
                        WindowStartupLocation="CenterOwner"
                        Topmost="{Binding IsChecked, ElementName=mnuAlwaysOnTop, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="240" />
-            <RowDefinition Height="30" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
-            <ColumnDefinition Width="400" />
-        </Grid.ColumnDefinitions>
-        <Grid.Resources>
-            <Style TargetType="Menu">
+    <DockPanel>
+        <DockPanel.Resources>
+            <Style TargetType="{x:Type Menu}">
                 <Setter Property="Background"
                         Value="Black" />
                 <Setter Property="Foreground"
                         Value="White" />
             </Style>
-            <Style TargetType="MenuItem">
+            <Style TargetType="{x:Type MenuItem}">
                 <Setter Property="Foreground"
                         Value="White" />
                 <Setter Property="Foreground"
                         Value="Black" />
             </Style>
-        </Grid.Resources>
-        <Menu Grid.ColumnSpan="3">
+        </DockPanel.Resources>
+        <StatusBar Background="Black"
+                   HorizontalContentAlignment="Center"
+                   Margin="0"
+                   DockPanel.Dock="Bottom"
+                   Height="36">
+            <Label x:Name="lblStatusBar"
+                   Foreground="White"
+                   Margin="0"
+                   Height="30"
+                   Content="{Binding StatusBarText, NotifyOnSourceUpdated=True}" />
+        </StatusBar>
+        <Menu Margin="0"
+              DockPanel.Dock="Top"
+              Height="36">
             <MenuItem Header="_File"
                       Foreground="White"
                       Background="Black">
@@ -53,16 +55,18 @@
             <MenuItem Header="_Options"
                       Foreground="White"
                       Background="Black">
-                <MenuItem Name="mnuAlwaysOnTop"
+                <MenuItem x:Name="mnuAlwaysOnTop"
                           Header="_Always on top"
+                          IsCheckable="True" />
+                <MenuItem x:Name="mnuMinimizeToTray"
+                          Header="_Minimize to system tray"
                           IsCheckable="True" />
             </MenuItem>
         </Menu>
         <TabControl x:Name="MainTabControl"
-                    Grid.Row="1"
-                    Grid.ColumnSpan="2"
                     ItemsSource="{Binding ViewModels}"
-                    SelectedIndex="{Binding SelectedIndex}">
+                    SelectedIndex="{Binding SelectedIndex}"
+                    Margin="0">
             <TabControl.Resources>
                 <DataTemplate DataType="{x:Type ViewModels:BattlesViewModel}">
                     <Views:BattlesView />
@@ -93,23 +97,13 @@
                 </DataTemplate>
             </TabControl.Resources>
             <TabControl.ItemContainerStyle>
-                <Style TargetType="TabItem">
+                <Style TargetType="{x:Type TabItem}">
                     <Setter Property="Header"
                             Value="{Binding VMName}" />
                     <Setter Property="ContentTemplate"
-                            Value="{Binding ElementName=MainTabControl, Path=SelectedTab}" />
+                            Value="{Binding SelectedTab, ElementName=MainTabControl}" />
                 </Style>
             </TabControl.ItemContainerStyle>
         </TabControl>
-        <StatusBar Grid.ColumnSpan="3"
-                   Grid.Row="2"
-                   Background="Black"
-                   HorizontalContentAlignment="Center">
-            <Label Name="lblStatusBar"
-                   Foreground="White"
-                   Margin="0"
-                   Height="30"
-                   Content="{Binding StatusBarText, NotifyOnSourceUpdated=True}" />
-        </StatusBar>
-    </Grid>
+    </DockPanel>
 </Controls:MetroWindow>

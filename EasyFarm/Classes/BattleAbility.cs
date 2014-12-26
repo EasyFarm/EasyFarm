@@ -79,7 +79,8 @@ namespace EasyFarm.Classes
         public bool SetAbility()
         {
             // We've already parsed the ability. 
-            if (this.Ability.IsValidName) return true; 
+            if (this.Ability.Name.Equals(this.NameX, 
+                StringComparison.CurrentCultureIgnoreCase)) return true; 
 
             AbilityService Fetcher = new AbilityService();
 

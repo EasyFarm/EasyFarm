@@ -94,6 +94,11 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>trayicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -231,7 +236,7 @@
     <Compile Include="ViewModels\Locator.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\UnitFilteringViewModel.cs">
+    <Compile Include="ViewModels\SettingsViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\RestingViewModel.cs" />
@@ -421,12 +426,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\XI-Tools\XI-Tools\XI-Tools.csproj">
-      <Project>{be0bf2c6-3db4-415c-be21-c3f6b696c335}</Project>
-      <Name>XI-Tools</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="trayicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Composition.dll" />
     <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Interactivity.dll" />
     <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Mvvm.Desktop.dll" />
@@ -434,12 +436,19 @@
     <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.PubSubEvents.dll" />
     <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.SharedInterfaces.dll" />
     <EmbeddedResource Include="Embedded\Microsoft.Practices.ServiceLocation.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\XI-Tools\XI-Tools\XI-Tools.csproj">
+      <Project>{be0bf2c6-3db4-415c-be21-c3f6b696c335}</Project>
+      <Name>XI-Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="FFACE.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="FFACETools.dll" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

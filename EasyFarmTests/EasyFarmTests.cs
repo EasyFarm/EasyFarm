@@ -29,50 +29,14 @@ using EasyFarm.ViewModels;
 using System.Collections.Generic;
 using EasyFarm.GameData;
 using ZeroLimits.FarmingTool;
+using System.Text.RegularExpressions;
 
 namespace EasyFarmTests
 {
     [TestClass]
     public class EasyFarmTests
     {
-        [TestMethod]
-        public void TestConfigSingletonInstance()
-        {
-            var conf = Config.Instance;
-            conf.FilterInfo.PartyFilter = true;
-            Assert.AreEqual(conf.FilterInfo.PartyFilter, Config.Instance.FilterInfo.PartyFilter);
-            Assert.AreSame(conf, Config.Instance);
-
-            // Wipe all static changed data. 
-            conf = new Config();
-        }
-
-        [TestMethod]
-        public void TestConfigPersistence()
-        {
-            var conf = new Config();
-            conf.DebugEnabled = true;
-            conf.FilterInfo.PartyFilter = false;
-            conf.SaveSettings();
-            conf.LoadSettings();
-            Assert.IsFalse(conf.FilterInfo.PartyFilter);
-
-            // Wipe all static changed data. 
-            conf = new Config();
-        }
-
-        [TestMethod]
-        public void TestConfigPersistanceWithGetInstance()
-        {
-            Config.Instance.FilterInfo.PartyFilter = true;
-            Config.Instance.DebugEnabled = true;
-            Config.Instance.SaveSettings();
-            Config.Instance.LoadSettings();
-            Assert.IsTrue(Config.Instance.FilterInfo.PartyFilter);
-
-            // Wipe all static changed data. 
-            Config.Instance = new Config();
-        }
+        
 
         [TestMethod]
         public void TestUnitFilter()
@@ -86,7 +50,7 @@ namespace EasyFarmTests
             TestUnit Unit = new TestUnit()
             {
                 Status = Status.Standing,
-                Distance = 0, 
+                Distance = 0,
                 IsActive = true,
                 NPCType = NPCType.Mob,
                 YDifference = 0,
@@ -109,7 +73,7 @@ namespace EasyFarmTests
 
             // Test Claimed Filter 
             Config.Instance.FilterInfo.ClaimedFilter = true;
-            Assert.IsTrue(UnitFilters.MobFilter(null)(Unit));            
+            Assert.IsTrue(UnitFilters.MobFilter(null)(Unit));
         }
 
         [TestMethod]
@@ -121,7 +85,7 @@ namespace EasyFarmTests
                 Enabled = true,
                 LowerHealth = 25,
                 UpperHealth = 75,
-                Ability = new Ability() { Name = "Raging Axe"}
+                Ability = new Ability() { Name = "Raging Axe" }
             };
 
             TestUnit unit = new TestUnit()
