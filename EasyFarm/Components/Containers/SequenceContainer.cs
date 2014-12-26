@@ -39,11 +39,17 @@ namespace EasyFarm.Components
 
                 foreach (var Component in this.Components)
                 {
-                    if (LastRan != null) LastRan.ExitComponent();
                     if (!Component.Enabled) continue;
                     if (Component.CheckComponent())
                     {
-                        if (LastRan == null) LastRan = Component;
+                        if (LastRan == null)
+                        {
+                            LastRan = Component;
+                            // Run the enter command or otherwise it won't 
+                            // trigger on the first run component. 
+                            Component.EnterComponent();
+                        }
+
                         if (LastRan != Component)
                         {
                             LastRan.ExitComponent();

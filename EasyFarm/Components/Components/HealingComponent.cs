@@ -45,6 +45,7 @@ namespace EasyFarm.Components
         public override void EnterComponent()
         {
             ftools.RestingService.EndResting();
+            FFACE.Navigator.Reset();
         }
 
         public override void RunComponent()

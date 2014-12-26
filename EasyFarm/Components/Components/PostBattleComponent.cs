@@ -35,6 +35,12 @@ namespace EasyFarm.Components
 
         public UnitService Units { get; set; }
 
+        public Unit Target
+        {
+            get { return AttackContainer.TargetUnit; }
+            set { AttackContainer.TargetUnit = value; }
+        }
+
         public PostBattleComponent(FFACE fface)
             : base(fface)
         {
@@ -47,11 +53,7 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            if (AttackContainer.TargetUnit == null) return true;
-
-            if (AttackContainer.TargetUnit.Status.Equals(Status.Dead1 | Status.Dead2)) return true;
-
-            return false;
+            return ((Target == null || Target.IsDead));
         }
 
         public override void EnterComponent() { }

@@ -48,7 +48,7 @@ namespace EasyFarm.Components
         /// <summary>
         /// Who we are trying to kill currently
         /// </summary>
-        public static Unit TargetUnit
+        public Unit Target
         {
             get { return AttackContainer.TargetUnit; }
             set { AttackContainer.TargetUnit = value; }
@@ -70,7 +70,7 @@ namespace EasyFarm.Components
             bool success = false;
 
             // If we have a valid target
-            if (Units.IsValid(TargetUnit))
+            if (Units.IsValid(Target))
             {
                 // If we're alive
                 if (!FFACE.Player.Status.Equals(Status.Dead1 | Status.Dead2))
@@ -87,6 +87,7 @@ namespace EasyFarm.Components
         public override void EnterComponent()
         {
             Resting.EndResting();
+            FFACE.Navigator.Reset();
         }
 
         public override void RunComponent()
@@ -102,7 +103,8 @@ namespace EasyFarm.Components
             if (FFACE.Player.Status.Equals(Status.Fighting))
             {
                 var Usable = Config.Instance.ActionInfo.BattleList
-                    .Where(x => x.Enabled && x.IsCastable(FFACE));
+                    .Where(x => x.Enabled && x.IsCastable(FFACE))
+                    .Where(x => Target.Distance < x.Distance);
 
                 var Buffs = Usable.Where(x => x.HasEffectWore(FFACE))
                     .Select(x => x.Ability);

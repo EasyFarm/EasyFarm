@@ -63,7 +63,9 @@ namespace EasyFarm.Components
         {
             var OldTolerance = FFACE.Navigator.DistanceTolerance;
             FFACE.Navigator.DistanceTolerance = Config.Instance.MiscSettings.MeleeDistance;
-            FFACE.Navigator.GotoNPC(Target.ID);
+
+            FFACE.Navigator.Goto(() => Target.PosX, () => Target.PosZ, false);
+
             FFACE.Navigator.DistanceTolerance = OldTolerance;
         }
 

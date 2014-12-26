@@ -60,7 +60,8 @@ namespace EasyFarm.Components
                     this.Executor.UseAbility(Config.Instance.WeaponSkill.Ability);
 
                     // Rest casting parameters. 
-                    this.Executor.SetDefaults();
+                    AbilityExecutor.CastLatency = Config.Instance.MiscSettings.CastLatency;
+                    AbilityExecutor.GlobalCooldown = Config.Instance.MiscSettings.GlobalCooldown;
                 }
             }
         }

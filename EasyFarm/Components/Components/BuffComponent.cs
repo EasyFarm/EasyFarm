@@ -50,10 +50,13 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            return (Target != null && !AttackContainer.FightStarted && !Target.IsDead);
+            return ((Target != null && !Target.IsDead) && !AttackContainer.FightStarted);
         }
 
-        public override void EnterComponent() { }
+        public override void EnterComponent() 
+        {
+            FFACE.Navigator.Reset();
+        }
 
         public override void RunComponent()
         {

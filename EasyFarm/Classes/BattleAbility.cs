@@ -1,4 +1,5 @@
-﻿using EasyFarm.Views;
+﻿using EasyFarm.ViewModels;
+using EasyFarm.Views;
 using FFACETools;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
@@ -17,7 +18,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// Is the move enabled?
         /// </summary>
-        public bool Enabled 
+        public bool Enabled
         {
             get { return this.m_enabled; }
             set { SetProperty(ref this.m_enabled, value); }
@@ -33,8 +34,9 @@ namespace EasyFarm.Classes
         public String NameX
         {
             get { return this.m_name; }
-            set { 
-                SetProperty(ref this.m_name, value); 
+            set
+            {
+                SetProperty(ref this.m_name, value);
             }
         }
 
@@ -57,7 +59,10 @@ namespace EasyFarm.Classes
         public double Distance
         {
             get { return this.m_distance; }
-            set { SetProperty(ref this.m_distance, value); }
+            set
+            {
+                SetProperty(ref this.m_distance, (int)value);
+            }
         }
 
         public Ability m_ability = new Ability();
@@ -79,8 +84,8 @@ namespace EasyFarm.Classes
         public bool SetAbility()
         {
             // We've already parsed the ability. 
-            if (this.Ability.Name.Equals(this.NameX, 
-                StringComparison.CurrentCultureIgnoreCase)) return true; 
+            if (this.Ability.Name.Equals(this.NameX,
+                StringComparison.CurrentCultureIgnoreCase)) return true;
 
             AbilityService Fetcher = new AbilityService();
 
@@ -116,7 +121,7 @@ namespace EasyFarm.Classes
             {
                 return true;
             }
-            
+
             return false;
         }
 
