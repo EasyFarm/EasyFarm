@@ -21,7 +21,8 @@
         </Grid.RowDefinitions>
 
         <!--Tells us what list to add the textbox item to.-->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1"
+              Margin="4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
