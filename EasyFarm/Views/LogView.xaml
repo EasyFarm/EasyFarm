@@ -4,13 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="300"
-             d:DesignWidth="300">
-    <Border BorderBrush="Black"
-            BorderThickness="20">
-        <StackPanel>
-            <!--Holds the list of logged items for display-->
-            <ListBox ItemsSource="{Binding LoggedItems}"></ListBox>
-        </StackPanel>
-    </Border>
+             d:DesignHeight="200"
+             d:DesignWidth="400">
+    <Grid Margin="5">
+        <ListBox BorderBrush="Black" 
+                 BorderThickness="1"
+                 ItemsSource="{Binding LoggedItems}"/>
+    </Grid>
 </UserControl>
