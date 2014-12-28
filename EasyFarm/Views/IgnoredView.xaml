@@ -4,52 +4,41 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="108.904"
-             d:DesignWidth="435.616">
+             d:DesignHeight="200"
+             d:DesignWidth="400">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
-            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ComboBox x:Name="cboIgnoreList"
-                  Margin="5"
+        <ComboBox Margin="5"
                   Grid.Column="1"
                   IsEditable="True"
                   ItemsSource="{Binding Ignored}"
                   Text="{Binding Name}" />
-        <Label Content="Name" />
+        <Label Content="Name" 
+               VerticalAlignment="Center"/>
         <Grid Grid.Row="1"
-              Grid.Column="2">
-            <!--All each button to be in its own column -->
+              Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <!--Format buttons to be spaced.-->
-            <Grid.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Margin"
-                            Value="5" />
-                </Style>
-            </Grid.Resources>
-            <!--Delete button -->
-            <Button x:Name="btnDeleteIgnored"
-                    Grid.Column="1"
-                    Content="Delete"
-                    Command="{Binding DeleteIgnoredUnitCommand}" />
-            <!--Add button -->
-            <Button x:Name="btnAddIgnored"
-                    Grid.Column="0"
+            <Button Grid.Column="0"
+                    Margin="5"
                     Command="{Binding AddIgnoredUnitCommand}"
                     Content="Add" />
-            <!--Clear button -->
-            <Button x:Name="btnClearIgnored"
-                    Grid.Column="2"
+            <Button Grid.Column="1"
+                    Margin="5"
+                    Content="Delete"
+                    Command="{Binding DeleteIgnoredUnitCommand}" />
+            <Button Grid.Column="2"
+                    Margin="5"
                     Command="{Binding ClearIgnoredUnitsCommand}"
                     Content="Clear" />
         </Grid>
