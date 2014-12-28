@@ -18,22 +18,19 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.UserSettings;
-using ZeroLimits.FarmingTool;
 
 namespace EasyFarm.ViewModels
 {
     [ViewModelAttribute("Resting")]
     public class RestingViewModel : ViewModelBase
     {
-        public RestingViewModel() { }
-
         public int LowHP
         {
             get { return Config.Instance.RestingInfo.Health.Low; }
             set
             {
                 SetProperty(ref Config.Instance.RestingInfo.Health.Low, value);
-                InformUser("Low hp set to " + this.LowHP);
+                InformUser("Low hp set to " + LowHP);
             }
         }
 
@@ -43,7 +40,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.RestingInfo.Health.High, value);
-                InformUser("High hp set to " + this.HighHP);
+                InformUser("High hp set to " + HighHP);
             }
         }
 
@@ -53,7 +50,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.RestingInfo.Magic.Low, value);
-                InformUser("Low mp set to " + this.LowMP);
+                InformUser("Low mp set to " + LowMP);
             }
         }
 
@@ -63,7 +60,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.RestingInfo.Magic.High, value);
-                InformUser("High mp set to " + this.HighMP);
+                InformUser("High mp set to " + HighMP);
             }
         }
 

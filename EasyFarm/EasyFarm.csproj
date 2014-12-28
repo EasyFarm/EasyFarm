@@ -235,8 +235,10 @@
     <Compile Include="ViewModels\HealingViewModel.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
     <Compile Include="ViewModels\Locator.cs" />
+    <Compile Include="ViewModels\LogSinkExtensions.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\StringSink.cs" />
     <Compile Include="ViewModels\UnitFilteringViewModel.cs">
       <SubType>Code</SubType>
     </Compile>

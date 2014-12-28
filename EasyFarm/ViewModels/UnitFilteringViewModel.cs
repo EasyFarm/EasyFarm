@@ -18,17 +18,8 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.UserSettings;
-using EasyFarm.ViewModels;
 using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.PubSubEvents;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using ZeroLimits.FarmingTool;
-using ZeroLimits.XITool;
 using ZeroLimits.XITool.Classes;
 
 
@@ -58,7 +49,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.MiscSettings.DetectionDistance; }
             set 
             { 
-                SetProperty<double>(ref Config.Instance.MiscSettings.DetectionDistance, (int)value);
+                SetProperty(ref Config.Instance.MiscSettings.DetectionDistance, (int)value);
                 InformUser("Detection Distance Set: {0}.", (int)value);
             }
         }
@@ -68,7 +59,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.MiscSettings.HeightThreshold; }
             set
             {
-                SetProperty<double>(ref Config.Instance.MiscSettings.HeightThreshold, value);
+                SetProperty(ref Config.Instance.MiscSettings.HeightThreshold, value);
                 InformUser("Height Threshold Set: {0}.", value);
             }
         }
@@ -78,7 +69,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.MiscSettings.MeleeDistance; }
             set
             {
-                SetProperty<double>(ref Config.Instance.MiscSettings.MeleeDistance, value);
+                SetProperty(ref Config.Instance.MiscSettings.MeleeDistance, value);
                 InformUser("Min Melee Distance Set: {0}.", value);
             }
         }
@@ -88,7 +79,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.MiscSettings.RangedAttackDelay; }
             set
             {
-                SetProperty<double>(ref Config.Instance.MiscSettings.RangedAttackDelay, value);
+                SetProperty(ref Config.Instance.MiscSettings.RangedAttackDelay, value);
                 InformUser("Ranged Attack Distance Set: {0}.", value);
             }
         }
@@ -98,7 +89,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.MiscSettings.WanderDistance; }
             set
             {
-                SetProperty<double>(ref Config.Instance.MiscSettings.WanderDistance, (int)value);
+                SetProperty(ref Config.Instance.MiscSettings.WanderDistance, (int)value);
                 InformUser("Wander Distance Set: {0}.", (int)value);
             }
         }

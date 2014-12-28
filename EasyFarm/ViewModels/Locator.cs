@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyFarm.ViewModels
 {
@@ -21,41 +19,44 @@ namespace EasyFarm.ViewModels
         /// <returns></returns>
         public List<ViewModelBase> GetEnabledViewModels()
         {
-            var AllMarkedClasses = GetMarkedTypes();
+            var allMarkedClasses = GetMarkedTypes();
 
-            var EnabledViewModels = AllMarkedClasses.Where(x =>
+            var enabledViewModels = allMarkedClasses.Where(x =>
                     x.GetCustomAttributes<ViewModelAttribute>(false)
                     .Any(attr => attr.Enabled))
                     .ToList();
 
-            var ViewModels = EnabledViewModels
+            var viewModels = enabledViewModels
                 .SelectMany(vmclass => vmclass.GetCustomAttributes<ViewModelAttribute>(false)
                 .Select(vmattribute =>
                 {
-                    ViewModelBase ViewModel =
-                        (ViewModelBase)ConstructItem(vmclass, new Type[] { });
-                    ViewModel.VMName = vmattribute.Name;
-                    return ViewModel;
+                    var viewModel = (ViewModelBase)ConstructItem(vmclass, new Type[] { });
+                    viewModel.VMName = vmattribute.Name;
+                    return viewModel;
                 }));
 
-            return ViewModels.ToList();
+            return viewModels.ToList();
         }
 
         public List<BaseState> GetEnabledStates(FFACE fface)
         {
-            var States = GetMarkedTypes()
+            var states = GetMarkedTypes()
                 .Where(x => x.GetCustomAttributes<StateAttribute>(false)
                 .Any(attr => attr.Enabled))
                 .SelectMany(state => state.GetCustomAttributes<StateAttribute>()
                 .Select(x =>
                 {
-                    ConstructorInfo ctor = state.GetConstructor(new[] { typeof(FFACE) });
-                    BaseState instance = (BaseState)ctor.Invoke(new object[] { fface });
-                    instance.Enabled = x.Enabled;
-                    instance.Priority = x.Priority;
-                    return instance;
+                    var ctor = state.GetConstructor(new[] { typeof(FFACE) });
+                    if (ctor != null)
+                    {
+                        var instance = (BaseState)ctor.Invoke(new object[] { fface });
+                        instance.Enabled = x.Enabled;
+                        instance.Priority = x.Priority;
+                        return instance;
+                    }
+                    return null;
                 }));
-            return States.ToList();
+            return states.ToList();
         }
 
         /// <summary>
@@ -66,11 +67,10 @@ namespace EasyFarm.ViewModels
         /// <returns></returns>
         public Object ConstructItem(Type x, Type[] constructorArgs)
         {
-            ConstructorInfo ci = x.GetConstructor(constructorArgs);
+            var ci = x.GetConstructor(constructorArgs);
             if (ci == null) return default(TResult);
             var value = x.GetCustomAttributes(typeof(T), false).FirstOrDefault();
-            if (value == null) return default(TResult);
-            return (Object)ci.Invoke(constructorArgs);
+            return value == null ? default(TResult) : ci.Invoke(constructorArgs);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace EasyFarm.ViewModels
         /// <returns></returns>
         public List<Object> ConstructMarkedClasses(List<Type> types, Type[] constructorArgs)
         {
-            return types.Select((x) => ConstructItem(x, constructorArgs)).ToList();
+            return types.Select(x => ConstructItem(x, constructorArgs)).ToList();
         }
 
         /// <summary>
@@ -102,8 +102,7 @@ namespace EasyFarm.ViewModels
         {
             return Assembly.GetExecutingAssembly().GetTypes()
                 .Where(type => type.IsClass)
-                .Where(type => type.GetCustomAttributes(false)
-                    .Where(attribute => attribute is T).Any())
+                .Where(type => type.GetCustomAttributes(false).Any(attribute => attribute is T))
                     .ToList();
         }
     }

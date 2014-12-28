@@ -17,15 +17,12 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.GameData;
 using EasyFarm.UserSettings;
 using EasyFarm.Views;
 using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using ZeroLimits.FarmingTool;
-using ZeroLimits.XITool;
 using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.ViewModels
@@ -33,7 +30,7 @@ namespace EasyFarm.ViewModels
     [ViewModelAttribute("Battles")]
     public class BattlesViewModel : ViewModelBase
     {
-        AbilityService AbilityService = new AbilityService();
+        readonly AbilityService _abilityService = new AbilityService();
         
         public BattlesViewModel()
         {
@@ -42,12 +39,12 @@ namespace EasyFarm.ViewModels
             ClearActionsCommand = new DelegateCommand(ClearActions);
         }
 
-        private Ability battleAction;
+        private Ability _battleAction;
 
         public Ability BattleAction
         {
-            get { return battleAction; }
-            set { SetProperty(ref this.battleAction, value); }
+            get { return _battleAction; }
+            set { SetProperty(ref _battleAction, value); }
         }
 
         /// <summary>
@@ -123,15 +120,15 @@ namespace EasyFarm.ViewModels
         /// <summary>
         /// Private backing for the moves name.
         /// </summary>
-        private String actionName;
+        private String _actionName;
 
         /// <summary>
         /// The string to be turned into a battle move.
         /// </summary>
         public String ActionName
         {
-            get { return actionName; }
-            set { SetProperty(ref this.actionName, value); }
+            get { return _actionName; }
+            set { SetProperty(ref _actionName, value); }
         }
 
         /// <summary>
@@ -157,15 +154,18 @@ namespace EasyFarm.ViewModels
             get
             {
                 if (StartSelected)
+                {
                     return StartList;
-                else if (BattleSelected)
+                }
+                if (BattleSelected)
+                {
                     return BattleList;
-                else if (EndSelected)
+                }
+                if (EndSelected)
+                {
                     return EndList;
-                else if (PullSelected)
-                    return PullList;
-                else
-                    return new ObservableCollection<Ability>();
+                }
+                return PullSelected ? PullList : new ObservableCollection<Ability>();
             }
         }
 
@@ -175,11 +175,11 @@ namespace EasyFarm.ViewModels
         /// <param name="obj"></param>
         private void AddAction(object obj)
         {
-            String name = obj as String;
-            if (AbilityService.GetAbilitiesWithName(name).Count > 1)
+            var name = obj as String;
+            if (_abilityService.GetAbilitiesWithName(name).Count > 1)
                 SelectedList.Add(new AbilitySelectionBox(name).SelectedAbility);
-            else if (AbilityService.Exists(name))
-                SelectedList.Add(AbilityService.CreateAbility(name));
+            else if (_abilityService.Exists(name))
+                SelectedList.Add(_abilityService.CreateAbility(name));
         }
 
         /// <summary>
@@ -197,29 +197,6 @@ namespace EasyFarm.ViewModels
         private void ClearActions()
         {
             SelectedList.Clear();
-        }
-
-        /// <summary>
-        /// Returns whether we can add an move.
-        /// </summary>
-        /// <param name="obj">Move's name</param>
-        /// <returns></returns>
-        private bool IsBattleActionAddable(object obj)
-        {
-            if (BattleAction != null && BattleAction.IsValidName && !SelectedList.Contains(BattleAction))
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// Returns whether we can delete an move.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        private bool IsBattleActionRemovable(object obj)
-        {
-            return !IsBattleActionAddable(obj);
         }
     }
 }

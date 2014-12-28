@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace EasyFarm.ViewModels
 {
@@ -13,8 +10,8 @@ namespace EasyFarm.ViewModels
 
         public ViewModelAttribute(String name, bool enabled = true)
         {
-            this.Enabled = enabled;
-            this.Name = name;
+            Enabled = enabled;
+            Name = name;
         }
     }
 }
