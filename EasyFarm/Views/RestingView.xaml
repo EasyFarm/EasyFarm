@@ -13,54 +13,73 @@
         </Grid.RowDefinitions>
         <!-- Controls for resting HP-->
         <GroupBox Header="HP">
-            <StackPanel Orientation="Horizontal">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                    
                 <!--Do we want to rest hp?-->
                 <CheckBox Content="Enabled"
                           VerticalAlignment="Center"
                           IsChecked="{Binding HPEnabled}" />
                 <!--When should we sit down?-->
-                <Label Content="Down"
+                <Label Grid.Column="1"
+                       Margin="5 10"
+                       Content="Down"
                        VerticalAlignment="Center" />
-                <Slider Margin="10"
+                <Slider Grid.Column="2"
                         VerticalAlignment="Center"
                         Maximum="100"
-                        Width="90"
                         Value="{Binding LowHP}" />
                 <!--When should we stand up?-->
-                <Label Content="Up"
+                <Label Grid.Column="3"
+                       Margin="5 10"
+                       Content="Up"
                        VerticalAlignment="Center" />
-                <Slider Margin="10"
+                <Slider Grid.Column="4"
                         VerticalAlignment="Center"
                         Maximum="100"
-                        Width="90"
                         Value="{Binding HighHP}" />
-            </StackPanel>
+            </Grid>
         </GroupBox>
         <!--Controls for resting mp-->
         <GroupBox Header="MP"
                   Grid.Row="1">
-            <StackPanel Orientation="Horizontal">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 <!--Do we want to rest mp?-->
                 <CheckBox Content="Enabled"
                           VerticalAlignment="Center"
                           IsChecked="{Binding MPEnabled}" />
                 <!--When should we sit down?-->
-                <Label Content="Down"
+                <Label Grid.Column="1"
+                       Margin="5 10"
+                       Content="Down"
                        VerticalAlignment="Center" />
-                <Slider Margin="10"
+                <Slider Grid.Column="2"
                         VerticalAlignment="Center"
                         Maximum="100"
-                        Width="90"
                         Value="{Binding LowMP}" />
                 <!--When should we stand up?-->
-                <Label Content="Up"
+                <Label Grid.Column="3"
+                       Margin="5 10"
+                       Content="Up"
                        VerticalAlignment="Center" />
-                <Slider Margin="10"
+                <Slider Grid.Column="4"
                         VerticalAlignment="Center"
                         Maximum="100"
-                        Width="90"
                         Value="{Binding HighMP}" />
-            </StackPanel>
+            </Grid>
         </GroupBox>
     </Grid>
 </UserControl>
