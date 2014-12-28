@@ -46,7 +46,7 @@
                       Foreground="White"
                       Background="Black"
                       VerticalAlignment="Center">
-                <MenuItem Header="St_art"
+                <MenuItem Header="{Binding StartPauseHeader}"
                           Command="{Binding StartCommand}" />
                 <MenuItem Header="_Save"
                           Command="{Binding SaveCommand}" />

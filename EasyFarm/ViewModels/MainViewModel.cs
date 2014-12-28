@@ -116,6 +116,22 @@ namespace EasyFarm.ViewModels
             get { return GameEngine.IsWorking; }
             set { SetProperty(ref GameEngine.IsWorking, value); }
         }
+
+        private string _startStopHeader = "St_art";
+        /// <summary>
+        /// Binding for File -> Start/Pause text.
+        /// </summary>
+        public string StartPauseHeader
+        {
+            get
+            {
+                return _startStopHeader;
+            }
+            set
+            {
+                SetProperty(ref _startStopHeader, value);
+            }
+        }
        
         /// <summary>
         /// Command to start the bot. 
@@ -142,12 +158,14 @@ namespace EasyFarm.ViewModels
                 Logger.Write.BotStop("Bot now paused");
                 InformUser("Program paused.");                
                 GameEngine.Stop();
+                StartPauseHeader = "St_art";
             }
             else
             {
                 Logger.Write.BotStart("Bot now running");
                 InformUser("Program running.");
                 GameEngine.Start();
+                StartPauseHeader = "P_ause";
             }
         }
 
