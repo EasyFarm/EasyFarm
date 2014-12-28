@@ -11,18 +11,6 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
-
-        <!--<StackPanel.Resources>
-            <Style TargetType="Button">
-                <Setter Property="Height"
-                        Value="23"></Setter>
-                <Setter Property="Width"
-                        Value="75"></Setter>
-                <Setter Property="Margin"
-                        Value="5"></Setter>
-            </Style>
-        </StackPanel.Resources>-->
         <StackPanel>
             <!--Adds an healing ability control to the list-->
             <Button Content="Add"
@@ -55,19 +43,18 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="35"/>
                         </Grid.ColumnDefinitions>
-
                         <!--Is the abilities current enabled?-->
                         <CheckBox VerticalAlignment="Center"
-                                  Margin="5 0 0 5"
+                                  Margin="5 2 0 2"
                                   IsChecked="{Binding Path=IsEnabled}" />
                         <!--The name of the ability-->
                         <TextBox Grid.Column="1"
-                                 Margin="5 0 0 5"
+                                 Margin="5 2 0 2"
                                  VerticalAlignment="Center"
                                  Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" />
                         <!--The health percentage at which it should be used-->
                         <Slider Grid.Column="2"
-                                Margin="5 0 0 5"
+                                Margin="5 2 0 2"
                                 VerticalAlignment="Center"
                                 IsSnapToTickEnabled="True"
                                 TickFrequency="1"
@@ -75,7 +62,7 @@
                                 Value="{Binding Path = TriggerLevel}" />
                         <!--Friendly label that displays the health percentage-->
                         <Label Grid.Column="3"
-                               Margin="5 0 0 5"
+                               Margin="5 2 0 2"
                                VerticalAlignment="Center"
                                HorizontalContentAlignment="Right"
                                Content="{Binding Path=TriggerLevel}" />
