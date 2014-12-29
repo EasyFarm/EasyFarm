@@ -64,7 +64,8 @@
         <ListBox x:Name="lstAbilities"
                  Grid.Column="1"
                  Grid.Row="1"
-                 Margin="5">
+                 Margin="5"
+                 SelectedIndex="{Binding SelectedIndex}">
             <ListBox.Style>
                 <Style>
                     <Style.Triggers>
