@@ -133,7 +133,7 @@ namespace EasyFarm.Classes
         {
             // Convert string status effect to enum. 
             StatusEffect status;
-            var conversionSuccesful = Enum.TryParse<StatusEffect>(this.Buff, out status);
+            var conversionSuccesful = Enum.TryParse<StatusEffect>(this.Buff.Replace(" ", "_"), out status);
 
             // Check if player does not have the status effect. 
             if (conversionSuccesful && !fface.Player.StatusEffects.Contains(status))

@@ -28,8 +28,6 @@ using System.IO;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using ZeroLimits.FarmingTool;
-using ZeroLimits.XITool;
 using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.ViewModels
@@ -37,13 +35,13 @@ namespace EasyFarm.ViewModels
     [ViewModelAttribute("Routes")]
     public class RoutesViewModel : ViewModelBase
     {
-        DispatcherTimer WaypointRecorder = new DispatcherTimer();
-        FFACE.Position LastPosition = new FFACE.Position();
+        readonly DispatcherTimer _waypointRecorder = new DispatcherTimer();
+        FFACE.Position _lastPosition = new FFACE.Position();
         
         public RoutesViewModel() 
         {
-            WaypointRecorder.Tick += new EventHandler(RouteRecorder_Tick);
-            WaypointRecorder.Interval = new TimeSpan(0, 0, 1);
+            _waypointRecorder.Tick += RouteRecorder_Tick;
+            _waypointRecorder.Interval = new TimeSpan(0, 0, 1);
 
             ClearRouteCommand = new DelegateCommand(ClearRoute);
             RecordRouteCommand = new DelegateCommand<Object>(RecordRoute);
@@ -70,26 +68,36 @@ namespace EasyFarm.ViewModels
             Route = new ObservableCollection<Waypoint>();
         }
 
-        public void RecordRoute(Object RecordButton)
+        public void RecordRoute(Object recordButton)
         {
-            if (!WaypointRecorder.IsEnabled)
+            if (!_waypointRecorder.IsEnabled)
             {
-                WaypointRecorder.Start();
-                (RecordButton as Button).Content = "Recording!";
+                _waypointRecorder.Start();
+                var button = recordButton as Button;
+                if (button != null)
+                {
+                    button.Content = "Recording!";
+                }
             }
             else
             {
-                WaypointRecorder.Stop();
-                (RecordButton as Button).Content = "Record";
+                _waypointRecorder.Stop();
+                var button = recordButton as Button;
+                if (button != null)
+                {
+                    button.Content = "Record";
+                }
             }
         }
 
         private void SaveRoute()
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.InitialDirectory = Directory.GetCurrentDirectory();
-            sfd.DefaultExt = ".wpl";
-            sfd.Filter = "Waypoint lists (.wpl)|*.wpl";
+            var sfd = new SaveFileDialog
+            {
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                DefaultExt = ".wpl",
+                Filter = "Waypoint lists (.wpl)|*.wpl"
+            };
 
             if (sfd.ShowDialog() == true)
             {
@@ -99,11 +107,13 @@ namespace EasyFarm.ViewModels
 
         private void LoadRoute()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.InitialDirectory = Directory.GetCurrentDirectory();
-            ofd.DefaultExt = ".wpl";
-            ofd.Filter = "Waypoint lists (.wpl)|*.wpl";
-            
+            var ofd = new OpenFileDialog
+            {
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                DefaultExt = ".wpl",
+                Filter = "Waypoint lists (.wpl)|*.wpl"
+            };
+
             if (ofd.ShowDialog() == true)
             {
                 Route = Serialization.Deserialize(ofd.SafeFileName, Route);
@@ -112,13 +122,14 @@ namespace EasyFarm.ViewModels
 
         void RouteRecorder_Tick(object sender, EventArgs e)
         {
-            var Point = ViewModelBase.FFACE.Player.Position;
+            var point = FFACE.Player.Position;
 
-            if (!Point.Equals(LastPosition))
+            if (point.Equals(_lastPosition))
             {
-                Config.Instance.Waypoints.Add(new Waypoint(Point));
-                LastPosition = Point;
+                return;
             }
+            Config.Instance.Waypoints.Add(new Waypoint(point));
+            _lastPosition = point;
         }
     }
 }

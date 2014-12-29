@@ -22,7 +22,6 @@ using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using ZeroLimits.FarmingTool;
 
 
 namespace EasyFarm.ViewModels
@@ -32,9 +31,9 @@ namespace EasyFarm.ViewModels
     {
         public TargetsViewModel()
         {
-            this.AddCommand = new DelegateCommand(AddTargetCommand);
-            this.DeleteCommand = new DelegateCommand(DeleteTargetCommand);
-            this.ClearCommand = new DelegateCommand(ClearTargetsCommand);
+            AddCommand = new DelegateCommand(AddTargetCommand);
+            DeleteCommand = new DelegateCommand(DeleteTargetCommand);
+            ClearCommand = new DelegateCommand(ClearTargetsCommand);
         }
 
         private void ClearTargetsCommand()
@@ -45,13 +44,17 @@ namespace EasyFarm.ViewModels
         private void DeleteTargetCommand()
         {
             if (Targets.Contains(TargetsName))
+            {
                 Targets.Remove(TargetsName);
+            }
         }
 
         private void AddTargetCommand()
         {
             if (!Targets.Contains(TargetsName))
+            {
                 Targets.Add(TargetsName);
+            }
         }
 
         public String TargetsName

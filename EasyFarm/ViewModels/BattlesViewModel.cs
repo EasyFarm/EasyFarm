@@ -17,15 +17,12 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.GameData;
 using EasyFarm.UserSettings;
 using EasyFarm.Views;
 using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using ZeroLimits.FarmingTool;
-using ZeroLimits.XITool;
 using ZeroLimits.XITool.Classes;
 using System.Linq;
 using EasyFarm.Classes;
@@ -35,7 +32,7 @@ namespace EasyFarm.ViewModels
     [ViewModelAttribute("Battles")]
     public class BattlesViewModel : ViewModelBase
     {
-        AbilityService AbilityService = new AbilityService();
+        readonly AbilityService _abilityService = new AbilityService();
 
         public BattlesViewModel()
         {
@@ -53,16 +50,8 @@ namespace EasyFarm.ViewModels
 
             var selected = this.SelectedList.ElementAt(SelectedIndex);
 
-            if (selected.SetAbility()) 
+            if (selected.SetAbility())
                 ViewModelBase.InformUser(selected.NameX + " set successfully. ");
-        }
-
-        private BattleAbility battleAction;
-
-        public BattleAbility BattleAction
-        {
-            get { return battleAction; }
-            set { SetProperty(ref this.battleAction, value); }
         }
 
         /// <summary>
@@ -156,15 +145,15 @@ namespace EasyFarm.ViewModels
         /// <summary>
         /// Private backing for the moves name.
         /// </summary>
-        private String actionName;
+        private String _actionName;
 
         /// <summary>
         /// The string to be turned into a battle move.
         /// </summary>
         public String ActionName
         {
-            get { return actionName; }
-            set { SetProperty(ref this.actionName, value); }
+            get { return _actionName; }
+            set { SetProperty(ref _actionName, value); }
         }
 
         /// <summary>
@@ -198,16 +187,18 @@ namespace EasyFarm.ViewModels
                 var selectedList = new ObservableCollection<BattleAbility>();
 
                 if (StartSelected)
-                    selectedList = StartList;
-                else if (BattleSelected)
-                    selectedList = BattleList;
-                else if (EndSelected)
-                    selectedList = EndList;
-                else if (PullSelected)
-                    selectedList = PullList;
-                else { /* None selected. */}
-
-                return selectedList;
+                {
+                    return StartList;
+                }
+                if (BattleSelected)
+                {
+                    return BattleList;
+                }
+                if (EndSelected)
+                {
+                    return EndList;
+                }
+                return PullSelected ? PullList : new ObservableCollection<BattleAbility>();
             }
         }
 
@@ -247,29 +238,6 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Returns whether we can add an move.
-        /// </summary>
-        /// <param name="obj">Move's name</param>
-        /// <returns></returns>
-        private bool IsBattleActionAddable(object obj)
-        {
-            if (BattleAction != null && BattleAction.Ability.IsValidName && !SelectedList.Contains(BattleAction))
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// Returns whether we can delete an move.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        private bool IsBattleActionRemovable(object obj)
-        {
-            return !IsBattleActionAddable(obj);
-        }
-
-        /// <summary>
         /// Ensures a list has at least one ability item in it. 
         /// </summary>
         public void KeepOne()
@@ -277,6 +245,6 @@ namespace EasyFarm.ViewModels
             // Ensure there is atleast one ability. 
             if (!SelectedList.Any())
                 this.SelectedList.Add(new BattleAbility());
-        }        
+        }
     }
 }

@@ -23,7 +23,6 @@ using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using ZeroLimits.FarmingTool;
 
 
 namespace EasyFarm.ViewModels

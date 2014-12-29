@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewModels="clr-namespace:EasyFarm.ViewModels"
+                    xmlns:views="clr-namespace:EasyFarm.Views">
+    <DataTemplate DataType="{x:Type viewModels:BattlesViewModel}">
+        <views:BattlesView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:HealingViewModel}">
+        <views:HealingView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:IgnoredViewModel}">
+        <views:IgnoredView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:RestingViewModel}">
+        <views:RestingView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:RoutesViewModel}">
+        <views:RoutesView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
+        <views:SettingsView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:TargetsViewModel}">
+        <views:TargetsView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:WeaponsViewModel}">
+        <views:WeaponsView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:LogViewModel}">
+        <views:LogView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type views:AbilityView}">
+        <views:AbilityView />
+    </DataTemplate>
+</ResourceDictionary>

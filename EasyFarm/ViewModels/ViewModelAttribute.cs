@@ -1,4 +1,4 @@
-﻿
+
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -32,8 +32,8 @@ namespace EasyFarm.ViewModels
 
         public ViewModelAttribute(String name, bool enabled = true)
         {
-            this.Enabled = enabled;
-            this.Name = name;
+            Enabled = enabled;
+            Name = name;
         }
     }
 }

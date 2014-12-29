@@ -60,7 +60,6 @@ namespace EasyFarm.Components
             this.AddComponent(new WeaponSkillComponent(fface) { Priority = 2 });
             this.AddComponent(new PullComponent(fface) { Priority = 4 });
             this.AddComponent(new BuffComponent(fface) { Priority = 5 });
-            this.AddComponent(new PostBattleComponent(fface) { Priority = 5 });
 
             // Enable all attack components. 
             this.Components.ForEach(x => x.Enabled = true);
