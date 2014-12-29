@@ -17,12 +17,10 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Views;
+using System.Windows;
 using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using System;
 using System.Windows.Input;
-using ZeroLimits.FarmingTool;
 using System.Linq;
 using EasyFarm.UserSettings;
 using System.Collections.ObjectModel;
@@ -35,52 +33,52 @@ namespace EasyFarm.ViewModels
         /// <summary>
         /// Internal list of view models. 
         /// </summary>
-        private ObservableCollection<ViewModelBase> m_ViewModels;
+        private ObservableCollection<ViewModelBase> _viewModels;
 
         /// <summary>
         /// List of dynamically found view models. 
         /// </summary>
         public ObservableCollection<ViewModelBase> ViewModels
         {
-            get { return m_ViewModels; }
+            get { return _viewModels; }
             set 
             {
-                this.SetProperty(ref m_ViewModels, value);
+                SetProperty(ref _viewModels, value);
             }
         }
 
         /// <summary>
         /// Interal stating index for the currently focused tab.
         /// </summary>
-        private int m_selectedIndex = 0;
+        private int _selectedIndex;
 
         /// <summary>
         /// Index for the currently focused tab. 
         /// </summary>
         public int SelectedIndex
         {
-            get { return m_selectedIndex; }
-            set { SetProperty(ref m_selectedIndex, value); }
+            get { return _selectedIndex; }
+            set { SetProperty(ref _selectedIndex, value); }
         }
 
         public MainViewModel()
         {
-            var Locator = new Locator<ViewModelAttribute, ViewModelBase>();
+            var locator = new Locator<ViewModelAttribute, ViewModelBase>();
 
             // Get all enabled view models. 
-            this.ViewModels = new ObservableCollection<ViewModelBase>(
-                Locator.GetEnabledViewModels()
+            ViewModels = new ObservableCollection<ViewModelBase>(
+                locator.GetEnabledViewModels()
                 .Where(x => x != null)
                 .OrderBy(x => x.VMName));
 
             // Get events from view models to update the status bar's text.
-            EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe((a) => { StatusBarText = a; });
+            EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe(a => { StatusBarText = a; });
 
             // Tell the user the program has loaded the player's data
             InformUser("Bot Loaded: " + FFACE.Player.Name);
 
             // Set the main window's title to the player's name. 
-            this.MainWindowTitle = "EasyFarm - " + FFACE.Player.Name;
+            MainWindowTitle = "EasyFarm - " + FFACE.Player.Name;
 
             // Create start command handler.
             StartCommand = new DelegateCommand(Start);
@@ -96,7 +94,7 @@ namespace EasyFarm.ViewModels
         public String MainWindowTitle 
         {
             get { return Config.Instance.MainWindowTitle; }
-            set { this.SetProperty(ref Config.Instance.MainWindowTitle, value); }
+            set { SetProperty(ref Config.Instance.MainWindowTitle, value); }
         }
 
         /// <summary>
@@ -105,7 +103,7 @@ namespace EasyFarm.ViewModels
         public String StatusBarText
         {
             get { return Config.Instance.StatusBarText; }
-            set { this.SetProperty(ref Config.Instance.StatusBarText, value); }
+            set { SetProperty(ref Config.Instance.StatusBarText, value); }
         }
 
         /// <summary>
@@ -115,6 +113,22 @@ namespace EasyFarm.ViewModels
         {
             get { return GameEngine.IsWorking; }
             set { SetProperty(ref GameEngine.IsWorking, value); }
+        }
+
+        private string _startStopHeader = "St_art";
+        /// <summary>
+        /// Binding for File -> Start/Pause text.
+        /// </summary>
+        public string StartPauseHeader
+        {
+            get
+            {
+                return _startStopHeader;
+            }
+            set
+            {
+                SetProperty(ref _startStopHeader, value);
+            }
         }
        
         /// <summary>
@@ -142,12 +156,14 @@ namespace EasyFarm.ViewModels
                 Logger.Write.BotStop("Bot now paused");
                 InformUser("Program paused.");                
                 GameEngine.Stop();
+                StartPauseHeader = "St_art";
             }
             else
             {
                 Logger.Write.BotStart("Bot now running");
                 InformUser("Program running.");
                 GameEngine.Start();
+                StartPauseHeader = "P_ause";
             }
         }
 
@@ -165,7 +181,7 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private void Exit()
         {
-            App.Current.Shutdown();
+            Application.Current.Shutdown();
         }
     }
 }

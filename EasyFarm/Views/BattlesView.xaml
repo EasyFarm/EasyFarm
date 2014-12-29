@@ -5,68 +5,67 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:Views="clr-namespace:EasyFarm.Views"
              mc:Ignorable="d"
-             d:DesignHeight="216.384"
-             d:DesignWidth="480.397">
-    <DockPanel>
-        <!--Used to manipulate the Abilities list-->
-        <Grid DockPanel.Dock="Bottom">
-            <Grid.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Margin"
-                            Value="10" />
-                    <Setter Property="Height"
-                            Value="23" />
-                </Style>
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Button x:Name="btnAddAbility"
-                    Grid.Column="0"
-                    Command="{Binding AddActionCommand}"
-                    CommandParameter="{Binding ElementName=txbAbilityName, Path=Text}"
-                    Content="Add" />
-            <Button x:Name="btnDeleteAbility"
-                    Grid.Column="1"
-                    Command="{Binding DeleteActionCommand}"
-                    CommandParameter="{Binding ElementName=lstAbilities, Path=SelectedItem}"
-                    Content="Delete" />
-            <Button x:Name="btnClearAbilities"
-                    Grid.Column="2"
-                    Command="{Binding ClearActionsCommand}"
-                    Content="Clear" />
-        </Grid>
+             d:DesignHeight="200"
+             d:DesignWidth="400">
+    <Grid Width="Auto"
+          Height="Auto"
+          FlowDirection="LeftToRight"
+          ShowGridLines="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
         <!--Tells us what list to add the textbox item to.-->
-        <StackPanel DockPanel.Dock="Left"
-                    Margin="10"
-                    VerticalAlignment="Center">
+        <Grid Grid.Row="1"
+              Margin="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <RadioButton x:Name="radStartingAction"
-                         IsChecked="{Binding StartSelected}">Start</RadioButton>
+                         Grid.Row="0"
+                         IsChecked="{Binding StartSelected}"
+                         Content="Start"/>
             <RadioButton x:Name="radPullingAction"
-                         IsChecked="{Binding PullSelected}">Pull</RadioButton>
+                         Grid.Row="1"
+                         Margin="0 5 0 0"
+                         IsChecked="{Binding PullSelected}"
+                         Content="Pull"/>
             <RadioButton x:Name="radBattleAction"
-                         IsChecked="{Binding BattleSelected}">Battle</RadioButton>
+                         Grid.Row="2"
+                         Margin="0 5 0 0"
+                         IsChecked="{Binding BattleSelected}"
+                         Content="Battle"/>
             <RadioButton x:Name="radEndingAction"
-                         IsChecked="{Binding EndSelected}">End</RadioButton>
-        </StackPanel>
+                         Grid.Row="3"
+                         Margin="0 5 0 0"
+                         IsChecked="{Binding EndSelected}"
+                         Content="End"/>
+        </Grid>
         <!--Name of the text box item to add-->
+        <Label Content="Name"
+               VerticalAlignment="Center"/>
+        <TextBox x:Name="txbAbilityName"
+                 Grid.Column="1"
+                 Margin=" 5"
+                 Text="{Binding ActionName, UpdateSourceTrigger=PropertyChanged}" />
+
+
+
         <!--The list of ability items. It's source is dependant on the start/end/battle radio buttons and changes when one is selected. -->
-        <ListView x:Name="lstAbilities"
-                  Margin="10"
-                  Grid.Column="1"
-                  Grid.Row="0"
-                  SelectedIndex="{Binding SelectedIndex}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderThickness="3"
-                            BorderBrush="Black">
-                        <Views:AbilityView Margin="5" />
-                    </Border>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.Style>
+        <ListBox x:Name="lstAbilities"
+                 Grid.Column="1"
+                 Grid.Row="1"
+                 Margin="5">
+            <ListBox.Style>
                 <Style>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName=radStartingAction, Path=IsChecked}"
@@ -91,7 +90,41 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </ListView.Style>
-        </ListView>
-    </DockPanel>
+            </ListBox.Style>
+            <!-- Add new ability view item style-->
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Black">
+                        <Views:AbilityView/>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <!--Used to manipulate the Abilities list-->
+        <Grid Grid.Row="2"
+              Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnAddAbility"
+                    Grid.Column="0"
+                    Margin="5"
+                    Command="{Binding AddActionCommand}"
+                    CommandParameter="{Binding ElementName=txbAbilityName, Path=Text}"
+                    Content="Add" />
+            <Button x:Name="btnDeleteAbility"
+                    Grid.Column="1"
+                    Margin="5"
+                    Command="{Binding DeleteActionCommand}"
+                    CommandParameter="{Binding ElementName=lstAbilities, Path=SelectedItem}"
+                    Content="Delete" />
+            <Button x:Name="btnClearAbilities"
+                    Margin="5"
+                    Grid.Column="2"
+                    Command="{Binding ClearActionsCommand}"
+                    Content="Clear" />
+        </Grid>
+    </Grid>
 </UserControl>

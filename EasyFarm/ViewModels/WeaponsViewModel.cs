@@ -22,7 +22,6 @@ using EasyFarm.UserSettings;
 using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Windows.Input;
-using ZeroLimits.FarmingTool;
 using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.ViewModels
@@ -46,8 +45,10 @@ namespace EasyFarm.ViewModels
         public double Distance
         {
             get { return Config.Instance.WeaponSkill.Distance; }
-            set { SetProperty(ref Config.Instance.WeaponSkill.Distance, value); 
-                    InformUser("Distance set to " + this.Distance);
+            set
+            {
+                SetProperty(ref Config.Instance.WeaponSkill.Distance, value);
+                InformUser("Distance set to " + Distance);
             }
         }
 
@@ -57,7 +58,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.WeaponSkill.UpperHealth, value);
-                InformUser("Upper health set to " + this.UpperHealth);
+                InformUser("Upper health set to " + UpperHealth);
             }
         }
 
@@ -67,7 +68,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.WeaponSkill.LowerHealth, value);
-                InformUser("Lower health set to " + this.LowerHealth);
+                InformUser("Lower health set to " + LowerHealth);
             }
         }
 
@@ -89,12 +90,12 @@ namespace EasyFarm.ViewModels
                 return;
             }
 
-            this.WeaponSkill.Ability = weaponSkill;
-            this.WeaponSkill.Distance = Distance;
-            this.WeaponSkill.UpperHealth = UpperHealth;
-            this.WeaponSkill.LowerHealth = LowerHealth;
-            this.WeaponSkill.Enabled = true;
-            this.WeaponSkill.Name = Name;
+            WeaponSkill.Ability = weaponSkill;
+            WeaponSkill.Distance = Distance;
+            WeaponSkill.UpperHealth = UpperHealth;
+            WeaponSkill.LowerHealth = LowerHealth;
+            WeaponSkill.Enabled = true;
+            WeaponSkill.Name = Name;
 
             InformUser("Weaponskill set.");
         }

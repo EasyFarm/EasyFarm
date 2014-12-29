@@ -5,100 +5,66 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="261"
-             d:DesignWidth="402">
+             d:DesignHeight="200"
+             d:DesignWidth="400">
     <ScrollViewer HorizontalScrollBarVisibility="Auto"
                   VerticalScrollBarVisibility="Auto">
-        <GroupBox Header="Misc Settings"
-                  Margin="10">
-            <DockPanel>
-                <Grid DockPanel.Dock="Top">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="100*" />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*" />
-                            <ColumnDefinition Width="7*" />
-                        </Grid.ColumnDefinitions>
-                        <Label>Detection Distance</Label>
-                        <Slider Grid.Column="1"
-                                Minimum="0"
-                                Maximum="50"
-                                ToolTip="How far a way an enemy will be considered reachable. "
-                                Value="{Binding DetectionDistance}"></Slider>
-                    </Grid>
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                            <ColumnDefinition Width="7*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label>Height Threshold</Label>
-                        <Slider Grid.Column="1"
-                                Minimum="0"
-                                Maximum="50"
-                                ToolTip="The max height diffence that a enemy will be considered reachable. "
-                                Value="{Binding HeightThreshold}"></Slider>
-                    </Grid>
-                    <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                            <ColumnDefinition Width="7*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label>Melee Distance</Label>
-                        <Slider Grid.Column="1"
-                                Minimum="0"
-                                Maximum="50"
-                                ToolTip="The max distance to stand away from the enemy. "
-                                Value="{Binding MeleeDistance}"></Slider>
-                    </Grid>
-                    <Grid Grid.Row="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                            <ColumnDefinition Width="7*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label>Wander Distance</Label>
-                        <Slider Grid.Column="1"
-                                Minimum="0"
-                                Maximum="50"
-                                ToolTip="Reduces the distance the bot will wander from its path. "
-                                Value="{Binding WanderDistance}"></Slider>
-                    </Grid>
-                    <Grid Grid.Row="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                            <ColumnDefinition Width="7*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label>Cast Latency</Label>
-                        <Slider Grid.Column="1"
-                                Minimum="0"
-                                Maximum="5000"
-                                ToolTip="The amount of time to wait after casting a spell. This is used to offset a server's latency. "
-                                Value="{Binding CastLatency}" />
-                    </Grid>
-                    <Grid Grid.Row="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                            <ColumnDefinition Width="7*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label>Global Cooldown</Label>
-                        <Slider Grid.Column="1"
-                                Minimum="0"
-                                Maximum="5000"
-                                ToolTip="A delay used to wait in between spell casts to reduce the amount of unable to cast messages. High values will slow the bot down immensly. "
-                                Value="{Binding GlobalCooldown}" />
-                    </Grid>
-                </Grid>
-                <Button DockPanel.Dock="Bottom"
-                        Width="Auto"
-                        Margin="10"
-                        Command="{Binding RestoreDefaultsCommand}">Restore Defaults</Button>
-            </DockPanel>
+        <GroupBox Header="Misc Settings">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Detection Distance" />
+                <Slider Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="5 0 0 0"
+                        Minimum="0"
+                        Maximum="50"
+                        Value="{Binding DetectionDistance}" />
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Content="Height Threshold" />
+                <Slider Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="5 0 0 0"
+                        Minimum="0"
+                        Maximum="50"
+                        Value="{Binding HeightThreshold}" />
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Content="Melee Distance" />
+                <Slider Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="5 0 0 0"
+                        Minimum="0"
+                        Maximum="50"
+                        Value="{Binding MeleeDistance}" />
+                <Label Grid.Row="3"
+                       Grid.Column="0"
+                       Content="Wander Distance" />
+                <Slider Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="5 0 0 0"
+                        Minimum="0"
+                        Maximum="50"
+                        Value="{Binding WanderDistance}" />
+
+
+                <Button Grid.Row="4"
+                        Grid.ColumnSpan="2"
+                        Margin="0 5 0 0"
+                        Command="{Binding RestoreDefaultsCommand}"
+                        Content="Restore Defaults" />
+            </Grid>
         </GroupBox>
     </ScrollViewer>
 </UserControl>

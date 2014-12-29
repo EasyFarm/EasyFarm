@@ -21,8 +21,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyFarm.ViewModels
 {
@@ -39,23 +37,21 @@ namespace EasyFarm.ViewModels
         public static List<ViewModelBase> GetEnabledViewModels()
         { 
             // Holds the list of enabled view models. 
-            List<ViewModelBase> EnabledViewModels = new List<ViewModelBase>();
+            var enabledViewModels = new List<ViewModelBase>();
 
             // Get all VMs marked with the ViewModelAttribute
-            var VMClasses = Assembly.GetExecutingAssembly().GetTypes()
+            var vmClasses = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(x => x.IsClass)
                 .Where(x => x.GetCustomAttributes<ViewModelAttribute>(false).Any())
                 .ToList();
 
             // For all marked classes...
-            foreach (var item in VMClasses)
+            foreach (var item in vmClasses)
             {
                 // Get the constructors info for creating a new vm. 
-                ConstructorInfo ci = item.GetConstructor(new Type[]{});
+                var ci = item.GetConstructor(new Type[]{});
 
                 if (ci == null) { continue; }
-
-                ViewModelBase vm = null;
 
                 // For each attribute...
                 foreach (ViewModelAttribute attribute in item.GetCustomAttributes(typeof(ViewModelAttribute), false))
@@ -64,19 +60,19 @@ namespace EasyFarm.ViewModels
                     if (attribute.Enabled)
                     {
                         // Call its constructor and make a new vm
-                        vm = (ViewModelBase)ci.Invoke(new Type[] { });
+                        var vm = (ViewModelBase)ci.Invoke(new object[] { });
                         
                         // Save into it the attribute's name. 
                         vm.VMName = attribute.Name;
 
                         // Add the new view model to the list of enabled view models. 
-                        EnabledViewModels.Add(vm);
+                        enabledViewModels.Add(vm);
                     }
                 }
             }
 
             // Return all enabled view models. 
-            return EnabledViewModels;
+            return enabledViewModels;
         }
     }
 }
