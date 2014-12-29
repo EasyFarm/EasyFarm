@@ -5,13 +5,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="200"
+             d:DesignHeight="234"
              d:DesignWidth="400">
     <ScrollViewer HorizontalScrollBarVisibility="Auto"
                   VerticalScrollBarVisibility="Auto">
         <GroupBox Header="Misc Settings">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -57,9 +59,27 @@
                         Minimum="0"
                         Maximum="50"
                         Value="{Binding WanderDistance}" />
-
-
-                <Button Grid.Row="4"
+                <Label Grid.Row="4"
+                       Grid.Column="0"
+                       Content="Cast Latency" />
+                <Slider Grid.Row="4"
+                        Grid.Column="1"
+                        Margin="5 0 0 0"
+                        Minimum="0"
+                        Maximum="5000"
+                        SmallChange="100"
+                        Value="{Binding CastLatency}" />
+                <Label Grid.Row="5"
+                       Grid.Column="0"
+                       Content="Global Cooldown" />
+                <Slider Grid.Row="5"
+                        Grid.Column="1"
+                        Margin="5 0 0 0"
+                        Minimum="0"                        
+                        Maximum="5000"
+                        SmallChange="100"
+                        Value="{Binding GlobalCooldown}" />
+                <Button Grid.Row="6"
                         Grid.ColumnSpan="2"
                         Margin="0 5 0 0"
                         Command="{Binding RestoreDefaultsCommand}"

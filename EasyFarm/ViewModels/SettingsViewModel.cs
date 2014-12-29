@@ -71,7 +71,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty<double>(ref Config.Instance.MiscSettings.HeightThreshold, value);
-                InformUser("Height Threshold Set: {0}.", value);
+                InformUser("Height Threshold Set: {0:F1}.", value);
             }
         }
 
@@ -81,7 +81,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty<double>(ref Config.Instance.MiscSettings.MeleeDistance, value);
-                InformUser("Min Melee Distance Set: {0}.", value);
+                InformUser("Melee Distance Set: {0:F1}.", value);
             }
         }
 
