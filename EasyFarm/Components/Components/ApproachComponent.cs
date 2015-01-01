@@ -59,6 +59,20 @@ namespace EasyFarm.Components
             // We should approach mobs that have aggroed or have been pulled. 
             if (Target.Status.Equals(Status.Fighting)) return true;
 
+            var Usable = Config.Instance.ActionInfo.PullList
+                    .Where(x => x.Enabled && x.IsCastable(FFACE));
+
+            // Only cast buffs when their status effects are not on the player. 
+            var Buffs = Usable
+                .Where(x => x.HasEffectWore(FFACE));
+
+            // Cast the other abilities on cooldown. 
+            var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
+                .Where(x => !x.IsBuff());
+
+            // Approach when there are no pulling moves available. 
+            if (!Buffs.Union(Others).Any()) return true;
+
             // Approach mobs if their distance is close. 
             return Target.Distance < 8;
         }
