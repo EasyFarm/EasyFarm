@@ -39,8 +39,12 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
+            // Target bad: null. 
             if (AttackContainer.TargetUnit == null) return true;
+            
+            // Target bad: unkillable
             if (!ftools.UnitService.IsValid(AttackContainer.TargetUnit)) return true;
+
             return false;
         }
 
@@ -48,9 +52,8 @@ namespace EasyFarm.Components
 
         public override void RunComponent()
         {
-            var Target = ftools.UnitService.GetTarget(
-                UnitFilters.MobFilter(FFACE), x => x.Distance);
-
+            // Get first target by distance. 
+            var Target = ftools.UnitService.GetTarget(UnitFilters.MobFilter(FFACE), x => x.Distance);
             AttackContainer.TargetUnit = Target;
 
             App.Current.Dispatcher.Invoke(() =>
