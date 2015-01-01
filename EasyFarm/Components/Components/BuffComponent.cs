@@ -50,7 +50,11 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            return ((Target != null && !Target.IsDead) && !AttackContainer.FightStarted);
+            // target dead or null. 
+            if (Target == null || Target.IsDead) return false;
+
+            // Return true if fight has not started. 
+            return !AttackContainer.FightStarted;
         }
 
         public override void EnterComponent() 

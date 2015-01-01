@@ -222,7 +222,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Components\Components\ApproachComponent.cs" />
-    <Compile Include="Components\Components\AbilityComponent.cs" />
+    <Compile Include="Components\Components\BattleComponent.cs" />
     <Compile Include="Components\Components\BuffComponent.cs" />
     <Compile Include="Components\Components\PullComponent.cs" />
     <Compile Include="States\StateAttribute.cs" />

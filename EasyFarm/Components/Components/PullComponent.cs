@@ -57,23 +57,7 @@ namespace EasyFarm.Components
             if(AttackContainer.FightStarted) return false;
 
             // We've succeeded at pulling the mob!
-            if(Target.Status.Equals(Status.Fighting)) return false;
-
-            var Usable = Config.Instance.ActionInfo.PullList
-                    .Where(x => x.Enabled && x.IsCastable(FFACE))
-                    .Where(x => Target.Distance < x.Distance);
-
-            // Only cast buffs when their status effects are not on the player. 
-            var Buffs = Usable.Where(x => x.HasEffectWore(FFACE))
-                .Select(x => x.Ability);
-
-            // Cast the other abilities on cooldown. 
-            var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
-                .Where(x => !x.IsBuff())
-                .Select(x => x.Ability);
-
-            // Any moves we can use? 
-            return Buffs.Union(Others).Any();
+            return !Target.Status.Equals(Status.Fighting);
         }
 
         public override void EnterComponent() 

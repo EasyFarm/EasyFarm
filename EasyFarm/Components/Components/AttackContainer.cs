@@ -53,16 +53,22 @@ namespace EasyFarm.Components
 
             // Add components.
             this.AddComponent(new ApproachComponent(fface) { Priority = 0 });
-            // this.AddComponent(new FaceTargetComponent(fface) { Priority = 1 });
-            // this.AddComponent(new TargetEnemyComponent(fface) { Priority = 1 });
-            // this.AddComponent(new EngageComponent(fface) { Priority = 1 });
-            this.AddComponent(new AbilityComponent(fface) { Priority = 3 });
+            this.AddComponent(new BattleComponent(fface) { Priority = 3 });
             this.AddComponent(new WeaponSkillComponent(fface) { Priority = 2 });
             this.AddComponent(new PullComponent(fface) { Priority = 4 });
             this.AddComponent(new BuffComponent(fface) { Priority = 5 });
 
             // Enable all attack components. 
             this.Components.ForEach(x => x.Enabled = true);
+        }
+
+        public override bool CheckComponent()
+        {
+            // If we're injured. 
+            if (new RestComponent(FFACE).CheckComponent()) return false;
+
+            // Return if other components need to fire. 
+            return base.CheckComponent();
         }
 
         /// <summary>

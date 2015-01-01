@@ -35,7 +35,7 @@ namespace EasyFarm.Components
     /// <summary>
     /// A class for defeating monsters.
     /// </summary>
-    public class AbilityComponent : MachineComponent
+    public class BattleComponent : MachineComponent
     {
         public FFACE FFACE { get; set; }
 
@@ -54,7 +54,7 @@ namespace EasyFarm.Components
             set { AttackContainer.TargetUnit = value; }
         }
 
-        public AbilityComponent(FFACE fface)
+        public BattleComponent(FFACE fface)
         {
             this.FFACE = fface;
             this.Units = new UnitService(fface);
@@ -67,21 +67,11 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            bool success = false;
+            // target null or dead. 
+            if (Target == null || Target.IsDead) return false;
 
-            // If we have a valid target
-            if (Units.IsValid(Target))
-            {
-                // If we're alive
-                if (!FFACE.Player.Status.Equals(Status.Dead1 | Status.Dead2))
-                {
-                    // If we're not injured
-                    if (!new RestComponent(FFACE).CheckComponent())
-                        success = true;
-                }
-            }
-
-            return success;
+            // Fight if we are engaged. 
+            return FFACE.Player.Status.Equals(Status.Fighting);
         }
 
         public override void EnterComponent()
@@ -92,14 +82,6 @@ namespace EasyFarm.Components
 
         public override void RunComponent()
         {
-            ///////////////////////////////////////////////////////////////////
-            // Battle Enemy. 
-            ///////////////////////////////////////////////////////////////////
-
-            // Check engaged
-            // FIXED: no longer return on not engage but don't execute 
-            // these moves instead. Fixes the bot not attacking things 
-            // from move than 30 yalms problem. 
             if (FFACE.Player.Status.Equals(Status.Fighting))
             {
                 var Usable = Config.Instance.ActionInfo.BattleList

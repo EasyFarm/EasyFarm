@@ -52,9 +52,11 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            return Target != null && 
-                FFACE.Player.Status.Equals(Status.Fighting) && 
-                !Target.IsDead;
+            // target dead or null
+            if (Target == null || Target.IsDead) return false;
+
+            // Use skill if we are engaged. 
+            return (FFACE.Player.Status.Equals(Status.Fighting));
         }
 
         public override void RunComponent()
