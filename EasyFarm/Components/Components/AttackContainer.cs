@@ -53,9 +53,9 @@ namespace EasyFarm.Components
 
             // Add components.
             this.AddComponent(new ApproachComponent(fface) { Priority = 0 });
-            this.AddComponent(new FaceTargetComponent(fface) { Priority = 1 });
-            this.AddComponent(new TargetEnemyComponent(fface) { Priority = 1 });
-            this.AddComponent(new EngageComponent(fface) { Priority = 1 });
+            // this.AddComponent(new FaceTargetComponent(fface) { Priority = 1 });
+            // this.AddComponent(new TargetEnemyComponent(fface) { Priority = 1 });
+            // this.AddComponent(new EngageComponent(fface) { Priority = 1 });
             this.AddComponent(new AbilityComponent(fface) { Priority = 3 });
             this.AddComponent(new WeaponSkillComponent(fface) { Priority = 2 });
             this.AddComponent(new PullComponent(fface) { Priority = 4 });

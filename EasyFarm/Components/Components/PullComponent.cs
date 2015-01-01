@@ -17,15 +17,13 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.FarmingTool;
-using FFACETools;
-using System;
-using ZeroLimits.FarmingTool;
-using ZeroLimits.XITool.Classes;
-using System.Linq;
-using EasyFarm.ViewModels;
+using EasyFarm.Classes;
 using EasyFarm.UserSettings;
-using EasyFarm.Logging;
+using FFACETools;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.Components
 {
@@ -41,17 +39,41 @@ namespace EasyFarm.Components
             set { AttackContainer.TargetUnit = value; }
         }
 
+        public MovingUnit Player; 
+
         public PullComponent(FFACE fface)
         {
             this.FFACE = fface;
             this.Executor = new AbilityExecutor(fface);
+            this.Player = new MovingUnit(fface.Player.ID);
         }
 
         public override bool CheckComponent()
         {
-            var TargetValid = Target != null && !Target.Status.Equals(Status.Fighting) && !Target.IsDead;
+            // Invalid target: dead or null
+            if(Target == null || Target.IsDead) return false;
 
-            return !AttackContainer.FightStarted && TargetValid;
+            // We've already tried to pull once, cancel. 
+            if(AttackContainer.FightStarted) return false;
+
+            // We've succeeded at pulling the mob!
+            if(Target.Status.Equals(Status.Fighting)) return false;
+
+            var Usable = Config.Instance.ActionInfo.PullList
+                    .Where(x => x.Enabled && x.IsCastable(FFACE))
+                    .Where(x => Target.Distance < x.Distance);
+
+            // Only cast buffs when their status effects are not on the player. 
+            var Buffs = Usable.Where(x => x.HasEffectWore(FFACE))
+                .Select(x => x.Ability);
+
+            // Cast the other abilities on cooldown. 
+            var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
+                .Where(x => !x.IsBuff())
+                .Select(x => x.Ability);
+
+            // Any moves we can use? 
+            return Buffs.Union(Others).Any();
         }
 
         public override void EnterComponent() 
@@ -66,19 +88,55 @@ namespace EasyFarm.Components
                     .Where(x => Target.Distance < x.Distance);
 
             // Only cast buffs when their status effects are not on the player. 
-            var Buffs = Usable.Where(x => x.HasEffectWore(FFACE))
-                .Select(x => x.Ability);
+            var Buffs = Usable.Where(x => x.HasEffectWore(FFACE));
 
             // Cast the other abilities on cooldown. 
             var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
-                .Where(x => !x.IsBuff())
-                .Select(x => x.Ability);
+                .Where(x => !x.IsBuff());
 
-            // Recast the buffs. 
-            this.Executor.EnsureSpellsCast(Buffs.ToList());
+            // Execute all abilities. 
+            ExecuteActions(Buffs.Union(Others));
+        }
 
-            // Recast others on cooldown. 
-            this.Executor.EnsureSpellsCast(Others.ToList());
+        /// <summary>
+        /// Execute actions by 
+        /// </summary>
+        /// <param name="actions"></param>
+        public void ExecuteActions(IEnumerable<BattleAbility> actions)
+        {
+            foreach (var action in actions.ToList())
+            {
+                // Move to target if out of distance. 
+                if (Target.Distance > action.Distance)
+                {
+                    // Move to unit at max buff distance. 
+                    var oldTolerance = FFACE.Navigator.DistanceTolerance;
+                    FFACE.Navigator.DistanceTolerance = action.Distance;
+                    FFACE.Navigator.GotoNPC(Target.ID);
+                    FFACE.Navigator.DistanceTolerance = action.Distance;
+                }
+
+                // Face unit
+                FFACE.Navigator.FaceHeading(Target.Position);
+
+                // Target mob if not currently targeted. 
+                if (Target.ID != FFACE.Target.ID)
+                {
+                    FFACE.Target.SetNPCTarget(Target.ID);
+                    FFACE.Windower.SendString("/ta <t>");
+                }
+
+                // Stop bot from running. 
+                if (Player.IsMoving)
+                {
+                    Thread.Sleep(500);
+                    FFACE.Navigator.Reset();
+                }
+                
+
+                // Fire the spell off. 
+                FFACE.Windower.SendString(action.Ability.ToString());
+            }
         }
 
         public override void ExitComponent()

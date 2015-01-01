@@ -224,11 +224,8 @@
     <Compile Include="Components\Components\ApproachComponent.cs" />
     <Compile Include="Components\Components\AbilityComponent.cs" />
     <Compile Include="Components\Components\BuffComponent.cs" />
-    <Compile Include="Components\Components\EngageComponent.cs" />
-    <Compile Include="Components\Components\FaceTargetComponent.cs" />
     <Compile Include="Components\Components\PullComponent.cs" />
     <Compile Include="States\StateAttribute.cs" />
-    <Compile Include="Components\Components\TargetEnemyComponent.cs" />
     <Compile Include="Components\Components\WeaponSkillComponent.cs" />
     <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="ViewModels\HealingViewModel.cs" />

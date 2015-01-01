@@ -53,22 +53,49 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            return (Target != null && !AttackContainer.TargetUnit.IsDead &&
-                Target.Distance > Config.Instance.MiscSettings.MeleeDistance);
+            // Target dead or null.
+            if (Target == null || Target.IsDead) return false;
+
+            // We should approach mobs that have aggroed or have been pulled. 
+            if (Target.Status.Equals(Status.Fighting)) return true;
+
+            // Approach mobs if their distance is close. 
+            return Target.Distance < 8;
         }
 
         public override void EnterComponent() { }
 
         public override void RunComponent()
         {
-            var OldTolerance = FFACE.Navigator.DistanceTolerance;
-            FFACE.Navigator.DistanceTolerance = Config.Instance.MiscSettings.MeleeDistance;
+            // Move to target if out of melee range. 
+            if (Target.Distance > Config.Instance.MiscSettings.MeleeDistance)
+            {
+                // Move to unit at max buff distance. 
+                var oldTolerance = FFACE.Navigator.DistanceTolerance;
+                FFACE.Navigator.DistanceTolerance = Config.Instance.MiscSettings.MeleeDistance;
+                FFACE.Navigator.GotoNPC(Target.ID);
+                FFACE.Navigator.DistanceTolerance = Config.Instance.MiscSettings.MeleeDistance;
+            }
 
-            FFACE.Navigator.Goto(() => Target.PosX, () => Target.PosZ, false);
+            // Face mob. 
+            FFACE.Navigator.FaceHeading(Target.Position);
 
-            FFACE.Navigator.DistanceTolerance = OldTolerance;
+            // Target mob if not currently targeted. 
+            if (Target.ID != FFACE.Target.ID)
+            {
+                // Set as target. 
+                FFACE.Target.SetNPCTarget(Target.ID);
+                FFACE.Windower.SendString("/ta <t>");
+            }
+
+            // Not engaged and in range. 
+            if (!FFACE.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
+            {
+                // Engage the target. 
+                FFACE.Windower.SendString(Constants.ATTACK_TARGET);
+            }
         }
 
-        public override void ExitComponent() {  }
+        public override void ExitComponent() { }
     }
 }
