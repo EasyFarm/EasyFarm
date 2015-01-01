@@ -74,10 +74,13 @@ namespace EasyFarm.Views
         /// <param name="e"></param>
         void ProcessWatcher_Exit(object sender, EventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            if (App.Current != null)
             {
-                this.SessionsListBox.Items.Remove(ProcessFormat((e as ProcessEventArgs).Process));
-            });
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    this.SessionsListBox.Items.Remove(ProcessFormat((e as ProcessEventArgs).Process));
+                });
+            }
         }
 
         /// <summary>
@@ -87,10 +90,13 @@ namespace EasyFarm.Views
         /// <param name="e"></param>
         void ProcessWatcher_Entry(object sender, EventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            if (App.Current != null)
             {
-                this.SessionsListBox.Items.Add(ProcessFormat((e as ProcessEventArgs).Process));
-            });
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    this.SessionsListBox.Items.Add(ProcessFormat((e as ProcessEventArgs).Process));
+                });
+            }
         }
 
         /// <summary>

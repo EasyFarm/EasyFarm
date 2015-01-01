@@ -54,13 +54,16 @@ namespace EasyFarm.Components
             var Target = ftools.UnitService.GetTarget(UnitFilters.MobFilter(FFACE), x => x.Distance);
             AttackContainer.TargetUnit = Target;
 
-            App.Current.Dispatcher.Invoke(() =>
+            if (App.Current != null)
             {
-                if (Target != null)
+                App.Current.Dispatcher.Invoke(() =>
                 {
-                    Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.ID);
-                }
-            });
+                    if (Target != null)
+                    {
+                        Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.ID);
+                    }
+                });
+            }
         }
     }
 }
