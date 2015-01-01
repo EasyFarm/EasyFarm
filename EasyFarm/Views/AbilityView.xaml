@@ -5,42 +5,52 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="84"
-             d:DesignWidth="355">
-    <Grid Width="350">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="2*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <CheckBox IsChecked="{Binding Enabled}">Enabled</CheckBox>
-        <Button Grid.Row="1"
-                Content="Set"
-                Command="{Binding ElementName=lstAbilities, Path=DataContext.SetCommand}" />
-        <Label Grid.Column="1">Name</Label>
-        <TextBox Grid.Column="2"
-                 Text="{Binding NameX}" />
-        <!-- Recast on buff wearing-->
-        <Label Grid.Column="1"
-               Grid.Row="1">Recast on wear</Label>
-        <TextBox Grid.Row="1"
-                 Grid.Column="2"
-                 Text="{Binding Buff}" />
+             d:DesignWidth="355"
+             Margin="1">
+    
+    <Border BorderBrush="Black"
+            BorderThickness="2">
+        <Grid Width="350">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <CheckBox IsChecked="{Binding Enabled}"
+                      Margin="5, 0, 5, 0"
+                      Content="Enabled" />
+            <Button Grid.Row="1"
+                    Content="Set"
+                    Margin="5, 0, 5, 0"
+                    Command="{Binding ElementName=lstAbilities, Path=DataContext.SetCommand}" />
+            <Label Grid.Column="1"
+                   Content="Name" />
+            <TextBox Grid.Column="2"
+                     Text="{Binding NameX}" />
+            <!-- Recast on buff wearing-->
+            <Label Grid.Column="1"
+                   Grid.Row="1"
+                   Content="Recast on wear" />
+            <TextBox Grid.Row="1"
+                     Grid.Column="2"
+                     Text="{Binding Buff}" />
 
-        <!-- Recast on buff wearing-->
-        <WrapPanel Grid.Column="1"
-                   Grid.Row="2">
-            <Label>Distance</Label>
-            <Label Content="{Binding Distance}" />
-        </WrapPanel>
-        <Slider Grid.Row="2"
-                Grid.Column="2"
-                Minimum="0"
-                Maximum="50"
-                Value="{Binding Distance}" />
-    </Grid>
+            <!-- Recast on buff wearing-->
+            <WrapPanel Grid.Column="1"
+                       Grid.Row="2">
+                <Label Content="Distance" />
+                <Label Content="{Binding Distance}" />
+            </WrapPanel>
+            <Slider Grid.Row="2"
+                    Grid.Column="2"
+                    Minimum="0"
+                    Maximum="50"
+                    Value="{Binding Distance}" />
+        </Grid>
+    </Border>
 </UserControl>

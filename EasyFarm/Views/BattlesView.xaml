@@ -16,14 +16,13 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!--Tells us what list to add the textbox item to.-->
-        <Grid Grid.Row="1"
-              Margin="4">
+        <Grid Grid.Row="0"
+              Margin="4" VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -50,20 +49,11 @@
                          IsChecked="{Binding EndSelected}"
                          Content="End"/>
         </Grid>
-        <!--Name of the text box item to add-->
-        <Label Content="Name"
-               VerticalAlignment="Center"/>
-        <TextBox x:Name="txbAbilityName"
-                 Grid.Column="1"
-                 Margin=" 5"
-                 Text="{Binding ActionName, UpdateSourceTrigger=PropertyChanged}" />
-
-
-
+        
         <!--The list of ability items. It's source is dependant on the start/end/battle radio buttons and changes when one is selected. -->
         <ListBox x:Name="lstAbilities"
                  Grid.Column="1"
-                 Grid.Row="1"
+                 Grid.Row="0"
                  Margin="5"
                  SelectedIndex="{Binding SelectedIndex}">
             <ListBox.Style>
@@ -102,7 +92,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <!--Used to manipulate the Abilities list-->
-        <Grid Grid.Row="2"
+        <Grid Grid.Row="1"
               Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
