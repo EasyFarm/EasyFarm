@@ -172,6 +172,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\BattleAbility.cs" />
+    <Compile Include="Classes\Executor.cs" />
     <Compile Include="Components\Containers\SequenceContainer.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Monitors\BaseMonitor.cs" />

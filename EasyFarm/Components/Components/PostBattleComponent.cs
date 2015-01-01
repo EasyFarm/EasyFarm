@@ -26,12 +26,13 @@ using System.Linq;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 using EasyFarm.Logging;
+using EasyFarm.Classes;
 
 namespace EasyFarm.Components
 {
     public class PostBattleComponent : BaseComponent
     {
-        public AbilityExecutor Executor { get; set; }
+        public Executor Executor { get; set; }
 
         public UnitService Units { get; set; }
 
@@ -44,7 +45,7 @@ namespace EasyFarm.Components
         public PostBattleComponent(FFACE fface)
             : base(fface)
         {
-            this.Executor = new AbilityExecutor(fface);
+            this.Executor = new Executor(fface);
             this.Units = new UnitService(fface);
 
             // Set default filter to target mobs. 
@@ -62,28 +63,23 @@ namespace EasyFarm.Components
                     .Where(x => x.Enabled && x.IsCastable(FFACE));
 
             // Only cast buffs when their status effects are not on the player. 
-            var Buffs = Usable
-                .Where(x => x.HasEffectWore(FFACE))
-                .Select(x => x.Ability);
+            var Buffs = Usable.Where(x => x.HasEffectWore(FFACE));
 
             // Cast the other abilities on cooldown. 
             var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
-                .Where(x => !x.IsBuff())
-                .Select(x => x.Ability);
+                .Where(x => !x.IsBuff());
 
-            // Recast the buffs. 
-            this.Executor.EnsureSpellsCast(Buffs.ToList());
-
-            // Recast others on cooldown. 
-            this.Executor.EnsureSpellsCast(Others.ToList());
+            // Execute moves at target. 
+            Executor.Target = Target;
+            Executor.ExecuteActions(Buffs.Union(Others));
 
             // Get the next target by distance to the player. 
-            var Target = ftools.UnitService.GetTarget(
+            var target = ftools.UnitService.GetTarget(
                 UnitFilters.MobFilter(FFACE), x => x.Distance);
 
             // Set our new target at the end so that we don't accidentaly cast on a 
             // new target. 
-            AttackContainer.TargetUnit = Target;
+            AttackContainer.TargetUnit = target;
 
             // Set to false in order to use starting moves again in the 
             // attack Component. 

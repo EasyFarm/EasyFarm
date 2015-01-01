@@ -29,6 +29,7 @@ using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 using EasyFarm.Logging;
 using EasyFarm.FarmingTool;
+using EasyFarm.Classes;
 
 namespace EasyFarm.Components
 {
@@ -43,7 +44,7 @@ namespace EasyFarm.Components
 
         public RestingService Resting { get; set; }
 
-        public AbilityExecutor Executor { get; set; }
+        public Executor Executor { get; set; }
 
         /// <summary>
         /// Who we are trying to kill currently
@@ -59,7 +60,7 @@ namespace EasyFarm.Components
             this.FFACE = fface;
             this.Units = new UnitService(fface);
             this.Resting = new RestingService(fface);
-            this.Executor = new AbilityExecutor(fface);
+            this.Executor = new Executor(fface);
 
             // Set default filter to target mobs. 
             this.Units.UnitFilter = UnitFilters.MobFilter(fface);
@@ -88,16 +89,14 @@ namespace EasyFarm.Components
                     .Where(x => x.Enabled && x.IsCastable(FFACE))
                     .Where(x => Target.Distance < x.Distance);
 
-                var Buffs = Usable.Where(x => x.HasEffectWore(FFACE))
-                    .Select(x => x.Ability);
+                var Buffs = Usable.Where(x => x.HasEffectWore(FFACE));
 
                 var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
-                    .Where(x => !x.IsBuff())
-                    .Select(x => x.Ability);
+                    .Where(x => !x.IsBuff());
 
-                var move = Buffs.Union(Others).FirstOrDefault();
-                
-                if (move != null) this.Executor.UseAbility(move);
+                // Execute moves at target. 
+                Executor.Target = Target;
+                Executor.ExecuteActions(Buffs.Union(Others));
             }
         }
     }

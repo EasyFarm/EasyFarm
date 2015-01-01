@@ -31,21 +31,18 @@ namespace EasyFarm.Components
     {
         public FFACE FFACE { get; set; }
 
-        public AbilityExecutor Executor { get; set; }
+        public Executor Executor { get; set; }
 
         public Unit Target
         {
             get { return AttackContainer.TargetUnit; }
             set { AttackContainer.TargetUnit = value; }
-        }
-
-        public MovingUnit Player; 
+        }        
 
         public PullComponent(FFACE fface)
         {
             this.FFACE = fface;
-            this.Executor = new AbilityExecutor(fface);
-            this.Player = new MovingUnit(fface.Player.ID);
+            this.Executor = new Executor(fface);           
         }
 
         public override bool CheckComponent()
@@ -79,49 +76,9 @@ namespace EasyFarm.Components
                 .Where(x => !x.IsBuff());
 
             // Execute all abilities. 
-            ExecuteActions(Buffs.Union(Others));
-        }
-
-        /// <summary>
-        /// Execute actions by 
-        /// </summary>
-        /// <param name="actions"></param>
-        public void ExecuteActions(IEnumerable<BattleAbility> actions)
-        {
-            foreach (var action in actions.ToList())
-            {
-                // Move to target if out of distance. 
-                if (Target.Distance > action.Distance)
-                {
-                    // Move to unit at max buff distance. 
-                    var oldTolerance = FFACE.Navigator.DistanceTolerance;
-                    FFACE.Navigator.DistanceTolerance = action.Distance;
-                    FFACE.Navigator.GotoNPC(Target.ID);
-                    FFACE.Navigator.DistanceTolerance = action.Distance;
-                }
-
-                // Face unit
-                FFACE.Navigator.FaceHeading(Target.Position);
-
-                // Target mob if not currently targeted. 
-                if (Target.ID != FFACE.Target.ID)
-                {
-                    FFACE.Target.SetNPCTarget(Target.ID);
-                    FFACE.Windower.SendString("/ta <t>");
-                }
-
-                // Stop bot from running. 
-                if (Player.IsMoving)
-                {
-                    Thread.Sleep(500);
-                    FFACE.Navigator.Reset();
-                }
-                
-
-                // Fire the spell off. 
-                FFACE.Windower.SendString(action.Ability.ToString());
-            }
-        }
+            Executor.Target = Target;
+            Executor.ExecuteActions(Buffs.Union(Others));
+        }        
 
         public override void ExitComponent()
         {

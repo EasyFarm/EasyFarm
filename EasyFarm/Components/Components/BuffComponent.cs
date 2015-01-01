@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes;
 using EasyFarm.FarmingTool;
 using EasyFarm.Logging;
 using EasyFarm.UserSettings;
@@ -40,12 +41,12 @@ namespace EasyFarm.Components
     {
         public FFACE FFACE { get; set; }
 
-        public AbilityExecutor Executor { get; set; }
+        public Executor Executor { get; set; }
 
         public BuffComponent(FFACE fface)
         {
             this.FFACE = fface;
-            this.Executor = new AbilityExecutor(fface);
+            this.Executor = new Executor(fface);
         }
 
         public override bool CheckComponent()
@@ -69,19 +70,15 @@ namespace EasyFarm.Components
 
             // Only cast buffs when their status effects are not on the player. 
             var Buffs = Usable
-                .Where(x => x.HasEffectWore(FFACE))
-                .Select(x => x.Ability);
+                .Where(x => x.HasEffectWore(FFACE));
 
             // Cast the other abilities on cooldown. 
             var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
-                .Where(x => !x.IsBuff())
-                .Select(x => x.Ability);
+                .Where(x => !x.IsBuff());
 
-            // Recast the buffs. 
-            this.Executor.EnsureSpellsCast(Buffs.ToList());
-
-            // Recast others on cooldown. 
-            this.Executor.EnsureSpellsCast(Others.ToList());
+            // Execute moves at target. 
+            Executor.Target = Target;
+            Executor.ExecuteActions(Buffs.Union(Others));
         }
 
         public Unit Target
