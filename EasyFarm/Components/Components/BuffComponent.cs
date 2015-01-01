@@ -80,8 +80,6 @@ namespace EasyFarm.Components
             this.Executor.EnsureSpellsCast(Others.ToList());
         }
 
-        public override void ExitComponent() { }
-
         public Unit Target
         {
             get { return AttackContainer.TargetUnit; }

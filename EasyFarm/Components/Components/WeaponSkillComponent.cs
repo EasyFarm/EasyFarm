@@ -57,8 +57,6 @@ namespace EasyFarm.Components
                 !Target.IsDead;
         }
 
-        public override void EnterComponent() { }
-
         public override void RunComponent()
         {
             // Check engaged
@@ -84,8 +82,6 @@ namespace EasyFarm.Components
                 }
             }
         }
-
-        public override void ExitComponent() { }
 
         /// <summary>
         /// Can we perform our weaponskill on the target unit?

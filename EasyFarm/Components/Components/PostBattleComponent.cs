@@ -56,8 +56,6 @@ namespace EasyFarm.Components
             return ((Target == null || Target.IsDead));
         }
 
-        public override void EnterComponent() { }
-
         public override void RunComponent()
         {
             var Usable = Config.Instance.ActionInfo.EndList
@@ -99,7 +97,5 @@ namespace EasyFarm.Components
                 }
             });
         }
-
-        public override void ExitComponent() { }
     }
 }

@@ -63,8 +63,6 @@ namespace EasyFarm.Components
             return Target.Distance < 8;
         }
 
-        public override void EnterComponent() { }
-
         public override void RunComponent()
         {
             // Move to target if out of melee range. 
@@ -95,7 +93,5 @@ namespace EasyFarm.Components
                 FFACE.Windower.SendString(Constants.ATTACK_TARGET);
             }
         }
-
-        public override void ExitComponent() { }
     }
 }

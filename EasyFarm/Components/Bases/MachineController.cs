@@ -27,14 +27,6 @@ namespace EasyFarm.Components
 {
     public abstract class MachineController : MachineContainer, IMachineController
     {
-        public abstract override bool CheckComponent();
-
-        public abstract override void EnterComponent();
-
-        public abstract override void RunComponent();
-
-        public abstract override void ExitComponent();
-
         public abstract void Start();
 
         public abstract void Stop();

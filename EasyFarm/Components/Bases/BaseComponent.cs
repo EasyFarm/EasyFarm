@@ -30,11 +30,6 @@ namespace EasyFarm.Components
         protected static FFACE FFACE;
         protected static FTools ftools;
 
-        public abstract override bool CheckComponent();
-        public abstract override void EnterComponent();
-        public abstract override void RunComponent();
-        public abstract override void ExitComponent();
-
         public BaseComponent(FFACE fface)
         {
             if (FFACE == null) FFACE = fface;

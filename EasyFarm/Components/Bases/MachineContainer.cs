@@ -37,14 +37,6 @@ namespace EasyFarm.Components
         /// </summary>
         public List<MachineComponent> Components { get; set; }
 
-        public abstract override bool CheckComponent();
-
-        public abstract override void EnterComponent();
-
-        public abstract override void RunComponent();
-
-        public abstract override void ExitComponent();
-
         public void AddComponent(MachineComponent component)
         {
             lock (this.Components) { this.Components.Add(component); }

@@ -37,13 +37,13 @@ namespace EasyFarm.Components
         /// </summary>
         public int Priority { get; set; }
 
-        public abstract bool CheckComponent();
+        public virtual bool CheckComponent() { return Enabled; }
 
-        public abstract void EnterComponent();
+        public virtual void EnterComponent() { }
 
-        public abstract void RunComponent();
+        public virtual void RunComponent() { }
 
-        public abstract void ExitComponent();
+        public virtual void ExitComponent() { }
 
         public int CompareTo(MachineComponent other)
         {

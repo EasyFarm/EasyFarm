@@ -103,7 +103,10 @@ namespace EasyFarm.Components
             position++;
         }
 
-        public override void ExitComponent() { FFACE.Navigator.Reset(); }
+        public override void ExitComponent() 
+        { 
+            FFACE.Navigator.Reset(); 
+        }
 
         /// <summary>
         /// Set the position to nearest point. 

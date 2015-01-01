@@ -116,15 +116,7 @@ namespace EasyFarm.Components
                 var move = Buffs.Union(Others).FirstOrDefault();
                 
                 if (move != null) this.Executor.UseAbility(move);
-
-                // Cast buffs when worn off. 
-                // this.Executor.ExecuteActions(Buffs.ToList());
-
-                // Cast other moves on cooldown. 
-                // this.Executor.ExecuteActions(Others.ToList());
             }
         }
-
-        public override void ExitComponent() { }
     }
 }

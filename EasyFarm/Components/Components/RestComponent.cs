@@ -47,8 +47,6 @@ namespace EasyFarm.Components
             return false;
         }
 
-        public override void EnterComponent() { }
-
         public override void RunComponent()
         {
             if (!FFACE.Player.Status.Equals(Status.Healing))
@@ -56,8 +54,6 @@ namespace EasyFarm.Components
                 ftools.RestingService.StartResting();
             }
         }
-
-        public override void ExitComponent() { }
 
         /// <summary>
         /// Does our player have a status effect that prevents him

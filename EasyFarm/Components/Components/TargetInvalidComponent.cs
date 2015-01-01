@@ -48,8 +48,6 @@ namespace EasyFarm.Components
             return false;
         }
 
-        public override void EnterComponent() { }
-
         public override void RunComponent()
         {
             // Get first target by distance. 
@@ -64,7 +62,5 @@ namespace EasyFarm.Components
                 }
             });
         }
-
-        public override void ExitComponent() { }
     }
 }

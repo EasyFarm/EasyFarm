@@ -67,7 +67,5 @@ namespace EasyFarm.Components
                 ftools.AbilityExecutor.UseAbility(HealingMove);
             }
         }
-
-        public override void ExitComponent() { }
     }
 }
