@@ -33,6 +33,9 @@ namespace EasyFarm.Classes
         /// <param name="actions"></param>
         public void ExecuteActions(IEnumerable<BattleAbility> actions)
         {
+            // Gaurd against null targets. 
+            if (this.Target == null) return;
+
             foreach (var action in actions.ToList())
             {
                 // Move to target if out of distance. 
