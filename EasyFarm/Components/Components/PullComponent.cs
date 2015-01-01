@@ -65,8 +65,7 @@ namespace EasyFarm.Components
         public override void RunComponent()
         {
             var Usable = Config.Instance.ActionInfo.PullList
-                    .Where(x => x.Enabled && x.IsCastable(FFACE))
-                    .Where(x => Target.Distance < x.Distance);
+                    .Where(x => x.Enabled && x.IsCastable(FFACE));
 
             // Only cast buffs when their status effects are not on the player. 
             var Buffs = Usable.Where(x => x.HasEffectWore(FFACE));

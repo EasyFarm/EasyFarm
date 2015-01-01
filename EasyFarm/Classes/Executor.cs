@@ -28,6 +28,27 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
+        /// Executes moves without the need for a target. 
+        /// </summary>
+        /// <param name="actions"></param>
+        public void ExecuteBuffs(IEnumerable<BattleAbility> actions)
+        {
+            foreach (var action in actions.ToList())
+            {
+                // Stop bot from running. 
+                if (Player.IsMoving)
+                {
+                    Thread.Sleep(500);
+                    FFACE.Navigator.Reset();
+                }
+
+
+                // Fire the spell off. 
+                FFACE.Windower.SendString(action.Ability.ToString());
+            }
+        }
+
+        /// <summary>
         /// Execute actions by 
         /// </summary>
         /// <param name="actions"></param>

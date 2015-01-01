@@ -69,9 +69,8 @@ namespace EasyFarm.Components
             var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
                 .Where(x => !x.IsBuff());
 
-            // Execute moves at target. 
-            Executor.Target = Target;
-            Executor.ExecuteActions(Buffs.Union(Others));
+            // Execute moves. 
+            Executor.ExecuteBuffs(Buffs.Union(Others));
 
             // Get the next target by distance to the player. 
             var target = ftools.UnitService.GetTarget(
