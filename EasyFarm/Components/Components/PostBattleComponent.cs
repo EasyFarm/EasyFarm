@@ -54,7 +54,8 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            return ((Target == null || Target.IsDead));
+            // Null, dead and empty mob check. 
+            return ((Target == null || Target.IsDead || Target.ID == 0));
         }
 
         public override void RunComponent()

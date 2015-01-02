@@ -54,7 +54,7 @@ namespace EasyFarm.Components
         public override bool CheckComponent()
         {
             // Target dead or null.
-            if (Target == null || Target.IsDead) return false;
+            if (Target == null || Target.IsDead || Target.ID == 0) return false;
 
             // We should approach mobs that have aggroed or have been pulled. 
             if (Target.Status.Equals(Status.Fighting)) return true;

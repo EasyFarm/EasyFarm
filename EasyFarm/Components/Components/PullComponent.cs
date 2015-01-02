@@ -48,7 +48,7 @@ namespace EasyFarm.Components
         public override bool CheckComponent()
         {
             // Invalid target: dead or null
-            if(Target == null || Target.IsDead) return false;
+            if (Target == null || Target.IsDead || Target.ID == 0) return false;
 
             // We've already tried to pull once, cancel. 
             if(AttackContainer.FightStarted) return false;

@@ -69,7 +69,7 @@ namespace EasyFarm.Components
         public override bool CheckComponent()
         {
             // target null or dead. 
-            if (Target == null || Target.IsDead) return false;
+            if (Target == null || Target.IsDead || Target.ID == 0) return false;
 
             // Fight if we are engaged. 
             return FFACE.Player.Status.Equals(Status.Fighting);
