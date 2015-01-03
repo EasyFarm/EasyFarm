@@ -146,11 +146,5 @@ namespace EasyFarm.Components
 
             return ready;
         }
-
-        public override void EnterComponent() { }
-
-        public override void RunComponent() { }
-
-        public override void ExitComponent() { }
     }
 }
