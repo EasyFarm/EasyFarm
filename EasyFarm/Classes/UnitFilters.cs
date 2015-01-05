@@ -76,10 +76,15 @@ namespace EasyFarm.FarmingTool
                 // Mob is dead
                 if (mob.IsDead) return false;
 
+                // Mob not rendered on screen. 
+                if (!mob.IsRendered) return false;
+                
+                // Depreciated: no longer needed to tell if mobs are rendered by npcbit. 
+
                 // Allow for mobs with an npc bit of sometimes 4 (colibri) 
                 // and ignore mobs that are invisible npcbit = 0
-                if (Config.Instance.FilterInfo.BitCheck)
-                    if (mob.NPCBit >= 16) return false;
+                // if (Config.Instance.FilterInfo.BitCheck)
+                //    if (mob.NPCBit >= 16) return false;
 
                 // Type is not mob 
                 if (!mob.NPCType.Equals(NPCType.Mob)) return false;

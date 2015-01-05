@@ -103,7 +103,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FFACETools, Version=1.3.1.20, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="FFACETools, Version=1.3.1.21, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\FFACETools.dll</HintPath>
     </Reference>
@@ -173,7 +173,15 @@
     </ApplicationDefinition>
     <Compile Include="Classes\BattleAbility.cs" />
     <Compile Include="Classes\Executor.cs" />
-    <Compile Include="Components\Containers\SequenceContainer.cs" />
+    <Compile Include="Components\Bases\MachineComponent_Async.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Components\CloseGapComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Containers\SequenceContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Monitors\BaseMonitor.cs" />
     <Compile Include="Classes\ChatLine.cs" />
@@ -187,21 +195,43 @@
     <Compile Include="Monitors\PlayerMonitor.cs" />
     <Compile Include="Classes\UnitFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Components\Components\AttackContainer.cs" />
-    <Compile Include="Components\Bases\BaseComponent.cs" />
-    <Compile Include="Components\Controllers\FiniteStateMachine.cs" />
+    <Compile Include="Components\Components\AttackContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Bases\BaseComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Controllers\FiniteStateMachine.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\Controllers\GameEngine.cs" />
-    <Compile Include="Components\Components\HealingComponent.cs" />
+    <Compile Include="Components\Components\HealingComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\Interfaces\IMachineContainer.cs" />
     <Compile Include="Components\Interfaces\IMachineController.cs" />
     <Compile Include="Components\Interfaces\IMachineComponent.cs" />
-    <Compile Include="Components\Bases\MachineComponent.cs" />
-    <Compile Include="Components\Bases\MachineContainer.cs" />
-    <Compile Include="Components\Bases\MachineController.cs" />
-    <Compile Include="Components\Components\PostBattleComponent.cs" />
-    <Compile Include="Components\Components\RestComponent.cs" />
-    <Compile Include="Components\Components\TargetInvalidComponent.cs" />
-    <Compile Include="Components\Components\TravelComponent.cs" />
+    <Compile Include="Components\Bases\MachineComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Bases\MachineContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Bases\MachineController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Components\PostBattleComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Components\RestComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Components\TargetInvalidComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Components\TravelComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Debugging\DebugCreatures.xaml.cs">
       <DependentUpon>DebugCreatures.xaml</DependentUpon>
     </Compile>
@@ -222,12 +252,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Components\Components\ApproachComponent.cs" />
-    <Compile Include="Components\Components\BattleComponent.cs" />
-    <Compile Include="Components\Components\BuffComponent.cs" />
-    <Compile Include="Components\Components\PullComponent.cs" />
+    <Compile Include="Components\Components\ApproachComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Components\BattleComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Components\BuffComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Components\PullComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="States\StateAttribute.cs" />
-    <Compile Include="Components\Components\WeaponSkillComponent.cs" />
+    <Compile Include="Components\Components\WeaponSkillComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="ViewModels\HealingViewModel.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
@@ -449,7 +489,9 @@
     <Content Include="FFACE.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="FFACETools.dll" />
+    <Content Include="FFACETools.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

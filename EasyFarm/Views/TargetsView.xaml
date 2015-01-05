@@ -49,9 +49,6 @@
             <CheckBox Margin="0 0 0 5"
                       Content="Claimed"
                       IsChecked="{Binding Claimed}" />
-            <CheckBox Margin="0 0 0 5"
-                      Content="BitCheck"
-                      IsChecked="{Binding BitCheck}" />
         </UniformGrid>
 
         <!--Used to manipulate the list items. 
