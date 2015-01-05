@@ -34,7 +34,6 @@ using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Settings")]
     public class SettingsViewModel : ViewModelBase
     {
         public SettingsViewModel()

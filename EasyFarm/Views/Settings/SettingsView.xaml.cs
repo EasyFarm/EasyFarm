@@ -23,13 +23,14 @@ using System.Windows.Controls;
 namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for UnitsView.xaml
+    /// Interaction logic for UnitFilteringView.xaml
     /// </summary>
-    public partial class UnitsView : UserControl
+    public partial class SettingsView : UserControl
     {
-        public UnitsView()
+        public SettingsView()
         {
             InitializeComponent();
+            this.DataContext = new SettingsViewModel();
         }
     }
 }

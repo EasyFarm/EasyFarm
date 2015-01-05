@@ -29,6 +29,7 @@ using EasyFarm.Logging;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using System.Diagnostics.Tracing;
 using System.Collections;
+using EasyFarm.Prism;
 
 namespace EasyFarm
 {
@@ -53,7 +54,7 @@ namespace EasyFarm
         /// Reduces the amount of dll files in the executable's working directory. 
         /// </summary>
         public App()
-        {            
+        {
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
         }
 
@@ -64,6 +65,8 @@ namespace EasyFarm
         /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
+
             Logger.Write.ApplicationStart("Application starting");
 
             // Check if the resource files exist.
@@ -119,6 +122,9 @@ namespace EasyFarm
             // new DebugCreatures(_fface, FarmingTools.UnitService).Show();
             // var dbc = new DebugCreatures(FarmingTools.FFACE, FarmingTools.UnitService);
             // dbc.Show();
+                
+            BootStrapper bootStrapper = new BootStrapper();
+            bootStrapper.Run();
         }
 
         /// <summary>
@@ -128,7 +134,6 @@ namespace EasyFarm
         protected override void OnExit(ExitEventArgs e)
         {
             Config.Instance.SaveSettings();
-
             Logger.Write.ApplicationStart("Application exiting");
         }
 

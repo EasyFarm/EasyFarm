@@ -26,16 +26,16 @@ using System.Windows.Forms;
 namespace EasyFarm.Views
 {
     // Members and Constructors
-    public partial class MainWindow : MetroWindow
+    public partial class MasterView : MetroWindow
     {
         private const String TRAY_ICON_FILE_NAME = "trayicon.ico";
 
         private NotifyIcon m_trayIcon = new NotifyIcon();
 
-        public MainWindow()
+        public MasterView()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel();            
+            this.DataContext = new MasterViewModel();            
 
             if (File.Exists(TRAY_ICON_FILE_NAME))
             {

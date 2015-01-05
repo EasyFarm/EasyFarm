@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyFarm.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +17,14 @@ using System.Windows.Shapes;
 namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for LogSettingsView.xaml
+    /// Interaction logic for MainView.xaml
     /// </summary>
-    public partial class LogSettingsView : Window
+    public partial class MainView : UserControl
     {
-        public LogSettingsView()
+        public MainView()
         {
             InitializeComponent();
+            this.DataContext = new MainViewModel();
         }
     }
 }

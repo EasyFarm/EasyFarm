@@ -1,4 +1,5 @@
 ﻿using EasyFarm.Components;
+using EasyFarm.UserSettings;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ZeroLimits.XITool.Classes;
+using ZeroLimits.XITool.Enums;
 
 namespace EasyFarm.Classes
 {
@@ -42,9 +44,14 @@ namespace EasyFarm.Classes
                     FFACE.Navigator.Reset();
                 }
 
+                // Sleep for the server latency. 
+                Thread.Sleep(Config.Instance.MiscSettings.CastLatency);
 
                 // Fire the spell off. 
                 FFACE.Windower.SendString(action.Ability.ToString());
+
+                // Sleep until a spell is recastable. 
+                Thread.Sleep(Config.Instance.MiscSettings.GlobalCooldown);
             }
         }
 
@@ -87,8 +94,15 @@ namespace EasyFarm.Classes
                 }
 
 
+                // Sleep for the server latency.                 
+                Thread.Sleep(Config.Instance.MiscSettings.CastLatency);
+
                 // Fire the spell off. 
                 FFACE.Windower.SendString(action.Ability.ToString());
+
+                // Sleep until a spell is recastable; no sleep for abilities. 
+                if (!action.Ability.ActionType.Equals(ActionType.Ability))
+                    Thread.Sleep(Config.Instance.MiscSettings.GlobalCooldown);
             }
         }
     }

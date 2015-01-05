@@ -54,7 +54,15 @@ namespace EasyFarm.UserSettings
         /// </summary>
         public double WanderDistance = Constants.DETECTION_DISTANCE;
 
+        /// <summary>
+        /// Cast delay for laggy servers. 
+        /// </summary>
         public int CastLatency = Constants.SPELL_CAST_LATENCY;
+
+        /// <summary>
+        /// Cast delay before casting next spell 
+        /// (stops cannot use ability spam)
+        /// </summary>
         public int GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
     }
 }
