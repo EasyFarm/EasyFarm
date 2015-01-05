@@ -127,7 +127,7 @@ namespace EasyFarm.ViewModels
         public string SettingsHeader
         {
             get { return _settingsHeader; }
-            set { _settingsHeader = value; }
+            set { SetProperty(ref _settingsHeader, value); }
         }
        
         /// <summary>
