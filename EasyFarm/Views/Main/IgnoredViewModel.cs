@@ -23,7 +23,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-
 namespace EasyFarm.ViewModels
 {
     [ViewModelAttribute("Ignored")]
@@ -55,14 +54,14 @@ namespace EasyFarm.ViewModels
 
         public String Name
         {
-            get { return Config.Instance.FilterInfo.IgnoredName; }
-            set { SetProperty(ref Config.Instance.FilterInfo.IgnoredName, value); }
+            get { return Config.Instance.IgnoredName; }
+            set { SetProperty(ref Config.Instance.IgnoredName, value); }
         }
 
         public ObservableCollection<String> Ignored
         {
-            get { return Config.Instance.FilterInfo.IgnoredMobs; }
-            set { SetProperty(ref Config.Instance.FilterInfo.IgnoredMobs, value); }
+            get { return Config.Instance.IgnoredMobs; }
+            set { SetProperty(ref Config.Instance.IgnoredMobs, value); }
         }
 
         public ICommand AddIgnoredUnitCommand { get; set; }
@@ -71,4 +70,20 @@ namespace EasyFarm.ViewModels
 
         public ICommand ClearIgnoredUnitsCommand { get; set; }
     }
+}
+
+namespace EasyFarm.UserSettings
+{
+    public partial class Config
+	{
+        /// <summary>
+        /// Name of the mob to be ignored
+        /// </summary>
+        public string IgnoredName = String.Empty;
+
+        /// <summary>
+        /// A list of mobs that we should ignore.
+        /// </summary>
+        public ObservableCollection<String> IgnoredMobs = new ObservableCollection<string>();
+	}
 }

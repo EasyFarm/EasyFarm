@@ -40,8 +40,8 @@ namespace EasyFarm.ViewModels
 
         public ObservableCollection<HealingAbility> Healing
         {
-            get { return Config.Instance.ActionInfo.HealingList; }
-            set { SetProperty(ref Config.Instance.ActionInfo.HealingList, value); }
+            get { return Config.Instance.HealingList; }
+            set { SetProperty(ref Config.Instance.HealingList, value); }
         }
 
         public ICommand AddHealingCommand { get; set; }
@@ -81,5 +81,17 @@ namespace EasyFarm.ViewModels
                 Healing.Add(new HealingAbility());
             }
         }
+    }
+}
+
+namespace EasyFarm.UserSettings
+{
+    public partial class Config
+    {
+        /// <summary>
+        /// List of actions that should be used when injured
+        /// </summary>
+        public ObservableCollection<HealingAbility> HealingList =
+            new ObservableCollection<HealingAbility>();
     }
 }

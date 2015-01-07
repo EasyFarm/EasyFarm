@@ -35,7 +35,7 @@ namespace EasyFarm.Components
         {
             if (new RestComponent(FFACE).CheckComponent()) return false;
 
-            if (!Config.Instance.ActionInfo.HealingList
+            if (!Config.Instance.HealingList
                 .Any(x => ActionFilters.HealingFilter(FFACE, x))) 
                 return false;
 
@@ -51,7 +51,7 @@ namespace EasyFarm.Components
         public override void RunComponent()
         {
             // Get the list of healing abilities that can be used.
-            var UsableHealingMoves = Config.Instance.ActionInfo.HealingList
+            var UsableHealingMoves = Config.Instance.HealingList
                 .Where(x => ActionFilters.HealingFilter(FFACE, x))
                 .ToList();
 

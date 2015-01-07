@@ -59,44 +59,44 @@ namespace EasyFarm.ViewModels
 
         public String TargetsName
         {
-            get { return Config.Instance.FilterInfo.TargetName; }
-            set { SetProperty(ref Config.Instance.FilterInfo.TargetName, value); }
+            get { return Config.Instance.TargetName; }
+            set { SetProperty(ref Config.Instance.TargetName, value); }
         }
 
         public ObservableCollection<String> Targets
         {
-            get { return Config.Instance.FilterInfo.TargetedMobs; }
-            set { SetProperty(ref Config.Instance.FilterInfo.TargetedMobs, value); }
+            get { return Config.Instance.TargetedMobs; }
+            set { SetProperty(ref Config.Instance.TargetedMobs, value); }
         }
 
         public bool Aggro
         {
-            get { return Config.Instance.FilterInfo.AggroFilter; }
-            set { SetProperty(ref Config.Instance.FilterInfo.AggroFilter, value); }
+            get { return Config.Instance.AggroFilter; }
+            set { SetProperty(ref Config.Instance.AggroFilter, value); }
         }
 
         public bool Unclaimed
         {
-            get { return Config.Instance.FilterInfo.UnclaimedFilter; }
-            set { SetProperty(ref Config.Instance.FilterInfo.UnclaimedFilter, value); }
+            get { return Config.Instance.UnclaimedFilter; }
+            set { SetProperty(ref Config.Instance.UnclaimedFilter, value); }
         }
 
         public bool PartyClaimed
         {
-            get { return Config.Instance.FilterInfo.PartyFilter; }
-            set { SetProperty(ref Config.Instance.FilterInfo.PartyFilter, value); }
+            get { return Config.Instance.PartyFilter; }
+            set { SetProperty(ref Config.Instance.PartyFilter, value); }
         }
 
         public bool Claimed
         {
-            get { return Config.Instance.FilterInfo.ClaimedFilter; }
-            set { SetProperty(ref Config.Instance.FilterInfo.ClaimedFilter, value); }
+            get { return Config.Instance.ClaimedFilter; }
+            set { SetProperty(ref Config.Instance.ClaimedFilter, value); }
         }
 
         public bool BitCheck
         {
-            get { return Config.Instance.FilterInfo.BitCheck; }
-            set { SetProperty(ref Config.Instance.FilterInfo.BitCheck, value); }
+            get { return Config.Instance.BitCheck; }
+            set { SetProperty(ref Config.Instance.BitCheck, value); }
         }
 
         public ICommand AddCommand { get; set; }
@@ -104,5 +104,47 @@ namespace EasyFarm.ViewModels
         public ICommand DeleteCommand { get; set; }
 
         public ICommand ClearCommand { get; set; }
+    }
+}
+
+namespace EasyFarm.UserSettings
+{
+    public partial class Config
+    {
+        /// <summary>
+        /// Name of the mob to be attacked
+        /// </summary>
+        public string TargetName = String.Empty;
+
+        /// <summary>
+        /// Used to filter out aggroed mobs.
+        /// </summary>
+        public bool AggroFilter = true;
+
+        /// <summary>
+        /// Used to filter out party claimed mobs.
+        /// </summary>
+        public bool PartyFilter = true;
+
+        /// <summary>
+        /// Used to filter out unclaimed mobs.
+        /// </summary>
+        public bool UnclaimedFilter = true;
+
+        /// <summary>
+        /// Used to include claimed mobs in the filter. 
+        /// </summary>
+        public bool ClaimedFilter = false;
+
+        /// <summary>
+        /// Used to control whether we should use npc bit checking
+        /// in mob validation. 
+        /// </summary>
+        public bool BitCheck = true;      
+
+        /// <summary>
+        /// A list of mobs that we should only kill.
+        /// </summary>
+        public ObservableCollection<String> TargetedMobs = new ObservableCollection<string>();
     }
 }

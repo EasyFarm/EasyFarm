@@ -38,11 +38,13 @@ namespace EasyFarm.Components
 
             if (FFACE.Player.Status == Status.Fighting) return false;
 
-            if (Config.Instance.RestingInfo.Health
-                .ShouldRest(FFACE.Player.HPPCurrent, FFACE.Player.Status)) return true;
+            if (Config.Instance.ShouldRestForHealth(
+                FFACE.Player.HPPCurrent, 
+                FFACE.Player.Status)) return true;
 
-            if (Config.Instance.RestingInfo.Magic
-                .ShouldRest(FFACE.Player.MPPCurrent, FFACE.Player.Status)) return true;
+            if (Config.Instance.ShouldRestForMagic(
+                FFACE.Player.MPPCurrent, 
+                FFACE.Player.Status)) return true;
 
             return false;
         }

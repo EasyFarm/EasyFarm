@@ -90,50 +90,50 @@ namespace EasyFarm.FarmingTool
                 if (!mob.NPCType.Equals(NPCType.Mob)) return false;
 
                 // Mob is out of range
-                if (!(mob.Distance < Config.Instance.MiscSettings.DetectionDistance)) return false;
+                if (!(mob.Distance < Config.Instance.DetectionDistance)) return false;
 
                 // If any unit is within the wander distance then the 
                 if (Config.Instance.Waypoints.Any())
                 {
                     if (!(Config.Instance.Waypoints.Any(waypoint => Distance(mob, waypoint) <=
-                        Config.Instance.MiscSettings.WanderDistance))) return false;
+                        Config.Instance.WanderDistance))) return false;
                 }
 
                 // Mob too high out of reach. 
-                if (mob.YDifference > Config.Instance.MiscSettings.HeightThreshold) return false;
+                if (mob.YDifference > Config.Instance.HeightThreshold) return false;
 
                 // User Specific Filtering
 
                 // Performs a case insensitve match on the mob's name. 
                 // If any part of the mob's name is in the ignored list,
                 // we will not attack it. 
-                if (MatchAny(mob.Name, Config.Instance.FilterInfo.IgnoredMobs,
+                if (MatchAny(mob.Name, Config.Instance.IgnoredMobs,
                     RegexOptions.IgnoreCase)) return false;
 
                 // Kill aggro if aggro's checked regardless of target's list but follows 
                 // the ignored list. 
-                if (mob.HasAggroed && Config.Instance.FilterInfo.AggroFilter) return true;
+                if (mob.HasAggroed && Config.Instance.AggroFilter) return true;
 
                 // There is a target's list but the mob is not on it. 
-                if (!MatchAny(mob.Name, Config.Instance.FilterInfo.TargetedMobs, RegexOptions.IgnoreCase) &&
-                    Config.Instance.FilterInfo.TargetedMobs.Any())
+                if (!MatchAny(mob.Name, Config.Instance.TargetedMobs, RegexOptions.IgnoreCase) &&
+                    Config.Instance.TargetedMobs.Any())
                     return false;
 
                 // Mob on our targets list or not on our ignore list. 
 
                 // Kill the creature if it has aggroed and aggro is checked. 
-                if (mob.HasAggroed && Config.Instance.FilterInfo.AggroFilter) return true;
+                if (mob.HasAggroed && Config.Instance.AggroFilter) return true;
 
                 // Kill the creature if it is claimed by party and party is checked. 
-                if (mob.PartyClaim && Config.Instance.FilterInfo.PartyFilter) return true;
+                if (mob.PartyClaim && Config.Instance.PartyFilter) return true;
 
                 // Kill the creature if it's not claimed and unclaimed is checked. 
-                if (!mob.IsClaimed && Config.Instance.FilterInfo.UnclaimedFilter) return true;
+                if (!mob.IsClaimed && Config.Instance.UnclaimedFilter) return true;
 
                 // Kill the creature if it's claimed and we we don't have claim but
                 // claim is checked. 
                 //FIX: Temporary fix until player.serverid is fixed. 
-                if (mob.IsClaimed && Config.Instance.FilterInfo.ClaimedFilter)
+                if (mob.IsClaimed && Config.Instance.ClaimedFilter)
                 {
                     // Kill creature if claim is checked. 
                     if (fface != null) return mob.ClaimedID != fface.PartyMember[0].ServerID;

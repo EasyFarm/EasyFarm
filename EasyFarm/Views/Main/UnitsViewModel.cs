@@ -50,9 +50,9 @@ namespace EasyFarm.ViewModels
             }
 
             var name = unit.Name;
-            if (!Config.Instance.FilterInfo.TargetedMobs.Contains(name))
+            if (!Config.Instance.TargetedMobs.Contains(name))
             {
-                Config.Instance.FilterInfo.TargetedMobs.Add(name);
+                Config.Instance.TargetedMobs.Add(name);
             }
         }
 

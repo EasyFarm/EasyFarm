@@ -59,7 +59,7 @@ namespace EasyFarm.Components
             // We should approach mobs that have aggroed or have been pulled. 
             if (Target.Status.Equals(Status.Fighting)) return true;
 
-            var Usable = Config.Instance.ActionInfo.PullList
+            var Usable = Config.Instance.PullList
                     .Where(x => x.Enabled && x.IsCastable(FFACE));
 
             // Only cast buffs when their status effects are not on the player. 
@@ -80,13 +80,13 @@ namespace EasyFarm.Components
         public override void RunComponent()
         {
             // Move to target if out of melee range. 
-            if (Target.Distance > Config.Instance.MiscSettings.MeleeDistance)
+            if (Target.Distance > Config.Instance.MeleeDistance)
             {
                 // Move to unit at max buff distance. 
                 var oldTolerance = FFACE.Navigator.DistanceTolerance;
-                FFACE.Navigator.DistanceTolerance = Config.Instance.MiscSettings.MeleeDistance;
+                FFACE.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
                 FFACE.Navigator.GotoNPC(Target.ID);
-                FFACE.Navigator.DistanceTolerance = Config.Instance.MiscSettings.MeleeDistance;
+                FFACE.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
             }
 
             // Face mob. 

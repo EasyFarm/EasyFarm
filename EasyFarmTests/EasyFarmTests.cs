@@ -36,8 +36,6 @@ namespace EasyFarmTests
     [TestClass]
     public class EasyFarmTests
     {
-        
-
         [TestMethod]
         public void TestUnitFilter()
         {
@@ -72,7 +70,7 @@ namespace EasyFarmTests
             Assert.IsFalse(UnitFilters.MobFilter(null)(Unit));
 
             // Test Claimed Filter 
-            Config.Instance.FilterInfo.ClaimedFilter = true;
+            Config.Instance.ClaimedFilter = true;
             Assert.IsTrue(UnitFilters.MobFilter(null)(Unit));
         }
 

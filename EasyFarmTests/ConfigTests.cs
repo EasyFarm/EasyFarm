@@ -42,8 +42,8 @@ namespace EasyFarmTests
         public void TestConfigSingletonInstance()
         {
             var conf = Config.Instance;
-            conf.FilterInfo.PartyFilter = true;
-            Assert.AreEqual(conf.FilterInfo.PartyFilter, Config.Instance.FilterInfo.PartyFilter);
+            conf.PartyFilter = true;
+            Assert.AreEqual(conf.PartyFilter, Config.Instance.PartyFilter);
             Assert.AreSame(conf, Config.Instance);            
         }
 
@@ -52,20 +52,20 @@ namespace EasyFarmTests
         {
             var conf = new Config();
             conf.DebugEnabled = true;
-            conf.FilterInfo.PartyFilter = false;
+            conf.PartyFilter = false;
             conf.SaveSettings();
             conf.LoadSettings();
-            Assert.IsFalse(conf.FilterInfo.PartyFilter);
+            Assert.IsFalse(conf.PartyFilter);
         }
 
         [TestMethod]
         public void TestConfigPersistanceWithGetInstance()
         {
-            Config.Instance.FilterInfo.PartyFilter = true;
+            Config.Instance.PartyFilter = true;
             Config.Instance.DebugEnabled = true;
             Config.Instance.SaveSettings();
             Config.Instance.LoadSettings();
-            Assert.IsTrue(Config.Instance.FilterInfo.PartyFilter);
+            Assert.IsTrue(Config.Instance.PartyFilter);
         }
     }
 }

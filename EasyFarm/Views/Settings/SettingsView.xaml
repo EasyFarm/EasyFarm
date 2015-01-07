@@ -9,82 +9,92 @@
              d:DesignWidth="400">
     <ScrollViewer HorizontalScrollBarVisibility="Auto"
                   VerticalScrollBarVisibility="Auto">
-        <GroupBox Header="Misc Settings">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Expander Header="Battle Settings">
+                <UniformGrid>
+                    <CheckBox Content="Engage mob during battle"
+                              IsChecked="{Binding IsEngagedEnabled}" />
+                    <CheckBox Content="Approach mob after pull"
+                              IsChecked="{Binding IsApproachEnabled}" />
+                </UniformGrid>
+            </Expander>
+            <Expander Header="Misc Settings">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <Label Content="Detection Distance" />
-                <Slider Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5 0 0 0"
-                        Minimum="0"
-                        Maximum="50"
-                        Value="{Binding DetectionDistance}" />
-                <Label Grid.Row="1"
-                       Grid.Column="0"
-                       Content="Height Threshold" />
-                <Slider Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="5 0 0 0"
-                        Minimum="0"
-                        Maximum="50"
-                        Value="{Binding HeightThreshold}" />
-                <Label Grid.Row="2"
-                       Grid.Column="0"
-                       Content="Melee Distance" />
-                <Slider Grid.Row="2"
-                        Grid.Column="1"
-                        Margin="5 0 0 0"
-                        Minimum="0"
-                        Maximum="50"
-                        Value="{Binding MeleeDistance}" />
-                <Label Grid.Row="3"
-                       Grid.Column="0"
-                       Content="Wander Distance" />
-                <Slider Grid.Row="3"
-                        Grid.Column="1"
-                        Margin="5 0 0 0"
-                        Minimum="0"
-                        Maximum="50"
-                        Value="{Binding WanderDistance}" />
-                <Label Grid.Row="4"
-                       Grid.Column="0"
-                       Content="Cast Latency" />
-                <Slider Grid.Row="4"
-                        Grid.Column="1"
-                        Margin="5 0 0 0"
-                        Minimum="0"
-                        Maximum="5000"
-                        SmallChange="100"
-                        Value="{Binding CastLatency}" />
-                <Label Grid.Row="5"
-                       Grid.Column="0"
-                       Content="Global Cooldown" />
-                <Slider Grid.Row="5"
-                        Grid.Column="1"
-                        Margin="5 0 0 0"
-                        Minimum="0"                        
-                        Maximum="5000"
-                        SmallChange="100"
-                        Value="{Binding GlobalCooldown}" />
-                <Button Grid.Row="6"
-                        Grid.ColumnSpan="2"
-                        Margin="0 5 0 0"
-                        Command="{Binding RestoreDefaultsCommand}"
-                        Content="Restore Defaults" />
-            </Grid>
-        </GroupBox>
+                    <Label Content="Detection Distance" />
+                    <Slider Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="5 0 0 0"
+                            Minimum="0"
+                            Maximum="50"
+                            Value="{Binding DetectionDistance}" />
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           Content="Height Threshold" />
+                    <Slider Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="5 0 0 0"
+                            Minimum="0"
+                            Maximum="50"
+                            Value="{Binding HeightThreshold}" />
+                    <Label Grid.Row="2"
+                           Grid.Column="0"
+                           Content="Melee Distance" />
+                    <Slider Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="5 0 0 0"
+                            Minimum="0"
+                            Maximum="50"
+                            Value="{Binding MeleeDistance}" />
+                    <Label Grid.Row="3"
+                           Grid.Column="0"
+                           Content="Wander Distance" />
+                    <Slider Grid.Row="3"
+                            Grid.Column="1"
+                            Margin="5 0 0 0"
+                            Minimum="0"
+                            Maximum="50"
+                            Value="{Binding WanderDistance}" />
+                    <Label Grid.Row="4"
+                           Grid.Column="0"
+                           Content="Cast Latency" />
+                    <Slider Grid.Row="4"
+                            Grid.Column="1"
+                            Margin="5 0 0 0"
+                            Minimum="0"
+                            Maximum="5000"
+                            SmallChange="100"
+                            Value="{Binding CastLatency}" />
+                    <Label Grid.Row="5"
+                           Grid.Column="0"
+                           Content="Global Cooldown" />
+                    <Slider Grid.Row="5"
+                            Grid.Column="1"
+                            Margin="5 0 0 0"
+                            Minimum="0"
+                            Maximum="5000"
+                            SmallChange="100"
+                            Value="{Binding GlobalCooldown}" />
+                    <Button Grid.Row="6"
+                            Grid.ColumnSpan="2"
+                            Margin="0 5 0 0"
+                            Command="{Binding RestoreDefaultsCommand}"
+                            Content="Restore Defaults" />
+                </Grid>
+            </Expander>
+        </StackPanel>
     </ScrollViewer>
 </UserControl>

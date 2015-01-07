@@ -60,7 +60,7 @@ namespace EasyFarm.Components
 
         public override void RunComponent()
         {
-            var Usable = Config.Instance.ActionInfo.EndList
+            var Usable = Config.Instance.EndList
                     .Where(x => x.Enabled && x.IsCastable(FFACE));
 
             // Only cast buffs when their status effects are not on the player. 

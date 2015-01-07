@@ -45,13 +45,13 @@ namespace EasyFarm.Classes
                 }
 
                 // Sleep for the server latency. 
-                Thread.Sleep(Config.Instance.MiscSettings.CastLatency);
+                Thread.Sleep(Config.Instance.CastLatency);
 
                 // Fire the spell off. 
                 FFACE.Windower.SendString(action.Ability.ToString());
 
                 // Sleep until a spell is recastable. 
-                Thread.Sleep(Config.Instance.MiscSettings.GlobalCooldown);
+                Thread.Sleep(Config.Instance.GlobalCooldown);
             }
         }
 
@@ -95,14 +95,14 @@ namespace EasyFarm.Classes
 
 
                 // Sleep for the server latency.                 
-                Thread.Sleep(Config.Instance.MiscSettings.CastLatency);
+                Thread.Sleep(Config.Instance.CastLatency);
 
                 // Fire the spell off. 
                 FFACE.Windower.SendString(action.Ability.ToString());
 
                 // Sleep until a spell is recastable; no sleep for abilities. 
                 if (!action.Ability.ActionType.Equals(ActionType.Ability))
-                    Thread.Sleep(Config.Instance.MiscSettings.GlobalCooldown);
+                    Thread.Sleep(Config.Instance.GlobalCooldown);
             }
         }
     }

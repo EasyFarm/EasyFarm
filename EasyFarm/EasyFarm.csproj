@@ -223,13 +223,7 @@
     <Compile Include="Classes\HealingAbility.cs" />
     <Compile Include="Classes\Waypoint.cs" />
     <Compile Include="Classes\WeaponSkill.cs" />
-    <Compile Include="SavedData\ActionInfo.cs" />
     <Compile Include="SavedData\Config.cs" />
-    <Compile Include="SavedData\Health.cs" />
-    <Compile Include="SavedData\Magic.cs" />
-    <Compile Include="SavedData\MiscSettings.cs" />
-    <Compile Include="SavedData\MobFilters.cs" />
-    <Compile Include="SavedData\RestingInfo.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -238,31 +232,29 @@
     <Compile Include="Components\Components\BattleComponent.cs" />
     <Compile Include="Components\Components\BuffComponent.cs" />
     <Compile Include="Components\Components\PullComponent.cs" />
-    <Compile Include="States\StateAttribute.cs" />
     <Compile Include="Components\Components\WeaponSkillComponent.cs" />
-    <Compile Include="ViewModels\BattlesViewModel.cs" />
-    <Compile Include="Prism\BootStrapper.cs" />
-    <Compile Include="ViewModels\HealingViewModel.cs" />
-    <Compile Include="ViewModels\IgnoredViewModel.cs" />
-    <Compile Include="ViewModels\Locator.cs" />
-    <Compile Include="ViewModels\LogSinkExtensions.cs" />
-    <Compile Include="ViewModels\LogViewModel.cs" />
-    <Compile Include="Prism\MainModule.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\Main\BattlesViewModel.cs" />
+    <Compile Include="Mvvm\BootStrapper.cs" />
+    <Compile Include="Views\Main\HealingViewModel.cs" />
+    <Compile Include="Views\Main\IgnoredViewModel.cs" />
+    <Compile Include="Mvvm\Locator.cs" />
+    <Compile Include="Logging\LogSinkExtensions.cs" />
+    <Compile Include="Views\Main\LogViewModel.cs" />
+    <Compile Include="Mvvm\MainModule.cs" />
+    <Compile Include="Views\Main\MainViewModel.cs" />
     <Compile Include="Views\Main\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\MasterViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\StringSink.cs" />
-    <Compile Include="ViewModels\RestingViewModel.cs" />
-    <Compile Include="ViewModels\RoutesViewModel.cs" />
-    <Compile Include="ViewModels\StatusBarUpdateEvent.cs" />
-    <Compile Include="ViewModels\TargetsViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelAttribute.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Compile Include="ViewModels\WeaponsViewModel.cs" />
+    <Compile Include="Views\Master\MasterViewModel.cs" />
+    <Compile Include="Views\Settings\SettingsViewModel.cs" />
+    <Compile Include="Logging\StringSink.cs" />
+    <Compile Include="Views\Main\RestingViewModel.cs" />
+    <Compile Include="Views\Main\RoutesViewModel.cs" />
+    <Compile Include="Mvvm\StatusBarUpdateEvent.cs" />
+    <Compile Include="Views\Main\TargetsViewModel.cs" />
+    <Compile Include="Mvvm\ViewModelAttribute.cs" />
+    <Compile Include="Mvvm\ViewModelBase.cs" />
+    <Compile Include="Views\Main\WeaponsViewModel.cs" />
     <Compile Include="Views\Main\AbilitySelectionBox.xaml.cs">
       <DependentUpon>AbilitySelectionBox.xaml</DependentUpon>
     </Compile>
@@ -302,7 +294,7 @@
     <Compile Include="Views\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\UnitsViewModel.cs" />
+    <Compile Include="Views\Main\UnitsViewModel.cs" />
     <Compile Include="Views\Main\WeaponsView.xaml.cs">
       <DependentUpon>WeaponsView.xaml</DependentUpon>
     </Compile>

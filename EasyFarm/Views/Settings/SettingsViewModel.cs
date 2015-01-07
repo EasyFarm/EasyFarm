@@ -56,60 +56,60 @@ namespace EasyFarm.ViewModels
 
         public double DetectionDistance
         {
-            get { return Config.Instance.MiscSettings.DetectionDistance; }
+            get { return Config.Instance.DetectionDistance; }
             set 
             { 
-                SetProperty<double>(ref Config.Instance.MiscSettings.DetectionDistance, (int)value);
+                SetProperty<double>(ref Config.Instance.DetectionDistance, (int)value);
                 InformUser("Detection Distance Set: {0}.", (int)value);
             }
         }
 
         public double HeightThreshold
         {
-            get { return Config.Instance.MiscSettings.HeightThreshold; }
+            get { return Config.Instance.HeightThreshold; }
             set
             {
-                SetProperty<double>(ref Config.Instance.MiscSettings.HeightThreshold, value);
+                SetProperty<double>(ref Config.Instance.HeightThreshold, value);
                 InformUser("Height Threshold Set: {0:F1}.", value);
             }
         }
 
         public double MeleeDistance
         {
-            get { return Config.Instance.MiscSettings.MeleeDistance; }
+            get { return Config.Instance.MeleeDistance; }
             set
             {
-                SetProperty<double>(ref Config.Instance.MiscSettings.MeleeDistance, value);
+                SetProperty<double>(ref Config.Instance.MeleeDistance, value);
                 InformUser("Melee Distance Set: {0:F1}.", value);
             }
         }
 
         public double RangedAttackDelay
         {
-            get { return Config.Instance.MiscSettings.RangedAttackDelay; }
+            get { return Config.Instance.RangedAttackDelay; }
             set
             {
-                SetProperty<double>(ref Config.Instance.MiscSettings.RangedAttackDelay, value);
+                SetProperty<double>(ref Config.Instance.RangedAttackDelay, value);
                 InformUser("Ranged Attack Distance Set: {0}.", value);
             }
         }
 
         public double WanderDistance
         {
-            get { return Config.Instance.MiscSettings.WanderDistance; }
+            get { return Config.Instance.WanderDistance; }
             set
             {
-                SetProperty<double>(ref Config.Instance.MiscSettings.WanderDistance, (int)value);
+                SetProperty<double>(ref Config.Instance.WanderDistance, (int)value);
                 InformUser("Wander Distance Set: {0}.", (int)value);
             }
         }
 
         public int CastLatency
         {
-            get { return Config.Instance.MiscSettings.CastLatency; }
+            get { return Config.Instance.CastLatency; }
             set
             {
-                SetProperty(ref Config.Instance.MiscSettings.CastLatency, (int)value);
+                SetProperty(ref Config.Instance.CastLatency, (int)value);
                 AbilityExecutor.CastLatency = (int)value;
                 InformUser("Cast Latency Set: {0}.", (int)value);
             }
@@ -117,13 +117,56 @@ namespace EasyFarm.ViewModels
 
         public int GlobalCooldown
         {
-            get { return Config.Instance.MiscSettings.GlobalCooldown; }
+            get { return Config.Instance.GlobalCooldown; }
             set
             {
-                SetProperty(ref Config.Instance.MiscSettings.GlobalCooldown, (int)value);
+                SetProperty(ref Config.Instance.GlobalCooldown, (int)value);
                 AbilityExecutor.GlobalCooldown = (int)value;
                 InformUser("Global Cooldown Set: {0}.", (int)value);
             }
         }
+    }
+}
+
+namespace EasyFarm.UserSettings
+{
+    public partial class Config
+    {
+        /// <summary>
+        /// How far a player should detect a creature. 
+        /// </summary>
+        public double DetectionDistance = Constants.DETECTION_DISTANCE;
+
+        /// <summary>
+        /// How high or low a player should detect a creature. 
+        /// </summary>
+        public double HeightThreshold = Constants.HEIGHT_THRESHOLD;
+
+        /// <summary>
+        /// How close the player should be when attacking a creature. 
+        /// </summary>
+        public double MeleeDistance = Constants.MELEE_DISTANCE;
+
+        /// <summary>
+        /// The amount of time in seconds to wait before refiring a 
+        /// ranged weapon. 
+        /// </summary>
+        public double RangedAttackDelay = 3;
+
+        /// <summary>
+        /// How far to go of the path for a unit. 
+        /// </summary>
+        public double WanderDistance = Constants.DETECTION_DISTANCE;
+
+        /// <summary>
+        /// Cast delay for laggy servers. 
+        /// </summary>
+        public int CastLatency = Constants.SPELL_CAST_LATENCY;
+
+        /// <summary>
+        /// Cast delay before casting next spell 
+        /// (stops cannot use ability spam)
+        /// </summary>
+        public int GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
     }
 }

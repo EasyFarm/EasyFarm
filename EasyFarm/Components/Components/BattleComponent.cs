@@ -85,7 +85,7 @@ namespace EasyFarm.Components
         {
             if (FFACE.Player.Status.Equals(Status.Fighting))
             {
-                var Usable = Config.Instance.ActionInfo.BattleList
+                var Usable = Config.Instance.BattleList
                     .Where(x => x.Enabled && x.IsCastable(FFACE));
 
                 var Buffs = Usable.Where(x => x.HasEffectWore(FFACE));

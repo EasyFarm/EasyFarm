@@ -101,3 +101,14 @@ namespace EasyFarm.ViewModels
         }
     }
 }
+
+namespace EasyFarm.UserSettings
+{
+    public partial class Config
+    {
+        /// <summary>
+        /// Contains weaponskill info. 
+        /// </summary>
+        public WeaponSkill WeaponSkill;
+    }
+}

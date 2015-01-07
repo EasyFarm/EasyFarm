@@ -28,6 +28,7 @@ using EasyFarm.Logging;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
 using EasyFarm.Views;
+using System.Xml.Serialization;
 
 namespace EasyFarm.ViewModels
 {
@@ -187,5 +188,23 @@ namespace EasyFarm.ViewModels
         {
             Application.Current.Shutdown();
         }        
+    }
+}
+
+namespace EasyFarm.UserSettings
+{
+    public partial class Config
+    {
+        /// <summary>
+        /// The text dislayed at the bottom of the screen
+        /// </summary>
+        [XmlIgnore]
+        public String StatusBarText;
+
+        /// <summary>
+        /// The window's name: player's name. 
+        /// </summary>
+        [XmlIgnore]
+        public string MainWindowTitle;
     }
 }

@@ -28,7 +28,7 @@ using System.Linq;
 using EasyFarm.Classes;
 
 namespace EasyFarm.ViewModels
-{
+{ 
     [ViewModelAttribute("Battles")]
     public class BattlesViewModel : ViewModelBase
     {
@@ -59,8 +59,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<BattleAbility> StartList
         {
-            get { return Config.Instance.ActionInfo.StartList; }
-            set { SetProperty(ref Config.Instance.ActionInfo.StartList, value); }
+            get { return Config.Instance.StartList; }
+            set { SetProperty(ref Config.Instance.StartList, value); }
         }
 
         /// <summary>
@@ -68,8 +68,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<BattleAbility> BattleList
         {
-            get { return Config.Instance.ActionInfo.BattleList; }
-            set { SetProperty(ref Config.Instance.ActionInfo.BattleList, value); }
+            get { return Config.Instance.BattleList; }
+            set { SetProperty(ref Config.Instance.BattleList, value); }
         }
 
         /// <summary>
@@ -77,15 +77,15 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<BattleAbility> EndList
         {
-            get { return Config.Instance.ActionInfo.EndList; }
-            set { SetProperty(ref Config.Instance.ActionInfo.EndList, value); }
+            get { return Config.Instance.EndList; }
+            set { SetProperty(ref Config.Instance.EndList, value); }
 
         }
 
         public ObservableCollection<BattleAbility> PullList
         {
-            get { return Config.Instance.ActionInfo.PullList; }
-            set { SetProperty(ref Config.Instance.ActionInfo.PullList, value); }
+            get { return Config.Instance.PullList; }
+            set { SetProperty(ref Config.Instance.PullList, value); }
         }
 
         /// <summary>
@@ -93,10 +93,10 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool BattleSelected
         {
-            get { return Config.Instance.ActionInfo.BattleListSelected; }
+            get { return Config.Instance.BattleListSelected; }
             set
             {
-                SetProperty(ref Config.Instance.ActionInfo.BattleListSelected, value);
+                SetProperty(ref Config.Instance.BattleListSelected, value);
                 // Ensures our lists have atleast 
                 // one ability item in them. 
                 KeepOne();
@@ -108,10 +108,10 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool StartSelected
         {
-            get { return Config.Instance.ActionInfo.StartListSelected; }
+            get { return Config.Instance.StartListSelected; }
             set
             {
-                SetProperty(ref Config.Instance.ActionInfo.StartListSelected, value);
+                SetProperty(ref Config.Instance.StartListSelected, value);
                 KeepOne();
             }
         }
@@ -121,10 +121,10 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool EndSelected
         {
-            get { return Config.Instance.ActionInfo.EndListSelected; }
+            get { return Config.Instance.EndListSelected; }
             set
             {
-                SetProperty(ref Config.Instance.ActionInfo.EndListSelected, value);
+                SetProperty(ref Config.Instance.EndListSelected, value);
                 KeepOne();
             }
         }
@@ -134,10 +134,10 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool PullSelected
         {
-            get { return Config.Instance.ActionInfo.PullListSelected; }
+            get { return Config.Instance.PullListSelected; }
             set
             {
-                SetProperty(ref Config.Instance.ActionInfo.PullListSelected, value);
+                SetProperty(ref Config.Instance.PullListSelected, value);
                 KeepOne();
             }
         }
@@ -246,5 +246,55 @@ namespace EasyFarm.ViewModels
             if (!SelectedList.Any())
                 this.SelectedList.Add(new BattleAbility());
         }
+    }
+}
+
+namespace EasyFarm.UserSettings
+{
+    public partial class Config
+    {
+        /// <summary>
+        /// List of actions that should be used before battle
+        /// </summary>
+        public ObservableCollection<BattleAbility> StartList =
+            new ObservableCollection<BattleAbility>();
+
+        /// <summary>
+        /// List of actions taht should be used at the end of battle
+        /// </summary>
+        public ObservableCollection<BattleAbility> EndList =
+            new ObservableCollection<BattleAbility>();
+
+        /// <summary>
+        /// List of actions that should be used in battle
+        /// </summary>
+        public ObservableCollection<BattleAbility> BattleList =
+            new ObservableCollection<BattleAbility>();
+
+        /// <summary>
+        /// List of moves that should be used to pull a creature. 
+        /// </summary>
+        public ObservableCollection<BattleAbility> PullList =
+            new ObservableCollection<BattleAbility>();
+
+        /// <summary>
+        /// Is the BattleList Selected in the battle tab?
+        /// </summary>
+        public bool BattleListSelected = true;
+
+        /// <summary>
+        /// Is the StartList selected in the battle tab?
+        /// </summary>
+        public bool StartListSelected = false;
+
+        /// <summary>
+        /// Is the Pulling list selected in the battle tab?
+        /// </summary>
+        public bool PullListSelected = false;
+
+        /// <summary>
+        /// Is the End list selected in the battle tab?
+        /// </summary>
+        public bool EndListSelected = false;
     }
 }

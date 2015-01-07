@@ -133,3 +133,14 @@ namespace EasyFarm.ViewModels
         }
     }
 }
+
+namespace EasyFarm.UserSettings
+{
+    public partial class Config
+    {
+        /// <summary>
+        /// List of all waypoints that make up the bots path
+        /// </summary>
+        public ObservableCollection<Waypoint> Waypoints;
+    }
+}
