@@ -223,7 +223,7 @@
     <Compile Include="Classes\HealingAbility.cs" />
     <Compile Include="Classes\Waypoint.cs" />
     <Compile Include="Classes\WeaponSkill.cs" />
-    <Compile Include="SavedData\Config.cs" />
+    <Compile Include="Classes\Config.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -300,9 +300,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\frmStartup.resx">
-      <DependentUpon>frmStartup.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
