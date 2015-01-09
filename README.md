@@ -21,7 +21,6 @@ Easyfarm is a general purpose farm bot for the game Final Fantasy XI. Its purpos
 # Requirements
 * FFace.dll
 * FFaceTools.dll
-* XI-Tools.dll
 * Resource Files
 * Microsoft .NET Framework 4.5
 * Visual C++ Redistributable Packages for Visual Studio 2013
