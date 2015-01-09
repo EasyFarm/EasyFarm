@@ -298,6 +298,24 @@
     <Compile Include="Views\Main\WeaponsView.xaml.cs">
       <DependentUpon>WeaponsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="XITools\Classes\AbilitiesService.cs" />
+    <Compile Include="XITools\Classes\Ability.cs" />
+    <Compile Include="XITools\Classes\AbilityExecutor.cs" />
+    <Compile Include="XITools\Classes\AbilityParser.cs" />
+    <Compile Include="XITools\Classes\ActionBlocked.cs" />
+    <Compile Include="XITools\Classes\CombatService.cs" />
+    <Compile Include="XITools\Classes\Constants.cs" />
+    <Compile Include="XITools\Classes\MovingUnit.cs" />
+    <Compile Include="XITools\Classes\Queues.cs" />
+    <Compile Include="XITools\Classes\RestingService.cs" />
+    <Compile Include="XITools\Classes\Serialization.cs" />
+    <Compile Include="XITools\Classes\Unit.cs" />
+    <Compile Include="XITools\Classes\UnitService.cs" />
+    <Compile Include="XITools\Classes\XITools.cs" />
+    <Compile Include="XITools\Enums\ActionTypes.cs" />
+    <Compile Include="XITools\Interfaces\IAbilityService.cs" />
+    <Compile Include="XITools\Interfaces\IUnit.cs" />
+    <Compile Include="XITools\Test\TestUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -422,12 +440,6 @@
     <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.PubSubEvents.dll" />
     <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.SharedInterfaces.dll" />
     <EmbeddedResource Include="Embedded\Microsoft.Practices.ServiceLocation.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\XI-Tools\XI-Tools\XI-Tools.csproj">
-      <Project>{be0bf2c6-3db4-415c-be21-c3f6b696c335}</Project>
-      <Name>XI-Tools</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="FFACE.dll">

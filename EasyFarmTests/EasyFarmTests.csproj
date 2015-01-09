@@ -82,12 +82,9 @@
     <Compile Include="ConfigTests.cs" />
     <Compile Include="EasyFarmTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XIToolsTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\XI-Tools\XI-Tools\XI-Tools.csproj">
-      <Project>{be0bf2c6-3db4-415c-be21-c3f6b696c335}</Project>
-      <Name>XI-Tools</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EasyFarm\EasyFarm.csproj">
       <Project>{14508978-627b-46ae-9779-1f6b4fb0611e}</Project>
       <Name>EasyFarm</Name>
