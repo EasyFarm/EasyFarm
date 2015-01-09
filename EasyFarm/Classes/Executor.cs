@@ -57,9 +57,8 @@ namespace EasyFarm.Classes
             foreach (var action in actions.ToList())
             {
                 // Stop bot from running. 
-                if (Player.IsMoving)
+                while (Player.IsMoving)
                 {
-                    Thread.Sleep(500);
                     FFACE.Navigator.Reset();
                 }
 
@@ -106,9 +105,8 @@ namespace EasyFarm.Classes
                 }
 
                 // Stop bot from running. 
-                if (Player.IsMoving)
+                while (Player.IsMoving)
                 {
-                    Thread.Sleep(500);
                     FFACE.Navigator.Reset();
                 }
 
