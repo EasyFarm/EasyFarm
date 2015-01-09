@@ -71,8 +71,9 @@ namespace EasyFarm.Components
             // target null or dead. 
             if (Target == null || Target.IsDead || Target.ID == 0) return false;
 
-            // Fight if we are engaged. 
-            return FFACE.Player.Status.Equals(Status.Fighting);
+            return AttackContainer.FightStarted;
+
+            // To support mages, no longer need to be engaged to use battle moves.
         }
 
         public override void EnterComponent()
@@ -83,20 +84,17 @@ namespace EasyFarm.Components
 
         public override void RunComponent()
         {
-            if (FFACE.Player.Status.Equals(Status.Fighting))
-            {
-                var Usable = Config.Instance.BattleList
-                    .Where(x => x.Enabled && x.IsCastable(FFACE));
+            var Usable = Config.Instance.BattleList
+                .Where(x => x.Enabled && x.IsCastable(FFACE));
 
-                var Buffs = Usable.Where(x => x.HasEffectWore(FFACE));
+            var Buffs = Usable.Where(x => x.HasEffectWore(FFACE));
 
-                var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
-                    .Where(x => !x.IsBuff());
+            var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
+                .Where(x => !x.IsBuff());
 
-                // Execute moves at target. 
-                Executor.Target = Target;
-                Executor.ExecuteActions(Buffs.Union(Others));
-            }
+            // Execute moves at target. 
+            Executor.Target = Target;
+            Executor.ExecuteActions(Buffs.Union(Others));
         }
     }
 }

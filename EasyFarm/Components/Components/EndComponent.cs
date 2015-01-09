@@ -30,7 +30,13 @@ using EasyFarm.Classes;
 
 namespace EasyFarm.Components
 {
-    public class PostBattleComponent : BaseComponent
+    /// <summary>
+    /// Handles the end of battle situation. 
+    /// Fires off the end list, sets FightStart to true so other 
+    /// lists can fire and replaces targets that are dead, null, 
+    /// empty or invalid. 
+    /// </summary>
+    public class EndComponent : BaseComponent
     {
         public Executor Executor { get; set; }
 
@@ -42,7 +48,7 @@ namespace EasyFarm.Components
             set { AttackContainer.TargetUnit = value; }
         }
 
-        public PostBattleComponent(FFACE fface)
+        public EndComponent(FFACE fface)
             : base(fface)
         {
             this.Executor = new Executor(fface);
@@ -55,7 +61,11 @@ namespace EasyFarm.Components
         public override bool CheckComponent()
         {
             // Null, dead and empty mob check. 
-            return ((Target == null || Target.IsDead || Target.ID == 0));
+            if ((Target == null || Target.IsDead || Target.ID == 0)) return true;
+
+            // Creature is unkillable and does not meets the 
+            // user's criteria for valid mobs defined in MobFilters. 
+            return !Units.IsValid(Target);
         }
 
         public override void RunComponent()
@@ -81,10 +91,6 @@ namespace EasyFarm.Components
             // new target. 
             AttackContainer.TargetUnit = target;
 
-            // Set to false in order to use starting moves again in the 
-            // attack Component. 
-            AttackContainer.FightStarted = false;
-
             if (App.Current != null)
             {
                 App.Current.Dispatcher.Invoke(() =>
@@ -95,6 +101,13 @@ namespace EasyFarm.Components
                     }
                 });
             }
+        }
+
+        public override void ExitComponent()
+        {
+            // Set to false in order to use starting moves again in the 
+            // attack Component. 
+            AttackContainer.FightStarted = false;
         }
     }
 }

@@ -45,16 +45,15 @@ namespace EasyFarm.Components
             this.Executor = new Executor(fface);           
         }
 
+        /// <summary>
+        /// Allow component to run when moves need to be triggered or 
+        /// FightStarted state needs updating. 
+        /// </summary>
+        /// <returns></returns>
         public override bool CheckComponent()
         {
-            // Invalid target: dead or null
-            if (Target == null || Target.IsDead || Target.ID == 0) return false;
-
-            // We've already tried to pull once, cancel. 
-            if(AttackContainer.FightStarted) return false;
-
-            // We've succeeded at pulling the mob!
-            return !Target.Status.Equals(Status.Fighting);
+            // Target not null, dead or empty.
+            return (Target != null && !Target.IsDead && Target.ID != 0);
         }
 
         public override void EnterComponent() 
@@ -62,29 +61,51 @@ namespace EasyFarm.Components
             FFACE.Navigator.Reset();
         }
 
+        /// <summary>
+        /// Use pulling moves if applicable to make the target 
+        /// mob aggressive to us. 
+        /// </summary>
         public override void RunComponent()
         {
-            var Usable = Config.Instance.PullList
-                    .Where(x => x.Enabled && x.IsCastable(FFACE));
+            // Do not pull if the mob is already aggressive.. 
+            if (Target.Status.Equals(Status.Fighting)) return;
 
-            // Only cast buffs when their status effects are not on the player. 
-            var Buffs = Usable.Where(x => x.HasEffectWore(FFACE));
+            // Do not pull if we've done so already. 
+            if (AttackContainer.FightStarted) return;
 
-            // Cast the other abilities on cooldown. 
-            var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
-                .Where(x => !x.IsBuff());
+            // Only pull if we have moves. 
+            if (Config.Instance.PullList.Any(x => x.Enabled))
+            {
+                var Usable = Config.Instance.PullList
+                        .Where(x => x.Enabled && x.IsCastable(FFACE));
 
-            // Execute all abilities. 
-            Executor.Target = Target;
-            Executor.ExecuteActions(Buffs.Union(Others));
+                // Only cast buffs when their status effects are not on the player. 
+                var Buffs = Usable.Where(x => x.HasEffectWore(FFACE));
+
+                // Cast the other abilities on cooldown. 
+                var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
+                    .Where(x => !x.IsBuff());
+
+                // Execute all abilities. 
+                Executor.Target = Target;
+                Executor.ExecuteActions(Buffs.Union(Others));
+            }
         }        
 
+        /// <summary>
+        /// Handle all cases of setting fight started to proper values
+        /// so other components can fire. 
+        /// </summary>
         public override void ExitComponent()
         {
             if (Target.Status.Equals(Status.Fighting))
-            {
                 AttackContainer.FightStarted = true;
-            }
+            // No moves in pull list, set FightStarted to true to let
+            // other components who depend on it trigger. 
+            else if (!Config.Instance.PullList.Any(x => x.Enabled))
+                AttackContainer.FightStarted = true;
+            else
+                AttackContainer.FightStarted = false;
         }
     }
 }

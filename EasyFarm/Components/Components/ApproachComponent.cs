@@ -79,14 +79,18 @@ namespace EasyFarm.Components
 
         public override void RunComponent()
         {
-            // Move to target if out of melee range. 
-            if (Target.Distance > Config.Instance.MeleeDistance)
+            // Has the user decided that we should approach targets?
+            if (Config.Instance.IsApproachEnabled)
             {
-                // Move to unit at max buff distance. 
-                var oldTolerance = FFACE.Navigator.DistanceTolerance;
-                FFACE.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
-                FFACE.Navigator.GotoNPC(Target.ID);
-                FFACE.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
+                // Move to target if out of melee range. 
+                if (Target.Distance > Config.Instance.MeleeDistance)
+                {
+                    // Move to unit at max buff distance. 
+                    var oldTolerance = FFACE.Navigator.DistanceTolerance;
+                    FFACE.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
+                    FFACE.Navigator.GotoNPC(Target.ID);
+                    FFACE.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
+                }
             }
 
             // Face mob. 
@@ -100,11 +104,15 @@ namespace EasyFarm.Components
                 FFACE.Windower.SendString("/ta <t>");
             }
 
-            // Not engaged and in range. 
-            if (!FFACE.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
+            // Has the user decided we should engage in battle. 
+            if (Config.Instance.IsEngageEnabled)
             {
-                // Engage the target. 
-                FFACE.Windower.SendString(Constants.ATTACK_TARGET);
+                // Not engaged and in range. 
+                if (!FFACE.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
+                {
+                    // Engage the target. 
+                    FFACE.Windower.SendString(Constants.ATTACK_TARGET);
+                }
             }
         }
     }

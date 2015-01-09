@@ -37,13 +37,13 @@ namespace EasyFarm.Components
     /// <summary>
     /// Buffs the player. 
     /// </summary>
-    public class BuffComponent : MachineComponent
+    public class StartComponent : MachineComponent
     {
         public FFACE FFACE { get; set; }
 
         public Executor Executor { get; set; }
 
-        public BuffComponent(FFACE fface)
+        public StartComponent(FFACE fface)
         {
             this.FFACE = fface;
             this.Executor = new Executor(fface);

@@ -55,6 +55,9 @@ namespace EasyFarmTests
                 Name = "TestMob",
                 ID = 777,
                 HPPCurrent = 100,
+                // New filtering code uses IsRendered vs
+                // NPCBit. 
+                IsRendered = true
             };
 
             // Generic filtering. 

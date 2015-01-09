@@ -122,34 +122,34 @@
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.Composition">
       <HintPath>..\packages\Prism.Composition.5.0.0\lib\NET45\Microsoft.Practices.Prism.Composition.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.Interactivity">
       <HintPath>..\packages\Prism.Interactivity.5.0.0\lib\NET45\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.Mvvm">
       <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.Mvvm.Desktop">
       <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.Desktop.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.PubSubEvents">
       <HintPath>..\packages\Prism.PubSubEvents.1.0.0\lib\portable-sl4+wp7+windows8+net40\Microsoft.Practices.Prism.PubSubEvents.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.SharedInterfaces">
       <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.UnityExtensions">
       <HintPath>..\packages\Prism.UnityExtensions.5.0.1\lib\NET45\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
@@ -210,9 +210,8 @@
     <Compile Include="Components\Bases\MachineComponent.cs" />
     <Compile Include="Components\Bases\MachineContainer.cs" />
     <Compile Include="Components\Bases\MachineController.cs" />
-    <Compile Include="Components\Components\PostBattleComponent.cs" />
+    <Compile Include="Components\Components\EndComponent.cs" />
     <Compile Include="Components\Components\RestComponent.cs" />
-    <Compile Include="Components\Components\TargetInvalidComponent.cs" />
     <Compile Include="Components\Components\TravelComponent.cs" />
     <Compile Include="Debugging\DebugCreatures.xaml.cs">
       <DependentUpon>DebugCreatures.xaml</DependentUpon>
@@ -230,7 +229,7 @@
     </Compile>
     <Compile Include="Components\Components\ApproachComponent.cs" />
     <Compile Include="Components\Components\BattleComponent.cs" />
-    <Compile Include="Components\Components\BuffComponent.cs" />
+    <Compile Include="Components\Components\StartComponent.cs" />
     <Compile Include="Components\Components\PullComponent.cs" />
     <Compile Include="Components\Components\WeaponSkillComponent.cs" />
     <Compile Include="Views\Main\BattlesViewModel.cs" />
@@ -246,6 +245,10 @@
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Master\MasterViewModel.cs" />
+    <Compile Include="Views\Settings\BattleSettingsView.xaml.cs">
+      <DependentUpon>BattleSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\BattleSettingsViewModel.cs" />
     <Compile Include="Views\Settings\SettingsViewModel.cs" />
     <Compile Include="Logging\StringSink.cs" />
     <Compile Include="Views\Main\RestingViewModel.cs" />
@@ -416,6 +419,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Settings\BattleSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Settings\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -433,13 +440,6 @@
     <Resource Include="trayicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Composition.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Interactivity.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Mvvm.Desktop.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.Mvvm.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.PubSubEvents.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.Prism.SharedInterfaces.dll" />
-    <EmbeddedResource Include="Embedded\Microsoft.Practices.ServiceLocation.dll" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FFACE.dll">

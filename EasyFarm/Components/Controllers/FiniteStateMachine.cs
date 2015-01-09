@@ -60,8 +60,7 @@ namespace EasyFarm.Components
             AddComponent(new AttackContainer(fface) { Priority = 1 });
             AddComponent(new TravelComponent(fface) { Priority = 1 });
             AddComponent(new HealingComponent(fface) { Priority = 2 });
-            AddComponent(new PostBattleComponent(fface) { Priority = 3 });
-            AddComponent(new TargetInvalidComponent(fface) { Priority = 3 });
+            AddComponent(new EndComponent(fface) { Priority = 3 });
 
             foreach (var b in this.Components) b.Enabled = true;
         }

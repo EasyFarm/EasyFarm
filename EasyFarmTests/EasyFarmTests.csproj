@@ -82,6 +82,7 @@
     <Compile Include="ConfigTests.cs" />
     <Compile Include="EasyFarmTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BattleSettingsTests.cs" />
     <Compile Include="XIToolsTests.cs" />
   </ItemGroup>
   <ItemGroup>

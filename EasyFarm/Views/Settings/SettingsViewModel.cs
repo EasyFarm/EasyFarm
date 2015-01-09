@@ -130,6 +130,9 @@ namespace EasyFarm.ViewModels
 
 namespace EasyFarm.UserSettings
 {
+    /// <summary>
+    /// Misc Settings
+    /// </summary>
     public partial class Config
     {
         /// <summary>
@@ -168,5 +171,5 @@ namespace EasyFarm.UserSettings
         /// (stops cannot use ability spam)
         /// </summary>
         public int GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
-    }
+    }    
 }
