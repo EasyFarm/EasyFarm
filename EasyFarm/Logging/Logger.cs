@@ -66,6 +66,9 @@ namespace EasyFarm.Logging
             public const int STATE_ENTER = 501;
             public const int STATE_RUN = 502;
             public const int STATE_EXIT = 503;
+
+            // Performance: 600-699
+            public const int PERFORMANCE_ELAPSED_TIME = 600;
         }
 
         /// <summary>
@@ -173,6 +176,12 @@ namespace EasyFarm.Logging
         public void StateRun(string message)
         {
             SimpleWrite(EventID.STATE_CHECK, message);
+        }
+
+        [Event(EventID.PERFORMANCE_ELAPSED_TIME, Level = EventLevel.Informational)]
+        public void PerformanceElapsedTime(string message)
+        {
+            SimpleWrite(EventID.PERFORMANCE_ELAPSED_TIME, message);
         }
 
         public void SimpleWrite(int id, string message)

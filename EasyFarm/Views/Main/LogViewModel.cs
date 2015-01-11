@@ -22,6 +22,7 @@ using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Tracing;
+using System.Threading;
 
 namespace EasyFarm.ViewModels
 {
@@ -34,12 +35,28 @@ namespace EasyFarm.ViewModels
 
         public ObservableEventListener EventListener { get; set; }
 
+        private readonly SynchronizationContext _syncContext;
+
         public LogViewModel()
         {
             LoggedItems = new ObservableCollection<string>();
             EventListener = new ObservableEventListener();
             EventListener.EnableEvents(Logger.Write, EventLevel.Verbose);
-            EventListener.LogToCollection(x => LoggedItems.Add(x));
+            this._syncContext = SynchronizationContext.Current;
+            this.EventListener.LogToCollection(PublishLogItem);
+            // Can only be called on the dispatcher's thread. 
+        }
+
+        /// <summary>
+        /// Publish log item under the right thread context. 
+        /// </summary>
+        /// <param name="message"></param>
+        public void PublishLogItem(String message)
+        {
+            if (this._syncContext == SynchronizationContext.Current)
+                LoggedItems.Add(message);
+            else
+                _syncContext.Send(o => LoggedItems.Add(message), null);
         }
     }
 }
