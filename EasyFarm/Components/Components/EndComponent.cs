@@ -84,8 +84,7 @@ namespace EasyFarm.Components
             Executor.ExecuteBuffs(Buffs.Union(Others));
 
             // Get the next target by distance to the player. 
-            var target = ftools.UnitService.GetTarget(
-                UnitFilters.MobFilter(FFACE), x => x.Distance);
+            var target = Units.GetTarget(UnitFilters.MobFilter(FFACE), x => x.Distance);
 
             // Set our new target at the end so that we don't accidentaly cast on a 
             // new target. 

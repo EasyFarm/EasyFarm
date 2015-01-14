@@ -23,18 +23,35 @@ using ZeroLimits.FarmingTool;
 using System.Linq;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
+using ZeroLimits.XITool.Classes;
+using EasyFarm.FarmingTool;
 
 namespace EasyFarm.Components
 {
-    public class RestComponent : BaseComponent
+    public class RestComponent : MachineComponent
     {
-        public RestComponent(FFACE fface) : base(fface) { }
+        public FFACE FFACE { get; set; }
+
+        public UnitService Units { get; set; }
+
+        public ActionBlocked Blocking { get; set; }
+
+        public RestingService Resting { get; set; }
+
+        public RestComponent(FFACE fface)
+        {
+            this.FFACE = fface;
+            this.Units = new UnitService(fface);
+            this.Units.UnitFilter = UnitFilters.MobFilter(fface);
+            this.Blocking = new ActionBlocked(fface);
+            this.Resting = new RestingService(fface);
+        }
        
         public override bool CheckComponent()
         {
-            if (ftools.UnitService.HasAggro) return false;
+            if (Units.HasAggro) return false;
 
-            if (ftools.ActionBlocked.IsRestingBlocked) return false;
+            if (Blocking.IsRestingBlocked) return false;
 
             if (FFACE.Player.Status == Status.Fighting) return false;
 
@@ -53,7 +70,7 @@ namespace EasyFarm.Components
         {
             if (!FFACE.Player.Status.Equals(Status.Healing))
             {
-                ftools.RestingService.StartResting();
+                Resting.StartResting();
             }
         }
 
@@ -79,6 +96,6 @@ namespace EasyFarm.Components
 
                 return RestBlockingDebuffs.Intersect(FFACE.Player.StatusEffects).Count() != 0;
             }
-        }
+        }        
     }
 }

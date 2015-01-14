@@ -36,7 +36,7 @@ namespace EasyFarm.Debugging
     /// </summary>
     public partial class DebugSpellCasting : Window
     {
-        private FFACE _fface;
+        private FFACE _fface;        
 
         public DebugSpellCasting(FFACE fface)
         {
@@ -168,14 +168,16 @@ namespace EasyFarm.Debugging
             private float _castMax = 0;
             private float _castCountDown = 0;
             private short _castPercent = 0;
+            private AbilityService _retriever;
+            private AbilityExecutor _executor;
 
             private FFACE _fface;
-            private FTools _ftools;
 
             public CastingModel(FFACE fface)
             {
                 this._fface = fface;
-                this._ftools = new FTools(fface);
+                this._executor = new AbilityExecutor(fface);
+                this._retriever = new AbilityService();
             }
 
             public float CastMax
@@ -251,12 +253,12 @@ namespace EasyFarm.Debugging
             {
                 bool success = false;
 
-                var ability = _ftools.AbilityService.CreateAbility(_spellName);
+                var ability = _retriever.CreateAbility(_spellName);
 
                 if (ability.IsValidName)
                 {
                     bool valid = new AbilityExecutor(_fface).IsActionValid(ability);
-                    success = _ftools.AbilityExecutor.UseAbility(ability);
+                    success = _executor.UseAbility(ability);
                 }
 
                 return success;

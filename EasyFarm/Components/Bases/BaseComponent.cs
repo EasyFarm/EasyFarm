@@ -28,16 +28,10 @@ namespace EasyFarm.Components
     public abstract class BaseComponent : MachineComponent
     {
         protected static FFACE FFACE;
-        protected static FTools ftools;
 
         public BaseComponent(FFACE fface)
         {
             if (FFACE == null) FFACE = fface;
-            if (ftools == null)
-            {
-                ftools = new FTools(fface);
-                ftools.UnitService.UnitFilter = UnitFilters.MobFilter(fface);
-            }
         }      
 
         public int CompareTo(BaseComponent other)

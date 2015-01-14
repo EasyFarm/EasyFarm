@@ -32,11 +32,14 @@ namespace EasyFarm.Views
     {
         public Ability SelectedAbility { get; set; }
 
+        public AbilityService Retriever { get; set; }
+
         public AbilitySelectionBox(String name)
         {
             InitializeComponent();
+            this.Retriever = new AbilityService();
             this.CompleteSelectionButton.Click += CompleteSelectionButton_Click;
-            this.AbilityListBox.ItemsSource = ViewModelBase.FTools.AbilityService.GetAbilitiesWithName(name);
+            this.AbilityListBox.ItemsSource = Retriever.GetAbilitiesWithName(name);
             this.ShowDialog();
         }
 

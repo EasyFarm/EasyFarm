@@ -45,11 +45,6 @@ namespace EasyFarm.ViewModels
         public static IEventAggregator EventAggregator { get; set; }
 
         /// <summary>
-        /// Provides access to XITools / FarmingTools classes. 
-        /// </summary>
-        public static FTools FTools { get; set; }
-
-        /// <summary>
         /// The game engine that runs the bot; controls the player's actions. 
         /// </summary>
         public static GameEngine GameEngine { get; set; }
@@ -75,9 +70,6 @@ namespace EasyFarm.ViewModels
         {
             // Save FFACE Instance
             FFACE = fface;
-
-            // Create FarmngTools object. 
-            FTools = new FTools(FFACE);
 
             // Create a new game engine to control our character. 
             GameEngine = new GameEngine(FFACE);

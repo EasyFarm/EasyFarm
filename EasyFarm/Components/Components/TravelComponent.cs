@@ -28,12 +28,19 @@ using EasyFarm.GameData;
 using System.Diagnostics;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
+using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.Components
 {
     public class TravelComponent : BaseComponent
     {
         private int position = 0;
+
+        public ActionBlocked Blocking { get; set; }
+
+        public RestingService Resting { get; set; }
+
+        public CombatService Combat { get; set; }
 
         public TravelComponent(FFACE fface) : base(fface) { }
 
@@ -53,15 +60,15 @@ namespace EasyFarm.Components
 
             // We are not bound or struck by an other movement
             // disabling condition. 
-            if (ftools.ActionBlocked.IsUnable) return false;
+            if (Blocking.IsUnable) return false;
 
             return true;
         }
 
         public override void EnterComponent()
         {
-            ftools.RestingService.EndResting();
-            ftools.CombatService.Disengage();
+            Resting.EndResting();
+            Combat.Disengage();
 
             FFACE.Navigator.DistanceTolerance = 1;
             FFACE.Navigator.HeadingTolerance = 1;
@@ -92,7 +99,7 @@ namespace EasyFarm.Components
                 {
                     if (FFACE.Player.Status.Equals(Status.Healing))
                     {
-                        ftools.RestingService.EndResting();
+                        Resting.EndResting();
                     }
                 }
             });

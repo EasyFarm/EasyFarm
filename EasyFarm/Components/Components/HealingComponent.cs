@@ -27,9 +27,20 @@ using EasyFarm.UserSettings;
 
 namespace EasyFarm.Components
 {
-    public class HealingComponent : BaseComponent
+    public class HealingComponent : MachineComponent
     {
-        public HealingComponent(FFACE fface) : base(fface) { }
+        private FFACE FFACE { get; set; }
+
+        private AbilityExecutor Executor { get; set; }
+
+        private AbilityService Retriever { get; set; }
+
+        public HealingComponent(FFACE fface)
+        {
+            this.FFACE = fface;
+            this.Executor = new AbilityExecutor(fface);
+            this.Retriever = new AbilityService();
+        }
 
         public override bool CheckComponent()
         {
@@ -44,7 +55,11 @@ namespace EasyFarm.Components
 
         public override void EnterComponent()
         {
-            ftools.RestingService.EndResting();
+            // Stop resting. 
+            if (FFACE.Player.Status.Equals(Status.Healing))
+                FFACE.Windower.SendString(Constants.RESTING_OFF);
+
+            // Stop moving. 
             FFACE.Navigator.Reset();
         }
 
@@ -63,9 +78,9 @@ namespace EasyFarm.Components
                 if (Action == null) { return; }
 
                 // Create an ability from the name and launch the move. 
-                var HealingMove = new AbilityService().CreateAbility(Action.Name);
-                ftools.AbilityExecutor.UseAbility(HealingMove);
+                var HealingMove = Retriever.CreateAbility(Action.Name);
+                Executor.UseAbility(HealingMove);
             }
-        }
+        }        
     }
 }

@@ -191,7 +191,6 @@
     <Compile Include="Classes\ChatLine.cs" />
     <Compile Include="Classes\ChatLog.cs" />
     <Compile Include="Monitors\DeadMonitor.cs" />
-    <Compile Include="Classes\FarmingTools.cs" />
     <Compile Include="Classes\ActionFilters.cs" />
     <Compile Include="Monitors\ProcessWatcher.cs" />
     <Compile Include="Monitors\StuckMonitor.cs" />
@@ -297,7 +296,6 @@
     <Compile Include="Views\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\UnitsViewModel.cs" />
     <Compile Include="Views\Main\WeaponsView.xaml.cs">
       <DependentUpon>WeaponsView.xaml</DependentUpon>
     </Compile>
