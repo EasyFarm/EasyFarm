@@ -48,7 +48,7 @@ namespace EasyFarm.Components
         // Constructor.
         public FiniteStateEngine(FFACE fface)
         {
-            m_heartBeat.Interval = 100; // Check State list ten times per second.
+            m_heartBeat.Interval = 300; // Check State list ten times per second.
             m_heartBeat.Tick += Heartbeat_Tick;
             m_worker.DoWork += worker_DoWork;
             m_worker.WorkerSupportsCancellation = true;

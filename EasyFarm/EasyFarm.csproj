@@ -188,8 +188,6 @@
     <Compile Include="Components\Containers\SequenceContainer.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Monitors\BaseMonitor.cs" />
-    <Compile Include="Classes\ChatLine.cs" />
-    <Compile Include="Classes\ChatLog.cs" />
     <Compile Include="Monitors\DeadMonitor.cs" />
     <Compile Include="Classes\ActionFilters.cs" />
     <Compile Include="Monitors\ProcessWatcher.cs" />

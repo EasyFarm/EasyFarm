@@ -29,7 +29,7 @@ namespace EasyFarm.FarmingTool
 {
     public delegate void StatusChanged(object sender, EventArgs e);
 
-    public abstract class BaseMonitor
+    public abstract class BaseMonitor : IDisposable
     {
         public event StatusChanged Changed;
 
@@ -37,7 +37,8 @@ namespace EasyFarm.FarmingTool
         protected Object m_lock = new Object();
         protected FFACE m_fface;
 
-        protected BaseMonitor(FFACE fface) : this()
+        protected BaseMonitor(FFACE fface)
+            : this()
         {
             this.m_fface = fface;
         }
@@ -67,6 +68,11 @@ namespace EasyFarm.FarmingTool
         {
             get { return m_timer.Enabled; }
             set { m_timer.Enabled = value; }
+        }
+
+        public void Dispose()
+        {
+            this.m_timer.Dispose();
         }
     }
 

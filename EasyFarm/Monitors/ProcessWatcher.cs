@@ -41,7 +41,7 @@ namespace EasyFarm.FarmingTool
 
     public delegate void ProcessExit(object sender, EventArgs e);
 
-    public class ProcessWatcher
+    public class ProcessWatcher : IDisposable
     {
         /// <summary>
         /// An event that fires when a process has started. 
@@ -132,5 +132,7 @@ namespace EasyFarm.FarmingTool
         public void Start() { this.m_timer.Start(); }
 
         public void Stop() { this.m_timer.Stop(); }
+
+        public void Dispose() { m_timer.Dispose(); }
     }
 }

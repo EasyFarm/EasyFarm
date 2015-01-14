@@ -116,6 +116,9 @@ namespace EasyFarm
             // Save the selected fface instance. 
             var FFACE = ProcessSelectionScreen.SelectedSession;
 
+            // Free up and stop timer from working. 
+            ProcessSelectionScreen.ProcessWatcher.Dispose();
+
             ViewModelBase.SetSession(FFACE);
 
             // new DebugSpellCasting(_fface).Show();
