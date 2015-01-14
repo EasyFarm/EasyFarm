@@ -32,9 +32,11 @@ using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.Components
 {
-    public class TravelComponent : BaseComponent
+    public class TravelComponent : MachineComponent
     {
         private int position = 0;
+
+        public FFACE FFACE { get; set; }
 
         public ActionBlocked Blocking { get; set; }
 
@@ -42,7 +44,13 @@ namespace EasyFarm.Components
 
         public CombatService Combat { get; set; }
 
-        public TravelComponent(FFACE fface) : base(fface) { }
+        public TravelComponent(FFACE fface)
+        {
+            this.FFACE = fface;
+            this.Blocking = new ActionBlocked(fface);
+            this.Resting = new RestingService(fface);
+            this.Combat = new CombatService(fface);
+        }
 
         public override bool CheckComponent()
         {
