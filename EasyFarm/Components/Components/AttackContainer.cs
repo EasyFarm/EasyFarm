@@ -67,8 +67,6 @@ namespace EasyFarm.Components
             // If we're injured. 
             if (new RestComponent(FFACE).CheckComponent()) return false;
 
-            if (new HealingComponent(FFACE).CheckComponent()) return false;
-
             // Return if other components need to fire. 
             return base.CheckComponent();
         }
