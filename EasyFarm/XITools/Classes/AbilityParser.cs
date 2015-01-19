@@ -102,7 +102,7 @@ namespace ZeroLimits.XITool.Classes
 
             foreach (var value in resources)
             {
-                if (string.Equals(value.Prefix, "/range", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(value.Prefix, "/range", StringComparison.CurrentCultureIgnoreCase))
                     value.ActionType = ActionType.Ranged;
             }
 
@@ -147,7 +147,7 @@ namespace ZeroLimits.XITool.Classes
             // Fetches the ability from xml.
             var element = XDoc.Elements(pname).Attributes()
                 // enl check is for ability item names
-                .Where(x => x.Name == "english")
+                .Where(x => x.Name == "english" || x.Name == "japanese")
                 // Case insensitive match for the name. 
                 .Where(x => x.Value.Equals(aname, StringComparison.CurrentCultureIgnoreCase))
                 .Select(x => x.Parent);

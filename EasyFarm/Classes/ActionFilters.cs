@@ -99,13 +99,13 @@ namespace ZeroLimits.FarmingTool
                 if (!Status.Equals(Status.Fighting)) return false;
 
                 // The target's health is greater than the upper threshold, return false. 
-                if (u.HPPCurrent > x.UpperHealth) return false;
+                if (u.HPPCurrent >= x.UpperHealth) return false;
 
                 // Target's health is less than the lower threshold, return false. 
-                if (u.HPPCurrent < x.LowerHealth) return false;
+                if (u.HPPCurrent <= x.LowerHealth) return false;
 
                 // Do not meet distance requirements. 
-                if (u.Distance > x.Distance) return false;
+                if (u.Distance >= x.Distance) return false;
 
                 return true;
             });
