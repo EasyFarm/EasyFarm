@@ -68,12 +68,13 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
+            if (!AttackContainer.FightStarted) return false;
+
             // target null or dead. 
-            if (Target == null || Target.IsDead || Target.ID == 0) return false;
+            if (Target == null || Target.IsDead || Target.ID == 0) return false;            
 
-            return AttackContainer.FightStarted;
-
-            // To support mages, no longer need to be engaged to use battle moves.
+            // Engage is enabled and we are not engaged. We cannot proceed. 
+            return Config.Instance.IsEngageEnabled && !FFACE.Player.Status.Equals(Status.Fighting);
         }
 
         public override void EnterComponent()
