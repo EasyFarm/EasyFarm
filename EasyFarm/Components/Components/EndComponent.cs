@@ -83,8 +83,13 @@ namespace EasyFarm.Components
             // Execute moves. 
             Executor.ExecuteBuffs(Buffs.Union(Others));
 
-            // Get the next target by distance to the player. 
-            var target = Units.GetTarget(UnitFilters.MobFilter(FFACE), x => x.Distance);
+            // Get mobs sorted first by party claim, then aggro 
+            // and finally distance. 
+            var target = Units.GetUnits(UnitFilters.MobFilter(FFACE))
+                .OrderBy(x => x.PartyClaim)
+                .ThenBy(x => x.HasAggroed)
+                .ThenBy(x => x.Distance)
+                .FirstOrDefault();
 
             // Set our new target at the end so that we don't accidentaly cast on a 
             // new target. 
