@@ -28,6 +28,7 @@ using ZeroLimits.FarmingTool;
 using ZeroLimits.XITool;
 using System.Threading.Tasks;
 using ZeroLimits.XITool.Classes;
+using EasyFarm.Classes;
 
 namespace EasyFarm.Debugging
 {
@@ -257,7 +258,7 @@ namespace EasyFarm.Debugging
 
                 if (ability.IsValidName)
                 {
-                    bool valid = new AbilityExecutor(_fface).IsActionValid(ability);
+                    bool valid = Helpers.IsActionValid(_fface, ability);
                     success = _executor.UseAbility(ability);
                 }
 

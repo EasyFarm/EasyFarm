@@ -184,7 +184,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\BattleAbility.cs" />
+    <Compile Include="Classes\Caster.cs" />
     <Compile Include="Classes\Executor.cs" />
+    <Compile Include="Classes\Extensions.cs" />
+    <Compile Include="Classes\Helpers.cs" />
+    <Compile Include="Classes\ProhibitEffects.cs" />
+    <Compile Include="Collections\FixedSortedList.cs" />
+    <Compile Include="Collections\LimitedQueue.cs" />
+    <Compile Include="Collections\ThresholdQueue.cs" />
+    <Compile Include="Collections\TimeSortedList.cs" />
     <Compile Include="Components\Containers\SequenceContainer.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Monitors\BaseMonitor.cs" />
@@ -305,7 +313,6 @@
     <Compile Include="XITools\Classes\CombatService.cs" />
     <Compile Include="XITools\Classes\Constants.cs" />
     <Compile Include="XITools\Classes\MovingUnit.cs" />
-    <Compile Include="XITools\Classes\Queues.cs" />
     <Compile Include="XITools\Classes\RestingService.cs" />
     <Compile Include="XITools\Classes\Serialization.cs" />
     <Compile Include="XITools\Classes\Unit.cs" />
@@ -444,6 +451,27 @@
     <Content Include="FFACETools.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="resources\abils.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\areas.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\items_armor.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\items_general.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\items_weapons.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\spells.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\status.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

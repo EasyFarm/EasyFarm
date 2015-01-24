@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using EasyFarm.Classes;
 using ZeroLimits.XITool.Classes;
 using ZeroLimits.XITool.Enums;
 
@@ -33,9 +34,9 @@ namespace EasyFarm.Classes
 {
     public class Executor
     {
-        private static MovingUnit Player;
+        private readonly FFACE FFACE;
 
-        private FFACE FFACE;
+        private readonly Caster Caster;
 
         /// <summary>
         /// Must be set by caller. 
@@ -45,7 +46,7 @@ namespace EasyFarm.Classes
         public Executor(FFACE fface)
         {
             this.FFACE = fface;
-            Player = Player ?? new MovingUnit(fface.Player.ID);
+            this.Caster = new Caster(fface);
         }
 
         /// <summary>
@@ -56,17 +57,8 @@ namespace EasyFarm.Classes
         {
             foreach (var action in actions.ToList())
             {
-                // Stop bot from running. 
-                while (Player.IsMoving)
-                {
-                    FFACE.Navigator.Reset();
-                }
-
-                // Sleep for the server latency. 
-                Thread.Sleep(Config.Instance.CastLatency);
-
-                // Fire the spell off. 
-                FFACE.Windower.SendString(action.Ability.ToString());
+                // Cast the spell. 
+                Caster.CastSpell(action.Ability);
 
                 // Sleep until a spell is recastable. 
                 Thread.Sleep(Config.Instance.GlobalCooldown);
@@ -104,22 +96,115 @@ namespace EasyFarm.Classes
                     FFACE.Windower.SendString("/ta <t>");
                 }
 
-                // Stop bot from running. 
-                while (Player.IsMoving)
+                if (action.Ability.ActionType == ActionType.Spell)
                 {
-                    FFACE.Navigator.Reset();
+                    Caster.CastSpell(action.Ability);
+                    Thread.Sleep(Config.Instance.GlobalCooldown);
+                }
+                else
+                { 
+                    Caster.CastAbility(action.Ability);
+                }                    
+            }
+        }        
+
+        /// <summary>
+        /// Executes one ability. 
+        /// </summary>
+        /// <param name="action"></param>
+        public void ExecuteAction(BattleAbility action)
+        {
+            ExecuteActions(new List<BattleAbility>() { action });
+        }
+
+        /// <summary>
+        /// Executes one buff. 
+        /// </summary>
+        /// <param name="action"></param>
+        public void ExecuteBuff(BattleAbility action)
+        {
+            ExecuteBuffs(new List<BattleAbility>() { action });
+        }
+
+        /// <summary>
+        /// Ensures the spells in the list are cast. 
+        /// </summary>
+        /// <param name="actions"></param>
+        public void EnsureSpellsCast(IEnumerable<Ability> actions, int recastAttempts = 3, double recastDelay = 2)
+        {
+            // Contains the moves for casting. DateTime field prevents 
+            var castable = new Dictionary<Ability, DateTime>();
+
+            // contains the list of moves to update in castables.
+            Dictionary<Ability, DateTime> updates = new Dictionary<Ability, DateTime>();
+
+            // contains the list of moves that have been completed and will be deleted
+            List<Ability> discards = new List<Ability>();
+
+            int recastCount = 0;
+
+            // Add all starting moves to the castable dictionary. 
+            foreach (var action in actions)
+            {
+                if (!castable.ContainsKey(action)) castable.Add(action, DateTime.Now);
+            }
+
+            // Loop until all abilities have been casted. 
+            while (castable.Count > 0 && recastCount++ < recastAttempts)
+            {
+                // Loop through all remaining abilities. 
+                foreach (var action in castable.Keys)
+                {
+                    // If we don't meet the mp/tp/recast requirements don't process the action. 
+                    // If we did we'd be adding unneccessary wait time.
+                    if (!Helpers.IsActionValid(FFACE, action)) continue;
+
+                    // Continue looping if we can't cast the spell. 
+                    if (DateTime.Now <= castable[action]) continue;
+
+                    var success = false;
+
+                    // Cast spells and abilities and return their success. 
+                    if (action.ActionType == ActionType.Spell)
+                    {
+                        success = this.Caster.CastSpell(action);
+                    }
+                    else
+                    {
+                        FFACE.Windower.SendString(action.ToString());
+                        success = true;
+                    }
+
+                    //  5 seconds wait after cast but skip the wait on the last action. 
+                    if (castable.Count > 1)
+                    {
+                        Thread.Sleep(Config.Instance.GlobalCooldown);
+                    }
+
+                    // On failure add action to updates for recasting.  
+                    if (!success)
+                    {
+                        var waitPeriod = DateTime.Now.AddSeconds(recastDelay);
+                        if (updates.ContainsKey(action)) updates[action] = waitPeriod;
+                        else updates.Add(action, waitPeriod);
+                    }
+
+                    // Delete actions that have succeeded. 
+                    else discards.Add(action);
                 }
 
+                // Remove the key and re-add it to update the recast times. 
+                foreach (var update in updates)
+                {
+                    castable.Remove(update.Key);
+                    castable.Add(update.Key, update.Value);
+                }
 
-                // Sleep for the server latency.                 
-                Thread.Sleep(Config.Instance.CastLatency);
-
-                // Fire the spell off. 
-                FFACE.Windower.SendString(action.Ability.ToString());
-
-                // Sleep until a spell is recastable; no sleep for abilities. 
-                if (!action.Ability.ActionType.Equals(ActionType.Ability))
-                    Thread.Sleep(Config.Instance.GlobalCooldown);
+                // Remove the key so we can't cast that spell again. 
+                foreach (var discard in discards)
+                {
+                    castable.Remove(discard);
+                }
             }
         }
     }

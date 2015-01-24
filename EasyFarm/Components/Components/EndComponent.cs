@@ -83,13 +83,14 @@ namespace EasyFarm.Components
             // Execute moves. 
             Executor.ExecuteBuffs(Buffs.Union(Others));
 
-            // Get mobs sorted first by party claim, then aggro 
-            // and finally distance. 
-            var target = Units.GetUnits(UnitFilters.MobFilter(FFACE))
-                .OrderBy(x => x.PartyClaim)
-                .ThenBy(x => x.HasAggroed)
+            // First get the first mob by distance. 
+            var mobs = Units.GetUnits(UnitFilters.MobFilter(FFACE))
+                .OrderByDescending(x => x.PartyClaim)
+                .ThenByDescending(x => x.HasAggroed)
                 .ThenBy(x => x.Distance)
-                .FirstOrDefault();
+                .ToList();
+
+            var target = mobs.FirstOrDefault();
 
             // Set our new target at the end so that we don't accidentaly cast on a 
             // new target. 

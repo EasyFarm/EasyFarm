@@ -45,7 +45,7 @@ namespace ZeroLimits.FarmingTool
         /// <returns></returns>
         public static bool AbilityFilter(FFACE fface, Ability x)
         {
-            return new AbilityExecutor(fface).IsActionValid(x);
+            return Helpers.IsActionValid(fface, x);
         }
 
         /// <summary>

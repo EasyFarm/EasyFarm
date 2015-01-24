@@ -146,10 +146,8 @@ namespace EasyFarm.Classes
 
         public bool IsCastable(FFACE fface)
         {
-            var executor = new AbilityExecutor(fface);
-
             // Check if the ability is valid. 
-            return executor.IsActionValid(this.Ability);
+            return Helpers.IsActionValid(fface, this.Ability);
         }
 
         public bool IsBuff()

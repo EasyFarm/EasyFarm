@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes;
 using EasyFarm.UserSettings;
 using FFACETools;
 using System;
@@ -36,12 +37,12 @@ namespace EasyFarm.Components
     {
         public FFACE FFACE { get; set; }
 
-        public AbilityExecutor Executor { get; set; }
+        public Caster Caster { get; set; }
 
         public WeaponSkillComponent(FFACE fface)
         {
             this.FFACE = fface;
-            this.Executor = new AbilityExecutor(fface);
+            this.Caster = new Caster(fface);
         }
 
         public Unit Target
@@ -70,17 +71,8 @@ namespace EasyFarm.Components
                 // Weaponskill
                 if (ShouldWeaponSkill)
                 {
-                    // Not sure if weapon skills or job abilities endure the same penalties that 
-                    // spell do in regards to wait times. So I'm using zero's here. 
-                    AbilityExecutor.CastLatency = 0;
-                    AbilityExecutor.GlobalCooldown = 0;
-
                     // Cast the weaponskill. 
-                    this.Executor.UseAbility(Config.Instance.WeaponSkill.Ability);
-
-                    // Rest casting parameters. 
-                    AbilityExecutor.CastLatency = Config.Instance.CastLatency;
-                    AbilityExecutor.GlobalCooldown = Config.Instance.GlobalCooldown;
+                    this.Caster.CastAbility(Config.Instance.WeaponSkill.Ability);
                 }
             }
         }

@@ -17,12 +17,9 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Collections;
 using FFACETools;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace ZeroLimits.XITool.Classes
@@ -42,8 +39,8 @@ namespace ZeroLimits.XITool.Classes
 
         private const int HISTORY_POSITION_LIMIT = 10;
 
-        private History _positionHistory =
-            new History(HISTORY_POSITION_LIMIT, .75);
+        private ThresholdQueue<FFACE.Position> _positionHistory =
+            new ThresholdQueue<FFACE.Position>(HISTORY_POSITION_LIMIT, .75);
 
         public bool IsVelocityEnabled { get; set; }
 
@@ -51,7 +48,7 @@ namespace ZeroLimits.XITool.Classes
             : base(id)
         {
             this._mutex = new object();
-            this._timer = new Timer(); // Default interval is 1 second. 
+            this._timer = new Timer();
             this._timer.AutoReset = true;
             this._timer.Interval = 30;
             this._timer.Elapsed += TimerTick;
@@ -70,7 +67,7 @@ namespace ZeroLimits.XITool.Classes
         {
             lock (_mutex)
             {
-                _positionHistory.Add(this.Position);
+                _positionHistory.AddItem(this.Position);
             }
         }
 
@@ -78,7 +75,7 @@ namespace ZeroLimits.XITool.Classes
         {
             get 
             {
-                return _positionHistory.Evaluate();
+                return _positionHistory.IsThresholdMet(x => GetIsStuck(x));
             }            
         }
 
@@ -103,10 +100,18 @@ namespace ZeroLimits.XITool.Classes
                 };
 
                 // Return true if we've moved any direction. 
-                return displacement.X != 0 &&
-                    displacement.Y != 0 &&
+                return displacement.X != 0 ||
+                    displacement.Y != 0 ||
                     displacement.Z != 0;
             }
+        }
+
+        public bool GetIsStuck(FFACE.Position velocity)
+        {
+            if (velocity.X == 0 && velocity.Z == 0) return false;
+            if (velocity.X < .125 && velocity.Z < .250) return true;
+            if (velocity.X < .250 && velocity.Z < .125) return true;
+            return false;
         }
     }
 }

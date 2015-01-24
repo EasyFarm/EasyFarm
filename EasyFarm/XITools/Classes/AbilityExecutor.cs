@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -30,17 +31,13 @@ namespace ZeroLimits.XITool.Classes
     /// <summary>
     /// Hold methods that are used for casting spells / abilities. 
     /// Spell / ability validation, recast time checks and casting methods implemented here.
+    /// Note: this class will either be refactored out or removed. 
     /// </summary>
     public class AbilityExecutor
     {
         private FFACE m_fface;
 
         private short m_priorPercentEx;
-
-        private CombatService m_combatService;
-
-        private ActionBlocked m_actionBlocked;
-
 
         public static int CastLatency { get; set; }
 
@@ -59,30 +56,15 @@ namespace ZeroLimits.XITool.Classes
         public AbilityExecutor(FFACE fface)
         {
             this.m_fface = fface;
-            this.m_combatService = new CombatService(fface);
-            this.m_actionBlocked = new ActionBlocked(fface);
 
             this.RecastAttempts = EnsureCastConstants.SPELL_RECAST_ATTEMPTS;
             this.RecastDelay = EnsureCastConstants.SPELL_RECAST_DELAY;
         }
 
         /// <summary>
-        /// Tries to cast spells but does not ensure the succeed. 
+        /// Uses every spell in the list once. 
         /// </summary>
-        /// <param name="target">
-        /// The Target use the spells on. 
-        /// </param>
-        /// <param name="actions">
-        /// The list of spells to use. 
-        /// </param>
-        /// <param name="spellCastLatency">
-        /// Time to wait for spells to start casting. The more laggy the server
-        /// the higher this value should be. 
-        /// </param>
-        /// <param name="globalSpellCoolDown">
-        /// The time to wait after each spell is casted before another spell may 
-        /// be casted.
-        /// </param>
+        /// <param name="actions"></param>
         public void ExecuteActions(IList<Ability> actions)
         {
             // Try to cast all spells / abilities. 
@@ -97,25 +79,9 @@ namespace ZeroLimits.XITool.Classes
         }
 
         /// <summary>
-        /// Ensures the casting of all spells. 
+        /// Ensures the spells in the list are cast. 
         /// </summary>
-        /// <param name="target">
-        /// The target we are using the moves on. 
-        /// </param>
-        /// <param name="actions">
-        /// List of moves to execute
-        /// </param>
-        /// <param name="spellCastLatency">
-        /// Time to wait for spells to start casting. The more laggy the server
-        /// the higher this value should be. 
-        /// </param>
-        /// <param name="globalSpellCoolDown">
-        /// The time to wait after each spell is casted before another spell may 
-        /// be casted.
-        /// </param>
-        /// <param name="spellRecastDelay">
-        /// How long to wait before casting a spell that has failed to cast. 
-        /// </param>
+        /// <param name="actions"></param>
         public void EnsureSpellsCast(List<Ability> actions)
         {
             // Contains the moves for casting. DateTime field prevents 
@@ -143,7 +109,7 @@ namespace ZeroLimits.XITool.Classes
                 {
                     // If we don't meet the mp/tp/recast requirements don't process the action. 
                     // If we did we'd be adding unneccessary wait time.
-                    if (!this.IsActionValid(action)) continue;
+                    if (!Helpers.IsActionValid(m_fface, action)) continue;
 
                     // Continue looping if we can't cast the spell. 
                     if (DateTime.Now <= castable[action]) continue;
@@ -186,27 +152,19 @@ namespace ZeroLimits.XITool.Classes
             }
         }
 
+
         /// <summary>
-        /// Uses an ability and returns whether it suceeded or not. 
+        /// Uses a single move and returns whether it
+        /// succeeded or not. 
         /// </summary>
-        /// <param name="ability">
-        /// The move to use. 
-        /// </param>
-        /// <param name="spellCastLatency">
-        /// Time to wait for spells to start casting. The more laggy the server
-        /// the higher this value should be. 
-        /// </param>
-        /// <param name="globalSpellCoolDown">
-        /// The time to wait after each spell is casted before another spell may 
-        /// be casted.
-        /// </param>
-        /// <returns>True on success</returns>
+        /// <param name="ability"></param>
+        /// <returns></returns>
         public bool UseAbility(Ability ability)
         {
             bool success = false;
 
             // If the ability can't be used
-            if (!IsActionValid(ability)) return false;
+            if (!Helpers.IsActionValid(m_fface, ability)) return false;
 
             // Stop the bot from running so that we can cast. 
             m_fface.Navigator.Reset();
@@ -252,7 +210,7 @@ namespace ZeroLimits.XITool.Classes
             var success = false;
 
             // If the ability can't be used
-            if (!IsActionValid(spell)) return false;
+            if (!Helpers.IsActionValid(m_fface, spell)) return false;
 
             // Stop the bot from running so that we can cast. 
             m_fface.Navigator.Reset();
@@ -291,86 +249,6 @@ namespace ZeroLimits.XITool.Classes
             m_priorPercentEx = -1;
 
             return success;
-        }
-
-        /// <summary>
-        /// Checks to  see if we can cast/use 
-        /// a job ability or spell.
-        /// </summary>
-        /// <param name="ability"></param>
-        /// <returns></returns>
-        public bool IsRecastable(Ability ability)
-        {
-            int recast = -1;
-
-            // If a spell get spell recast
-            if (ability.ActionType == ActionType.Spell) recast =
-                m_fface.Timer.GetSpellRecast((SpellList)ability.Index);
-
-            // if ability get ability recast. 
-            if (ability.ActionType == ActionType.Ability) recast =
-                m_fface.Timer.GetAbilityRecast((AbilityList)ability.Index);
-
-            //Fix: If the action is a ranged attack, 
-            // it will return something even when it's recastable. 
-            if (ability.ActionType.Equals(ActionType.Ranged))
-            {
-                return true;
-            }
-
-            /*
-             * Fixed bug: recast for weaponskills returns -1 not zero. 
-             * Check for <= to zero instead of strictly == zero. 
-             */
-            return recast <= 0;
-        }
-
-        /// <summary>
-        /// Returns the list of usable abilities
-        /// </summary>
-        /// <param name="Actions"></param>
-        /// <returns></returns>
-        public List<Ability> FilterValidActions(IList<Ability> Actions)
-        {
-            return Actions.Where(x => IsActionValid(x)).ToList();
-        }
-
-        /// <summary>
-        /// Determines whether a spell or ability can be used based on...
-        /// 1) It retrieved a non-null ability/spell from the resource files.
-        /// 2) The ability is recastable.
-        /// 3) The user has the mp or tp for the move.
-        /// 4) We don't have a debuff like amnesia that stops us from using it. 
-        /// </summary>
-        /// <param name="action"></param>
-        /// <returns>True for usable, False for unusable</returns>
-        public bool IsActionValid(Ability action)
-        {
-            // Ability valid check
-            if (!action.IsValidName) return false;
-
-            // Recast Check
-            if (!IsRecastable(action)) return false;
-
-            // MP Check
-            if (action.MPCost > m_fface.Player.MPCurrent) return false;
-
-            // TP Check
-            if (action.TPCost > m_fface.Player.TPCurrent) return false;
-
-            // Determine whether we have an debuff that blocks us from casting spells. 
-            if (action.ActionType.Equals(ActionType.Spell))
-            {
-                if (m_actionBlocked.AreSpellsBlocked) return false;
-            }
-
-            // Determines if we have a debuff that blocks us from casting abilities. 
-            if (action.ActionType.Equals(ActionType.Ability))
-            {
-                if (m_actionBlocked.AreAbilitiesBlocked) return false;
-            }
-
-            return true;
         }
     }
 }
