@@ -43,14 +43,17 @@ namespace EasyFarm.Components
         /// </summary>
         private FFACE m_fface;
 
-        private BackgroundWorker m_worker = new BackgroundWorker();
+
+        private BackgroundWorker m_worker = 
+            new BackgroundWorker();
+
 
         // Constructor.
         public FiniteStateEngine(FFACE fface)
         {
-            m_heartBeat.Interval = 300; // Check State list ten times per second.
+            m_heartBeat.Interval = 30; // Check State list ten times per second.
             m_heartBeat.Tick += Heartbeat_Tick;
-            m_worker.DoWork += worker_DoWork;
+            m_worker.DoWork += Work;
             m_worker.WorkerSupportsCancellation = true;
 
             this.m_fface = fface;
@@ -62,10 +65,13 @@ namespace EasyFarm.Components
             AddComponent(new HealingComponent(fface) { Priority = 2 });
             AddComponent(new EndComponent(fface) { Priority = 3 });
 
-            foreach (var b in this.Components) b.Enabled = true;
+            foreach (var b in this.Components)
+            {
+                b.Enabled = true;
+            }
         }
 
-        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        private void Work(object sender, DoWorkEventArgs e)
         {
             lock (Components)
             {

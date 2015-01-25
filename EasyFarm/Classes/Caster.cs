@@ -28,14 +28,18 @@ namespace EasyFarm.Classes
     public class Caster
     {
         // Get player object. 
-        private readonly MovingUnit Player;
+        private static MovingUnit Player;
         private readonly FFACE FFACE;
 
         public Caster(FFACE fface)
         {
             this.FFACE = fface;
             MovingUnit.Session = this.FFACE;
-            this.Player = new MovingUnit(FFACE.Player.ID);
+            
+            if (Player == null)
+            {
+                Player = new MovingUnit(FFACE.Player.ID);
+            }
         }
 
         /// <summary>

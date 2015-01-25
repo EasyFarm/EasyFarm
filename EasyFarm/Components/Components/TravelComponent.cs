@@ -96,25 +96,9 @@ namespace EasyFarm.Components
 
             // If we are more than 10 yalms away from the nearest point...
             if (FFACE.Navigator.DistanceTo(Config.Instance.Waypoints[position].Position) > 10)
-            {
                 SetPositionToNearestPoint();
-            }
 
-            bool isCanceled = false;
-            var KeepFromRestingTask = new Task(() =>
-            {
-                while (!isCanceled)
-                {
-                    if (FFACE.Player.Status.Equals(Status.Healing))
-                    {
-                        Resting.EndResting();
-                    }
-                }
-            });
-
-            KeepFromRestingTask.Start();
             FFACE.Navigator.Goto(Config.Instance.Waypoints[position].Position, false);
-            isCanceled = true;
             position++;
         }
 

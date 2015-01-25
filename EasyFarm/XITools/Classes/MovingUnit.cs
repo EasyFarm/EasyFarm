@@ -19,12 +19,13 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Collections;
 using FFACETools;
+using System;
 using System.Linq;
 using System.Timers;
 
 namespace ZeroLimits.XITool.Classes
 {
-    public class MovingUnit : Unit
+    public class MovingUnit : Unit, IDisposable
     {
         /// <summary>
         /// Timer that ticks to calculate the current displacement, velocity and 
@@ -73,10 +74,10 @@ namespace ZeroLimits.XITool.Classes
 
         public bool IsStuck
         {
-            get 
+            get
             {
                 return _positionHistory.IsThresholdMet(x => GetIsStuck(x));
-            }            
+            }
         }
 
         public bool IsMoving
@@ -112,6 +113,11 @@ namespace ZeroLimits.XITool.Classes
             if (velocity.X < .125 && velocity.Z < .250) return true;
             if (velocity.X < .250 && velocity.Z < .125) return true;
             return false;
+        }
+
+        public void Dispose()
+        {
+            this._timer.Dispose();
         }
     }
 }
