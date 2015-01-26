@@ -35,7 +35,7 @@ namespace EasyFarm.Classes
         {
             this.FFACE = fface;
             MovingUnit.Session = this.FFACE;
-            
+
             if (Player == null)
             {
                 Player = new MovingUnit(FFACE.Player.ID);
@@ -55,10 +55,16 @@ namespace EasyFarm.Classes
                 return false;
 
             // Check if recast is available. 
-            if (!Helpers.IsRecastable(FFACE, ability)) return false;
+            if (!Helpers.IsRecastable(FFACE, ability))
+            {
+                return false;
+            }
 
             // Do we meet the mp requirements. 
-            if (!Helpers.IsActionValid(FFACE, ability)) return false;
+            if (!Helpers.IsActionValid(FFACE, ability))
+            {
+                return false;
+            }
 
             // Call for player to stop. 
             while (Player.IsMoving)
@@ -66,19 +72,41 @@ namespace EasyFarm.Classes
                 FFACE.Navigator.Reset();
             }
 
-            // Ensure command has been successfully sent. 
-            int count = 0;            
-            var previous = FFACE.Player.CastPercentEx;
-            while (previous == FFACE.Player.CastPercentEx && count++ < 5 )
-            {
-                // Send the command to the game. 
-                FFACE.Windower.SendString(ability.ToString());
+            // Make sure the cast starts before monitoring
+            // its progrss. 
+            EnsureCast(ability.ToString());
 
-                // Chainspelled spells will always be cast without fail. 
-                if (FFACE.Player.StatusEffects.Contains(StatusEffect.Chainspell))
-                    return true;
+            // Return whether we've casted successfully or 
+            // not. 
+            return MonitorCast();
+        }
+
+        /// <summary>
+        /// Ensures the command is sent to the game and 
+        /// executed. 
+        /// </summary>
+        /// <param name="ability"></param>
+        private void EnsureCast(String command)
+        {
+            // Chainspelled spells will always be cast without fail so 
+            // cast it and return immediately. 
+            if (FFACE.Player.StatusEffects.Contains(StatusEffect.Chainspell))
+            {
+                FFACE.Windower.SendString(command);
+                return;
             }
 
+            // Ensure command has been successfully sent. 
+            int count = 0;
+            var previous = FFACE.Player.CastPercentEx;
+            while (previous == FFACE.Player.CastPercentEx && count++ < 5)
+            {
+                FFACE.Windower.SendString(command);
+            }
+        }
+
+        private bool MonitorCast()
+        {
             // Monitor the cast and break when either the player 
             // moved or casting has been finished. 
             var position = FFACE.Player.Position;
@@ -104,15 +132,30 @@ namespace EasyFarm.Classes
         public bool CastAbility(Ability ability)
         {
             // Check if recast is available. 
-            if (!Helpers.IsRecastable(FFACE, ability)) return false;
+            if (!Helpers.IsRecastable(FFACE, ability))
+            {
+                return false;
+            }
 
             // Do we meet the mp requirements. 
-            if (!Helpers.IsActionValid(FFACE, ability)) return false;
+            if (!Helpers.IsActionValid(FFACE, ability))
+            {
+                return false;
+            }
 
             // Send the command to the game. 
             FFACE.Windower.SendString(ability.ToString());
-
             return true;
+        }
+
+        public void CastAbility(BattleAbility ability)
+        {
+            this.CastAbility(ability.Ability);
+        }
+       
+        public bool CastSpell(BattleAbility ability)
+        {
+            return this.CastSpell(ability.Ability);
         }
     }
 }

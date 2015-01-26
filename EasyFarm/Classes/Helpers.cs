@@ -21,6 +21,7 @@ using ZeroLimits.XITool.Classes;
 using ZeroLimits.XITool.Enums;
 using System.Linq;
 using System;
+using System.Text.RegularExpressions;
 
 namespace EasyFarm.Classes
 {
@@ -36,11 +37,16 @@ namespace EasyFarm.Classes
         {
             int recast = -1;
 
+            // Strip all characters that are not words of the 
+            // ability's name and convert spaces to underscores. 
+            var name = Regex.Replace(ability.Name, @"([^a-zA-Z ])", "")
+                .Replace(" ", "_");
+
             // If a spell get spell recast
             if (ability.ActionType == ActionType.Spell)
             {
                 SpellList value = default(SpellList);
-                Enum.TryParse<SpellList>(ability.Name.Replace(" ", "_"), out value);
+                Enum.TryParse<SpellList>(name, out value);
                 recast = fface.Timer.GetSpellRecast(value);
             }
 
@@ -48,7 +54,7 @@ namespace EasyFarm.Classes
             if (ability.ActionType == ActionType.Ability)
             {
                 AbilityList value = default(AbilityList);
-                Enum.TryParse<AbilityList>(ability.Name.Replace(" ", "_"), out value);
+                Enum.TryParse<AbilityList>(name, out value);
                 recast = fface.Timer.GetAbilityRecast(value);
             }
 
