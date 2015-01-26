@@ -37,25 +37,18 @@ namespace EasyFarm.Classes
         {
             int recast = -1;
 
-            // Strip all characters that are not words of the 
-            // ability's name and convert spaces to underscores. 
-            var name = Regex.Replace(ability.Name, @"([^a-zA-Z ])", "")
-                .Replace(" ", "_");
-
             // If a spell get spell recast
             if (ability.ActionType == ActionType.Spell)
             {
-                SpellList value = default(SpellList);
-                Enum.TryParse<SpellList>(name, out value);
-                recast = fface.Timer.GetSpellRecast(value);
+                recast = fface.Timer.GetSpellRecast(ToSpellList(ability));
             }
+
 
             // if ability get ability recast. 
             if (ability.ActionType == ActionType.Ability)
             {
-                AbilityList value = default(AbilityList);
-                Enum.TryParse<AbilityList>(name, out value);
-                recast = fface.Timer.GetAbilityRecast(value);
+                recast = fface.Timer.GetAbilityRecast(
+                    ToAbilityList(ability));
             }
 
             //Fix: If the action is a ranged attack, 
@@ -70,6 +63,46 @@ namespace EasyFarm.Classes
              * Check for <= to zero instead of strictly == zero. 
              */
             return recast <= 0;
+        }
+
+        /// <summary>
+        /// Adjusts the name of abilities to fit the 
+        /// ablity and spell list enum format. 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static String AdjustName(String name)
+        {
+            // Strip all characters that are not words of the 
+            // ability's name and convert spaces to underscores. 
+            return Regex.Replace(name, @"([^a-zA-Z ])", "")
+                .Replace(" ", "_");
+
+        }
+
+        public static AbilityList ToAbilityList(Ability ability)
+        {
+            var name = AdjustName(ability.Name);
+
+            AbilityList value = default(AbilityList);
+
+            // Fixes for summoner's blood pact recast times. 
+            if (string.Equals(ability.Type.ToLower(), "BloodPactWard".ToLower()))
+                return AbilityList.Blood_Pact_Ward;
+            if (string.Equals(ability.Type.ToLower(), "BloodPactRage".ToLower()))
+                return AbilityList.Blood_Pact_Rage;
+
+            Enum.TryParse<AbilityList>(name, out value);
+
+            return value;
+        }
+
+        public static SpellList ToSpellList(Ability ability)
+        {
+            string name = AdjustName(ability.Name);
+            SpellList value = default(SpellList);
+            Enum.TryParse<SpellList>(name, out value);
+            return value;
         }
 
         /// <summary>
