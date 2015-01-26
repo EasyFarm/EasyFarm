@@ -4,82 +4,78 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="200"
-             d:DesignWidth="400">
+             d:DesignHeight="102"
+             d:DesignWidth="384">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <!-- Controls for resting HP-->
-        <GroupBox Header="HP">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                    
-                <!--Do we want to rest hp?-->
-                <CheckBox Content="Enabled"
-                          VerticalAlignment="Center"
-                          IsChecked="{Binding HPEnabled}" />
-                <!--When should we sit down?-->
-                <Label Grid.Column="1"
-                       Margin="5 10"
-                       Content="Down"
-                       VerticalAlignment="Center" />
-                <Slider Grid.Column="2"
-                        VerticalAlignment="Center"
-                        Maximum="100"
-                        Value="{Binding LowHP}" />
-                <!--When should we stand up?-->
-                <Label Grid.Column="3"
-                       Margin="5 10"
-                       Content="Up"
-                       VerticalAlignment="Center" />
-                <Slider Grid.Column="4"
-                        VerticalAlignment="Center"
-                        Maximum="100"
-                        Value="{Binding HighHP}" />
-            </Grid>
-        </GroupBox>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!--Do we want to rest hp?-->
+            <CheckBox Content="HP"
+                      VerticalAlignment="Center"
+                      IsChecked="{Binding HPEnabled}" />
+            <!--When should we sit down?-->
+            <Label Grid.Column="1"
+                   Margin="5 10"
+                   Content="Down"
+                   VerticalAlignment="Center" />
+            <Slider Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Maximum="100"
+                    Value="{Binding LowHP}" />
+            <!--When should we stand up?-->
+            <Label Grid.Column="3"
+                   Margin="5 10"
+                   Content="Up"
+                   VerticalAlignment="Center" />
+            <Slider Grid.Column="4"
+                    VerticalAlignment="Center"
+                    Maximum="100"
+                    Value="{Binding HighHP}" />
+        </Grid>
         <!--Controls for resting mp-->
-        <GroupBox Header="MP"
-                  Grid.Row="1">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <!--Do we want to rest mp?-->
-                <CheckBox Content="Enabled"
-                          VerticalAlignment="Center"
-                          IsChecked="{Binding MPEnabled}" />
-                <!--When should we sit down?-->
-                <Label Grid.Column="1"
-                       Margin="5 10"
-                       Content="Down"
-                       VerticalAlignment="Center" />
-                <Slider Grid.Column="2"
-                        VerticalAlignment="Center"
-                        Maximum="100"
-                        Value="{Binding LowMP}" />
-                <!--When should we stand up?-->
-                <Label Grid.Column="3"
-                       Margin="5 10"
-                       Content="Up"
-                       VerticalAlignment="Center" />
-                <Slider Grid.Column="4"
-                        VerticalAlignment="Center"
-                        Maximum="100"
-                        Value="{Binding HighMP}" />
-            </Grid>
-        </GroupBox>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!--Do we want to rest mp?-->
+            <CheckBox Grid.Column="0"
+                      Content="MP"
+                      VerticalAlignment="Center"
+                      IsChecked="{Binding MPEnabled}" />
+            <!--When should we sit down?-->
+            <Label Grid.Column="1"
+                   Margin="5 10"
+                   Content="Down"
+                   VerticalAlignment="Center" />
+            <Slider Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Maximum="100"
+                    Value="{Binding LowMP}" />
+            <!--When should we stand up?-->
+            <Label Grid.Column="3"
+                   Margin="5 10"
+                   Content="Up"
+                   VerticalAlignment="Center" />
+            <Slider Grid.Column="4"
+                    VerticalAlignment="Center"
+                    Maximum="100"
+                    Value="{Binding HighMP}" />
+        </Grid>
     </Grid>
 </UserControl>

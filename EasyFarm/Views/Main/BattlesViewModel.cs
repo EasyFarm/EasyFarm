@@ -28,7 +28,7 @@ using System.Linq;
 using EasyFarm.Classes;
 
 namespace EasyFarm.ViewModels
-{ 
+{
     [ViewModelAttribute("Battles")]
     public class BattlesViewModel : ViewModelBase
     {
@@ -36,7 +36,7 @@ namespace EasyFarm.ViewModels
 
         public BattlesViewModel()
         {
-            AddActionCommand = new DelegateCommand<Object>(AddAction);
+            AddActionCommand = new DelegateCommand(AddAction);
             DeleteActionCommand = new DelegateCommand(DeleteAction);
             ClearActionsCommand = new DelegateCommand(ClearActions);
             SetCommand = new DelegateCommand(SetAbility);
@@ -44,14 +44,30 @@ namespace EasyFarm.ViewModels
 
         public int SelectedIndex { get; set; }
 
+        /// <summary>
+        /// The selected in the currently selected list. 
+        /// </summary>
+        public BattleAbility SelectedAbility
+        {
+            get
+            {
+                if (SelectedIndex < 0)
+                {
+                    return new BattleAbility();
+                }
+                else
+                {
+                    return this.SelectedList[SelectedIndex];
+                }
+            }
+        }
+
         private void SetAbility()
         {
-            if (SelectedIndex < 0) return;
-
-            var selected = this.SelectedList.ElementAt(SelectedIndex);
-
-            if (selected.SetAbility())
-                ViewModelBase.InformUser(selected.NameX + " set successfully. ");
+            if (SelectedAbility.SetAbility())
+            {
+                ViewModelBase.InformUser(SelectedAbility.NameX + " set successfully. ");
+            }
         }
 
         /// <summary>
@@ -143,20 +159,6 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Private backing for the moves name.
-        /// </summary>
-        private String _actionName;
-
-        /// <summary>
-        /// The string to be turned into a battle move.
-        /// </summary>
-        public String ActionName
-        {
-            get { return _actionName; }
-            set { SetProperty(ref _actionName, value); }
-        }
-
-        /// <summary>
         /// Action to add an new move to the currently selected list.
         /// </summary>
         public ICommand AddActionCommand { get; set; }
@@ -190,14 +192,17 @@ namespace EasyFarm.ViewModels
                 {
                     return StartList;
                 }
+
                 if (BattleSelected)
                 {
                     return BattleList;
                 }
+
                 if (EndSelected)
                 {
                     return EndList;
                 }
+
                 return PullSelected ? PullList : new ObservableCollection<BattleAbility>();
             }
         }
@@ -206,7 +211,7 @@ namespace EasyFarm.ViewModels
         /// Add an move to the currently selected list.
         /// </summary>
         /// <param name="obj"></param>
-        private void AddAction(object obj)
+        private void AddAction()
         {
             this.SelectedList.Add(new BattleAbility());
         }

@@ -6,14 +6,14 @@
              mc:Ignorable="d"
              d:DesignHeight="94"
              d:DesignWidth="443">
-    <Grid>
-        <Expander Header="Battle Settings">
-            <UniformGrid>
-                <CheckBox Content="Engage mob during battle"
-                          IsChecked="{Binding ShouldEngage}" />
-                <CheckBox Content="Approach mob after pull"
-                          IsChecked="{Binding ShouldApproach}" />
-            </UniformGrid>
-        </Expander>
-    </Grid>
+    <Expander Header="Battle Settings">
+        <UniformGrid>
+            <CheckBox Content="Engage"
+                      ToolTip="Sets whether the player should engage the target."
+                      IsChecked="{Binding ShouldEngage}" />
+            <CheckBox Content="Approach"
+                      ToolTip="Sets whether the player should approach the target."
+                      IsChecked="{Binding ShouldApproach}" />
+        </UniformGrid>
+    </Expander>
 </UserControl>
