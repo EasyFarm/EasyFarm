@@ -53,7 +53,7 @@ namespace EasyFarm.Debugging
             this.Show();
         }
 
-        public ICollection<Unit> Units
+        public IEnumerable<Unit> Units
         {
             get { return _units.UnitArray; }
         }

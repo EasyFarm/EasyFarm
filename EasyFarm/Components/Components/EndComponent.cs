@@ -42,6 +42,8 @@ namespace EasyFarm.Components
 
         public UnitService Units { get; set; }
 
+        private DateTime lastCheckedForMob = DateTime.Now;
+
         public Unit Target
         {
             get { return AttackContainer.TargetUnit; }
@@ -83,18 +85,19 @@ namespace EasyFarm.Components
             // Execute moves. 
             Executor.ExecuteBuffs(Buffs.Union(Others));
 
-            // First get the first mob by distance. 
-            var mobs = Units.GetUnits(UnitFilters.MobFilter(FFACE))
-                .OrderByDescending(x => x.PartyClaim)
-                .ThenByDescending(x => x.HasAggroed)
-                .ThenBy(x => x.Distance)
-                .ToList();
+            if (lastCheckedForMob.AddSeconds(3) < DateTime.Now)
+            {
+                // First get the first mob by distance. 
+                var mobs = Units.MOBArray.Where(x => Units.IsValid(x))
+                    .OrderByDescending(x => x.PartyClaim)
+                    .ThenByDescending(x => x.HasAggroed)
+                    .ThenBy(x => x.Distance)
+                    .ToList();
 
-            var target = mobs.FirstOrDefault();
-
-            // Set our new target at the end so that we don't accidentaly cast on a 
-            // new target. 
-            AttackContainer.TargetUnit = target;
+                // Set our new target at the end so that we don't accidentaly cast on a 
+                // new target. 
+                AttackContainer.TargetUnit = mobs.FirstOrDefault();
+            }
 
             if (App.Current != null)
             {

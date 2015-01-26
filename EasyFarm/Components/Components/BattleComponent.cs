@@ -40,8 +40,6 @@ namespace EasyFarm.Components
     {
         public FFACE FFACE { get; set; }
 
-        public UnitService Units { get; set; }
-
         public RestingService Resting { get; set; }
 
         public Executor Executor { get; set; }
@@ -58,12 +56,8 @@ namespace EasyFarm.Components
         public BattleComponent(FFACE fface)
         {
             this.FFACE = fface;
-            this.Units = new UnitService(fface);
             this.Resting = new RestingService(fface);
             this.Executor = new Executor(fface);
-
-            // Set default filter to target mobs. 
-            this.Units.UnitFilter = UnitFilters.MobFilter(fface);
         }
 
         public override bool CheckComponent()
@@ -79,8 +73,6 @@ namespace EasyFarm.Components
                 return FFACE.Player.Status.Equals(Status.Fighting);
             // Engage is not checked, so just proceed to battle. 
             else return true;
-            
-                
         }
 
         public override void EnterComponent()

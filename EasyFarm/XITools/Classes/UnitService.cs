@@ -29,6 +29,7 @@ namespace ZeroLimits.XITool.Classes
         #region Members
         private static Unit[] _unitArray;
         private const short UNIT_ARRAY_MAX = Constants.UNIT_ARRAY_MAX;
+        private const short MOB_ARRAY_MAX = Constants.MOB_ARRAY_MAX;
         private static FFACE _fface;
 
         #endregion
@@ -61,7 +62,7 @@ namespace ZeroLimits.XITool.Classes
         {
             get
             {
-                foreach (var monster in FilteredArray)
+                foreach (var monster in MOBArray.Where(x => IsValid(x)))
                 {
                     if (monster.HasAggroed)
                     {
@@ -94,18 +95,18 @@ namespace ZeroLimits.XITool.Classes
         /// <summary>
         /// Returns the list of filter units.
         /// </summary>
-        public ICollection<Unit> FilteredArray
+        public IEnumerable<Unit> FilteredArray
         {
             get
             {
-                return _unitArray.Where(x => IsValid(x)).ToArray();
+                return _unitArray.Where(x => IsValid(x));
             }
         }
 
         /// <summary>
         /// Retrieves the list of UNITs
         /// </summary>
-        public ICollection<Unit> UnitArray
+        public IEnumerable<Unit> UnitArray
         {
             get
             {
@@ -116,22 +117,24 @@ namespace ZeroLimits.XITool.Classes
         /// <summary>
         /// Retrieves the list of MOBs.
         /// </summary>
-        public ICollection<Unit> MOBArray
+        public IEnumerable<Unit> MOBArray
         {
             get 
             {
-                return UnitArray.Where(x => x.NPCType.Equals(NPCType.Mob)).ToArray();
+                return UnitArray.Take(MOB_ARRAY_MAX)
+                    .Where(x => x.NPCType.Equals(NPCType.Mob));
             }
         }
 
         /// <summary>
         /// Retrieves the lsit of PCs.
         /// </summary>
-        public ICollection<Unit> PCArray
+        public IEnumerable<Unit> PCArray
         {
             get 
             {
-                return UnitArray.Where(x => x.NPCType.Equals(NPCType.PC)).ToArray();
+                return UnitArray.Skip(MOB_ARRAY_MAX)
+                    .Where(x => x.NPCType.Equals(NPCType.PC));
             }
         }
 
@@ -153,9 +156,9 @@ namespace ZeroLimits.XITool.Classes
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public ICollection<Unit> GetUnits(Func<Unit, bool> filter)
+        public IEnumerable<Unit> GetUnits(Func<Unit, bool> filter)
         {
-            return UnitArray.Where(filter).ToArray();
+            return UnitArray.Where(filter);
         }
 
         /// <summary>
@@ -165,9 +168,9 @@ namespace ZeroLimits.XITool.Classes
         /// <param name="filter"></param>
         /// <param name="orderby"></param>
         /// <returns></returns>
-        public ICollection<Unit> GetUnits(Func<Unit, bool> filter, Func<Unit, object> orderby)
+        public IEnumerable<Unit> GetUnits(Func<Unit, bool> filter, Func<Unit, object> orderby)
         {
-            return UnitArray.Where(filter).OrderBy(orderby).ToArray();
+            return UnitArray.Where(filter).OrderBy(orderby);
         }
 
         /// <summary>

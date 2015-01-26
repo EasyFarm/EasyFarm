@@ -25,6 +25,7 @@ using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 using ZeroLimits.XITool.Classes;
 using EasyFarm.FarmingTool;
+using System;
 
 namespace EasyFarm.Components
 {
@@ -38,6 +39,8 @@ namespace EasyFarm.Components
 
         public RestingService Resting { get; set; }
 
+        private DateTime LastAggroCheck = DateTime.Now;
+
         public RestComponent(FFACE fface)
         {
             this.FFACE = fface;
@@ -49,7 +52,10 @@ namespace EasyFarm.Components
        
         public override bool CheckComponent()
         {
-            if (Units.HasAggro) return false;
+            if (LastAggroCheck.AddSeconds(3) < DateTime.Now)
+            {
+                if (Units.HasAggro) return false;
+            }
 
             if (Blocking.IsRestingBlocked) return false;
 
