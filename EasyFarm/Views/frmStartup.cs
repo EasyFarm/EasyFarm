@@ -141,7 +141,21 @@ namespace EasyFarm.Views
         /// </summary>
         public FFACE SelectedSession
         {
-            get { return new FFACE(SelectedProcess.Id); }
+            get 
+            {
+                try
+                {
+                    return new FFACE(SelectedProcess.Id); 
+                }
+                catch (DllNotFoundException ex)
+                {
+                    MessageBox.Show(String.Join(Environment.NewLine, 
+                        "FFACE.dll is missing. Please re-run the program with the fface.dll file in EasyFarm's folder. ", 
+                        "Error: " + ex.Message));
+                    System.Environment.Exit(0);
+                    return null;
+                }                
+            }
         }
     }
 }
