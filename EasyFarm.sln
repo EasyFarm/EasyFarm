@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarm", "EasyFarm\EasyFa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarmTests", "EasyFarmTests\EasyFarmTests.csproj", "{A55B26A6-570A-49D8-B524-51B075D126ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XML Filter", "XML Filter\XML Filter.csproj", "{387686E4-6CFA-4A2B-8BCD-77603CDAF153}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,16 +39,6 @@ Global
 		{A55B26A6-570A-49D8-B524-51B075D126ED}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A55B26A6-570A-49D8-B524-51B075D126ED}.Release|x86.ActiveCfg = Release|x86
 		{A55B26A6-570A-49D8-B524-51B075D126ED}.Release|x86.Build.0 = Release|x86
-		{387686E4-6CFA-4A2B-8BCD-77603CDAF153}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{387686E4-6CFA-4A2B-8BCD-77603CDAF153}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{387686E4-6CFA-4A2B-8BCD-77603CDAF153}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{387686E4-6CFA-4A2B-8BCD-77603CDAF153}.Debug|x86.ActiveCfg = Debug|x86
-		{387686E4-6CFA-4A2B-8BCD-77603CDAF153}.Debug|x86.Build.0 = Debug|x86
-		{387686E4-6CFA-4A2B-8BCD-77603CDAF153}.Release|Any CPU.ActiveCfg = Release|x86
-		{387686E4-6CFA-4A2B-8BCD-77603CDAF153}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{387686E4-6CFA-4A2B-8BCD-77603CDAF153}.Release|Mixed Platforms.Build.0 = Release|x86
-		{387686E4-6CFA-4A2B-8BCD-77603CDAF153}.Release|x86.ActiveCfg = Release|x86
-		{387686E4-6CFA-4A2B-8BCD-77603CDAF153}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
