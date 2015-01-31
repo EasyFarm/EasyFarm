@@ -72,13 +72,15 @@ namespace EasyFarm.Classes
                 FFACE.Navigator.Reset();
             }
 
-            // Make sure the cast starts before monitoring
-            // its progrss. 
-            EnsureCast(ability.ToString());
-
-            // Return whether we've casted successfully or 
-            // not. 
-            return MonitorCast();
+            // Try to cast the spell and return false if
+            // we've failed to start casting or the 
+            // casting was interrupted. 
+            if (EnsureCast(ability.ToString()))
+            {
+                return MonitorCast();
+            }
+            
+            return false;            
         }
 
         /// <summary>
@@ -86,14 +88,14 @@ namespace EasyFarm.Classes
         /// executed. 
         /// </summary>
         /// <param name="ability"></param>
-        private void EnsureCast(String command)
+        private bool EnsureCast(String command)
         {
             // Chainspelled spells will always be cast without fail so 
             // cast it and return immediately. 
             if (FFACE.Player.StatusEffects.Contains(StatusEffect.Chainspell))
             {
                 FFACE.Windower.SendString(command);
-                return;
+                return true;
             }
 
             // Ensure command has been successfully sent. 
@@ -103,6 +105,9 @@ namespace EasyFarm.Classes
             {
                 FFACE.Windower.SendString(command);
             }
+
+            if (count == 5) return true;
+            else return false;
         }
 
         private bool MonitorCast()
@@ -114,8 +119,6 @@ namespace EasyFarm.Classes
 
             while (!castHistory.RepeatsN(10).Any())
             {
-                // Add item to history
-                if (FFACE.Player.CastPercentEx == 0) continue;
                 castHistory.AddItem(FFACE.Player.CastPercentEx);
 
                 // Has moved 
