@@ -54,10 +54,6 @@
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FFACETools, Version=1.3.1.20, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\FFACETools.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.Prism.Mvvm">
       <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
     </Reference>
@@ -86,6 +82,10 @@
     <Compile Include="XIToolsTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\FFACETools_ffevo.net\FFACETools.csproj">
+      <Project>{37456169-2b9e-49a7-8b20-a160c180e453}</Project>
+      <Name>FFACETools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EasyFarm\EasyFarm.csproj">
       <Project>{14508978-627b-46ae-9779-1f6b4fb0611e}</Project>
       <Name>EasyFarm</Name>
@@ -98,7 +98,6 @@
     <Content Include="FFACE.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="FFACETools.dll" />
     <Content Include="resources\abils.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
