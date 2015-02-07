@@ -17,19 +17,10 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using EasyFarm.Classes;
 using EasyFarm.UserSettings;
-using Moq;
-using ZeroLimits.XITool.Classes;
 using FFACETools;
-using EasyFarm.FarmingTool;
-using ZeroLimits.XITool.Test;
-using EasyFarm.ViewModels;
-using System.Collections.Generic;
-using EasyFarm.GameData;
-using ZeroLimits.FarmingTool;
-using System.Text.RegularExpressions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EasyFarmTests
 {

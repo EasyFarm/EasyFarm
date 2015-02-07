@@ -17,14 +17,13 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.GameData;
+﻿using EasyFarm.Classes;
 using EasyFarm.ViewModels;
 using FFACETools;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
-using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.UserSettings
 {

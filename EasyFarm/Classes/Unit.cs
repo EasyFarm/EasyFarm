@@ -17,14 +17,10 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Timers;
-using System.Linq;
-using ZeroLimits.XITool.Interfaces;
 using FFACETools;
+using System;
 
-namespace ZeroLimits.XITool.Classes
+namespace EasyFarm.Classes
 {
     public class Unit : IUnit
     {

@@ -26,7 +26,7 @@ using System.Text;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace ZeroLimits.XITool.Classes
+namespace EasyFarm.Classes
 {
     public static class Serialization
     {

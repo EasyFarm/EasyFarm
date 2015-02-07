@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ZeroLimits.XITool.Classes
+namespace EasyFarm.Classes
 {
     /// <summary>
     /// Provides methods that allow the player to start resting or stop resting

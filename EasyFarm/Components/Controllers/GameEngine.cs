@@ -21,11 +21,6 @@ using EasyFarm.FarmingTool;
 using EasyFarm.ViewModels;
 using FFACETools;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Forms;
-using ZeroLimits.FarmingTool;
 
 namespace EasyFarm.Components
 {

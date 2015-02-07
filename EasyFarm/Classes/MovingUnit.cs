@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Timers;
 
-namespace ZeroLimits.XITool.Classes
+namespace EasyFarm.Classes
 {
     public class MovingUnit : Unit, IDisposable
     {

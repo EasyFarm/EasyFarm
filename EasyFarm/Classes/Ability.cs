@@ -18,10 +18,8 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
-using ZeroLimits.XITool.Enums;
 
-namespace ZeroLimits.XITool.Classes
+namespace EasyFarm.Classes
 {
     /// <summary>
     /// An action to be used on a target unit or player.
@@ -34,7 +32,7 @@ namespace ZeroLimits.XITool.Classes
         /// </summary>
         public Ability() 
         {
-            this.ActionType = Enums.ActionType.None;
+            this.ActionType = ActionType.None;
             this.Alias = String.Empty;
             this.CastTime = 0;
             this.Element = String.Empty;

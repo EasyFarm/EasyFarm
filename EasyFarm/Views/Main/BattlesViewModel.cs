@@ -17,15 +17,12 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.UserSettings;
-using EasyFarm.Views;
-using Microsoft.Practices.Prism.Commands;
-using System;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using ZeroLimits.XITool.Classes;
-using System.Linq;
 using EasyFarm.Classes;
+using EasyFarm.UserSettings;
+using Microsoft.Practices.Prism.Commands;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
 
 namespace EasyFarm.ViewModels
 {

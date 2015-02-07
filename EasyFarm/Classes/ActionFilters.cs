@@ -19,19 +19,8 @@ You should have received a copy of the GNU General Public License
 
 using FFACETools;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EasyFarm.GameData;
-using ZeroLimits.XITool;
-using ZeroLimits.XITool.Classes;
-using EasyFarm.UserSettings;
-using ZeroLimits.XITool.Interfaces;
-using ZeroLimits.XITool.Test;
-using EasyFarm.Components;
-using EasyFarm.Classes;
 
-namespace ZeroLimits.FarmingTool
+namespace EasyFarm.Classes
 {
     /// <summary>
     /// This class is responsible for holding all of the abilities our character may use in battle.

@@ -22,7 +22,7 @@ using System.Linq;
 using FFACETools;
 using System.Collections.Generic;
 
-namespace ZeroLimits.XITool.Classes
+namespace EasyFarm.Classes
 {
     public class UnitService
     {

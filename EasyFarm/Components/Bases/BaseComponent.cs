@@ -17,11 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-﻿using System;
-using FFACETools;
-using ZeroLimits.FarmingTool;
-using EasyFarm.FarmingTool;
-using EasyFarm.ViewModels;
+﻿using FFACETools;
 
 namespace EasyFarm.Components
 {

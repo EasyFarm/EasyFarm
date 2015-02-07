@@ -17,10 +17,9 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.ViewModels;
+using EasyFarm.Classes;
 using System;
 using System.Windows;
-using ZeroLimits.XITool.Classes;
 
 
 namespace EasyFarm.Views

@@ -18,20 +18,13 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.UserSettings;
-using EasyFarm.ViewModels;
 using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using ZeroLimits.FarmingTool;
-using ZeroLimits.XITool;
-using ZeroLimits.XITool.Classes;
-using ZeroLimits.XITool.Interfaces;
 
-namespace EasyFarm.FarmingTool
+namespace EasyFarm.Classes
 {
     public class UnitFilters
     {
@@ -148,7 +141,7 @@ namespace EasyFarm.FarmingTool
             });
         }
 
-        private static double Distance(IUnit mob, GameData.Waypoint waypoint)
+        private static double Distance(IUnit mob, Waypoint waypoint)
         {
             return Math.Sqrt(Math.Pow(waypoint.X - mob.PosX, 2) + Math.Pow(waypoint.Z - mob.PosZ, 2));
         }

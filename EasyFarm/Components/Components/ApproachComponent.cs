@@ -17,19 +17,10 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Components;
-using EasyFarm.FarmingTool;
-using EasyFarm.Logging;
+using EasyFarm.Classes;
 using EasyFarm.UserSettings;
 using FFACETools;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZeroLimits.FarmingTool;
-using ZeroLimits.XITool;
-using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.Components
 {

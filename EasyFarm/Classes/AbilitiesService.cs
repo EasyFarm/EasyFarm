@@ -19,14 +19,9 @@ You should have received a copy of the GNU General Public License
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-using ZeroLimits.XITool.Interfaces;
 
-namespace ZeroLimits.Classes
+namespace EasyFarm.Classes
 {
     /// <summary>
     /// This class is responsible for retrieving job abilties and spells.

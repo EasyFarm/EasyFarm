@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.GameData;
+using EasyFarm.Classes;
 using EasyFarm.UserSettings;
 using FFACETools;
 using Microsoft.Practices.Prism.Commands;
@@ -28,7 +28,6 @@ using System.IO;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.ViewModels
 {

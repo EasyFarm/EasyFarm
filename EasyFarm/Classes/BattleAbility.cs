@@ -17,16 +17,11 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.ViewModels;
 using EasyFarm.Views;
 using FFACETools;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.Classes
 {

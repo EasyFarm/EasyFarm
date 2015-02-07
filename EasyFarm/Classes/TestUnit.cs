@@ -18,14 +18,8 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using FFACETools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZeroLimits.XITool.Interfaces;
 
-namespace ZeroLimits.XITool.Test
+namespace EasyFarm.Classes
 {
     public class TestUnit : IUnit
     {

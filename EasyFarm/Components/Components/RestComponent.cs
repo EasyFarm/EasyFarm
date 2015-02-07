@@ -17,25 +17,22 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 ﻿
-using FFACETools;
-using System.Collections.Generic;
-using ZeroLimits.FarmingTool;
-using System.Linq;
-using EasyFarm.ViewModels;
+using EasyFarm.Classes;
 using EasyFarm.UserSettings;
-using ZeroLimits.XITool.Classes;
-using EasyFarm.FarmingTool;
+using FFACETools;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EasyFarm.Components
 {
     public class RestComponent : MachineComponent
     {
-        public FFACE FFACE { get; set; }
+        private FFACE FFACE;
 
-        public UnitService Units { get; set; }
+        private UnitService Units;
 
-        public RestingService Resting { get; set; }
+        private RestingService Resting;
 
         private DateTime LastAggroCheck = DateTime.Now;
 

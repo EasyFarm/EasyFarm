@@ -17,12 +17,11 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Diagnostics;
-using ZeroLimits.XITool.Classes;
-using ZeroLimits.XITool.Interfaces;
 
 namespace XI_Tools_Tests
 {

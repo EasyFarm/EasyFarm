@@ -20,10 +20,7 @@ You should have received a copy of the GNU General Public License
 using EasyFarm.Classes;
 using EasyFarm.UserSettings;
 using FFACETools;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.Components
 {

@@ -23,7 +23,7 @@ using FFACETools;
 using System;
 using System.Threading;
 
-namespace ZeroLimits.XITool.Classes
+namespace EasyFarm.Classes
 {
     public class CombatService
     {

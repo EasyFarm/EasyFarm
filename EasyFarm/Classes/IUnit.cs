@@ -24,7 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZeroLimits.XITool.Interfaces
+namespace EasyFarm.Classes
 {
     public interface IUnit
     {

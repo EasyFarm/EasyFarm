@@ -18,21 +18,17 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
-using ZeroLimits.XITool.Enums;
 
-namespace ZeroLimits.XITool.Classes
+namespace EasyFarm.Classes
 {
     /// <summary>
     /// A class for loading the ability and spell xmls from file.
     /// </summary>
-    private class AbilityParser
+    public class AbilityParser
     {
         public class RESOURCES
         {
@@ -46,7 +42,7 @@ namespace ZeroLimits.XITool.Classes
         /// <summary>
         /// Class load time initializer
         /// </summary>
-        protected static AbilityParser()
+        static AbilityParser()
         {
             m_abilsDoc = LoadResource(RESOURCES.ABILS_FILE_NAME);
             m_spellsDoc = LoadResource(RESOURCES.SPELLS_FILE_NAME);

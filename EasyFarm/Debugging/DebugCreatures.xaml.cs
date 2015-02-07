@@ -17,17 +17,14 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.GameData;
+using EasyFarm.Classes;
 using FFACETools;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using ZeroLimits.FarmingTool;
-using System.Linq;
-using ZeroLimits.XITool;
-using ZeroLimits.XITool.Classes;
 
 namespace EasyFarm.Debugging
 {

@@ -23,7 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZeroLimits.XITool.Enums
+namespace EasyFarm.Classes
 {
     [Flags]
     public enum ActionType  

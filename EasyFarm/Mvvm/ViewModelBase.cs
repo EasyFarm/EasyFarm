@@ -23,7 +23,6 @@ using FFACETools;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
-using ZeroLimits.FarmingTool;
 
 namespace EasyFarm.ViewModels
 {

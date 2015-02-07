@@ -17,10 +17,8 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using FFACETools;
-using ZeroLimits.XITool.Classes;
-using ZeroLimits.XITool.Enums;
-using System.Linq;
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace EasyFarm.Classes
