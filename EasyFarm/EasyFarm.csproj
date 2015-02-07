@@ -240,9 +240,6 @@
     <Compile Include="Debugging\DebugCreatures.xaml.cs">
       <DependentUpon>DebugCreatures.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Debugging\DebugSpellCasting.xaml.cs">
-      <DependentUpon>DebugSpellCasting.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Classes\HealingAbility.cs" />
     <Compile Include="Classes\Waypoint.cs" />
     <Compile Include="Classes\WeaponSkill.cs" />
@@ -324,23 +321,20 @@
     <Compile Include="Views\Main\WeaponsView.xaml.cs">
       <DependentUpon>WeaponsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="XITools\Classes\AbilitiesService.cs" />
-    <Compile Include="XITools\Classes\Ability.cs" />
-    <Compile Include="XITools\Classes\AbilityExecutor.cs" />
-    <Compile Include="XITools\Classes\AbilityParser.cs" />
-    <Compile Include="XITools\Classes\ActionBlocked.cs" />
-    <Compile Include="XITools\Classes\CombatService.cs" />
-    <Compile Include="XITools\Classes\Constants.cs" />
-    <Compile Include="XITools\Classes\MovingUnit.cs" />
-    <Compile Include="XITools\Classes\RestingService.cs" />
-    <Compile Include="XITools\Classes\Serialization.cs" />
-    <Compile Include="XITools\Classes\Unit.cs" />
-    <Compile Include="XITools\Classes\UnitService.cs" />
-    <Compile Include="XITools\Classes\XITools.cs" />
-    <Compile Include="XITools\Enums\ActionTypes.cs" />
-    <Compile Include="XITools\Interfaces\IAbilityService.cs" />
-    <Compile Include="XITools\Interfaces\IUnit.cs" />
-    <Compile Include="XITools\Test\TestUnit.cs" />
+    <Compile Include="Classes\AbilitiesService.cs" />
+    <Compile Include="Classes\Ability.cs" />
+    <Compile Include="Classes\AbilityParser.cs" />
+    <Compile Include="Classes\CombatService.cs" />
+    <Compile Include="Classes\Constants.cs" />
+    <Compile Include="Classes\MovingUnit.cs" />
+    <Compile Include="Classes\RestingService.cs" />
+    <Compile Include="Classes\Serialization.cs" />
+    <Compile Include="Classes\Unit.cs" />
+    <Compile Include="Classes\UnitService.cs" />
+    <Compile Include="Classes\ActionTypes.cs" />
+    <Compile Include="Classes\IAbilityService.cs" />
+    <Compile Include="Classes\IUnit.cs" />
+    <Compile Include="Classes\TestUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -374,10 +368,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Debugging\DebugCreatures.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Debugging\DebugSpellCasting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

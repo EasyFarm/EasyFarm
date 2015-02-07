@@ -32,7 +32,7 @@ namespace ZeroLimits.XITool.Classes
     /// <summary>
     /// A class for loading the ability and spell xmls from file.
     /// </summary>
-    public class AbilityParser
+    private class AbilityParser
     {
         public class RESOURCES
         {
@@ -46,7 +46,7 @@ namespace ZeroLimits.XITool.Classes
         /// <summary>
         /// Class load time initializer
         /// </summary>
-        static AbilityParser()
+        protected static AbilityParser()
         {
             m_abilsDoc = LoadResource(RESOURCES.ABILS_FILE_NAME);
             m_spellsDoc = LoadResource(RESOURCES.SPELLS_FILE_NAME);

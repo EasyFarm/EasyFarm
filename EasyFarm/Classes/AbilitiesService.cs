@@ -26,7 +26,7 @@ using System.Text;
 using System.Xml.Linq;
 using ZeroLimits.XITool.Interfaces;
 
-namespace ZeroLimits.XITool.Classes
+namespace ZeroLimits.Classes
 {
     /// <summary>
     /// This class is responsible for retrieving job abilties and spells.

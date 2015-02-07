@@ -93,7 +93,7 @@ namespace EasyFarm.Components
 
             // Execute moves at target. 
             Executor.Target = Target;
-            Executor.ExecuteActions(Buffs.Union(Others));
+            Executor.UseTargetedActions(Buffs.Union(Others));
         }
     }
 }

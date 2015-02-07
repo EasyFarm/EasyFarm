@@ -83,7 +83,7 @@ namespace EasyFarm.Components
                 .Where(x => !x.IsBuff());
 
             // Execute moves. 
-            Executor.ExecuteBuffs(Buffs.Union(Others));
+            Executor.UseBuffingActions(Buffs.Union(Others));
 
             if (lastCheckedForMob.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
             {

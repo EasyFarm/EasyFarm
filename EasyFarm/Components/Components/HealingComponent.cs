@@ -24,21 +24,20 @@ using ZeroLimits.XITool;
 using ZeroLimits.XITool.Classes;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
+using EasyFarm.Classes;
 
 namespace EasyFarm.Components
 {
     public class HealingComponent : MachineComponent
     {
-        private FFACE FFACE { get; set; }
-
-        private AbilityExecutor Executor { get; set; }
-
-        private AbilityService Retriever { get; set; }
+        private FFACE FFACE;
+        private Executor Executor;
+        private AbilityService Retriever;
 
         public HealingComponent(FFACE fface)
         {
             this.FFACE = fface;
-            this.Executor = new AbilityExecutor(fface);
+            this.Executor = new Executor(fface);
             this.Retriever = new AbilityService();
         }
 
@@ -79,7 +78,7 @@ namespace EasyFarm.Components
 
                 // Create an ability from the name and launch the move. 
                 var HealingMove = Retriever.CreateAbility(Action.Name);
-                Executor.UseAbility(HealingMove);
+                Executor.UseBuffingAction(HealingMove);
             }
         }        
     }

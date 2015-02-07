@@ -39,8 +39,6 @@ namespace EasyFarm.Components
 
         private FFACE FFACE;
 
-        private ActionBlocked Blocking;
-
         private RestingService Resting;
 
         private CombatService Combat;
@@ -50,7 +48,6 @@ namespace EasyFarm.Components
         public TravelComponent(FFACE fface)
         {
             this.FFACE = fface;
-            this.Blocking = new ActionBlocked(fface);
             this.Resting = new RestingService(fface);
             this.Combat = new CombatService(fface);
 
@@ -75,7 +72,8 @@ namespace EasyFarm.Components
 
             // We are not bound or struck by an other movement
             // disabling condition. 
-            if (Blocking.IsUnable) return false;
+            if (ProhibitEffects.PROHIBIT_EFFECTS_MOVEMENT
+                .Intersect(FFACE.Player.StatusEffects).Any()) return false;
 
             return true;
         }

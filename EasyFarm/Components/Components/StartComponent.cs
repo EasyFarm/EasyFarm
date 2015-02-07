@@ -77,7 +77,7 @@ namespace EasyFarm.Components
                 .Where(x => !x.IsBuff());
 
             // Execute moves at target. 
-            Executor.ExecuteBuffs(Buffs.Union(Others));
+            Executor.UseBuffingActions(Buffs.Union(Others));
         }
 
         public Unit Target

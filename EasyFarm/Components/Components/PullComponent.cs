@@ -88,7 +88,7 @@ namespace EasyFarm.Components
 
                 // Execute all abilities. 
                 Executor.Target = Target;
-                Executor.ExecuteActions(Buffs.Union(Others));
+                Executor.UseTargetedActions(Buffs.Union(Others));
             }
         }        
 

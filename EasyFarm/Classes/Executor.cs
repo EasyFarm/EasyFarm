@@ -32,8 +32,14 @@ using ZeroLimits.XITool.Enums;
 
 namespace EasyFarm.Classes
 {
+    /// <summary>
+    /// Executor targeted or buffing actions. A fuller explanation 
+    /// can be found here: https://github.com/EasyFarm/EasyFarm/wiki/Battle-List-Roles. 
+    /// See "list types" for more details. 
+    /// </summary>
     public class Executor
     {
+        #region Member Variables
         private readonly FFACE FFACE;
 
         private readonly Caster Caster;
@@ -42,18 +48,22 @@ namespace EasyFarm.Classes
         /// Must be set by caller. 
         /// </summary>
         public Unit Target { get; set; }
+        #endregion
 
+        #region Constructors
         public Executor(FFACE fface)
         {
             this.FFACE = fface;
             this.Caster = new Caster(fface);
         }
+        #endregion
 
+        #region Buffing Methods
         /// <summary>
         /// Executes moves without the need for a target. 
         /// </summary>
         /// <param name="actions"></param>
-        public void ExecuteBuffs(IEnumerable<BattleAbility> actions)
+        public void UseBuffingActions(IEnumerable<BattleAbility> actions)
         {
             foreach (var action in actions.ToList())
             {
@@ -65,11 +75,41 @@ namespace EasyFarm.Classes
             }
         }
 
+
         /// <summary>
-        /// Execute actions by 
+        /// Execute actions that are not target oriented. 
         /// </summary>
         /// <param name="actions"></param>
-        public void ExecuteActions(IEnumerable<BattleAbility> actions)
+        public void UseBuffingActions(IEnumerable<Ability> actions)
+        {
+            UseBuffingActions(actions.Select(x => new BattleAbility() { Ability = x }));
+        }
+
+        /// <summary>
+        /// Execute a signle buffing type action. 
+        /// </summary>
+        /// <param name="action"></param>
+        public void UseBuffingAction(BattleAbility action)
+        {
+            UseBuffingActions(new List<BattleAbility>() { action });
+        }
+
+        /// <summary>
+        /// Execute a single buffing type action. 
+        /// </summary>
+        /// <param name="action"></param>
+        public void UseBuffingAction(Ability action)
+        {
+            UseBuffingActions(new List<BattleAbility>() { new BattleAbility() { Ability = action } });
+        }
+        #endregion
+
+        #region Targeted Methods
+        /// <summary>
+        /// Execute targeted actions. 
+        /// </summary>
+        /// <param name="actions"></param>
+        public void UseTargetedActions(IEnumerable<BattleAbility> actions)
         {
             // Gaurd against null targets. 
             if (this.Target == null) return;
@@ -102,28 +142,20 @@ namespace EasyFarm.Classes
                     Thread.Sleep(Config.Instance.GlobalCooldown);
                 }
                 else
-                { 
+                {
                     Caster.CastAbility(action);
-                }                    
+                }
             }
-        }        
-
-        /// <summary>
-        /// Executes one ability. 
-        /// </summary>
-        /// <param name="action"></param>
-        public void ExecuteAction(BattleAbility action)
-        {
-            ExecuteActions(new List<BattleAbility>() { action });
         }
 
         /// <summary>
-        /// Executes one buff. 
+        /// Execute a single action targeted type action. 
         /// </summary>
         /// <param name="action"></param>
-        public void ExecuteBuff(BattleAbility action)
+        public void UseTargetedAction(BattleAbility action)
         {
-            ExecuteBuffs(new List<BattleAbility>() { action });
+            UseTargetedActions(new List<BattleAbility>() { action });
         }
+        #endregion
     }
 }

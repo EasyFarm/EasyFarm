@@ -35,8 +35,6 @@ namespace EasyFarm.Components
 
         public UnitService Units { get; set; }
 
-        public ActionBlocked Blocking { get; set; }
-
         public RestingService Resting { get; set; }
 
         private DateTime LastAggroCheck = DateTime.Now;
@@ -46,7 +44,6 @@ namespace EasyFarm.Components
             this.FFACE = fface;
             this.Units = new UnitService(fface);
             this.Units.UnitFilter = UnitFilters.MobFilter(fface);
-            this.Blocking = new ActionBlocked(fface);
             this.Resting = new RestingService(fface);
         }
        
@@ -57,7 +54,8 @@ namespace EasyFarm.Components
                 if (Units.HasAggro) return false;
             }
 
-            if (Blocking.IsRestingBlocked) return false;
+            if (ProhibitEffects.PROHIBIT_EFFECTS_DOTS
+                .Intersect(FFACE.Player.StatusEffects).Any()) return false;
 
             if (FFACE.Player.Status == Status.Fighting) return false;
 

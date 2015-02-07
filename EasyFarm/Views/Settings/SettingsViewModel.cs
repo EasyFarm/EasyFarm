@@ -110,7 +110,6 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.CastLatency, (int)value);
-                AbilityExecutor.CastLatency = (int)value;
                 InformUser("Cast Latency Set: {0}.", (int)value);
             }
         }
@@ -121,7 +120,6 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.GlobalCooldown, (int)value);
-                AbilityExecutor.GlobalCooldown = (int)value;
                 InformUser("Global Cooldown Set: {0}.", (int)value);
             }
         }
