@@ -29,6 +29,7 @@ using System.Diagnostics;
 using EasyFarm.ViewModels;
 using EasyFarm.UserSettings;
 using ZeroLimits.XITool.Classes;
+using EasyFarm.FarmingTool;
 
 namespace EasyFarm.Components
 {
@@ -36,13 +37,15 @@ namespace EasyFarm.Components
     {
         private int position = 0;
 
-        public FFACE FFACE { get; set; }
+        private FFACE FFACE;
 
-        public ActionBlocked Blocking { get; set; }
+        private ActionBlocked Blocking;
 
-        public RestingService Resting { get; set; }
+        private RestingService Resting;
 
-        public CombatService Combat { get; set; }
+        private CombatService Combat;
+
+        private UnitService Units;
 
         public TravelComponent(FFACE fface)
         {
@@ -50,6 +53,10 @@ namespace EasyFarm.Components
             this.Blocking = new ActionBlocked(fface);
             this.Resting = new RestingService(fface);
             this.Combat = new CombatService(fface);
+
+            // Create unit object for parsing of npc array. 
+            this.Units = new UnitService(fface);
+            this.Units.UnitFilter = UnitFilters.MobFilter(fface);
         }
 
         public override bool CheckComponent()
@@ -75,9 +82,7 @@ namespace EasyFarm.Components
 
         public override void EnterComponent()
         {
-            Resting.EndResting();
             Combat.Disengage();
-
             FFACE.Navigator.DistanceTolerance = 1;
             FFACE.Navigator.HeadingTolerance = 1;
         }
@@ -96,15 +101,32 @@ namespace EasyFarm.Components
 
             // If we are more than 10 yalms away from the nearest point...
             if (FFACE.Navigator.DistanceTo(Config.Instance.Waypoints[position].Position) > 10)
+            {
                 SetPositionToNearestPoint();
+            }
 
-            FFACE.Navigator.Goto(Config.Instance.Waypoints[position].Position, false);
+            FFACE.Navigator.Goto(Config.Instance.Waypoints[position].Position, false, IsCancellationRequired);
             position++;
         }
 
-        public override void ExitComponent() 
-        { 
-            FFACE.Navigator.Reset(); 
+        public DateTime LastAggroCheck = DateTime.Now;
+
+        /// <summary>
+        /// Returns true when the player should stop traveling. 
+        /// </summary>
+        /// <returns></returns>
+        public bool IsCancellationRequired()
+        {
+            /// Defines some common situations to stop travel. 
+
+            // Check if the player has aggro, but don't hammer the 
+            // npc array less than every second. 
+            if (LastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
+            {
+                if (Units.HasAggro) return true;
+            }
+
+            return false;
         }
 
         /// <summary>

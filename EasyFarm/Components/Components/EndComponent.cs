@@ -85,7 +85,7 @@ namespace EasyFarm.Components
             // Execute moves. 
             Executor.ExecuteBuffs(Buffs.Union(Others));
 
-            if (lastCheckedForMob.AddSeconds(3) < DateTime.Now)
+            if (lastCheckedForMob.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
             {
                 // First get the first mob by distance. 
                 var mobs = Units.MOBArray.Where(x => Units.IsValid(x))

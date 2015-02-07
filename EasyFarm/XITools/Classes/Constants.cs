@@ -112,7 +112,13 @@ namespace ZeroLimits.XITool.Classes
         /// <summary>
         /// The upper limit of the mob array. (Monsters, NPCS)
         /// </summary>
-        public const int MOB_ARRAY_MAX = 768;        
+        public const int MOB_ARRAY_MAX = 768;
+        
+        /// <summary>
+        /// Controls the wait time between checks on the 
+        /// unit array to control performance. 
+        /// </summary>
+        public const double UNIT_ARRAY_CHECK_RATE = 1;        
     }
 
     public class EnsureCastConstants

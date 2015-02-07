@@ -52,7 +52,7 @@ namespace EasyFarm.Components
        
         public override bool CheckComponent()
         {
-            if (LastAggroCheck.AddSeconds(3) < DateTime.Now)
+            if (LastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
             {
                 if (Units.HasAggro) return false;
             }
