@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.UserSettings;
 using FFACETools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -34,13 +35,7 @@ namespace EasyFarm.Classes
     {
         #region Member Variables
         private readonly FFACE FFACE;
-
         private readonly Caster Caster;
-
-        /// <summary>
-        /// Must be set by caller. 
-        /// </summary>
-        public Unit Target { get; set; }
         #endregion
 
         #region Constructors
@@ -58,6 +53,8 @@ namespace EasyFarm.Classes
         /// <param name="actions"></param>
         public void UseBuffingActions(IEnumerable<BattleAbility> actions)
         {
+            if (actions == null) throw new ArgumentNullException("actions");
+
             foreach (var action in actions.ToList())
             {
                 // Cast the spell. 
@@ -68,13 +65,13 @@ namespace EasyFarm.Classes
             }
         }
 
-
         /// <summary>
         /// Execute actions that are not target oriented. 
         /// </summary>
         /// <param name="actions"></param>
         public void UseBuffingActions(IEnumerable<Ability> actions)
         {
+            if (actions == null) throw new ArgumentNullException("actions");
             UseBuffingActions(actions.Select(x => new BattleAbility() { Ability = x }));
         }
 
@@ -84,6 +81,7 @@ namespace EasyFarm.Classes
         /// <param name="action"></param>
         public void UseBuffingAction(BattleAbility action)
         {
+            if (action == null) throw new ArgumentNullException("action");
             UseBuffingActions(new List<BattleAbility>() { action });
         }
 
@@ -93,6 +91,7 @@ namespace EasyFarm.Classes
         /// <param name="action"></param>
         public void UseBuffingAction(Ability action)
         {
+            if (action == null) throw new ArgumentNullException("action");
             UseBuffingActions(new List<BattleAbility>() { new BattleAbility() { Ability = action } });
         }
         #endregion
@@ -102,30 +101,31 @@ namespace EasyFarm.Classes
         /// Execute targeted actions. 
         /// </summary>
         /// <param name="actions"></param>
-        public void UseTargetedActions(IEnumerable<BattleAbility> actions)
+        public void UseTargetedActions(IEnumerable<BattleAbility> actions, Unit target)
         {
-            // Gaurd against null targets. 
-            if (this.Target == null) return;
+            // Logic error to call this without setting a target first. 
+            if (actions == null) throw new ArgumentNullException("actions");
+            if (target == null) throw new ArgumentNullException("target");
 
             foreach (var action in actions)
             {
                 // Move to target if out of distance. 
-                if (Target.Distance > action.Distance)
+                if (target.Distance > action.Distance)
                 {
                     // Move to unit at max buff distance. 
                     var oldTolerance = FFACE.Navigator.DistanceTolerance;
                     FFACE.Navigator.DistanceTolerance = action.Distance;
-                    FFACE.Navigator.GotoNPC(Target.ID);
+                    FFACE.Navigator.GotoNPC(target.ID);
                     FFACE.Navigator.DistanceTolerance = action.Distance;
                 }
 
                 // Face unit
-                FFACE.Navigator.FaceHeading(Target.Position);
+                FFACE.Navigator.FaceHeading(target.Position);
 
                 // Target mob if not currently targeted. 
-                if (Target.ID != FFACE.Target.ID)
+                if (target.ID != FFACE.Target.ID)
                 {
-                    FFACE.Target.SetNPCTarget(Target.ID);
+                    FFACE.Target.SetNPCTarget(target.ID);
                     FFACE.Windower.SendString("/ta <t>");
                 }
 
@@ -145,9 +145,11 @@ namespace EasyFarm.Classes
         /// Execute a single action targeted type action. 
         /// </summary>
         /// <param name="action"></param>
-        public void UseTargetedAction(BattleAbility action)
+        public void UseTargetedAction(BattleAbility action, Unit target)
         {
-            UseTargetedActions(new List<BattleAbility>() { action });
+            if (target == null) throw new ArgumentNullException("target");
+            if (action == null) throw new ArgumentNullException("action");
+            UseTargetedActions(new List<BattleAbility>() { action }, target);
         }
         #endregion
     }

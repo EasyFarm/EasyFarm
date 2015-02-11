@@ -29,11 +29,9 @@ namespace EasyFarm.Components
     /// </summary>
     public class BattleComponent : MachineComponent
     {
-        public FFACE FFACE { get; set; }
-
-        public RestingService Resting { get; set; }
-
-        public Executor Executor { get; set; }
+        private FFACE FFACE;
+        private RestingService Resting;
+        private Executor Executor;
 
         /// <summary>
         /// Who we are trying to kill currently
@@ -73,7 +71,7 @@ namespace EasyFarm.Components
         }
 
         public override void RunComponent()
-        {
+        {           
             var Usable = Config.Instance.BattleList
                 .Where(x => x.Enabled && x.IsCastable(FFACE));
 
