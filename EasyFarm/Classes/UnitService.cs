@@ -31,7 +31,6 @@ namespace EasyFarm.Classes
         private const short UNIT_ARRAY_MAX = Constants.UNIT_ARRAY_MAX;
         private const short MOB_ARRAY_MAX = Constants.MOB_ARRAY_MAX;
         private static FFACE _fface;
-
         #endregion
 
         public UnitService(FFACE session)
@@ -148,6 +147,7 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public bool IsValid(Unit unit)
         {
+            if (unit == null) throw new ArgumentNullException("unit");
             return UnitFilter(unit);
         }
 
@@ -158,6 +158,7 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public IEnumerable<Unit> GetUnits(Func<Unit, bool> filter)
         {
+            if (filter == null) throw new ArgumentNullException("filter");
             return UnitArray.Where(filter);
         }
 
@@ -170,6 +171,8 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public IEnumerable<Unit> GetUnits(Func<Unit, bool> filter, Func<Unit, object> orderby)
         {
+            if (filter == null) throw new ArgumentNullException("filter");
+            if (orderby == null) throw new ArgumentNullException("orderby");
             return UnitArray.Where(filter).OrderBy(orderby);
         }
 
@@ -180,6 +183,7 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public Unit GetTarget(Func<Unit, bool> filter)
         {
+            if (filter == null) throw new ArgumentNullException("filter");
             return GetUnits(filter).FirstOrDefault();
         }
 
@@ -192,6 +196,8 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public Unit GetTarget(Func<Unit, bool> filter, Func<Unit, object> orderby)
         {
+            if (filter == null) throw new ArgumentNullException("filter");
+            if (orderby == null) throw new ArgumentNullException("orderby");
             return GetUnits(filter).OrderBy(orderby).FirstOrDefault();
         }
 

@@ -28,25 +28,21 @@ namespace EasyFarm.Components
 {
     public class TravelComponent : MachineComponent
     {
-        private int position = 0;
-
-        private FFACE FFACE;
-
-        private RestingService Resting;
-
-        private CombatService Combat;
-
-        private UnitService Units;
+        private int _position = 0;
+        private FFACE _fface;
+        private RestingService _resting;
+        private CombatService _combat;
+        private UnitService _units;
 
         public TravelComponent(FFACE fface)
         {
-            this.FFACE = fface;
-            this.Resting = new RestingService(fface);
-            this.Combat = new CombatService(fface);
+            _fface = fface;
+            _resting = new RestingService(fface);
+            _combat = new CombatService(fface);
 
             // Create unit object for parsing of npc array. 
-            this.Units = new UnitService(fface);
-            this.Units.UnitFilter = UnitFilters.MobFilter(fface);
+            _units = new UnitService(fface);
+            _units.UnitFilter = UnitFilters.MobFilter(fface);
         }
 
         public override bool CheckComponent()
@@ -55,49 +51,53 @@ namespace EasyFarm.Components
             if (Config.Instance.Waypoints.Count <= 0) return false;
 
             // We are not able to attack any creatures. 
-            if (new AttackContainer(FFACE).CheckComponent()) return false;
+            if (new AttackContainer(_fface).CheckComponent()) return false;
 
             // We don't have to rest. 
-            if (new RestComponent(FFACE).CheckComponent()) return false;
+            if (new RestComponent(_fface).CheckComponent()) return false;
 
             // We don't have to heal. 
-            if (new HealingComponent(FFACE).CheckComponent()) return false;
+            if (new HealingComponent(_fface).CheckComponent()) return false;
 
             // We are not bound or struck by an other movement
             // disabling condition. 
             if (ProhibitEffects.PROHIBIT_EFFECTS_MOVEMENT
-                .Intersect(FFACE.Player.StatusEffects).Any()) return false;
+                .Intersect(_fface.Player.StatusEffects).Any()) return false;
 
             return true;
         }
 
         public override void EnterComponent()
         {
-            Combat.Disengage();
-            FFACE.Navigator.DistanceTolerance = 1;
-            FFACE.Navigator.HeadingTolerance = 1;
+            _combat.Disengage();
+            _fface.Navigator.DistanceTolerance = 1;
+            _fface.Navigator.HeadingTolerance = 1;
         }
 
         public override void RunComponent()
         {
             // If we've reached the end of the path....
-            if (position > Config.Instance.Waypoints.Count - 1)
+            if (_position > Config.Instance.Waypoints.Count - 1)
             {
                 // Turn around and run the path in reverse with the old end being the new starting point
                 Config.Instance.Waypoints = new ObservableCollection<Waypoint>
                     (Config.Instance.Waypoints.Reverse());
 
-                position = 0;
+                _position = 0;
             }
 
             // If we are more than 10 yalms away from the nearest point...
-            if (FFACE.Navigator.DistanceTo(Config.Instance.Waypoints[position].Position) > 10)
+
+            // Fix: May throw array out of bounds error when collection 
+            // is modified during execution. 
+
+            if (_fface.Navigator.DistanceTo(Config.Instance.Waypoints[_position].Position) > 10)
             {
                 SetPositionToNearestPoint();
             }
 
-            FFACE.Navigator.Goto(Config.Instance.Waypoints[position].Position, false, IsCancellationRequired);
-            position++;
+            _fface.Navigator.Goto(Config.Instance.Waypoints[_position].Position, false, IsCancellationRequired);
+            _position++;
         }
 
         public DateTime LastAggroCheck = DateTime.Now;
@@ -114,7 +114,7 @@ namespace EasyFarm.Components
             // npc array less than every second. 
             if (LastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
             {
-                if (Units.HasAggro) return true;
+                if (_units.HasAggro) return true;
             }
 
             return false;
@@ -127,14 +127,14 @@ namespace EasyFarm.Components
         {
             // Get the nearest waypoint to the player. 
             var nearest = Config.Instance.Waypoints
-                .OrderBy(x => FFACE.Navigator.DistanceTo(x.Position))
+                .OrderBy(x => _fface.Navigator.DistanceTo(x.Position))
                 .FirstOrDefault();
 
             // Return if the list is empty; 
             if (nearest == null) return;
 
             // Get its index in the array of points, then ...
-            position = Config.Instance.Waypoints.IndexOf(nearest);
+            _position = Config.Instance.Waypoints.IndexOf(nearest);
         }
     }
 }
