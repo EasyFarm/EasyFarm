@@ -449,9 +449,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="trayicon.ico">
+    <None Include="trayicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="FFACE.dll">

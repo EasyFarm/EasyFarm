@@ -84,8 +84,7 @@ namespace EasyFarm.Components
                     .Where(x => !x.IsBuff());
 
                 // Execute all abilities. 
-                Executor.Target = Target;
-                Executor.UseTargetedActions(Buffs.Union(Others));
+                Executor.UseTargetedActions(Buffs.Union(Others), Target);
             }
         }        
 

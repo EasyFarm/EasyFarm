@@ -80,9 +80,7 @@ namespace EasyFarm.Components
             var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
                 .Where(x => !x.IsBuff());
 
-            // Execute moves at target. 
-            Executor.Target = Target;
-            Executor.UseTargetedActions(Buffs.Union(Others));
+            Executor.UseTargetedActions(Buffs.Union(Others), Target);
         }
     }
 }
