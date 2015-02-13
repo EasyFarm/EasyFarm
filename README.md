@@ -27,6 +27,7 @@ EasyFarm is free software, licensed under the GPLv3 software license which can b
 * Resource Files
 * Microsoft .NET Framework 4.5
 * Visual C++ Redistributable Packages for Visual Studio 2013
+* Ashita or Windower Game Client
 
 # Support
 Bug reports and suggestions can also be made at the [FFEvo EasyFarm Support Thread](http://www.ffevo.net/topic/3137-easyfarm/). This is the primary place where questions can be answered.
