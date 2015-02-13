@@ -8,8 +8,11 @@ EasyFarm is free software, licensed under the GPLv3 software license which can b
 ![EasyFarm GUI](http://i.imgur.com/r7md4nv.png)
 
 # Features
-* Aggro Detection
-* Resting and Healing
+* Mob filtering with regex expressions
+* Aggressive mob detection
+* Automatic self-healing
+* Saves and restores session settings
+* Customizable spell and ability usage
 * (planned) Fields of Valor / Grounds of Valor support
 * (planned) Trust Magic support
 * (planned) Player Detection
@@ -41,7 +44,7 @@ Yes, the program can detect whether the player has aggro.
 
 **Why does the new version of the program crash?**
 
-1. Using an old user preference file may cause the program to crash. Delete the preference file and let the program generate a new one. 
+Using an old user preference file may cause the program to crash. Delete the preference file and let the program generate a new one. 
 
 **The program has caused my character to keeping running and I can't get him to stop. What should I do?**
 
