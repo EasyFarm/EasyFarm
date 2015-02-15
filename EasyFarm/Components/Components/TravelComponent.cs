@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 
 ﻿using EasyFarm.Classes;
 using EasyFarm.UserSettings;
+using EasyFarm.ViewModels;
 using FFACETools;
 using System;
 using System.Collections.ObjectModel;
@@ -115,6 +116,12 @@ namespace EasyFarm.Components
             if (LastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
             {
                 if (_units.HasAggro) return true;
+            }
+
+            // Return when the user has pause the program. 
+            if (!ViewModelBase.GameEngine.IsWorking)
+            {
+                return true;
             }
 
             return false;
