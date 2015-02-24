@@ -40,7 +40,7 @@ namespace EasyFarm.Classes
             }
         }
 
-        public static T Deserialize<T>(string filename, T value)
+        public static T Deserialize<T>(string filename)
         {
                 if (System.IO.File.Exists(filename))
                 {
@@ -52,7 +52,7 @@ namespace EasyFarm.Classes
                     }
                 }
 
-            return value;
+            return default(T);
         }
     }
 }

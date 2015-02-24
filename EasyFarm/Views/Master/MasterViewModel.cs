@@ -29,6 +29,8 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
 using EasyFarm.Views;
 using System.Xml.Serialization;
+using Microsoft.Win32;
+using EasyFarm.Classes;
 
 namespace EasyFarm.ViewModels
 {
@@ -38,7 +40,8 @@ namespace EasyFarm.ViewModels
 
         public MasterViewModel()
         {
-            this.IsSettingsShown = false;
+            // Toggles start / pause button text. 
+            IsSettingsShown = false;
 
             // Get events from view models to update the status bar's text.
             EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe(a => { StatusBarText = a; });
@@ -49,13 +52,11 @@ namespace EasyFarm.ViewModels
             // Set the main window's title to the player's name. 
             MainWindowTitle = "EasyFarm - " + FFACE.Player.Name;
 
-            // Create start command handler.
+            // Bind commands to their handlers. 
             StartCommand = new DelegateCommand(Start);
-
             ExitCommand = new DelegateCommand(Exit);
-
             SaveCommand = new DelegateCommand(Save);
-
+            LoadCommand = new DelegateCommand(Load);
             SettingsCommand = new DelegateCommand(ShowSettings);
         }
 
@@ -113,14 +114,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public string StartPauseHeader
         {
-            get
-            {
-                return _startStopHeader;
-            }
-            set
-            {
-                SetProperty(ref _startStopHeader, value);
-            }
+            get { return _startStopHeader; }
+            set { SetProperty(ref _startStopHeader, value); }
         }
 
         private string _settingsHeader = "_Settings...";
@@ -145,6 +140,11 @@ namespace EasyFarm.ViewModels
         /// Command to save the user's settings. 
         /// </summary>
         public DelegateCommand SaveCommand { get; set; }
+
+        /// <summary>
+        /// Command to load the user's settings. 
+        /// </summary>
+        public DelegateCommand LoadCommand { get; set; }
 
         /// <summary>
         /// Load the settings window. 
@@ -178,7 +178,13 @@ namespace EasyFarm.ViewModels
         private void Save()
         {
             Logger.Write.SaveSettings("Settings saved");
-            Config.Instance.SaveSettings();
+            SettingsManager.Save<Config>(Config.Instance);
+        }
+
+        private void Load()
+        {
+            Logger.Write.SaveSettings("Settings loaded");
+            Config.Instance = SettingsManager.Load<Config>();
         }
 
         /// <summary>

@@ -67,48 +67,6 @@ namespace EasyFarm.UserSettings
             {
                 lazy = new Lazy<Config>(() => value);
             }
-        }        
-
-        /// <summary>
-        /// Saves the settings of Config object to file for later retrieval.
-        /// </summary>
-        /// <param name="Engine"></param>
-        public void SaveSettings()
-        {
-            // Default file name for when fface is null. 
-            string fileName = "UserPref.xml";
-
-            // Get the filename in which to save the player's settings. 
-            if (FFACE != null)
-            {
-                fileName = ViewModelBase.FFACE.Player.Name + "_UserPref.xml";
-            }
-
-            // Save all user settings under PlayerName_UserPref.xml. 
-            Serialization.Serialize(fileName, Instance);
-        }
-
-        /// <summary>
-        /// Loads the settings from the player specific configuration file to the Config obj.
-        /// </summary>
-        public void LoadSettings()
-        {
-            // Default file name when fface is null
-            string fileName = "UserPref.xml";
-
-            // Set filename to PlayerName_UserPref.xml when fface is found. 
-            if (FFACE != null)
-            {
-                fileName = ViewModelBase.FFACE.Player.Name + "_UserPref.xml";
-            }
-
-            // Read the configuration from file for a given player. 
-            // Note: this will wipe out your prevous fface instance for the object. 
-            Instance = Serialization.Deserialize(fileName, Instance);
-
-            // Reset the fface instance. 
-            if (!DebugEnabled)
-                Instance.FFACE = ViewModelBase.FFACE;
         }
     }
 }

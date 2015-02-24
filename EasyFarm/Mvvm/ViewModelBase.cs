@@ -75,9 +75,6 @@ namespace EasyFarm.ViewModels
 
             // Set FFACE session for config. 
             Config.Instance.FFACE = FFACE;
-
-            // Loads up all settings. 
-            Config.Instance.LoadSettings();
         }
     }
 }

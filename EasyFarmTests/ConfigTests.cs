@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes;
 using EasyFarm.UserSettings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -53,19 +54,9 @@ namespace EasyFarmTests
             var conf = new Config();
             conf.DebugEnabled = true;
             conf.PartyFilter = false;
-            conf.SaveSettings();
-            conf.LoadSettings();
+            Serialization.Serialize("test.xml", conf);
+            conf = Serialization.Deserialize<Config>("test.xml");
             Assert.IsFalse(conf.PartyFilter);
-        }
-
-        [TestMethod]
-        public void TestConfigPersistanceWithGetInstance()
-        {
-            Config.Instance.PartyFilter = true;
-            Config.Instance.DebugEnabled = true;
-            Config.Instance.SaveSettings();
-            Config.Instance.LoadSettings();
-            Assert.IsTrue(Config.Instance.PartyFilter);
         }
     }
 }

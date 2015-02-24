@@ -36,8 +36,8 @@ namespace EasyFarm.ViewModels
     {
         readonly DispatcherTimer _waypointRecorder = new DispatcherTimer();
         FFACE.Position _lastPosition = new FFACE.Position();
-        
-        public RoutesViewModel() 
+
+        public RoutesViewModel()
         {
             _waypointRecorder.Tick += RouteRecorder_Tick;
             _waypointRecorder.Interval = new TimeSpan(0, 0, 1);
@@ -91,32 +91,12 @@ namespace EasyFarm.ViewModels
 
         private void SaveRoute()
         {
-            var sfd = new SaveFileDialog
-            {
-                InitialDirectory = Directory.GetCurrentDirectory(),
-                DefaultExt = ".wpl",
-                Filter = "Waypoint lists (.wpl)|*.wpl"
-            };
-
-            if (sfd.ShowDialog() == true)
-            {
-                Serialization.Serialize(sfd.SafeFileName, Route);
-            }
+            SettingsManager.Save<ObservableCollection<Waypoint>>(Route);
         }
 
         private void LoadRoute()
         {
-            var ofd = new OpenFileDialog
-            {
-                InitialDirectory = Directory.GetCurrentDirectory(),
-                DefaultExt = ".wpl",
-                Filter = "Waypoint lists (.wpl)|*.wpl"
-            };
-
-            if (ofd.ShowDialog() == true)
-            {
-                Route = Serialization.Deserialize(ofd.SafeFileName, Route);
-            }
+            Route = SettingsManager.Load<ObservableCollection<Waypoint>>();
         }
 
         void RouteRecorder_Tick(object sender, EventArgs e)

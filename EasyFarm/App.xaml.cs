@@ -136,7 +136,6 @@ namespace EasyFarm
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
-            Config.Instance.SaveSettings();
             Logger.Write.ApplicationStart("Application exiting");
         }
 

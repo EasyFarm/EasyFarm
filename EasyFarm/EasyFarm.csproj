@@ -208,6 +208,7 @@
     <Compile Include="Classes\Extensions.cs" />
     <Compile Include="Classes\Helpers.cs" />
     <Compile Include="Classes\ProhibitEffects.cs" />
+    <Compile Include="Classes\SettingsManager.cs" />
     <Compile Include="Collections\FixedSortedList.cs" />
     <Compile Include="Collections\LimitedQueue.cs" />
     <Compile Include="Collections\ThresholdQueue.cs" />
