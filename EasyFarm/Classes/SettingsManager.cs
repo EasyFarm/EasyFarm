@@ -15,19 +15,16 @@ namespace EasyFarm.Classes
 
         public static void Save<T>(T value)
         {
-            var path = GetSavePath();
+            var path = GetSavePath();            
+            if (!File.Exists(path)) return;
             Serialization.Serialize<T>(path, value);
         }
 
         public static T Load<T>()
         {
             var path = GetLoadPath();
-            if (File.Exists(path))
-            {
-                return Serialization.Deserialize<T>(path);
-            }
-
-            return default(T);
+            if (!File.Exists(path)) return default(T);
+            return Serialization.Deserialize<T>(path);
         }
 
         private static string GetSavePath()

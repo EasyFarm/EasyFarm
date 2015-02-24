@@ -96,7 +96,15 @@ namespace EasyFarm.ViewModels
 
         private void LoadRoute()
         {
-            Route = SettingsManager.Load<ObservableCollection<Waypoint>>();
+            var path = SettingsManager.Load<ObservableCollection<Waypoint>>();
+            
+            if (path == null)
+            {
+                ViewModelBase.InformUser("Path could not be loaded. ");
+                return;
+            }
+
+            Route = path;
         }
 
         void RouteRecorder_Tick(object sender, EventArgs e)

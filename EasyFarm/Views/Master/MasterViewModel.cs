@@ -184,7 +184,15 @@ namespace EasyFarm.ViewModels
         private void Load()
         {
             Logger.Write.SaveSettings("Settings loaded");
-            Config.Instance = SettingsManager.Load<Config>();
+            var settings = SettingsManager.Load<Config>();
+            
+            if (settings == null)
+            {
+                ViewModelBase.InformUser("Settings could not be loaded. ");
+                return;
+            }
+
+            Config.Instance = settings;
         }
 
         /// <summary>

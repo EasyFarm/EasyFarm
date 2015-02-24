@@ -42,15 +42,22 @@ namespace EasyFarm.Classes
 
         public static T Deserialize<T>(string filename)
         {
+            try
+            {
                 if (System.IO.File.Exists(filename))
                 {
                     using (Stream fStream = new FileStream(filename,
                         FileMode.Open, FileAccess.Read, FileShare.None))
                     {
                         XmlSerializer xmlDeserializer = new XmlSerializer(typeof(T));
-                        return (T) xmlDeserializer.Deserialize(fStream);
+                        return (T)xmlDeserializer.Deserialize(fStream);
                     }
                 }
+            }
+            catch (InvalidOperationException) 
+            {
+                return default(T);
+            }
 
             return default(T);
         }
