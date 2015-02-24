@@ -24,6 +24,7 @@ using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EasyFarm.Logging
@@ -71,11 +72,18 @@ namespace EasyFarm.Logging
             public const int PERFORMANCE_ELAPSED_TIME = 600;
         }
 
+        public Logger()
+        {
+            _syncContext = SynchronizationContext.Current;
+        }
+
         /// <summary>
         /// Our internal instance of our logger. 
         /// </summary>
         private readonly static Lazy<Logger> m_instance =
             new Lazy<Logger>(() => new Logger());
+
+        private readonly SynchronizationContext _syncContext;
 
         /// <summary>
         /// Returns a static instance to our logger object for 
@@ -186,7 +194,13 @@ namespace EasyFarm.Logging
 
         public void SimpleWrite(int id, string message)
         {
-            if (this.IsEnabled()) WriteEvent(id, message);
+            if (IsEnabled())
+            {
+                if (_syncContext == SynchronizationContext.Current)
+                    WriteEvent(id, message);
+                else
+                    _syncContext.Send(o => WriteEvent(id, message), null);
+            }
         }
     }
 }
