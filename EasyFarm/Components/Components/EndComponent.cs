@@ -68,18 +68,10 @@ namespace EasyFarm.Components
 
         public override void RunComponent()
         {
-            var Usable = Config.Instance.EndList
-                    .Where(x => x.Enabled && x.IsCastable(FFACE));
-
-            // Only cast buffs when their status effects are not on the player. 
-            var Buffs = Usable.Where(x => x.HasEffectWore(FFACE));
-
-            // Cast the other abilities on cooldown. 
-            var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
-                .Where(x => !x.IsBuff());
-
             // Execute moves. 
-            Executor.UseBuffingActions(Buffs.Union(Others));
+            var Usable = Config.Instance.EndList
+                .Where(x => ActionFilters.BattleAbilityFilter(FFACE, x));
+            Executor.UseBuffingActions(Usable);
 
             if (lastCheckedForMob.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
             {
@@ -95,15 +87,9 @@ namespace EasyFarm.Components
                 AttackContainer.TargetUnit = mobs.FirstOrDefault();
             }
 
-            if (App.Current != null)
+            if (Target != null)
             {
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    if (Target != null)
-                    {
-                        Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.ID);
-                    }
-                });
+                Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.ID);
             }
         }
 

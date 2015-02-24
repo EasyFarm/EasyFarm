@@ -37,6 +37,20 @@ namespace EasyFarm.Classes
             return Helpers.IsActionValid(fface, x);
         }
 
+        public static bool BattleAbilityFilter(FFACE fface, BattleAbility x)
+        {
+            // Return if not enabled. 
+            if (!x.Enabled) return false;
+
+            // Return if not castable.
+            if (!x.IsCastable(fface)) return false;
+
+            // If it meets these requirements, it's true. 
+            // If it's a buff and has wore, true,
+            // If it's not a buff then true. 
+            return x.IsBuff() && x.HasEffectWore(fface) || !x.IsBuff();
+        }
+
         /// <summary>
         /// Filters out usable healing abilities. 
         /// </summary>
@@ -44,10 +58,10 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public static bool HealingFilter(FFACE fface, HealingAbility x)
         {
-            if (!x.IsEnabled) 
+            if (!x.IsEnabled)
                 return false;
 
-            if (x.TriggerLevel < fface.Player.HPPCurrent) 
+            if (x.TriggerLevel < fface.Player.HPPCurrent)
                 return false;
 
             if (!AbilityFilter(fface, new AbilityService().CreateAbility(x.Name)))
@@ -61,7 +75,7 @@ namespace EasyFarm.Classes
         /// </summary>
         /// <param name="fface"></param>
         /// <returns></returns>
-        public static Func<WeaponSkill, IUnit, bool> WeaponSkillFilter(FFACE fface)
+        public static bool WeaponSkillFilter(FFACE fface, WeaponSkill x, IUnit u)
         {
             //////////////////////////////////////////////////////
             // Code for testing weaponskill filtering.          //
@@ -76,28 +90,25 @@ namespace EasyFarm.Classes
             }
             //////////////////////////////////////////////////////
 
-            return new Func<WeaponSkill, IUnit, bool>((WeaponSkill x, IUnit u) =>
-            {
-                // Weaponskill a valid ability?
-                if (!x.Ability.IsValidName) return false;
+            // Weaponskill a valid ability?
+            if (!x.Ability.IsValidName) return false;
 
-                // Not enough tp. 
-                if (TPCurrent < Constants.WEAPONSKILL_TP) return false;
+            // Not enough tp. 
+            if (TPCurrent < Constants.WEAPONSKILL_TP) return false;
 
-                // Not engaged. 
-                if (!Status.Equals(Status.Fighting)) return false;
+            // Not engaged. 
+            if (!Status.Equals(Status.Fighting)) return false;
 
-                // The target's health is greater than the upper threshold, return false. 
-                if (u.HPPCurrent >= x.UpperHealth) return false;
+            // The target's health is greater than the upper threshold, return false. 
+            if (u.HPPCurrent >= x.UpperHealth) return false;
 
-                // Target's health is less than the lower threshold, return false. 
-                if (u.HPPCurrent <= x.LowerHealth) return false;
+            // Target's health is less than the lower threshold, return false. 
+            if (u.HPPCurrent <= x.LowerHealth) return false;
 
-                // Do not meet distance requirements. 
-                if (u.Distance >= x.Distance) return false;
+            // Do not meet distance requirements. 
+            if (u.Distance >= x.Distance) return false;
 
-                return true;
-            });
+            return true;
         }
     }
 }

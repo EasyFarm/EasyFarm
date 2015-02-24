@@ -21,6 +21,7 @@ using EasyFarm.Classes;
 using EasyFarm.UserSettings;
 using FFACETools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace EasyFarmTests
 {
@@ -87,15 +88,15 @@ namespace EasyFarmTests
             };
 
             // Test for success
-            Assert.IsTrue(ActionFilters.WeaponSkillFilter(null)(skill, unit));
+            Assert.IsTrue(ActionFilters.WeaponSkillFilter(null, skill, unit));
 
             // Test for failure on low hp. 
             unit.HPPCurrent = 0;
-            Assert.IsFalse(ActionFilters.WeaponSkillFilter(null)(skill, unit));
+            Assert.IsFalse(ActionFilters.WeaponSkillFilter(null, skill, unit));
 
             // Test for failure on high hp. 
             unit.HPPCurrent = 100;
-            Assert.IsFalse(ActionFilters.WeaponSkillFilter(null)(skill, unit));
-        }
+            Assert.IsFalse(ActionFilters.WeaponSkillFilter(null, skill, unit));
+        }        
     }
 }

@@ -61,26 +61,14 @@ namespace EasyFarm.Components
             // from move than 30 yalms problem. 
             if (FFACE.Player.Status.Equals(Status.Fighting))
             {
+                var weaponskill = Config.Instance.WeaponSkill;
+
                 // Weaponskill
-                if (ShouldWeaponSkill)
+                if (ActionFilters.WeaponSkillFilter(FFACE, weaponskill,Target))
                 {
                     // Cast the weaponskill. 
-                    this.Caster.CastAbility(Config.Instance.WeaponSkill.Ability);
+                    this.Caster.CastAbility(weaponskill.Ability);
                 }
-            }
-        }
-
-        /// <summary>
-        /// Can we perform our weaponskill on the target unit?
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public bool ShouldWeaponSkill
-        {
-            get
-            {
-                return ActionFilters.WeaponSkillFilter(FFACE)
-                    (Config.Instance.WeaponSkill, Target);
             }
         }
     }

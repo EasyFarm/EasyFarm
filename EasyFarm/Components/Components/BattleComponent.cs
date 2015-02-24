@@ -72,15 +72,9 @@ namespace EasyFarm.Components
 
         public override void RunComponent()
         {           
-            var Usable = Config.Instance.BattleList
-                .Where(x => x.Enabled && x.IsCastable(FFACE));
-
-            var Buffs = Usable.Where(x => x.HasEffectWore(FFACE));
-
-            var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
-                .Where(x => !x.IsBuff());
-
-            Executor.UseTargetedActions(Buffs.Union(Others), Target);
+            var Usable = Config.Instance.BattleList.Where(x => 
+                ActionFilters.BattleAbilityFilter(FFACE, x));
+            Executor.UseTargetedActions(Usable, Target);
         }
     }
 }

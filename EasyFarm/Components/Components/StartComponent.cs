@@ -48,26 +48,18 @@ namespace EasyFarm.Components
             return !AttackContainer.FightStarted;
         }
 
-        public override void EnterComponent() 
+        public override void EnterComponent()
         {
             FFACE.Navigator.Reset();
         }
 
         public override void RunComponent()
         {
-            var Usable = Config.Instance.StartList
-                    .Where(x => x.Enabled && x.IsCastable(FFACE));
-
-            // Only cast buffs when their status effects are not on the player. 
-            var Buffs = Usable
-                .Where(x => x.HasEffectWore(FFACE));
-
-            // Cast the other abilities on cooldown. 
-            var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
-                .Where(x => !x.IsBuff());
+            var usable = Config.Instance.StartList
+                .Where(x => ActionFilters.BattleAbilityFilter(FFACE, x));
 
             // Execute moves at target. 
-            Executor.UseBuffingActions(Buffs.Union(Others));
+            Executor.UseBuffingActions(usable);
         }
 
         public Unit Target

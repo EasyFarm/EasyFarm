@@ -64,27 +64,16 @@ namespace EasyFarm.Components
         /// </summary>
         public override void RunComponent()
         {
-            // Do not pull if the mob is already aggressive.. 
-            if (Target.Status.Equals(Status.Fighting)) return;
-
             // Do not pull if we've done so already. 
             if (AttackContainer.FightStarted) return;
 
             // Only pull if we have moves. 
             if (Config.Instance.PullList.Any(x => x.Enabled))
-            {
-                var Usable = Config.Instance.PullList
-                        .Where(x => x.Enabled && x.IsCastable(FFACE));
-
-                // Only cast buffs when their status effects are not on the player. 
-                var Buffs = Usable.Where(x => x.HasEffectWore(FFACE));
-
-                // Cast the other abilities on cooldown. 
-                var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
-                    .Where(x => !x.IsBuff());
-
-                // Execute all abilities. 
-                Executor.UseTargetedActions(Buffs.Union(Others), Target);
+            {                
+                var usable = Config.Instance.PullList
+                    .Where(x => ActionFilters.BattleAbilityFilter(FFACE, x));
+               
+                Executor.UseTargetedActions(usable, Target);
             }
         }        
 
