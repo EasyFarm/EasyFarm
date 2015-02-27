@@ -36,10 +36,17 @@ namespace EasyFarm.ViewModels
 {
     public class MasterViewModel : ViewModelBase
     {
+        private SettingsManager _settingsManager;
+
         public bool IsSettingsShown { get; set; }
 
         public MasterViewModel()
         {
+            _settingsManager = new SettingsManager(
+                "eup", 
+                "EasyFarm User Preference"
+            );
+
             // Toggles start / pause button text. 
             IsSettingsShown = false;
 
@@ -170,7 +177,7 @@ namespace EasyFarm.ViewModels
                 GameEngine.Start();
                 StartPauseHeader = "P_ause";
             }
-        }
+        }        
 
         /// <summary>
         /// Saves the player's data to file. 
@@ -178,13 +185,13 @@ namespace EasyFarm.ViewModels
         private void Save()
         {
             Logger.Write.SaveSettings("Settings saved");
-            SettingsManager.Save<Config>(Config.Instance);
+            _settingsManager.Save<Config>(Config.Instance);
         }
 
         private void Load()
         {
             Logger.Write.SaveSettings("Settings loaded");
-            var settings = SettingsManager.Load<Config>();
+            var settings = _settingsManager.Load<Config>();
             
             if (settings == null)
             {

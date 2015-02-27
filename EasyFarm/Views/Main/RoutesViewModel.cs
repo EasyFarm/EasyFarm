@@ -34,11 +34,25 @@ namespace EasyFarm.ViewModels
     [ViewModelAttribute("Routes")]
     public class RoutesViewModel : ViewModelBase
     {
-        readonly DispatcherTimer _waypointRecorder = new DispatcherTimer();
-        FFACE.Position _lastPosition = new FFACE.Position();
+        /// <summary>
+        /// Recorder to record new waypoints into our path. 
+        /// </summary>
+        private readonly DispatcherTimer _waypointRecorder;
+
+        /// <summary>
+        /// Used by the recorder to avoid duplicate, successive waypoints.
+        /// (Identicle waypoints are allowed, just not in succession.)
+        /// </summary>
+        private FFACE.Position _lastPosition = new FFACE.Position();
+
+        /// <summary>
+        /// Saves the route to file on user request. 
+        /// </summary>
+        private SettingsManager _settingsManager;
 
         public RoutesViewModel()
         {
+            _waypointRecorder = new DispatcherTimer();
             _waypointRecorder.Tick += RouteRecorder_Tick;
             _waypointRecorder.Interval = new TimeSpan(0, 0, 1);
 
@@ -46,27 +60,55 @@ namespace EasyFarm.ViewModels
             RecordRouteCommand = new DelegateCommand<Object>(RecordRoute);
             SaveCommand = new DelegateCommand(SaveRoute);
             LoadCommand = new DelegateCommand(LoadRoute);
+
+            _settingsManager = new SettingsManager(
+                "ewl",
+                "EasyFarm Waypoint List"
+            );
         }
 
+        /// <summary>
+        /// Exposes the list of waypoints to the user. 
+        /// </summary>
         public ObservableCollection<Waypoint> Route
         {
             get { return Config.Instance.Waypoints; }
             set { SetProperty(ref Config.Instance.Waypoints, value); }
         }
 
+        /// <summary>
+        /// Binding for the record command for the GUI.
+        /// </summary>
         public ICommand RecordRouteCommand { get; set; }
 
+        /// <summary>
+        /// Binding for the clear command for the GUI. 
+        /// </summary>
         public ICommand ClearRouteCommand { get; set; }
 
+        /// <summary>
+        /// Binding for the save command for the GUI. 
+        /// </summary>
         public ICommand SaveCommand { get; set; }
 
+        /// <summary>
+        /// Binding for the load command for the GUI. 
+        /// </summary>
         public ICommand LoadCommand { get; set; }
 
+        /// <summary>
+        /// Clears the waypoint list. 
+        /// </summary>
         public void ClearRoute()
         {
-            Route = new ObservableCollection<Waypoint>();
+            Route.Clear();
         }
 
+        /// <summary>
+        /// Pauses and resumes the path recorder based on
+        /// its current state. 
+        /// </summary>
+        /// <param name="recordButton"></param>
         public void RecordRoute(Object recordButton)
         {
             if (!_waypointRecorder.IsEnabled)
@@ -89,14 +131,20 @@ namespace EasyFarm.ViewModels
             }
         }
 
+        /// <summary>
+        /// Saves the route data. 
+        /// </summary>
         private void SaveRoute()
         {
-            SettingsManager.Save<ObservableCollection<Waypoint>>(Route);
+            _settingsManager.Save<ObservableCollection<Waypoint>>(Route);
         }
 
+        /// <summary>
+        /// Loads the route data. 
+        /// </summary>
         private void LoadRoute()
         {
-            var path = SettingsManager.Load<ObservableCollection<Waypoint>>();
+            var path = _settingsManager.Load<ObservableCollection<Waypoint>>();
             
             if (path == null)
             {
@@ -107,14 +155,19 @@ namespace EasyFarm.ViewModels
             Route = path;
         }
 
-        void RouteRecorder_Tick(object sender, EventArgs e)
+        /// <summary>
+        /// Records waypoints to the waypoint path. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RouteRecorder_Tick(object sender, EventArgs e)
         {
+            // Add a new waypoint only when we are not standing at 
+            // our last position. 
             var point = FFACE.Player.Position;
+            if (point.Equals(_lastPosition)) return;
 
-            if (point.Equals(_lastPosition))
-            {
-                return;
-            }
+            // Add the new waypoint. 
             Config.Instance.Waypoints.Add(new Waypoint(point));
             _lastPosition = point;
         }
