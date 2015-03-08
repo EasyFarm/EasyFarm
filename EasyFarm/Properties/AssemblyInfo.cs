@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZeroLimits")]
 [assembly: AssemblyProduct("EasyFarm")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCopyright("Copyright ©  2013 - 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.6.3.13")]
-[assembly: AssemblyFileVersion("1.6.3.13")]
+[assembly: AssemblyVersion("1.8.5.15")]
+[assembly: AssemblyFileVersion("1.8.5.15")]
