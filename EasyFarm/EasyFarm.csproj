@@ -455,9 +455,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FFACE.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="resources\abils.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -485,6 +482,11 @@
       <Project>{37456169-2b9e-49a7-8b20-a160c180e453}</Project>
       <Name>FFACETools</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FFACE.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

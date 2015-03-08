@@ -22,9 +22,15 @@ using FFACETools;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace EasyFarm.Classes
 {
+    /// <summary>
+    /// An ability that should be used in battle. It represents both
+    /// targeted and buffing abilities allowing the player to choose
+    /// to cast abilities when a buff has worn. 
+    /// </summary>
     public class BattleAbility : BindableBase
     {
         private bool m_enabled = false;
@@ -124,19 +130,20 @@ namespace EasyFarm.Classes
             return this.Ability.IsValidName;
         }
 
+        /// <summary>
+        /// Check to see if the buff has wore on the player. 
+        /// </summary>
+        /// <param name="fface"></param>
+        /// <returns></returns>
         public bool HasEffectWore(FFACE fface)
         {
-            // Convert string status effect to enum. 
-            StatusEffect status;
-            var conversionSuccesful = Enum.TryParse<StatusEffect>(this.Buff.Replace(" ", "_"), out status);
-
-            // Check if player does not have the status effect. 
-            if (conversionSuccesful && !fface.Player.StatusEffects.Contains(status))
-            {
-                return true;
-            }
-
-            return false;
+            // Use matching to determine if a buff has wore. 
+            // We remove '_' characters so buffs can be properly
+            // identified. 
+            return !fface.Player.StatusEffects.Any(x => 
+                Regex.IsMatch(x.ToString(), 
+                Buff.Replace(" ", "_"), 
+                RegexOptions.IgnoreCase));
         }
 
         public bool IsCastable(FFACE fface)
@@ -145,6 +152,10 @@ namespace EasyFarm.Classes
             return Helpers.IsActionValid(fface, this.Ability);
         }
 
+        /// <summary>
+        /// Determines whether this is a buffing ability. 
+        /// </summary>
+        /// <returns></returns>
         public bool IsBuff()
         {
             return !String.IsNullOrWhiteSpace(this.Buff);
