@@ -83,7 +83,8 @@ namespace EasyFarm.Classes
 
             // Ensure command has been successfully sent. 
             var previous = FFACE.Player.CastPercentEx;
-            while (previous == FFACE.Player.CastPercentEx)
+            var startTime = DateTime.Now;
+            while (previous == FFACE.Player.CastPercentEx && DateTime.Now < startTime.AddSeconds(3))
             {
                 FFACE.Windower.SendString(command);
                 Thread.Sleep(100);
