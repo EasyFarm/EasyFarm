@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License
 using EasyFarm.UserSettings;
 using FFACETools;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -55,13 +56,28 @@ namespace EasyFarm.Classes
         {
             if (actions == null) throw new ArgumentNullException("actions");
 
-            foreach (var action in actions.ToList())
-            {
-                // Cast the spell. 
-                Caster.CastSpell(action);
+            var castables = actions.ToList();
 
-                // Sleep until a spell is recastable. 
-                Thread.Sleep(Config.Instance.GlobalCooldown);
+            while (castables.Count > 0)
+            {
+                foreach (var action in castables.ToList())
+                {
+                    if (!ActionFilters.BattleAbilityFilter(FFACE, action))
+                    {
+                        castables.Remove(action);
+                    }
+
+                    // Try to cast the spell. On failure, 
+                    // continue and recast at a later time. 
+                    if (!Caster.CastSpell(action)) continue;
+
+                    // Remove spell from castables so that it 
+                    // will not be casted again. 
+                    castables.Remove(action);
+                    
+                    // Sleep until a spell is recastable. 
+                    Thread.Sleep(Config.Instance.GlobalCooldown);
+                }
             }
         }
 
@@ -109,25 +125,13 @@ namespace EasyFarm.Classes
 
             foreach (var action in actions)
             {
-                // Move to target if out of distance. 
-                if (target.Distance > action.Distance)
-                {
-                    // Move to unit at max buff distance. 
-                    var oldTolerance = FFACE.Navigator.DistanceTolerance;
-                    FFACE.Navigator.DistanceTolerance = action.Distance;
-                    FFACE.Navigator.GotoNPC(target.ID);
-                    FFACE.Navigator.DistanceTolerance = action.Distance;
-                }
+                MoveIntoActionRange(target, action);
 
                 // Face unit
                 FFACE.Navigator.FaceHeading(target.Position);
 
                 // Target mob if not currently targeted. 
-                if (target.ID != FFACE.Target.ID)
-                {
-                    FFACE.Target.SetNPCTarget(target.ID);
-                    FFACE.Windower.SendString("/ta <t>");
-                }
+                SetTarget(target);
 
                 if (action.Ability.ActionType == ActionType.Spell)
                 {
@@ -138,6 +142,37 @@ namespace EasyFarm.Classes
                 {
                     Caster.CastAbility(action);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Place cursor on unit
+        /// </summary>
+        /// <param name="target"></param>
+        private void SetTarget(Unit target)
+        {
+            if (target.ID != FFACE.Target.ID)
+            {
+                FFACE.Target.SetNPCTarget(target.ID);
+                FFACE.Windower.SendString("/ta <t>");
+            }
+        }
+
+        /// <summary>
+        /// Move close enough to mob to use an ability. 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="action"></param>
+        private void MoveIntoActionRange(Unit target, BattleAbility action)
+        {
+            // Move to target if out of distance. 
+            if (target.Distance > action.Distance)
+            {
+                // Move to unit at max buff distance. 
+                var oldTolerance = FFACE.Navigator.DistanceTolerance;
+                FFACE.Navigator.DistanceTolerance = action.Distance;
+                FFACE.Navigator.GotoNPC(target.ID);
+                FFACE.Navigator.DistanceTolerance = action.Distance;
             }
         }
 

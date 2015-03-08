@@ -20,6 +20,7 @@ using EasyFarm.Collections;
 using FFACETools;
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace EasyFarm.Classes
 {
@@ -48,22 +49,6 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public bool CastSpell(Ability ability)
         {
-            // Player contains a move that prevents casting or movement. 
-            if (ProhibitEffects.PROHIBIT_EFFECTS_SPELL.Intersect(FFACE.Player.StatusEffects).Any())
-                return false;
-
-            // Check if recast is available. 
-            if (!Helpers.IsRecastable(FFACE, ability))
-            {
-                return false;
-            }
-
-            // Do we meet the mp requirements. 
-            if (!Helpers.IsActionValid(FFACE, ability))
-            {
-                return false;
-            }
-
             // Call for player to stop. 
             while (Player.IsMoving)
             {
@@ -97,15 +82,14 @@ namespace EasyFarm.Classes
             }
 
             // Ensure command has been successfully sent. 
-            int count = 0;
             var previous = FFACE.Player.CastPercentEx;
-            while (previous == FFACE.Player.CastPercentEx && count++ < 5)
+            while (previous == FFACE.Player.CastPercentEx)
             {
                 FFACE.Windower.SendString(command);
+                Thread.Sleep(100);
             }
 
-            if (count == 5) return true;
-            else return false;
+            return true;
         }
 
         private bool MonitorCast()
@@ -114,49 +98,43 @@ namespace EasyFarm.Classes
             // moved or casting has been finished. 
             var position = FFACE.Player.Position;
             var castHistory = new LimitedQueue<short>(100);
+            var prior = FFACE.Player.CastPercentEx;
 
-            while (!castHistory.RepeatsN(10).Any())
+            while (!castHistory.RepeatsN(30).Any())
             {
-                castHistory.AddItem(FFACE.Player.CastPercentEx);
+                if (prior == FFACE.Player.CastPercentEx)
+                    castHistory.AddItem(FFACE.Player.CastPercentEx);
 
                 // Has moved 
                 if (position.X != FFACE.Player.PosX ||
                     position.Y != FFACE.Player.PosY ||
-                    position.Z != FFACE.Player.PosZ) return false;
+                    position.Z != FFACE.Player.PosZ) return false;                
+
+                prior = FFACE.Player.CastPercentEx;
+
+                Thread.Sleep(100);
             }
 
             // Report success
-            if (castHistory.RepeatsN(10).Any(x => x.Equals(100))) return true;
+            if (castHistory.RepeatsN(30).Any(x => x.Equals(100))) return true;
             else return false;
         }
 
         public bool CastAbility(Ability ability)
-        {
-            // Check if recast is available. 
-            if (!Helpers.IsRecastable(FFACE, ability))
-            {
-                return false;
-            }
-
-            // Do we meet the mp requirements. 
-            if (!Helpers.IsActionValid(FFACE, ability))
-            {
-                return false;
-            }
-
+        {           
             // Send the command to the game. 
             FFACE.Windower.SendString(ability.ToString());
             return true;
         }
 
-        public void CastAbility(BattleAbility ability)
+        public bool CastAbility(BattleAbility ability)
         {
-            this.CastAbility(ability.Ability);
+            return CastAbility(ability.Ability);
         }
        
         public bool CastSpell(BattleAbility ability)
         {
-            return this.CastSpell(ability.Ability);
+            return CastSpell(ability.Ability);
         }
     }
 }
