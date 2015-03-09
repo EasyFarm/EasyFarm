@@ -183,23 +183,42 @@ namespace EasyFarm.ViewModels
         /// Saves the player's data to file. 
         /// </summary>
         private void Save()
-        {
-            Logger.Write.SaveSettings("Settings saved");
-            _settingsManager.Save<Config>(Config.Instance);
+        {           
+            try
+            {                
+                _settingsManager.Save<Config>(Config.Instance);
+                ViewModelBase.InformUser("Settings have been saved.");
+                Logger.Write.SaveSettings("Settings saved");
+            }
+            catch (InvalidOperationException)
+            {
+                ViewModelBase.InformUser("Failed to save settings.");
+            }
         }
 
         private void Load()
         {
-            Logger.Write.SaveSettings("Settings loaded");
-            var settings = _settingsManager.Load<Config>();
-            
-            if (settings == null)
-            {
-                ViewModelBase.InformUser("Settings could not be loaded. ");
-                return;
-            }
+            try
+            {                
+                // Load the settings.
+                var settings = _settingsManager.Load<Config>();
 
-            Config.Instance = settings;
+                // Did we fail to load the settings?
+                if (settings == null)
+                {
+                    ViewModelBase.InformUser("Failed to load settings.");
+                    return;
+                }
+
+                // Inform the user of our success. 
+                Config.Instance = settings;
+                ViewModelBase.InformUser("Settings have been loaded.");
+                Logger.Write.SaveSettings("Settings loaded");
+            }
+            catch (InvalidOperationException)
+            {
+                ViewModelBase.InformUser("Failed to load settings.");
+            }
         }
 
         /// <summary>

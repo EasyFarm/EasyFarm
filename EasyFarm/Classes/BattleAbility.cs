@@ -17,12 +17,15 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.ViewModels;
 using EasyFarm.Views;
 using FFACETools;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 
 namespace EasyFarm.Classes
 {
@@ -35,99 +38,69 @@ namespace EasyFarm.Classes
     {
         private bool m_enabled = false;
 
-        /// <summary>
-        /// Is the move enabled?
-        /// </summary>
-        public bool Enabled
-        {
-            get { return this.m_enabled; }
-            set { SetProperty(ref this.m_enabled, value); }
-        }
-
         private string m_name = String.Empty;
-
-        /// <summary>
-        /// The ability's name. I'm using NameX since it seems to 
-        /// bind and Name and AbilityName do not. Will fix when I locate 
-        /// the problem. 
-        /// </summary>
-        public String NameX
-        {
-            get { return this.m_name; }
-            set
-            {
-                SetProperty(ref this.m_name, value);
-            }
-        }
 
         private string m_buff = String.Empty;
 
-        /// <summary>
-        /// Name of the buff that will be applied when using it. 
-        /// </summary>
-        public String Buff
-        {
-            get { return this.m_buff; }
-            set { SetProperty(ref this.m_buff, value); }
-        }
-
         private double m_distance = Constants.MELEE_DISTANCE;
 
-        /// <summary>
-        /// The distance the move should be used at. 
-        /// </summary>
-        public double Distance
+        private Ability m_ability = new Ability();
+        
+        public BattleAbility()
         {
-            get { return this.m_distance; }
-            set
-            {
-                SetProperty(ref this.m_distance, (int)value);
-            }
-        }
-
-        public Ability m_ability = new Ability();
-
-        /// <summary>
-        /// The other ability's attributes. 
-        /// </summary>
-        public Ability Ability
-        {
-            get { return this.m_ability; }
-            set { SetProperty(ref this.m_ability, value); }
-        }
-
-        public BattleAbility() { }
-
+            SetCommand = new DelegateCommand(SetAbility);
+        }        
+              
         /// <summary>
         /// Sets the ability field. 
         /// </summary>
-        public bool SetAbility()
-        {
+        public void SetAbility()
+        {            
             // We've already parsed the ability. 
-            if (this.Ability.Name.Equals(this.NameX,
-                StringComparison.CurrentCultureIgnoreCase)) return true;
+            if (Ability.Name.Equals(Name,
+                StringComparison.CurrentCultureIgnoreCase))
+            {
+                ViewModelBase.InformUser(Name + " set successfully. ");
+                return;
+            }
 
+            // Get the ability by name. 
+            var ability = FindAbility(Name);
+
+            // Attempt to set the ability and inform the 
+            // user of its sucess. 
+            if (ability == null)
+            {
+                ViewModelBase.InformUser(Name + " could not be set. ");
+            }
+            else 
+            {
+                this.Ability = ability;
+                ViewModelBase.InformUser(Name + " set successfully. ");
+            }
+        }
+
+        /// <summary>
+        /// Locates an ability by name and prompting the user if 
+        /// more than one ability has been found. 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public Ability FindAbility(String name)
+        {
+            // Our service for locating abilities. 
             AbilityService Fetcher = new AbilityService();
 
             // Retriever all moves with the specified name. 
-            var moves = Fetcher.GetAbilitiesWithName(this.NameX);
+            var moves = Fetcher.GetAbilitiesWithName(name);
 
-            if (moves.Any())
-            {
-                if (moves.Count > 1)
-                {
-                    // Let user pick one. 
-                    this.Ability = new AbilitySelectionBox(this.NameX).SelectedAbility;
-                }
-                else
-                {
-                    // Grab the only move. 
-                    this.Ability = moves.FirstOrDefault();
-                }
-            }
-
-            // Return true if we've found and stored any ability. 
-            return this.Ability.IsValidName;
+            // Prompt user to select a move if more 
+            // than one are found with the same name. 
+            // Otherwise, return the first occurence or null. 
+            if (moves.Count > 1)
+                return new AbilitySelectionBox(this.Name).SelectedAbility;
+            else 
+                return moves.FirstOrDefault();
         }
 
         /// <summary>
@@ -159,6 +132,67 @@ namespace EasyFarm.Classes
         public bool IsBuff()
         {
             return !String.IsNullOrWhiteSpace(this.Buff);
+        }
+
+        /// <summary>
+        /// Sets an BattleAbility's ability object using the ability service object
+        /// for lookups. 
+        /// </summary>
+        // Delegate Commands cannot be serialized. 
+        [XmlIgnore] 
+        public DelegateCommand SetCommand { get; set; }
+
+        /// <summary>
+        /// Is the move enabled?
+        /// </summary>
+        public bool Enabled
+        {
+            get { return this.m_enabled; }
+            set { SetProperty(ref this.m_enabled, value); }
+        }
+
+        /// <summary>
+        /// The ability's name. I'm using NameX since it seems to 
+        /// bind and Name and AbilityName do not. Will fix when I locate 
+        /// the problem. 
+        /// </summary>
+        public String Name
+        {
+            get { return this.m_name; }
+            set
+            {
+                SetProperty(ref this.m_name, value);
+            }
+        }
+
+        /// <summary>
+        /// Name of the buff that will be applied when using it. 
+        /// </summary>
+        public String Buff
+        {
+            get { return this.m_buff; }
+            set { SetProperty(ref this.m_buff, value); }
+        }
+
+        /// <summary>
+        /// The distance the move should be used at. 
+        /// </summary>
+        public double Distance
+        {
+            get { return this.m_distance; }
+            set
+            {
+                SetProperty(ref this.m_distance, (int)value);
+            }
+        }
+
+        /// <summary>
+        /// The other ability's attributes. 
+        /// </summary>
+        public Ability Ability
+        {
+            get { return this.m_ability; }
+            set { SetProperty(ref this.m_ability, value); }
         }
     }
 }

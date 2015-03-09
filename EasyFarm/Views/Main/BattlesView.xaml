@@ -6,12 +6,9 @@
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:Views="clr-namespace:EasyFarm.Views"
              mc:Ignorable="d"
-             d:DesignHeight="168"
-             d:DesignWidth="715">
-    <Grid Width="Auto"
-          Height="Auto"
-          FlowDirection="LeftToRight"
-          ShowGridLines="False">
+             d:DesignHeight="435"
+             d:DesignWidth="785">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -101,23 +98,18 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnAddAbility"
-                    Grid.Column="0"
+            <Button Grid.Column="0"
                     Margin="5"
                     Command="{Binding AddActionCommand}"
-                    CommandParameter="{Binding ElementName=txbAbilityName, Path=Text}"
                     Content="Add" />
-            <Button x:Name="btnDeleteAbility"
-                    Grid.Column="1"
+            <Button Grid.Column="1"
                     Margin="5"
                     Command="{Binding DeleteActionCommand}"
-                    CommandParameter="{Binding ElementName=lstAbilities, Path=SelectedItem}"
                     Content="Delete" />
-            <Button x:Name="btnClearAbilities"
-                    Margin="5"
+            <Button Margin="5"
                     Grid.Column="2"
                     Command="{Binding ClearActionsCommand}"
                     Content="Clear" />
-        </Grid>        
+        </Grid>
     </Grid>
 </UserControl>

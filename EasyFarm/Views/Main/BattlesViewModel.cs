@@ -36,7 +36,7 @@ namespace EasyFarm.ViewModels
             AddActionCommand = new DelegateCommand(AddAction);
             DeleteActionCommand = new DelegateCommand(DeleteAction);
             ClearActionsCommand = new DelegateCommand(ClearActions);
-            SetCommand = new DelegateCommand(SetAbility);
+            
         }
 
         public int SelectedIndex { get; set; }
@@ -56,14 +56,6 @@ namespace EasyFarm.ViewModels
                 {
                     return this.SelectedList[SelectedIndex];
                 }
-            }
-        }
-
-        private void SetAbility()
-        {
-            if (SelectedAbility.SetAbility())
-            {
-                ViewModelBase.InformUser(SelectedAbility.NameX + " set successfully. ");
             }
         }
 
@@ -168,13 +160,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         /// Action to clear all moves from the currently selected list.
         /// </summary>
-        public ICommand ClearActionsCommand { get; set; }
-
-        /// <summary>
-        /// Sets an BattleAbility's ability object using the ability service object
-        /// for lookups. 
-        /// </summary>
-        public ICommand SetCommand { get; set; }
+        public ICommand ClearActionsCommand { get; set; }        
 
         /// <summary>
         /// Returns the currently selected list.

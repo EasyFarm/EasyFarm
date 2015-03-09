@@ -138,7 +138,15 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private void SaveRoute()
         {
-            _settingsManager.Save<ObservableCollection<Waypoint>>(Route);
+            try
+            {
+                _settingsManager.Save<ObservableCollection<Waypoint>>(Route);
+                ViewModelBase.InformUser("Path has been saved.");    
+            }
+            catch (InvalidOperationException)
+            {
+                ViewModelBase.InformUser("Failed to save path.");
+            }            
         }
 
         /// <summary>
@@ -146,15 +154,26 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private void LoadRoute()
         {
-            var path = _settingsManager.Load<ObservableCollection<Waypoint>>();
-            
-            if (path == null)
+            try
             {
-                ViewModelBase.InformUser("Path could not be loaded. ");
-                return;
-            }
+                // Load the path
+                var path = _settingsManager.Load<ObservableCollection<Waypoint>>();
 
-            Route = path;
+                // Did we fail to load the settings?
+                if (path == null)
+                {
+                    ViewModelBase.InformUser("Failed to load the path.");
+                    return;
+                }
+
+                ViewModelBase.InformUser("Path has been loaded.");
+
+                Route = path;
+            }
+            catch (InvalidOperationException)
+            {
+                ViewModelBase.InformUser("Failed to load the path.");
+            }            
         }
 
         /// <summary>

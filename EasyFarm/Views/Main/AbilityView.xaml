@@ -4,9 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="86"
-             d:DesignWidth="325"
-             Margin="1">
+             d:DesignHeight="105"
+             d:DesignWidth="365">
 
     <Border BorderBrush="Black"
             BorderThickness="1">
@@ -22,17 +21,16 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <CheckBox IsChecked="{Binding Enabled}"
+            <CheckBox IsChecked="{Binding Path=Enabled}"
                       Content="Enabled"
                       Margin="5, 0, 5, 0" />
             <TextBox Grid.Column="1"
-                     Text="{Binding NameX}" />
+                     Text="{Binding Path=Name}" />
             <Button Grid.Column="2"
                     Grid.Row="0"
                     Content="Set"
                     Margin="5 0"
-                    Command="{Binding ElementName=lstAbilities, Path=DataContext.SetCommand}" />
-
+                    Command="{Binding Path=SetCommand}" />
             <Label Grid.Column="0"
                    Grid.Row="1"
                    Content="Recast on wear"
