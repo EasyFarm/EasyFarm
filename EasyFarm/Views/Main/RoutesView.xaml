@@ -14,22 +14,17 @@
         <StackPanel>
             <!--Begins record waypoints and adding them to the list.-->
             <Button x:Name="btnRecordWaypoints"
-                    Width="75"
                     Margin="0 5 0 0"
-                    Command="{Binding RecordRouteCommand}"
-                    CommandParameter="{Binding ElementName=btnRecordWaypoints}"
-                    Content="Record" />
+                    Command="{Binding RecordCommand}"
+                    Content="{Binding RecordHeader}" />
             <!--Clears all the waypoints in the waypoint list-->
-            <Button Command="{Binding ClearRouteCommand}"
-                    Width="75"
+            <Button Command="{Binding ClearCommand}"
                     Margin="0 5 0 0"
                     Content="Clear" />
             <Button Command="{Binding SaveCommand}"
-                    Width="75"
                     Margin="0 5 0 0"
                     Content="Save"/>
             <Button Command="{Binding LoadCommand}"
-                    Width="75"
                     Margin="0 5 0 0"
                     Content="Load"/>
             <!--Contains the list of coordinates to display to the user.-->
