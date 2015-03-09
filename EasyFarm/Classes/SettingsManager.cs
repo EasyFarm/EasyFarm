@@ -21,6 +21,12 @@ namespace EasyFarm.Classes
             _startPath = Environment.CurrentDirectory;
         }
 
+        /// <summary>
+        /// Saves settings to file. 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <exception cref="System.InvalidOperationException"></exception>
         public void Save<T>(T value)
         {
             var path = GetSavePath();
@@ -28,6 +34,12 @@ namespace EasyFarm.Classes
             Serialization.Serialize<T>(path, value);
         }
 
+        /// <summary>
+        /// Loads settings from file. 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        /// /// <exception cref="InvalidOperationException"></exception>
         public T Load<T>()
         {
             var path = GetLoadPath();

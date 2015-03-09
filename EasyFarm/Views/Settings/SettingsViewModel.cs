@@ -39,7 +39,6 @@ namespace EasyFarm.ViewModels
             HeightThreshold = Constants.HEIGHT_THRESHOLD;
             MeleeDistance = Constants.MELEE_DISTANCE;
             WanderDistance = Constants.DETECTION_DISTANCE;
-            CastLatency = Constants.SPELL_CAST_LATENCY;
             GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
             InformUser("Defaults have been restored.");
         }
@@ -72,17 +71,7 @@ namespace EasyFarm.ViewModels
                 SetProperty<double>(ref Config.Instance.MeleeDistance, value);
                 InformUser("Melee Distance Set: {0:F1}.", value);
             }
-        }
-
-        public double RangedAttackDelay
-        {
-            get { return Config.Instance.RangedAttackDelay; }
-            set
-            {
-                SetProperty<double>(ref Config.Instance.RangedAttackDelay, value);
-                InformUser("Ranged Attack Distance Set: {0}.", value);
-            }
-        }
+        }        
 
         public double WanderDistance
         {
@@ -91,16 +80,6 @@ namespace EasyFarm.ViewModels
             {
                 SetProperty<double>(ref Config.Instance.WanderDistance, (int)value);
                 InformUser("Wander Distance Set: {0}.", (int)value);
-            }
-        }
-
-        public int CastLatency
-        {
-            get { return Config.Instance.CastLatency; }
-            set
-            {
-                SetProperty(ref Config.Instance.CastLatency, (int)value);
-                InformUser("Cast Latency Set: {0}.", (int)value);
             }
         }
 
@@ -139,20 +118,9 @@ namespace EasyFarm.UserSettings
         public double MeleeDistance = Constants.MELEE_DISTANCE;
 
         /// <summary>
-        /// The amount of time in seconds to wait before refiring a 
-        /// ranged weapon. 
-        /// </summary>
-        public double RangedAttackDelay = 3;
-
-        /// <summary>
         /// How far to go of the path for a unit. 
         /// </summary>
         public double WanderDistance = Constants.DETECTION_DISTANCE;
-
-        /// <summary>
-        /// Cast delay for laggy servers. 
-        /// </summary>
-        public int CastLatency = Constants.SPELL_CAST_LATENCY;
 
         /// <summary>
         /// Cast delay before casting next spell 

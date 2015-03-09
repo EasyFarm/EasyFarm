@@ -41,9 +41,6 @@ namespace EasyFarm.UserSettings
         [XmlIgnore]
         private static Lazy<Config> lazy = new Lazy<Config>(() => new Config());
 
-        [XmlIgnore]
-        public FFACE FFACE { get; set; }
-
         /// <summary>
         /// Sets up the default values for player settings. 
         /// Used also for unit testing purposes. 

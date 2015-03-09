@@ -72,9 +72,6 @@ namespace EasyFarm.ViewModels
 
             // Create a new game engine to control our character. 
             GameEngine = new GameEngine(FFACE);
-
-            // Set FFACE session for config. 
-            Config.Instance.FFACE = FFACE;
         }
     }
 }

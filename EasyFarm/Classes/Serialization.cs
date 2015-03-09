@@ -14,7 +14,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
 using FFACETools;
 using System;
@@ -30,6 +31,15 @@ namespace EasyFarm.Classes
 {
     public static class Serialization
     {
+        /// <summary>
+        /// Serializes an object to file. This function does not 
+        /// handle errors and it's the consumer's job to do so. 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filename"></param>
+        /// <param name="value"></param>
+        /// <exception cref="System.InvalidOperationException"></exception>
+        /// <exception cref="System.IO.IOException"></exception>
         public static void Serialize<T>(string filename, T value)
         {
             using (Stream fStream = new FileStream(filename,
@@ -40,26 +50,23 @@ namespace EasyFarm.Classes
             }
         }
 
+        /// <summary>
+        /// Serializes an object from file. This function does not 
+        /// handle errors and it's the consumer's job to do so. 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filename"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="FileNotFoundException"></exception>
+        /// <returns></returns>
         public static T Deserialize<T>(string filename)
         {
-            try
+            using (Stream fStream = new FileStream(filename,
+                FileMode.Open, FileAccess.Read, FileShare.None))
             {
-                if (System.IO.File.Exists(filename))
-                {
-                    using (Stream fStream = new FileStream(filename,
-                        FileMode.Open, FileAccess.Read, FileShare.None))
-                    {
-                        XmlSerializer xmlDeserializer = new XmlSerializer(typeof(T));
-                        return (T)xmlDeserializer.Deserialize(fStream);
-                    }
-                }
+                XmlSerializer xmlDeserializer = new XmlSerializer(typeof(T));
+                return (T)xmlDeserializer.Deserialize(fStream);
             }
-            catch (InvalidOperationException) 
-            {
-                return default(T);
-            }
-
-            return default(T);
         }
     }
 }
