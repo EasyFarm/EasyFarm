@@ -68,36 +68,34 @@ namespace EasyFarm.Components
             return true;
         }
 
-        public override void EnterComponent()
-        {
-            _combat.Disengage();
-            _fface.Navigator.DistanceTolerance = 1;
-            _fface.Navigator.HeadingTolerance = 1;
-        }
-
         public override void RunComponent()
         {
-            // If we've reached the end of the path....
-            if (_position > Config.Instance.Waypoints.Count - 1)
+            // Create a copy of the list. 
+            var waypointPath = Config.Instance.Waypoints
+                .Select(x => x.Position)
+                .ToList();
+
+            // Reverse the waypoint path. 
+            if (_position == waypointPath.Count)
             {
-                // Turn around and run the path in reverse with the old end being the new starting point
-                Config.Instance.Waypoints = new ObservableCollection<Waypoint>
-                    (Config.Instance.Waypoints.Reverse());
+                Config.Instance.Waypoints = new ObservableCollection<Waypoint>(
+                    Config.Instance.Waypoints.Reverse());
 
                 _position = 0;
             }
 
-            // If we are more than 10 yalms away from the nearest point...
-
-            // Fix: May throw array out of bounds error when collection 
-            // is modified during execution. 
-
-            if (_fface.Navigator.DistanceTo(Config.Instance.Waypoints[_position].Position) > 10)
+            // If far away from the path, set us to run to the closest waypoint
+            if (_fface.Navigator.DistanceTo(waypointPath[_position]) > 10)
             {
-                SetPositionToNearestPoint();
+                var closest = waypointPath
+                    .OrderBy(x => _fface.Navigator.DistanceTo(x))
+                    .FirstOrDefault();
+
+                _position = waypointPath.IndexOf(closest);
             }
 
-            _fface.Navigator.Goto(Config.Instance.Waypoints[_position].Position, false, IsCancellationRequired);
+            // Run to the waypoint allowing cancellation on aggro or paused. 
+            _fface.Navigator.Goto(waypointPath[_position], false, IsCancellationRequired);
             _position++;
         }
 
@@ -113,35 +111,13 @@ namespace EasyFarm.Components
 
             // Check if the player has aggro, but don't hammer the 
             // npc array less than every second. 
-            if (LastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
-            {
-                if (_units.HasAggro) return true;
-            }
-
-            // Return when the user has pause the program. 
-            if (!ViewModelBase.GameEngine.IsWorking)
+            if (LastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now && _units.HasAggro)
             {
                 return true;
             }
 
-            return false;
-        }
-
-        /// <summary>
-        /// Set the position to nearest point. 
-        /// </summary>
-        private void SetPositionToNearestPoint()
-        {
-            // Get the nearest waypoint to the player. 
-            var nearest = Config.Instance.Waypoints
-                .OrderBy(x => _fface.Navigator.DistanceTo(x.Position))
-                .FirstOrDefault();
-
-            // Return if the list is empty; 
-            if (nearest == null) return;
-
-            // Get its index in the array of points, then ...
-            _position = Config.Instance.Waypoints.IndexOf(nearest);
+            // Return when the user has pause the program. 
+            return !ViewModelBase.GameEngine.IsWorking;
         }
     }
 }
