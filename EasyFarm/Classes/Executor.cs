@@ -65,6 +65,7 @@ namespace EasyFarm.Classes
                     if (!ActionFilters.BattleAbilityFilter(FFACE, action))
                     {
                         castables.Remove(action);
+                        continue;
                     }
 
                     // Try to cast the spell. On failure, 
@@ -108,7 +109,17 @@ namespace EasyFarm.Classes
         public void UseBuffingAction(Ability action)
         {
             if (action == null) throw new ArgumentNullException("action");
-            UseBuffingActions(new List<BattleAbility>() { new BattleAbility() { Ability = action } });
+            
+            // Convert ability to new battleability object. 
+            UseBuffingActions(new List<BattleAbility>() 
+            { 
+                new BattleAbility() 
+                {
+                    Ability = action, 
+                    Enabled = true, 
+                    Name = action.Name 
+                } 
+            });
         }
         #endregion
 

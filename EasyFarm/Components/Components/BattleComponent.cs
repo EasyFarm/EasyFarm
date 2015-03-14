@@ -74,7 +74,13 @@ namespace EasyFarm.Components
         {           
             var Usable = Config.Instance.BattleList.Where(x => 
                 ActionFilters.BattleAbilityFilter(FFACE, x));
-            Executor.UseTargetedActions(Usable, Target);
+
+            // Cast only one action to prevent blocking curing. 
+            var action = Usable.FirstOrDefault();
+            if (action != null)
+            {
+                Executor.UseTargetedAction(action, Target);
+            }
         }
     }
 }
