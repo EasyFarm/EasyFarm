@@ -17,23 +17,42 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System;
+
 namespace Parsing.Types
 {
     /// <summary>
     /// Represents the command used to trigger the action. 
     /// </summary>
-    public enum AbilityType  
+    [Flags]
+    public enum AbilityType
     {
-        Unknown,
-        Magic, 
-        Ninjutsu, 
-        Song, 
-        Trigger, 
-        Weaponskill, 
-        Range, 
-        Echo, 
-        Jobability, 
-        Pet, 
-        Monsterskill
+        Unknown         = 0x0000,
+        Magic           = 0x0001,
+        Ninjutsu        = 0x0002,
+        Song            = 0x0004,
+        Trigger         = 0x0008,
+        Weaponskill     = 0x0016,
+        Range           = 0x0032,
+        Echo            = 0x0064,
+        Jobability      = 0x0128,
+        Pet             = 0x0256,
+        Monsterskill    = 0x0512
+    }
+
+    /// <summary>
+    /// AbilityTypes that have been combined for special usages. 
+    /// </summary>
+    public class CompositeAbilityTypes
+    {
+        /// <summary>
+        /// Represents all the types that are spells or casted. 
+        /// </summary>
+        public static AbilityType IsSpell = (AbilityType.Magic | AbilityType.Ninjutsu | AbilityType.Song);
+
+        /// <summary>
+        /// Represents all the types that are not spells or casted. 
+        /// </summary>
+        public static AbilityType IsAbility = (AbilityType.Weaponskill | AbilityType.Range | AbilityType.Jobability | AbilityType.Pet | AbilityType.Monsterskill);
     }
 }

@@ -20,6 +20,8 @@ You should have received a copy of the GNU General Public License
 using EasyFarm.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Parsing.Abilities;
+using Parsing.Services;
 using System;
 using System.Diagnostics;
 
@@ -55,9 +57,9 @@ namespace XI_Tools_Tests
             {
                 Ability test = new Ability();
                 test.Prefix = "/magic";
-                test.Name = "Cure";
+                test.English = "Cure";
                 test.Targets = "Self";
-                var cure = new AbilityService().CreateAbility("Cure");
+                var cure = new AbilityService("resources").CreateAbility("Cure");
                 StringAssert.Equals(test.ToString(), cure.ToString());
             }
         }

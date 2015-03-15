@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using FFACETools;
+using Parsing.Abilities;
 using System;
 
 namespace EasyFarm.Classes
@@ -64,7 +65,7 @@ namespace EasyFarm.Classes
             if (x.TriggerLevel < fface.Player.HPPCurrent)
                 return false;
 
-            if (!AbilityFilter(fface, new AbilityService().CreateAbility(x.Name)))
+            if (!AbilityFilter(fface, App.AbilityService.CreateAbility(x.Name)))
                 return false;
 
             return true;

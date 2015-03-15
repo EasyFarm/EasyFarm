@@ -21,6 +21,7 @@ using EasyFarm.Classes;
 using EasyFarm.UserSettings;
 using FFACETools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Parsing.Abilities;
 using System.Collections.Generic;
 
 namespace EasyFarmTests
@@ -78,7 +79,7 @@ namespace EasyFarmTests
                 Enabled = true,
                 LowerHealth = 25,
                 UpperHealth = 75,
-                Ability = new Ability() { Name = "Raging Axe" }
+                Ability = new Ability() { English = "Raging Axe" }
             };
 
             TestUnit unit = new TestUnit()

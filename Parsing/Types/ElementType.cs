@@ -17,26 +17,29 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System;
+
 namespace Parsing.Types
 {
     /// <summary>
     /// The elemental type for the ability. 
     /// </summary>
+    [Flags]
     public enum ElementType
     {
-        Unknown,
-        Light, 
-        Wind, 
-        Earth, 
-        Water, 
-        Ice, 
-        Fire,
-        Thunder, 
-        Dark, 
-        NonElemental, 
-        None, 
-        trigger, 
-        Any, 
-        All
+        Unknown         = 0x0000,
+        Light           = 0x0001,
+        Wind            = 0x0002,
+        Earth           = 0x0004,
+        Water           = 0x0008,
+        Ice             = 0x0016,
+        Fire            = 0x0032,
+        Thunder         = 0x0064,
+        Dark            = 0x0128,
+        NonElemental    = 0x0256,
+        None            = 0x0512,
+        trigger         = 0x1024,
+        Any             = 0x2048,
+        All             = 0x4096
     }
 }

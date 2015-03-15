@@ -17,18 +17,21 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using Parsing.Abilities;
+using Parsing.Parsers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EasyFarm.Classes
+namespace Parsing.Services
 {
     /// <summary>
     /// This class is responsible for retrieving job abilties and spells.
     /// </summary>
     public class AbilityService : AbilityParser, IAbilityService
     {
-        public AbilityService() { }
+        public AbilityService(string resourcePath) : 
+            base(resourcePath) { }
 
         /// <summary>
         /// Creates an ability obj. This object may be a spell
@@ -39,7 +42,7 @@ namespace EasyFarm.Classes
         public Ability CreateAbility(string name)
         {
             var Abilities = GetAbilitiesWithName(name);
-            if (Abilities.Count <= 0) return new Ability();
+            if (Abilities.Count() <= 0) return new Ability();
             return Abilities.First();
         }
 
@@ -48,9 +51,9 @@ namespace EasyFarm.Classes
         /// </summary>
         /// <param name="name">Name of the action</param>
         /// <returns>A list of actions with that name</returns>
-        public ICollection<Ability> GetAbilitiesWithName(String name)
+        public IEnumerable<Ability> GetAbilitiesWithName(String name)
         {
-            return ParseActions(name);
+            return ParseResources(name);
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace EasyFarm.Classes
         /// <param name="name"></param>
         /// <param name="XMLDoc"></param>
         /// <returns></returns>
-        public ICollection<Ability> GetJobAbilitiesByName(string name)
+        public IEnumerable<Ability> GetJobAbilitiesByName(string name)
         {
             return ParseAbilities(name);
         }
@@ -71,7 +74,7 @@ namespace EasyFarm.Classes
         /// <param name="XMLDoc"></param>
         /// <returns></returns>
         /// 
-        public ICollection<Ability> GetSpellAbilitiesByName(string name)
+        public IEnumerable<Ability> GetSpellAbilitiesByName(string name)
         {
             return ParseSpells(name);
         }
@@ -83,7 +86,7 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public bool Exists(string actionName)
         {
-            return GetAbilitiesWithName(actionName).Count > 0;
+            return GetAbilitiesWithName(actionName).Count() > 0;
         }
     }
 }

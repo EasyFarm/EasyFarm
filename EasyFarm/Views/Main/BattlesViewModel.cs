@@ -29,8 +29,6 @@ namespace EasyFarm.ViewModels
     [ViewModelAttribute("Battles")]
     public class BattlesViewModel : ViewModelBase
     {
-        readonly AbilityService _abilityService = new AbilityService();
-
         public BattlesViewModel()
         {
             AddActionCommand = new DelegateCommand(AddAction);

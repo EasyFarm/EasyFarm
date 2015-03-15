@@ -18,16 +18,19 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
 
-namespace EasyFarm.Classes
+namespace Parsing.Types
 {
-    public interface IAbilityService
+    [Flags]
+    public enum TargetType
     {
-        Ability CreateAbility(string name);
-        ICollection<Ability> GetAbilitiesWithName(String name);
-        ICollection<Ability> GetJobAbilitiesByName(string name);
-        ICollection<Ability> GetSpellAbilitiesByName(string name);
-        bool Exists(string actionName);
+        Unknown     = 0x0000,
+        Self        = 0x0001,
+        Player      = 0x0002,
+        Party       = 0x0004,
+        Ally        = 0x0008,
+        NPC         = 0x0016,
+        Enemy       = 0x0032,
+        Corpse      = 0x0064
     }
 }

@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using FFACETools;
+using Parsing.Abilities;
+using Parsing.Types;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -35,25 +37,28 @@ namespace EasyFarm.Classes
         {
             int recast = -1;
 
+            /* 
+             * Fix: If the action is a ranged attack,                
+             * it will return something even when it's recastable. 
+             *                
+             * This if statement must be above process abilities since               
+             * AbilityType.Range is in AbilityType.IsAbility
+             */
+            if (AbilityType.Range.HasFlag(ability.AbilityType))
+            {
+                return true;
+            }
+
             // If a spell get spell recast
-            if (ability.ActionType == ActionType.Spell)
+            if (CompositeAbilityTypes.IsSpell.HasFlag(ability.AbilityType))
             {
                 recast = fface.Timer.GetSpellRecast(ToSpellList(ability));
             }
 
-
             // if ability get ability recast. 
-            if (ability.ActionType == ActionType.Ability)
+            if (CompositeAbilityTypes.IsAbility.HasFlag(ability.AbilityType))
             {
-                recast = fface.Timer.GetAbilityRecast(
-                    ToAbilityList(ability));
-            }
-
-            //Fix: If the action is a ranged attack, 
-            // it will return something even when it's recastable. 
-            if (ability.ActionType.Equals(ActionType.Ranged))
-            {
-                return true;
+                recast = fface.Timer.GetAbilityRecast(ToAbilityList(ability));
             }
 
             /*
@@ -80,14 +85,14 @@ namespace EasyFarm.Classes
 
         public static AbilityList ToAbilityList(Ability ability)
         {
-            var name = AdjustName(ability.Name);
+            var name = AdjustName(ability.English);
 
             AbilityList value = default(AbilityList);
 
             // Fixes for summoner's blood pact recast times. 
-            if (string.Equals(ability.Type.ToLower(), "BloodPactWard".ToLower()))
+            if (ability.CategoryType.HasFlag(CategoryType.BloodPactWard))
                 return AbilityList.Blood_Pact_Ward;
-            if (string.Equals(ability.Type.ToLower(), "BloodPactRage".ToLower()))
+            if (ability.CategoryType.HasFlag(CategoryType.BloodPactRage))
                 return AbilityList.Blood_Pact_Rage;
 
             Enum.TryParse<AbilityList>(name, out value);
@@ -97,7 +102,7 @@ namespace EasyFarm.Classes
 
         public static SpellList ToSpellList(Ability ability)
         {
-            string name = AdjustName(ability.Name);
+            string name = AdjustName(ability.English);
             SpellList value = default(SpellList);
             Enum.TryParse<SpellList>(name, out value);
             return value;
@@ -123,18 +128,21 @@ namespace EasyFarm.Classes
             // TP Check
             if (action.TPCost > fface.Player.TPCurrent) return false;
 
-            // Determine whether we have an debuff that blocks us from casting spells. 
-            if (action.ActionType == ActionType.Spell)
+            if (CompositeAbilityTypes.IsSpell.HasFlag(action.AbilityType))
             {
                 if (ProhibitEffects.PROHIBIT_EFFECTS_SPELL.Intersect(fface.Player.StatusEffects).Any())
+                {
                     return false;
+                }
             }
 
             // Determines if we have a debuff that blocks us from casting abilities. 
-            if (action.ActionType == ActionType.Ability)
+            if (CompositeAbilityTypes.IsAbility.HasFlag(action.AbilityType))
             {
                 if (ProhibitEffects.PROHIBIT_EFFECTS_ABILITY.Intersect(fface.Player.StatusEffects).Any())
+                {
                     return false;
+                }
             }
 
             return true;

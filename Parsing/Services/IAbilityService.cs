@@ -17,23 +17,18 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using Parsing.Abilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace EasyFarm.Classes
+namespace Parsing.Services
 {
-    [Flags]
-    public enum ActionType  
+    public interface IAbilityService
     {
-        None = 0,
-        Ability = 1,
-        Spell = 2,
-        WeaponSkill = 4,
-        Ranged = 8,
-        Melee = 16,
-        Item = 32
+        Ability CreateAbility(string name);
+        IEnumerable<Ability> GetAbilitiesWithName(String name);
+        IEnumerable<Ability> GetJobAbilitiesByName(string name);
+        IEnumerable<Ability> GetSpellAbilitiesByName(string name);
+        bool Exists(string actionName);
     }
 }

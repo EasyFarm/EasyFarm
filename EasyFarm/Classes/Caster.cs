@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Collections;
 using FFACETools;
+using Parsing.Abilities;
 using System;
 using System.Linq;
 using System.Threading;

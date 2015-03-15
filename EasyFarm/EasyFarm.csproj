@@ -202,11 +202,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\AbilitiesService.cs" />
-    <Compile Include="Classes\Ability.cs" />
-    <Compile Include="Classes\AbilityParser.cs" />
-    <Compile Include="Classes\ActionTypes.cs" />
-    <Compile Include="Classes\IAbilityService.cs" />
     <Compile Include="Components\Bases\BaseComponent.cs" />
     <Compile Include="Components\Bases\MachineComponent.cs" />
     <Compile Include="Components\Bases\MachineContainer.cs" />

@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using Parsing.Abilities;
 using System;
 using System.Windows;
 
@@ -31,14 +32,11 @@ namespace EasyFarm.Views
     {
         public Ability SelectedAbility { get; set; }
 
-        public AbilityService Retriever { get; set; }
-
         public AbilitySelectionBox(String name)
         {
             InitializeComponent();
-            this.Retriever = new AbilityService();
             this.CompleteSelectionButton.Click += CompleteSelectionButton_Click;
-            this.AbilityListBox.ItemsSource = Retriever.GetAbilitiesWithName(name);
+            this.AbilityListBox.ItemsSource = App.AbilityService.GetAbilitiesWithName(name);
             this.ShowDialog();
         }
 

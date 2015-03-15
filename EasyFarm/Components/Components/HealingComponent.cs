@@ -28,13 +28,11 @@ namespace EasyFarm.Components
     {
         private FFACE FFACE;
         private Executor Executor;
-        private AbilityService Retriever;
 
         public HealingComponent(FFACE fface)
         {
             this.FFACE = fface;
             this.Executor = new Executor(fface);
-            this.Retriever = new AbilityService();
         }
 
         public override bool CheckComponent()
@@ -73,7 +71,7 @@ namespace EasyFarm.Components
                 if (Action == null) { return; }
 
                 // Create an ability from the name and launch the move. 
-                var HealingMove = Retriever.CreateAbility(Action.Name);
+                var HealingMove = App.AbilityService.CreateAbility(Action.Name);
                 Executor.UseBuffingAction(HealingMove);
             }
         }        

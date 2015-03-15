@@ -22,6 +22,7 @@ using EasyFarm.Views;
 using FFACETools;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
+using Parsing.Abilities;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -57,7 +58,7 @@ namespace EasyFarm.Classes
         public void SetAbility()
         {            
             // We've already parsed the ability. 
-            if (Ability.Name.Equals(Name,
+            if (Ability.English.Equals(Name,
                 StringComparison.CurrentCultureIgnoreCase))
             {
                 ViewModelBase.InformUser(Name + " set successfully. ");
@@ -88,16 +89,13 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public Ability FindAbility(String name)
         {
-            // Our service for locating abilities. 
-            AbilityService Fetcher = new AbilityService();
-
             // Retriever all moves with the specified name. 
-            var moves = Fetcher.GetAbilitiesWithName(name);
+            var moves = App.AbilityService.GetAbilitiesWithName(name);
 
             // Prompt user to select a move if more 
             // than one are found with the same name. 
             // Otherwise, return the first occurence or null. 
-            if (moves.Count > 1)
+            if (moves.Count() > 1)
                 return new AbilitySelectionBox(this.Name).SelectedAbility;
             else 
                 return moves.FirstOrDefault();

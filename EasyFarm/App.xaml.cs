@@ -30,6 +30,7 @@ using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using System.Diagnostics.Tracing;
 using System.Collections;
 using EasyFarm.Prism;
+using Parsing.Services;
 
 namespace EasyFarm
 {
@@ -38,24 +39,13 @@ namespace EasyFarm
     /// </summary>
     public partial class App : Application
     {
-        /// <summary>
-        /// The files we currently use for AbilityService's resource file parsing. 
-        /// </summary>
-        public static readonly String[] resources = { "spells.xml", "abils.xml" };
+        public static readonly AbilityService AbilityService;
 
-        /// <summary>
-        /// The url where the resources may be downloaded. 
-        /// </summary>
-        public const String resourcesUrl =
-            "http://www.ffevo.net/topic/2923-ashita-and-ffacetools-missing-resource-files/";
-
-        /// <summary>
-        /// Set up the assembly resolution code to find embedded dll files. 
-        /// Reduces the amount of dll files in the executable's working directory. 
-        /// </summary>
-        public App()
+        static App()
         {
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
+            // Create the ability service passing to it the resources 
+            // folder named "resources"
+            AbilityService = new AbilityService("resources");
         }
 
         /// <summary>
@@ -67,32 +57,7 @@ namespace EasyFarm
         {
             base.OnStartup(e);
 
-            Logger.Write.ApplicationStart("Application starting");
-
-            // Check if the resource files exist.
-            if (!Directory.Exists("resources"))
-            {
-                Logger.Write.ResourceFolderMissing("Resource folder missing");
-
-                MessageBox.Show(
-                    String.Format("You're missing the resources folder. You can download it from : {0}", resourcesUrl
-                    ));
-
-                Environment.Exit(0);
-            }
-
-            if (resources.Any(x => !File.Exists(Path.Combine("resources", x))))
-            {
-                String[] missing = resources.Where(x => !File.Exists(Path.Combine("resources", x))).ToArray();
-                String message = String.Join(" , ", missing);
-
-                Logger.Write.ResourceFileMissing("Resources missing " + String.Join(" , ", missing));
-
-                MessageBox.Show(
-                    String.Format("You're missing {0} resource files. You can download them from : {1}.",
-                    message, resourcesUrl));
-                Environment.Exit(0);
-            }
+            Logger.Write.ApplicationStart("Application starting");            
 
             Logger.Write.ResourcesLocated("Resources located");
 
@@ -137,32 +102,6 @@ namespace EasyFarm
         protected override void OnExit(ExitEventArgs e)
         {
             Logger.Write.ApplicationStart("Application exiting");
-        }
-
-        // Thanks to atom0s for assembly embedding code!
-
-        /// <summary>
-        /// Assembly resolve event callback to load embedded libraries.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        private static Assembly CurrentDomainOnAssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            var dllName = args.Name.Contains(",") ? args.Name.Substring(0, args.Name.IndexOf(",", System.StringComparison.InvariantCultureIgnoreCase)) : args.Name.Replace(".dll", "");
-            if (dllName.ToLower().EndsWith(".resources"))
-                return null;
-
-            var fullName = string.Format("EasyFarm.Embedded.{0}.dll", new AssemblyName(args.Name).Name);
-            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fullName))
-            {
-                if (stream == null)
-                    return null;
-
-                var data = new byte[stream.Length];
-                stream.Read(data, 0, (int)stream.Length);
-                return Assembly.Load(data);
-            }
-        }
+        }        
     }
 }

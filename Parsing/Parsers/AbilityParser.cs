@@ -109,12 +109,7 @@ namespace Parsing.Parsers
         protected IEnumerable<Ability> ParseAbilities(String name)
         {
             return ParseResources(name)
-                .Where(x => x.AbilityType.HasFlag(
-                    AbilityType.Jobability |
-                    AbilityType.Monsterskill |
-                    AbilityType.Pet |
-                    AbilityType.Weaponskill |
-                    AbilityType.Range)
+                .Where(x => CompositeAbilityTypes.IsAbility.HasFlag(x.AbilityType)
             );
         }
 
@@ -126,10 +121,7 @@ namespace Parsing.Parsers
         protected IEnumerable<Ability> ParseSpells(String name)
         {
             return ParseResources(name)
-                .Where(x => x.AbilityType.HasFlag(
-                    AbilityType.Magic |
-                    AbilityType.Ninjutsu |
-                    AbilityType.Song)
+                .Where(x => CompositeAbilityTypes.IsSpell.HasFlag(x.AbilityType)
             );
         }
 

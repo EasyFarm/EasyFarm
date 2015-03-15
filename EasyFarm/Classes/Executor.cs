@@ -19,6 +19,8 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.UserSettings;
 using FFACETools;
+using Parsing.Abilities;
+using Parsing.Types;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -117,7 +119,7 @@ namespace EasyFarm.Classes
                 {
                     Ability = action, 
                     Enabled = true, 
-                    Name = action.Name 
+                    Name = action.English 
                 } 
             });
         }
@@ -144,7 +146,7 @@ namespace EasyFarm.Classes
                 // Target mob if not currently targeted. 
                 SetTarget(target);
 
-                if (action.Ability.ActionType == ActionType.Spell)
+                if (CompositeAbilityTypes.IsSpell.HasFlag(action.Ability.AbilityType))
                 {
                     Caster.CastSpell(action);
                     Thread.Sleep(Config.Instance.GlobalCooldown);

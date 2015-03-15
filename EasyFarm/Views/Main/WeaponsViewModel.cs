@@ -28,8 +28,6 @@ namespace EasyFarm.ViewModels
     [ViewModelAttribute("WeaponSkill")]
     public class WeaponsViewModel : ViewModelBase
     {
-        AbilityService AbilityService = new AbilityService();
-
         public WeaponsViewModel() 
         {
             SetCommand = new DelegateCommand(SetWeaponSkill);
@@ -81,7 +79,7 @@ namespace EasyFarm.ViewModels
 
         private void SetWeaponSkill()
         {
-            var weaponSkill = AbilityService.CreateAbility(Name);
+            var weaponSkill = App.AbilityService.CreateAbility(Name);
 
             if (string.IsNullOrWhiteSpace(Name) || !weaponSkill.IsValidName)
             {
