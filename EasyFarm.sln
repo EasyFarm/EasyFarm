@@ -4,10 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarm", "EasyFarm\EasyFarm.csproj", "{14508978-627B-46AE-9779-1F6B4FB0611E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372} = {7008DAF7-D3AA-41A4-9D85-8EC168D5D372}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarmTests", "EasyFarmTests\EasyFarmTests.csproj", "{A55B26A6-570A-49D8-B524-51B075D126ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFACETools", "..\FFACETools_ffevo.net\FFACETools.csproj", "{37456169-2B9E-49A7-8B20-A160C180E453}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing", "Parsing\Parsing.csproj", "{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsingTests", "ParsingTests\ParsingTests.csproj", "{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +62,26 @@ Global
 		{37456169-2B9E-49A7-8B20-A160C180E453}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{37456169-2B9E-49A7-8B20-A160C180E453}.Release|x86.ActiveCfg = Release|x86
 		{37456169-2B9E-49A7-8B20-A160C180E453}.Release|x86.Build.0 = Release|x86
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Release|x86.ActiveCfg = Release|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

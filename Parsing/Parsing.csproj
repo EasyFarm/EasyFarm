@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Parsing</RootNamespace>
+    <AssemblyName>Parsing</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abilities\Ability.cs" />
+    <Compile Include="Augmenting\SpecializedTypeAugmenter.cs" />
+    <Compile Include="Augmenting\TargetTypeAugmenter.cs" />
+    <Compile Include="Augmenting\SkillTypeAugmenter.cs" />
+    <Compile Include="Augmenting\CategoryTypeAugmenter.cs" />
+    <Compile Include="Augmenting\ResourceValueAugmenter.cs" />
+    <Compile Include="Converters\IObjectConverter.cs" />
+    <Compile Include="Converters\ResourceValueConverter.cs" />
+    <Compile Include="Extraction\IDataExtractor.cs" />
+    <Compile Include="Extraction\ResourceValueExtractor.cs" />
+    <Compile Include="Mapping\EnumClassUtils.cs" />
+    <Compile Include="Mapping\IObjectMultiMapper.cs" />
+    <Compile Include="Mapping\EnumObjectMapper.cs" />
+    <Compile Include="Mapping\MultiObjectMapper.cs" />
+    <Compile Include="Types\AbilityType.cs" />
+    <Compile Include="Types\CategoryType.cs" />
+    <Compile Include="Types\ElementType.cs" />
+    <Compile Include="Types\SkillType.cs" />
+    <Compile Include="Types\TargetType.cs" />
+    <Compile Include="Parsers\AbilityParser.cs" />
+    <Compile Include="Augmenting\AbilityAugmenter.cs" />
+    <Compile Include="Augmenting\ElementTypeAugmenter.cs" />
+    <Compile Include="Augmenting\IObjectAugmenter.cs" />
+    <Compile Include="Augmenting\AbilityTypeAugmenter.cs" />
+    <Compile Include="Mapping\IObjectMapper.cs" />
+    <Compile Include="Mapping\ObjectMapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AbilitiesService.cs" />
+    <Compile Include="Services\IAbilityService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FFACETools_ffevo.net\FFACETools.csproj">
+      <Project>{37456169-2b9e-49a7-8b20-a160c180e453}</Project>
+      <Name>FFACETools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Augmenting\ArgumenterInfo.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

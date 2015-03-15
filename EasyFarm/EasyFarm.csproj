@@ -202,7 +202,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\AbilitiesService.cs" />
+    <Compile Include="Classes\Ability.cs" />
+    <Compile Include="Classes\AbilityParser.cs" />
     <Compile Include="Classes\ActionTypes.cs" />
+    <Compile Include="Classes\IAbilityService.cs" />
     <Compile Include="Components\Bases\BaseComponent.cs" />
     <Compile Include="Components\Bases\MachineComponent.cs" />
     <Compile Include="Components\Bases\MachineContainer.cs" />
@@ -323,9 +327,6 @@
     <Compile Include="Views\Main\WeaponsView.xaml.cs">
       <DependentUpon>WeaponsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\AbilitiesService.cs" />
-    <Compile Include="Classes\Ability.cs" />
-    <Compile Include="Classes\AbilityParser.cs" />
     <Compile Include="Classes\CombatService.cs" />
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\MovingUnit.cs" />
@@ -333,7 +334,6 @@
     <Compile Include="Classes\Serialization.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\UnitService.cs" />
-    <Compile Include="Classes\IAbilityService.cs" />
     <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\TestUnit.cs" />
   </ItemGroup>
@@ -481,6 +481,10 @@
     <ProjectReference Include="..\..\FFACETools_ffevo.net\FFACETools.csproj">
       <Project>{37456169-2b9e-49a7-8b20-a160c180e453}</Project>
       <Name>FFACETools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Parsing\Parsing.csproj">
+      <Project>{7008daf7-d3aa-41a4-9d85-8ec168d5d372}</Project>
+      <Name>Parsing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
