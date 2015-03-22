@@ -90,6 +90,8 @@ namespace Parsing.Parsers
             List<XElement> XmlDocuments = new List<XElement>();
 
             // Get a list of all resource file names. 
+            if (!Directory.Exists(path)) return new List<XElement>();
+
             string[] resources = Directory.GetFiles(path, "*.xml");
 
             // Load all resource files in the given directory. 

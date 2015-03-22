@@ -68,10 +68,11 @@ namespace EasyFarm.Components
             if (AttackContainer.FightStarted) return;
 
             // Only pull if we have moves. 
-            if (Config.Instance.PullList.Any(x => x.Enabled))
+            if (Config.Instance.BattleLists["Pull"]
+                .Actions.Any(x => x.IsEnabled))
             {                
-                var usable = Config.Instance.PullList
-                    .Where(x => ActionFilters.BattleAbilityFilter(FFACE, x));
+                var usable = Config.Instance.BattleLists["Pull"]
+                    .Actions.Where(x => ActionFilters.BattleAbilityFilter(FFACE, x));
                
                 Executor.UseTargetedActions(usable, Target);
             }
@@ -87,7 +88,7 @@ namespace EasyFarm.Components
                 AttackContainer.FightStarted = true;
             // No moves in pull list, set FightStarted to true to let
             // other components who depend on it trigger. 
-            else if (!Config.Instance.PullList.Any(x => x.Enabled))
+            else if (!Config.Instance.BattleLists["Pull"].Actions.Any(x => x.IsEnabled))
                 AttackContainer.FightStarted = true;
             else
                 AttackContainer.FightStarted = false;

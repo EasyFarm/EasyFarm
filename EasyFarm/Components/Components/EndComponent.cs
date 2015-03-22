@@ -69,8 +69,9 @@ namespace EasyFarm.Components
         public override void RunComponent()
         {
             // Execute moves. 
-            var Usable = Config.Instance.EndList
+            var Usable = Config.Instance.BattleLists["End"].Actions
                 .Where(x => ActionFilters.BattleAbilityFilter(FFACE, x));
+
             Executor.UseBuffingActions(Usable);
 
             if (lastCheckedForMob.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)

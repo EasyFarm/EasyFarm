@@ -190,8 +190,9 @@ namespace EasyFarm.ViewModels
                 ViewModelBase.InformUser("Settings have been saved.");
                 Logger.Write.SaveSettings("Settings saved");
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
+                Console.WriteLine(ex.Message);
                 ViewModelBase.InformUser("Failed to save settings.");
             }
         }

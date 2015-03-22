@@ -4,10 +4,7 @@
                     xmlns:views="clr-namespace:EasyFarm.Views">
     <DataTemplate DataType="{x:Type viewModels:BattlesViewModel}">
         <views:BattlesView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type viewModels:HealingViewModel}">
-        <views:HealingView />
-    </DataTemplate>
+    </DataTemplate>   
     <DataTemplate DataType="{x:Type viewModels:IgnoredViewModel}">
         <views:IgnoredView />
     </DataTemplate>
@@ -22,9 +19,6 @@
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewModels:TargetsViewModel}">
         <views:TargetsView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type viewModels:WeaponsViewModel}">
-        <views:WeaponsView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewModels:LogViewModel}">
         <views:LogView />

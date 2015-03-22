@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes;
 using EasyFarm.ViewModels;
 using System.Windows.Controls;
 
@@ -30,6 +31,25 @@ namespace EasyFarm.Views
         public BattlesView()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// We are using custom code to assign a selected item since TreeView's selected item property is read-only. 
+        /// There were a few solutions to this problem, but this is the simplest.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TreeView_SelectedItemChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (DataContext != null)
+            {
+                // Update to the new selected list. 
+                ((BattlesViewModel)DataContext).SelectedList = (e.NewValue as BattleList);
+
+                // Update to the new selected ability. 
+                ((BattlesViewModel)DataContext).SelectedAbility = (e.NewValue as BattleAbility);
+                details.DataContext = (e.NewValue as BattleAbility);
+            }
         }
     }
 }

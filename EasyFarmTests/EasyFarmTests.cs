@@ -73,14 +73,12 @@ namespace EasyFarmTests
         [TestMethod]
         public void TestWeaponSkillTrigger()
         {
-            WeaponSkill skill = new WeaponSkill()
-            {
-                Distance = 4,
-                Enabled = true,
-                LowerHealth = 25,
-                UpperHealth = 75,
-                Ability = new Ability() { English = "Raging Axe" }
-            };
+            BattleAbility skill = new BattleAbility();
+            skill.Distance = 4;
+            skill.IsEnabled = true;
+            skill.TargetLowerHealth = 25;
+            skill.TargetUpperHealth = 75;
+            skill.Ability.English = "Raging Axe";
 
             TestUnit unit = new TestUnit()
             {

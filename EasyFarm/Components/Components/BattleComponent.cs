@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License
 using EasyFarm.Classes;
 using EasyFarm.UserSettings;
 using FFACETools;
+using System;
 using System.Linq;
 
 namespace EasyFarm.Components
@@ -71,12 +72,12 @@ namespace EasyFarm.Components
         }
 
         public override void RunComponent()
-        {           
-            var Usable = Config.Instance.BattleList.Where(x => 
-                ActionFilters.BattleAbilityFilter(FFACE, x));
-
+        {               
             // Cast only one action to prevent blocking curing. 
-            var action = Usable.FirstOrDefault();
+            var action = Config.Instance.BattleLists["Battle"].Actions
+                .Where(x => ActionFilters.BattleAbilityFilter(FFACE, x))
+                .FirstOrDefault();
+
             if (action != null)
             {
                 Executor.UseTargetedAction(action, Target);

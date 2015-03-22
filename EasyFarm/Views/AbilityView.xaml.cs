@@ -17,17 +17,16 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.ViewModels;
 using System.Windows.Controls;
 
 namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for HealingView.xaml
+    /// Interaction logic for AbilityView.xaml
     /// </summary>
-    public partial class HealingView : UserControl
+    public partial class AbilityView : UserControl
     {
-        public HealingView()
+        public AbilityView()
         {
             InitializeComponent();
         }

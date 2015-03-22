@@ -50,7 +50,13 @@ namespace EasyFarm.UserSettings
             this.MainWindowTitle = "Default";
             this.StatusBarText = String.Empty;
             this.Waypoints = new ObservableCollection<Waypoint>();
-            this.WeaponSkill = new WeaponSkill();
+
+            BattleLists.Lists.Add(new BattleList("Start"));
+            BattleLists.Lists.Add(new BattleList("Pull"));
+            BattleLists.Lists.Add(new BattleList("Battle"));
+            BattleLists.Lists.Add(new BattleList("End"));
+            BattleLists.Lists.Add(new BattleList("Healing"));
+            BattleLists.Lists.Add(new BattleList("Weaponskill"));
         }
 
         [XmlIgnore]

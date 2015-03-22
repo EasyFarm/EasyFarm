@@ -212,17 +212,17 @@ namespace Parsing.Abilities
         {
             // If it was intended to work on use, 
             // set it to cast on us
-            if (TargetType.Self.Equals(TargetType))
+            if (TargetType.HasFlag(TargetType.Self))
             {
                 Postfix = "<me>";
             }
-            else if (TargetType.Enemy.Equals(TargetType))
+            else if (TargetType.HasFlag(TargetType.Enemy))
             {
                 Postfix = "<t>";
             }
 
             // If it was a ranged attack, use the ranged attack syntax
-            if (AbilityType.Range.Equals(AbilityType))
+            if (AbilityType.HasFlag(AbilityType.Range))
             {
                 return Prefix + " " + Postfix;
             }

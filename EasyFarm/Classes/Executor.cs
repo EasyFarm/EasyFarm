@@ -77,7 +77,7 @@ namespace EasyFarm.Classes
                     // Remove spell from castables so that it 
                     // will not be casted again. 
                     castables.Remove(action);
-                    
+
                     // Sleep until a spell is recastable. 
                     Thread.Sleep(Config.Instance.GlobalCooldown);
                 }
@@ -111,17 +111,15 @@ namespace EasyFarm.Classes
         public void UseBuffingAction(Ability action)
         {
             if (action == null) throw new ArgumentNullException("action");
-            
+
+            // Create new new ability and set its basic required information. 
+            var baction = new BattleAbility();
+            baction.Name = action.English;
+            baction.IsEnabled = true;
+            baction.Ability = action;
+
             // Convert ability to new battleability object. 
-            UseBuffingActions(new List<BattleAbility>() 
-            { 
-                new BattleAbility() 
-                {
-                    Ability = action, 
-                    Enabled = true, 
-                    Name = action.English 
-                } 
-            });
+            UseBuffingActions(new List<BattleAbility>() { baction });
         }
         #endregion
 

@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Classes;
 using EasyFarm.UserSettings;
+using System.Linq;
 using FFACETools;
 
 namespace EasyFarm.Components
@@ -30,12 +31,12 @@ namespace EasyFarm.Components
     {
         public FFACE FFACE { get; set; }
 
-        public Caster Caster { get; set; }
+        public Executor Executor { get; set; }
 
         public WeaponSkillComponent(FFACE fface)
         {
             this.FFACE = fface;
-            this.Caster = new Caster(fface);
+            this.Executor = new Executor(fface);
         }
 
         public Unit Target
@@ -61,13 +62,17 @@ namespace EasyFarm.Components
             // from move than 30 yalms problem. 
             if (FFACE.Player.Status.Equals(Status.Fighting))
             {
-                var weaponskill = Config.Instance.WeaponSkill;
+                // Grab the first weaponskill or null. 
+                var weaponskill = Config.Instance.BattleLists["Weaponskill"]
+                    .Actions.FirstOrDefault();
 
-                // Weaponskill
-                if (ActionFilters.WeaponSkillFilter(FFACE, weaponskill,Target))
+                // See if they the user set a weaponskill. 
+                if (weaponskill == null) return;
+
+                // Perform the weaponskill if it is valid. 
+                if (ActionFilters.WeaponSkillFilter(FFACE, weaponskill, Target))
                 {
-                    // Cast the weaponskill. 
-                    this.Caster.CastAbility(weaponskill.Ability);
+                    Executor.UseTargetedAction(weaponskill, Target);
                 }
             }
         }

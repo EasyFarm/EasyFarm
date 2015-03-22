@@ -202,6 +202,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\BattleList.cs" />
+    <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Components\Bases\BaseComponent.cs" />
     <Compile Include="Components\Bases\MachineComponent.cs" />
     <Compile Include="Components\Bases\MachineContainer.cs" />
@@ -254,39 +256,37 @@
     <Compile Include="Components\Components\StartComponent.cs" />
     <Compile Include="Components\Components\PullComponent.cs" />
     <Compile Include="Components\Components\WeaponSkillComponent.cs" />
-    <Compile Include="Views\Main\BattlesViewModel.cs" />
-    <Compile Include="Mvvm\BootStrapper.cs" />
-    <Compile Include="Views\Main\HealingViewModel.cs" />
-    <Compile Include="Views\Main\IgnoredViewModel.cs" />
-    <Compile Include="Mvvm\Locator.cs" />
-    <Compile Include="Logging\LogSinkExtensions.cs" />
-    <Compile Include="Views\Main\LogViewModel.cs" />
-    <Compile Include="Mvvm\MainModule.cs" />
-    <Compile Include="Views\Main\MainViewModel.cs" />
-    <Compile Include="Views\Main\MainView.xaml.cs">
-      <DependentUpon>MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Master\MasterViewModel.cs" />
-    <Compile Include="Views\Settings\BattleSettingsView.xaml.cs">
-      <DependentUpon>BattleSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Settings\BattleSettingsViewModel.cs" />
-    <Compile Include="Views\Settings\SettingsViewModel.cs" />
-    <Compile Include="Logging\StringSink.cs" />
-    <Compile Include="Views\Main\RestingViewModel.cs" />
-    <Compile Include="Views\Main\RoutesViewModel.cs" />
-    <Compile Include="Mvvm\StatusBarUpdateEvent.cs" />
-    <Compile Include="Views\Main\TargetsViewModel.cs" />
-    <Compile Include="Mvvm\ViewModelAttribute.cs" />
-    <Compile Include="Mvvm\ViewModelBase.cs" />
-    <Compile Include="Views\Main\WeaponsViewModel.cs" />
-    <Compile Include="Views\Main\AbilitySelectionBox.xaml.cs">
-      <DependentUpon>AbilitySelectionBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Main\AbilityView.xaml.cs">
+    <Compile Include="Views\AbilityView.xaml.cs">
       <DependentUpon>AbilityView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\BattlesView.xaml.cs">
+    <Compile Include="Views\BattlesViewModel.cs" />
+    <Compile Include="Mvvm\BootStrapper.cs" />
+    <Compile Include="Views\IgnoredViewModel.cs" />
+    <Compile Include="Mvvm\Locator.cs" />
+    <Compile Include="Logging\LogSinkExtensions.cs" />
+    <Compile Include="Views\LogViewModel.cs" />
+    <Compile Include="Mvvm\MainModule.cs" />
+    <Compile Include="Views\MainViewModel.cs" />
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterViewModel.cs" />
+    <Compile Include="Views\BattleSettingsView.xaml.cs">
+      <DependentUpon>BattleSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BattleSettingsViewModel.cs" />
+    <Compile Include="Views\SettingsViewModel.cs" />
+    <Compile Include="Logging\StringSink.cs" />
+    <Compile Include="Views\RestingViewModel.cs" />
+    <Compile Include="Views\RoutesViewModel.cs" />
+    <Compile Include="Mvvm\StatusBarUpdateEvent.cs" />
+    <Compile Include="Views\TargetsViewModel.cs" />
+    <Compile Include="Mvvm\ViewModelAttribute.cs" />
+    <Compile Include="Mvvm\ViewModelBase.cs" />
+    <Compile Include="Views\AbilitySelectionBox.xaml.cs">
+      <DependentUpon>AbilitySelectionBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BattlesView.xaml.cs">
       <DependentUpon>BattlesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\frmStartup.cs">
@@ -295,32 +295,26 @@
     <Compile Include="Views\frmStartup.designer.cs">
       <DependentUpon>frmStartup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\HealingView.xaml.cs">
-      <DependentUpon>HealingView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Main\IgnoredView.xaml.cs">
+    <Compile Include="Views\IgnoredView.xaml.cs">
       <DependentUpon>IgnoredView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\LogView.xaml.cs">
+    <Compile Include="Views\LogView.xaml.cs">
       <DependentUpon>LogView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Master\MasterView.xaml.cs">
+    <Compile Include="Views\MasterView.xaml.cs">
       <DependentUpon>MasterView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\RestingView.xaml.cs">
+    <Compile Include="Views\RestingView.xaml.cs">
       <DependentUpon>RestingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\RoutesView.xaml.cs">
+    <Compile Include="Views\RoutesView.xaml.cs">
       <DependentUpon>RoutesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\TargetsView.xaml.cs">
+    <Compile Include="Views\TargetsView.xaml.cs">
       <DependentUpon>TargetsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsView.xaml.cs">
+    <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Main\WeaponsView.xaml.cs">
-      <DependentUpon>WeaponsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\CombatService.cs" />
     <Compile Include="Classes\Constants.cs" />
@@ -367,81 +361,71 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Main\MainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Main\AbilitySelectionBox.xaml">
+    <Page Include="Views\AbilityView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Main\AbilityView.xaml">
+    <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Main\BattlesView.xaml">
+    <Page Include="Views\AbilitySelectionBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Main\HealingView.xaml">
+    <Page Include="Views\BattlesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Main\IgnoredView.xaml">
+    <Page Include="Views\IgnoredView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Main\LogView.xaml">
+    <Page Include="Views\LogView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Master\MasterView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Main\RestingView.xaml">
+    <Page Include="Views\MasterView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Main\RoutesView.xaml">
+    <Page Include="Views\RestingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Main\TargetsView.xaml">
+    <Page Include="Views\RoutesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Settings\BattleSettingsView.xaml">
+    <Page Include="Views\TargetsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\BattleSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Settings\SettingsView.xaml">
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Master\ViewDictionary.xaml">
+    <Page Include="Views\ViewDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Main\WeaponsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -450,27 +434,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\abils.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="resources\areas.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="resources\items_armor.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="resources\items_general.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="resources\items_weapons.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="resources\spells.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="resources\status.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="resources\abils.xml" />
+    <None Include="resources\areas.xml" />
+    <None Include="resources\items_armor.xml" />
+    <None Include="resources\items_general.xml" />
+    <None Include="resources\items_weapons.xml" />
+    <None Include="resources\spells.xml" />
+    <None Include="resources\status.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FFACETools_ffevo.net\FFACETools.csproj">

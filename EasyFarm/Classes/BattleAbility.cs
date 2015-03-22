@@ -37,29 +37,172 @@ namespace EasyFarm.Classes
     /// </summary>
     public class BattleAbility : BindableBase
     {
-        private bool m_enabled = false;
+        #region Basic Conditions
 
-        private string m_name = String.Empty;
+        /// <summary>
+        /// Is this move ready for use?
+        /// </summary>
+        private bool _isEnabled = false;
 
-        private string m_buff = String.Empty;
+        public bool IsEnabled
+        {
+            get { return _isEnabled; }
+            set { SetProperty(ref _isEnabled, value); }
+        }
 
-        private double m_distance = Constants.MELEE_DISTANCE;
+        /// <summary>
+        /// The move's name. 
+        /// </summary>
+        private string _name = string.Empty;
 
-        private Ability m_ability = new Ability();
-        
+        public string Name
+        {
+            get { return _name; }
+            set { SetProperty(ref _name, value); }
+        }
+
+        /// <summary>
+        /// The move's max distance. 
+        /// </summary>
+        private double _distance = 0;
+
+        public double Distance
+        {
+            get { return _distance; }
+            set { SetProperty(ref _distance, value); }
+        }
+
+        /// <summary>
+        /// Resource information about the move. 
+        /// </summary>
+        private Ability _ability;
+
+        /// <summary>
+        /// Holds the resource file information for the move. 
+        /// </summary>
+        public Ability Ability
+        {
+            get { return this._ability; }
+            set { SetProperty(ref this._ability, value); }
+        }
+        #endregion
+
+        #region Player Conditions
+        /// <summary>
+        /// Check for the presense or absents of a status effect. 
+        /// Unchecked means we use moves in absence of the status effect. 
+        /// Checked means we use moves when the status effect is present. 
+        /// </summary>
+        private bool _triggerOnEffectPresent = false;
+
+        public bool TriggerOnEffectPresent
+        {
+            get { return _triggerOnEffectPresent; }
+            set { SetProperty(ref _triggerOnEffectPresent, value); }
+        }
+
+        /// <summary>
+        /// The status effect to check for. 
+        /// </summary>
+        private string _statusEffect = string.Empty;
+
+        public string StatusEffect
+        {
+            get { return _statusEffect; }
+            set { SetProperty(ref _statusEffect, value); }
+        }
+
+        /// <summary>
+        /// The upper limit of the player's health. 
+        /// </summary>
+        private int _playerLowerHealth = 0;
+
+        public int PlayerLowerHealth
+        {
+            get { return _playerLowerHealth; }
+            set
+            {
+                SetProperty(ref _playerLowerHealth, value);
+                ViewModelBase.InformUser("Lower health set to {0}.", _playerLowerHealth);
+            }
+        }
+
+        /// <summary>
+        /// The lower limit of the player's health. 
+        /// </summary>
+        private int _playerUpperHealth = 0;
+
+        public int PlayerUpperHealth
+        {
+            get { return _playerUpperHealth; }
+            set
+            {
+                SetProperty(ref _playerUpperHealth, value);
+                ViewModelBase.InformUser("Upper health set to {0}.", _playerUpperHealth);
+            }
+        }
+        #endregion
+
+        #region Target Conditions
+        /// <summary>
+        /// Regular expression used for filtering target names. 
+        /// </summary>
+        private string _targetName = string.Empty;
+
+        public string TargetName
+        {
+            get { return _targetName; }
+            set { SetProperty(ref _targetName, value); }
+        }
+
+        /// <summary>
+        /// Target's lower health threshold. 
+        /// </summary>
+        private int _targetLowerHealth = 0;
+
+        public int TargetLowerHealth
+        {
+            get { return _targetLowerHealth; }
+            set
+            {
+                SetProperty(ref _targetLowerHealth, value);
+                ViewModelBase.InformUser("Lower health set to {0}.", _targetLowerHealth);
+            }
+        }
+
+        /// <summary>
+        /// Target's upper health threshold. 
+        /// </summary>
+        private int _targetUpperHealth = 100;
+
+        public int TargetUpperHealth
+        {
+            get { return _targetUpperHealth; }
+            set
+            {
+                SetProperty(ref _targetUpperHealth, value);
+                ViewModelBase.InformUser("Upper health set to {0}.", _targetUpperHealth);
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// Create our command binds and initialize our user's
+        /// move usage conditions. 
+        /// </summary>
         public BattleAbility()
         {
-            SetCommand = new DelegateCommand(SetAbility);
-        }        
-              
+            AutoFillCommand = new DelegateCommand(AutoFill);
+            _ability = new Ability();
+        }
+
         /// <summary>
         /// Sets the ability field. 
         /// </summary>
-        public void SetAbility()
-        {            
+        public void AutoFill()
+        {
             // We've already parsed the ability. 
-            if (Ability.English.Equals(Name,
-                StringComparison.CurrentCultureIgnoreCase))
+            if (Ability.English.Equals(Name, StringComparison.CurrentCultureIgnoreCase))
             {
                 ViewModelBase.InformUser(Name + " set successfully. ");
                 return;
@@ -74,7 +217,7 @@ namespace EasyFarm.Classes
             {
                 ViewModelBase.InformUser(Name + " could not be set. ");
             }
-            else 
+            else
             {
                 this.Ability = ability;
                 ViewModelBase.InformUser(Name + " set successfully. ");
@@ -96,40 +239,9 @@ namespace EasyFarm.Classes
             // than one are found with the same name. 
             // Otherwise, return the first occurence or null. 
             if (moves.Count() > 1)
-                return new AbilitySelectionBox(this.Name).SelectedAbility;
-            else 
+                return new AbilitySelectionBox(name).SelectedAbility;
+            else
                 return moves.FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Check to see if the buff has wore on the player. 
-        /// </summary>
-        /// <param name="fface"></param>
-        /// <returns></returns>
-        public bool HasEffectWore(FFACE fface)
-        {
-            // Use matching to determine if a buff has wore. 
-            // We remove '_' characters so buffs can be properly
-            // identified. 
-            return !fface.Player.StatusEffects.Any(x => 
-                Regex.IsMatch(x.ToString(), 
-                Buff.Replace(" ", "_"), 
-                RegexOptions.IgnoreCase));
-        }
-
-        public bool IsCastable(FFACE fface)
-        {
-            // Check if the ability is valid. 
-            return Helpers.IsActionValid(fface, this.Ability);
-        }
-
-        /// <summary>
-        /// Determines whether this is a buffing ability. 
-        /// </summary>
-        /// <returns></returns>
-        public bool IsBuff()
-        {
-            return !String.IsNullOrWhiteSpace(this.Buff);
         }
 
         /// <summary>
@@ -137,60 +249,7 @@ namespace EasyFarm.Classes
         /// for lookups. 
         /// </summary>
         // Delegate Commands cannot be serialized. 
-        [XmlIgnore] 
-        public DelegateCommand SetCommand { get; set; }
-
-        /// <summary>
-        /// Is the move enabled?
-        /// </summary>
-        public bool Enabled
-        {
-            get { return this.m_enabled; }
-            set { SetProperty(ref this.m_enabled, value); }
-        }
-
-        /// <summary>
-        /// The ability's name. I'm using NameX since it seems to 
-        /// bind and Name and AbilityName do not. Will fix when I locate 
-        /// the problem. 
-        /// </summary>
-        public String Name
-        {
-            get { return this.m_name; }
-            set
-            {
-                SetProperty(ref this.m_name, value);
-            }
-        }
-
-        /// <summary>
-        /// Name of the buff that will be applied when using it. 
-        /// </summary>
-        public String Buff
-        {
-            get { return this.m_buff; }
-            set { SetProperty(ref this.m_buff, value); }
-        }
-
-        /// <summary>
-        /// The distance the move should be used at. 
-        /// </summary>
-        public double Distance
-        {
-            get { return this.m_distance; }
-            set
-            {
-                SetProperty(ref this.m_distance, (int)value);
-            }
-        }
-
-        /// <summary>
-        /// The other ability's attributes. 
-        /// </summary>
-        public Ability Ability
-        {
-            get { return this.m_ability; }
-            set { SetProperty(ref this.m_ability, value); }
-        }
+        [XmlIgnore]
+        public DelegateCommand AutoFillCommand { get; set; }
     }
 }

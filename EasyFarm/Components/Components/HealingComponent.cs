@@ -39,7 +39,7 @@ namespace EasyFarm.Components
         {
             if (new RestComponent(FFACE).CheckComponent()) return false;
 
-            if (!Config.Instance.HealingList
+            if (!Config.Instance.BattleLists["Healing"].Actions
                 .Any(x => ActionFilters.HealingFilter(FFACE, x))) 
                 return false;
 
@@ -50,7 +50,9 @@ namespace EasyFarm.Components
         {
             // Stop resting. 
             if (FFACE.Player.Status.Equals(Status.Healing))
+            {
                 FFACE.Windower.SendString(Constants.RESTING_OFF);
+            }
 
             // Stop moving. 
             FFACE.Navigator.Reset();
@@ -59,7 +61,7 @@ namespace EasyFarm.Components
         public override void RunComponent()
         {
             // Get the list of healing abilities that can be used.
-            var UsableHealingMoves = Config.Instance.HealingList
+            var UsableHealingMoves = Config.Instance.BattleLists["Healing"].Actions
                 .Where(x => ActionFilters.HealingFilter(FFACE, x))
                 .ToList();
 

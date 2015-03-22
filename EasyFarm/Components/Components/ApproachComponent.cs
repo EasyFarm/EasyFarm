@@ -45,24 +45,17 @@ namespace EasyFarm.Components
         public override bool CheckComponent()
         {
             // Target dead or null.
-            if (Target == null || Target.IsDead || Target.ID == 0) return false;
+            if (Target == null || Target.IsDead) return false;
 
             // We should approach mobs that have aggroed or have been pulled. 
             if (Target.Status.Equals(Status.Fighting)) return true;
 
-            var Usable = Config.Instance.PullList
-                    .Where(x => x.Enabled && x.IsCastable(FFACE));
-
-            // Only cast buffs when their status effects are not on the player. 
-            var Buffs = Usable
-                .Where(x => x.HasEffectWore(FFACE));
-
-            // Cast the other abilities on cooldown. 
-            var Others = Usable.Where(x => !x.HasEffectWore(FFACE))
-                .Where(x => !x.IsBuff());
+            // Get usable abilities. 
+            var Usable = Config.Instance.BattleLists["Pull"].Actions
+                .Where(x => ActionFilters.BattleAbilityFilter(FFACE, x));
 
             // Approach when there are no pulling moves available. 
-            if (!Buffs.Union(Others).Any()) return true;
+            if (!Usable.Any()) return true;
 
             // Approach mobs if their distance is close. 
             return Target.Distance < 8;
