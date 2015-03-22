@@ -78,6 +78,9 @@ namespace EasyFarm.Classes
                     // will not be casted again. 
                     castables.Remove(action);
 
+                    // Increase usage count to limit number of usages. 
+                    action.Usages++;
+
                     // Sleep until a spell is recastable. 
                     Thread.Sleep(Config.Instance.GlobalCooldown);
                 }
@@ -147,12 +150,15 @@ namespace EasyFarm.Classes
                 if (CompositeAbilityTypes.IsSpell.HasFlag(action.Ability.AbilityType))
                 {
                     Caster.CastSpell(action);
-                    Thread.Sleep(Config.Instance.GlobalCooldown);
                 }
                 else
                 {
-                    Caster.CastAbility(action);
+                    Caster.CastAbility(action);                    
                 }
+
+                // Increase usage count to limit number of usages. 
+                action.Usages++;
+                Thread.Sleep(Config.Instance.GlobalCooldown);
             }
         }
 

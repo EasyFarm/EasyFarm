@@ -59,7 +59,7 @@ namespace EasyFarm.Components
         public override bool CheckComponent()
         {
             // Null, dead and empty mob check. 
-            if ((Target == null || Target.IsDead || Target.ID == 0)) return true;
+            if (Target == null || Target.IsDead) return true;
 
             // Creature is unkillable and does not meets the 
             // user's criteria for valid mobs defined in MobFilters. 
@@ -90,6 +90,12 @@ namespace EasyFarm.Components
 
             if (Target != null)
             {
+                // Reset all usage data to begin a new battle. 
+                foreach (var action in Config.Instance.BattleLists.Actions)
+                {
+                    action.Usages = 0;
+                }
+
                 Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.ID);
             }
         }

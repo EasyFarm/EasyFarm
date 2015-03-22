@@ -55,7 +55,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The move's name. 
         /// </summary>
-        private string _name;
+        private string _name = string.Empty;
 
         public string Name
         {
@@ -75,13 +75,16 @@ namespace EasyFarm.Classes
         public double Distance
         {
             get { return _distance; }
-            set { SetProperty(ref _distance, value); }
+            set { 
+                SetProperty(ref _distance, value);
+                ViewModelBase.InformUser("Distance set to {0}.", _distance);
+            }
         }
 
         /// <summary>
         /// Resource information about the move. 
         /// </summary>
-        private Ability _ability;
+        private Ability _ability = new Ability();
 
         /// <summary>
         /// Holds the resource file information for the move. 
@@ -187,7 +190,7 @@ namespace EasyFarm.Classes
             }
         }
 
-        private AbilityType _abilityType;
+        private AbilityType _abilityType = AbilityType.Unknown;
 
         public AbilityType AbilityType
         {
@@ -206,7 +209,39 @@ namespace EasyFarm.Classes
             }
         }
 
-        private Dictionary<AbilityType, string> CommandMapper = new Dictionary<AbilityType, string>();
+        /// <summary>
+        /// Private backing for UsageLimit. 
+        /// </summary>
+        private int _usageLimit = 0;
+
+        /// <summary>
+        /// The maximum limit of times this move can be used in battle. 
+        /// </summary>
+        public int UsageLimit
+        {
+            get { return _usageLimit; }
+            set { SetProperty(ref _usageLimit, value); }
+        }
+       
+        /// <summary>
+        /// Private backing for usages. 
+        /// </summary>
+        private int _usages;
+
+        /// <summary>
+        /// The number of times this move has been used. 
+        /// </summary>
+        public int Usages
+        {
+            get { return _usages; }
+            set { SetProperty(ref _usages, value); }
+        }
+
+        /// <summary>
+        /// Maps ability type objects to their commands. 
+        /// </summary>
+        private Dictionary<AbilityType, string> CommandMapper 
+            = new Dictionary<AbilityType, string>();
 
         /// <summary>
         /// Create our command binds and initialize our user's
@@ -261,12 +296,12 @@ namespace EasyFarm.Classes
             // user of its sucess. 
             if (ability == null)
             {
-                ViewModelBase.InformUser(Name + " could not be set. ");
+                ViewModelBase.InformUser("Auto-Fill failed to find {0} in resources. ", Name);
             }
             else
             {
                 this.Ability = ability;
-                ViewModelBase.InformUser(Name + " set successfully. ");
+                ViewModelBase.InformUser("Auto-Filling for {0} complete. ", Name);
                 
                 // Manually signal AbilityType that a change has occured. 
                 this.OnPropertyChanged("AbilityType");

@@ -51,6 +51,12 @@ namespace EasyFarm.Classes
             // TP Check
             if (action.Ability.TPCost > fface.Player.TPCurrent) return false;
 
+            // Usage Limit Check. 
+            if (action.UsageLimit != 0)
+            {
+                if (action.Usages > action.UsageLimit) return false;
+            }
+
             // Recast Check
             if (!Helpers.IsRecastable(fface, action.Ability)) return false;
 

@@ -17,9 +17,11 @@ namespace EasyFarm.Classes
         /// </summary>
         public ObservableCollection<BattleList> Lists = new ObservableCollection<BattleList>();
 
-        public BattleLists() 
-        { 
-            
+        public BattleLists() { }
+
+        public IEnumerable<BattleAbility> Actions
+        {
+            get { return Lists.SelectMany(x => x.Actions); }
         }
 
         /// <summary>

@@ -22,7 +22,7 @@
         <!--################################################################-->
         <!-- General -->
         <!--################################################################-->
-        <Expander Header="Action"
+        <GroupBox Header="Action"
                   Grid.Row="0"
                   Grid.ColumnSpan="2">
             <Grid>
@@ -31,6 +31,7 @@
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -75,32 +76,35 @@
                                         Value="{Binding Path=Ability.Index}" />
 
                 <!-- Distance -->
-                <Grid Grid.Row="2"
-                      Grid.Column="0"
-                      Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Label Content="Distance" />
-                    <Label Grid.Column="1"
-                           Content="{Binding Path=Distance, FallbackValue=0}" />
-                </Grid>
-
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Margin="5"
+                       Content="Distance" />
                 <Slider Grid.Row="2"
                         Grid.Column="1"
                         Minimum="0"
                         Maximum="50"
                         Margin="5"
-                        ToolTip="Move's  "
+                        ToolTip="Max distance for the move. "
                         Value="{Binding Path=Distance}" />
+
+                <!-- Limit Use Per Battle -->
+                <Label Grid.Row="3"
+                       Grid.Column="0"
+                       Margin="5"
+                       Content="Max Uses" />
+                <controls:NumericUpDown Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="5"
+                        ToolTip="Limits the maximum number of uses per battle"
+                        Value="{Binding Path=UsageLimit}" />
             </Grid>
-        </Expander>
+        </GroupBox>
 
         <!--################################################################-->
         <!-- Self -->
         <!--################################################################-->
-        <Expander Header="Self"
+        <GroupBox Header="Self"
                   Grid.Row="1"
                   Grid.ColumnSpan="2">
             <Grid>
@@ -168,14 +172,14 @@
                                       UpperValue="{Binding Path=PlayerUpperHealth}"
                                       ToolTip="Use a move when our character's health falls in this range." />
             </Grid>
-        </Expander>
+        </GroupBox>
 
         <!--################################################################-->
         <!-- Target -->
         <!--################################################################-->
-        <Expander Header="Target"
-                  Grid.Row="2"
-                  Grid.ColumnSpan="2">
+        <GroupBox  Header="Target"
+                   Grid.Row="2"
+                   Grid.ColumnSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -213,7 +217,7 @@
                                       Grid.Row="1"
                                       Grid.Column="1" />
             </Grid>
-        </Expander>
+        </GroupBox>
 
         <!--################################################################-->
         <!-- Auto-Fill -->
