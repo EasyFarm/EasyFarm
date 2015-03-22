@@ -41,10 +41,28 @@
                           Content="Enabled"
                           ToolTip="Sets the move as active. "
                           Margin="5" />
-                <TextBox Grid.Column="1"
-                         Margin="5"
-                         ToolTip="Name of the move. "
-                         Text="{Binding Path=Name}" />
+
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.Column="0"
+                              Margin="5"
+                              IsReadOnly="True"
+                              ItemsSource="{Binding CommandPrefixes}"
+                              SelectedItem="{Binding AbilityType}" />
+                    <TextBox Grid.Column="1"
+                             Margin="5"
+                             ToolTip="Name of the move. "
+                             Text="{Binding Path=Name}" />
+                    <ComboBox Grid.Column="2"
+                              Margin="5"
+                              IsReadOnly="True"
+                              ItemsSource="{Binding CommandTargets}"
+                              SelectedItem="{Binding Ability.TargetType}" />
+                </Grid>
 
                 <!-- Index -->
                 <Label Grid.Row="1"
@@ -183,8 +201,8 @@
 
                 <!-- Target's Health -->
                 <Label Content="Health"
-                       Grid.Row="1" 
-                       Margin="5"/>
+                       Grid.Row="1"
+                       Margin="5" />
                 <controls:RangeSlider Name="targetHealthSlider"
                                       Margin="5"
                                       Maximum="100"

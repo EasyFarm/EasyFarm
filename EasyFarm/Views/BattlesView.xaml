@@ -62,6 +62,7 @@
             <TreeView Name="master"
                       Margin="5"
                       Grid.Column="0"
+                      Grid.ColumnSpan="2"
                       ItemsSource="{Binding BattleLists}"
                       SelectedItemChanged="TreeView_SelectedItemChanged">
             </TreeView>

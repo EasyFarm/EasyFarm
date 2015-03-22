@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using Parsing.Types;
+using System.Collections.Generic;
 
 namespace Parsing.Abilities
 {
@@ -40,7 +41,7 @@ namespace Parsing.Abilities
             this.ID = 0;
             this.Index = 0;
             this.Japanese = string.Empty;
-            this.MPCost = MPCost;
+            this.MPCost = 0;
             this.Postfix = string.Empty;
             this.Prefix = string.Empty;
             this.Recast = 0;

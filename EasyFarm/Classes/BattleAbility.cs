@@ -23,7 +23,11 @@ using FFACETools;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Parsing.Abilities;
+using Parsing.Mapping;
+using Parsing.Types;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
@@ -37,8 +41,6 @@ namespace EasyFarm.Classes
     /// </summary>
     public class BattleAbility : BindableBase
     {
-        #region Basic Conditions
-
         /// <summary>
         /// Is this move ready for use?
         /// </summary>
@@ -53,12 +55,16 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The move's name. 
         /// </summary>
-        private string _name = string.Empty;
+        private string _name;
 
         public string Name
         {
             get { return _name; }
-            set { SetProperty(ref _name, value); }
+            set
+            {
+                SetProperty(ref _name, value);
+                Ability.English = _name;
+            }
         }
 
         /// <summary>
@@ -85,9 +91,7 @@ namespace EasyFarm.Classes
             get { return this._ability; }
             set { SetProperty(ref this._ability, value); }
         }
-        #endregion
 
-        #region Player Conditions
         /// <summary>
         /// Check for the presense or absents of a status effect. 
         /// Unchecked means we use moves in absence of the status effect. 
@@ -141,9 +145,7 @@ namespace EasyFarm.Classes
                 ViewModelBase.InformUser("Upper health set to {0}.", _playerUpperHealth);
             }
         }
-        #endregion
 
-        #region Target Conditions
         /// <summary>
         /// Regular expression used for filtering target names. 
         /// </summary>
@@ -184,7 +186,27 @@ namespace EasyFarm.Classes
                 ViewModelBase.InformUser("Upper health set to {0}.", _targetUpperHealth);
             }
         }
-        #endregion
+
+        private AbilityType _abilityType;
+
+        public AbilityType AbilityType
+        {
+            get 
+            {
+                return Ability.AbilityType;
+            }
+            set 
+            {
+                SetProperty(ref _abilityType, value);
+                
+                var prefix = CommandMapper.ContainsKey(value) ? 
+                    CommandMapper[value] : string.Empty;
+                
+                Ability.Prefix = prefix;
+            }
+        }
+
+        private Dictionary<AbilityType, string> CommandMapper = new Dictionary<AbilityType, string>();
 
         /// <summary>
         /// Create our command binds and initialize our user's
@@ -194,6 +216,34 @@ namespace EasyFarm.Classes
         {
             AutoFillCommand = new DelegateCommand(AutoFill);
             _ability = new Ability();
+
+            // Load valid prefixes.
+            CommandPrefixes = new ObservableCollection<AbilityType>();
+            CommandPrefixes.Add(AbilityType.Unknown);
+            CommandPrefixes.Add(AbilityType.Jobability);
+            CommandPrefixes.Add(AbilityType.Magic);
+            CommandPrefixes.Add(AbilityType.Monsterskill);
+            CommandPrefixes.Add(AbilityType.Ninjutsu);
+            CommandPrefixes.Add(AbilityType.Pet);
+            CommandPrefixes.Add(AbilityType.Range);
+            CommandPrefixes.Add(AbilityType.Song);
+            CommandPrefixes.Add(AbilityType.Weaponskill);
+
+            // Load valid targets. 
+            CommandTargets = new ObservableCollection<TargetType>();
+            CommandTargets.Add(TargetType.Unknown);
+            CommandTargets.Add(TargetType.Self);
+            CommandTargets.Add(TargetType.Enemy);
+
+            // Ability type objects to their commands. 
+            CommandMapper.Add(AbilityType.Jobability, "/jobability");
+            CommandMapper.Add(AbilityType.Magic, "/magic");
+            CommandMapper.Add(AbilityType.Monsterskill, "/monsterskill");
+            CommandMapper.Add(AbilityType.Ninjutsu, "/ninjutsu");
+            CommandMapper.Add(AbilityType.Pet, "/pet");
+            CommandMapper.Add(AbilityType.Range, "/range");
+            CommandMapper.Add(AbilityType.Song, "/song");
+            CommandMapper.Add(AbilityType.Weaponskill, "/weaponskill");
         }
 
         /// <summary>
@@ -201,12 +251,8 @@ namespace EasyFarm.Classes
         /// </summary>
         public void AutoFill()
         {
-            // We've already parsed the ability. 
-            if (Ability.English.Equals(Name, StringComparison.CurrentCultureIgnoreCase))
-            {
-                ViewModelBase.InformUser(Name + " set successfully. ");
-                return;
-            }
+            // Return if string null or empty. 
+            if (string.IsNullOrWhiteSpace(Name)) return;
 
             // Get the ability by name. 
             var ability = FindAbility(Name);
@@ -221,6 +267,9 @@ namespace EasyFarm.Classes
             {
                 this.Ability = ability;
                 ViewModelBase.InformUser(Name + " set successfully. ");
+                
+                // Manually signal AbilityType that a change has occured. 
+                this.OnPropertyChanged("AbilityType");
             }
         }
 
@@ -251,5 +300,15 @@ namespace EasyFarm.Classes
         // Delegate Commands cannot be serialized. 
         [XmlIgnore]
         public DelegateCommand AutoFillCommand { get; set; }
+
+        /// <summary>
+        /// List of usable command prefixes. 
+        /// </summary>
+        public ObservableCollection<AbilityType> CommandPrefixes { get; set; }
+
+        /// <summary>
+        /// List of usable command targets. 
+        /// </summary>
+        public ObservableCollection<TargetType> CommandTargets { get; set; }
     }
 }
