@@ -56,7 +56,7 @@ namespace EasyFarm.Components
         public override void RunComponent()
         {
             var usable = Config.Instance.BattleLists["Start"]
-                .Actions.Where(x => ActionFilters.BattleAbilityFilter(FFACE, x));
+                .Actions.Where(x => ActionFilters.BuffingFilter(FFACE, x));
 
             // Execute moves at target. 
             Executor.UseBuffingActions(usable);

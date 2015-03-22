@@ -75,7 +75,7 @@ namespace EasyFarm.Components
         {               
             // Cast only one action to prevent blocking curing. 
             var action = Config.Instance.BattleLists["Battle"].Actions
-                .Where(x => ActionFilters.BattleAbilityFilter(FFACE, x))
+                .Where(x => ActionFilters.TargetedFilter(FFACE, x, Target))
                 .FirstOrDefault();
 
             if (action != null)

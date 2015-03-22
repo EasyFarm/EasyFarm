@@ -22,6 +22,7 @@ using Parsing.Abilities;
 using System;
 using System.Text.RegularExpressions;
 using System.Linq;
+using Parsing.Types;
 
 namespace EasyFarm.Classes
 {
@@ -29,93 +30,107 @@ namespace EasyFarm.Classes
     /// This class is responsible for holding all of the abilities our character may use in battle.
     /// </summary>
     public class ActionFilters
-    {
+    {        
         /// <summary>
-        /// Filters out usable abilities. 
+        /// Filters out unusable buffing abilities. 
         /// </summary>
         /// <param name="fface"></param>
+        /// <param name="action"></param>
         /// <returns></returns>
-        public static bool AbilityFilter(FFACE fface, Ability ability)
-        {
-            return Helpers.IsActionValid(fface, ability);
-        }
-
-        public static bool BattleAbilityFilter(FFACE fface, BattleAbility ability)
+        public static bool BuffingFilter(FFACE fface, BattleAbility action)
         {
             // Return if not enabled. 
-            if (!ability.IsEnabled) return false;
+            if (!action.IsEnabled) return false;
 
-            // Return if not castable.
-            if (!Helpers.IsActionValid(fface, ability.Ability)) return false;
+            // Name Check
+            if (string.IsNullOrWhiteSpace(action.Name)) return false;
 
-            var IsBuff = !String.IsNullOrWhiteSpace(ability.StatusEffect);
+            // MP Check
+            if (action.Ability.MPCost > fface.Player.MPCurrent) return false;
 
-            var HasEffectWore = !fface.Player.StatusEffects.Any(effect =>
+            // TP Check
+            if (action.Ability.TPCost > fface.Player.TPCurrent) return false;
+
+            // Recast Check
+            if (!Helpers.IsRecastable(fface, action.Ability)) return false;
+
+            // Limiting Status Effect Check for Spells. 
+            if (CompositeAbilityTypes.IsSpell.HasFlag(action.Ability.AbilityType))
+            {
+                if (ProhibitEffects.PROHIBIT_EFFECTS_SPELL.Intersect(fface.Player.StatusEffects).Any())
+                {
+                    return false;
+                }
+            }
+
+            // Limiting Status Effect Check for Abilities. 
+            if (CompositeAbilityTypes.IsAbility.HasFlag(action.Ability.AbilityType))
+            {
+                if (ProhibitEffects.PROHIBIT_EFFECTS_ABILITY.Intersect(fface.Player.StatusEffects).Any())
+                {
+                    return false;
+                }
+            }
+
+            // Player HP Checks Enabled. 
+            if (action.PlayerLowerHealth != 0 || action.PlayerUpperHealth != 0)
+            {
+                // Player Upper HP Check
+                if (fface.Player.HPPCurrent > action.PlayerUpperHealth) return false;
+
+                // Player Lower HP Check
+                if (fface.Player.HPPCurrent < action.PlayerLowerHealth) return false;
+            }
+
+            // Status Effect Checks Enabled
+            if (!string.IsNullOrWhiteSpace(action.StatusEffect))
+            {
+                var HasEffect = fface.Player.StatusEffects.Any(effect =>
                 Regex.IsMatch(effect.ToString(),
-                ability.StatusEffect.Replace(" ", "_"),
+                action.StatusEffect.Replace(" ", "_"),
                 RegexOptions.IgnoreCase));
 
-            // If it meets these requirements, it's true. 
-            // If it's a buff and has wore, true,
-            // If it's not a buff then true. 
-            return IsBuff && HasEffectWore || !IsBuff;
-        }
+                // Contains Effect Check
+                if (HasEffect && !action.TriggerOnEffectPresent) return false;
 
-        /// <summary>
-        /// Filters out usable healing abilities. 
-        /// </summary>
-        /// <param name="fface"></param>
-        /// <returns></returns>
-        public static bool HealingFilter(FFACE fface, BattleAbility x)
-        {
-            if (!x.IsEnabled) return false;
-
-            if (x.PlayerLowerHealth < fface.Player.HPPCurrent && fface.Player.HPPCurrent > x.PlayerUpperHealth)
-                return false;
-
-            if (!AbilityFilter(fface, App.AbilityService.CreateAbility(x.Name)))
-                return false;
+                // Missing EFfect Check
+                if (!HasEffect && action.TriggerOnEffectPresent) return false;
+            }
 
             return true;
         }
 
         /// <summary>
-        /// A filter to checking whether we can use a weaponskill or not.  
+        /// Filters out unusable targeted abilities. 
         /// </summary>
         /// <param name="fface"></param>
+        /// <param name="action"></param>
+        /// <param name="unit"></param>
         /// <returns></returns>
-        public static bool WeaponSkillFilter(FFACE fface, BattleAbility x, IUnit u)
+        public static bool TargetedFilter(FFACE fface, BattleAbility action, Unit unit)
         {
-            //////////////////////////////////////////////////////
-            // Code for testing weaponskill filtering.          //
-            //////////////////////////////////////////////////////
-            int TPCurrent = Constants.WEAPONSKILL_TP;
-            Status Status = Status.Fighting;
+            // Does not pass the base criteria for casting. 
+            if (!BuffingFilter(fface, action)) return false;
 
-            if (fface != null)
+            // Target HP Checks Enabled. 
+            if (action.TargetLowerHealth != 0 || action.TargetUpperHealth != 0)
             {
-                TPCurrent = fface.Player.TPCurrent;
-                Status = fface.Player.Status;
+                // Target Upper Health Check
+                if (unit.HPPCurrent > action.TargetUpperHealth) return false;
+
+                // Target Lower Health Check
+                if (unit.HPPCurrent < action.TargetLowerHealth) return false;
+            }            
+
+            // Target Name Checks Enabled.
+            if (!string.IsNullOrWhiteSpace(action.TargetName))
+            {
+                // Target Name Check. 
+                if (!Regex.IsMatch(unit.Name, action.TargetName, RegexOptions.IgnoreCase)) return false;
             }
-            //////////////////////////////////////////////////////
 
-            // Weaponskill a valid ability?
-            if (string.IsNullOrWhiteSpace(x.Name)) return false;
-
-            // Not enough tp. 
-            if (TPCurrent < x.Ability.TPCost) return false;
-
-            // Not engaged. 
-            if (!Status.Equals(Status.Fighting)) return false;
-
-            // The target's health is greater than the upper threshold, return false. 
-            if (u.HPPCurrent > x.TargetUpperHealth) return false;
-
-            // Target's health is less than the lower threshold, return false. 
-            if (u.HPPCurrent < x.TargetLowerHealth) return false;
-
-            // Do not meet distance requirements. 
-            if (u.Distance > x.Distance) return false;
+            // Distance Check
+            if (unit.Distance > action.Distance) return false;            
 
             return true;
         }

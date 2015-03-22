@@ -70,7 +70,7 @@ namespace EasyFarm.Components
         {
             // Execute moves. 
             var Usable = Config.Instance.BattleLists["End"].Actions
-                .Where(x => ActionFilters.BattleAbilityFilter(FFACE, x));
+                .Where(x => ActionFilters.BuffingFilter(FFACE, x));
 
             Executor.UseBuffingActions(Usable);
 

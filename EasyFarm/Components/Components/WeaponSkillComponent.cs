@@ -70,7 +70,7 @@ namespace EasyFarm.Components
                 if (weaponskill == null) return;
 
                 // Perform the weaponskill if it is valid. 
-                if (ActionFilters.WeaponSkillFilter(FFACE, weaponskill, Target))
+                if (ActionFilters.TargetedFilter(FFACE, weaponskill, Target))
                 {
                     Executor.UseTargetedAction(weaponskill, Target);
                 }

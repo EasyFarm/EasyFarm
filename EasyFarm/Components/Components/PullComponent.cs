@@ -72,7 +72,7 @@ namespace EasyFarm.Components
                 .Actions.Any(x => x.IsEnabled))
             {                
                 var usable = Config.Instance.BattleLists["Pull"]
-                    .Actions.Where(x => ActionFilters.BattleAbilityFilter(FFACE, x));
+                    .Actions.Where(x => ActionFilters.TargetedFilter(FFACE, x, Target));
                
                 Executor.UseTargetedActions(usable, Target);
             }

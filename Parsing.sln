@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFACETools", "..\..\..\GitHub\FFACETools_ffevo.net\FFACETools.csproj", "{37456169-2B9E-49A7-8B20-A160C180E453}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing", "Parsing\Parsing.csproj", "{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsingTests", "ParsingTests\ParsingTests.csproj", "{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37456169-2B9E-49A7-8B20-A160C180E453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37456169-2B9E-49A7-8B20-A160C180E453}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37456169-2B9E-49A7-8B20-A160C180E453}.Debug|x86.ActiveCfg = Debug|x86
+		{37456169-2B9E-49A7-8B20-A160C180E453}.Debug|x86.Build.0 = Debug|x86
+		{37456169-2B9E-49A7-8B20-A160C180E453}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37456169-2B9E-49A7-8B20-A160C180E453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37456169-2B9E-49A7-8B20-A160C180E453}.Release|x86.ActiveCfg = Release|x86
+		{37456169-2B9E-49A7-8B20-A160C180E453}.Release|x86.Build.0 = Release|x86
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}.Release|x86.ActiveCfg = Release|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

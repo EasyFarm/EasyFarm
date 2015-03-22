@@ -64,7 +64,7 @@ namespace EasyFarm.Classes
             {
                 foreach (var action in castables.ToList())
                 {
-                    if (!ActionFilters.BattleAbilityFilter(FFACE, action))
+                    if (!ActionFilters.BuffingFilter(FFACE, action))
                     {
                         castables.Remove(action);
                         continue;

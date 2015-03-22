@@ -64,7 +64,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The move's max distance. 
         /// </summary>
-        private double _distance = 0;
+        private double _distance = Constants.MELEE_DISTANCE;
 
         public double Distance
         {
@@ -173,7 +173,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// Target's upper health threshold. 
         /// </summary>
-        private int _targetUpperHealth = 100;
+        private int _targetUpperHealth = 0;
 
         public int TargetUpperHealth
         {

@@ -52,7 +52,7 @@ namespace EasyFarm.Components
 
             // Get usable abilities. 
             var Usable = Config.Instance.BattleLists["Pull"].Actions
-                .Where(x => ActionFilters.BattleAbilityFilter(FFACE, x));
+                .Where(x => ActionFilters.BuffingFilter(FFACE, x));
 
             // Approach when there are no pulling moves available. 
             if (!Usable.Any()) return true;

@@ -434,13 +434,27 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\abils.xml" />
-    <None Include="resources\areas.xml" />
-    <None Include="resources\items_armor.xml" />
-    <None Include="resources\items_general.xml" />
-    <None Include="resources\items_weapons.xml" />
-    <None Include="resources\spells.xml" />
-    <None Include="resources\status.xml" />
+    <None Include="resources\abils.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="resources\areas.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="resources\items_armor.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="resources\items_general.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="resources\items_weapons.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="resources\spells.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="resources\status.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FFACETools_ffevo.net\FFACETools.csproj">
