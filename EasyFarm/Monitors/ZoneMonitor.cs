@@ -34,7 +34,7 @@ namespace EasyFarm.FarmingTool
             {
                 Zone zone = m_fface.Player.Zone;
 
-                if (m_zone != zone)
+                if (m_zone != zone || m_fface.Player.Stats.Str == 0)
                 {
                     OnChanged(new MonitorArgs<Zone>(zone));
                     m_zone = zone;

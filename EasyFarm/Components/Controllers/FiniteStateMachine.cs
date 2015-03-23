@@ -28,6 +28,7 @@ using EasyFarm.Components;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using FFACETools;
+using System.Threading;
 
 namespace EasyFarm.Components
 {
@@ -35,27 +36,19 @@ namespace EasyFarm.Components
     {
         private MachineComponent LastRan = null;
 
-        // Timer loop, check the State list.
-        private Timer m_heartBeat = new Timer();
-
         /// <summary>
         /// FFACE Session for reading memory from the game client. 
         /// </summary>
         private FFACE m_fface;
 
-
-        private BackgroundWorker m_worker = 
-            new BackgroundWorker();
-
+        /// <summary>
+        /// Our operational state object. 
+        /// </summary>
+        private TaskInfo taskInfo = null;
 
         // Constructor.
         public FiniteStateEngine(FFACE fface)
         {
-            m_heartBeat.Interval = 100; // Check State list ten times per second.
-            m_heartBeat.Tick += Heartbeat_Tick;
-            m_worker.DoWork += Work;
-            m_worker.WorkerSupportsCancellation = true;
-
             this.m_fface = fface;
 
             //Create the states
@@ -64,16 +57,13 @@ namespace EasyFarm.Components
             AddComponent(new TravelComponent(fface) { Priority = 1 });
             AddComponent(new HealingComponent(fface) { Priority = 2 });
             AddComponent(new EndComponent(fface) { Priority = 3 });
-
-            foreach (var b in this.Components)
-            {
-                b.Enabled = true;
-            }
+            this.Components.ForEach(x => x.Enabled = true);
         }
 
-        private void Work(object sender, DoWorkEventArgs e)
+        private void Work(object state, bool timedOut)
         {
-            lock (Components)
+            // Keep looping until user requests cancel. 
+            while (!((TaskInfo)state).IsCanceled)
             {
                 // Sort the List, States may have updated Priorities.
                 Components.Sort();
@@ -81,16 +71,20 @@ namespace EasyFarm.Components
                 // Find a State that says it needs to run.
                 foreach (MachineComponent MC in Components)
                 {
-                    // Cancel operations if pause pending.
-                    if (m_worker.CancellationPending)
+                    // Stop operations on being signaled to stop. 
+                    if (!timedOut)
                     {
-                        e.Cancel = true;
-
                         // Make the last state clean up and exit (stops running if travelling)
                         if (LastRan != null)
                         {
                             LastRan.ExitComponent();
                         }
+
+                        if (taskInfo.Handle != null)
+                        {
+                            taskInfo.Handle.Unregister(null);
+                        }
+
                         return;
                     }
 
@@ -111,28 +105,21 @@ namespace EasyFarm.Components
                         MC.RunComponent();
                     }
                 }
-            }
-        }
 
-        // Handles the updating.
-        public void Heartbeat_Tick(object sender, EventArgs e)
-        {
-            if (!m_worker.IsBusy) { m_worker.RunWorkerAsync(); }
+                // Acts like timer's elapsed wait duration. 
+                Thread.Sleep(100);
+            }
         }
 
         // Start and stop.
         public override void Start()
         {
-            m_heartBeat.Start();
+            taskInfo = new TaskInfo(Work);
         }
 
         public override void Stop()
         {
-            // Stop next round of states. 
-            m_heartBeat.Stop();
-
-            // Prevent next states from executing.
-            m_worker.CancelAsync();
+            taskInfo.Dispose();
         }
 
         public override bool CheckComponent()
@@ -150,6 +137,39 @@ namespace EasyFarm.Components
             }
 
             return ready;
+        }
+
+        public class TaskInfo : IDisposable
+        {
+            public RegisteredWaitHandle Handle = null;
+
+            /// <summary>
+            /// Cancels running new states. 
+            /// </summary>
+            public bool IsCanceled = false;
+
+            /// <summary>
+            /// Signals this task to stop. 
+            /// </summary>
+            public AutoResetEvent AutoReset = new AutoResetEvent(false);
+
+            public TaskInfo(WaitOrTimerCallback callback)
+            {
+                Handle = ThreadPool.RegisterWaitForSingleObject(
+                    AutoReset,
+                    new WaitOrTimerCallback(callback),
+                    this,
+                    500,
+                    true
+                );
+            }
+
+            public void Dispose()
+            {
+                IsCanceled = true;
+                if (Handle != null) Handle.Unregister(null);
+                AutoReset.Dispose();
+            }
         }
     }
 }

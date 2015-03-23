@@ -48,6 +48,7 @@ namespace EasyFarm.Components
         {
             if (LastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
             {
+                LastAggroCheck = DateTime.Now;
                 if (Units.HasAggro) return false;
             }
 

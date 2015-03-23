@@ -21,6 +21,7 @@ using EasyFarm.FarmingTool;
 using EasyFarm.ViewModels;
 using FFACETools;
 using System;
+using System.Threading;
 
 namespace EasyFarm.Components
 {
@@ -77,6 +78,9 @@ namespace EasyFarm.Components
             this._statusMonitor = new DeadMonitor(fface);
             this._stuckMonitor = new StuckMonitor(fface);
             this._stateMachine = new FiniteStateEngine(fface);
+
+            _zoneMonitor.Changed += ZoneMonitor_ZoneChanged;
+            _zoneMonitor.Start();
 
             _statusMonitor.Changed += StatusMonitor_StatusChanged;
             _statusMonitor.Start();
@@ -141,7 +145,7 @@ namespace EasyFarm.Components
                 ViewModelBase.InformUser("Program Paused");
                 Stop();
             }
-            else 
+            else
             {
                 ViewModelBase.InformUser("Program Resumed");
                 Start();
@@ -166,11 +170,11 @@ namespace EasyFarm.Components
             // Stop the state machine.
             Stop();
 
-            // Set up waiting of 5 seconds to be our current time + 10 seconds. 
-            var waitDelay = DateTime.Now.Add(TimeSpan.FromSeconds(10));
-
-            // Wait for five seconds after zoning. 
-            while (DateTime.Now < waitDelay)  { }
+            // Wait until our player has zoned; 
+            while (_fface.Player.Stats.Str == 0)  
+            {
+                Thread.Sleep(500);
+            }
 
             // Start up the state machine again.
             Start();

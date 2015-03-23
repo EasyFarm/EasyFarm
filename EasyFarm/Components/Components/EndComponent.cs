@@ -86,6 +86,8 @@ namespace EasyFarm.Components
                 // Set our new target at the end so that we don't accidentaly cast on a 
                 // new target. 
                 AttackContainer.TargetUnit = mobs.FirstOrDefault();
+
+                lastCheckedForMob = DateTime.Now;
             }
 
             if (Target != null)

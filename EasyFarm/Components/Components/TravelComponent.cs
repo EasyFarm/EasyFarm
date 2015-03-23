@@ -111,9 +111,10 @@ namespace EasyFarm.Components
 
             // Check if the player has aggro, but don't hammer the 
             // npc array less than every second. 
-            if (LastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now && _units.HasAggro)
+            if (LastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
             {
-                return true;
+                LastAggroCheck = DateTime.Now;
+                if (_units.HasAggro) return true;
             }
 
             // Return when the user has pause the program. 
