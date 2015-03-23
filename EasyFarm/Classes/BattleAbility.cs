@@ -75,7 +75,8 @@ namespace EasyFarm.Classes
         public double Distance
         {
             get { return _distance; }
-            set { 
+            set
+            {
                 SetProperty(ref _distance, value);
                 ViewModelBase.InformUser("Distance set to {0}.", _distance);
             }
@@ -194,17 +195,17 @@ namespace EasyFarm.Classes
 
         public AbilityType AbilityType
         {
-            get 
+            get
             {
                 return Ability.AbilityType;
             }
-            set 
+            set
             {
                 SetProperty(ref _abilityType, value);
-                
-                var prefix = CommandMapper.ContainsKey(value) ? 
+
+                var prefix = CommandMapper.ContainsKey(value) ?
                     CommandMapper[value] : string.Empty;
-                
+
                 Ability.Prefix = prefix;
             }
         }
@@ -222,7 +223,7 @@ namespace EasyFarm.Classes
             get { return _usageLimit; }
             set { SetProperty(ref _usageLimit, value); }
         }
-       
+
         /// <summary>
         /// Private backing for usages. 
         /// </summary>
@@ -237,38 +238,27 @@ namespace EasyFarm.Classes
             set { SetProperty(ref _usages, value); }
         }
 
-        /// <summary>
-        /// Maps ability type objects to their commands. 
-        /// </summary>
-        private Dictionary<AbilityType, string> CommandMapper 
-            = new Dictionary<AbilityType, string>();
-
-        /// <summary>
-        /// Create our command binds and initialize our user's
-        /// move usage conditions. 
-        /// </summary>
-        public BattleAbility()
+        static BattleAbility()
         {
-            AutoFillCommand = new DelegateCommand(AutoFill);
-            _ability = new Ability();
+            var commandTypes = new ObservableCollection<AbilityType>()
+            { 
+                AbilityType.Unknown, AbilityType.Jobability, 
+                AbilityType.Magic, AbilityType.Monsterskill, 
+                AbilityType.Ninjutsu, AbilityType.Pet, 
+                AbilityType.Range, AbilityType.Song,
+                AbilityType.Weaponskill
+            };
 
             // Load valid prefixes.
-            CommandPrefixes = new ObservableCollection<AbilityType>();
-            CommandPrefixes.Add(AbilityType.Unknown);
-            CommandPrefixes.Add(AbilityType.Jobability);
-            CommandPrefixes.Add(AbilityType.Magic);
-            CommandPrefixes.Add(AbilityType.Monsterskill);
-            CommandPrefixes.Add(AbilityType.Ninjutsu);
-            CommandPrefixes.Add(AbilityType.Pet);
-            CommandPrefixes.Add(AbilityType.Range);
-            CommandPrefixes.Add(AbilityType.Song);
-            CommandPrefixes.Add(AbilityType.Weaponskill);
+            CommandPrefixes = new ReadOnlyObservableCollection<AbilityType>(commandTypes);
+
+            var commandPrefix = new ObservableCollection<TargetType>() 
+            { 
+                TargetType.Unknown, TargetType.Self, TargetType.Enemy
+            };
 
             // Load valid targets. 
-            CommandTargets = new ObservableCollection<TargetType>();
-            CommandTargets.Add(TargetType.Unknown);
-            CommandTargets.Add(TargetType.Self);
-            CommandTargets.Add(TargetType.Enemy);
+            CommandTargets = new ReadOnlyObservableCollection<TargetType>(commandPrefix);           
 
             // Ability type objects to their commands. 
             CommandMapper.Add(AbilityType.Jobability, "/jobability");
@@ -279,6 +269,16 @@ namespace EasyFarm.Classes
             CommandMapper.Add(AbilityType.Range, "/range");
             CommandMapper.Add(AbilityType.Song, "/song");
             CommandMapper.Add(AbilityType.Weaponskill, "/weaponskill");
+        }
+
+        /// <summary>
+        /// Create our command binds and initialize our user's
+        /// move usage conditions. 
+        /// </summary>
+        public BattleAbility()
+        {
+            AutoFillCommand = new DelegateCommand(AutoFill);
+            _ability = new Ability();
         }
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace EasyFarm.Classes
             {
                 this.Ability = ability;
                 ViewModelBase.InformUser("Auto-Filling for {0} complete. ", Name);
-                
+
                 // Manually signal AbilityType that a change has occured. 
                 this.OnPropertyChanged("AbilityType");
             }
@@ -337,13 +337,19 @@ namespace EasyFarm.Classes
         public DelegateCommand AutoFillCommand { get; set; }
 
         /// <summary>
+        /// Maps ability type objects to their commands. 
+        /// </summary>
+        private static readonly Dictionary<AbilityType, string> CommandMapper
+            = new Dictionary<AbilityType, string>();
+
+        /// <summary>
         /// List of usable command prefixes. 
         /// </summary>
-        public ObservableCollection<AbilityType> CommandPrefixes { get; set; }
+        public static ReadOnlyObservableCollection<AbilityType> CommandPrefixes { get; set; }
 
         /// <summary>
         /// List of usable command targets. 
         /// </summary>
-        public ObservableCollection<TargetType> CommandTargets { get; set; }
+        public static ReadOnlyObservableCollection<TargetType> CommandTargets { get; set; }
     }
 }

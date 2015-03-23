@@ -68,6 +68,11 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ICommand ClearActionsCommand { get; set; }
 
+        /// <summary>
+        /// Finds the list containing the given battle ability. 
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <returns></returns>
         private BattleList FindListContainingAbility(BattleAbility ability)
         {
             return Config.Instance.BattleLists.Lists

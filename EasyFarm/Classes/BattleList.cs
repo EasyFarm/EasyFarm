@@ -16,6 +16,7 @@ namespace EasyFarm.Classes
         {
             _name = name;
             _actions = new ObservableCollection<BattleAbility>();
+            _actions.Add(new BattleAbility() { Name = "Default" });
         }
 
         private string _name;
