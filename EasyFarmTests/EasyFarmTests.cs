@@ -69,33 +69,5 @@ namespace EasyFarmTests
             Config.Instance.ClaimedFilter = true;
             Assert.IsTrue(UnitFilters.MobFilter(null)(Unit));
         }
-
-        [TestMethod]
-        public void TestWeaponSkillTrigger()
-        {
-            BattleAbility skill = new BattleAbility();
-            skill.Distance = 4;
-            skill.IsEnabled = true;
-            skill.TargetLowerHealth = 25;
-            skill.TargetUpperHealth = 75;
-            skill.Ability.English = "Raging Axe";
-
-            TestUnit unit = new TestUnit()
-            {
-                HPPCurrent = 50,
-                Distance = 3
-            };
-
-            // Test for success
-            Assert.IsTrue(ActionFilters.WeaponSkillFilter(null, skill, unit));
-
-            // Test for failure on low hp. 
-            unit.HPPCurrent = 0;
-            Assert.IsFalse(ActionFilters.WeaponSkillFilter(null, skill, unit));
-
-            // Test for failure on high hp. 
-            unit.HPPCurrent = 100;
-            Assert.IsFalse(ActionFilters.WeaponSkillFilter(null, skill, unit));
-        }        
     }
 }

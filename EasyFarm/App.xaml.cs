@@ -60,37 +60,7 @@ namespace EasyFarm
             Logger.Write.ApplicationStart("Application starting");            
 
             Logger.Write.ResourcesLocated("Resources located");
-
-            // Let user select ffxi process
-            frmStartup ProcessSelectionScreen = new frmStartup();
-            ProcessSelectionScreen.ShowDialog();
-
-            // Validate the selection
-            var m_process = ProcessSelectionScreen.SelectedProcess;
-
-            // Check if the user made a selection. 
-            if (m_process == null)
-            {
-                Logger.Write.ProcessNotFound("Process not found");
-                MessageBox.Show("No valid process was selected: Exiting now.");
-                Environment.Exit(0);
-            }
-
-            Logger.Write.ProcessFound("Process found");
-
-            // Save the selected fface instance. 
-            var FFACE = ProcessSelectionScreen.SelectedSession;
-
-            // Free up and stop timer from working. 
-            ProcessSelectionScreen.ProcessWatcher.Dispose();
-
-            ViewModelBase.SetSession(FFACE);
-
-            // new DebugSpellCasting(_fface).Show();
-            // new DebugCreatures(_fface, FarmingTools.UnitService).Show();
-            // var dbc = new DebugCreatures(FarmingTools.FFACE, FarmingTools.UnitService);
-            // dbc.Show();
-                
+                          
             BootStrapper bootStrapper = new BootStrapper();
             bootStrapper.Run();
         }

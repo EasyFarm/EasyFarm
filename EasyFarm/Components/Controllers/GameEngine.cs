@@ -64,6 +64,11 @@ namespace EasyFarm.Components
         /// </summary>
         private FFACE _fface;
 
+        /// <summary>
+        /// The engine that controls player actions. 
+        /// </summary>
+        private FiniteStateEngine _stateMachine;
+
         public GameEngine(FFACE fface)
         {
             this._fface = fface;
@@ -71,22 +76,11 @@ namespace EasyFarm.Components
             this._playerMonitor = new PlayerMonitor(fface);
             this._statusMonitor = new DeadMonitor(fface);
             this._stuckMonitor = new StuckMonitor(fface);
-            this.StateMachine = new FiniteStateEngine(fface);
-
-            _zoneMonitor.Changed += ZoneMonitor_ZoneChanged;
-            _zoneMonitor.Start();
+            this._stateMachine = new FiniteStateEngine(fface);
 
             _statusMonitor.Changed += StatusMonitor_StatusChanged;
             _statusMonitor.Start();
-
-            // _stuckMonitor.Changed += StuckMonitor_StuckChanged;
-            // _stuckMonitor.Start();
         }
-
-        /// <summary>
-        /// The engine that controls player actions. 
-        /// </summary>
-        public FiniteStateEngine StateMachine { get; set; }
 
         /// <summary>
         /// Monitors engine status for player being stuck and 
@@ -189,7 +183,7 @@ namespace EasyFarm.Components
         /// </summary>
         public void Start()
         {
-            StateMachine.Start();
+            _stateMachine.Start();
             IsWorking = true;
         }
 
@@ -198,7 +192,7 @@ namespace EasyFarm.Components
         /// </summary>
         public void Stop()
         {
-            StateMachine.Stop();
+            _stateMachine.Stop();
             IsWorking = false;
         }
     }

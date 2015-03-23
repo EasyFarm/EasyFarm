@@ -145,6 +145,7 @@ namespace EasyFarm.Views
             {
                 try
                 {
+                    if (SelectedProcess == null) return null;
                     return new FFACE(SelectedProcess.Id); 
                 }
                 catch (DllNotFoundException ex)

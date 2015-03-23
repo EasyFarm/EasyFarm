@@ -43,7 +43,7 @@ namespace EasyFarm.ViewModels
         public MasterViewModel()
         {
             _settingsManager = new SettingsManager(
-                "eup", 
+                "eup",
                 "EasyFarm User Preference"
             );
 
@@ -53,24 +53,19 @@ namespace EasyFarm.ViewModels
             // Get events from view models to update the status bar's text.
             EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe(a => { StatusBarText = a; });
 
-            // Tell the user the program has loaded the player's data
-            InformUser("Bot Loaded: " + FFACE.Player.Name);
-
-            // Set the main window's title to the player's name. 
-            MainWindowTitle = "EasyFarm - " + FFACE.Player.Name;
-
             // Bind commands to their handlers. 
             StartCommand = new DelegateCommand(Start);
             ExitCommand = new DelegateCommand(Exit);
             SaveCommand = new DelegateCommand(Save);
             LoadCommand = new DelegateCommand(Load);
             SettingsCommand = new DelegateCommand(ShowSettings);
+            SelectProcessCommand = new DelegateCommand(SelectProcess);
         }
 
-        private void ShowSettings() 
+        private void ShowSettings()
         {
             IRegionManager regionManager =
-                ServiceLocator.Current.GetInstance<IRegionManager>();         
+                ServiceLocator.Current.GetInstance<IRegionManager>();
 
             var region = regionManager.Regions["MainRegion"];
 
@@ -91,7 +86,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         /// Bind for the title bar's text. 
         /// </summary>
-        public String MainWindowTitle 
+        public String MainWindowTitle
         {
             get { return Config.Instance.MainWindowTitle; }
             set { SetProperty(ref Config.Instance.MainWindowTitle, value); }
@@ -109,7 +104,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         /// Tells whether the bot is working or not. 
         /// </summary>
-        public bool IsWorking 
+        public bool IsWorking
         {
             get { return GameEngine.IsWorking; }
             set { SetProperty(ref GameEngine.IsWorking, value); }
@@ -132,7 +127,7 @@ namespace EasyFarm.ViewModels
             get { return _settingsHeader; }
             set { SetProperty(ref _settingsHeader, value); }
         }
-       
+
         /// <summary>
         /// Command to start the bot. 
         /// </summary>
@@ -159,14 +154,26 @@ namespace EasyFarm.ViewModels
         public DelegateCommand SettingsCommand { get; set; }
 
         /// <summary>
+        /// Binding for selecting a PlayOnline process. 
+        /// </summary>
+        public DelegateCommand SelectProcessCommand { get; set; }
+
+        /// <summary>
         /// Tells the program to start farming. 
         /// </summary>
         public void Start()
         {
+            // Return when the user has not selected a process. 
+            if (FFACE == null)
+            {
+                InformUser("No process has been selected.");
+                return;
+            }
+
             if (GameEngine.IsWorking)
             {
                 Logger.Write.BotStop("Bot now paused");
-                InformUser("Program paused.");                
+                InformUser("Program paused.");
                 GameEngine.Stop();
                 StartPauseHeader = "St_art";
             }
@@ -177,15 +184,15 @@ namespace EasyFarm.ViewModels
                 GameEngine.Start();
                 StartPauseHeader = "P_ause";
             }
-        }        
+        }
 
         /// <summary>
         /// Saves the player's data to file. 
         /// </summary>
         private void Save()
-        {           
+        {
             try
-            {                
+            {
                 _settingsManager.Save<Config>(Config.Instance);
                 ViewModelBase.InformUser("Settings have been saved.");
                 Logger.Write.SaveSettings("Settings saved");
@@ -200,7 +207,7 @@ namespace EasyFarm.ViewModels
         private void Load()
         {
             try
-            {                
+            {
                 // Load the settings.
                 var settings = _settingsManager.Load<Config>();
 
@@ -223,12 +230,49 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
+        /// Selects a process to user for this application. 
+        /// </summary>
+        private void SelectProcess()
+        {
+            // Let user select ffxi process
+            frmStartup ProcessSelectionScreen = new frmStartup();
+            ProcessSelectionScreen.ShowDialog();
+
+            // Validate the selection
+            var m_process = ProcessSelectionScreen.SelectedProcess;
+
+            // Check if the user made a selection. 
+            if (m_process == null)
+            {
+                Logger.Write.ProcessNotFound("Process not found");
+                ViewModelBase.InformUser("No valid process was selected.");
+                return;
+            }
+
+            Logger.Write.ProcessFound("Process found");
+
+            // Save the selected fface instance. 
+            var FFACE = ProcessSelectionScreen.SelectedSession;
+
+            // Free up and stop timer from working. 
+            ProcessSelectionScreen.ProcessWatcher.Dispose();
+
+            ViewModelBase.SetSession(FFACE);
+
+            // Tell the user the program has loaded the player's data
+            InformUser("Bot Loaded: " + FFACE.Player.Name);
+
+            // Set the main window's title to the player's name. 
+            MainWindowTitle = "EasyFarm - " + FFACE.Player.Name;
+        }
+
+        /// <summary>
         /// Shutsdown the program. 
         /// </summary>
         private void Exit()
         {
             Application.Current.Shutdown();
-        }        
+        }
     }
 }
 

@@ -67,6 +67,8 @@ namespace EasyFarm.ViewModels
 
         public static void SetSession(FFACE fface)
         {
+            if (fface == null) return;
+
             // Save FFACE Instance
             FFACE = fface;
 

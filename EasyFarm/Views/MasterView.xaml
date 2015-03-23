@@ -51,14 +51,21 @@
                       Foreground="White"
                       Background="Black"
                       VerticalAlignment="Center">
+                <MenuItem Header="Process selection..."
+                          Command="{Binding SelectProcessCommand}" />
                 <MenuItem Header="{Binding StartPauseHeader}"
                           Command="{Binding StartCommand}" />
+                <MenuItem Header="E_xit"
+                          Command="{Binding ExitCommand}" />
+            </MenuItem>
+            <MenuItem Header="_Data"
+                      Foreground="White"
+                      Background="Black"
+                      VerticalAlignment="Center">
                 <MenuItem Header="_Save"
                           Command="{Binding SaveCommand}" />
                 <MenuItem Header="_Load"
                           Command="{Binding LoadCommand}" />
-                <MenuItem Header="E_xit"
-                          Command="{Binding ExitCommand}" />
             </MenuItem>
             <MenuItem Header="_Options"
                       Foreground="White"
