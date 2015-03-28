@@ -74,7 +74,7 @@ namespace EasyFarm.Logging
 
         public Logger()
         {
-            _syncContext = SynchronizationContext.Current;
+            _syncContext = SynchronizationContext.Current ?? new SynchronizationContext();
         }
 
         /// <summary>
