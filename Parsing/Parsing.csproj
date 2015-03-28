@@ -71,12 +71,6 @@
     <Compile Include="Services\IAbilityService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FFACETools_ffevo.net\FFACETools.csproj">
-      <Project>{37456169-2b9e-49a7-8b20-a160c180e453}</Project>
-      <Name>FFACETools</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Augmenting\ArgumenterInfo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

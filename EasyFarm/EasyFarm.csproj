@@ -126,6 +126,10 @@
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FFACETools, Version=1.3.1.21, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\FFACETools.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.14.0.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -457,21 +461,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FFACETools_ffevo.net\FFACETools.csproj">
-      <Project>{37456169-2b9e-49a7-8b20-a160c180e453}</Project>
-      <Name>FFACETools</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Parsing\Parsing.csproj">
       <Project>{7008daf7-d3aa-41a4-9d85-8ec168d5d372}</Project>
       <Name>Parsing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="FFACE.dll">
+    <Content Include="FFACE.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="FFACETools.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

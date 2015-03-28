@@ -95,7 +95,7 @@ namespace EasyFarm.Components
             }
 
             // Run to the waypoint allowing cancellation on aggro or paused. 
-            _fface.Navigator.Goto(waypointPath[_position], false, IsCancellationRequired);
+            _fface.Navigator.Goto(waypointPath[_position], false);
             _position++;
         }
 
