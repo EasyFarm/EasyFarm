@@ -5,7 +5,7 @@ EasyFarm helps reduce tedious work by automating the farming process. This allow
 
 EasyFarm is free software, licensed under the GPLv3 software license which can be found [here](http://www.gnu.org/licenses/gpl-3.0-standalone.html) and in the project's root directory.
 
-![EasyFarm GUI](http://i.imgur.com/r7md4nv.png)
+![EasyFarm GUI](http://i.imgur.com/pcrEm66.png)
 
 # Features
 * Mob filtering with regex expressions
