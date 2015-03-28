@@ -6,7 +6,7 @@ using EasyFarm.Views.Settings;
 namespace EasyFarmTests
 {
     [TestClass]
-    public class BattleSettingsTests
+    public class TestBattleSettings
     {
         [TestInitialize]
         public void Setup()

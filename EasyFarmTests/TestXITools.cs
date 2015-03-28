@@ -28,7 +28,7 @@ using System.Diagnostics;
 namespace XI_Tools_Tests
 {
     [TestClass]
-    public class XIToolsTests
+    public class TestXITools
     {
         [TestInitialize]
         public void SetUp()

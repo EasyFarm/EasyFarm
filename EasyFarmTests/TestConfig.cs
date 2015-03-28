@@ -29,7 +29,7 @@ using System.Threading.Tasks;
 namespace EasyFarmTests
 {
     [TestClass]
-    public class ConfigTests
+    public class TestConfig
     {
         [TestInitialize]
         public void Setup()

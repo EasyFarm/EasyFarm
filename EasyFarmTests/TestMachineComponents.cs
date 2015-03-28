@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace EasyFarmTests.MachineComponentTests
 {
     [TestClass]
-    public class MachineComponentTests
+    public class TestMachineComponents
     {
         /// <summary>
         /// Verifies the logic behind the filtering in all 

@@ -27,7 +27,7 @@ using System.Collections.Generic;
 namespace EasyFarmTests
 {
     [TestClass]
-    public class EasyFarmTests
+    public class TestEasyFarm
     {
         [TestMethod]
         public void TestUnitFilter()
