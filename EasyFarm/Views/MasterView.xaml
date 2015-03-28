@@ -4,13 +4,13 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:prism="http://www.codeplex.com/prism"
                        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                       xmlns:Properties="clr-namespace:EasyFarm.Properties"
                        mc:Ignorable="d"
                        x:Name="MainForm"
                        x:Class="EasyFarm.Views.MasterView"
-                       Width="510"
-                       Height="340"
+                       Width="{Binding Width, Mode=TwoWay, Source={x:Static Properties:Settings.Default}}"
+                       Height="{Binding Height, Mode=TwoWay, Source={x:Static Properties:Settings.Default}}"
                        Title="{Binding MainWindowTitle}"
-                       WindowStartupLocation="CenterOwner"
                        Topmost="{Binding IsChecked, ElementName=mnuAlwaysOnTop, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
     <controls:MetroWindow.Resources>
         <ResourceDictionary>

@@ -31,17 +31,40 @@ using EasyFarm.Views;
 using System.Xml.Serialization;
 using Microsoft.Win32;
 using EasyFarm.Classes;
+using NotifyIcon = System.Windows.Forms.NotifyIcon;
+using System.IO;
 
 namespace EasyFarm.ViewModels
 {
+    /// <summary>
+    /// The view model for the main window. 
+    /// </summary>
     public class MasterViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Saves and loads settings from file. 
+        /// </summary>
         private SettingsManager _settingsManager;
 
+        /// <summary>
+        /// Whether main content or settings window is shown. 
+        /// </summary>
         public bool IsSettingsShown { get; set; }
+
+        /// <summary>
+        /// The path of the icon file. 
+        /// </summary>
+        private const String TRAY_ICON_FILE_NAME = "trayicon.ico";
+
+        /// <summary>
+        /// This program's icon file. 
+        /// </summary>
+        private NotifyIcon m_trayIcon = new NotifyIcon();
 
         public MasterViewModel()
         {
+            // Create a new settings manager and associate it with our
+            // .eup file type. 
             _settingsManager = new SettingsManager(
                 "eup",
                 "EasyFarm User Preference"
@@ -60,8 +83,19 @@ namespace EasyFarm.ViewModels
             LoadCommand = new DelegateCommand(Load);
             SettingsCommand = new DelegateCommand(ShowSettings);
             SelectProcessCommand = new DelegateCommand(SelectProcess);
+
+            // Hook up our trayicon for minimization to system tray 
+            if (File.Exists(TRAY_ICON_FILE_NAME))
+            {
+                m_trayIcon.Icon = new System.Drawing.Icon(TRAY_ICON_FILE_NAME);
+                MasterView.View.StateChanged += OnStateChanged;
+                m_trayIcon.Click += TrayIcon_Click;            
+            }            
         }
 
+        /// <summary>
+        /// Toggles whether the settings or main window is shown. 
+        /// </summary>
         private void ShowSettings()
         {
             IRegionManager regionManager =
@@ -110,7 +144,11 @@ namespace EasyFarm.ViewModels
             set { SetProperty(ref GameEngine.IsWorking, value); }
         }
 
+        /// <summary>
+        /// The text displayed on the start / pause button. 
+        /// </summary>
         private string _startStopHeader = "St_art";
+
         /// <summary>
         /// Binding for File -> Start/Pause text.
         /// </summary>
@@ -120,8 +158,14 @@ namespace EasyFarm.ViewModels
             set { SetProperty(ref _startStopHeader, value); }
         }
 
+        /// <summary>
+        /// Internal backing for the settings button text. 
+        /// </summary>
         private string _settingsHeader = "_Settings...";
 
+        /// <summary>
+        /// Stores the text for the settings button. 
+        /// </summary>
         public string SettingsHeader
         {
             get { return _settingsHeader; }
@@ -204,6 +248,9 @@ namespace EasyFarm.ViewModels
             }
         }
 
+        /// <summary>
+        /// Loads easyfarm settings from file. 
+        /// </summary>
         private void Load()
         {
             try
@@ -272,6 +319,45 @@ namespace EasyFarm.ViewModels
         private void Exit()
         {
             Application.Current.Shutdown();
+        }
+
+        
+        /* 
+         * View Specific Data 
+         * We should refactor this out eventually, but it's better to have the code here than
+         * in the code behind. This makes it a little bit easier to swap views out. 
+         */
+
+        /// <summary>
+        /// Shows the main window when we click this icon in the system tray. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void TrayIcon_Click(object sender, System.EventArgs e)
+        {
+            MasterView.View.WindowState = WindowState.Normal;
+            MasterView.View.ShowInTaskbar = true;
+            m_trayIcon.Visible = false;
+        }
+
+        /// <summary>
+        /// Minimizes the application to the system tray. 
+        /// </summary>
+        /// <param name="e"></param>
+        public void OnStateChanged(object sender, System.EventArgs e)
+        {
+            // Perform tray icon information update here to 
+            // receive current title bar information. 
+            m_trayIcon.Text = MainWindowTitle;
+            m_trayIcon.BalloonTipText = "EasyFarm has been minimized. ";
+            m_trayIcon.BalloonTipTitle = MainWindowTitle;
+
+            if (MasterView.View.mnuMinimizeToTray.IsChecked && MasterView.View.WindowState == WindowState.Minimized)
+            {
+                this.m_trayIcon.Visible = true;
+                this.m_trayIcon.ShowBalloonTip(30);
+                MasterView.View.ShowInTaskbar = false;
+            }
         }
     }
 }

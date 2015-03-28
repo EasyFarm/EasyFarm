@@ -260,6 +260,11 @@
     <Compile Include="Components\Components\StartComponent.cs" />
     <Compile Include="Components\Components\PullComponent.cs" />
     <Compile Include="Components\Components\WeaponSkillComponent.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Views\AbilityView.xaml.cs">
       <DependentUpon>AbilityView.xaml</DependentUpon>
     </Compile>
@@ -433,6 +438,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="trayicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

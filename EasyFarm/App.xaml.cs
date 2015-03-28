@@ -31,6 +31,7 @@ using System.Diagnostics.Tracing;
 using System.Collections;
 using EasyFarm.Prism;
 using Parsing.Services;
+using EasyFarm.Components;
 
 namespace EasyFarm
 {
@@ -41,11 +42,14 @@ namespace EasyFarm
     {
         public static readonly AbilityService AbilityService;
 
+        public static readonly GameEngine GameEngine;
+
         static App()
         {
             // Create the ability service passing to it the resources 
             // folder named "resources"
             AbilityService = new AbilityService("resources");
+            Logger.Write.ResourcesLocated("Resources loaded");
         }
 
         /// <summary>
@@ -57,9 +61,7 @@ namespace EasyFarm
         {
             base.OnStartup(e);
 
-            Logger.Write.ApplicationStart("Application starting");            
-
-            Logger.Write.ResourcesLocated("Resources located");
+            Logger.Write.ApplicationStart("Application starting");                        
                           
             BootStrapper bootStrapper = new BootStrapper();
             bootStrapper.Run();
@@ -72,6 +74,7 @@ namespace EasyFarm
         protected override void OnExit(ExitEventArgs e)
         {
             Logger.Write.ApplicationStart("Application exiting");
+            EasyFarm.Properties.Settings.Default.Save();
         }        
     }
 }
