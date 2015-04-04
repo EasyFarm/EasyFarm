@@ -51,23 +51,23 @@
                       Foreground="White"
                       Background="Black"
                       VerticalAlignment="Center">
-                <MenuItem Header="Process selection..."
+                <MenuItem Header="Select Character ..."
                           Command="{Binding SelectProcessCommand}" />
                 <MenuItem Header="{Binding StartPauseHeader}"
                           Command="{Binding StartCommand}" />
                 <MenuItem Header="E_xit"
                           Command="{Binding ExitCommand}" />
             </MenuItem>
-            <MenuItem Header="_Data"
+            <MenuItem Header="_Settings"
                       Foreground="White"
                       Background="Black"
                       VerticalAlignment="Center">
-                <MenuItem Header="_Save"
-                          Command="{Binding SaveCommand}" />
                 <MenuItem Header="_Load"
                           Command="{Binding LoadCommand}" />
+                <MenuItem Header="_Save"
+                          Command="{Binding SaveCommand}" />
             </MenuItem>
-            <MenuItem Header="_Options"
+            <MenuItem Header="_Window"
                       Foreground="White"
                       Background="Black">
                 <MenuItem x:Name="mnuAlwaysOnTop"
@@ -76,9 +76,6 @@
                 <MenuItem x:Name="mnuMinimizeToTray"
                           Header="_Minimize to system tray"
                           IsCheckable="True" />
-                <MenuItem x:Name="mnuShowSettings"
-                          Header="{Binding SettingsHeader}"
-                          Command="{Binding SettingsCommand}" />
             </MenuItem>
         </Menu>
 

@@ -24,6 +24,7 @@ using System.Windows.Input;
 
 namespace EasyFarm.ViewModels
 {
+    [ViewModelAttribute("Settings")]
     public class SettingsViewModel : ViewModelBase
     {
         public SettingsViewModel()

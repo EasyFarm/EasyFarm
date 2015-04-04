@@ -47,11 +47,6 @@ namespace EasyFarm.ViewModels
         private SettingsManager _settingsManager;
 
         /// <summary>
-        /// Whether main content or settings window is shown. 
-        /// </summary>
-        public bool IsSettingsShown { get; set; }
-
-        /// <summary>
         /// The path of the icon file. 
         /// </summary>
         private const String TRAY_ICON_FILE_NAME = "trayicon.ico";
@@ -70,9 +65,6 @@ namespace EasyFarm.ViewModels
                 "EasyFarm User Preference"
             );
 
-            // Toggles start / pause button text. 
-            IsSettingsShown = false;
-
             // Get events from view models to update the status bar's text.
             EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe(a => { StatusBarText = a; });
 
@@ -81,7 +73,6 @@ namespace EasyFarm.ViewModels
             ExitCommand = new DelegateCommand(Exit);
             SaveCommand = new DelegateCommand(Save);
             LoadCommand = new DelegateCommand(Load);
-            SettingsCommand = new DelegateCommand(ShowSettings);
             SelectProcessCommand = new DelegateCommand(SelectProcess);
 
             // Hook up our trayicon for minimization to system tray 
@@ -91,30 +82,6 @@ namespace EasyFarm.ViewModels
                 MasterView.View.StateChanged += OnStateChanged;
                 m_trayIcon.Click += TrayIcon_Click;            
             }            
-        }
-
-        /// <summary>
-        /// Toggles whether the settings or main window is shown. 
-        /// </summary>
-        private void ShowSettings()
-        {
-            IRegionManager regionManager =
-                ServiceLocator.Current.GetInstance<IRegionManager>();
-
-            var region = regionManager.Regions["MainRegion"];
-
-            if (!IsSettingsShown)
-            {
-                SettingsHeader = "_Main...";
-                region.Activate(region.Views.OfType<SettingsView>().First());
-                IsSettingsShown = true;
-            }
-            else
-            {
-                SettingsHeader = "_Settings...";
-                region.Activate(region.Views.OfType<MainView>().First());
-                IsSettingsShown = false;
-            }
         }
 
         /// <summary>
@@ -157,21 +124,7 @@ namespace EasyFarm.ViewModels
             get { return _startStopHeader; }
             set { SetProperty(ref _startStopHeader, value); }
         }
-
-        /// <summary>
-        /// Internal backing for the settings button text. 
-        /// </summary>
-        private string _settingsHeader = "_Settings...";
-
-        /// <summary>
-        /// Stores the text for the settings button. 
-        /// </summary>
-        public string SettingsHeader
-        {
-            get { return _settingsHeader; }
-            set { SetProperty(ref _settingsHeader, value); }
-        }
-
+        
         /// <summary>
         /// Command to start the bot. 
         /// </summary>
@@ -191,11 +144,6 @@ namespace EasyFarm.ViewModels
         /// Command to load the user's settings. 
         /// </summary>
         public DelegateCommand LoadCommand { get; set; }
-
-        /// <summary>
-        /// Load the settings window. 
-        /// </summary>
-        public DelegateCommand SettingsCommand { get; set; }
 
         /// <summary>
         /// Binding for selecting a PlayOnline process. 
@@ -320,7 +268,6 @@ namespace EasyFarm.ViewModels
         {
             Application.Current.Shutdown();
         }
-
         
         /* 
          * View Specific Data 
