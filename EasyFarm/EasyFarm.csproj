@@ -208,6 +208,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
+    <Compile Include="Classes\TaskTimer.cs" />
     <Compile Include="Components\Bases\BaseComponent.cs" />
     <Compile Include="Components\Bases\MachineComponent.cs" />
     <Compile Include="Components\Bases\MachineContainer.cs" />

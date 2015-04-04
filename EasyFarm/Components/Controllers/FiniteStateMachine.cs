@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using FFACETools;
 using System.Threading;
+using EasyFarm.Classes;
 
 namespace EasyFarm.Components
 {
@@ -44,7 +45,7 @@ namespace EasyFarm.Components
         /// <summary>
         /// Our operational state object. 
         /// </summary>
-        private TaskInfo taskInfo = null;
+        private TaskTimer TaskTimer = null;
 
         // Constructor.
         public FiniteStateEngine(FFACE fface)
@@ -58,12 +59,34 @@ namespace EasyFarm.Components
             AddComponent(new HealingComponent(fface) { Priority = 2 });
             AddComponent(new EndComponent(fface) { Priority = 3 });
             this.Components.ForEach(x => x.Enabled = true);
+
+            // Threaded timer to run the main loop on. 
+            TaskTimer = new TaskTimer();
+            TaskTimer.OnElapsed += Run;
+            TaskTimer.Interval = 100;
+            TaskTimer.AutoReset = true;
         }
 
-        private void Work(object state, bool timedOut)
+        public override bool CheckComponent()
         {
-            // Keep looping until user requests cancel. 
-            while (!((TaskInfo)state).IsCanceled)
+            var ready = false;
+
+            // Loop through all components and if one reports ready,
+            // the attack container may run. 
+            foreach (var Component in this.Components)
+            {
+                if (Component.Enabled)
+                {
+                    ready |= Component.CheckComponent();
+                }
+            }
+
+            return ready;
+        }
+
+        private void Run(bool timedOut)
+        {
+            lock (this)
             {
                 // Sort the List, States may have updated Priorities.
                 Components.Sort();
@@ -78,11 +101,6 @@ namespace EasyFarm.Components
                         if (LastRan != null)
                         {
                             LastRan.ExitComponent();
-                        }
-
-                        if (taskInfo.Handle != null)
-                        {
-                            taskInfo.Handle.Unregister(null);
                         }
 
                         return;
@@ -105,71 +123,18 @@ namespace EasyFarm.Components
                         MC.RunComponent();
                     }
                 }
-
-                // Acts like timer's elapsed wait duration. 
-                Thread.Sleep(100);
             }
         }
 
         // Start and stop.
         public override void Start()
         {
-            taskInfo = new TaskInfo(Work);
+            TaskTimer.Start();
         }
 
         public override void Stop()
         {
-            taskInfo.Dispose();
-        }
-
-        public override bool CheckComponent()
-        {
-            var ready = false;
-
-            // Loop through all components and if one reports ready,
-            // the attack container may run. 
-            foreach (var Component in this.Components)
-            {
-                if (Component.Enabled)
-                {
-                    ready |= Component.CheckComponent();
-                }
-            }
-
-            return ready;
-        }
-
-        public class TaskInfo : IDisposable
-        {
-            public RegisteredWaitHandle Handle = null;
-
-            /// <summary>
-            /// Cancels running new states. 
-            /// </summary>
-            public bool IsCanceled = false;
-
-            /// <summary>
-            /// Signals this task to stop. 
-            /// </summary>
-            public AutoResetEvent AutoReset = new AutoResetEvent(false);
-
-            public TaskInfo(WaitOrTimerCallback callback)
-            {
-                Handle = ThreadPool.RegisterWaitForSingleObject(
-                    AutoReset,
-                    new WaitOrTimerCallback(callback),
-                    this,
-                    500,
-                    true
-                );
-            }
-
-            public void Dispose()
-            {
-                IsCanceled = true;
-                if (Handle != null) Handle.Unregister(null);
-                AutoReset.Dispose();
-            }
-        }
+            TaskTimer.Stop();
+        }        
     }
 }
