@@ -54,6 +54,7 @@ namespace EasyFarm.Classes
             while (Player.IsMoving)
             {
                 FFACE.Navigator.Reset();
+                Thread.Sleep(100);
             }
 
             // Try to cast the spell and return false if
@@ -126,6 +127,7 @@ namespace EasyFarm.Classes
         {           
             // Send the command to the game. 
             FFACE.Windower.SendString(ability.ToString());
+            Thread.Sleep(100);
             return true;
         }
 
