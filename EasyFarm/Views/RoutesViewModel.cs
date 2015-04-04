@@ -121,6 +121,13 @@ namespace EasyFarm.ViewModels
         /// <param name="recordButton"></param>
         public void RecordRoute()
         {
+            // Return when the user has not selected a process. 
+            if (FFACE == null)
+            {
+                InformUser("No process has been selected.");
+                return;
+            }
+
             if (!_pathRecorder.IsEnabled)
             {
                 _pathRecorder.Start();
