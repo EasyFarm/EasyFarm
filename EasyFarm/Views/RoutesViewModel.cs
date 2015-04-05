@@ -118,13 +118,13 @@ namespace EasyFarm.ViewModels
         /// Pauses and resumes the path recorder based on
         /// its current state. 
         /// </summary>
-        /// <param name="recordButton"></param>
+        /// <param name="recordBut`ton"></param>
         public void RecordRoute()
         {
             // Return when the user has not selected a process. 
             if (FFACE == null)
             {
-                InformUser("No process has been selected.");
+                AppInformer.InformUser("No process has been selected.");
                 return;
             }
 
@@ -148,11 +148,11 @@ namespace EasyFarm.ViewModels
             try
             {
                 _settingsManager.Save<ObservableCollection<Waypoint>>(Route);
-                ViewModelBase.InformUser("Path has been saved.");    
+                AppInformer.InformUser("Path has been saved.");    
             }
             catch (InvalidOperationException)
             {
-                ViewModelBase.InformUser("Failed to save path.");
+                AppInformer.InformUser("Failed to save path.");
             }            
         }
 
@@ -169,17 +169,17 @@ namespace EasyFarm.ViewModels
                 // Did we fail to load the settings?
                 if (path == null)
                 {
-                    ViewModelBase.InformUser("Failed to load the path.");
+                    AppInformer.InformUser("Failed to load the path.");
                     return;
                 }
 
-                ViewModelBase.InformUser("Path has been loaded.");
+                AppInformer.InformUser("Path has been loaded.");
 
                 Route = path;
             }
             catch (InvalidOperationException)
             {
-                ViewModelBase.InformUser("Failed to load the path.");
+                AppInformer.InformUser("Failed to load the path.");
             }            
         }
 

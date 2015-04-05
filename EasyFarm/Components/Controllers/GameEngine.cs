@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes;
 using EasyFarm.FarmingTool;
 using EasyFarm.ViewModels;
 using FFACETools;
@@ -101,7 +102,7 @@ namespace EasyFarm.Components
             _fface.Navigator.Reset();
 
             // Tell the use we paused the program. 
-            ViewModelBase.InformUser("Program Paused");
+            AppInformer.InformUser("Program Paused");
 
             // Stop the engine from running. 
             Stop();
@@ -122,7 +123,7 @@ namespace EasyFarm.Components
             _fface.Navigator.Reset();
 
             // Tell the use we paused the program. 
-            ViewModelBase.InformUser("Program Paused");
+            AppInformer.InformUser("Program Paused");
 
             // Stop the engine from running. 
             Stop();
@@ -142,12 +143,12 @@ namespace EasyFarm.Components
             var args = (e as MonitorArgs<bool>);
             if (args.Status)
             {
-                ViewModelBase.InformUser("Program Paused");
+                AppInformer.InformUser("Program Paused");
                 Stop();
             }
             else
             {
-                ViewModelBase.InformUser("Program Resumed");
+                AppInformer.InformUser("Program Resumed");
                 Start();
             }
         }
@@ -165,7 +166,7 @@ namespace EasyFarm.Components
             // If the program is not running then bail out. 
             if (!IsWorking) { return; }
 
-            ViewModelBase.InformUser("Program Paused");
+            AppInformer.InformUser("Program Paused");
 
             // Stop the state machine.
             Stop();
@@ -179,7 +180,7 @@ namespace EasyFarm.Components
             // Start up the state machine again.
             Start();
 
-            ViewModelBase.InformUser("Program Resumed");
+            AppInformer.InformUser("Program Resumed");
         }
 
         /// <summary>

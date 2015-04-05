@@ -41,7 +41,7 @@ namespace EasyFarm.ViewModels
             MeleeDistance = Constants.MELEE_DISTANCE;
             WanderDistance = Constants.DETECTION_DISTANCE;
             GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
-            InformUser("Defaults have been restored.");
+            AppInformer.InformUser("Defaults have been restored.");
         }
 
         public double DetectionDistance
@@ -50,7 +50,7 @@ namespace EasyFarm.ViewModels
             set 
             { 
                 SetProperty<double>(ref Config.Instance.DetectionDistance, (int)value);
-                InformUser("Detection Distance Set: {0}.", (int)value);
+                AppInformer.InformUser("Detection Distance Set: {0}.", (int)value);
             }
         }
 
@@ -60,7 +60,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty<double>(ref Config.Instance.HeightThreshold, value);
-                InformUser("Height Threshold Set: {0:F1}.", value);
+                AppInformer.InformUser("Height Threshold Set: {0:F1}.", value);
             }
         }
 
@@ -70,7 +70,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty<double>(ref Config.Instance.MeleeDistance, value);
-                InformUser("Melee Distance Set: {0:F1}.", value);
+                AppInformer.InformUser("Melee Distance Set: {0:F1}.", value);
             }
         }        
 
@@ -80,7 +80,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty<double>(ref Config.Instance.WanderDistance, (int)value);
-                InformUser("Wander Distance Set: {0}.", (int)value);
+                AppInformer.InformUser("Wander Distance Set: {0}.", (int)value);
             }
         }
 
@@ -90,7 +90,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.GlobalCooldown, (int)value);
-                InformUser("Global Cooldown Set: {0}.", (int)value);
+                AppInformer.InformUser("Global Cooldown Set: {0}.", (int)value);
             }
         }
     }

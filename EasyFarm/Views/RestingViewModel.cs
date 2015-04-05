@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes;
 using EasyFarm.UserSettings;
 using FFACETools;
 
@@ -31,7 +32,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.LowHealth, value);
-                InformUser("Low hp set to " + LowHP);
+                AppInformer.InformUser("Low hp set to " + LowHP);
             }
         }
 
@@ -41,7 +42,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.HighHealth, value);
-                InformUser("High hp set to " + HighHP);
+                AppInformer.InformUser("High hp set to " + HighHP);
             }
         }
 
@@ -51,7 +52,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.LowMagic, value);
-                InformUser("Low mp set to " + LowMP);
+                AppInformer.InformUser("Low mp set to " + LowMP);
             }
         }
 
@@ -61,7 +62,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.HighMagic, value);
-                InformUser("High mp set to " + HighMP);
+                AppInformer.InformUser("High mp set to " + HighMP);
             }
         }
 

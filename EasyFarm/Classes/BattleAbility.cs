@@ -78,7 +78,7 @@ namespace EasyFarm.Classes
             set
             {
                 SetProperty(ref _distance, value);
-                ViewModelBase.InformUser("Distance set to {0}.", _distance);
+                AppInformer.InformUser("Distance set to {0}.", _distance);
             }
         }
 
@@ -131,7 +131,7 @@ namespace EasyFarm.Classes
             set
             {
                 SetProperty(ref _playerLowerHealth, value);
-                ViewModelBase.InformUser("Lower health set to {0}.", _playerLowerHealth);
+                AppInformer.InformUser("Lower health set to {0}.", _playerLowerHealth);
             }
         }
 
@@ -146,7 +146,7 @@ namespace EasyFarm.Classes
             set
             {
                 SetProperty(ref _playerUpperHealth, value);
-                ViewModelBase.InformUser("Upper health set to {0}.", _playerUpperHealth);
+                AppInformer.InformUser("Upper health set to {0}.", _playerUpperHealth);
             }
         }
 
@@ -172,7 +172,7 @@ namespace EasyFarm.Classes
             set
             {
                 SetProperty(ref _targetLowerHealth, value);
-                ViewModelBase.InformUser("Lower health set to {0}.", _targetLowerHealth);
+                AppInformer.InformUser("Lower health set to {0}.", _targetLowerHealth);
             }
         }
 
@@ -187,7 +187,7 @@ namespace EasyFarm.Classes
             set
             {
                 SetProperty(ref _targetUpperHealth, value);
-                ViewModelBase.InformUser("Upper health set to {0}.", _targetUpperHealth);
+                AppInformer.InformUser("Upper health set to {0}.", _targetUpperHealth);
             }
         }
 
@@ -296,12 +296,12 @@ namespace EasyFarm.Classes
             // user of its sucess. 
             if (ability == null)
             {
-                ViewModelBase.InformUser("Auto-Fill failed to find {0} in resources. ", Name);
+                AppInformer.InformUser("Auto-Fill failed to find {0} in resources. ", Name);
             }
             else
             {
                 this.Ability = ability;
-                ViewModelBase.InformUser("Auto-Filling for {0} complete. ", Name);
+                AppInformer.InformUser("Auto-Filling for {0} complete. ", Name);
 
                 // Manually signal AbilityType that a change has occured. 
                 this.OnPropertyChanged("AbilityType");

@@ -32,6 +32,7 @@ using System.Collections;
 using EasyFarm.Prism;
 using Parsing.Services;
 using EasyFarm.Components;
+using Microsoft.Practices.Prism.PubSubEvents;
 
 namespace EasyFarm
 {
@@ -40,9 +41,15 @@ namespace EasyFarm
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// XML parser for looking up ability, spell and weaponskill data. 
+        /// </summary>
         public static readonly AbilityService AbilityService;
 
-        public static GameEngine GameEngine;
+        /// <summary>
+        /// Global game engine controlling the player. 
+        /// </summary>
+        public static GameEngine GameEngine;        
 
         static App()
         {

@@ -36,29 +36,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         /// Solo FFACE instance for current player. 
         /// </summary>
-        public static FFACE FFACE { get; set; }
-
-        /// <summary>
-        /// Sends messages mostly to the status bar. 
-        /// </summary>
-        public static IEventAggregator EventAggregator { get; set; }
-
-        static ViewModelBase()
-        {
-            // Set up the event aggregator for updates to the status bar from 
-            // multiple view models.
-            EventAggregator = new EventAggregator();
-        }
-
-        /// <summary>
-        /// Update the user on what's happening.
-        /// </summary>
-        /// <param name="message">The message to display in the statusbar</param>
-        /// <param name="values"></param>
-        public static void InformUser(String message, params object[] values)
-        {
-            EventAggregator.GetEvent<StatusBarUpdateEvent>().Publish(String.Format(message, values));
-        }
+        public static FFACE FFACE { get; set; }      
 
         public static void SetSession(FFACE fface)
         {
