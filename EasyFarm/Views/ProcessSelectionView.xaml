@@ -1,0 +1,35 @@
+﻿<Window x:Class="EasyFarm.Views.ProcessSelectionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:vm="clr-namespace:EasyFarm.ViewModels"
+        mc:Ignorable="d"
+        Height="300"
+        Width="300"
+        d:DesignHeight="300"
+        d:DesignWidth="300">
+    <DockPanel>
+        <!-- Shuts down the process selection view. -->
+        <Button DockPanel.Dock="Bottom"
+                Content="Set Character"
+                Command="{Binding Path=ExitCommand}" />
+
+        <!-- A view for currently running game sessions. -->
+        <GroupBox Header="Please select your character">
+            <ListView Name="lsvGameSessons"
+                      ItemsSource="{Binding Sessions}"
+                      SelectedItem="{Binding SelectedItem}">
+                <ListView.View>
+                    <!-- The headers for session information. -->
+                    <GridView>
+                        <GridViewColumn Header="Process ID"
+                                        DisplayMemberBinding="{Binding Path=Id}" />
+                        <GridViewColumn Header="Character Name"
+                                        DisplayMemberBinding="{Binding Path=MainWindowTitle}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+    </DockPanel>
+</Window>

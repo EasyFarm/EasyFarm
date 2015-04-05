@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 
-namespace EasyFarm.FarmingTool
+namespace EasyFarm.Classes
 {
     public class ProcessEventArgs : EventArgs
     {

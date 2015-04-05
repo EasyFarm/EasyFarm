@@ -190,6 +190,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity">
@@ -208,6 +209,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
+    <Compile Include="Views\ProcessSelectionViewModel.cs" />
     <Compile Include="Classes\TaskTimer.cs" />
     <Compile Include="Components\Bases\BaseComponent.cs" />
     <Compile Include="Components\Bases\MachineComponent.cs" />
@@ -285,6 +287,9 @@
       <DependentUpon>BattleSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BattleSettingsViewModel.cs" />
+    <Compile Include="Views\ProcessSelectionView.xaml.cs">
+      <DependentUpon>ProcessSelectionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsViewModel.cs" />
     <Compile Include="Logging\StringSink.cs" />
     <Compile Include="Views\RestingViewModel.cs" />
@@ -407,6 +412,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ProcessSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RestingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

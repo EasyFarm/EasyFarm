@@ -33,6 +33,7 @@ using Microsoft.Win32;
 using EasyFarm.Classes;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using System.IO;
+using System.Diagnostics;
 
 namespace EasyFarm.ViewModels
 {
@@ -107,8 +108,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool IsWorking
         {
-            get { return GameEngine.IsWorking; }
-            set { SetProperty(ref GameEngine.IsWorking, value); }
+            get { return App.GameEngine.IsWorking; }
+            set { SetProperty(ref App.GameEngine.IsWorking, value); }
         }
 
         /// <summary>
@@ -162,18 +163,18 @@ namespace EasyFarm.ViewModels
                 return;
             }
 
-            if (GameEngine.IsWorking)
+            if (App.GameEngine.IsWorking)
             {
                 Logger.Write.BotStop("Bot now paused");
                 InformUser("Program paused.");
-                GameEngine.Stop();
+                App.GameEngine.Stop();
                 StartPauseHeader = "St_art";
             }
             else
             {
                 Logger.Write.BotStart("Bot now running");
                 InformUser("Program running.");
-                GameEngine.Start();
+                App.GameEngine.Start();
                 StartPauseHeader = "P_ause";
             }
         }
@@ -230,11 +231,11 @@ namespace EasyFarm.ViewModels
         private void SelectProcess()
         {
             // Let user select ffxi process
-            frmStartup ProcessSelectionScreen = new frmStartup();
-            ProcessSelectionScreen.ShowDialog();
+            ProcessSelectionView selectionView = new ProcessSelectionView();
+            selectionView.ShowDialog();           
 
             // Validate the selection
-            var m_process = ProcessSelectionScreen.SelectedProcess;
+            var m_process = selectionView.lsvGameSessons.SelectedItem as Process;
 
             // Check if the user made a selection. 
             if (m_process == null)
@@ -244,14 +245,13 @@ namespace EasyFarm.ViewModels
                 return;
             }
 
+            // Log that a process selected. 
             Logger.Write.ProcessFound("Process found");
 
             // Save the selected fface instance. 
-            var FFACE = ProcessSelectionScreen.SelectedSession;
+            var FFACE = new FFACETools.FFACE(m_process.Id);
 
-            // Free up and stop timer from working. 
-            ProcessSelectionScreen.ProcessWatcher.Dispose();
-
+            // Set the FFACE Session. 
             ViewModelBase.SetSession(FFACE);
 
             // Tell the user the program has loaded the player's data

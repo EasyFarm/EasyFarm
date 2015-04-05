@@ -118,7 +118,7 @@ namespace EasyFarm.Components
             }
 
             // Return when the user has pause the program. 
-            return !ViewModelBase.GameEngine.IsWorking;
+            return !App.GameEngine.IsWorking;
         }
     }
 }

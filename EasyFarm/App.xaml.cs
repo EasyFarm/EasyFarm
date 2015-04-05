@@ -42,7 +42,7 @@ namespace EasyFarm
     {
         public static readonly AbilityService AbilityService;
 
-        public static readonly GameEngine GameEngine;
+        public static GameEngine GameEngine;
 
         static App()
         {

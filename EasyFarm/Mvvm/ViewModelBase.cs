@@ -43,11 +43,6 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public static IEventAggregator EventAggregator { get; set; }
 
-        /// <summary>
-        /// The game engine that runs the bot; controls the player's actions. 
-        /// </summary>
-        public static GameEngine GameEngine { get; set; }
-
         static ViewModelBase()
         {
             // Set up the event aggregator for updates to the status bar from 
@@ -73,7 +68,7 @@ namespace EasyFarm.ViewModels
             FFACE = fface;
 
             // Create a new game engine to control our character. 
-            GameEngine = new GameEngine(FFACE);
+            App.GameEngine = new GameEngine(FFACE);
         }
     }
 }
