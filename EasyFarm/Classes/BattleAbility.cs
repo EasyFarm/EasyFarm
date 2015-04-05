@@ -77,7 +77,7 @@ namespace EasyFarm.Classes
             get { return _distance; }
             set
             {
-                SetProperty(ref _distance, value);
+                SetProperty(ref _distance, (int)value);
                 AppInformer.InformUser("Distance set to {0}.", _distance);
             }
         }
