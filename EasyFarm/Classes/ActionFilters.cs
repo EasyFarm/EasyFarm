@@ -58,7 +58,7 @@ namespace EasyFarm.Classes
             }
 
             // Recast Check
-            if (!Helpers.IsRecastable(fface, action.Ability)) return false;
+            if (!AbilityUtils.IsRecastable(fface, action.Ability)) return false;
 
             // Limiting Status Effect Check for Spells. 
             if (CompositeAbilityTypes.IsSpell.HasFlag(action.Ability.AbilityType))

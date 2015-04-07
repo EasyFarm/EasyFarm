@@ -27,6 +27,10 @@ using System.Threading.Tasks;
 
 namespace EasyFarm.Classes
 {
+    /// <summary>
+    /// Updates the main window's status bar text to 
+    /// inform the user of important information. 
+    /// </summary>
     public class AppInformer
     {
         /// <summary>

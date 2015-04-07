@@ -227,7 +227,7 @@
     <Compile Include="Classes\Caster.cs" />
     <Compile Include="Classes\Executor.cs" />
     <Compile Include="Classes\Extensions.cs" />
-    <Compile Include="Classes\Helpers.cs" />
+    <Compile Include="Classes\AbilityUtils.cs" />
     <Compile Include="Classes\ProhibitEffects.cs" />
     <Compile Include="Classes\SettingsManager.cs" />
     <Compile Include="Collections\FixedSortedList.cs" />
@@ -254,7 +254,6 @@
     <Compile Include="Components\Components\TravelComponent.cs" />
     <Compile Include="Classes\HealingAbility.cs" />
     <Compile Include="Classes\Waypoint.cs" />
-    <Compile Include="Classes\WeaponSkill.cs" />
     <Compile Include="Classes\Config.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -339,7 +338,6 @@
     <Compile Include="Classes\Serialization.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\UnitService.cs" />
-    <Compile Include="Classes\TestUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -25,6 +25,9 @@ using System.Timers;
 
 namespace EasyFarm.Classes
 {
+    /// <summary>
+    /// Information about a unit that can move. 
+    /// </summary>
     public class MovingUnit : Unit, IDisposable
     {
         /// <summary>

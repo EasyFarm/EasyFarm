@@ -25,6 +25,9 @@ using System.Threading;
 
 namespace EasyFarm.Classes
 {
+    /// <summary>
+    /// Monitors and Casts player abilities, spells and weaponskills. 
+    /// </summary>
     public class Caster
     {
         // Get player object. 
@@ -130,11 +133,21 @@ namespace EasyFarm.Classes
             return true;
         }
 
+        /// <summary>
+        /// Casts an ability with no monitoring. 
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <returns></returns>
         public bool CastAbility(BattleAbility ability)
         {
             return CastAbility(ability.Ability);
         }
        
+        /// <summary>
+        /// Casts a spell with monitoring. 
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <returns></returns>
         public bool CastSpell(BattleAbility ability)
         {
             return CastSpell(ability.Ability);

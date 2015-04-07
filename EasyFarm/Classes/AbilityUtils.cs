@@ -25,7 +25,7 @@ using System.Text.RegularExpressions;
 
 namespace EasyFarm.Classes
 {
-    public class Helpers
+    public class AbilityUtils
     {
         /// <summary>
         /// Checks whether a spell or ability can be recasted. 
@@ -74,7 +74,7 @@ namespace EasyFarm.Classes
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static String AdjustName(String name)
+        private static String AdjustName(String name)
         {
             // Strip all characters that are not words of the 
             // ability's name and convert spaces to underscores. 
@@ -83,7 +83,7 @@ namespace EasyFarm.Classes
 
         }
 
-        public static AbilityList ToAbilityList(Ability ability)
+        private static AbilityList ToAbilityList(Ability ability)
         {
             var name = AdjustName(ability.English);
 
@@ -100,52 +100,12 @@ namespace EasyFarm.Classes
             return value;
         }
 
-        public static SpellList ToSpellList(Ability ability)
+        private static SpellList ToSpellList(Ability ability)
         {
             string name = AdjustName(ability.English);
             SpellList value = default(SpellList);
             Enum.TryParse<SpellList>(name, out value);
             return value;
-        }
-
-        /// <summary>
-        /// Checks if all the requirements are meet for casting 
-        /// an action. 
-        /// </summary>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public static bool IsActionValid(FFACE fface, Ability action)
-        {
-            // Ability valid check
-            if (!action.IsValidName) return false;
-
-            // Recast Check
-            if (!IsRecastable(fface, action)) return false;
-
-            // MP Check
-            if (action.MPCost > fface.Player.MPCurrent) return false;
-
-            // TP Check
-            if (action.TPCost > fface.Player.TPCurrent) return false;
-
-            if (CompositeAbilityTypes.IsSpell.HasFlag(action.AbilityType))
-            {
-                if (ProhibitEffects.PROHIBIT_EFFECTS_SPELL.Intersect(fface.Player.StatusEffects).Any())
-                {
-                    return false;
-                }
-            }
-
-            // Determines if we have a debuff that blocks us from casting abilities. 
-            if (CompositeAbilityTypes.IsAbility.HasFlag(action.AbilityType))
-            {
-                if (ProhibitEffects.PROHIBIT_EFFECTS_ABILITY.Intersect(fface.Player.StatusEffects).Any())
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
     }
 }

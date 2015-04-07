@@ -27,6 +27,10 @@ using System.Threading.Tasks;
 
 namespace EasyFarm.Classes
 {
+    /// <summary>
+    /// Manages the saving and loading of game data to 
+    /// file under their own extensions. 
+    /// </summary>
     public class SettingsManager
     {
         private string _startPath;

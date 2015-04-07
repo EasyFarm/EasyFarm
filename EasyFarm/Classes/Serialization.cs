@@ -29,6 +29,9 @@ using System.Xml.Serialization;
 
 namespace EasyFarm.Classes
 {
+    /// <summary>
+    /// Serializes objects to file. 
+    /// </summary>
     public static class Serialization
     {
         /// <summary>

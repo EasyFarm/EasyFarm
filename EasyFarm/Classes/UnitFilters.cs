@@ -26,6 +26,9 @@ using System.Text.RegularExpressions;
 
 namespace EasyFarm.Classes
 {
+    /// <summary>
+    /// Helper functions for filtering units. 
+    /// </summary>
     public class UnitFilters
     {
         #region MOBFilter
