@@ -3469,6 +3469,20 @@
   <i id="3679" enl="beastman gonfalon" jp="獣人旗" jpl="" targets="None">Beastman Gonfalon</i>
   <i id="3680" enl="copy of &quot;Judgment Day&quot;" jp="審判の日" jpl="" targets="None">Judgment Day</i>
   <i id="3681" enl="Alza'daal table" jp="アルザダールデスク" jpl="" targets="None">Alza'daal Table</i>
+  <i id="3682" enl="sproutling board" jp="双葉の音楽家" jpl="" targets="None">Sproutling Board</i>
+  <i id="3683" enl="forestdweller board" jp="森の住人" jpl="" targets="None">Forest. Board</i>
+  <i id="3684" enl="princess board" jp="若姫の微笑" jpl="" targets="None">Princess Board</i>
+  <i id="3685" enl="empress board" jp="第16代聖皇" jpl="" targets="None">Empress Board</i>
+  <i id="3686" enl="duelist board" jp="天真爛漫" jpl="" targets="None">Duelist Board</i>
+  <i id="3687" enl="crystal board" jp="結晶の守り人" jpl="" targets="None">Crystal Board</i>
+  <i id="3688" enl="dancer board" jp="トップダンサー" jpl="" targets="None">Dancer Board</i>
+  <i id="3689" enl="wizardess board" jp="連邦の黒い悪魔" jpl="" targets="None">Wizardess Board</i>
+  <i id="3690" enl="fighter board" jp="東の武士" jpl="" targets="None">Fighter Board</i>
+  <i id="3691" enl="guardian board" jp="隻眼の女将軍" jpl="" targets="None">Guardian Board</i>
+  <i id="3692" enl="stoic board" jp="銃士紅一点" jpl="" targets="None">Stoic Board</i>
+  <i id="3693" enl="lamb carving" jp="子羊の像" jpl="" targets="None">Lamb Carving</i>
+  <i id="3694" enl="polished lamb carving" jp="子羊の像II" jpl="" targets="None">Pol. Lamb Carving</i>
+  <i id="3695" enl="Cait Sith carving" jp="招き猫" jpl="" targets="None">Cait Sith Car.</i>
   <i id="3840" enl="pulse cell: Mx" jp="パルス管【Mx】" jpl="" targets="None">Pulse Cell: Mx</i>
   <i id="3841" enl="pulse cell: An" jp="パルス管【An】" jpl="" targets="None">Pulse Cell: An</i>
   <i id="3842" enl="pulse cell: Fa" jp="パルス管【Fa】" jpl="" targets="None">Pulse Cell: Fa</i>
@@ -5790,6 +5804,65 @@
   <i id="6294" enl="Liij-Vok's grand coffer" jp="リッジの大箱" jpl="" targets="Self" casttime="0.5">Li. Gr. Coffer</i>
   <i id="6295" enl="Gramk-Droog's coffer" jp="グラムクの箱" jpl="" targets="Self" casttime="0.5">Gramk-Dr. Coffer</i>
   <i id="6296" enl="Gramk-Droog's grand coffer" jp="グラムクの大箱" jpl="" targets="Self" casttime="0.5">Gr. Gr. Coffer</i>
+  <i id="6297" enl="juji shuriken pouch" jp="合切袋【十字】" jpl="" targets="Self" casttime="1">Juji Sh. Pouch</i>
+  <i id="6298" enl="manji shuriken pouch" jp="合切袋【卍】" jpl="" targets="Self" casttime="1">Manji Sh. Pouch</i>
+  <i id="6299" enl="shuriken pouch" jp="合切袋【手裏剣】" jpl="" targets="Self" casttime="1">Sh. Pouch</i>
+  <i id="6300" enl="koga shuriken pouch" jp="合切袋【甲賀】" jpl="" targets="Self" casttime="1">Koga Sh. Pouch</i>
+  <i id="6301" enl="togakushi shuriken pouch" jp="合切袋【戸隠】" jpl="" targets="Self" casttime="1">Toga. Sh. Pouch</i>
+  <i id="6302" enl="fuma shuriken pouch" jp="合切袋【風魔】" jpl="" targets="Self" casttime="1">Fuma Sh. Pouch</i>
+  <i id="6303" enl="iga shuriken pouch" jp="合切袋【伊賀】" jpl="" targets="Self" casttime="1">Iga Sh. Pouch</i>
+  <i id="6304" enl="roppo shuriken pouch" jp="合切袋【六方】" jpl="" targets="Self" casttime="1">Rop. Sh. Pouch</i>
+  <i id="6305" enl="roppo shuriken +1 pouch" jp="合切袋【六方改】" jpl="" targets="Self" casttime="1">Ro. Sh. +1 Pouch</i>
+  <i id="6306" enl="happo shuriken pouch" jp="合切袋【八方】" jpl="" targets="Self" casttime="1">Hap. Sh. Pouch</i>
+  <i id="6307" enl="happo shuriken +1 pouch" jp="合切袋【八方改】" jpl="" targets="Self" casttime="1">Ha. Sh. +1 Pouch</i>
+  <i id="6308" enl="hachiya shuriken pouch" jp="合切袋【蜂屋】" jpl="" targets="Self" casttime="1">Hac. Sh. Pouch</i>
+  <i id="6309" enl="suppa shuriken pouch" jp="合切袋【素破】" jpl="" targets="Self" casttime="1">Sup. Sh. Pouch</i>
+  <i id="6310" enl="gashing bolt quiver" jp="矢筒【ガッシング】" jpl="" targets="Self" casttime="1">Gash. Bolt Quiver</i>
+  <i id="6311" enl="decimating bullet pouch" jp="胴乱【デシメート】" jpl="" targets="Self" casttime="1">Dec. Bul. Pouch</i>
+  <i id="6312" enl="Hugemaw Harold's coffer" jp="ヘラルドの箱" jpl="" targets="Self" casttime="1">Harold's Coffer</i>
+  <i id="6313" enl="Bouncing Bertha's coffer" jp="バーサの箱" jpl="" targets="Self" casttime="1">Bertha's Coffer</i>
+  <i id="6314" enl="Prickly Pitriv's coffer" jp="ピトリヴの箱" jpl="" targets="Self" casttime="1">Pitriv's Coffer</i>
+  <i id="6315" enl="Ironhorn Baldurno's coffer" jp="バルダーノの箱" jpl="" targets="Self" casttime="1">Baldurno's Coffer</i>
+  <i id="6316" enl="Sleepy Mabel's coffer" jp="メーブルの箱" jpl="" targets="Self" casttime="1">Mabel's Coffer</i>
+  <i id="6317" enl="Valkurm Imperator's coffer" jp="インピラトアの箱" jpl="" targets="Self" casttime="1">Imperator's Coffer</i>
+  <i id="6318" enl="Serpopard Ninlil's coffer" jp="ニンリルの箱" jpl="" targets="Self" casttime="1">Ninlil's Coffer</i>
+  <i id="6319" enl="Abyssdiver's coffer" jp="アビスの箱" jpl="" targets="Self" casttime="1">Abyssdiver's Coffer</i>
+  <i id="6320" enl="Intuila's coffer" jp="インツリアの箱" jpl="" targets="Self" casttime="1">Intuila's Coffer</i>
+  <i id="6321" enl="Emperor Arthro's coffer" jp="皇帝アースロの箱" jpl="" targets="Self" casttime="1">Arthro's Coffer</i>
+  <i id="6322" enl="Orcfeltrap's coffer" jp="フェルトラップの箱" jpl="" targets="Self" casttime="1">Orcfeltrap's Coffer</i>
+  <i id="6323" enl="Lumber Jill's coffer" jp="ジルの箱" jpl="" targets="Self" casttime="1">Jill's Coffer</i>
+  <i id="6324" enl="Joyous Green's coffer" jp="ジョイアスの箱" jpl="" targets="Self" casttime="1">Joyous's Coffer</i>
+  <i id="6325" enl="Strix's coffer" jp="ストリクスの箱" jpl="" targets="Self" casttime="1">Strix's Coffer</i>
+  <i id="6326" enl="Warblade Beak's coffer" jp="ウォーブレイドの箱" jpl="" targets="Self" casttime="1">Warblade's Coffer</i>
+  <i id="6327" enl="Arke's coffer" jp="アルケの箱" jpl="" targets="Self" casttime="1">Arke's Coffer</i>
+  <i id="6328" enl="Largantua's coffer" jp="ラガンチュアの箱" jpl="" targets="Self" casttime="1">Largantua's Coffer</i>
+  <i id="6329" enl="Beist's coffer" jp="バイストの箱" jpl="" targets="Self" casttime="1">Beist's Coffer</i>
+  <i id="6330" enl="Jester Malatrix's coffer" jp="マラトリクスの箱" jpl="" targets="Self" casttime="1">Malatrix's Coffer</i>
+  <i id="6331" enl="Catrot Veloz's coffer" jp="ベロスの箱" jpl="" targets="Self" casttime="1">Veloz's Coffer</i>
+  <i id="6332" enl="Woodland Mender's coffer" jp="メンダーの箱" jpl="" targets="Self" casttime="1">Mender's Coffer</i>
+  <i id="6333" enl="translucent salpa" jp="インビジサルパ" jpl="" targets="Self" casttime="1">Translucent Salpa</i>
+  <i id="6334" enl="Ra'Kaznar Shellfish" jp="カザナルシェル" jpl="" targets="Self" casttime="1">Ra. Shellfish</i>
+  <i id="6335" enl="white lobster" jp="ホワイトロブスター" jpl="" targets="Self" casttime="1">White Lobster</i>
+  <i id="6336" enl="bonefish" jp="ボーンフィッシュ" jpl="" targets="Self" casttime="1">Bonefish</i>
+  <i id="6337" enl="thysanopeltis" jp="ティサノペルティス" jpl="" targets="Self" casttime="1">Thysanopeltis</i>
+  <i id="6338" enl="cameroceras" jp="カメロケラス" jpl="" targets="Self" casttime="1">Cameroceras</i>
+  <i id="6339" enl="rolanberry daifuku" jp="ベリー大福" jpl="" targets="Self" casttime="1">Rolan. Daifuku</i>
+  <i id="6340" enl="rolanberry daifuku +1" jp="ベリー大福+1" jpl="" targets="Self" casttime="1">Rolan. Daifuku +1</i>
+  <i id="6341" enl="bean daifuku" jp="豆大福" jpl="" targets="Self" casttime="1">Bean Daifuku</i>
+  <i id="6342" enl="bean daifuku +1" jp="豆大福+1" jpl="" targets="Self" casttime="1">Bean Daifuku +1</i>
+  <i id="6343" enl="grape daifuku" jp="ブドウ大福" jpl="" targets="Self" casttime="1">Grape Daifuku</i>
+  <i id="6344" enl="grape daifuku +1" jp="ブドウ大福+1" jpl="" targets="Self" casttime="1">Grape Daifuku +1</i>
+  <i id="6345" enl="frayed sack of horror +2" jp="古い袋【黒霊石+2】" jpl="" targets="Self" casttime="1">Frayed Sack (H2)</i>
+  <i id="6346" enl="frayed sack of beauty" jp="古い袋【綺麗な翅】" jpl="" targets="Self" casttime="1">Frayed Sack (Pul)</i>
+  <i id="6347" enl="sheet of Adoulinian tunes" jp="譜面：アドゥリン" jpl="" targets="Self" casttime="1">Adoulinian Tunes</i>
+  <i id="6348" enl="sheet of Promathian tunes" jp="譜面：プロマシア" jpl="" targets="Self" casttime="1">Promathian Tunes</i>
+  <i id="6349" enl="Makel-Pakel's grab bag" jp="メイケルの福袋" jpl="" targets="Self" casttime="1">Makel's Grab Bag</i>
+  <i id="6350" enl="Sybaritic Samantha's coffer" jp="サマンサの箱" jpl="" targets="Self" casttime="1">Saman. Coffer</i>
+  <i id="6351" enl="Keeper of Heiligtum's coffer" jp="ハイリグタムの箱" jpl="" targets="Self" casttime="1">Heiligtum's Coffer</i>
+  <i id="6352" enl="Douma Weapon's coffer" jp="ドウマの箱" jpl="" targets="Self" casttime="1">Douma's Coffer</i>
+  <i id="6353" enl="King Uropygid's coffer" jp="ウルピジッドの箱" jpl="" targets="Self" casttime="1">Uropygid's Coffer</i>
+  <i id="6354" enl="Vedrfolnir's coffer" jp="ヴェドルの箱" jpl="" targets="Self" casttime="1">Vedrfolnir's Coffer</i>
+  <i id="6355" enl="stinger bullet pouch" jp="胴乱【スティンガ】" jpl="" targets="Self" casttime="1">Sti. Bul. Pouch</i>
   <i id="8193" enl="Harlequin head" jp="湎用ヘッド" jpl="">Harlequin Head</i>
   <i id="8194" enl="Valoredge X-900 head" jp="白兵戦ヘッド" jpl="">Valoredge Head</i>
   <i id="8195" enl="Sharpshot Z-500 head" jp="射撃戦ヘッド" jpl="">Sharpshot Head</i>
@@ -6054,6 +6127,57 @@
   <i id="8969" enl="eudaemon sash" jp="ユデイモンサッシュ" jpl="" targets="None">Eudaemon Sash</i>
   <i id="8970" enl="eudaemon shield" jp="ユデイモンシールド" jpl="" targets="None">Eudaemon Shld.</i>
   <i id="8971" enl="onz of miracle mulch" jp="堆肥" jpl="" targets="None">Miracle Mulch</i>
+  <i id="8973" enl="special gobbiedial key" jp="ダイヤルキー#SP" jpl="" targets="None">SP Gobbie Key</i>
+  <i id="8974" enl="chunk of Harold Hugemaw's red ore" jp="ヘラルドの鉱石" jpl="" targets="None">Harold's Ore</i>
+  <i id="8975" enl="Bouncing Bertha's hide" jp="バーサの皮" jpl="" targets="None">Bertha's hide</i>
+  <i id="8976" enl="Prickly Pitriv's thread" jp="ピトリヴの糸" jpl="" targets="None">Pitriv's thread</i>
+  <i id="8977" enl="Ironhorn Baldurno's horn" jp="バルダーノの角" jpl="" targets="None">Baldurno's Horn</i>
+  <i id="8978" enl="strand of Sleepy Mabel's fur" jp="メーブルの羊毛" jpl="" targets="None">Sleepy Mabel's Fur</i>
+  <i id="8979" enl="Valkurm Imperator's wing" jp="インピラトアの翅" jpl="" targets="None">Imperator's Wing</i>
+  <i id="8980" enl="Serpopard Ninlil's bone" jp="ニンリルの大腿骨" jpl="" targets="None">Ninlil's Bone</i>
+  <i id="8981" enl="Abyssdiver's feather" jp="アビスの羽根" jpl="" targets="None">Abyssdiver Feather</i>
+  <i id="8982" enl="Intuila's hide" jp="インツリアの皮" jpl="" targets="None">Intuila's Hide</i>
+  <i id="8983" enl="Emperor Arthro's shell" jp="皇帝アースロの甲殻" jpl="" targets="None">Arthro's Shell</i>
+  <i id="8984" enl="Orcfeltrap's leaf" jp="フェルトラップの葉" jpl="" targets="None">Orcfeltrap's Leaf</i>
+  <i id="8985" enl="vial of Lumber Jill's spittle" jp="ジルの体液" jpl="" targets="None">Jill's Spittle</i>
+  <i id="8986" enl="clump of Joyous Green's moss" jp="ジョイアスの苔" jpl="" targets="None">Joyous's Moss</i>
+  <i id="8987" enl="Strix's tailfeather" jp="ストリクスの尾羽根" jpl="" targets="None">Strix's Tailfeather</i>
+  <i id="8988" enl="Warblade Beak's hide" jp="ウォーブレイドの皮" jpl="" targets="None">Warblade's Hide</i>
+  <i id="8989" enl="Arke's wing" jp="アルケの羽根" jpl="" targets="None">Arke's Wing</i>
+  <i id="8990" enl="Largantua's shard" jp="ラガンチュアの破片" jpl="" targets="None">Largantua's Shard</i>
+  <i id="8991" enl="vial of Beist's blood" jp="バイストの血" jpl="" targets="None">Beist's Blood</i>
+  <i id="8992" enl="Jester Malatrix's shard" jp="マラトリクスの破片" jpl="" targets="None">Malatrix's Shard</i>
+  <i id="8993" enl="Cactrot Veloz's needle" jp="ベロスの針" jpl="" targets="None">Veloz's Needle</i>
+  <i id="8994" enl="Woodland Mender's log" jp="メンダー原木" jpl="" targets="None">Mender's Log</i>
+  <i id="8995" enl="cracked matamata shell" jp="割れた甲羅" jpl="" targets="None">C. Mata. Shell</i>
+  <i id="8996" enl="slashed vine" jp="千切れたつる" jpl="" targets="None">Slashed Vine</i>
+  <i id="8997" enl="sliced thread" jp="細切れの糸" jpl="" targets="None">Sliced Thread</i>
+  <i id="8998" enl="wrecked pincer" jp="砕けた鋏" jpl="" targets="None">Wrecked Pincer</i>
+  <i id="8999" enl="sullied feather" jp="泥まみれの羽根" jpl="" targets="None">Sullied Feather</i>
+  <i id="9000" enl="clump of florid leaf mold" jp="薫る腐葉土" jpl="" targets="None">Florid Leaf Mold</i>
+  <i id="9001" enl="vial of rockoil" jp="ロックオイル" jpl="" targets="None">Rockoil</i>
+  <i id="9010" enl="dense cluster" jp="ヘヴィクラスター" jpl="" targets="None">Dense Cluster</i>
+  <i id="9011" enl="??? sword +1" jp="？？？ソード+1" jpl="" targets="None">??? Sword +1</i>
+  <i id="9012" enl="??? dagger +1" jp="？？？ダガー+1" jpl="" targets="None">??? Dagger +1</i>
+  <i id="9013" enl="??? pole +1" jp="？？？ポール+1" jpl="" targets="None">??? Pole +1</i>
+  <i id="9014" enl="??? axe +1" jp="？？？アクス+1" jpl="" targets="None">??? Axe +1</i>
+  <i id="9015" enl="??? bow +1" jp="？？？ボウ+1" jpl="" targets="None">??? Bow +1</i>
+  <i id="9016" enl="??? gloves +1" jp="？？？グローブ+1" jpl="" targets="None">??? Gloves +1</i>
+  <i id="9017" enl="??? footwear +1" jp="？？？フット+1" jpl="" targets="None">??? Footwear +1</i>
+  <i id="9018" enl="??? headwear +1" jp="？？？ヘッド+1" jpl="" targets="None">??? Headwear +1</i>
+  <i id="9019" enl="??? earring +1" jp="？？？イヤリング+1" jpl="" targets="None">??? Earring +1</i>
+  <i id="9020" enl="??? ring +1" jp="？？？リング+1" jpl="" targets="None">??? Ring +1</i>
+  <i id="9021" enl="??? cape +1" jp="？？？ケープ+1" jpl="" targets="None">??? Cape +1</i>
+  <i id="9022" enl="??? sash +1" jp="？？？サッシュ+1" jpl="" targets="None">??? Sash +1</i>
+  <i id="9023" enl="??? shield +1" jp="？？？シールド+1" jpl="" targets="None">??? Shield +1</i>
+  <i id="9024" enl="??? necklace +1" jp="？？？ネックレス+1" jpl="" targets="None">??? Necklace +1</i>
+  <i id="9025" enl="??? box +1" jp="？？？ボックス+1" jpl="" targets="None">??? Box +1</i>
+  <i id="9026" enl="??? box +2" jp="？？？ボックス+2" jpl="" targets="None">??? Box +2</i>
+  <i id="9027" enl="Sybaritic Samantha's vine" jp="サマンサのつる" jpl="" targets="None">Samantha's vine</i>
+  <i id="9028" enl="handful of Heiligtum's moss" jp="ハイリグタムの苔" jpl="" targets="None">Heiligtum's Moss</i>
+  <i id="9029" enl="Douma Weapon's shard" jp="ドウマの破片" jpl="" targets="None">Douma's Shard</i>
+  <i id="9030" enl="King Uropygid's needle" jp="ウルピジッドの針" jpl="" targets="None">Uropygid's Needle</i>
+  <i id="9031" enl="Vedrfolnir's wing" jp="ヴェドルの羽根" jpl="" targets="None">Vedrfolnir's Wing</i>
   <i id="10112" enl="cipher of Zeid's alter ego" jp="盟-ザイド" jpl="" targets="None">Cipher: Zeid</i>
   <i id="10113" enl="cipher of Lion's alter ego" jp="盟-ライオン" jpl="" targets="None">Cipher: Lion</i>
   <i id="10114" enl="cipher of Tenzen's alter ego" jp="盟-テンゼン" jpl="" targets="None">Cipher: Tenzen</i>
@@ -6079,10 +6203,20 @@
   <i id="10134" enl="cipher of Star Sibyl's alter ego" jp="盟-星の神子" jpl="" targets="None">Cipher: S. Sibyl</i>
   <i id="10135" enl="cipher of Mumor's alter ego" jp="盟-ミュモル" jpl="" targets="None">Cipher: Mumor</i>
   <i id="10136" enl="cipher of Uka's alter ego" jp="盟-ウカ" jpl="" targets="None">Cipher: Uka</i>
+  <i id="10137" enl="cipher of Lilisette's alter ego" jp="盟-リリゼット" jpl="" targets="None">Cipher: Lilisette</i>
   <i id="10138" enl="cipher of Cid's alter ego" jp="盟-シド" jpl="" targets="None">Cipher: Cid</i>
   <i id="10139" enl="cipher of Rahal's alter ego" jp="盟-ラーアル" jpl="" targets="None">Cipher: Rahal</i>
   <i id="10140" enl="cipher of Koru-Moru's alter ego" jp="盟-コルモル" jpl="" targets="None">Cipher: Koru-Moru</i>
   <i id="10141" enl="cipher of Kuyin's alter ego" jp="盟-クイン" jpl="" targets="None">Cipher: Kuyin</i>
+  <i id="10142" enl="cipher of Karaha's alter ego" jp="盟-カラハバルハ" jpl="" targets="None">Cipher: Karaha</i>
+  <i id="10143" enl="cipher of Babban's alter ego" jp="盟-ウェイレア" jpl="" targets="None">Cipher: Babban</i>
+  <i id="10144" enl="cipher of Abenzio's alter ego" jp="盟-アベンツィオ" jpl="" targets="None">Cipher: Abenzio</i>
+  <i id="10145" enl="cipher of Rughadjeen's alter ego" jp="盟-天蛇将" jpl="" targets="None">Cipher: Rughadjeen</i>
+  <i id="10146" enl="cipher of Kukki's alter ego" jp="盟-クッキー" jpl="" targets="None">Cipher: Kukki</i>
+  <i id="10147" enl="cipher of Margret's alter ego" jp="盟-マルグレート" jpl="" targets="None">Cipher: Margret</i>
+  <i id="10148" enl="cipher of Gilgamesh's alter ego" jp="盟-ギルガメッシュ" jpl="" targets="None">Cipher: Gilgamesh</i>
+  <i id="10149" enl="cipher of Areuhat's alter ego" jp="盟-アレヴァト" jpl="" targets="None">Cipher: Areuhat</i>
+  <i id="10150" enl="cipher of Lhe's alter ego" jp="盟-レイ" jpl="" targets="None">Cipher: Lhe</i>
   <i id="28672" enl="Maze Tabula M01" jp="メイズタビュラM01" jpl="">Maze Tabula M01</i>
   <i id="28673" enl="Maze Tabula M02" jp="メイズタビュラM02" jpl="">Maze Tabula M02</i>
   <i id="28674" enl="Maze Tabula M03" jp="メイズタビュラM03" jpl="">Maze Tabula M03</i>

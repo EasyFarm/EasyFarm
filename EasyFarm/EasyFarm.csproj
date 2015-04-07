@@ -211,6 +211,8 @@
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\AppInformer.cs" />
     <Compile Include="Classes\GameSession.cs" />
+    <Compile Include="Classes\MovementUtils.cs" />
+    <Compile Include="Classes\Targeting.cs" />
     <Compile Include="Views\ProcessSelectionViewModel.cs" />
     <Compile Include="Classes\TaskTimer.cs" />
     <Compile Include="Components\Bases\BaseComponent.cs" />
@@ -250,9 +252,6 @@
     <Compile Include="Components\Components\EndComponent.cs" />
     <Compile Include="Components\Components\RestComponent.cs" />
     <Compile Include="Components\Components\TravelComponent.cs" />
-    <Compile Include="Debugging\DebugCreatures.xaml.cs">
-      <DependentUpon>DebugCreatures.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Classes\HealingAbility.cs" />
     <Compile Include="Classes\Waypoint.cs" />
     <Compile Include="Classes\WeaponSkill.cs" />
@@ -333,14 +332,13 @@
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\CombatService.cs" />
+    <Compile Include="Classes\CombatUtils.cs" />
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\MovingUnit.cs" />
-    <Compile Include="Classes\RestingService.cs" />
+    <Compile Include="Classes\RestingUtil.cs" />
     <Compile Include="Classes\Serialization.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\UnitService.cs" />
-    <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\TestUnit.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -374,10 +372,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Debugging\DebugCreatures.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\AbilityView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

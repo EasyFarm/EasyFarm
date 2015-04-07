@@ -28,17 +28,16 @@ namespace EasyFarm.Classes
     public class Caster
     {
         // Get player object. 
-        private static MovingUnit Player;
-        private readonly FFACE FFACE;
+        private static MovingUnit _player;
+        private readonly FFACE _fface;
 
         public Caster(FFACE fface)
         {
-            this.FFACE = fface;
-            MovingUnit.Session = this.FFACE;
+            this._fface = fface;
 
-            if (Player == null)
+            if (_player == null)
             {
-                Player = new MovingUnit(FFACE.Player.ID);
+                _player = new MovingUnit(_fface, _fface.Player.ID);
             }
         }
 
@@ -51,9 +50,9 @@ namespace EasyFarm.Classes
         public bool CastSpell(Ability ability)
         {
             // Call for player to stop. 
-            while (Player.IsMoving)
+            while (_player.IsMoving)
             {
-                FFACE.Navigator.Reset();
+                _fface.Navigator.Reset();
                 Thread.Sleep(100);
             }
 
@@ -77,18 +76,18 @@ namespace EasyFarm.Classes
         {
             // Chainspelled spells will always be cast without fail so 
             // cast it and return immediately. 
-            if (FFACE.Player.StatusEffects.Contains(StatusEffect.Chainspell))
+            if (_fface.Player.StatusEffects.Contains(StatusEffect.Chainspell))
             {
-                FFACE.Windower.SendString(command);
+                _fface.Windower.SendString(command);
                 return true;
             }
 
             // Ensure command has been successfully sent. 
-            var previous = FFACE.Player.CastPercentEx;
+            var previous = _fface.Player.CastPercentEx;
             var startTime = DateTime.Now;
-            while (previous == FFACE.Player.CastPercentEx && DateTime.Now < startTime.AddSeconds(3))
+            while (previous == _fface.Player.CastPercentEx && DateTime.Now < startTime.AddSeconds(3))
             {
-                FFACE.Windower.SendString(command);
+                _fface.Windower.SendString(command);
                 Thread.Sleep(100);
             }
 
@@ -99,21 +98,21 @@ namespace EasyFarm.Classes
         {
             // Monitor the cast and break when either the player 
             // moved or casting has been finished. 
-            var position = FFACE.Player.Position;
+            var position = _fface.Player.Position;
             var castHistory = new LimitedQueue<short>(100);
-            var prior = FFACE.Player.CastPercentEx;
+            var prior = _fface.Player.CastPercentEx;
 
             while (!castHistory.RepeatsN(30).Any())
             {
-                if (prior == FFACE.Player.CastPercentEx)
-                    castHistory.AddItem(FFACE.Player.CastPercentEx);
+                if (prior == _fface.Player.CastPercentEx)
+                    castHistory.AddItem(_fface.Player.CastPercentEx);
 
                 // Has moved 
-                if (position.X != FFACE.Player.PosX ||
-                    position.Y != FFACE.Player.PosY ||
-                    position.Z != FFACE.Player.PosZ) return false;                
+                if (position.X != _fface.Player.PosX ||
+                    position.Y != _fface.Player.PosY ||
+                    position.Z != _fface.Player.PosZ) return false;                
 
-                prior = FFACE.Player.CastPercentEx;
+                prior = _fface.Player.CastPercentEx;
 
                 Thread.Sleep(100);
             }
@@ -126,7 +125,7 @@ namespace EasyFarm.Classes
         public bool CastAbility(Ability ability)
         {           
             // Send the command to the game. 
-            FFACE.Windower.SendString(ability.ToString());
+            _fface.Windower.SendString(ability.ToString());
             Thread.Sleep(100);
             return true;
         }

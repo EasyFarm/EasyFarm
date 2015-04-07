@@ -66,27 +66,29 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\abils.xml">
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\abils.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\areas.xml">
+    </Content>
+    <Content Include="Resources\areas.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\items_armor.xml">
+    </Content>
+    <Content Include="Resources\items_armor.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\items_general.xml">
+    </Content>
+    <Content Include="Resources\items_general.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\items_weapons.xml">
+    </Content>
+    <Content Include="Resources\items_weapons.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\spells.xml">
+    </Content>
+    <Content Include="Resources\spells.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\status.xml">
+    </Content>
+    <Content Include="Resources\status.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

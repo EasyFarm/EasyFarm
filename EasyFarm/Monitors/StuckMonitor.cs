@@ -30,14 +30,13 @@ namespace EasyFarm.FarmingTool
 
         public StuckMonitor(FFACE fface) : base(fface) 
         {
-            if (Unit.Session == null) Unit.Session = fface;
             this.ID = fface.Player.ID;
-            this.Player = new MovingUnit(this.ID);                       
+            this.Player = new MovingUnit(fface, this.ID);                       
         }
 
         protected override void CheckStatus(object sender, System.Timers.ElapsedEventArgs e)
         {
-            lock (this.m_lock)
+            lock (this._lock)
             {
                 if (this.Player.IsStuck)
                 {

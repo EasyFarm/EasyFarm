@@ -30,8 +30,7 @@ namespace EasyFarm.Components
     /// </summary>
     public class BattleComponent : MachineComponent
     {
-        private FFACE FFACE;
-        private RestingService Resting;
+        private FFACE _fface;
         private Executor Executor;
 
         /// <summary>
@@ -45,8 +44,7 @@ namespace EasyFarm.Components
 
         public BattleComponent(FFACE fface)
         {
-            this.FFACE = fface;
-            this.Resting = new RestingService(fface);
+            this._fface = fface;
             this.Executor = new Executor(fface);
         }
 
@@ -60,22 +58,22 @@ namespace EasyFarm.Components
 
             // Engage is enabled and we are not engaged. We cannot proceed. 
             if (Config.Instance.IsEngageEnabled)
-                return FFACE.Player.Status.Equals(Status.Fighting);
+                return _fface.Player.Status.Equals(Status.Fighting);
             // Engage is not checked, so just proceed to battle. 
             else return true;
         }
 
         public override void EnterComponent()
         {
-            Resting.EndResting();
-            FFACE.Navigator.Reset();
+            RestingUtils.Stand(_fface);
+            _fface.Navigator.Reset();
         }
 
         public override void RunComponent()
         {               
             // Cast only one action to prevent blocking curing. 
             var action = Config.Instance.BattleLists["Battle"].Actions
-                .Where(x => ActionFilters.TargetedFilter(FFACE, x, Target))
+                .Where(x => ActionFilters.TargetedFilter(_fface, x, Target))
                 .FirstOrDefault();
 
             if (action != null)

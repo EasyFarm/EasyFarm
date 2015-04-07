@@ -19,7 +19,6 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using Parsing.Abilities;
 using Parsing.Services;
 using System;
@@ -34,19 +33,6 @@ namespace XI_Tools_Tests
         public void SetUp()
         {
             Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-        }
-
-        [TestClass]
-        public class UnitTests
-        {
-            [TestMethod]
-            public void TestUnitFiltering()
-            {
-                var mock = new Mock<IUnit>();
-                mock.SetupGet(x => x.IsClaimed).Returns(true);
-                IUnit unit = (IUnit)mock.Object;
-                Assert.AreEqual(true, unit.IsClaimed);
-            }
         }
 
         [TestClass]

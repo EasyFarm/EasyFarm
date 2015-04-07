@@ -22,149 +22,189 @@ using System;
 
 namespace EasyFarm.Classes
 {
-    public class Unit : IUnit
+    public class Unit
     {
         #region Members
-        public static FFACE Session { get; set; }
-        private static FFACE.NPCTools NPCTools;
-        private static Unit m = null;
-       
+        /// <summary>
+        /// Holds all the game's data. 
+        /// </summary>
+        private FFACE _fface;
+
+        /// <summary>
+        /// Holds the data about units. 
+        /// </summary>
+        private FFACE.NPCTools _npc;
         #endregion
 
         #region Constructors
-        protected Unit(int id = 0)
+        public Unit(FFACE fface, int id)
         {
+            // Set this unit's session data. 
+            _fface = fface;
+
             // Set the internal id. 
-            this.ID = id;
+            ID = id;
 
-            // Our npctools object. 
-            if (NPCTools == null && Session != null)
-            {
-                NPCTools = Session.NPC;
-            }            
+            // Set the NPC information.
+            _npc = _fface.NPC;
         }
-
-        public static Unit CreateUnit(int id)
-        {
-            if (m == null)
-            {
-                return m = new Unit(id);
-            }
-            else
-            {
-                m.ID = id;
-                return m.MemberwiseClone() as Unit;
-            }
-        }
-        #endregion        
+        #endregion
 
         #region Player Data
-        // Details about a specific unit
-        // Retrieves detail from FFACE Library
-        // Uses ID to get details from NPCTools
-
+        /// <summary>
+        /// The unit's id. 
+        /// </summary>
         public int ID
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// The unit's claim id; zero for unclaimed. 
+        /// </summary>
         public int ClaimedID
         {
-            get { return NPCTools.ClaimedID(ID); }
+            get { return _npc.ClaimedID(ID); }
         }
 
+        /// <summary>
+        /// The unit's distace from the player. 
+        /// </summary>
         public double Distance
         {
-            get { return NPCTools.Distance(ID); }
+            get { return _npc.Distance(ID); }
         }
 
+        /// <summary>
+        /// The unit's position. 
+        /// </summary>
         public FFACE.Position Position
         {
-            get { return NPCTools.GetPosition(ID); }
+            get { return _npc.GetPosition(ID); }
         }
 
+        /// <summary>
+        /// The unit's health as a percent. 
+        /// </summary>
         public short HPPCurrent
         {
-            get { return NPCTools.HPPCurrent(ID); }
+            get { return _npc.HPPCurrent(ID); }
         }
 
+        /// <summary>
+        /// Whether this unit is active. 
+        /// </summary>
         public bool IsActive
         {
-            get { return NPCTools.IsActive(ID); }
+            get { return _npc.IsActive(ID); }
         }
 
+        /// <summary>
+        /// Whether this unit is claimed by some player. 
+        /// </summary>
         public bool IsClaimed
         {
-            get { return NPCTools.IsClaimed(ID); }
+            get { return _npc.IsClaimed(ID); }
         }
 
+        /// <summary>
+        /// Whether this unit is visible to the player. 
+        /// </summary>
         public bool IsRendered
         {
-            get { return NPCTools.IsRendered(ID); }
+            get { return _npc.IsRendered(ID); }
         }
 
+        /// <summary>
+        /// The unit's name. 
+        /// </summary>
         public string Name
         {
-            get { return NPCTools.Name(ID); }
+            get { return _npc.Name(ID); }
         }
 
+        /// <summary>
+        /// The unit's npc bit
+        /// </summary>
         public byte NPCBit
         {
-            get { return NPCTools.NPCBit(ID); }
+            get { return _npc.NPCBit(ID); }
         }
 
+        /// <summary>
+        /// The unit's npc type
+        /// </summary>
         public NPCType NPCType
         {
-            get { return NPCTools.NPCType(ID); }
+            get { return _npc.NPCType(ID); }
         }
 
+        /// <summary>
+        /// The unit's pet's id. 
+        /// </summary>
         public int PetID
         {
-            get { return NPCTools.PetID(ID); }
+            get { return _npc.PetID(ID); }
         }
 
+        /// <summary>
+        /// The unit's heading. 
+        /// </summary>
         public float PosH
         {
-            get { return NPCTools.PosH(ID); }
+            get { return _npc.PosH(ID); }
         }
 
+        /// <summary>
+        /// The unit's x coordinate. 
+        /// </summary>
         public float PosX
         {
-            get { return NPCTools.PosX(ID); }
+            get { return _npc.PosX(ID); }
         }
 
+        /// <summary>
+        /// The unit's y coordinate. 
+        /// </summary>
         public float PosY
         {
-            get { return NPCTools.PosY(ID); }
+            get { return _npc.PosY(ID); }
         }
 
+        /// <summary>
+        /// The unit's z coordinate.  
+        /// </summary>
         public float PosZ
         {
-            get { return NPCTools.PosZ(ID); }
+            get { return _npc.PosZ(ID); }
         }
 
-        public byte[] RawData
-        {
-            get { return NPCTools.GetRawNPCData(ID, ID, ID); }
-        }
-
+        /// <summary>
+        /// The unit's status. 
+        /// </summary>
         public Status Status
         {
-            get { return NPCTools.Status(ID); }
+            get { return _npc.Status(ID); }
         }
 
+        /// <summary>
+        /// The unit's current tp. 
+        /// </summary>
         public short TPCurrent
         {
-            get { return NPCTools.TPCurrent(ID); }
+            get { return _npc.TPCurrent(ID); }
         }
 
         public bool MyClaim
         {
             // Using FFACE.PartyMember[0].ServerID until FFACE.Player.PlayerServerID is fixed. 
-            get { return ClaimedID == Session.PartyMember[0].ServerID; }
+            get { return ClaimedID == _fface.PartyMember[0].ServerID; }
         }
 
+        /// <summary>
+        /// If the unit has aggroed our player. 
+        /// </summary>
         public bool HasAggroed
         {
             get
@@ -173,18 +213,24 @@ namespace EasyFarm.Classes
             }
         }
 
+        /// <summary>
+        /// If the unit is dead. 
+        /// </summary>
         public bool IsDead
         {
             get { return Status == FFACETools.Status.Dead1 || Status == FFACETools.Status.Dead2 || HPPCurrent <= 0; }
         }
 
+        /// <summary>
+        /// If a party or alliance member has claim on the unit. 
+        /// </summary>
         public bool PartyClaim
         {
             get
             {
-                for (byte i = 0; i < Session.PartyMember.Count; i++)
+                for (byte i = 0; i < _fface.PartyMember.Count; i++)
                 {
-                    if (Session.PartyMember[i].ServerID != 0 && ClaimedID == Session.PartyMember[i].ServerID)
+                    if (_fface.PartyMember[i].ServerID != 0 && ClaimedID == _fface.PartyMember[i].ServerID)
                     {
                         return true;
                     }
@@ -193,14 +239,17 @@ namespace EasyFarm.Classes
             }
         }
 
+        /// <summary>
+        /// The vertical distance between this unit and our player. 
+        /// </summary>
         public double YDifference
         {
-            get { return Math.Abs(PosY - Session.Player.PosY); }
+            get { return Math.Abs(PosY - _fface.Player.PosY); }
         }
 
         #endregion
 
-        #region Methods        
+        #region Methods
 
         // Make it default to printing units name
         public override string ToString()

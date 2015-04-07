@@ -567,4 +567,9 @@
   <b id="580" duration="0" jp="ヘイスト" enLog="hastened">Haste</b>
   <b id="581" duration="0" jp="スナップ" enLog="Flurry">Flurry</b>
   <b id="582" duration="0" jp="コントラダンス" enLog="Contradance">Contradance</b>
+  <b id="583" duration="0" jp="アポジー" enLog="Apogee">Apogee</b>
+  <b id="584" duration="0" jp="エントラスト" enLog="entrusting">Entrust</b>
+  <b id="585" duration="0" jp="コスチューム" enLog="costumed">Costume</b>
+  <b id="586" duration="0" jp="被ケアル回復量アップ" enLog="Curing Conduit">Curing Conduit</b>
+  <b id="587" duration="0" jp="TPボーナスアップ" enLog="TP Bonus">TP Bonus</b>
 </status>

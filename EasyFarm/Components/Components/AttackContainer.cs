@@ -36,7 +36,6 @@ namespace EasyFarm.Components
         static AttackContainer()
         {
             FightStarted = false;
-            m_targetUnit = Unit.CreateUnit(0);
         }
 
         public AttackContainer(FFACE fface)

@@ -26,54 +26,63 @@ using System.Linq;
 
 namespace EasyFarm.Components
 {
+    /// <summary>
+    /// Behavior for resting our character. 
+    /// </summary>
     public class RestComponent : MachineComponent
     {
-        private FFACE FFACE;
+        private FFACE _fface;
 
-        private UnitService Units;
+        /// <summary>
+        /// Retrieves aggroing creature. 
+        /// </summary>
+        private UnitService _units;
 
-        private RestingService Resting;
-
-        private DateTime LastAggroCheck = DateTime.Now;
+        /// <summary>
+        /// The last time we checked for aggro. 
+        /// </summary>
+        private DateTime _lastAggroCheck = DateTime.Now;
 
         public RestComponent(FFACE fface)
         {
-            this.FFACE = fface;
-            this.Units = new UnitService(fface);
-            this.Units.UnitFilter = UnitFilters.MobFilter(fface);
-            this.Resting = new RestingService(fface);
+            this._fface = fface;
+            this._units = new UnitService(fface);
         }
-       
+
         public override bool CheckComponent()
         {
-            if (LastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
+            // Check for aggro if possible; this check helps with program performance by limiting
+            // constant checks against the whole unit array which is expensive. 
+            if (_lastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
             {
-                LastAggroCheck = DateTime.Now;
-                if (Units.HasAggro) return false;
+                _lastAggroCheck = DateTime.Now;
+                if (_units.HasAggro) return false;
             }
 
+            // Check for effects taht stop resting. 
             if (ProhibitEffects.PROHIBIT_EFFECTS_DOTS
-                .Intersect(FFACE.Player.StatusEffects).Any()) return false;
+                .Intersect(_fface.Player.StatusEffects).Any()) return false;
 
-            if (FFACE.Player.Status == Status.Fighting) return false;
+            // Check if we are fighting. 
+            if (_fface.Player.Status == Status.Fighting) return false;
 
+            // Check if we should rest for health.
             if (Config.Instance.ShouldRestForHealth(
-                FFACE.Player.HPPCurrent, 
-                FFACE.Player.Status)) return true;
+                _fface.Player.HPPCurrent,
+                _fface.Player.Status)) return true;
 
+            // Check if we should rest for magic. 
             if (Config.Instance.ShouldRestForMagic(
-                FFACE.Player.MPPCurrent, 
-                FFACE.Player.Status)) return true;
+                _fface.Player.MPPCurrent,
+                _fface.Player.Status)) return true;
 
+            // We do not meet the conditions for resting. 
             return false;
         }
 
         public override void RunComponent()
         {
-            if (!FFACE.Player.Status.Equals(Status.Healing))
-            {
-                Resting.StartResting();
-            }
+            RestingUtils.Rest(_fface);
         }
 
         /// <summary>
@@ -96,8 +105,8 @@ namespace EasyFarm.Components
                 StatusEffect.Lullaby
             };
 
-                return RestBlockingDebuffs.Intersect(FFACE.Player.StatusEffects).Count() != 0;
+                return RestBlockingDebuffs.Intersect(_fface.Player.StatusEffects).Count() != 0;
             }
-        }        
+        }
     }
 }

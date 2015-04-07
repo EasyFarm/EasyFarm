@@ -14,7 +14,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////
 
 using FFACETools;
 using System;
@@ -28,38 +29,28 @@ namespace EasyFarm.Classes
     /// Provides methods that allow the player to start resting or stop resting
     /// through the use of /heal on or /heal off. 
     /// </summary>
-    public class RestingService
+    public class RestingUtils
     {
-        private FFACE _fface;
-
-        public RestingService(FFACE session)
-        {
-            this._fface = session;
-        }
-
         /// <summary>
-        /// Makes the character stop resting
+        /// Makes the character rest
         /// </summary>
-        public void EndResting()
+        public static void Rest(FFACE fface)
         {
-            if (_fface.Player.Status.Equals(Status.Healing)) 
-            { 
-                _fface.Windower.SendString(Constants.RESTING_OFF);
+            if (!fface.Player.Status.Equals(Status.Healing))
+            {
+                fface.Windower.SendString(Constants.RESTING_ON);
                 System.Threading.Thread.Sleep(50);
             }
         }
 
         /// <summary>
-        /// Makes the character rest
+        /// Makes the character stop resting
         /// </summary>
-        public void StartResting()
+        public static void Stand(FFACE fface)
         {
-            /*Fixed bug that caused program to stop attacking
-             * Changed while to if
-             */
-            if (!_fface.Player.Status.Equals(Status.Healing)) 
-            { 
-                _fface.Windower.SendString(Constants.RESTING_ON);
+            if (fface.Player.Status.Equals(Status.Healing))
+            {
+                fface.Windower.SendString(Constants.RESTING_OFF);
                 System.Threading.Thread.Sleep(50);
             }
         }

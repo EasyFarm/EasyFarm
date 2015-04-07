@@ -574,6 +574,9 @@
   <a id="894" index="253" prefix="/jobability" english="Relinquish" japanese="リリンク" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="895" index="242" prefix="/jobability" english="Vivacious Pulse" japanese="ビベイシャス" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="896" index="229" prefix="/jobability" english="Contradance" japanese="コントラダンス" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="897" index="108" prefix="/jobability" english="Apogee" japanese="アポジー" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="898" index="93" prefix="/jobability" english="Entrust" japanese="エントラスト" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="899" index="94" prefix="/jobability" english="Bestial Loyalty" japanese="しょうしゅう" type="JobAbility" element="None" targets="Self" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1024" index="174" prefix="/pet" english="Healing Ruby" japanese="ルビーの癒し" type="BloodPactWard" element="None" targets="Self, Party" skill="Ability" mpcost="6" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1025" index="173" prefix="/pet" english="Poison Nails" japanese="ポイズンネイル" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="11" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1026" index="174" prefix="/pet" english="Shining Ruby" japanese="ルビーの輝き" type="BloodPactWard" element="None" targets="Self" skill="Ability" mpcost="44" tpcost="0" casttime="0" recast="0" duration="180" alias="" />
@@ -610,6 +613,7 @@
   <a id="1063" index="173" prefix="/pet" english="Meteor Strike" japanese="メテオストライク" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="182" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1064" index="173" prefix="/pet" english="Inferno" japanese="インフェルノ" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1065" index="174" prefix="/pet" english="Inferno Howl" japanese="灼熱の咆哮" type="BloodPactWard" element="None" targets="Self" skill="Ability" mpcost="72" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1066" index="173" prefix="/pet" english="Conflag Strike" japanese="コンフラグストライク" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="141" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1072" index="173" prefix="/pet" english="Rock Throw" japanese="ロックスロー" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="10" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1073" index="173" prefix="/pet" english="Stone II" japanese="ストーンII" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="24" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1074" index="173" prefix="/pet" english="Rock Buster" japanese="ロックバスター" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="39" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
@@ -620,6 +624,7 @@
   <a id="1079" index="173" prefix="/pet" english="Geocrush" japanese="ジオクラッシュ" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="182" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1080" index="173" prefix="/pet" english="Earthen Fury" japanese="アースフューリー" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1081" index="174" prefix="/pet" english="Earthen Armor" japanese="大地の鎧" type="BloodPactWard" element="None" targets="Self" skill="Ability" mpcost="156" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1082" index="173" prefix="/pet" english="Crag Throw" japanese="クラッグスロー" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="124" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1088" index="173" prefix="/pet" english="Barracuda Dive" japanese="バラクーダダイブ" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="8" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1089" index="173" prefix="/pet" english="Water II" japanese="ウォータII" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="24" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1090" index="173" prefix="/pet" english="Tail Whip" japanese="テールウィップ" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="49" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
@@ -630,6 +635,7 @@
   <a id="1095" index="173" prefix="/pet" english="Grand Fall" japanese="グランドフォール" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="182" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1096" index="173" prefix="/pet" english="Tidal Wave" japanese="タイダルウェイブ" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1097" index="174" prefix="/pet" english="Tidal Roar" japanese="タイダルロア" type="BloodPactWard" element="None" targets="Enemy" skill="Ability" mpcost="138" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1098" index="174" prefix="/pet" english="Soothing Current" japanese="スージングカレント" type="BloodPactWard" element="None" targets="Self" skill="Ability" mpcost="95" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1104" index="173" prefix="/pet" english="Claw" japanese="クロー" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="7" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1105" index="173" prefix="/pet" english="Aero II" japanese="エアロII" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="24" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1106" index="174" prefix="/pet" english="Whispering Wind" japanese="風の囁き" type="BloodPactWard" element="None" targets="Self" skill="Ability" mpcost="119" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
@@ -640,6 +646,7 @@
   <a id="1111" index="173" prefix="/pet" english="Wind Blade" japanese="ウインドブレード" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="182" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1112" index="173" prefix="/pet" english="Aerial Blast" japanese="エリアルブラスト" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1113" index="174" prefix="/pet" english="Fleet Wind" japanese="真空の具足" type="BloodPactWard" element="None" targets="Self" skill="Ability" mpcost="114" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1114" index="174" prefix="/pet" english="Hastega II" japanese="ヘイスガII" type="BloodPactWard" element="None" targets="Self" skill="Ability" mpcost="248" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1120" index="173" prefix="/pet" english="Axe Kick" japanese="アクスキック" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="10" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1121" index="173" prefix="/pet" english="Blizzard II" japanese="ブリザドII" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="24" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1122" index="174" prefix="/pet" english="Frost Armor" japanese="凍てつく鎧" type="BloodPactWard" element="None" targets="Self" skill="Ability" mpcost="63" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
@@ -650,6 +657,7 @@
   <a id="1127" index="173" prefix="/pet" english="Heavenly Strike" japanese="ヘヴンリーストライク" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="182" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1128" index="173" prefix="/pet" english="Diamond Dust" japanese="ダイヤモンドダスト" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1129" index="174" prefix="/pet" english="Diamond Storm" japanese="ダイヤモンドストーム" type="BloodPactWard" element="None" targets="Enemy" skill="Ability" mpcost="138" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1130" index="174" prefix="/pet" english="Crystal Blessing" japanese="クリスタルブレシング" type="BloodPactWard" element="None" targets="Self" skill="Ability" mpcost="201" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1136" index="173" prefix="/pet" english="Shock Strike" japanese="ショックストライク" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="6" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1137" index="173" prefix="/pet" english="Thunder II" japanese="サンダーII" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="24" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1138" index="174" prefix="/pet" english="Rolling Thunder" japanese="雷鼓" type="BloodPactWard" element="None" targets="Self" skill="Ability" mpcost="52" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
@@ -660,6 +668,7 @@
   <a id="1143" index="173" prefix="/pet" english="Thunderstorm" japanese="サンダーストーム" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="182" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1144" index="173" prefix="/pet" english="Judgment Bolt" japanese="ジャッジボルト" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1145" index="174" prefix="/pet" english="Shock Squall" japanese="スタンガ" type="BloodPactWard" element="None" targets="Enemy" skill="Ability" mpcost="67" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1146" index="173" prefix="/pet" english="Volt Strike" japanese="ボルトストライク" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="229" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1151" index="0" prefix="/pet" english="Healing Breath IV" japanese="ヒールブレスIV" type="BloodPactRage" element="None" targets="Self, Party" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1152" index="0" prefix="/pet" english="Healing Breath" japanese="ヒールブレス" type="BloodPactRage" element="None" targets="Self, Party" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1153" index="0" prefix="/pet" english="Healing Breath II" japanese="ヒールブレスII" type="BloodPactRage" element="None" targets="Self, Party" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
@@ -687,8 +696,8 @@
   <a id="1176" index="173" prefix="/pet" english="Ruinous Omen" japanese="ルイナスオーメン" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1177" index="173" prefix="/pet" english="Night Terror" japanese="ナイトテラー" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="177" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1178" index="174" prefix="/pet" english="Pavor Nocturnus" japanese="パボルノクターナス" type="BloodPactWard" element="None" targets="Enemy" skill="Ability" mpcost="246" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
-  <a id="1180" index="0" prefix="/pet" english="Atomos (Temp)" japanese="アトモス(仮)" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
-  <a id="1181" index="0" prefix="/pet" english="Atomos (Temp)" japanese="アトモス(仮)" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1180" index="0" prefix="/pet" english="Deconstruction" japanese="ディコンストラクション" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1181" index="0" prefix="/pet" english="Chronoshift" japanese="クロノシフト" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1182" index="0" prefix="/pet" english="Zantetsuken" japanese="斬鉄剣" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1183" index="0" prefix="/pet" english="Perfect Defense" japanese="絶対防御" type="BloodPactRage" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1184" index="102" prefix="/pet" english="Foot Kick" japanese="フットキック" type="Monster" element="None" targets="Self" skill="Ability" mpcost="1" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
@@ -785,6 +794,12 @@
   <a id="1277" index="102" prefix="/pet" english="Sweeping Gouge" japanese="スイープガウジ" type="Monster" element="None" targets="Self" skill="Ability" mpcost="1" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1278" index="102" prefix="/pet" english="Zealous Snort" japanese="ゼラススノート" type="Monster" element="None" targets="Self" skill="Ability" mpcost="3" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1279" index="102" prefix="/pet" english="Pentapeck" japanese="ペンタペック" type="Monster" element="None" targets="Self" skill="Ability" mpcost="3" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1280" index="102" prefix="/pet" english="Tickling Tendrils" japanese="ティックルテンドリル" type="Monster" element="None" targets="Self" skill="Ability" mpcost="1" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1281" index="102" prefix="/pet" english="Stink Bomb" japanese="スティンクボム" type="Monster" element="None" targets="Self" skill="Ability" mpcost="2" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1282" index="102" prefix="/pet" english="Nectarous Deluge" japanese="ネクターデルージュ" type="Monster" element="None" targets="Self" skill="Ability" mpcost="2" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1283" index="102" prefix="/pet" english="Nepenthic Plunge" japanese="ネペンシックプランジ" type="Monster" element="None" targets="Self" skill="Ability" mpcost="3" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1284" index="102" prefix="/pet" english="Somersault " japanese="サマーソルト" type="Monster" element="None" targets="Self" skill="Ability" mpcost="1" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1285" index="174" prefix="/pet" english="Pacifying Ruby" japanese="ルビーの贖罪" type="BloodPactWard" element="None" targets="Self, Party" skill="Ability" mpcost="83" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1537" index="0" prefix="/echo" english="Accuracy Bonus" japanese="物理命中率アップ" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1538" index="0" prefix="/echo" english="Evasion Bonus" japanese="物理回避率アップ" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1539" index="0" prefix="/echo" english="Attack Bonus" japanese="物理攻撃力アップ" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
@@ -894,6 +909,8 @@
   <a id="1656" index="0" prefix="/echo" english="Primeval Zeal" japanese="プライムジール" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1657" index="0" prefix="/echo" english="Inspiration" japanese="インスパイア" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1658" index="0" prefix="/echo" english="Sleight of Sword" japanese="スライトソード" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1659" index="0" prefix="/echo" english="Daken" japanese="打剣" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1660" index="0" prefix="/echo" english="Superior" japanese="スペリア" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1793" index="900" prefix="/monsterskill" english="Foot Kick" japanese="フットキック" type="MonsterSkill" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="232" casttime="0" recast="0" duration="0" alias="" />
   <a id="1794" index="900" prefix="/monsterskill" english="Dust Cloud" japanese="土煙" type="MonsterSkill" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="32" casttime="0" recast="0" duration="0" alias="" />
   <a id="1795" index="900" prefix="/monsterskill" english="Whirl Claws" japanese="爪旋風脚" type="MonsterSkill" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="8" casttime="0" recast="0" duration="0" alias="" />

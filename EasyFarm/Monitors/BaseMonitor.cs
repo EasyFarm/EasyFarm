@@ -34,13 +34,13 @@ namespace EasyFarm.FarmingTool
         public event StatusChanged Changed;
 
         protected Timer m_timer = new Timer();
-        protected Object m_lock = new Object();
-        protected FFACE m_fface;
+        protected Object _lock = new Object();
+        protected FFACE _fface;
 
         protected BaseMonitor(FFACE fface)
             : this()
         {
-            this.m_fface = fface;
+            this._fface = fface;
         }
 
         protected BaseMonitor()

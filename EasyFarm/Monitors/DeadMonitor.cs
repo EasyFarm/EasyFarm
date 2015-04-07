@@ -32,11 +32,11 @@ namespace EasyFarm.FarmingTool
 
         protected override void CheckStatus(object sender, System.Timers.ElapsedEventArgs e)
         {
-            lock (m_lock)
+            lock (_lock)
             {
-                if (m_fface.Player.Status.Equals(Status.Dead1 | Status.Dead2))
+                if (_fface.Player.Status.Equals(Status.Dead1 | Status.Dead2))
                 {
-                    OnChanged(new MonitorArgs<Status>(m_fface.Player.Status));
+                    OnChanged(new MonitorArgs<Status>(_fface.Player.Status));
                 }
             }
         }

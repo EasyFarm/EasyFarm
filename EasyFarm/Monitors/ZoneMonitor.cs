@@ -30,11 +30,11 @@ namespace EasyFarm.FarmingTool
 
         protected override void CheckStatus(object sender, ElapsedEventArgs e)
         {
-            lock (m_lock)
+            lock (_lock)
             {
-                Zone zone = m_fface.Player.Zone;
+                Zone zone = _fface.Player.Zone;
 
-                if (m_zone != zone || m_fface.Player.Stats.Str == 0)
+                if (m_zone != zone || _fface.Player.Stats.Str == 0)
                 {
                     OnChanged(new MonitorArgs<Zone>(zone));
                     m_zone = zone;

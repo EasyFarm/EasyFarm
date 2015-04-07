@@ -31,19 +31,14 @@ namespace EasyFarm.Components
     {
         private int _position = 0;
         private FFACE _fface;
-        private RestingService _resting;
-        private CombatService _combat;
         private UnitService _units;
 
         public TravelComponent(FFACE fface)
         {
             _fface = fface;
-            _resting = new RestingService(fface);
-            _combat = new CombatService(fface);
 
             // Create unit object for parsing of npc array. 
             _units = new UnitService(fface);
-            _units.UnitFilter = UnitFilters.MobFilter(fface);
         }
 
         public override bool CheckComponent()

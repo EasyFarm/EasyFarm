@@ -34,11 +34,13 @@ namespace EasyFarm.Components
     /// </summary>
     public class EndComponent : BaseComponent
     {
-        public Executor Executor { get; set; }
+        private FFACE _fface;
 
-        public UnitService Units { get; set; }
+        private Executor _executor;
 
-        private DateTime lastCheckedForMob = DateTime.Now;
+        private UnitService _units;
+
+        private DateTime _lastTargetCheck = DateTime.Now;
 
         public Unit Target
         {
@@ -49,11 +51,9 @@ namespace EasyFarm.Components
         public EndComponent(FFACE fface)
             : base(fface)
         {
-            this.Executor = new Executor(fface);
-            this.Units = new UnitService(fface);
-
-            // Set default filter to target mobs. 
-            this.Units.UnitFilter = UnitFilters.MobFilter(fface);
+            _fface = fface;
+            _executor = new Executor(fface);
+            _units = new UnitService(fface);            
         }
 
         public override bool CheckComponent()
@@ -63,7 +63,7 @@ namespace EasyFarm.Components
 
             // Creature is unkillable and does not meets the 
             // user's criteria for valid mobs defined in MobFilters. 
-            return !Units.IsValid(Target);
+            return !UnitFilters.MobFilter(_fface, Target);
         }
 
         public override void RunComponent()
@@ -72,12 +72,12 @@ namespace EasyFarm.Components
             var Usable = Config.Instance.BattleLists["End"].Actions
                 .Where(x => ActionFilters.BuffingFilter(FFACE, x));
 
-            Executor.UseBuffingActions(Usable);
+            _executor.UseBuffingActions(Usable);
 
-            if (lastCheckedForMob.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
+            if (_lastTargetCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
             {
                 // First get the first mob by distance. 
-                var mobs = Units.MOBArray.Where(x => Units.IsValid(x))
+                var mobs = _units.MOBArray.Where(x => UnitFilters.MobFilter(_fface, x))
                     .OrderByDescending(x => x.PartyClaim)
                     .ThenByDescending(x => x.HasAggroed)
                     .ThenBy(x => x.Distance)
@@ -87,7 +87,7 @@ namespace EasyFarm.Components
                 // new target. 
                 AttackContainer.TargetUnit = mobs.FirstOrDefault();
 
-                lastCheckedForMob = DateTime.Now;
+                _lastTargetCheck = DateTime.Now;
             }
 
             if (Target != null)

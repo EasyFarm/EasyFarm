@@ -24,35 +24,43 @@ using System.Collections.Generic;
 
 namespace EasyFarm.Classes
 {
+    /// <summary>
+    /// Retrieves the zone's unit data. 
+    /// </summary>
     public class UnitService
     {
         #region Members
-        private static Unit[] _unitArray;
+        /// <summary>
+        /// The zone's unit array. 
+        /// </summary>
+        private static IEnumerable<Unit> _units;
+
+        /// <summary>
+        /// The unit array's max size: 0 - 2048
+        /// </summary>
         private const short UNIT_ARRAY_MAX = Constants.UNIT_ARRAY_MAX;
+
+        /// <summary>
+        /// The mob array's max size: 0 - 768.
+        /// </summary>
         private const short MOB_ARRAY_MAX = Constants.MOB_ARRAY_MAX;
+
+        /// <summary>
+        /// The player's environmental data. 
+        /// </summary>
         private static FFACE _fface;
         #endregion
 
-        public UnitService(FFACE session)
+        public UnitService(FFACE fface)
         {
-            _fface = session;
-            Unit.Session = _fface;
-            _unitArray = new Unit[UNIT_ARRAY_MAX];
+            _fface = fface;
 
-            // Create units
-            for (int id = 0; id < UNIT_ARRAY_MAX; id++)
-            {
-                _unitArray[id] = Unit.CreateUnit(id);
-            }
+            // Create the UnitArray
+            _units = Enumerable.Range(0, UNIT_ARRAY_MAX)
+                .Select(x => new Unit(_fface, x));
         }
 
         #region Properties
-
-        /// <summary>
-        /// Used to filter units based on what the user thinks is valid. 
-        /// Sets an optional filter to be used. 
-        /// </summary>
-        public Func<Unit, bool> UnitFilter { get; set; }
 
         /// <summary>
         /// Does there exist a mob that has aggroed in general.
@@ -61,7 +69,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                foreach (var monster in MOBArray.Where(x => IsValid(x)))
+                foreach (var monster in MOBArray)
                 {
                     if (monster.HasAggroed)
                     {
@@ -80,7 +88,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                foreach (var monster in FilteredArray)
+                foreach (var monster in MOBArray)
                 {
                     if (monster.IsClaimed)
                     {
@@ -92,24 +100,13 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Returns the list of filter units.
-        /// </summary>
-        public IEnumerable<Unit> FilteredArray
-        {
-            get
-            {
-                return _unitArray.Where(x => IsValid(x));
-            }
-        }
-
-        /// <summary>
         /// Retrieves the list of UNITs
         /// </summary>
         public IEnumerable<Unit> UnitArray
         {
             get
             {
-                return _unitArray;
+                return _units;
             }
         }
 
@@ -118,7 +115,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public IEnumerable<Unit> MOBArray
         {
-            get 
+            get
             {
                 return UnitArray.Take(MOB_ARRAY_MAX)
                     .Where(x => x.NPCType.Equals(NPCType.Mob));
@@ -130,7 +127,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public IEnumerable<Unit> PCArray
         {
-            get 
+            get
             {
                 return UnitArray.Skip(MOB_ARRAY_MAX)
                     .Where(x => x.NPCType.Equals(NPCType.PC));
@@ -138,73 +135,5 @@ namespace EasyFarm.Classes
         }
 
         #endregion
-
-        /// <summary>
-        /// Applies set filter to the unit array and 
-        /// returns matches. 
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public bool IsValid(Unit unit)
-        {
-            if (unit == null) throw new ArgumentNullException("unit");
-            return UnitFilter(unit);
-        }
-
-        /// <summary>
-        /// Returns matched units that meet the filters requirements. 
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        public IEnumerable<Unit> GetUnits(Func<Unit, bool> filter)
-        {
-            if (filter == null) throw new ArgumentNullException("filter");
-            return UnitArray.Where(filter);
-        }
-
-        /// <summary>
-        /// Returns matched units that meet the filters requirements 
-        /// and then orders by the passed function.
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="orderby"></param>
-        /// <returns></returns>
-        public IEnumerable<Unit> GetUnits(Func<Unit, bool> filter, Func<Unit, object> orderby)
-        {
-            if (filter == null) throw new ArgumentNullException("filter");
-            if (orderby == null) throw new ArgumentNullException("orderby");
-            return UnitArray.Where(filter).OrderBy(orderby);
-        }
-
-        /// <summary>
-        /// Returns a single unit matching the filter. 
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        public Unit GetTarget(Func<Unit, bool> filter)
-        {
-            if (filter == null) throw new ArgumentNullException("filter");
-            return GetUnits(filter).FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Matches mobs against the "filter" and then orders them "orderby" 
-        /// and returns the first match.
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="orderby"></param>
-        /// <returns></returns>
-        public Unit GetTarget(Func<Unit, bool> filter, Func<Unit, object> orderby)
-        {
-            if (filter == null) throw new ArgumentNullException("filter");
-            if (orderby == null) throw new ArgumentNullException("orderby");
-            return GetUnits(filter).OrderBy(orderby).FirstOrDefault();
-        }
-
-        // The default mob filter used in filtering the mobs. 
-        public virtual Func<Unit, bool> DefaultFilter(FFACE fface)
-        {
-            throw new NotImplementedException("You need to override DefaultFilter with an implementation.");
-        }
     }
 }

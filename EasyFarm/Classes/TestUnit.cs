@@ -21,7 +21,7 @@ using FFACETools;
 
 namespace EasyFarm.Classes
 {
-    public class TestUnit : IUnit
+    public class TestUnit
     {
         public int ID { get; set; }
 

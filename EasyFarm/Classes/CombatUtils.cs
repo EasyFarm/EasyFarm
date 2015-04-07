@@ -1,4 +1,4 @@
-﻿
+
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -17,42 +17,37 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using FFACETools;
-using System.Timers;
+﻿using System.Collections.Generic;
 using System.Linq;
+using FFACETools;
+using System;
+using System.Threading;
 
-namespace EasyFarm.FarmingTool
+namespace EasyFarm.Classes
 {
-    public class PlayerMonitor : BaseMonitor
+    public class CombatUtils
     {
-        private UnitService _units;
-        private bool _detected = false;
-
-        public PlayerMonitor(FFACE fface)
-            : base(fface)
+        /// <summary>
+        /// Switches the player to attack mode on the current unit
+        /// </summary>
+        /// <param name="unit"></param>
+        public static void Engage(FFACE fface)
         {
-            this._units = new UnitService(fface);
-        }
-
-        protected override void CheckStatus(object sender, ElapsedEventArgs e)
-        {
-            lock (_lock)
+            if (!fface.Player.Status.Equals(Status.Fighting))
             {
-                bool detected = _units.PCArray
-                    .Any(x => UnitFilters.PCFilter(_fface, x));
-
-                if (_detected != detected)
-                {
-                    OnChanged(new MonitorArgs<bool>(detected));
-                    _detected = detected;
-                }
+                fface.Windower.SendString(Constants.ATTACK_TARGET);
             }
         }
 
-        public bool Detected
+        /// <summary>
+        /// Stop the character from fight the target
+        /// </summary>
+        public static void Disengage(FFACE fface)
         {
-            get { return this._detected; }
+            if (fface.Player.Status.Equals(Status.Fighting))
+            {
+                fface.Windower.SendString(Constants.ATTACK_OFF);
+            }
         }
     }
 }

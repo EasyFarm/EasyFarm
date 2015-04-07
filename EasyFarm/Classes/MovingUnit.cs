@@ -45,8 +45,8 @@ namespace EasyFarm.Classes
 
         public bool IsVelocityEnabled { get; set; }
 
-        public MovingUnit(int id)
-            : base(id)
+        public MovingUnit(FFACE fface, int id)
+            : base(fface, id)
         {
             this._mutex = new object();
             this._timer = new Timer();
@@ -55,8 +55,6 @@ namespace EasyFarm.Classes
             this._timer.Elapsed += TimerTick;
             this._timer.Start();
         }
-
-        public MovingUnit(Unit unit) : this(unit.ID) { }
 
         /// <summary>
         /// Updates our history of player positions, velocities and 
