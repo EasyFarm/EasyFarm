@@ -210,7 +210,6 @@
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\AppInformer.cs" />
-    <Compile Include="Classes\GameSession.cs" />
     <Compile Include="Classes\MovementUtils.cs" />
     <Compile Include="Classes\Targeting.cs" />
     <Compile Include="Views\ProcessSelectionViewModel.cs" />
