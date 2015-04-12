@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
 using Microsoft.Practices.Prism.Commands;
 using System.Windows.Input;
 
@@ -94,39 +93,4 @@ namespace EasyFarm.ViewModels
             }
         }
     }
-}
-
-namespace EasyFarm.UserSettings
-{
-    /// <summary>
-    /// Misc Settings
-    /// </summary>
-    public partial class Config
-    {
-        /// <summary>
-        /// How far a player should detect a creature. 
-        /// </summary>
-        public double DetectionDistance = Constants.DETECTION_DISTANCE;
-
-        /// <summary>
-        /// How high or low a player should detect a creature. 
-        /// </summary>
-        public double HeightThreshold = Constants.HEIGHT_THRESHOLD;
-
-        /// <summary>
-        /// How close the player should be when attacking a creature. 
-        /// </summary>
-        public double MeleeDistance = Constants.MELEE_DISTANCE;
-
-        /// <summary>
-        /// How far to go of the path for a unit. 
-        /// </summary>
-        public double WanderDistance = Constants.DETECTION_DISTANCE;
-
-        /// <summary>
-        /// Cast delay before casting next spell 
-        /// (stops cannot use ability spam)
-        /// </summary>
-        public int GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
-    }    
 }

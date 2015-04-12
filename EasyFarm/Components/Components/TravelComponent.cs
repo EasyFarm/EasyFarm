@@ -18,8 +18,6 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 ﻿using EasyFarm.Classes;
-using EasyFarm.UserSettings;
-using EasyFarm.ViewModels;
 using FFACETools;
 using System;
 using System.Collections.ObjectModel;

@@ -337,6 +337,7 @@
     <Compile Include="Classes\Serialization.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\UnitService.cs" />
+    <Compile Include="Views\TreeItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

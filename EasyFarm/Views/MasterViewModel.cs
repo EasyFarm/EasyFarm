@@ -17,23 +17,16 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System.Windows;
+using EasyFarm.Classes;
+using EasyFarm.Logging;
+using EasyFarm.Views;
 using Microsoft.Practices.Prism.Commands;
 using System;
-using System.Windows.Input;
-using System.Linq;
-using EasyFarm.UserSettings;
-using System.Collections.ObjectModel;
-using EasyFarm.Logging;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.ServiceLocation;
-using EasyFarm.Views;
-using System.Xml.Serialization;
-using Microsoft.Win32;
-using EasyFarm.Classes;
-using NotifyIcon = System.Windows.Forms.NotifyIcon;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using System.Windows;
+using System.Windows.Input;
+using NotifyIcon = System.Windows.Forms.NotifyIcon;
 
 namespace EasyFarm.ViewModels
 {
@@ -306,23 +299,5 @@ namespace EasyFarm.ViewModels
                 MasterView.View.ShowInTaskbar = false;
             }
         }
-    }
-}
-
-namespace EasyFarm.UserSettings
-{
-    public partial class Config
-    {
-        /// <summary>
-        /// The text dislayed at the bottom of the screen
-        /// </summary>
-        [XmlIgnore]
-        public String StatusBarText;
-
-        /// <summary>
-        /// The window's name: player's name. 
-        /// </summary>
-        [XmlIgnore]
-        public string MainWindowTitle;
     }
 }

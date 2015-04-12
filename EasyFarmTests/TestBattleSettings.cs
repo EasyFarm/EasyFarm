@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using EasyFarm.UserSettings;
+using EasyFarm.Classes;
 using EasyFarm.Views.Settings;
 
 namespace EasyFarmTests

@@ -275,10 +275,19 @@ namespace EasyFarm.Classes
         /// Create our command binds and initialize our user's
         /// move usage conditions. 
         /// </summary>
-        public BattleAbility()
+        public BattleAbility() : this(new Ability())
         {
             AutoFillCommand = new DelegateCommand(AutoFill);
-            _ability = new Ability();
+        }
+
+        /// <summary>
+        /// Create a storing a reference to the given ability. 
+        /// </summary>
+        /// <param name="ability"></param>
+        public BattleAbility(Ability ability)
+        {
+            this.Ability = ability;
+            this.Name = ability.English;
         }
 
         /// <summary>

@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 ﻿
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -49,6 +48,10 @@ namespace EasyFarm.Components
             this._units = new UnitService(fface);
         }
 
+        /// <summary>
+        /// Determines if we should rest up our health or magic. 
+        /// </summary>
+        /// <returns></returns>
         public override bool CheckComponent()
         {
             // Check for aggro if possible; this check helps with program performance by limiting
@@ -67,12 +70,13 @@ namespace EasyFarm.Components
             if (_fface.Player.Status == Status.Fighting) return false;
 
             // Check if we should rest for health.
-            if (Config.Instance.ShouldRestForHealth(
+
+            if (ShouldRestForHealth(
                 _fface.Player.HPPCurrent,
                 _fface.Player.Status)) return true;
 
             // Check if we should rest for magic. 
-            if (Config.Instance.ShouldRestForMagic(
+            if (ShouldRestForMagic(
                 _fface.Player.MPPCurrent,
                 _fface.Player.Status)) return true;
 
@@ -80,6 +84,9 @@ namespace EasyFarm.Components
             return false;
         }
 
+        /// <summary>
+        /// Begin resting our health and magic. 
+        /// </summary>
         public override void RunComponent()
         {
             RestingUtils.Rest(_fface);
@@ -107,6 +114,69 @@ namespace EasyFarm.Components
 
                 return RestBlockingDebuffs.Intersect(_fface.Player.StatusEffects).Count() != 0;
             }
+        }
+
+        /// <summary>
+        /// Tells us when we should rest mp. 
+        /// </summary>
+        /// <param name="magic"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public bool ShouldRestForMagic(int magic, Status status)
+        {
+            return (Config.Instance.IsMagicEnabled && (IsMagicLow(magic) || !IsMagicHigh(magic) && status == Status.Healing));
+        }
+
+        /// <summary>
+        /// Given a value, is our mp low?
+        /// </summary>
+        /// <param name="magic"></param>
+        /// <returns></returns>
+        public bool IsMagicLow(int magic)
+        {
+            return magic <= Config.Instance.LowMagic;
+        }
+
+        /// <summary>
+        /// Given a value, is our mp high?
+        /// </summary>
+        /// <param name="magic"></param>
+        /// <returns></returns>
+        public bool IsMagicHigh(int magic)
+        {
+            return magic >= Config.Instance.HighMagic;
+        }
+
+        /// <summary>
+        /// Should we rest up our magic?
+        /// </summary>
+        /// <param name="health"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public bool ShouldRestForHealth(int health, Status status)
+        {
+            // Rest while low and while not high
+            return (Config.Instance.IsHealthEnabled && (IsHealthLow(health) || !IsHealthHigh(health) && status == Status.Healing));
+        }
+
+        /// <summary>
+        /// Given a value, is our health low?
+        /// </summary>
+        /// <param name="health"></param>
+        /// <returns></returns>
+        public bool IsHealthLow(int health)
+        {
+            return health <= Config.Instance.LowHealth;
+        }
+
+        /// <summary>
+        /// Given a value, is our health high?
+        /// </summary>
+        /// <param name="health"></param>
+        /// <returns></returns>
+        public bool IsHealthHigh(int health)
+        {
+            return health >= Config.Instance.HighHealth;
         }
     }
 }

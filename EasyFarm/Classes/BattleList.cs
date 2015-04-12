@@ -34,8 +34,8 @@ namespace EasyFarm.Classes
         public BattleList(string name)
         {
             _name = name;
-            _actions = new ObservableCollection<BattleAbility>();
-            _actions.Add(new BattleAbility() { Name = "Default" });
+            _value = new ObservableCollection<BattleAbility>();
+            _value.Add(new BattleAbility() { Name = "Default" });
         }
 
         private string _name;
@@ -46,12 +46,12 @@ namespace EasyFarm.Classes
             set { SetProperty(ref _name, value); }
         }
 
-        private ObservableCollection<BattleAbility> _actions;
+        private ObservableCollection<BattleAbility> _value;
 
         public ObservableCollection<BattleAbility> Actions
         {
-            get { return _actions; }
-            set { SetProperty(ref _actions, value); }
+            get { return _value; }
+            set { SetProperty(ref _value, value); }
         }
     }
 }

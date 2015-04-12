@@ -18,13 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyFarmTests
 {
@@ -52,7 +46,6 @@ namespace EasyFarmTests
         public void TestConfigPersistence()
         {
             var conf = new Config();
-            conf.DebugEnabled = true;
             conf.PartyFilter = false;
             Serialization.Serialize("test.xml", conf);
             conf = Serialization.Deserialize<Config>("test.xml");

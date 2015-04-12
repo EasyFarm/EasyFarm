@@ -18,14 +18,10 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
 using FFACETools;
 using Microsoft.Practices.Prism.Commands;
-using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -203,16 +199,5 @@ namespace EasyFarm.ViewModels
                 _lastPosition = playerPosition;
             }
         }
-    }
-}
-
-namespace EasyFarm.UserSettings
-{
-    public partial class Config
-    {
-        /// <summary>
-        /// List of all waypoints that make up the bots path
-        /// </summary>
-        public ObservableCollection<Waypoint> Waypoints;
     }
 }

@@ -34,9 +34,12 @@ namespace EasyFarm.Classes
         /// <summary>
         /// Contains all the battle lists. 
         /// </summary>
-        public ObservableCollection<BattleList> Lists = new ObservableCollection<BattleList>();
+        public ObservableCollection<BattleList> Lists;
 
-        public BattleLists() { }
+        public BattleLists() 
+        {
+            Lists = new ObservableCollection<BattleList>();            
+        }
 
         public IEnumerable<BattleAbility> Actions
         {

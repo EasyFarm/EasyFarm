@@ -53,6 +53,6 @@ namespace EasyFarm.Classes
                 fface.Windower.SendString(Constants.RESTING_OFF);
                 System.Threading.Thread.Sleep(50);
             }
-        }
+        }        
     }
 }

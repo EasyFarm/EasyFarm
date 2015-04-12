@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.Classes;
 using EasyFarm.ViewModels;
 using FFACETools;
 using Microsoft.Practices.Prism.Mvvm;
@@ -25,7 +24,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 
-namespace EasyFarm.UserSettings
+namespace EasyFarm.Classes
 {
     /// <summary>
     /// A configuration file for the user to edit through his GUI.
@@ -34,9 +33,133 @@ namespace EasyFarm.UserSettings
     public partial class Config : BindableBase
     {
         /// <summary>
-        /// Whether we are debugging this class. 
+        /// Contains all the lists that contain the moves used by 
+        /// our player. 
         /// </summary>
-        public bool DebugEnabled { get; set; }
+        public BattleLists BattleLists = new BattleLists();
+
+        /// <summary>
+        /// Should we engage our target when in battle.
+        /// </summary>
+        public bool IsEngageEnabled = true;
+
+        /// <summary>
+        /// Should we move to the target once pulled. 
+        /// </summary>
+        public bool IsApproachEnabled = true;
+
+        /// <summary>
+        /// Name of the mob to be ignored
+        /// </summary>
+        public string IgnoredName = String.Empty;
+
+        /// <summary>
+        /// A list of mobs that we should ignore.
+        /// </summary>
+        public ObservableCollection<String> IgnoredMobs = new ObservableCollection<string>();
+
+        /// <summary>
+        /// Whether mp resting is enabled. 
+        /// </summary>
+        public bool IsMagicEnabled = false;
+
+        /// <summary>
+        /// The upper value to stand up from mp resting. 
+        /// </summary>
+        public int HighMagic = 100;
+
+        /// <summary>
+        /// The lower value to sit down and rest mp. 
+        /// </summary>
+        public int LowMagic = 50;        
+
+        /// <summary>
+        /// Whether health resting is enabled. 
+        /// </summary>
+        public bool IsHealthEnabled = false;
+
+        /// <summary>
+        /// The high value to stand up from resting health. 
+        /// </summary>
+        public int HighHealth = 100;
+
+        /// <summary>
+        /// The low value to start resting for health. 
+        /// </summary>
+        public int LowHealth = 50;        
+
+        /// <summary>
+        /// List of all waypoints that make up the bots path
+        /// </summary>
+        public ObservableCollection<Waypoint> Waypoints;
+
+        /// <summary>
+        /// How far a player should detect a creature. 
+        /// </summary>
+        public double DetectionDistance = Constants.DETECTION_DISTANCE;
+
+        /// <summary>
+        /// How high or low a player should detect a creature. 
+        /// </summary>
+        public double HeightThreshold = Constants.HEIGHT_THRESHOLD;
+
+        /// <summary>
+        /// How close the player should be when attacking a creature. 
+        /// </summary>
+        public double MeleeDistance = Constants.MELEE_DISTANCE;
+
+        /// <summary>
+        /// How far to go of the path for a unit. 
+        /// </summary>
+        public double WanderDistance = Constants.DETECTION_DISTANCE;
+
+        /// <summary>
+        /// Cast delay before casting next spell 
+        /// (stops cannot use ability spam)
+        /// </summary>
+        public int GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
+
+        /// <summary>
+        /// Name of the mob to be attacked
+        /// </summary>
+        public string TargetName = String.Empty;
+
+        /// <summary>
+        /// Used to filter out aggroed mobs.
+        /// </summary>
+        public bool AggroFilter = true;
+
+        /// <summary>
+        /// Used to filter out party claimed mobs.
+        /// </summary>
+        public bool PartyFilter = true;
+
+        /// <summary>
+        /// Used to filter out unclaimed mobs.
+        /// </summary>
+        public bool UnclaimedFilter = true;
+
+        /// <summary>
+        /// Used to include claimed mobs in the filter. 
+        /// </summary>
+        public bool ClaimedFilter = false;
+
+        /// <summary>
+        /// A list of mobs that we should only kill.
+        /// </summary>
+        public ObservableCollection<String> TargetedMobs = new ObservableCollection<string>();
+
+        /// <summary>
+        /// The text dislayed at the bottom of the screen
+        /// </summary>
+        [XmlIgnore]
+        public String StatusBarText;
+
+        /// <summary>
+        /// The window's name: player's name. 
+        /// </summary>
+        [XmlIgnore]
+        public string MainWindowTitle;
 
         [XmlIgnore]
         private static Lazy<Config> lazy = new Lazy<Config>(() => new Config());
@@ -47,7 +170,7 @@ namespace EasyFarm.UserSettings
         /// </summary>
         public Config()
         {
-            this.MainWindowTitle = "Default";
+            this.MainWindowTitle = "EasyFarm";
             this.StatusBarText = String.Empty;
             this.Waypoints = new ObservableCollection<Waypoint>();
 

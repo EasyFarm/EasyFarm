@@ -18,9 +18,8 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
-using System.Linq;
 using FFACETools;
+using System.Linq;
 
 namespace EasyFarm.Components
 {

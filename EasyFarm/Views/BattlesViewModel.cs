@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
 using Microsoft.Practices.Prism.Commands;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -171,13 +170,5 @@ namespace EasyFarm.ViewModels
                 SelectedList.Actions.Add(action);
             }
         }
-    }
-}
-
-namespace EasyFarm.UserSettings
-{
-    public partial class Config
-    {
-        public BattleLists BattleLists = new BattleLists();
     }
 }

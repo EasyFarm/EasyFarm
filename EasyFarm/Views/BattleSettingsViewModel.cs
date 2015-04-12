@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.UserSettings;
+using EasyFarm.Classes;
 using EasyFarm.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -40,23 +40,4 @@ namespace EasyFarm.Views.Settings
             set { this.SetProperty(ref Config.Instance.IsApproachEnabled, value); }
         }
     }    
-}
-
-namespace EasyFarm.UserSettings
-{
-    /// <summary>
-    /// Battle Settings
-    /// </summary>
-    public partial class Config
-    {
-        /// <summary>
-        /// Should we engage our target when in battle.
-        /// </summary>
-        public bool IsEngageEnabled = true;
-
-        /// <summary>
-        /// Should we move to the target once pulled. 
-        /// </summary>
-        public bool IsApproachEnabled = true;
-    }
 }

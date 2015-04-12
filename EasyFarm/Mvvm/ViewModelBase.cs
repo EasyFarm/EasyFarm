@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Components;
-using EasyFarm.UserSettings;
+using EasyFarm.Classes;
 using FFACETools;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;

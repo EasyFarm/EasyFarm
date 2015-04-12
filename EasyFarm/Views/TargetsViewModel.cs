@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.UserSettings;
+using EasyFarm.Classes;
 using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
@@ -93,58 +93,10 @@ namespace EasyFarm.ViewModels
             set { SetProperty(ref Config.Instance.ClaimedFilter, value); }
         }
 
-        public bool BitCheck
-        {
-            get { return Config.Instance.BitCheck; }
-            set { SetProperty(ref Config.Instance.BitCheck, value); }
-        }
-
         public ICommand AddCommand { get; set; }
 
         public ICommand DeleteCommand { get; set; }
 
         public ICommand ClearCommand { get; set; }
-    }
-}
-
-namespace EasyFarm.UserSettings
-{
-    public partial class Config
-    {
-        /// <summary>
-        /// Name of the mob to be attacked
-        /// </summary>
-        public string TargetName = String.Empty;
-
-        /// <summary>
-        /// Used to filter out aggroed mobs.
-        /// </summary>
-        public bool AggroFilter = true;
-
-        /// <summary>
-        /// Used to filter out party claimed mobs.
-        /// </summary>
-        public bool PartyFilter = true;
-
-        /// <summary>
-        /// Used to filter out unclaimed mobs.
-        /// </summary>
-        public bool UnclaimedFilter = true;
-
-        /// <summary>
-        /// Used to include claimed mobs in the filter. 
-        /// </summary>
-        public bool ClaimedFilter = false;
-
-        /// <summary>
-        /// Used to control whether we should use npc bit checking
-        /// in mob validation. 
-        /// </summary>
-        public bool BitCheck = true;      
-
-        /// <summary>
-        /// A list of mobs that we should only kill.
-        /// </summary>
-        public ObservableCollection<String> TargetedMobs = new ObservableCollection<string>();
     }
 }

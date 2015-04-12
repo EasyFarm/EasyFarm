@@ -24,7 +24,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Linq;
-using EasyFarm.UserSettings;
+using EasyFarm.Classes;
 using EasyFarm.Logging;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using System.Diagnostics.Tracing;

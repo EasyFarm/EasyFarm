@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
 using FFACETools;
 
 namespace EasyFarm.ViewModels
@@ -76,56 +75,6 @@ namespace EasyFarm.ViewModels
         {
             get { return Config.Instance.IsMagicEnabled; }
             set { SetProperty(ref Config.Instance.IsMagicEnabled, value); }
-        }
-    }
-}
-
-namespace EasyFarm.UserSettings
-{
-    // Health data. 
-    public partial class Config
-    {
-        public bool IsHealthEnabled = false;
-        public int HighHealth = 100;
-        public int LowHealth = 50;
-
-        public bool ShouldRestForHealth(int health, Status status)
-        {
-            // Rest while low and while not high
-            return (IsHealthEnabled && (IsHealthLow(health) || !IsHealthHigh(health) && status == Status.Healing));
-        }
-
-        public bool IsHealthLow(int health)
-        {
-            return health <= LowHealth;
-        }
-
-        public bool IsHealthHigh(int health)
-        {
-            return health >= HighHealth;
-        }
-    }
-
-    // Magic Data. 
-    public partial class Config
-    {
-        public bool IsMagicEnabled = false;
-        public int HighMagic = 100;
-        public int LowMagic = 50;
-
-        public bool ShouldRestForMagic(int magic, Status status)
-        {
-            return (IsMagicEnabled && (IsMagicLow(magic) || !IsMagicHigh(magic) && status == Status.Healing));
-        }
-
-        public bool IsMagicLow(int magic)
-        {
-            return magic <= LowMagic;
-        }
-
-        public bool IsMagicHigh(int magic)
-        {
-            return magic >= HighMagic;
         }
     }
 }

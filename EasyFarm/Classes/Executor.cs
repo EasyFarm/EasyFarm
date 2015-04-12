@@ -17,12 +17,10 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.UserSettings;
 using FFACETools;
 using Parsing.Abilities;
 using Parsing.Types;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;

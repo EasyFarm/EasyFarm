@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.UserSettings;
+using EasyFarm.Classes;
 using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
@@ -70,20 +70,4 @@ namespace EasyFarm.ViewModels
 
         public ICommand ClearIgnoredUnitsCommand { get; set; }
     }
-}
-
-namespace EasyFarm.UserSettings
-{
-    public partial class Config
-	{
-        /// <summary>
-        /// Name of the mob to be ignored
-        /// </summary>
-        public string IgnoredName = String.Empty;
-
-        /// <summary>
-        /// A list of mobs that we should ignore.
-        /// </summary>
-        public ObservableCollection<String> IgnoredMobs = new ObservableCollection<string>();
-	}
 }

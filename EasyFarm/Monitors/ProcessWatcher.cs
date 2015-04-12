@@ -85,6 +85,12 @@ namespace EasyFarm.Classes
             m_timer.Interval = 30;
         }
 
+        public ProcessWatcher() :
+            this("")
+        {
+
+        }
+
         protected void CheckProcesses(object sender, ElapsedEventArgs e)
         {
             lock (this.Mutex)
@@ -93,7 +99,10 @@ namespace EasyFarm.Classes
                 // Check for new processes and fire Entry Events
                 ///////////////////////////////////////////////////////////////////
                 // Get the list of all running processes. 
-                var plist = Process.GetProcessesByName(this.ProcessName).ToList();
+
+                var plist = (string.IsNullOrWhiteSpace(ProcessName) ?
+                    Process.GetProcesses() :
+                    Process.GetProcessesByName(this.ProcessName)).ToList();
 
                 // Get a list of processes that are not contained in "Processes".
                 plist = plist.Where(x => !Processes.Any(y => y.Id == x.Id)).ToList();
@@ -131,17 +140,10 @@ namespace EasyFarm.Classes
 
                     Processes.RemoveAll(x => x.HasExited);
                 }
-                catch (Win32Exception ex)
+                catch (Win32Exception)
                 {
-                    // Prevent timer from re-triggering the exception. 
-                    this.m_timer.Dispose();
-
-                    // Handle situation where user has not run the program as an
-                    // administor. 
-                    MessageBox.Show(String.Join(Environment.NewLine,
-                        "This program needs administrator privledges to run. Please re-run EasyFarm as an administrator. ",
-                        "Error: " + ex.Message));
-                    System.Environment.Exit(0);
+                    // Non-Critical Error Trying to retrieve a process; most likely
+                    // a system process we do not have access to. 
                 }
             }
         }

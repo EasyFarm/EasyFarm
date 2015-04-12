@@ -82,6 +82,7 @@
     <Compile Include="TestBattleSettings.cs" />
     <Compile Include="TestMachineComponents.cs" />
     <Compile Include="TestXITools.cs" />
+    <Compile Include="TestTreeView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EasyFarm\EasyFarm.csproj">
