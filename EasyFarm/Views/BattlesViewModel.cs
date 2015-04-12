@@ -38,8 +38,12 @@ namespace EasyFarm.ViewModels
 
         public ObservableCollection<BattleList> BattleLists
         {
-            get { return Config.Instance.BattleLists.Lists; }
-            set { SetProperty(ref Config.Instance.BattleLists.Lists, value); }
+            get { return Config.Instance.BattleLists; }
+            set 
+            { 
+                var lists = (ObservableCollection<BattleList>)Config.Instance.BattleLists;
+                SetProperty(ref lists, value); 
+            }
         }
 
         /// <summary>
@@ -74,7 +78,7 @@ namespace EasyFarm.ViewModels
         /// <returns></returns>
         private BattleList FindListContainingAbility(BattleAbility ability)
         {
-            return Config.Instance.BattleLists.Lists
+            return Config.Instance.BattleLists
                 .Where(x => x.Actions.Contains(ability))
                 .FirstOrDefault();
         }

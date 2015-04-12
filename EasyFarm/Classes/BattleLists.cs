@@ -29,21 +29,13 @@ namespace EasyFarm.Classes
     /// <summary>
     /// Class for finding battle lists by name. 
     /// </summary>
-    public class BattleLists
+    public class BattleLists : ObservableCollection<BattleList>
     {
-        /// <summary>
-        /// Contains all the battle lists. 
-        /// </summary>
-        public ObservableCollection<BattleList> Lists;
-
-        public BattleLists() 
-        {
-            Lists = new ObservableCollection<BattleList>();            
-        }
+        public BattleLists() { }
 
         public IEnumerable<BattleAbility> Actions
         {
-            get { return Lists.SelectMany(x => x.Actions); }
+            get { return this.SelectMany(x => x.Actions); }
         }
 
         /// <summary>
@@ -56,7 +48,7 @@ namespace EasyFarm.Classes
             get
             {
                 // Find the list item with that name. 
-                var list = Lists.Where(x => x.Name.Equals(index)).FirstOrDefault();
+                var list = this.Where(x => x.Name.Equals(index)).FirstOrDefault();
 
                 // Throw error if now found. 
                 if (list == null) throw new Exception(
@@ -69,7 +61,7 @@ namespace EasyFarm.Classes
             set
             {
                 // Find the list item with that name. 
-                var list = Lists.Where(x => x.Name.Equals(index)).FirstOrDefault();
+                var list = this.Where(x => x.Name.Equals(index)).FirstOrDefault();
 
                 // Throw error when key not found.
                 if (list == null) throw new Exception(
@@ -77,10 +69,10 @@ namespace EasyFarm.Classes
                  );
 
                 // Remove the old reference to the indexed value. 
-                Lists.Remove(list);
+                this.Remove(list);
 
                 // Add the new indexed value. 
-                Lists.Add(value);
+                this.Add(value);
             }
         }
     }

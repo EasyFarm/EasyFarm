@@ -71,7 +71,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The lower value to sit down and rest mp. 
         /// </summary>
-        public int LowMagic = 50;        
+        public int LowMagic = 50;
 
         /// <summary>
         /// Whether health resting is enabled. 
@@ -86,7 +86,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The low value to start resting for health. 
         /// </summary>
-        public int LowHealth = 50;        
+        public int LowHealth = 50;
 
         /// <summary>
         /// List of all waypoints that make up the bots path
@@ -164,6 +164,19 @@ namespace EasyFarm.Classes
         [XmlIgnore]
         private static Lazy<Config> lazy = new Lazy<Config>(() => new Config());
 
+        static Config()
+        {
+            // Add battle moves at the start only once since deserialization
+            // can cause duplicate entries when the default constructor is 
+            // called. 
+            Instance.BattleLists.Add(new BattleList("Start"));
+            Instance.BattleLists.Add(new BattleList("Pull"));
+            Instance.BattleLists.Add(new BattleList("Battle"));
+            Instance.BattleLists.Add(new BattleList("End"));
+            Instance.BattleLists.Add(new BattleList("Healing"));
+            Instance.BattleLists.Add(new BattleList("Weaponskill"));
+        }
+
         /// <summary>
         /// Sets up the default values for player settings. 
         /// Used also for unit testing purposes. 
@@ -173,26 +186,13 @@ namespace EasyFarm.Classes
             this.MainWindowTitle = "EasyFarm";
             this.StatusBarText = String.Empty;
             this.Waypoints = new ObservableCollection<Waypoint>();
-
-            BattleLists.Lists.Add(new BattleList("Start"));
-            BattleLists.Lists.Add(new BattleList("Pull"));
-            BattleLists.Lists.Add(new BattleList("Battle"));
-            BattleLists.Lists.Add(new BattleList("End"));
-            BattleLists.Lists.Add(new BattleList("Healing"));
-            BattleLists.Lists.Add(new BattleList("Weaponskill"));
         }
 
         [XmlIgnore]
         public static Config Instance
         {
-            get
-            {
-                return lazy.Value;
-            }
-            set
-            {
-                lazy = new Lazy<Config>(() => value);
-            }
+            get { return lazy.Value; }
+            set { lazy = new Lazy<Config>(() => value); }
         }
     }
 }
