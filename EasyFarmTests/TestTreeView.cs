@@ -24,7 +24,7 @@ namespace EasyFarmTests
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void TreeViewLayering()
         {
             // Create the TreeItemViewModels that will be stored in layer one. 
             var Fire = CreateTreeItem("Fire");
