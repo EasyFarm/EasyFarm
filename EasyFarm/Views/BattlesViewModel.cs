@@ -101,7 +101,6 @@ namespace EasyFarm.ViewModels
             if (SelectedList != null)
             {
                 var action = new BattleAbility();
-                action.Name = "Default";
                 SelectedList.Actions.Add(action);
             }
         }
@@ -170,7 +169,6 @@ namespace EasyFarm.ViewModels
             if (!SelectedList.Actions.Any())
             {
                 var action = new BattleAbility();
-                action.Name = "Default";
                 SelectedList.Actions.Add(action);
             }
         }
