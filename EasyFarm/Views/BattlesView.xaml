@@ -9,11 +9,22 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="600">
-    <UserControl.Resources>      
-        <ControlTemplate x:Key="DetailsTemplate">
-            <views:AbilityView />
-        </ControlTemplate>
+    <UserControl.Resources>
+        <!-- Removes the blue border around selected and hovered over items. -->
+        <Style x:Key="ListBoxItemContainer"
+               TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Background="Transparent">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
+
     <DockPanel>
         <!--Used to manipulate the Abilities list-->
         <Grid DockPanel.Dock="Bottom"
@@ -49,14 +60,14 @@
 
             <!-- Master Ability View-->
             <ListBox Name="master"
-                      Margin="5"
-                      Grid.Column="0"
-                      Grid.ColumnSpan="2"
-                      ItemsSource="{Binding BattleLists}"
-                      SelectionChanged="master_SelectionChanged">
+                     Margin="5"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     ItemsSource="{Binding BattleLists}"
+                     SelectionChanged="master_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Label Content="{Binding Name}"/>
+                        <Label Content="{Binding Name}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -68,7 +79,8 @@
             <!-- Detail Ability View -->
             <ScrollViewer Grid.Column="2"
                           Margin="5">
-                <ListBox ItemsSource="{Binding ElementName=master, Path=SelectedValue.Actions}">
+                <ListBox ItemsSource="{Binding ElementName=master, Path=SelectedValue.Actions}"
+                         ItemContainerStyle="{StaticResource ListBoxItemContainer}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <views:AbilityView />
