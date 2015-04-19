@@ -43,7 +43,8 @@ namespace EasyFarm.Components
         private FFACE m_fface;
 
         /// <summary>
-        /// Our operational state object. 
+        /// A timer for running tasks over long 
+        /// periods of time. 
         /// </summary>
         private TaskTimer TaskTimer = null;
 
@@ -86,8 +87,19 @@ namespace EasyFarm.Components
 
         private void Run(bool timedOut)
         {
-            lock (this)
+            bool acquiredLock = false;
+
+            try
             {
+                // Thread exit if another thread is handling this event. 
+                if (Monitor.IsEntered(Components)) return;
+
+                // Acquire access to this resource. 
+                Monitor.TryEnter(Components, ref acquiredLock);
+
+                // If we've failed to acquire the lock exit. 
+                if (!acquiredLock) return;
+
                 // Sort the List, States may have updated Priorities.
                 Components.Sort();
 
@@ -98,11 +110,7 @@ namespace EasyFarm.Components
                     if (!timedOut)
                     {
                         // Make the last state clean up and exit (stops running if travelling)
-                        if (LastRan != null)
-                        {
-                            LastRan.ExitComponent();
-                        }
-
+                        if (LastRan != null) LastRan.ExitComponent();
                         return;
                     }
 
@@ -124,6 +132,14 @@ namespace EasyFarm.Components
                     }
                 }
             }
+            finally
+            {
+                if (acquiredLock)
+                {
+                    // Release our resources. 
+                    Monitor.Exit(Components);
+                }
+            }
         }
 
         // Start and stop.
@@ -135,6 +151,6 @@ namespace EasyFarm.Components
         public override void Stop()
         {
             TaskTimer.Stop();
-        }        
+        }
     }
 }
