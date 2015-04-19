@@ -56,11 +56,8 @@ namespace EasyFarm.Components
         {
             // Check for aggro if possible; this check helps with program performance by limiting
             // constant checks against the whole unit array which is expensive. 
-            if (_lastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
-            {
-                _lastAggroCheck = DateTime.Now;
-                if (_units.HasAggro) return false;
-            }
+            _lastAggroCheck = DateTime.Now;
+            if (_units.HasAggro) return false;
 
             // Check for effects taht stop resting. 
             if (ProhibitEffects.PROHIBIT_EFFECTS_DOTS
@@ -90,6 +87,17 @@ namespace EasyFarm.Components
         public override void RunComponent()
         {
             RestingUtils.Rest(_fface);
+        }
+
+        /// <summary>
+        /// Force the player to stand up before attempting anything else. 
+        /// </summary>
+        public override void ExitComponent()
+        {
+            while (_fface.Player.Status == Status.Healing)
+            {
+                RestingUtils.Stand(_fface);
+            }
         }
 
         /// <summary>

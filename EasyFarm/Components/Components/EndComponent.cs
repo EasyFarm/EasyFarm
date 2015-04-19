@@ -57,6 +57,9 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
+            // Prevent making the player stand up from resting. 
+            if (_fface.Player.Status == Status.Healing) return false;
+
             // Null, dead and empty mob check. 
             if (Target == null || Target.IsDead) return true;
 
