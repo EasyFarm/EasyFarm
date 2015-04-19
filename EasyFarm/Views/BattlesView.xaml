@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:views="clr-namespace:EasyFarm.Views"
+             xmlns:viewModels="clr-namespace:EasyFarm.ViewModels"
              xmlns:local="clr-namespace:EasyFarm.Classes"
              mc:Ignorable="d"
              d:DesignHeight="300"
@@ -78,6 +79,8 @@
 
             <!-- Detail Ability View -->
             <ScrollViewer Grid.Column="2"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
                           Margin="5">
                 <ListBox ItemsSource="{Binding ElementName=master, Path=SelectedValue.Actions}"
                          ItemContainerStyle="{StaticResource ListBoxItemContainer}">
