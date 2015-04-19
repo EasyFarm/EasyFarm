@@ -30,20 +30,20 @@ namespace Parsing.Mapping
     /// Maps comma separated values into strongly typed enum objects. 
     /// </summary>
     /// <typeparam name="TType"></typeparam>
-    public class EnumObjectMapper<TType> :
+    public abstract class BaseEnumMapper<TType> :
         EnumClassUtils<TType>,
         IObjectMapper<string, TType>
     {
         /// <summary>
         /// The internal list of mappers. 
         /// </summary>
-        private IEnumerable<IObjectMapper<string, TType>> _mappers;
+        protected IEnumerable<IObjectMapper<string, TType>> _mappers;
 
         /// <summary>
         /// Save a list of mappers to compare values against. 
         /// </summary>
         /// <param name="mappers"></param>
-        public EnumObjectMapper(IEnumerable<IObjectMapper<string, TType>> mappers)
+        public BaseEnumMapper(IEnumerable<IObjectMapper<string, TType>> mappers)
         {
             _mappers = mappers;
         }
@@ -54,21 +54,7 @@ namespace Parsing.Mapping
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public bool IsMapped(string obj)
-        {
-            foreach (var data in SplitData(obj))
-            {
-                foreach (var mapper in _mappers)
-                {
-                    if (mapper.IsMapped(data))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
+        public abstract bool IsMapped(string obj);
 
         /// <summary>
         /// Return an enum with flags indicated by the string 
@@ -76,34 +62,14 @@ namespace Parsing.Mapping
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public TType GetMapping(string obj)
-        {
-            TType value = default(TType);
-
-            List<TType> flags = new List<TType>();
-
-            // Map all elements to their proper element
-            // and combine them together into one ElementType object. 
-            foreach (var data in SplitData(obj))
-            {
-                foreach (var mapper in _mappers)
-                {
-                    if (mapper.IsMapped(data))
-                    {
-                        value = EnumObjectMapper<TType>.SetFlag<TType>(value, mapper.GetMapping(data));
-                    }
-                }
-            }
-
-            return value;
-        }
+        public abstract TType GetMapping(string obj);
 
         /// <summary>
         /// Split and clean the string data for parsing. 
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        private IEnumerable<string> SplitData(string obj)
+        protected IEnumerable<string> SplitData(string obj)
         {
             return obj.Split(',')
                 .Select(x => x.Trim())

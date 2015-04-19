@@ -32,7 +32,13 @@ namespace Parsing.Augmenting
     public class SpecializedTypeAugmenter<TType> : AbilityAugmenter<Ability>
     {
         public SpecializedTypeAugmenter(string attributeName, string variableName) :
-            base(attributeName, variableName) { }
+            base(attributeName, variableName) 
+        {
+            // Our default implementation for the specialized mapper that handles the 
+            // flags situation for enums where an enum is a combination of multiple
+            // states. 
+            _mapper = new MultiValueEnumMapper<TType>(_mappers);
+        }
 
         /// <summary>
         /// A list of mappers that map strings to other objects.  
@@ -43,8 +49,18 @@ namespace Parsing.Augmenting
         /// <summary>
         /// Maps a string to a list of potential objects. 
         /// </summary>
-        private EnumObjectMapper<TType> _mapper;
+        public IObjectMapper<string, TType> _mapper 
+        { 
+            get; 
+            set; 
+        }
 
+        /// <summary>
+        /// Augment the object with the extracted and converted
+        /// enum data. 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="ability"></param>
         public override void Augment(XElement element, Ability ability)
         {
             // If we can't augment, return. 
@@ -55,9 +71,6 @@ namespace Parsing.Augmenting
 
             // Extract the data. 
             var value = _extractor.ExtractData(element);
-
-            // Store all the mappers in the master map object. 
-            _mapper = new EnumObjectMapper<TType>(_mappers);
 
             // Get all AbilityType mappings for that command. 
             if (_mapper.IsMapped(value))

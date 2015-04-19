@@ -31,17 +31,12 @@ namespace Parsing.Parsers
     /// <summary>
     /// A class for loading the ability and spell xmls from file.
     /// </summary>
-    public class AbilityParser
+    public class AbilityParser : BaseParser
     {
-        /// <summary>
-        /// Holds the list of loaded resource files. 
-        /// </summary>
-        public readonly IEnumerable<XElement> _resources;
-
         /// <summary>
         /// List of handlers to handle the conversion of abilities from file. 
         /// </summary>
-        List<IObjectAugmenter<XElement, Ability>> _augmenters = 
+        List<IObjectAugmenter<XElement, Ability>> _augmenters =
             new List<IObjectAugmenter<XElement, Ability>>();
 
         /// <summary>
@@ -49,11 +44,8 @@ namespace Parsing.Parsers
         /// given file path. 
         /// </summary>
         /// <param name="resourcesPath"></param>
-        public AbilityParser(string resourcesPath)
+        public AbilityParser(string resourcesPath) : base(resourcesPath)
         {
-            // Read in all resources in the resourcePath. 
-            _resources = LoadResources(resourcesPath);
-
             // Augmenters for predefined data types. 
             _augmenters.Add(new AbilityAugmenter<string>("alias", "Alias"));
             _augmenters.Add(new AbilityAugmenter<double>("casttime", "CastTime"));
@@ -62,7 +54,7 @@ namespace Parsing.Parsers
             _augmenters.Add(new AbilityAugmenter<int>("index", "Index"));
             _augmenters.Add(new AbilityAugmenter<int>("mpcost", "MPCost"));
             _augmenters.Add(new AbilityAugmenter<string>("english", "English"));
-            _augmenters.Add(new AbilityAugmenter<string>("japanese", "Japanese"));            
+            _augmenters.Add(new AbilityAugmenter<string>("japanese", "Japanese"));
             _augmenters.Add(new AbilityAugmenter<string>("prefix", "Prefix"));
             _augmenters.Add(new AbilityAugmenter<double>("recast", "Recast"));
             _augmenters.Add(new AbilityAugmenter<string>("skill", "Skill"));
@@ -76,31 +68,6 @@ namespace Parsing.Parsers
             _augmenters.Add(new ElementTypeAugmenter("element", "ElementType"));
             _augmenters.Add(new SkillTypeAugmenter("skill", "SkillType"));
             _augmenters.Add(new TargetTypeAugmenter("targets", "TargetType"));
-        }
-
-        /// <summary>
-        /// Ensures that the resource file passed exists
-        /// and returns the XElement obj associated with the file.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private IEnumerable<XElement> LoadResources(string path)
-        {
-            // List to store all read resources. 
-            List<XElement> XmlDocuments = new List<XElement>();
-
-            // Get a list of all resource file names. 
-            if (!Directory.Exists(path)) return new List<XElement>();
-
-            string[] resources = Directory.GetFiles(path, "*.xml");
-
-            // Load all resource files in the given directory. 
-            foreach (var resource in resources)
-            {
-                XmlDocuments.Add(XElement.Load(resource));
-            }
-
-            return XmlDocuments;
         }
 
         /// <summary>

@@ -50,10 +50,13 @@
     <Compile Include="Converters\ResourceValueConverter.cs" />
     <Compile Include="Extraction\IDataExtractor.cs" />
     <Compile Include="Extraction\ResourceValueExtractor.cs" />
+    <Compile Include="Mapping\BaseEnumMapper.cs" />
     <Compile Include="Mapping\EnumClassUtils.cs" />
     <Compile Include="Mapping\IObjectMultiMapper.cs" />
-    <Compile Include="Mapping\EnumObjectMapper.cs" />
+    <Compile Include="Mapping\SingleValueEnumMapper.cs" />
+    <Compile Include="Mapping\MultiValueEnumMapper.cs" />
     <Compile Include="Mapping\MultiObjectMapper.cs" />
+    <Compile Include="Parsers\BaseParser.cs" />
     <Compile Include="Types\AbilityType.cs" />
     <Compile Include="Types\CategoryType.cs" />
     <Compile Include="Types\ElementType.cs" />

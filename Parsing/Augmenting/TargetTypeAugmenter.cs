@@ -31,7 +31,7 @@ namespace Parsing.Augmenting
     {
         public TargetTypeAugmenter(string attributeName, string variableName) :
             base(attributeName, variableName)
-        {
+        {            
             _mappers.Add(new ObjectMapper<string, TargetType>("Corpse", TargetType.Corpse));
             _mappers.Add(new ObjectMapper<string, TargetType>("Enemy", TargetType.Enemy));
             _mappers.Add(new ObjectMapper<string, TargetType>("NPC", TargetType.NPC));
@@ -39,6 +39,9 @@ namespace Parsing.Augmenting
             _mappers.Add(new ObjectMapper<string, TargetType>("Party", TargetType.Party));
             _mappers.Add(new ObjectMapper<string, TargetType>("Player", TargetType.Player));
             _mappers.Add(new ObjectMapper<string, TargetType>("Self", TargetType.Self));
+
+            // Use the single value enum mapper. 
+            this._mapper = new SingleValueEnumMapper<TargetType>(_mappers);
         }        
     }
 }
