@@ -58,6 +58,12 @@ namespace EasyFarm.Components
             // If we're injured. 
             if (new RestComponent(FFACE).CheckComponent()) return false;
 
+            if (TargetUnit != null)
+            {
+                // Target is out of distance and we should not attack it. 
+                if (TargetUnit.Distance > Config.Instance.WanderDistance) return false;
+            }
+
             // Return if other components need to fire. 
             return base.CheckComponent();
         }

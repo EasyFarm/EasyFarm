@@ -68,6 +68,17 @@ namespace EasyFarm.Components
             return !UnitFilters.MobFilter(_fface, Target);
         }
 
+        /// <summary>
+        /// Force player when changing targets. 
+        /// </summary>
+        public override void EnterComponent()
+        {
+            while (_fface.Player.Status == Status.Fighting)
+            {
+                CombatUtils.Disengage(_fface);
+            }
+        }
+
         public override void RunComponent()
         {
             // Execute moves. 
