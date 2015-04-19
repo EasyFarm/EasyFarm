@@ -227,31 +227,38 @@ namespace EasyFarm.ViewModels
             ProcessSelectionView selectionView = new ProcessSelectionView();
             selectionView.ShowDialog();           
 
-            // Validate the selection
-            var m_process = selectionView.lsvGameSessons.SelectedItem as Process;
+            // Grab the view model with the game sessions. 
+            var viewModel = selectionView.DataContext as ProcessSelectionViewModel;
 
-            // Check if the user made a selection. 
-            if (m_process == null)
+            // If the view has a process selection view model binded to it. 
+            if (viewModel != null)
             {
-                Logger.Write.ProcessNotFound("Process not found");
-                AppInformer.InformUser("No valid process was selected.");
-                return;
-            }
+                // Get the selected process. 
+                var process = viewModel.SelectedProcess;
 
-            // Log that a process selected. 
-            Logger.Write.ProcessFound("Process found");
+                // User never selected a process. 
+                if (process == null || !viewModel.IsProcessSelected)
+                {
+                    Logger.Write.ProcessNotFound("Process not found");
+                    AppInformer.InformUser("No valid process was selected.");
+                    return;
+                }
 
-            // Save the selected fface instance. 
-            var FFACE = new FFACETools.FFACE(m_process.Id);
+                // Log that a process selected. 
+                Logger.Write.ProcessFound("Process found");
 
-            // Set the FFACE Session. 
-            ViewModelBase.SetSession(FFACE);
+                // Save the selected fface instance. 
+                var FFACE = new FFACETools.FFACE(process.Id);
 
-            // Tell the user the program has loaded the player's data
-            AppInformer.InformUser("Bot Loaded: " + FFACE.Player.Name);
+                // Set the FFACE Session. 
+                ViewModelBase.SetSession(FFACE);
 
-            // Set the main window's title to the player's name. 
-            MainWindowTitle = "EasyFarm - " + FFACE.Player.Name;
+                // Tell the user the program has loaded the player's data
+                AppInformer.InformUser("Bot Loaded: " + FFACE.Player.Name);
+
+                // Set the main window's title to the player's name. 
+                MainWindowTitle = "EasyFarm - " + FFACE.Player.Name;
+            }            
         }
 
         /// <summary>

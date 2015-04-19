@@ -6,20 +6,26 @@
         xmlns:vm="clr-namespace:EasyFarm.ViewModels"
         mc:Ignorable="d"
         Height="300"
-        Width="300"
-        d:DesignHeight="300"
-        d:DesignWidth="300">
+        Width="300">
     <DockPanel>
-        <!-- Shuts down the process selection view. -->
-        <Button DockPanel.Dock="Bottom"
-                Content="Set Character"
-                Command="{Binding Path=ExitCommand}" />
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <!-- Shuts down the process selection view. -->
+            <Button Content="Set Character"
+                    Command="{Binding Path=ExitCommand}" />
+            <Button Grid.Column="1"
+                    Content="{Binding ToggleButtonHeader}"
+                    Command="{Binding ToggleFiltering}"/>
+        </Grid>
 
         <!-- A view for currently running game sessions. -->
         <GroupBox Header="Please select your character">
             <ListView Name="lsvGameSessons"
                       ItemsSource="{Binding Sessions}"
-                      SelectedItem="{Binding SelectedItem}">
+                      SelectedItem="{Binding SelectedProcess}">
                 <ListView.View>
                     <!-- The headers for session information. -->
                     <GridView>

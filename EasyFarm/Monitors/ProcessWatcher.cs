@@ -85,12 +85,6 @@ namespace EasyFarm.Classes
             m_timer.Interval = 30;
         }
 
-        public ProcessWatcher() :
-            this("")
-        {
-
-        }
-
         protected void CheckProcesses(object sender, ElapsedEventArgs e)
         {
             lock (this.Mutex)
