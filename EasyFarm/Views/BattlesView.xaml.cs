@@ -33,23 +33,5 @@ namespace EasyFarm.Views
         {
             InitializeComponent();
         }
-                
-        /// <summary>
-        /// Update the selected battle list in the BattlesViewModel. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void master_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (DataContext != null)
-            {
-                var vm = (BattlesViewModel)DataContext;
-                
-                if (e.AddedItems.Count > 0)
-                {
-                    vm.SelectedList = e.AddedItems[0] as BattleList;
-                }
-            }
-        }
     }
 }

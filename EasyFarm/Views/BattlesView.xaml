@@ -64,7 +64,7 @@
                      Grid.Column="0"
                      Grid.ColumnSpan="2"
                      ItemsSource="{Binding BattleLists}"
-                     SelectionChanged="master_SelectionChanged">
+                     SelectedItem="{Binding SelectedList}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Label Content="{Binding Name}" />
