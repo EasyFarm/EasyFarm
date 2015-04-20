@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License
 ﻿using EasyFarm.Classes;
 using FFACETools;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -37,6 +38,17 @@ namespace EasyFarm.Components
 
             // Create unit object for parsing of npc array. 
             _units = new UnitService(fface);
+        }
+
+        /// <summary>
+        /// Returns a copy of the current values in our path. 
+        /// </summary>
+        public List<FFACE.Position> Path 
+        { 
+            get 
+            { 
+                return Config.Instance.Waypoints.Select(x => x.Position).ToList(); 
+            } 
         }
 
         public override bool CheckComponent()
@@ -63,36 +75,34 @@ namespace EasyFarm.Components
 
         public override void RunComponent()
         {
-            // Create a copy of the list. 
-            var waypointPath = Config.Instance.Waypoints
-                .Select(x => x.Position)
-                .ToList();
+            // Make a copy of the waypoint path from config. 
+            var route = Path;
 
             // Reverse the waypoint path. 
-            if (_position == waypointPath.Count)
+            if (_position == Path.Count)
             {
                 Config.Instance.Waypoints = new ObservableCollection<Waypoint>(
                     Config.Instance.Waypoints.Reverse());
+
+                // Copy new waypoint path from config. 
+                route = Path;
 
                 _position = 0;
             }
 
             // If far away from the path, set us to run to the closest waypoint
-            if (_fface.Navigator.DistanceTo(waypointPath[_position]) > 10)
+            if (_fface.Navigator.DistanceTo(Path[_position]) > 15)
             {
-                var closest = waypointPath
-                    .OrderBy(x => _fface.Navigator.DistanceTo(x))
+                var closest = route.OrderBy(x => _fface.Navigator.DistanceTo(x))
                     .FirstOrDefault();
 
-                _position = waypointPath.IndexOf(closest);
+                _position = route.IndexOf(closest);
             }
 
             // Run to the waypoint allowing cancellation on aggro or paused. 
-            _fface.Navigator.Goto(waypointPath[_position], false);
+            _fface.Navigator.Goto(route[_position], false);
             _position++;
         }
-
-        public DateTime LastAggroCheck = DateTime.Now;
 
         /// <summary>
         /// Returns true when the player should stop traveling. 
@@ -101,14 +111,7 @@ namespace EasyFarm.Components
         public bool IsCancellationRequired()
         {
             /// Defines some common situations to stop travel. 
-
-            // Check if the player has aggro, but don't hammer the 
-            // npc array less than every second. 
-            if (LastAggroCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
-            {
-                LastAggroCheck = DateTime.Now;
-                if (_units.HasAggro) return true;
-            }
+            if (_units.HasAggro) return true;
 
             // Return when the user has pause the program. 
             return !App.GameEngine.IsWorking;
