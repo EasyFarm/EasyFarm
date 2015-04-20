@@ -52,13 +52,13 @@ namespace EasyFarm.Components
         {
             _fface = fface;
             _executor = new Executor(fface);
-            _units = new UnitService(fface);            
+            _units = new UnitService(fface);
         }
 
         public override bool CheckComponent()
         {
             // Prevent making the player stand up from resting. 
-            if (_fface.Player.Status == Status.Healing) return false;
+            if (new RestComponent(_fface).CheckComponent()) return false;
 
             // Null, dead and empty mob check. 
             if (Target == null || Target.IsDead) return true;

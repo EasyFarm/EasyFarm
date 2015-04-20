@@ -37,11 +37,6 @@ namespace EasyFarm.Components
         /// </summary>
         private UnitService _units;
 
-        /// <summary>
-        /// The last time we checked for aggro. 
-        /// </summary>
-        private DateTime _lastAggroCheck = DateTime.Now;
-
         public RestComponent(FFACE fface)
         {
             this._fface = fface;
@@ -54,20 +49,17 @@ namespace EasyFarm.Components
         /// <returns></returns>
         public override bool CheckComponent()
         {
-            // Check for aggro if possible; this check helps with program performance by limiting
-            // constant checks against the whole unit array which is expensive. 
-            _lastAggroCheck = DateTime.Now;
-            if (_units.HasAggro) return false;
-
             // Check for effects taht stop resting. 
             if (ProhibitEffects.PROHIBIT_EFFECTS_DOTS
                 .Intersect(_fface.Player.StatusEffects).Any()) return false;
+
+            // Do not rest if we are being attacked. 
+            if (_units.HasAggro) return false;
 
             // Check if we are fighting. 
             if (_fface.Player.Status == Status.Fighting) return false;
 
             // Check if we should rest for health.
-
             if (ShouldRestForHealth(
                 _fface.Player.HPPCurrent,
                 _fface.Player.Status)) return true;

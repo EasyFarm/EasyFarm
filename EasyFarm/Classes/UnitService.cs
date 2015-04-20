@@ -45,6 +45,20 @@ namespace EasyFarm.Classes
         /// </summary>
         private const short MOB_ARRAY_MAX = Constants.MOB_ARRAY_MAX;
 
+
+        // We are caching values for HasAggro, since the program will 
+        // call it constantly which will result in a performance jump. 
+
+        /// <summary>
+        /// The last time an aggro check was performed. 
+        /// </summary>
+        public DateTime LastAggroCheck = DateTime.Now;
+
+        /// <summary>
+        /// The last value read from HasAggro
+        /// </summary>
+        public bool LastAggroStatus = false;
+
         /// <summary>
         /// The player's environmental data. 
         /// </summary>
@@ -69,15 +83,19 @@ namespace EasyFarm.Classes
         {
             get
             {
-                foreach (var monster in MOBArray)
-                {
-                    if (monster.HasAggroed)
-                    {
-                        return true;
-                    }
+                // Return the cached value if we're checking too often. 
+                if (LastAggroCheck.AddSeconds(
+                    Constants.UNIT_ARRAY_CHECK_RATE) > 
+                    DateTime.Now)
+                {                    
+                    return LastAggroStatus;
                 }
 
-                return false;
+                // Update the last checked time. 
+                LastAggroCheck = DateTime.Now;
+
+                // Otherwise return the current environment value. 
+                return LastAggroStatus = MOBArray.Any(x => x.HasAggroed);               
             }
         }
 
