@@ -1,4 +1,3 @@
-
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -17,26 +16,15 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using FFACETools;
 using System;
+using FFACETools;
 
 namespace EasyFarm.Classes
 {
     public class Unit
     {
-        #region Members
-        /// <summary>
-        /// Holds all the game's data. 
-        /// </summary>
-        private FFACE _fface;
-
-        /// <summary>
-        /// Holds the data about units. 
-        /// </summary>
-        private FFACE.NPCTools _npc;
-        #endregion
-
         #region Constructors
+
         public Unit(FFACE fface, int id)
         {
             // Set this unit's session data. 
@@ -48,20 +36,42 @@ namespace EasyFarm.Classes
             // Set the NPC information.
             _npc = _fface.NPC;
         }
+
+        #endregion
+
+        #region Methods
+
+        // Make it default to printing units name
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        #endregion
+
+        #region Members
+
+        /// <summary>
+        ///     Holds all the game's data.
+        /// </summary>
+        private readonly FFACE _fface;
+
+        /// <summary>
+        ///     Holds the data about units.
+        /// </summary>
+        private readonly FFACE.NPCTools _npc;
+
         #endregion
 
         #region Player Data
-        /// <summary>
-        /// The unit's id. 
-        /// </summary>
-        public int ID
-        {
-            get;
-            set;
-        }
 
         /// <summary>
-        /// The unit's claim id; zero for unclaimed. 
+        ///     The unit's id.
+        /// </summary>
+        public int ID { get; set; }
+
+        /// <summary>
+        ///     The unit's claim id; zero for unclaimed.
         /// </summary>
         public int ClaimedID
         {
@@ -69,7 +79,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's distace from the player. 
+        ///     The unit's distace from the player.
         /// </summary>
         public double Distance
         {
@@ -77,7 +87,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's position. 
+        ///     The unit's position.
         /// </summary>
         public FFACE.Position Position
         {
@@ -85,7 +95,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's health as a percent. 
+        ///     The unit's health as a percent.
         /// </summary>
         public short HPPCurrent
         {
@@ -93,7 +103,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Whether this unit is active. 
+        ///     Whether this unit is active.
         /// </summary>
         public bool IsActive
         {
@@ -101,7 +111,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Whether this unit is claimed by some player. 
+        ///     Whether this unit is claimed by some player.
         /// </summary>
         public bool IsClaimed
         {
@@ -109,7 +119,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Whether this unit is visible to the player. 
+        ///     Whether this unit is visible to the player.
         /// </summary>
         public bool IsRendered
         {
@@ -117,7 +127,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's name. 
+        ///     The unit's name.
         /// </summary>
         public string Name
         {
@@ -125,7 +135,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's npc bit
+        ///     The unit's npc bit
         /// </summary>
         public byte NPCBit
         {
@@ -133,7 +143,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's npc type
+        ///     The unit's npc type
         /// </summary>
         public NPCType NPCType
         {
@@ -141,7 +151,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's pet's id. 
+        ///     The unit's pet's id.
         /// </summary>
         public int PetID
         {
@@ -149,7 +159,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's heading. 
+        ///     The unit's heading.
         /// </summary>
         public float PosH
         {
@@ -157,7 +167,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's x coordinate. 
+        ///     The unit's x coordinate.
         /// </summary>
         public float PosX
         {
@@ -165,7 +175,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's y coordinate. 
+        ///     The unit's y coordinate.
         /// </summary>
         public float PosY
         {
@@ -173,7 +183,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's z coordinate.  
+        ///     The unit's z coordinate.
         /// </summary>
         public float PosZ
         {
@@ -181,7 +191,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's status. 
+        ///     The unit's status.
         /// </summary>
         public Status Status
         {
@@ -189,7 +199,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The unit's current tp. 
+        ///     The unit's current tp.
         /// </summary>
         public short TPCurrent
         {
@@ -203,26 +213,23 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// If the unit has aggroed our player. 
+        ///     If the unit has aggroed our player.
         /// </summary>
         public bool HasAggroed
         {
-            get
-            {
-                return (!IsClaimed || MyClaim) && Status == FFACETools.Status.Fighting;
-            }
+            get { return (!IsClaimed || MyClaim) && Status == Status.Fighting; }
         }
 
         /// <summary>
-        /// If the unit is dead. 
+        ///     If the unit is dead.
         /// </summary>
         public bool IsDead
         {
-            get { return Status == FFACETools.Status.Dead1 || Status == FFACETools.Status.Dead2 || HPPCurrent <= 0; }
+            get { return Status == Status.Dead1 || Status == Status.Dead2 || HPPCurrent <= 0; }
         }
 
         /// <summary>
-        /// If a party or alliance member has claim on the unit. 
+        ///     If a party or alliance member has claim on the unit.
         /// </summary>
         public bool PartyClaim
         {
@@ -240,21 +247,11 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// The vertical distance between this unit and our player. 
+        ///     The vertical distance between this unit and our player.
         /// </summary>
         public double YDifference
         {
             get { return Math.Abs(PosY - _fface.Player.PosY); }
-        }
-
-        #endregion
-
-        #region Methods
-
-        // Make it default to printing units name
-        public override string ToString()
-        {
-            return Name;
         }
 
         #endregion

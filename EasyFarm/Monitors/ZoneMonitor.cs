@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,34 +16,31 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using FFACETools;
 using System.Timers;
+using FFACETools;
 
 namespace EasyFarm.FarmingTool
 {
     public class ZoneMonitor : BaseMonitor
     {
-        private Zone m_zone;
+        public ZoneMonitor(FFACE fface) : base(fface)
+        {
+        }
 
-        public ZoneMonitor(FFACE fface) : base(fface) { }
+        public Zone Zone { get; private set; }
 
         protected override void CheckStatus(object sender, ElapsedEventArgs e)
         {
             lock (_lock)
             {
-                Zone zone = _fface.Player.Zone;
+                var zone = _fface.Player.Zone;
 
-                if (m_zone != zone || _fface.Player.Stats.Str == 0)
+                if (Zone != zone || _fface.Player.Stats.Str == 0)
                 {
                     OnChanged(new MonitorArgs<Zone>(zone));
-                    m_zone = zone;
+                    Zone = zone;
                 }
             }
         }
-
-        public Zone Zone
-        {
-            get { return this.m_zone; }
-        }        
     }
 }

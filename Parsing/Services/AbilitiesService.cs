@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,25 +16,26 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using Parsing.Abilities;
-using Parsing.Parsers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Parsing.Abilities;
+using Parsing.Parsers;
 
 namespace Parsing.Services
 {
     /// <summary>
-    /// This class is responsible for retrieving job abilties and spells.
+    ///     This class is responsible for retrieving job abilties and spells.
     /// </summary>
     public class AbilityService : AbilityParser, IAbilityService
     {
-        public AbilityService(string resourcePath) : 
-            base(resourcePath) { }
+        public AbilityService(string resourcePath) :
+            base(resourcePath)
+        {
+        }
 
         /// <summary>
-        /// Creates an ability obj. This object may be a spell
-        /// or an ability.
+        ///     Creates an ability obj. This object may be a spell
+        ///     or an ability.
         /// </summary>
         /// <param name="name">Ability's Name</param>
         /// <returns>a new ability</returns>
@@ -47,17 +47,17 @@ namespace Parsing.Services
         }
 
         /// <summary>
-        /// Returns a list of all abilities with a specific name.
+        ///     Returns a list of all abilities with a specific name.
         /// </summary>
         /// <param name="name">Name of the action</param>
         /// <returns>A list of actions with that name</returns>
-        public IEnumerable<Ability> GetAbilitiesWithName(String name)
+        public IEnumerable<Ability> GetAbilitiesWithName(string name)
         {
             return ParseResources(name);
         }
 
         /// <summary>
-        /// Parses a resource in terms of an ability.
+        ///     Parses a resource in terms of an ability.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="XMLDoc"></param>
@@ -68,19 +68,18 @@ namespace Parsing.Services
         }
 
         /// <summary>
-        /// Parses a resource in terms of an spell.
+        ///     Parses a resource in terms of an spell.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="XMLDoc"></param>
         /// <returns></returns>
-        /// 
         public IEnumerable<Ability> GetSpellAbilitiesByName(string name)
         {
             return ParseSpells(name);
         }
 
         /// <summary>
-        /// Returns whether abilities with the given name.
+        ///     Returns whether abilities with the given name.
         /// </summary>
         /// <param name="actionName"></param>
         /// <returns></returns>

@@ -1,5 +1,4 @@
-
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,18 +16,14 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-﻿using System.Collections.Generic;
-using System.Linq;
 using FFACETools;
-using System;
-using System.Threading;
 
 namespace EasyFarm.Classes
 {
     public class CombatUtils
     {
         /// <summary>
-        /// Switches the player to attack mode on the current unit
+        ///     Switches the player to attack mode on the current unit
         /// </summary>
         /// <param name="unit"></param>
         public static void Engage(FFACE fface)
@@ -40,7 +35,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Stop the character from fight the target
+        ///     Stop the character from fight the target
         /// </summary>
         public static void Disengage(FFACE fface)
         {

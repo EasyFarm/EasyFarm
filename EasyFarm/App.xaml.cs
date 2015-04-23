@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,39 +16,29 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.ViewModels;
-using EasyFarm.Views;
-using System;
-using System.IO;
-using System.Reflection;
 using System.Windows;
-using System.Linq;
-using EasyFarm.Classes;
-using EasyFarm.Logging;
-using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
-using System.Diagnostics.Tracing;
-using System.Collections;
-using EasyFarm.Prism;
-using Parsing.Services;
 using EasyFarm.Components;
-using Microsoft.Practices.Prism.PubSubEvents;
+using EasyFarm.Logging;
+using EasyFarm.Prism;
+using EasyFarm.Properties;
+using Parsing.Services;
 
 namespace EasyFarm
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    ///     Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
         /// <summary>
-        /// XML parser for looking up ability, spell and weaponskill data. 
+        ///     XML parser for looking up ability, spell and weaponskill data.
         /// </summary>
         public static readonly AbilityService AbilityService;
 
         /// <summary>
-        /// Global game engine controlling the player. 
+        ///     Global game engine controlling the player.
         /// </summary>
-        public static GameEngine GameEngine;        
+        public static GameEngine GameEngine;
 
         static App()
         {
@@ -60,28 +49,28 @@ namespace EasyFarm
         }
 
         /// <summary>
-        /// Gets the user's selected FFACE Session and 
-        /// starts up the program. 
+        ///     Gets the user's selected FFACE Session and
+        ///     starts up the program.
         /// </summary>
         /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            Logger.Write.ApplicationStart("Application starting");                        
-                          
-            BootStrapper bootStrapper = new BootStrapper();
+            Logger.Write.ApplicationStart("Application starting");
+
+            var bootStrapper = new BootStrapper();
             bootStrapper.Run();
         }
 
         /// <summary>
-        /// Save the settings to file via an XML Serializer. 
+        ///     Save the settings to file via an XML Serializer.
         /// </summary>
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
             Logger.Write.ApplicationStart("Application exiting");
-            EasyFarm.Properties.Settings.Default.Save();
-        }        
+            Settings.Default.Save();
+        }
     }
 }

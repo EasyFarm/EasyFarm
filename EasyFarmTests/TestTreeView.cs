@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
 using EasyFarm.Classes;
 using EasyFarm.ViewModels;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Parsing.Services;
-using System.Collections.Generic;
 
 namespace EasyFarmTests
 {
@@ -11,12 +10,12 @@ namespace EasyFarmTests
     public class TestTreeView
     {
         /// <summary>
-        /// Retrieves abilities from resource files. 
+        ///     Retrieves abilities from resource files.
         /// </summary>
-        private static AbilityService retriever;
+        private static readonly AbilityService retriever;
 
         /// <summary>
-        /// Set up the ability retriever. 
+        ///     Set up the ability retriever.
         /// </summary>
         static TestTreeView()
         {
@@ -39,7 +38,7 @@ namespace EasyFarmTests
 
         public TreeItemViewModel<IEnumerable<TreeItemViewModel<T>>>
             CreateTreeLayer<T>(
-            string name, 
+            string name,
             params TreeItemViewModel<T>[] items)
         {
             return new TreeItemViewModel<IEnumerable<TreeItemViewModel<T>>>(name, items);

@@ -4,7 +4,7 @@
         Title="AbilitySelectionBox" Height="300" Width="300">
     <Grid>
         <StackPanel>
-            <ListBox Name="AbilityListBox"></ListBox>
+            <ListBox Name="AbilityListBox" />
             <Button Name="CompleteSelectionButton">Complete Selection</Button>
         </StackPanel>
     </Grid>

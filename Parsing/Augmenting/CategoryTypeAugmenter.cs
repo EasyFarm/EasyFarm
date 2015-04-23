@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,12 +16,8 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using Parsing.Abilities;
 using Parsing.Mapping;
 using Parsing.Types;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace Parsing.Augmenting
 {

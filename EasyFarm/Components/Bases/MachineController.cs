@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,18 +16,11 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace EasyFarm.Components
 {
     public abstract class MachineController : MachineContainer, IMachineController
     {
         public abstract void Start();
-
         public abstract void Stop();
     }
 }

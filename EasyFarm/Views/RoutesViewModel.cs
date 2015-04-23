@@ -1,4 +1,3 @@
-
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -17,34 +16,36 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using FFACETools;
-using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Threading;
+using EasyFarm.Classes;
+using FFACETools;
+using Microsoft.Practices.Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Routes")]
+    [ViewModel("Routes")]
     public class RoutesViewModel : ViewModelBase
     {
         /// <summary>
-        /// Recorder to record new waypoints into our path. 
+        ///     Recorder to record new waypoints into our path.
         /// </summary>
         private readonly DispatcherTimer _pathRecorder;
 
         /// <summary>
-        /// Used by the recorder to avoid duplicate, successive waypoints.
-        /// (Identicle waypoints are allowed, just not in succession.)
+        ///     Saves the route to file on user request.
+        /// </summary>
+        private readonly SettingsManager _settingsManager;
+
+        /// <summary>
+        ///     Used by the recorder to avoid duplicate, successive waypoints.
+        ///     (Identicle waypoints are allowed, just not in succession.)
         /// </summary>
         private FFACE.Position _lastPosition = new FFACE.Position();
 
-        /// <summary>
-        /// Saves the route to file on user request. 
-        /// </summary>
-        private SettingsManager _settingsManager;
+        private string _recordHeader;
 
         public RoutesViewModel()
         {
@@ -55,17 +56,15 @@ namespace EasyFarm.ViewModels
             ClearCommand = new DelegateCommand(ClearRoute);
             RecordCommand = new DelegateCommand(RecordRoute);
             SaveCommand = new DelegateCommand(SaveRoute);
-            LoadCommand = new DelegateCommand(LoadRoute);            
+            LoadCommand = new DelegateCommand(LoadRoute);
 
             _settingsManager = new SettingsManager(
                 "ewl",
                 "EasyFarm Waypoint List"
-            );
+                );
 
             RecordHeader = "Record";
         }
-
-        private string _recordHeader;
 
         public string RecordHeader
         {
@@ -74,7 +73,7 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Exposes the list of waypoints to the user. 
+        ///     Exposes the list of waypoints to the user.
         /// </summary>
         public ObservableCollection<Waypoint> Route
         {
@@ -83,27 +82,27 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Binding for the record command for the GUI.
+        ///     Binding for the record command for the GUI.
         /// </summary>
         public ICommand RecordCommand { get; set; }
 
         /// <summary>
-        /// Binding for the clear command for the GUI. 
+        ///     Binding for the clear command for the GUI.
         /// </summary>
         public ICommand ClearCommand { get; set; }
 
         /// <summary>
-        /// Binding for the save command for the GUI. 
+        ///     Binding for the save command for the GUI.
         /// </summary>
         public ICommand SaveCommand { get; set; }
 
         /// <summary>
-        /// Binding for the load command for the GUI. 
+        ///     Binding for the load command for the GUI.
         /// </summary>
         public ICommand LoadCommand { get; set; }
 
         /// <summary>
-        /// Clears the waypoint list. 
+        ///     Clears the waypoint list.
         /// </summary>
         public void ClearRoute()
         {
@@ -111,8 +110,8 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Pauses and resumes the path recorder based on
-        /// its current state. 
+        ///     Pauses and resumes the path recorder based on
+        ///     its current state.
         /// </summary>
         /// <param name="recordBut`ton"></param>
         public void RecordRoute()
@@ -137,23 +136,23 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Saves the route data. 
+        ///     Saves the route data.
         /// </summary>
         private void SaveRoute()
         {
             try
             {
-                _settingsManager.Save<ObservableCollection<Waypoint>>(Route);
-                AppInformer.InformUser("Path has been saved.");    
+                _settingsManager.Save(Route);
+                AppInformer.InformUser("Path has been saved.");
             }
             catch (InvalidOperationException)
             {
                 AppInformer.InformUser("Failed to save path.");
-            }            
+            }
         }
 
         /// <summary>
-        /// Loads the route data. 
+        ///     Loads the route data.
         /// </summary>
         private void LoadRoute()
         {
@@ -176,11 +175,11 @@ namespace EasyFarm.ViewModels
             catch (InvalidOperationException)
             {
                 AppInformer.InformUser("Failed to load the path.");
-            }            
+            }
         }
 
         /// <summary>
-        /// Records a new path for the player to travel. 
+        ///     Records a new path for the player to travel.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -189,7 +188,7 @@ namespace EasyFarm.ViewModels
             // Add a new waypoint only when we are not standing at 
             // our last position. 
             var playerPosition = FFACE.Player.Position;
-            
+
             // Update the path if we've changed out position. Rotating our heading does not
             // count as the player moving. 
             if (playerPosition.X != _lastPosition.X || playerPosition.Z != _lastPosition.Z)

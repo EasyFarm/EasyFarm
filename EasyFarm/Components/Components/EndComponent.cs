@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,35 +16,26 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System;
+using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.Logging;
 using FFACETools;
-using System;
-using System.Linq;
 
 namespace EasyFarm.Components
 {
     /// <summary>
-    /// Handles the end of battle situation. 
-    /// Fires off the end list, sets FightStart to true so other 
-    /// lists can fire and replaces targets that are dead, null, 
-    /// empty or invalid. 
+    ///     Handles the end of battle situation.
+    ///     Fires off the end list, sets FightStart to true so other
+    ///     lists can fire and replaces targets that are dead, null,
+    ///     empty or invalid.
     /// </summary>
     public class EndComponent : BaseComponent
     {
-        private FFACE _fface;
-
-        private Executor _executor;
-
-        private UnitService _units;
-
+        private readonly Executor _executor;
+        private readonly FFACE _fface;
+        private readonly UnitService _units;
         private DateTime _lastTargetCheck = DateTime.Now;
-
-        public Unit Target
-        {
-            get { return AttackContainer.TargetUnit; }
-            set { AttackContainer.TargetUnit = value; }
-        }
 
         public EndComponent(FFACE fface)
             : base(fface)
@@ -53,6 +43,12 @@ namespace EasyFarm.Components
             _fface = fface;
             _executor = new Executor(fface);
             _units = new UnitService(fface);
+        }
+
+        public Unit Target
+        {
+            get { return AttackContainer.TargetUnit; }
+            set { AttackContainer.TargetUnit = value; }
         }
 
         public override bool CheckComponent()
@@ -69,7 +65,7 @@ namespace EasyFarm.Components
         }
 
         /// <summary>
-        /// Force player when changing targets. 
+        ///     Force player when changing targets.
         /// </summary>
         public override void EnterComponent()
         {

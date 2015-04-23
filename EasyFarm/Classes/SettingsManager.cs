@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,25 +16,21 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Manages the saving and loading of game data to 
-    /// file under their own extensions. 
+    ///     Manages the saving and loading of game data to
+    ///     file under their own extensions.
     /// </summary>
     public class SettingsManager
     {
-        private string _startPath;
-        private string _extension;
-        private string _fileType;
+        private readonly string _extension;
+        private readonly string _fileType;
+        private readonly string _startPath;
 
         public SettingsManager(string extension, string fileType)
         {
@@ -45,7 +40,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Saves settings to file. 
+        ///     Saves settings to file.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
@@ -54,15 +49,16 @@ namespace EasyFarm.Classes
         {
             var path = GetSavePath();
             if (string.IsNullOrWhiteSpace(path)) return;
-            Serialization.Serialize<T>(path, value);
+            Serialization.Serialize(path, value);
         }
 
         /// <summary>
-        /// Loads settings from file. 
+        ///     Loads settings from file.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        /// /// <exception cref="InvalidOperationException"></exception>
+        /// ///
+        /// <exception cref="InvalidOperationException"></exception>
         public T Load<T>()
         {
             var path = GetLoadPath();
@@ -72,7 +68,7 @@ namespace EasyFarm.Classes
 
         private string GetSavePath()
         {
-            SaveFileDialog sfd = new SaveFileDialog();
+            var sfd = new SaveFileDialog();
             sfd.OverwritePrompt = true;
             sfd.InitialDirectory = _startPath;
             sfd.AddExtension = true;
@@ -84,7 +80,7 @@ namespace EasyFarm.Classes
 
         private string GetLoadPath()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
+            var ofd = new OpenFileDialog();
             ofd.InitialDirectory = _startPath;
             ofd.AddExtension = true;
             ofd.DefaultExt = _extension;
@@ -94,8 +90,8 @@ namespace EasyFarm.Classes
         }
 
         private string GetFilter()
-        {           
-            return String.Format("{0} ({1})|*.{1}", _fileType, _extension);
+        {
+            return string.Format("{0} ({1})|*.{1}", _fileType, _extension);
         }
     }
 }

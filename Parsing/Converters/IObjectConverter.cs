@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -22,14 +21,14 @@ namespace Parsing.Converters
     public interface IObjectConverter<TObject>
     {
         /// <summary>
-        /// Whether or not we can convert the object. 
+        ///     Whether or not we can convert the object.
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
         bool CanConvert(TObject obj);
 
         /// <summary>
-        /// Convert the object to the new type. 
+        ///     Convert the object to the new type.
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>

@@ -1,4 +1,3 @@
-
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -18,22 +17,18 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace EasyFarm.ViewModels
 {
     public class ViewModelAttribute : Attribute
     {
-        public String Name { get; set; }
-
-        public bool Enabled { get; set; }
-
-        public ViewModelAttribute(String name, bool enabled = true)
+        public ViewModelAttribute(string name, bool enabled = true)
         {
             Enabled = enabled;
             Name = name;
         }
+
+        public string Name { get; set; }
+        public bool Enabled { get; set; }
     }
 }

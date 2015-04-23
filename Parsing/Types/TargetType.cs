@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -24,13 +23,13 @@ namespace Parsing.Types
     [Flags]
     public enum TargetType
     {
-        Unknown     = 0x0000,
-        Self        = 0x0001,
-        Player      = 0x0002,
-        Party       = 0x0004,
-        Ally        = 0x0008,
-        NPC         = 0x0016,
-        Enemy       = 0x0032,
-        Corpse      = 0x0064
+        Unknown = 0x0000,
+        Self = 0x0001,
+        Player = 0x0002,
+        Party = 0x0004,
+        Ally = 0x0008,
+        NPC = 0x0016,
+        Enemy = 0x0032,
+        Corpse = 0x0064
     }
 }

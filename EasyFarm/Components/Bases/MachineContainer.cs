@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,11 +16,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyFarm.Components
 {
@@ -29,27 +24,36 @@ namespace EasyFarm.Components
     {
         public MachineContainer()
         {
-            this.Components = new List<MachineComponent>();
+            Components = new List<MachineComponent>();
         }
 
         /// <summary>
-        /// List of components to run. 
+        ///     List of components to run.
         /// </summary>
         public List<MachineComponent> Components { get; set; }
 
         public void AddComponent(MachineComponent component)
         {
-            lock (this.Components) { this.Components.Add(component); }
+            lock (Components)
+            {
+                Components.Add(component);
+            }
         }
 
         public void RemoveComponent(int index)
         {
-            lock (Components) { this.Components.RemoveAt(index); }
+            lock (Components)
+            {
+                Components.RemoveAt(index);
+            }
         }
 
         public void ClearComponents()
         {
-            lock (Components) { Components.Clear(); }
+            lock (Components)
+            {
+                Components.Clear();
+            }
         }
     }
 }

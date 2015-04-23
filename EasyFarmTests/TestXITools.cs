@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,12 +16,11 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
+using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Parsing.Abilities;
 using Parsing.Services;
-using System;
-using System.Diagnostics;
 
 namespace XI_Tools_Tests
 {
@@ -37,16 +35,16 @@ namespace XI_Tools_Tests
 
         [TestClass]
         public class AbilityTests
-        {           
+        {
             [TestMethod]
             public void TestToString()
             {
-                Ability test = new Ability();
+                var test = new Ability();
                 test.Prefix = "/magic";
                 test.English = "Cure";
                 test.Targets = "Self";
                 var cure = new AbilityService("resources").CreateAbility("Cure");
-                StringAssert.Equals(test.ToString(), cure.ToString());
+                Equals(test.ToString(), cure.ToString());
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,13 +16,8 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using Parsing.Abilities;
 using Parsing.Mapping;
 using Parsing.Types;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
 
 namespace Parsing.Augmenting
 {
@@ -31,7 +25,7 @@ namespace Parsing.Augmenting
     {
         public TargetTypeAugmenter(string attributeName, string variableName) :
             base(attributeName, variableName)
-        {            
+        {
             _mappers.Add(new ObjectMapper<string, TargetType>("Corpse", TargetType.Corpse));
             _mappers.Add(new ObjectMapper<string, TargetType>("Enemy", TargetType.Enemy));
             _mappers.Add(new ObjectMapper<string, TargetType>("NPC", TargetType.NPC));
@@ -41,7 +35,7 @@ namespace Parsing.Augmenting
             _mappers.Add(new ObjectMapper<string, TargetType>("Self", TargetType.Self));
 
             // Use the single value enum mapper. 
-            this._mapper = new SingleValueEnumMapper<TargetType>(_mappers);
-        }        
+            _mapper = new SingleValueEnumMapper<TargetType>(_mappers);
+        }
     }
 }

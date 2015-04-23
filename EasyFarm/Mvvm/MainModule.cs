@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -20,18 +19,12 @@ You should have received a copy of the GNU General Public License
 using EasyFarm.Views;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.ServiceLocation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyFarm.Prism
 {
     public class MainModule : IModule
     {
-        private readonly IRegionViewRegistry regionViewRegistry = null;
+        private readonly IRegionViewRegistry regionViewRegistry;
 
         public MainModule(IRegionViewRegistry regionViewRegistry)
         {
@@ -40,8 +33,8 @@ namespace EasyFarm.Prism
 
         public void Initialize()
         {
-            this.regionViewRegistry.RegisterViewWithRegion("MainRegion", typeof(MainView));
-            this.regionViewRegistry.RegisterViewWithRegion("MainRegion", typeof(SettingsView));
+            regionViewRegistry.RegisterViewWithRegion("MainRegion", typeof (MainView));
+            regionViewRegistry.RegisterViewWithRegion("MainRegion", typeof (SettingsView));
         }
     }
 }

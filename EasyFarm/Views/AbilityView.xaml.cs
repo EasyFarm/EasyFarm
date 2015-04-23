@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -22,7 +21,7 @@ using System.Windows.Controls;
 namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for AbilityView.xaml
+    ///     Interaction logic for AbilityView.xaml
     /// </summary>
     public partial class AbilityView : UserControl
     {

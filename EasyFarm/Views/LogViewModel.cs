@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,24 +16,17 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Logging;
-using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
-using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Tracing;
 using System.Threading;
+using EasyFarm.Logging;
+using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Log")]
+    [ViewModel("Log")]
     public class LogViewModel : ViewModelBase
     {
-        public ObservableCollection<String> LoggedItems { get; set; }
-
-        public StringSink EventSink { get; set; }
-
-        public ObservableEventListener EventListener { get; set; }
-
         private readonly SynchronizationContext _syncContext;
 
         public LogViewModel()
@@ -42,18 +34,22 @@ namespace EasyFarm.ViewModels
             LoggedItems = new ObservableCollection<string>();
             EventListener = new ObservableEventListener();
             EventListener.EnableEvents(Logger.Write, EventLevel.Verbose);
-            this._syncContext = SynchronizationContext.Current;
-            this.EventListener.LogToCollection(PublishLogItem);
+            _syncContext = SynchronizationContext.Current;
+            EventListener.LogToCollection(PublishLogItem);
             // Can only be called on the dispatcher's thread. 
         }
 
+        public ObservableCollection<string> LoggedItems { get; set; }
+        public StringSink EventSink { get; set; }
+        public ObservableEventListener EventListener { get; set; }
+
         /// <summary>
-        /// Publish log item under the right thread context. 
+        ///     Publish log item under the right thread context.
         /// </summary>
         /// <param name="message"></param>
-        public void PublishLogItem(String message)
+        public void PublishLogItem(string message)
         {
-            if (this._syncContext == SynchronizationContext.Current)
+            if (_syncContext == SynchronizationContext.Current)
                 LoggedItems.Add(message);
             else
                 _syncContext.Send(o => LoggedItems.Add(message), null);

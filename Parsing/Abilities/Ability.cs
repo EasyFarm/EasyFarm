@@ -1,4 +1,3 @@
-
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -18,195 +17,182 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using Parsing.Types;
-using System.Collections.Generic;
 
 namespace Parsing.Abilities
 {
     /// <summary>
-    /// An action to be used on a target unit or player.
-    /// Could be a spell or an ability.
+    ///     An action to be used on a target unit or player.
+    ///     Could be a spell or an ability.
     /// </summary>
     public class Ability
     {
         public Ability()
         {
-            this.AbilityType = AbilityType.Unknown;
-            this.Alias = string.Empty;
-            this.CastTime = 0;
-            this.CategoryType = CategoryType.Unknown;
-            this.Distance = 0;
-            this.Element = string.Empty;
-            this.ElementType = ElementType.Unknown;
-            this.English = string.Empty;
-            this.ID = 0;
-            this.Index = 0;
-            this.Japanese = string.Empty;
-            this.MPCost = 0;
-            this.Postfix = string.Empty;
-            this.Prefix = string.Empty;
-            this.Recast = 0;
-            this.Skill = string.Empty;
-            this.SkillType = SkillType.Unknown;
-            this.Targets = string.Empty;
-            this.TargetType = TargetType.Unknown;
-            this.TPCost = 0;
-            this.Type = string.Empty;
+            AbilityType = AbilityType.Unknown;
+            Alias = string.Empty;
+            CastTime = 0;
+            CategoryType = CategoryType.Unknown;
+            Distance = 0;
+            Element = string.Empty;
+            ElementType = ElementType.Unknown;
+            English = string.Empty;
+            ID = 0;
+            Index = 0;
+            Japanese = string.Empty;
+            MPCost = 0;
+            Postfix = string.Empty;
+            Prefix = string.Empty;
+            Recast = 0;
+            Skill = string.Empty;
+            SkillType = SkillType.Unknown;
+            Targets = string.Empty;
+            TargetType = TargetType.Unknown;
+            TPCost = 0;
+            Type = string.Empty;
         }
 
         /// <summary>
-        /// The ability ID in its own resource file. 
+        ///     The ability ID in its own resource file.
         /// </summary>
         public int ID { get; set; }
 
         /// <summary>
-        /// Unique number that allows for retrieving ability recast times. 
+        ///     Unique number that allows for retrieving ability recast times.
         /// </summary>
         public int Index { get; set; }
 
         /// <summary>
-        /// The name of the ability in English. 
+        ///     The name of the ability in English.
         /// </summary>
         public string English { get; set; }
 
         /// <summary>
-        /// The name of the ability in Japanese. 
+        ///     The name of the ability in Japanese.
         /// </summary>
         public string Japanese { get; set; }
 
         /// <summary>
-        /// The mp cost for the ability. 
+        ///     The mp cost for the ability.
         /// </summary>
         public int MPCost { get; set; }
 
         /// <summary>
-        /// The tp cost for the ablility. 
+        ///     The tp cost for the ablility.
         /// </summary>
         public int TPCost { get; set; }
 
         /// <summary>
-        /// The alias for the ability. Not every ability 
-        /// has an alias. 
-        /// 
-        /// Example: Cure's alias is c1
+        ///     The alias for the ability. Not every ability
+        ///     has an alias.
+        ///     Example: Cure's alias is c1
         /// </summary>
         public string Alias { get; set; }
 
         /// <summary>
-        /// The first part of the command that tells us what type
-        /// of ability it is:
-        /// 
-        /// Magic: 
-        /// /magic, /ninjutsu, /song, /trigger, 
-        /// 
-        /// Ability: 
-        /// /weaponskill, 
-        /// /range, /echo, /jobability, /pet, /monsterskill. 
+        ///     The first part of the command that tells us what type
+        ///     of ability it is:
+        ///     Magic:
+        ///     /magic, /ninjutsu, /song, /trigger,
+        ///     Ability:
+        ///     /weaponskill,
+        ///     /range, /echo, /jobability, /pet, /monsterskill.
         /// </summary>
         public AbilityType AbilityType { get; set; }
 
         /// <summary>
-        /// String representation for the AbilityType. 
+        ///     String representation for the AbilityType.
         /// </summary>
         public string Prefix { get; set; }
 
         /// <summary>
-        /// The target for the ability. 
-        /// Example: <t>, <st>, <stnpc>
+        ///     The target for the ability.
+        ///     Example: <t>, <st>, <stnpc>
         /// </summary>
         public string Postfix { get; set; }
 
         /// <summary>
-        /// How long the ability takes to cast. 
+        ///     How long the ability takes to cast.
         /// </summary>
         public double CastTime { get; set; }
 
         /// <summary>
-        /// How long to wait before the ability can be casted again. 
+        ///     How long to wait before the ability can be casted again.
         /// </summary>
         public double Recast { get; set; }
 
         /// <summary>
-        /// The max range with which this ability can be used. 
+        ///     The max range with which this ability can be used.
         /// </summary>
         public double Distance { get; set; }
 
         /// <summary>
-        /// The type of ability: 
-        /// 
-        /// Magic:
-        /// WhiteMagic, BlackMagic, SummonerPact, Ninjustsu, Geomancy, 
-        /// BlueMagic, BardSong, Trust, trigger, 
-        /// 
-        /// Ability: 
-        /// WeaponSkill, Misc, JobAbility, PetCommand, CorsairRoll, 
-        /// CorsairShot, Samba, Waltz, Jig, Step, Flourish1, Flourish2, 
-        /// Effusion, Rune, Ward, BloodPactWard, BloodPactRage, Monster,
-        /// JobTrait, MonsterSkill
-        /// 
-        /// Example: BlueMagic
+        ///     The type of ability:
+        ///     Magic:
+        ///     WhiteMagic, BlackMagic, SummonerPact, Ninjustsu, Geomancy,
+        ///     BlueMagic, BardSong, Trust, trigger,
+        ///     Ability:
+        ///     WeaponSkill, Misc, JobAbility, PetCommand, CorsairRoll,
+        ///     CorsairShot, Samba, Waltz, Jig, Step, Flourish1, Flourish2,
+        ///     Effusion, Rune, Ward, BloodPactWard, BloodPactRage, Monster,
+        ///     JobTrait, MonsterSkill
+        ///     Example: BlueMagic
         /// </summary>
         public CategoryType CategoryType { get; set; }
 
         /// <summary>
-        /// String representation for the catergory type. 
+        ///     String representation for the catergory type.
         /// </summary>
         public string Type { get; set; }
 
         /// <summary>
-        /// The type of skill the ability is: 
-        /// 
-        /// HealingMagic, DivineMagic, EnfeeblingMagic,
-        /// EnhancingMagic, ElementalMagic, DarkMagic, 
-        /// SummoningMagic, Ninjutsu, Singing, BlueMagic
-        /// Geomancy, ControlTrigger, GenericTrigger, 
-        /// ElementalTrigger, CombatTrigger, trigger, 0, 
-        /// Ability
+        ///     The type of skill the ability is:
+        ///     HealingMagic, DivineMagic, EnfeeblingMagic,
+        ///     EnhancingMagic, ElementalMagic, DarkMagic,
+        ///     SummoningMagic, Ninjutsu, Singing, BlueMagic
+        ///     Geomancy, ControlTrigger, GenericTrigger,
+        ///     ElementalTrigger, CombatTrigger, trigger, 0,
+        ///     Ability
         /// </summary>
         public SkillType SkillType { get; set; }
 
         /// <summary>
-        /// String representation of the skill type. 
+        ///     String representation of the skill type.
         /// </summary>
         public string Skill { get; set; }
 
         /// <summary>
-        /// The element type of the ability:
-        /// Light, Wind, Earth, Water, Ice, Fire, 
-        /// Thunder, Dark, NonElemental, None, 
-        /// trigger, Any, All
-        /// 
-        /// Example: Light, Dark
+        ///     The element type of the ability:
+        ///     Light, Wind, Earth, Water, Ice, Fire,
+        ///     Thunder, Dark, NonElemental, None,
+        ///     trigger, Any, All
+        ///     Example: Light, Dark
         /// </summary>
         public ElementType ElementType { get; set; }
 
         /// <summary>
-        /// String representation of the element type. 
+        ///     String representation of the element type.
         /// </summary>
         public string Element { get; set; }
 
         /// <summary>
-        /// The target types can the ability be used on. 
-        /// It can be a combination of these fields: 
-        /// Self, Player, Party, Ally, NPC, Enemy, Corpse
-        /// 
-        /// Example: Self, Party
+        ///     The target types can the ability be used on.
+        ///     It can be a combination of these fields:
+        ///     Self, Player, Party, Ally, NPC, Enemy, Corpse
+        ///     Example: Self, Party
         /// </summary>
         public TargetType TargetType { get; set; }
 
         /// <summary>
-        /// String representation of the target type. 
+        ///     String representation of the target type.
         /// </summary>
         public string Targets { get; set; }
 
         /// <summary>
-        /// Indicates whether we created a valid ability or not. 
+        ///     Indicates whether we created a valid ability or not.
         /// </summary>
         public bool IsValidName
         {
-            get
-            {
-                return !string.IsNullOrEmpty(English);
-            }
+            get { return !string.IsNullOrEmpty(English); }
         }
 
         public override string ToString()
@@ -228,11 +214,8 @@ namespace Parsing.Abilities
                 return Prefix + " " + Postfix;
             }
 
-            // Use the spell/ability syntax.
-            else
-            {
-                return Prefix + " \"" + English + "\" " + Postfix;
-            }
-        }        
+                // Use the spell/ability syntax.
+            return Prefix + " \"" + English + "\" " + Postfix;
+        }
     }
 }

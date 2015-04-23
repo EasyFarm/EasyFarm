@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -20,39 +19,40 @@ You should have received a copy of the GNU General Public License
 namespace Parsing.Types
 {
     /// <summary>
-    /// Represents an ability's catergory type which is the group 
-    /// of abilities this ability belongs to. 
+    ///     Represents an ability's catergory type which is the group
+    ///     of abilities this ability belongs to.
     /// </summary>
     public enum CategoryType
     {
         Unknown,
-        WeaponSkill, 
-        Misc, 
-        JobAbility, 
-        PetCommand, 
+        WeaponSkill,
+        Misc,
+        JobAbility,
+        PetCommand,
         CorsairRoll,
-        CorsairShot, 
-        Samba, Waltz, 
-        Jig, 
-        Step, 
-        Flourish1, 
-        Flourish2, 
-        Effusion, 
-        Rune, 
-        Ward, 
-        BloodPactWard, 
-        BloodPactRage, 
+        CorsairShot,
+        Samba,
+        Waltz,
+        Jig,
+        Step,
+        Flourish1,
+        Flourish2,
+        Effusion,
+        Rune,
+        Ward,
+        BloodPactWard,
+        BloodPactRage,
         Monster,
-        JobTrait, 
+        JobTrait,
         MonsterSkill,
-        WhiteMagic, 
-        BlackMagic, 
-        SummonerPact, 
-        Ninjustsu, 
-        Geomancy, 
-        BlueMagic, 
-        BardSong, 
-        Trust, 
+        WhiteMagic,
+        BlackMagic,
+        SummonerPact,
+        Ninjustsu,
+        Geomancy,
+        BlueMagic,
+        BardSong,
+        Trust,
         Trigger
     }
 }

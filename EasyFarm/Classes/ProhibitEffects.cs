@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 Copyright (C) <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
@@ -16,98 +15,103 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using FFACETools;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using FFACETools;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Effects that render player actions unusable. 
+    ///     Effects that render player actions unusable.
     /// </summary>
-    public partial class ProhibitEffects
+    public class ProhibitEffects
     {
         /// <summary>
-        /// Effects that prevent casting. 
+        ///     Effects that prevent casting.
         /// </summary>
         public static IEnumerable<StatusEffect> PROHIBIT_EFFECTS_SPELL
         {
             get
             {
-                return new List<StatusEffect>()
-                { 
-                    StatusEffect.Silence, StatusEffect.Mute
-
+                return new List<StatusEffect>
+                {
+                    StatusEffect.Silence,
+                    StatusEffect.Mute
                 }.Concat(PROHIBIT_EFFECTS_CONTROL);
             }
         }
 
         /// <summary>
-        /// Effects that prevent ability usage. 
+        ///     Effects that prevent ability usage.
         /// </summary>
         public static IEnumerable<StatusEffect> PROHIBIT_EFFECTS_ABILITY
         {
             get
             {
-                return new List<StatusEffect>()
-                { 
+                return new List<StatusEffect>
+                {
                     StatusEffect.Amnesia
-
                 }.Concat(PROHIBIT_EFFECTS_CONTROL);
             }
         }
 
         /// <summary>
-        /// Effects that prevent player action.
+        ///     Effects that prevent player action.
         /// </summary>
         public static IEnumerable<StatusEffect> PROHIBIT_EFFECTS_CONTROL
         {
             get
             {
-                return new List<StatusEffect>()
+                return new List<StatusEffect>
                 {
-                    StatusEffect.Charm1, StatusEffect.Charm2, 
-                    StatusEffect.Petrification, StatusEffect.Sleep, 
-                    StatusEffect.Sleep2, StatusEffect.Stun, 
-                    StatusEffect.Chocobo, StatusEffect.Terror,
+                    StatusEffect.Charm1,
+                    StatusEffect.Charm2,
+                    StatusEffect.Petrification,
+                    StatusEffect.Sleep,
+                    StatusEffect.Sleep2,
+                    StatusEffect.Stun,
+                    StatusEffect.Chocobo,
+                    StatusEffect.Terror,
                     StatusEffect.Lullaby
                 };
             }
         }
 
         /// <summary>
-        /// Effects that prevent player action.
+        ///     Effects that prevent player action.
         /// </summary>
         public static IEnumerable<StatusEffect> PROHIBIT_EFFECTS_MOVEMENT
         {
             get
             {
-                return new List<StatusEffect>() 
-                { 
-                    StatusEffect.Bind 
-
+                return new List<StatusEffect>
+                {
+                    StatusEffect.Bind
                 }.Concat(PROHIBIT_EFFECTS_CONTROL);
             }
         }
 
-
         /// <summary>
-        /// Effects that prevent resting or recovering hp / mp. 
+        ///     Effects that prevent resting or recovering hp / mp.
         /// </summary>
         public static IEnumerable<StatusEffect> PROHIBIT_EFFECTS_DOTS
         {
             get
             {
-                return new List<StatusEffect>()
+                return new List<StatusEffect>
                 {
-                    StatusEffect.Bio, StatusEffect.Poison, 
-                    StatusEffect.Frost, StatusEffect.Burn, 
-                    StatusEffect.Choke, StatusEffect.Rasp, 
-                    StatusEffect.Shock, StatusEffect.Drown, 
-                    StatusEffect.Dia, StatusEffect.Requiem, 
-                    StatusEffect.Disease, StatusEffect.Helix, 
+                    StatusEffect.Bio,
+                    StatusEffect.Poison,
+                    StatusEffect.Frost,
+                    StatusEffect.Burn,
+                    StatusEffect.Choke,
+                    StatusEffect.Rasp,
+                    StatusEffect.Shock,
+                    StatusEffect.Drown,
+                    StatusEffect.Dia,
+                    StatusEffect.Requiem,
+                    StatusEffect.Disease,
+                    StatusEffect.Helix,
                     StatusEffect.Plague
                 };
             }

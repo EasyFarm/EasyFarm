@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 Copyright (C) <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
@@ -16,17 +15,17 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Collections;
-using FFACETools;
-using Parsing.Abilities;
 using System;
 using System.Linq;
 using System.Threading;
+using EasyFarm.Collections;
+using FFACETools;
+using Parsing.Abilities;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Monitors and Casts player abilities, spells and weaponskills. 
+    ///     Monitors and Casts player abilities, spells and weaponskills.
     /// </summary>
     public class Caster
     {
@@ -36,7 +35,7 @@ namespace EasyFarm.Classes
 
         public Caster(FFACE fface)
         {
-            this._fface = fface;
+            _fface = fface;
 
             if (_player == null)
             {
@@ -45,8 +44,8 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Cast the spell and returns whether the cast was 
-        /// successful or not. 
+        ///     Cast the spell and returns whether the cast was
+        ///     successful or not.
         /// </summary>
         /// <param name="ability"></param>
         /// <returns></returns>
@@ -66,16 +65,16 @@ namespace EasyFarm.Classes
             {
                 return MonitorCast();
             }
-            
-            return false;            
+
+            return false;
         }
 
         /// <summary>
-        /// Ensures the command is sent to the game and 
-        /// executed. 
+        ///     Ensures the command is sent to the game and
+        ///     executed.
         /// </summary>
         /// <param name="ability"></param>
-        private bool EnsureCast(String command)
+        private bool EnsureCast(string command)
         {
             // Chainspelled spells will always be cast without fail so 
             // cast it and return immediately. 
@@ -113,7 +112,7 @@ namespace EasyFarm.Classes
                 // Has moved 
                 if (position.X != _fface.Player.PosX ||
                     position.Y != _fface.Player.PosY ||
-                    position.Z != _fface.Player.PosZ) return false;                
+                    position.Z != _fface.Player.PosZ) return false;
 
                 prior = _fface.Player.CastPercentEx;
 
@@ -122,11 +121,11 @@ namespace EasyFarm.Classes
 
             // Report success
             if (castHistory.RepeatsN(30).Any(x => x.Equals(100))) return true;
-            else return false;
+            return false;
         }
 
         public bool CastAbility(Ability ability)
-        {           
+        {
             // Send the command to the game. 
             _fface.Windower.SendString(ability.ToString());
             Thread.Sleep(100);
@@ -134,7 +133,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Casts an ability with no monitoring. 
+        ///     Casts an ability with no monitoring.
         /// </summary>
         /// <param name="ability"></param>
         /// <returns></returns>
@@ -142,9 +141,9 @@ namespace EasyFarm.Classes
         {
             return CastAbility(ability.Ability);
         }
-       
+
         /// <summary>
-        /// Casts a spell with monitoring. 
+        ///     Casts a spell with monitoring.
         /// </summary>
         /// <param name="ability"></param>
         /// <returns></returns>

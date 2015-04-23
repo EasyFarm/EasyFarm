@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,68 +16,51 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Collections;
-using FFACETools;
 using System;
 using System.Linq;
 using System.Timers;
+using EasyFarm.Collections;
+using FFACETools;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Information about a unit that can move. 
+    ///     Information about a unit that can move.
     /// </summary>
     public class MovingUnit : Unit, IDisposable
     {
-        /// <summary>
-        /// Timer that ticks to calculate the current displacement, velocity and 
-        /// acceleration from previous values. 
-        /// </summary>
-        private Timer _timer;
-
-        /// <summary>
-        /// Create an object the timers can lock onto. 
-        /// </summary>
-        private object _mutex;
-
         private const int HISTORY_POSITION_LIMIT = 10;
 
-        private ThresholdQueue<FFACE.Position> _positionHistory =
+        /// <summary>
+        ///     Create an object the timers can lock onto.
+        /// </summary>
+        private readonly object _mutex;
+
+        private readonly ThresholdQueue<FFACE.Position> _positionHistory =
             new ThresholdQueue<FFACE.Position>(HISTORY_POSITION_LIMIT, .75);
 
-        public bool IsVelocityEnabled { get; set; }
+        /// <summary>
+        ///     Timer that ticks to calculate the current displacement, velocity and
+        ///     acceleration from previous values.
+        /// </summary>
+        private readonly Timer _timer;
 
         public MovingUnit(FFACE fface, int id)
             : base(fface, id)
         {
-            this._mutex = new object();
-            this._timer = new Timer();
-            this._timer.AutoReset = true;
-            this._timer.Interval = 30;
-            this._timer.Elapsed += TimerTick;
-            this._timer.Start();
+            _mutex = new object();
+            _timer = new Timer();
+            _timer.AutoReset = true;
+            _timer.Interval = 30;
+            _timer.Elapsed += TimerTick;
+            _timer.Start();
         }
 
-        /// <summary>
-        /// Updates our history of player positions, velocities and 
-        /// sets the IsStuck field. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TimerTick(object sender, ElapsedEventArgs e)
-        {
-            lock (_mutex)
-            {
-                _positionHistory.AddItem(this.Position);
-            }
-        }
+        public bool IsVelocityEnabled { get; set; }
 
         public bool IsStuck
         {
-            get
-            {
-                return _positionHistory.IsThresholdMet(x => GetIsStuck(x));
-            }
+            get { return _positionHistory.IsThresholdMet(x => GetIsStuck(x)); }
         }
 
         public bool IsMoving
@@ -94,7 +76,7 @@ namespace EasyFarm.Classes
                 if (end == null) return false;
 
                 // Calculate the displacement
-                var displacement = new FFACE.Position()
+                var displacement = new FFACE.Position
                 {
                     X = start.X - end.X,
                     Y = start.Y - end.Y,
@@ -103,8 +85,27 @@ namespace EasyFarm.Classes
 
                 // Return true if we've moved any direction. 
                 return displacement.X != 0 ||
-                    displacement.Y != 0 ||
-                    displacement.Z != 0;
+                       displacement.Y != 0 ||
+                       displacement.Z != 0;
+            }
+        }
+
+        public void Dispose()
+        {
+            _timer.Dispose();
+        }
+
+        /// <summary>
+        ///     Updates our history of player positions, velocities and
+        ///     sets the IsStuck field.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimerTick(object sender, ElapsedEventArgs e)
+        {
+            lock (_mutex)
+            {
+                _positionHistory.AddItem(Position);
             }
         }
 
@@ -114,11 +115,6 @@ namespace EasyFarm.Classes
             if (velocity.X < .125 && velocity.Z < .250) return true;
             if (velocity.X < .250 && velocity.Z < .125) return true;
             return false;
-        }
-
-        public void Dispose()
-        {
-            this._timer.Dispose();
         }
     }
 }

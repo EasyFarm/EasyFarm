@@ -1,4 +1,3 @@
-
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -17,23 +16,38 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using Microsoft.Practices.Prism.Commands;
-using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using EasyFarm.Classes;
+using Microsoft.Practices.Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Ignored")]
+    [ViewModel("Ignored")]
     public class IgnoredViewModel : ViewModelBase
     {
-        public IgnoredViewModel() 
+        public IgnoredViewModel()
         {
             AddIgnoredUnitCommand = new DelegateCommand(AddIgnoredUnit);
             DeleteIgnoredUnitCommand = new DelegateCommand(DeleteIgnoredUnit);
             ClearIgnoredUnitsCommand = new DelegateCommand(ClearIgnoredUnits);
         }
+
+        public string Name
+        {
+            get { return Config.Instance.IgnoredName; }
+            set { SetProperty(ref Config.Instance.IgnoredName, value); }
+        }
+
+        public ObservableCollection<string> Ignored
+        {
+            get { return Config.Instance.IgnoredMobs; }
+            set { SetProperty(ref Config.Instance.IgnoredMobs, value); }
+        }
+
+        public ICommand AddIgnoredUnitCommand { get; set; }
+        public ICommand DeleteIgnoredUnitCommand { get; set; }
+        public ICommand ClearIgnoredUnitsCommand { get; set; }
 
         private void ClearIgnoredUnits()
         {
@@ -48,26 +62,8 @@ namespace EasyFarm.ViewModels
 
         private void AddIgnoredUnit()
         {
-            if(!Ignored.Contains(Name))
+            if (!Ignored.Contains(Name))
                 Ignored.Add(Name);
         }
-
-        public String Name
-        {
-            get { return Config.Instance.IgnoredName; }
-            set { SetProperty(ref Config.Instance.IgnoredName, value); }
-        }
-
-        public ObservableCollection<String> Ignored
-        {
-            get { return Config.Instance.IgnoredMobs; }
-            set { SetProperty(ref Config.Instance.IgnoredMobs, value); }
-        }
-
-        public ICommand AddIgnoredUnitCommand { get; set; }
-
-        public ICommand DeleteIgnoredUnitCommand { get; set; }
-
-        public ICommand ClearIgnoredUnitsCommand { get; set; }
     }
 }

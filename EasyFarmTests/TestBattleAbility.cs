@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,23 +16,16 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace EasyFarmTests.MachineComponentTests
 {
     public class TestBattleAbility
     {
-        private string _name = string.Empty;
-        private bool _enabled = false;
-        private bool _isBuff = false;
-        private bool _effectWore = false;
+        private readonly bool _effectWore;
+        private readonly bool _enabled;
+        private readonly bool _isBuff;
+        private readonly string _name = string.Empty;
 
-        public TestBattleAbility(String name, bool enabled , bool isbuff, bool effectwore)
+        public TestBattleAbility(string name, bool enabled, bool isbuff, bool effectwore)
         {
             _name = name;
             _enabled = enabled;
@@ -41,36 +33,24 @@ namespace EasyFarmTests.MachineComponentTests
             _effectWore = effectwore;
         }
 
-        public string Name 
+        public string Name
         {
-            get 
-            {
-                return _name;
-            }
+            get { return _name; }
         }
 
         public bool Enabled
         {
-            get 
-            {
-                return _enabled;
-            }
-        }   
-
-        public bool IsBuff 
-        { 
-            get 
-            { 
-                return _isBuff; 
-            } 
+            get { return _enabled; }
         }
 
-        public bool HasEffectWore 
+        public bool IsBuff
         {
-            get 
-            {
-                return _effectWore;
-            }
+            get { return _isBuff; }
+        }
+
+        public bool HasEffectWore
+        {
+            get { return _effectWore; }
         }
     }
 }

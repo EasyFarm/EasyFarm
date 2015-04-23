@@ -1,4 +1,3 @@
-
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -17,26 +16,20 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using FFACETools;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Serializes objects to file. 
+    ///     Serializes objects to file.
     /// </summary>
     public static class Serialization
     {
         /// <summary>
-        /// Serializes an object to file. This function does not 
-        /// handle errors and it's the consumer's job to do so. 
+        ///     Serializes an object to file. This function does not
+        ///     handle errors and it's the consumer's job to do so.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="filename"></param>
@@ -48,14 +41,14 @@ namespace EasyFarm.Classes
             using (Stream fStream = new FileStream(filename,
                 FileMode.Create, FileAccess.Write, FileShare.None))
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                var xmlSerializer = new XmlSerializer(typeof (T));
                 xmlSerializer.Serialize(fStream, value);
             }
         }
 
         /// <summary>
-        /// Serializes an object from file. This function does not 
-        /// handle errors and it's the consumer's job to do so. 
+        ///     Serializes an object from file. This function does not
+        ///     handle errors and it's the consumer's job to do so.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="filename"></param>
@@ -67,8 +60,8 @@ namespace EasyFarm.Classes
             using (Stream fStream = new FileStream(filename,
                 FileMode.Open, FileAccess.Read, FileShare.None))
             {
-                XmlSerializer xmlDeserializer = new XmlSerializer(typeof(T));
-                return (T)xmlDeserializer.Deserialize(fStream);
+                var xmlDeserializer = new XmlSerializer(typeof (T));
+                return (T) xmlDeserializer.Deserialize(fStream);
             }
         }
     }

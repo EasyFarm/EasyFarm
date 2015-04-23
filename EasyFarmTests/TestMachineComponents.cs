@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,12 +16,9 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using EasyFarm.Classes;
 using System.Linq;
-using System.Diagnostics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EasyFarmTests.MachineComponentTests
 {
@@ -30,9 +26,9 @@ namespace EasyFarmTests.MachineComponentTests
     public class TestMachineComponents
     {
         /// <summary>
-        /// Verifies the logic behind the filtering in all 
-        /// targeted and buffing components. The user's expect the 
-        /// ordering to be maintained in each list. 
+        ///     Verifies the logic behind the filtering in all
+        ///     targeted and buffing components. The user's expect the
+        ///     ordering to be maintained in each list.
         /// </summary>
         [TestMethod]
         public void TestComponentAbilityFiltering()
@@ -48,12 +44,12 @@ namespace EasyFarmTests.MachineComponentTests
             // Enabled test data
             var water = new TestBattleAbility("Water", false, false, false);
 
-            var testData = new List<TestBattleAbility>()
+            var testData = new List<TestBattleAbility>
             {
-                provoke, 
-                protect, 
-                shell, 
-                fire, 
+                provoke,
+                protect,
+                shell,
+                fire,
                 water
             };
 
@@ -66,7 +62,7 @@ namespace EasyFarmTests.MachineComponentTests
                 .Where(x => x.Enabled)
                 .Where(x => x.IsBuff && x.HasEffectWore || !x.IsBuff);
 
-            Assert.IsTrue(Enumerable.SequenceEqual(ordering, desiredOutcome));
+            Assert.IsTrue(ordering.SequenceEqual(desiredOutcome));
         }
     }
 }

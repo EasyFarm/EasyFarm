@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 Copyright (C) <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
@@ -21,27 +20,27 @@ using System.Collections.Concurrent;
 namespace EasyFarm.Collections
 {
     /// <summary>
-    /// A queue that keeps a list of a limited number of values. 
+    ///     A queue that keeps a list of a limited number of values.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class LimitedQueue<T> : ConcurrentQueue<T>
     {
         /// <summary>
-        /// The maximum limit the queue can hold. 
-        /// </summary>
-        public int Limit { get; set; }
-
-        /// <summary>
-        /// Create the object and set the maximum limit for the queue. 
+        ///     Create the object and set the maximum limit for the queue.
         /// </summary>
         /// <param name="limit"></param>
         public LimitedQueue(int limit)
         {
-            this.Limit = limit;
+            Limit = limit;
         }
 
         /// <summary>
-        /// Add the object but only keep a set amount of them. 
+        ///     The maximum limit the queue can hold.
+        /// </summary>
+        public int Limit { get; set; }
+
+        /// <summary>
+        ///     Add the object but only keep a set amount of them.
         /// </summary>
         /// <param name="value"></param>
         public void AddItem(T value)
@@ -50,10 +49,10 @@ namespace EasyFarm.Collections
             T discard;
 
             // Remove the oldest value when limit is reached. 
-            if (Count >= Limit) this.TryDequeue(out discard);
+            if (Count >= Limit) TryDequeue(out discard);
 
             // Add value to end.
-            this.Enqueue(value);
+            Enqueue(value);
         }
     }
 }

@@ -1,4 +1,3 @@
-
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -17,16 +16,15 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using Microsoft.Practices.Prism.Commands;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using EasyFarm.Classes;
+using Microsoft.Practices.Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Battles")]
+    [ViewModel("Battles")]
     public class BattlesViewModel : ViewModelBase
     {
         public BattlesViewModel()
@@ -39,40 +37,40 @@ namespace EasyFarm.ViewModels
         public ObservableCollection<BattleList> BattleLists
         {
             get { return Config.Instance.BattleLists; }
-            set 
-            { 
-                var lists = (ObservableCollection<BattleList>)Config.Instance.BattleLists;
-                SetProperty(ref lists, value); 
+            set
+            {
+                var lists = (ObservableCollection<BattleList>) Config.Instance.BattleLists;
+                SetProperty(ref lists, value);
             }
         }
 
         /// <summary>
-        /// The currently selected ability. 
+        ///     The currently selected ability.
         /// </summary>
         public BattleAbility SelectedAbility { get; set; }
 
         /// <summary>
-        /// The currently selected list. 
+        ///     The currently selected list.
         /// </summary>
         public BattleList SelectedList { get; set; }
 
         /// <summary>
-        /// Action to add an new move to the currently selected list.
+        ///     Action to add an new move to the currently selected list.
         /// </summary>
         public ICommand AddActionCommand { get; set; }
 
         /// <summary>
-        /// Action to delete an existing move from the currently selected list.
+        ///     Action to delete an existing move from the currently selected list.
         /// </summary>
         public ICommand DeleteActionCommand { get; set; }
 
         /// <summary>
-        /// Action to clear all moves from the currently selected list.
+        ///     Action to clear all moves from the currently selected list.
         /// </summary>
         public ICommand ClearActionsCommand { get; set; }
 
         /// <summary>
-        /// Finds the list containing the given battle ability. 
+        ///     Finds the list containing the given battle ability.
         /// </summary>
         /// <param name="ability"></param>
         /// <returns></returns>
@@ -84,7 +82,7 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Add an move to the currently selected list.
+        ///     Add an move to the currently selected list.
         /// </summary>
         /// <param name="obj"></param>
         private void AddAction()
@@ -106,7 +104,7 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Remove an move from the currently selected list.
+        ///     Remove an move from the currently selected list.
         /// </summary>
         /// <param name="obj"></param>
         private void DeleteAction()
@@ -133,7 +131,7 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Clear the currently selected list.
+        ///     Clear the currently selected list.
         /// </summary>
         private void ClearActions()
         {
@@ -159,7 +157,7 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Ensures a list has at least one ability item in it. 
+        ///     Ensures a list has at least one ability item in it.
         /// </summary>
         public void KeepOne()
         {

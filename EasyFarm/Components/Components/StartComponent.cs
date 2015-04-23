@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,25 +16,30 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Linq;
 using EasyFarm.Classes;
 using FFACETools;
-using System.Linq;
 
 namespace EasyFarm.Components
 {
     /// <summary>
-    /// Buffs the player. 
+    ///     Buffs the player.
     /// </summary>
     public class StartComponent : MachineComponent
     {
-        public FFACE FFACE { get; set; }
-
-        public Executor Executor { get; set; }
-
         public StartComponent(FFACE fface)
         {
-            this.FFACE = fface;
-            this.Executor = new Executor(fface);
+            FFACE = fface;
+            Executor = new Executor(fface);
+        }
+
+        public FFACE FFACE { get; set; }
+        public Executor Executor { get; set; }
+
+        public Unit Target
+        {
+            get { return AttackContainer.TargetUnit; }
+            set { AttackContainer.TargetUnit = value; }
         }
 
         public override bool CheckComponent()
@@ -59,12 +63,6 @@ namespace EasyFarm.Components
 
             // Execute moves at target. 
             Executor.UseBuffingActions(usable);
-        }
-
-        public Unit Target
-        {
-            get { return AttackContainer.TargetUnit; }
-            set { AttackContainer.TargetUnit = value; }
         }
     }
 }

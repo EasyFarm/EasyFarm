@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,31 +16,30 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 using Parsing.Abilities;
 using Parsing.Augmenting;
 using Parsing.Types;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace Parsing.Parsers
 {
     /// <summary>
-    /// A class for loading the ability and spell xmls from file.
+    ///     A class for loading the ability and spell xmls from file.
     /// </summary>
     public class AbilityParser : BaseParser
     {
         /// <summary>
-        /// List of handlers to handle the conversion of abilities from file. 
+        ///     List of handlers to handle the conversion of abilities from file.
         /// </summary>
-        List<IObjectAugmenter<XElement, Ability>> _augmenters =
+        private readonly List<IObjectAugmenter<XElement, Ability>> _augmenters =
             new List<IObjectAugmenter<XElement, Ability>>();
 
         /// <summary>
-        /// Creates a parser that parsers resource files in the 
-        /// given file path. 
+        ///     Creates a parser that parsers resource files in the
+        ///     given file path.
         /// </summary>
         /// <param name="resourcesPath"></param>
         public AbilityParser(string resourcesPath) : base(resourcesPath)
@@ -71,31 +69,31 @@ namespace Parsing.Parsers
         }
 
         /// <summary>
-        /// Grabs all abilities from the resource files with the specified name
+        ///     Grabs all abilities from the resource files with the specified name
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        protected IEnumerable<Ability> ParseAbilities(String name)
+        protected IEnumerable<Ability> ParseAbilities(string name)
         {
             return ParseResources(name)
                 .Where(x => CompositeAbilityTypes.IsAbility.HasFlag(x.AbilityType)
-            );
+                );
         }
 
         /// <summary>
-        /// Grabs all abilities from the resource files with the specified name
+        ///     Grabs all abilities from the resource files with the specified name
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        protected IEnumerable<Ability> ParseSpells(String name)
+        protected IEnumerable<Ability> ParseSpells(string name)
         {
             return ParseResources(name)
                 .Where(x => CompositeAbilityTypes.IsSpell.HasFlag(x.AbilityType)
-            );
+                );
         }
 
         /// <summary>
-        /// A general method for loading abilites from the .xml files. 
+        ///     A general method for loading abilites from the .xml files.
         /// </summary>
         /// <param name="pname">a, s or i for spell or ability</param>
         /// <param name="XDoc"></param>
@@ -113,16 +111,16 @@ namespace Parsing.Parsers
             foreach (var resource in _resources)
             {
                 elements.AddRange(resource.Elements()
-                .Attributes()
-                .Where(x => x.Name != null && x.Name == "english" || x.Name == "japanese")
-                .Where(x => x.Value.Equals(name, StringComparison.CurrentCultureIgnoreCase))
-                .Select(x => x.Parent));
+                    .Attributes()
+                    .Where(x => x.Name != null && x.Name == "english" || x.Name == "japanese")
+                    .Where(x => x.Value.Equals(name, StringComparison.CurrentCultureIgnoreCase))
+                    .Select(x => x.Parent));
             }
 
             // Start extracting values from XElement;s and augment our ability objects. 
             foreach (var element in elements.Where(x => x.HasAttributes))
             {
-                Ability ability = new Ability();
+                var ability = new Ability();
 
                 // Get the list of handlers that can process this element. 
                 var augmenters = _augmenters

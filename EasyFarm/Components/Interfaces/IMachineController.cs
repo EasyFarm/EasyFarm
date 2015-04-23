@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,26 +16,20 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace EasyFarm.Components
 {
     /// <summary>
-    /// An interface that represents the root finite state machine. 
+    ///     An interface that represents the root finite state machine.
     /// </summary>
     public interface IMachineController : IMachineComponent
     {
         /// <summary>
-        /// Starts the controller.
+        ///     Starts the controller.
         /// </summary>
         void Start();
 
         /// <summary>
-        /// Stops the controller. 
+        ///     Stops the controller.
         /// </summary>
         void Stop();
     }

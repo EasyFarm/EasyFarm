@@ -1,4 +1,3 @@
-
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -17,33 +16,33 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Linq;
 using EasyFarm.Classes;
 using FFACETools;
-using System.Linq;
 
 namespace EasyFarm.Components
 {
     /// <summary>
-    /// A class for defeating monsters.
+    ///     A class for defeating monsters.
     /// </summary>
     public class BattleComponent : MachineComponent
     {
-        private FFACE _fface;
-        private Executor Executor;
+        private readonly FFACE _fface;
+        private readonly Executor Executor;
+
+        public BattleComponent(FFACE fface)
+        {
+            _fface = fface;
+            Executor = new Executor(fface);
+        }
 
         /// <summary>
-        /// Who we are trying to kill currently
+        ///     Who we are trying to kill currently
         /// </summary>
         public Unit Target
         {
             get { return AttackContainer.TargetUnit; }
             set { AttackContainer.TargetUnit = value; }
-        }
-
-        public BattleComponent(FFACE fface)
-        {
-            this._fface = fface;
-            this.Executor = new Executor(fface);
         }
 
         public override bool CheckComponent()
@@ -57,8 +56,8 @@ namespace EasyFarm.Components
             // Engage is enabled and we are not engaged. We cannot proceed. 
             if (Config.Instance.IsEngageEnabled)
                 return _fface.Player.Status.Equals(Status.Fighting);
-            // Engage is not checked, so just proceed to battle. 
-            else return true;
+                // Engage is not checked, so just proceed to battle. 
+            return true;
         }
 
         public override void EnterComponent()
@@ -68,7 +67,7 @@ namespace EasyFarm.Components
         }
 
         public override void RunComponent()
-        {               
+        {
             // Cast only one action to prevent blocking curing. 
             var action = Config.Instance.BattleLists["Battle"].Actions
                 .Where(x => ActionFilters.TargetedFilter(_fface, x, Target))

@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -18,25 +17,22 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Components;
-using EasyFarm.Classes;
 using FFACETools;
 using Microsoft.Practices.Prism.Mvvm;
-using Microsoft.Practices.Prism.PubSubEvents;
-using System;
 
 namespace EasyFarm.ViewModels
 {
     public class ViewModelBase : BindableBase
     {
         /// <summary>
-        /// View Model name for header in tabcontrol item. 
+        ///     View Model name for header in tabcontrol item.
         /// </summary>
-        public String VMName { get; set; }
+        public string VMName { get; set; }
 
         /// <summary>
-        /// Solo FFACE instance for current player. 
+        ///     Solo FFACE instance for current player.
         /// </summary>
-        public static FFACE FFACE { get; set; }      
+        public static FFACE FFACE { get; set; }
 
         public static void SetSession(FFACE fface)
         {

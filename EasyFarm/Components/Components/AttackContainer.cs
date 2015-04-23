@@ -1,4 +1,3 @@
-
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -23,16 +22,10 @@ using FFACETools;
 namespace EasyFarm.Components
 {
     /// <summary>
-    /// A class for defeating monsters. 
+    ///     A class for defeating monsters.
     /// </summary>
     public class AttackContainer : SequenceContainer
     {
-        public static bool FightStarted { get; set; }
-
-        private static Unit m_targetUnit { get; set; }
-
-        public FFACE FFACE { get; set; }
-
         static AttackContainer()
         {
             FightStarted = false;
@@ -40,17 +33,30 @@ namespace EasyFarm.Components
 
         public AttackContainer(FFACE fface)
         {
-            this.FFACE = fface;
+            FFACE = fface;
 
             // Add components.
-            this.AddComponent(new ApproachComponent(fface) { Priority = 0 });
-            this.AddComponent(new BattleComponent(fface) { Priority = 3 });
-            this.AddComponent(new WeaponSkillComponent(fface) { Priority = 2 });
-            this.AddComponent(new PullComponent(fface) { Priority = 4 });
-            this.AddComponent(new StartComponent(fface) { Priority = 5 });
+            AddComponent(new ApproachComponent(fface) {Priority = 0});
+            AddComponent(new BattleComponent(fface) {Priority = 3});
+            AddComponent(new WeaponSkillComponent(fface) {Priority = 2});
+            AddComponent(new PullComponent(fface) {Priority = 4});
+            AddComponent(new StartComponent(fface) {Priority = 5});
 
             // Enable all attack components. 
-            this.Components.ForEach(x => x.Enabled = true);
+            Components.ForEach(x => x.Enabled = true);
+        }
+
+        public static bool FightStarted { get; set; }
+        private static Unit m_targetUnit { get; set; }
+        public FFACE FFACE { get; set; }
+
+        /// <summary>
+        ///     Who we are trying to kill currently
+        /// </summary>
+        public static Unit TargetUnit
+        {
+            get { return m_targetUnit; }
+            set { m_targetUnit = value; }
         }
 
         public override bool CheckComponent()
@@ -66,15 +72,6 @@ namespace EasyFarm.Components
 
             // Return if other components need to fire. 
             return base.CheckComponent();
-        }
-
-        /// <summary>
-        /// Who we are trying to kill currently
-        /// </summary>
-        public static Unit TargetUnit
-        {
-            get { return m_targetUnit; }
-            set { m_targetUnit = value; }
         }
     }
 }

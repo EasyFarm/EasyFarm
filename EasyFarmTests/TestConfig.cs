@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -27,7 +26,7 @@ namespace EasyFarmTests
     {
         [TestInitialize]
         public void Setup()
-        { 
+        {
             // Wipe all static changed data for 
             // every config test. 
             Config.Instance = new Config();
@@ -39,7 +38,7 @@ namespace EasyFarmTests
             var conf = Config.Instance;
             conf.PartyFilter = true;
             Assert.AreEqual(conf.PartyFilter, Config.Instance.PartyFilter);
-            Assert.AreSame(conf, Config.Instance);            
+            Assert.AreSame(conf, Config.Instance);
         }
 
         [TestMethod]

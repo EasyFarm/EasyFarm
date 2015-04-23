@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -20,25 +19,25 @@ You should have received a copy of the GNU General Public License
 namespace Parsing.Mapping
 {
     /// <summary>
-    /// Defines an interface for creating a mapping from one object to another. 
+    ///     Defines an interface for creating a mapping from one object to another.
     /// </summary>
     /// <typeparam name="TData">
-    /// The data returned when an object is mapped successfully. 
+    ///     The data returned when an object is mapped successfully.
     /// </typeparam>
     /// <typeparam name="TObject">
-    /// The object compared to see if there's a mapping. 
+    ///     The object compared to see if there's a mapping.
     /// </typeparam>
     public interface IObjectMapper<TObject, TData>
     {
         /// <summary>
-        /// Checks whether there's a mapping from obj to data. 
+        ///     Checks whether there's a mapping from obj to data.
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
         bool IsMapped(TObject obj);
 
         /// <summary>
-        /// Returns the data object if there's a mapping. 
+        ///     Returns the data object if there's a mapping.
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>

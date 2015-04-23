@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,19 +16,19 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using Microsoft.Practices.Prism.Mvvm;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Practices.Prism.Mvvm;
 
 namespace EasyFarm.Classes
 {
     public class BattleList : BindableBase
     {
-        public BattleList() { }
+        private string _name;
+        private ObservableCollection<BattleAbility> _value;
+
+        public BattleList()
+        {
+        }
 
         public BattleList(string name)
         {
@@ -38,15 +37,11 @@ namespace EasyFarm.Classes
             _value.Add(new BattleAbility());
         }
 
-        private string _name;
-
         public string Name
         {
             get { return _name; }
             set { SetProperty(ref _name, value); }
         }
-
-        private ObservableCollection<BattleAbility> _value;
 
         public ObservableCollection<BattleAbility> Actions
         {

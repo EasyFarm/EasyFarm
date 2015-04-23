@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,15 +16,12 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using EasyFarm.ViewModels;
 using System.Windows.Controls;
-using System.Linq;
 
 namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for BattlesView.xaml
+    ///     Interaction logic for BattlesView.xaml
     /// </summary>
     public partial class BattlesView : UserControl
     {

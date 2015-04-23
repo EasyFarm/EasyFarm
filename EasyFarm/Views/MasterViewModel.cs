@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,38 +16,45 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System;
+using System.Drawing;
+using System.IO;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Logging;
 using EasyFarm.Views;
+using FFACETools;
 using Microsoft.Practices.Prism.Commands;
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Windows;
-using System.Windows.Input;
-using NotifyIcon = System.Windows.Forms.NotifyIcon;
+using Application = System.Windows.Application;
 
 namespace EasyFarm.ViewModels
 {
     /// <summary>
-    /// The view model for the main window. 
+    ///     The view model for the main window.
     /// </summary>
     public class MasterViewModel : ViewModelBase
     {
         /// <summary>
-        /// Saves and loads settings from file. 
+        ///     The path of the icon file.
         /// </summary>
-        private SettingsManager _settingsManager;
+        private const string TRAY_ICON_FILE_NAME = "trayicon.ico";
 
         /// <summary>
-        /// The path of the icon file. 
+        ///     Saves and loads settings from file.
         /// </summary>
-        private const String TRAY_ICON_FILE_NAME = "trayicon.ico";
+        private readonly SettingsManager _settingsManager;
 
         /// <summary>
-        /// This program's icon file. 
+        ///     This program's icon file.
         /// </summary>
-        private NotifyIcon m_trayIcon = new NotifyIcon();
+        private readonly NotifyIcon m_trayIcon = new NotifyIcon();
+
+        /// <summary>
+        ///     The text displayed on the start / pause button.
+        /// </summary>
+        private string _startStopHeader = "St_art";
 
         public MasterViewModel()
         {
@@ -57,7 +63,7 @@ namespace EasyFarm.ViewModels
             _settingsManager = new SettingsManager(
                 "eup",
                 "EasyFarm User Preference"
-            );
+                );
 
             // Get events from view models to update the status bar's text.
             AppInformer.EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe(a => { StatusBarText = a; });
@@ -72,32 +78,32 @@ namespace EasyFarm.ViewModels
             // Hook up our trayicon for minimization to system tray 
             if (File.Exists(TRAY_ICON_FILE_NAME))
             {
-                m_trayIcon.Icon = new System.Drawing.Icon(TRAY_ICON_FILE_NAME);
+                m_trayIcon.Icon = new Icon(TRAY_ICON_FILE_NAME);
                 MasterView.View.StateChanged += OnStateChanged;
-                m_trayIcon.Click += TrayIcon_Click;            
-            }            
+                m_trayIcon.Click += TrayIcon_Click;
+            }
         }
 
         /// <summary>
-        /// Bind for the title bar's text. 
+        ///     Bind for the title bar's text.
         /// </summary>
-        public String MainWindowTitle
+        public string MainWindowTitle
         {
             get { return Config.Instance.MainWindowTitle; }
             set { SetProperty(ref Config.Instance.MainWindowTitle, value); }
         }
 
         /// <summary>
-        /// Binding for the status bar's text. 
+        ///     Binding for the status bar's text.
         /// </summary>
-        public String StatusBarText
+        public string StatusBarText
         {
             get { return Config.Instance.StatusBarText; }
             set { SetProperty(ref Config.Instance.StatusBarText, value); }
         }
 
         /// <summary>
-        /// Tells whether the bot is working or not. 
+        ///     Tells whether the bot is working or not.
         /// </summary>
         public bool IsWorking
         {
@@ -106,46 +112,41 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// The text displayed on the start / pause button. 
-        /// </summary>
-        private string _startStopHeader = "St_art";
-
-        /// <summary>
-        /// Binding for File -> Start/Pause text.
+        ///     Binding for File -> Start/Pause text.
         /// </summary>
         public string StartPauseHeader
         {
             get { return _startStopHeader; }
             set { SetProperty(ref _startStopHeader, value); }
         }
-        
+
         /// <summary>
-        /// Command to start the bot. 
+        ///     Command to start the bot.
         /// </summary>
         public ICommand StartCommand { get; set; }
 
         /// <summary>
-        /// Command to shut down the program. 
+        ///     Command to shut down the program.
         /// </summary>
         public ICommand ExitCommand { get; set; }
 
         /// <summary>
-        /// Command to save the user's settings. 
+        ///     Command to save the user's settings.
         /// </summary>
         public DelegateCommand SaveCommand { get; set; }
 
         /// <summary>
-        /// Command to load the user's settings. 
+        ///     Command to load the user's settings.
         /// </summary>
         public DelegateCommand LoadCommand { get; set; }
 
         /// <summary>
-        /// Binding for selecting a PlayOnline process. 
+        ///     Binding for selecting a PlayOnline process.
         /// </summary>
         public DelegateCommand SelectProcessCommand { get; set; }
 
         /// <summary>
-        /// Tells the program to start farming. 
+        ///     Tells the program to start farming.
         /// </summary>
         public void Start()
         {
@@ -173,13 +174,13 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Saves the player's data to file. 
+        ///     Saves the player's data to file.
         /// </summary>
         private void Save()
         {
             try
             {
-                _settingsManager.Save<Config>(Config.Instance);
+                _settingsManager.Save(Config.Instance);
                 AppInformer.InformUser("Settings have been saved.");
                 Logger.Write.SaveSettings("Settings saved");
             }
@@ -191,7 +192,7 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Loads easyfarm settings from file. 
+        ///     Loads easyfarm settings from file.
         /// </summary>
         private void Load()
         {
@@ -219,13 +220,13 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Selects a process to user for this application. 
+        ///     Selects a process to user for this application.
         /// </summary>
         private void SelectProcess()
         {
             // Let user select ffxi process
-            ProcessSelectionView selectionView = new ProcessSelectionView();
-            selectionView.ShowDialog();           
+            var selectionView = new ProcessSelectionView();
+            selectionView.ShowDialog();
 
             // Grab the view model with the game sessions. 
             var viewModel = selectionView.DataContext as ProcessSelectionViewModel;
@@ -248,27 +249,27 @@ namespace EasyFarm.ViewModels
                 Logger.Write.ProcessFound("Process found");
 
                 // Save the selected fface instance. 
-                var FFACE = new FFACETools.FFACE(process.Id);
+                var FFACE = new FFACE(process.Id);
 
                 // Set the FFACE Session. 
-                ViewModelBase.SetSession(FFACE);
+                SetSession(FFACE);
 
                 // Tell the user the program has loaded the player's data
                 AppInformer.InformUser("Bot Loaded: " + FFACE.Player.Name);
 
                 // Set the main window's title to the player's name. 
                 MainWindowTitle = "EasyFarm - " + FFACE.Player.Name;
-            }            
+            }
         }
 
         /// <summary>
-        /// Shutsdown the program. 
+        ///     Shutsdown the program.
         /// </summary>
         private void Exit()
         {
             Application.Current.Shutdown();
         }
-        
+
         /* 
          * View Specific Data 
          * We should refactor this out eventually, but it's better to have the code here than
@@ -276,11 +277,11 @@ namespace EasyFarm.ViewModels
          */
 
         /// <summary>
-        /// Shows the main window when we click this icon in the system tray. 
+        ///     Shows the main window when we click this icon in the system tray.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void TrayIcon_Click(object sender, System.EventArgs e)
+        public void TrayIcon_Click(object sender, EventArgs e)
         {
             MasterView.View.WindowState = WindowState.Normal;
             MasterView.View.ShowInTaskbar = true;
@@ -288,10 +289,10 @@ namespace EasyFarm.ViewModels
         }
 
         /// <summary>
-        /// Minimizes the application to the system tray. 
+        ///     Minimizes the application to the system tray.
         /// </summary>
         /// <param name="e"></param>
-        public void OnStateChanged(object sender, System.EventArgs e)
+        public void OnStateChanged(object sender, EventArgs e)
         {
             // Perform tray icon information update here to 
             // receive current title bar information. 
@@ -301,8 +302,8 @@ namespace EasyFarm.ViewModels
 
             if (MasterView.View.mnuMinimizeToTray.IsChecked && MasterView.View.WindowState == WindowState.Minimized)
             {
-                this.m_trayIcon.Visible = true;
-                this.m_trayIcon.ShowBalloonTip(30);
+                m_trayIcon.Visible = true;
+                m_trayIcon.ShowBalloonTip(30);
                 MasterView.View.ShowInTaskbar = false;
             }
         }

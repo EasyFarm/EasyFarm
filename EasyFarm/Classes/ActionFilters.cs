@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,22 +16,20 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using FFACETools;
-using Parsing.Abilities;
-using System;
-using System.Text.RegularExpressions;
 using System.Linq;
+using System.Text.RegularExpressions;
+using FFACETools;
 using Parsing.Types;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// This class is responsible for holding all of the abilities our character may use in battle.
+    ///     This class is responsible for holding all of the abilities our character may use in battle.
     /// </summary>
     public class ActionFilters
-    {        
+    {
         /// <summary>
-        /// Filters out unusable buffing abilities. 
+        ///     Filters out unusable buffing abilities.
         /// </summary>
         /// <param name="fface"></param>
         /// <param name="action"></param>
@@ -92,9 +89,9 @@ namespace EasyFarm.Classes
             if (!string.IsNullOrWhiteSpace(action.StatusEffect))
             {
                 var HasEffect = fface.Player.StatusEffects.Any(effect =>
-                Regex.IsMatch(effect.ToString(),
-                action.StatusEffect.Replace(" ", "_"),
-                RegexOptions.IgnoreCase));
+                    Regex.IsMatch(effect.ToString(),
+                        action.StatusEffect.Replace(" ", "_"),
+                        RegexOptions.IgnoreCase));
 
                 // Contains Effect Check
                 if (HasEffect && !action.TriggerOnEffectPresent) return false;
@@ -107,7 +104,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Filters out unusable targeted abilities. 
+        ///     Filters out unusable targeted abilities.
         /// </summary>
         /// <param name="fface"></param>
         /// <param name="action"></param>
@@ -126,7 +123,7 @@ namespace EasyFarm.Classes
 
                 // Target Lower Health Check
                 if (unit.HPPCurrent < action.TargetLowerHealth) return false;
-            }            
+            }
 
             // Target Name Checks Enabled.
             if (!string.IsNullOrWhiteSpace(action.TargetName))
@@ -136,7 +133,7 @@ namespace EasyFarm.Classes
             }
 
             // Distance Check
-            if (unit.Distance > action.Distance) return false;            
+            if (unit.Distance > action.Distance) return false;
 
             return true;
         }

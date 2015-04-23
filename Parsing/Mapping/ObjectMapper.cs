@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -20,25 +19,25 @@ You should have received a copy of the GNU General Public License
 namespace Parsing.Mapping
 {
     /// <summary>
-    /// Generic mapper for data that uses equals to map equal references on 
-    /// reference types or equal values on value types. 
+    ///     Generic mapper for data that uses equals to map equal references on
+    ///     reference types or equal values on value types.
     /// </summary>
     /// <typeparam name="TObject"></typeparam>
     /// <typeparam name="TData"></typeparam>
     public class ObjectMapper<TObject, TData> : IObjectMapper<TObject, TData>
     {
         /// <summary>
-        /// The object to map against. 
+        ///     The data to return on successful mapping.
         /// </summary>
-        private TObject _obj = default(TObject);
+        private readonly TData _data;
 
         /// <summary>
-        /// The data to return on successful mapping. 
+        ///     The object to map against.
         /// </summary>
-        private TData _data = default(TData);
+        private readonly TObject _obj;
 
         /// <summary>
-        /// Store the data and object to map. 
+        ///     Store the data and object to map.
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="data"></param>
@@ -49,8 +48,8 @@ namespace Parsing.Mapping
         }
 
         /// <summary>
-        /// Checks if there's a mapping from the given object 
-        /// to our internal object. 
+        ///     Checks if there's a mapping from the given object
+        ///     to our internal object.
         /// </summary>
         /// <param name="obj">The object to check the mapping against. </param>
         /// <returns></returns>
@@ -60,7 +59,7 @@ namespace Parsing.Mapping
         }
 
         /// <summary>
-        /// Gets the data if the given object maps. 
+        ///     Gets the data if the given object maps.
         /// </summary>
         /// <param name="obj">The object to check the mapping againsts. </param>
         /// <returns></returns>

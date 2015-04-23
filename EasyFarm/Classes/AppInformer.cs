@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -19,40 +18,35 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.ViewModels;
 using Microsoft.Practices.Prism.PubSubEvents;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Updates the main window's status bar text to 
-    /// inform the user of important information. 
+    ///     Updates the main window's status bar text to
+    ///     inform the user of important information.
     /// </summary>
     public class AppInformer
     {
-        /// <summary>
-        /// Sends messages mostly to the status bar. 
-        /// </summary>
-        public static IEventAggregator EventAggregator { get; set; }
-
         static AppInformer()
         {
             // Set up the event aggregator for updates to the status bar from 
             // multiple view models.
-            EventAggregator = new EventAggregator();            
+            EventAggregator = new EventAggregator();
         }
 
         /// <summary>
-        /// Update the user on what's happening.
+        ///     Sends messages mostly to the status bar.
+        /// </summary>
+        public static IEventAggregator EventAggregator { get; set; }
+
+        /// <summary>
+        ///     Update the user on what's happening.
         /// </summary>
         /// <param name="message">The message to display in the statusbar</param>
         /// <param name="values"></param>
-        public static void InformUser(String message, params object[] values)
+        public static void InformUser(string message, params object[] values)
         {
-            EventAggregator.GetEvent<StatusBarUpdateEvent>().Publish(String.Format(message, values));
+            EventAggregator.GetEvent<StatusBarUpdateEvent>().Publish(string.Format(message, values));
         }
     }
 }

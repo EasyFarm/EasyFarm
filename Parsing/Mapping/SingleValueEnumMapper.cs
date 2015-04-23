@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,31 +16,28 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Parsing.Mapping
 {
     /// <summary>
-    /// Maps comma separated values into strongly typed enum objects. 
+    ///     Maps comma separated values into strongly typed enum objects.
     /// </summary>
     /// <typeparam name="TType"></typeparam>
     public class SingleValueEnumMapper<TType> : BaseEnumMapper<TType>
     {
         /// <summary>
-        /// Save a list of mappers to compare values against. 
+        ///     Save a list of mappers to compare values against.
         /// </summary>
         /// <param name="mappers"></param>
         public SingleValueEnumMapper(IEnumerable<IObjectMapper<string, TType>> mappers)
-            : base(mappers) { }
+            : base(mappers)
+        {
+        }
 
         /// <summary>
-        /// Check to see if any mappers can map the 
-        /// string separated enum flag values. 
+        ///     Check to see if any mappers can map the
+        ///     string separated enum flag values.
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -62,16 +58,16 @@ namespace Parsing.Mapping
         }
 
         /// <summary>
-        /// Return an enum with flags indicated by the string 
-        /// object obj. 
+        ///     Return an enum with flags indicated by the string
+        ///     object obj.
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
         public override TType GetMapping(string obj)
         {
-            TType value = default(TType);
+            var value = default(TType);
 
-            List<TType> flags = new List<TType>();
+            var flags = new List<TType>();
 
             // Map all elements to their proper element
             // and combine them together into one ElementType object. 

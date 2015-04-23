@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,37 +16,58 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using FFACETools;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Helper functions for filtering units. 
+    ///     Helper functions for filtering units.
     /// </summary>
     public class UnitFilters
     {
+        /// <summary>
+        ///     Returns whether the player is a valid player.
+        /// </summary>
+        /// <param name="fface"></param>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static bool PCFilter(FFACE fface, Unit unit)
+        {
+            if (fface == null) throw new ArgumentNullException("fface");
+            if (unit == null) throw new ArgumentNullException("unit");
+
+            // PC is not active but in memory
+            if (!unit.IsActive) return false;
+
+            // Type is not mob 
+            if (!unit.NPCType.Equals(NPCType.PC)) return false;
+
+            // PC is out of range
+            if (unit.Distance >= 50) return false;
+
+            // PC can see us...
+            return true;
+        }
+
         #region MOBFilter
 
         /// <summary>
-        /// This function returns whether a mob is a valid mob. 
-        /// 
-        /// Aftewards it will check our filtering. 
-        ///     If its on the ignored list, ignore it. 
+        ///     This function returns whether a mob is a valid mob.
+        ///     Aftewards it will check our filtering.
+        ///     If its on the ignored list, ignore it.
         ///     If its not on the targets list and there is a list, ignore it
         ///     If its on the targets list check
-        ///         If the mob is our claim and is checked, attack it.
-        ///         if the mob is our partys claimand is checked, attack it.
-        ///         if the mob is unclaimed and is checked, attack it.
-        ///         if the mob is claimed and not our claimed and 
-        ///         claimed checked attack it.
-        ///
-        /// The function will not attack mobs that have aggroed but
-        /// are not on the target's list or 
+        ///     If the mob is our claim and is checked, attack it.
+        ///     if the mob is our partys claimand is checked, attack it.
+        ///     if the mob is unclaimed and is checked, attack it.
+        ///     if the mob is claimed and not our claimed and
+        ///     claimed checked attack it.
+        ///     The function will not attack mobs that have aggroed but
+        ///     are not on the target's list or
         /// </summary>
         /// <param name="fface"></param>
         /// <returns></returns>
@@ -78,7 +98,7 @@ namespace EasyFarm.Classes
             if (Config.Instance.Waypoints.Any())
             {
                 if (!(Config.Instance.Waypoints.Any(waypoint => Distance(mob, waypoint) <=
-                    Config.Instance.WanderDistance))) return false;
+                                                                Config.Instance.WanderDistance))) return false;
             }
 
             // Mob too high out of reach. 
@@ -135,41 +155,18 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Check multiple patterns for a match.
+        ///     Check multiple patterns for a match.
         /// </summary>
         /// <param name="input"></param>
         /// <param name="patterns"></param>
         /// <returns></returns>
-        private static bool MatchAny(string input, IList<String> patterns, RegexOptions options)
+        private static bool MatchAny(string input, IList<string> patterns, RegexOptions options)
         {
             return patterns
                 .Select(pattern => new Regex(pattern, options))
                 .Any(matcher => matcher.IsMatch(input));
         }
+
         #endregion
-
-        /// <summary>
-        /// Returns whether the player is a valid player. 
-        /// </summary>
-        /// <param name="fface"></param>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static bool PCFilter(FFACE fface, Unit unit)
-        {
-            if (fface == null) throw new ArgumentNullException("fface");
-            if (unit == null) throw new ArgumentNullException("unit");
-
-            // PC is not active but in memory
-            if (!unit.IsActive) return false;
-
-            // Type is not mob 
-            if (!unit.NPCType.Equals(NPCType.PC)) return false;
-
-            // PC is out of range
-            if (unit.Distance >= 50) return false;
-
-            // PC can see us...
-            return true;
-        }
     }
 }

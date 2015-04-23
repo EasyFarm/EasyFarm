@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,19 +16,11 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace EasyFarm.Components
 {
     public class SequenceContainer : MachineContainer
     {
-        private MachineComponent LastRan = null;
-
-        public SequenceContainer() { }
+        private MachineComponent LastRan;
 
         public override bool CheckComponent()
         {
@@ -37,7 +28,7 @@ namespace EasyFarm.Components
 
             // Loop through all components and if one reports ready,
             // the attack container may run. 
-            foreach (var Component in this.Components)
+            foreach (var Component in Components)
             {
                 if (Component.Enabled)
                 {
@@ -48,15 +39,17 @@ namespace EasyFarm.Components
             return ready;
         }
 
-        public override void EnterComponent() { }
+        public override void EnterComponent()
+        {
+        }
 
         public override void RunComponent()
         {
-            lock (this.Components)
+            lock (Components)
             {
                 Components.Sort();
 
-                foreach (var Component in this.Components)
+                foreach (var Component in Components)
                 {
                     if (!Component.Enabled) continue;
                     if (Component.CheckComponent())
@@ -82,6 +75,8 @@ namespace EasyFarm.Components
             }
         }
 
-        public override void ExitComponent() { }
+        public override void ExitComponent()
+        {
+        }
     }
 }

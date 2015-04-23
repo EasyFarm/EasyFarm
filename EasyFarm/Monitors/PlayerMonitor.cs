@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,42 +16,39 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Linq;
+using System.Timers;
 using EasyFarm.Classes;
 using FFACETools;
-using System.Timers;
-using System.Linq;
 
 namespace EasyFarm.FarmingTool
 {
     public class PlayerMonitor : BaseMonitor
     {
-        private UnitService _units;
-        private bool _detected = false;
+        private readonly UnitService _units;
 
         public PlayerMonitor(FFACE fface)
             : base(fface)
         {
-            this._units = new UnitService(fface);
+            Detected = false;
+            _units = new UnitService(fface);
         }
+
+        public bool Detected { get; private set; }
 
         protected override void CheckStatus(object sender, ElapsedEventArgs e)
         {
             lock (_lock)
             {
-                bool detected = _units.PCArray
+                var detected = _units.PCArray
                     .Any(x => UnitFilters.PCFilter(_fface, x));
 
-                if (_detected != detected)
+                if (Detected != detected)
                 {
                     OnChanged(new MonitorArgs<bool>(detected));
-                    _detected = detected;
+                    Detected = detected;
                 }
             }
-        }
-
-        public bool Detected
-        {
-            get { return this._detected; }
         }
     }
 }

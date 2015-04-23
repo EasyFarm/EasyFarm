@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,20 +16,20 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.ViewModels;
 using System.Windows.Controls;
+using EasyFarm.ViewModels;
 
 namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for UnitFilteringView.xaml
+    ///     Interaction logic for UnitFilteringView.xaml
     /// </summary>
     public partial class SettingsView : UserControl
     {
         public SettingsView()
         {
             InitializeComponent();
-            this.DataContext = new SettingsViewModel();
+            DataContext = new SettingsViewModel();
         }
     }
 }

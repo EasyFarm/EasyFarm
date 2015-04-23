@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -22,21 +21,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
-using System.Windows;
 
 namespace EasyFarm.Classes
 {
     public class ProcessEventArgs : EventArgs
     {
-        public Process Process { get; set; }
-
         public ProcessEventArgs(Process process)
         {
-            this.Process = process;
+            Process = process;
         }
+
+        public Process Process { get; set; }
     }
 
     public delegate void ProcessEntry(object sender, EventArgs e);
@@ -46,57 +42,62 @@ namespace EasyFarm.Classes
     public class ProcessWatcher : IDisposable
     {
         /// <summary>
-        /// An event that fires when a process has started. 
-        /// </summary>
-        public event ProcessEntry Entry;
-
-        /// <summary>
-        /// An event that fires when a process has exited. 
-        /// </summary>
-        public event ProcessExit Exit;
-
-        /// <summary>
-        /// Internal timer to check process updates. 
+        ///     Internal timer to check process updates.
         /// </summary>
         protected Timer m_timer = new Timer();
 
-        /// <summary>
-        /// List of processes currently monitored. 
-        /// </summary>
-        public List<Process> Processes { get; set; }
-
-        /// <summary>
-        /// Name of the process to monitor. 
-        /// </summary>
-        public String ProcessName { get; set; }
-
-        /// <summary>
-        /// An object for locking.
-        /// </summary>
-        public Object Mutex { get; set; }
-
-        public ProcessWatcher(String processName)
+        public ProcessWatcher(string processName)
         {
             Processes = new List<Process>();
-            Mutex = new Object();
-            this.ProcessName = processName;
+            Mutex = new object();
+            ProcessName = processName;
             m_timer.Elapsed += CheckProcesses;
             m_timer.AutoReset = true;
             m_timer.Interval = 30;
         }
 
+        /// <summary>
+        ///     List of processes currently monitored.
+        /// </summary>
+        public List<Process> Processes { get; set; }
+
+        /// <summary>
+        ///     Name of the process to monitor.
+        /// </summary>
+        public string ProcessName { get; set; }
+
+        /// <summary>
+        ///     An object for locking.
+        /// </summary>
+        public object Mutex { get; set; }
+
+        public void Dispose()
+        {
+            m_timer.Dispose();
+        }
+
+        /// <summary>
+        ///     An event that fires when a process has started.
+        /// </summary>
+        public event ProcessEntry Entry;
+
+        /// <summary>
+        ///     An event that fires when a process has exited.
+        /// </summary>
+        public event ProcessExit Exit;
+
         protected void CheckProcesses(object sender, ElapsedEventArgs e)
         {
-            lock (this.Mutex)
+            lock (Mutex)
             {
                 ///////////////////////////////////////////////////////////////////
                 // Check for new processes and fire Entry Events
                 ///////////////////////////////////////////////////////////////////
                 // Get the list of all running processes. 
 
-                var plist = (string.IsNullOrWhiteSpace(ProcessName) ?
-                    Process.GetProcesses() :
-                    Process.GetProcessesByName(this.ProcessName)).ToList();
+                var plist = (string.IsNullOrWhiteSpace(ProcessName)
+                    ? Process.GetProcesses()
+                    : Process.GetProcessesByName(ProcessName)).ToList();
 
                 // Get a list of processes that are not contained in "Processes".
                 plist = plist.Where(x => !Processes.Any(y => y.Id == x.Id)).ToList();
@@ -106,12 +107,12 @@ namespace EasyFarm.Classes
                 foreach (var process in plist)
                 {
                     // Add the process
-                    this.Processes.Add(process);
+                    Processes.Add(process);
 
-                    if (this.Entry != null)
+                    if (Entry != null)
                     {
                         // Fire an entry event. 
-                        this.Entry(this, new ProcessEventArgs(process));
+                        Entry(this, new ProcessEventArgs(process));
                     }
                 }
 
@@ -125,10 +126,10 @@ namespace EasyFarm.Classes
                 {
                     foreach (var process in Processes.Where(x => x.HasExited))
                     {
-                        if (this.Exit != null)
+                        if (Exit != null)
                         {
                             // Fire the process Exit event. 
-                            this.Exit(this, new ProcessEventArgs(process));
+                            Exit(this, new ProcessEventArgs(process));
                         }
                     }
 
@@ -142,10 +143,14 @@ namespace EasyFarm.Classes
             }
         }
 
-        public void Start() { this.m_timer.Start(); }
+        public void Start()
+        {
+            m_timer.Start();
+        }
 
-        public void Stop() { this.m_timer.Stop(); }
-
-        public void Dispose() { m_timer.Dispose(); }
+        public void Stop()
+        {
+            m_timer.Stop();
+        }
     }
 }

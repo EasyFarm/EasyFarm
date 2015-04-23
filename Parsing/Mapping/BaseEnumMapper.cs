@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,17 +16,13 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Parsing.Mapping
 {
     /// <summary>
-    /// Maps comma separated values into strongly typed enum objects. 
+    ///     Maps comma separated values into strongly typed enum objects.
     /// </summary>
     /// <typeparam name="TType"></typeparam>
     public abstract class BaseEnumMapper<TType> :
@@ -35,12 +30,12 @@ namespace Parsing.Mapping
         IObjectMapper<string, TType>
     {
         /// <summary>
-        /// The internal list of mappers. 
+        ///     The internal list of mappers.
         /// </summary>
         protected IEnumerable<IObjectMapper<string, TType>> _mappers;
 
         /// <summary>
-        /// Save a list of mappers to compare values against. 
+        ///     Save a list of mappers to compare values against.
         /// </summary>
         /// <param name="mappers"></param>
         public BaseEnumMapper(IEnumerable<IObjectMapper<string, TType>> mappers)
@@ -49,23 +44,23 @@ namespace Parsing.Mapping
         }
 
         /// <summary>
-        /// Check to see if any mappers can map the 
-        /// string separated enum flag values. 
+        ///     Check to see if any mappers can map the
+        ///     string separated enum flag values.
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
         public abstract bool IsMapped(string obj);
 
         /// <summary>
-        /// Return an enum with flags indicated by the string 
-        /// object obj. 
+        ///     Return an enum with flags indicated by the string
+        ///     object obj.
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
         public abstract TType GetMapping(string obj);
 
         /// <summary>
-        /// Split and clean the string data for parsing. 
+        ///     Split and clean the string data for parsing.
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>

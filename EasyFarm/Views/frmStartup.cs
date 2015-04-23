@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,37 +16,35 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using FFACETools;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using EasyFarm.Classes;
+using FFACETools;
+using Application = System.Windows.Application;
 
 namespace EasyFarm.Views
 {
     /// <summary>
-    /// Allows the user to select his desired pol process and saves
-    /// an FFACE session related to his selected process. 
+    ///     Allows the user to select his desired pol process and saves
+    ///     an FFACE session related to his selected process.
     /// </summary>
     public partial class frmStartup : Form
     {
         /// <summary>
-        /// Name of the application to monitor
+        ///     Name of the application to monitor
         /// </summary>
         public string AppName = "pol";
 
         /// <summary>
-        /// Monitors new processes or exited processes. 
-        /// Will fire events when processes enter and exit the system. 
+        ///     Monitors new processes or exited processes.
+        ///     Will fire events when processes enter and exit the system.
         /// </summary>
         public ProcessWatcher ProcessWatcher;
-        
+
         /// <summary>
-        /// Form initialization.
+        ///     Form initialization.
         /// </summary>
         public frmStartup()
         {
@@ -55,7 +52,45 @@ namespace EasyFarm.Views
         }
 
         /// <summary>
-        /// Setup the process monitor to the pol program.
+        ///     The currently selected pol instance.
+        /// </summary>
+        public Process SelectedProcess
+        {
+            get
+            {
+                if (SessionsListBox.SelectedItem == null) return null;
+
+                return Process.GetProcessesByName(AppName)
+                    .Where(x => SessionsListBox.SelectedItem.ToString().Contains(x.Id.ToString()))
+                    .FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        ///     The currently selected FFACE Instance.
+        /// </summary>
+        public FFACE SelectedSession
+        {
+            get
+            {
+                try
+                {
+                    if (SelectedProcess == null) return null;
+                    return new FFACE(SelectedProcess.Id);
+                }
+                catch (DllNotFoundException ex)
+                {
+                    MessageBox.Show(string.Join(Environment.NewLine,
+                        "FFACE.dll is missing. Please re-run the program with the fface.dll file in EasyFarm's folder. ",
+                        "Error: " + ex.Message));
+                    Environment.Exit(0);
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Setup the process monitor to the pol program.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -68,95 +103,53 @@ namespace EasyFarm.Views
         }
 
         /// <summary>
-        /// Removes processes from the list box when they exit. 
+        ///     Removes processes from the list box when they exit.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void ProcessWatcher_Exit(object sender, EventArgs e)
+        private void ProcessWatcher_Exit(object sender, EventArgs e)
         {
-            if (App.Current != null)
+            if (Application.Current != null)
             {
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    this.SessionsListBox.Items.Remove(ProcessFormat((e as ProcessEventArgs).Process));
-                });
+                Application.Current.Dispatcher.Invoke(
+                    () => { SessionsListBox.Items.Remove(ProcessFormat((e as ProcessEventArgs).Process)); });
             }
         }
 
         /// <summary>
-        /// Adds processes to the list box when they are added to the system. 
+        ///     Adds processes to the list box when they are added to the system.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void ProcessWatcher_Entry(object sender, EventArgs e)
+        private void ProcessWatcher_Entry(object sender, EventArgs e)
         {
-            if (App.Current != null)
+            if (Application.Current != null)
             {
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    this.SessionsListBox.Items.Add(ProcessFormat((e as ProcessEventArgs).Process));
-                });
+                Application.Current.Dispatcher.Invoke(
+                    () => { SessionsListBox.Items.Add(ProcessFormat((e as ProcessEventArgs).Process)); });
             }
         }
 
         /// <summary>
-        /// Exits the form when a user picks a process. 
+        ///     Exits the form when a user picks a process.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SessionsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (SessionsListBox.SelectedIndex == -1) return;
-            this.Close();
+            Close();
         }
 
         /// <summary>
-        /// Returns the process as a string in a consistent fashion. 
-        /// Windows Title: ID
+        ///     Returns the process as a string in a consistent fashion.
+        ///     Windows Title: ID
         /// </summary>
         /// <param name="process"></param>
         /// <returns></returns>
-        public String ProcessFormat(Process process)
+        public string ProcessFormat(Process process)
         {
             return process.MainWindowTitle + ": " + process.Id;
-        }
-
-        /// <summary>
-        /// The currently selected pol instance. 
-        /// </summary>
-        public Process SelectedProcess
-        {
-            get
-            {
-                if (SessionsListBox.SelectedItem == null) return null;
-                
-                return Process.GetProcessesByName(AppName)
-                    .Where(x => SessionsListBox.SelectedItem.ToString().Contains(x.Id.ToString()))
-                    .FirstOrDefault();
-            }
-        }
-
-        /// <summary>
-        /// The currently selected FFACE Instance. 
-        /// </summary>
-        public FFACE SelectedSession
-        {
-            get 
-            {
-                try
-                {
-                    if (SelectedProcess == null) return null;
-                    return new FFACE(SelectedProcess.Id); 
-                }
-                catch (DllNotFoundException ex)
-                {
-                    MessageBox.Show(String.Join(Environment.NewLine, 
-                        "FFACE.dll is missing. Please re-run the program with the fface.dll file in EasyFarm's folder. ", 
-                        "Error: " + ex.Message));
-                    System.Environment.Exit(0);
-                    return null;
-                }                
-            }
         }
     }
 }

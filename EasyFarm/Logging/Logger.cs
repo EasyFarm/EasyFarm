@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,60 +16,24 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace EasyFarm.Logging
 {
     /// <summary>
-    /// The logger for logging events to file or other mediums. 
+    ///     The logger for logging events to file or other mediums.
     /// </summary>
     public class Logger : EventSource
     {
         /// <summary>
-        /// Stores all the EventIDs for events in the application. 
-        /// We're using this instead of an enum to avoid conversion of 
-        /// enum elements to ints 100 times.. 
+        ///     Our internal instance of our logger.
         /// </summary>
-        private class EventID
-        {
-            // Application: 0 - 99
-            public const int APPLICATION_START = 1;
-            public const int APPLICATION_END = 2;
+        private static readonly Lazy<Logger> m_instance =
+            new Lazy<Logger>(() => new Logger());
 
-            // Resources: 100 - 199
-            public const int RESOURCES_LOCATED = 100;
-            public const int RESOURCE_FOLDER_MISSING = 101;
-            public const int RESOURCE_FILES_MISSING = 102;
-
-            // Processes: 200 - 299
-            public const int PROCESS_FOUND = 200;
-            public const int PROCESS_NOT_FOUND = 201;
-
-            // Bot: 300 - 399
-            public const int BOT_START = 300;
-            public const int BOT_STOP = 301;
-
-            // Settings: 400 - 499
-            public const int SETTINGS_SAVE = 400;
-            public const int SETTINGS_LOAD = 401;
-
-            // Settings: 500 - 599
-            public const int STATE_CHECK = 500;
-            public const int STATE_ENTER = 501;
-            public const int STATE_RUN = 502;
-            public const int STATE_EXIT = 503;
-
-            // Performance: 600-699
-            public const int PERFORMANCE_ELAPSED_TIME = 600;
-        }
+        private readonly SynchronizationContext _syncContext;
 
         public Logger()
         {
@@ -78,16 +41,8 @@ namespace EasyFarm.Logging
         }
 
         /// <summary>
-        /// Our internal instance of our logger. 
-        /// </summary>
-        private readonly static Lazy<Logger> m_instance =
-            new Lazy<Logger>(() => new Logger());
-
-        private readonly SynchronizationContext _syncContext;
-
-        /// <summary>
-        /// Returns a static instance to our logger object for 
-        /// writing log messages. 
+        ///     Returns a static instance to our logger object for
+        ///     writing log messages.
         /// </summary>
         public static Logger Write
         {
@@ -95,7 +50,7 @@ namespace EasyFarm.Logging
         }
 
         /// <summary>
-        /// Logs the program's start. 
+        ///     Logs the program's start.
         /// </summary>
         /// <param name="message"></param>
         [Event(EventID.APPLICATION_START, Level = EventLevel.Informational)]
@@ -105,7 +60,7 @@ namespace EasyFarm.Logging
         }
 
         /// <summary>
-        /// Logs the program's end. 
+        ///     Logs the program's end.
         /// </summary>
         /// <param name="message"></param>
         [Event(EventID.APPLICATION_END, Level = EventLevel.Informational)]
@@ -115,7 +70,7 @@ namespace EasyFarm.Logging
         }
 
         /// <summary>
-        /// Logs the success of finding all resource folders / files. 
+        ///     Logs the success of finding all resource folders / files.
         /// </summary>
         /// <param name="message"></param>
         [Event(EventID.RESOURCES_LOCATED, Level = EventLevel.Informational)]
@@ -125,7 +80,7 @@ namespace EasyFarm.Logging
         }
 
         /// <summary>
-        /// Logs events for resource files being missing. 
+        ///     Logs events for resource files being missing.
         /// </summary>
         /// <param name="message"></param>
         [Event(EventID.RESOURCE_FILES_MISSING, Level = EventLevel.Error)]
@@ -135,7 +90,7 @@ namespace EasyFarm.Logging
         }
 
         /// <summary>
-        /// Logs events for the resources folder being missing. 
+        ///     Logs events for the resources folder being missing.
         /// </summary>
         /// <param name="message"></param>
         [Event(EventID.RESOURCE_FOLDER_MISSING, Level = EventLevel.Error)]
@@ -201,6 +156,38 @@ namespace EasyFarm.Logging
                 else
                     _syncContext.Send(o => WriteEvent(id, message), null);
             }
+        }
+
+        /// <summary>
+        ///     Stores all the EventIDs for events in the application.
+        ///     We're using this instead of an enum to avoid conversion of
+        ///     enum elements to ints 100 times..
+        /// </summary>
+        private class EventID
+        {
+            // Application: 0 - 99
+            public const int APPLICATION_START = 1;
+            public const int APPLICATION_END = 2;
+            // Resources: 100 - 199
+            public const int RESOURCES_LOCATED = 100;
+            public const int RESOURCE_FOLDER_MISSING = 101;
+            public const int RESOURCE_FILES_MISSING = 102;
+            // Processes: 200 - 299
+            public const int PROCESS_FOUND = 200;
+            public const int PROCESS_NOT_FOUND = 201;
+            // Bot: 300 - 399
+            public const int BOT_START = 300;
+            public const int BOT_STOP = 301;
+            // Settings: 400 - 499
+            public const int SETTINGS_SAVE = 400;
+            public const int SETTINGS_LOAD = 401;
+            // Settings: 500 - 599
+            public const int STATE_CHECK = 500;
+            public const int STATE_ENTER = 501;
+            public const int STATE_RUN = 502;
+            public const int STATE_EXIT = 503;
+            // Performance: 600-699
+            public const int PERFORMANCE_ELAPSED_TIME = 600;
         }
     }
 }

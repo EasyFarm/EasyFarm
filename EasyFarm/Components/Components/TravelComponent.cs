@@ -1,5 +1,4 @@
-
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,20 +16,19 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.Classes;
-using FFACETools;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using EasyFarm.Classes;
+using FFACETools;
 
 namespace EasyFarm.Components
 {
     public class TravelComponent : MachineComponent
     {
-        private int _position = 0;
-        private FFACE _fface;
-        private UnitService _units;
+        private readonly FFACE _fface;
+        private readonly UnitService _units;
+        private int _position;
 
         public TravelComponent(FFACE fface)
         {
@@ -41,14 +39,11 @@ namespace EasyFarm.Components
         }
 
         /// <summary>
-        /// Returns a copy of the current values in our path. 
+        ///     Returns a copy of the current values in our path.
         /// </summary>
-        public List<FFACE.Position> Path 
-        { 
-            get 
-            { 
-                return Config.Instance.Waypoints.Select(x => x.Position).ToList(); 
-            } 
+        public List<FFACE.Position> Path
+        {
+            get { return Config.Instance.Waypoints.Select(x => x.Position).ToList(); }
         }
 
         public override bool CheckComponent()
@@ -105,7 +100,7 @@ namespace EasyFarm.Components
         }
 
         /// <summary>
-        /// Returns true when the player should stop traveling. 
+        ///     Returns true when the player should stop traveling.
         /// </summary>
         /// <returns></returns>
         public bool IsCancellationRequired()

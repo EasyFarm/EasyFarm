@@ -1,5 +1,4 @@
-
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,7 +16,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-﻿using FFACETools;
+using FFACETools;
 
 namespace EasyFarm.Components
 {
@@ -28,11 +27,11 @@ namespace EasyFarm.Components
         public BaseComponent(FFACE fface)
         {
             if (FFACE == null) FFACE = fface;
-        }      
+        }
 
         public int CompareTo(BaseComponent other)
         {
-            return -this.Priority.CompareTo(other.Priority);
+            return -Priority.CompareTo(other.Priority);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -18,12 +17,10 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using Microsoft.Practices.Prism.PubSubEvents;
-using System;
 
 namespace EasyFarm.ViewModels
 {
-    public class StatusBarUpdateEvent : PubSubEvent<String>
+    public class StatusBarUpdateEvent : PubSubEvent<string>
     {
-
     }
 }

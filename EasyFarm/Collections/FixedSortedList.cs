@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 Copyright (C) <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
@@ -22,26 +21,26 @@ using System.Linq;
 namespace EasyFarm.Collections
 {
     /// <summary>
-    /// A sorted list of a fixed size.  
+    ///     A sorted list of a fixed size.
     /// </summary>
     public class FixedSortedList<K, V> : SortedList<K, List<V>>
     {
         /// <summary>
-        /// Maximum capacity of the list. 
-        /// </summary>
-        public int Limit { get; set; }
-
-        /// <summary>
-        /// Create a new fixed size list with a limit. 
+        ///     Create a new fixed size list with a limit.
         /// </summary>
         /// <param name="limit"></param>
         public FixedSortedList(int limit)
         {
-            this.Limit = limit;
+            Limit = limit;
         }
 
         /// <summary>
-        /// Gets the number of elements contains in the FixedSortedList. 
+        ///     Maximum capacity of the list.
+        /// </summary>
+        public int Limit { get; set; }
+
+        /// <summary>
+        ///     Gets the number of elements contains in the FixedSortedList.
         /// </summary>
         public int CountItems
         {
@@ -49,22 +48,22 @@ namespace EasyFarm.Collections
         }
 
         /// <summary>
-        /// Adds a value but removes the oldest or 
-        /// minimum value in the list. 
+        ///     Adds a value but removes the oldest or
+        ///     minimum value in the list.
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         public void AddItem(K key, V value)
         {
             // Does not contain the key, create one. 
-            if (!this.ContainsKey(key))
+            if (!ContainsKey(key))
                 this[key] = new List<V>();
 
             // Add a value to the key / values pairing. 
             this[key].Add(value);
 
             // Remove one chatline from the oldest list of chatlines. 
-            if (this.CountItems > Limit && this.CountItems > 0)
+            if (CountItems > Limit && CountItems > 0)
             {
                 // remove a single list item. 
                 this.First().Value.Remove(this.First().Value.First());
@@ -72,7 +71,7 @@ namespace EasyFarm.Collections
                 // List no longer contains items, remove it. 
                 if (this.First().Value.Count == 0)
                 {
-                    this.Remove(this.First().Key);
+                    Remove(this.First().Key);
                 }
             }
         }

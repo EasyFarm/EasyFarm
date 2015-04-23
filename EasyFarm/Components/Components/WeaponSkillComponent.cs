@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,26 +16,25 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Linq;
 using EasyFarm.Classes;
 using FFACETools;
-using System.Linq;
 
 namespace EasyFarm.Components
 {
     /// <summary>
-    /// Performs weaponskills on targets. 
+    ///     Performs weaponskills on targets.
     /// </summary>
     public class WeaponSkillComponent : MachineComponent
     {
-        public FFACE FFACE { get; set; }
-
-        public Executor Executor { get; set; }
-
         public WeaponSkillComponent(FFACE fface)
         {
-            this.FFACE = fface;
-            this.Executor = new Executor(fface);
+            FFACE = fface;
+            Executor = new Executor(fface);
         }
+
+        public FFACE FFACE { get; set; }
+        public Executor Executor { get; set; }
 
         public Unit Target
         {

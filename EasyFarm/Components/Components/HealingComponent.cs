@@ -1,5 +1,4 @@
-
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,21 +16,21 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-﻿using EasyFarm.Classes;
-using FFACETools;
 using System.Linq;
+using EasyFarm.Classes;
+using FFACETools;
 
 namespace EasyFarm.Components
 {
     public class HealingComponent : MachineComponent
     {
-        private FFACE FFACE;
-        private Executor Executor;
+        private readonly Executor Executor;
+        private readonly FFACE FFACE;
 
         public HealingComponent(FFACE fface)
         {
-            this.FFACE = fface;
-            this.Executor = new Executor(fface);
+            FFACE = fface;
+            Executor = new Executor(fface);
         }
 
         public override bool CheckComponent()
@@ -39,7 +38,7 @@ namespace EasyFarm.Components
             if (new RestComponent(FFACE).CheckComponent()) return false;
 
             if (!Config.Instance.BattleLists["Healing"].Actions
-                .Any(x => ActionFilters.BuffingFilter(FFACE, x))) 
+                .Any(x => ActionFilters.BuffingFilter(FFACE, x)))
                 return false;
 
             return true;
@@ -69,12 +68,15 @@ namespace EasyFarm.Components
             {
                 // Check for actions available
                 var Action = UsableHealingMoves.FirstOrDefault();
-                if (Action == null) { return; }
+                if (Action == null)
+                {
+                    return;
+                }
 
                 // Create an ability from the name and launch the move. 
                 var HealingMove = App.AbilityService.CreateAbility(Action.Name);
                 Executor.UseBuffingAction(HealingMove);
             }
-        }        
+        }
     }
 }

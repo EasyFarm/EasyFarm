@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,13 +16,13 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Windows.Input;
 using EasyFarm.Classes;
 using Microsoft.Practices.Prism.Commands;
-using System.Windows.Input;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Settings")]
+    [ViewModel("Settings")]
     public class SettingsViewModel : ViewModelBase
     {
         public SettingsViewModel()
@@ -32,24 +31,14 @@ namespace EasyFarm.ViewModels
         }
 
         public ICommand RestoreDefaultsCommand { get; set; }
-        
-        private void RestoreDefaults()
-        {
-            DetectionDistance = Constants.DETECTION_DISTANCE;
-            HeightThreshold = Constants.HEIGHT_THRESHOLD;
-            MeleeDistance = Constants.MELEE_DISTANCE;
-            WanderDistance = Constants.DETECTION_DISTANCE;
-            GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
-            AppInformer.InformUser("Defaults have been restored.");
-        }
 
         public double DetectionDistance
         {
             get { return Config.Instance.DetectionDistance; }
-            set 
-            { 
-                SetProperty<double>(ref Config.Instance.DetectionDistance, (int)value);
-                AppInformer.InformUser("Detection Distance Set: {0}.", (int)value);
+            set
+            {
+                SetProperty(ref Config.Instance.DetectionDistance, (int) value);
+                AppInformer.InformUser("Detection Distance Set: {0}.", (int) value);
             }
         }
 
@@ -58,7 +47,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.HeightThreshold; }
             set
             {
-                SetProperty<double>(ref Config.Instance.HeightThreshold, value);
+                SetProperty(ref Config.Instance.HeightThreshold, value);
                 AppInformer.InformUser("Height Threshold Set: {0:F1}.", value);
             }
         }
@@ -68,18 +57,18 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.MeleeDistance; }
             set
             {
-                SetProperty<double>(ref Config.Instance.MeleeDistance, value);
+                SetProperty(ref Config.Instance.MeleeDistance, value);
                 AppInformer.InformUser("Melee Distance Set: {0:F1}.", value);
             }
-        }        
+        }
 
         public double WanderDistance
         {
             get { return Config.Instance.WanderDistance; }
             set
             {
-                SetProperty<double>(ref Config.Instance.WanderDistance, (int)value);
-                AppInformer.InformUser("Wander Distance Set: {0}.", (int)value);
+                SetProperty(ref Config.Instance.WanderDistance, (int) value);
+                AppInformer.InformUser("Wander Distance Set: {0}.", (int) value);
             }
         }
 
@@ -88,9 +77,19 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.GlobalCooldown; }
             set
             {
-                SetProperty(ref Config.Instance.GlobalCooldown, (int)value);
-                AppInformer.InformUser("Global Cooldown Set: {0}.", (int)value);
+                SetProperty(ref Config.Instance.GlobalCooldown, value);
+                AppInformer.InformUser("Global Cooldown Set: {0}.", value);
             }
+        }
+
+        private void RestoreDefaults()
+        {
+            DetectionDistance = Constants.DETECTION_DISTANCE;
+            HeightThreshold = Constants.HEIGHT_THRESHOLD;
+            MeleeDistance = Constants.MELEE_DISTANCE;
+            WanderDistance = Constants.DETECTION_DISTANCE;
+            GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
+            AppInformer.InformUser("Defaults have been restored.");
         }
     }
 }

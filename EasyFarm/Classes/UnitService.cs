@@ -1,5 +1,4 @@
-
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,54 +16,18 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using FFACETools;
-using System.Collections.Generic;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Retrieves the zone's unit data. 
+    ///     Retrieves the zone's unit data.
     /// </summary>
     public class UnitService
     {
-        #region Members
-        /// <summary>
-        /// The zone's unit array. 
-        /// </summary>
-        private static IEnumerable<Unit> _units;
-
-        /// <summary>
-        /// The unit array's max size: 0 - 2048
-        /// </summary>
-        private const short UNIT_ARRAY_MAX = Constants.UNIT_ARRAY_MAX;
-
-        /// <summary>
-        /// The mob array's max size: 0 - 768.
-        /// </summary>
-        private const short MOB_ARRAY_MAX = Constants.MOB_ARRAY_MAX;
-
-
-        // We are caching values for HasAggro, since the program will 
-        // call it constantly which will result in a performance jump. 
-
-        /// <summary>
-        /// The last time an aggro check was performed. 
-        /// </summary>
-        public DateTime LastAggroCheck = DateTime.Now;
-
-        /// <summary>
-        /// The last value read from HasAggro
-        /// </summary>
-        public bool LastAggroStatus = false;
-
-        /// <summary>
-        /// The player's environmental data. 
-        /// </summary>
-        private static FFACE _fface;
-        #endregion
-
         public UnitService(FFACE fface)
         {
             _fface = fface;
@@ -74,10 +37,48 @@ namespace EasyFarm.Classes
                 .Select(x => new Unit(_fface, x));
         }
 
+        #region Members
+
+        /// <summary>
+        ///     The zone's unit array.
+        /// </summary>
+        private static IEnumerable<Unit> _units;
+
+        /// <summary>
+        ///     The unit array's max size: 0 - 2048
+        /// </summary>
+        private const short UNIT_ARRAY_MAX = Constants.UNIT_ARRAY_MAX;
+
+        /// <summary>
+        ///     The mob array's max size: 0 - 768.
+        /// </summary>
+        private const short MOB_ARRAY_MAX = Constants.MOB_ARRAY_MAX;
+
+
+        // We are caching values for HasAggro, since the program will 
+        // call it constantly which will result in a performance jump. 
+
+        /// <summary>
+        ///     The last time an aggro check was performed.
+        /// </summary>
+        public DateTime LastAggroCheck = DateTime.Now;
+
+        /// <summary>
+        ///     The last value read from HasAggro
+        /// </summary>
+        public bool LastAggroStatus;
+
+        /// <summary>
+        ///     The player's environmental data.
+        /// </summary>
+        private static FFACE _fface;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
-        /// Does there exist a mob that has aggroed in general.
+        ///     Does there exist a mob that has aggroed in general.
         /// </summary>
         public bool HasAggro
         {
@@ -85,9 +86,9 @@ namespace EasyFarm.Classes
             {
                 // Return the cached value if we're checking too often. 
                 if (LastAggroCheck.AddSeconds(
-                    Constants.UNIT_ARRAY_CHECK_RATE) > 
+                    Constants.UNIT_ARRAY_CHECK_RATE) >
                     DateTime.Now)
-                {                    
+                {
                     return LastAggroStatus;
                 }
 
@@ -95,12 +96,12 @@ namespace EasyFarm.Classes
                 LastAggroCheck = DateTime.Now;
 
                 // Otherwise return the current environment value. 
-                return LastAggroStatus = MOBArray.Any(x => x.HasAggroed);               
+                return LastAggroStatus = MOBArray.Any(x => x.HasAggroed);
             }
         }
 
         /// <summary>
-        /// Do we have claim on any mob?
+        ///     Do we have claim on any mob?
         /// </summary>
         public bool HasClaim
         {
@@ -118,18 +119,15 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Retrieves the list of UNITs
+        ///     Retrieves the list of UNITs
         /// </summary>
         public IEnumerable<Unit> UnitArray
         {
-            get
-            {
-                return _units;
-            }
+            get { return _units; }
         }
 
         /// <summary>
-        /// Retrieves the list of MOBs.
+        ///     Retrieves the list of MOBs.
         /// </summary>
         public IEnumerable<Unit> MOBArray
         {
@@ -141,7 +139,7 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Retrieves the lsit of PCs.
+        ///     Retrieves the lsit of PCs.
         /// </summary>
         public IEnumerable<Unit> PCArray
         {

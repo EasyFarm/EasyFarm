@@ -1,4 +1,3 @@
-
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -18,11 +17,10 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using FFACETools;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Resting")]
+    [ViewModel("Resting")]
     public class RestingViewModel : ViewModelBase
     {
         public int LowHP

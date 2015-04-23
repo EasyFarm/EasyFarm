@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -22,16 +21,18 @@ using Parsing.Abilities;
 namespace Parsing.Augmenting
 {
     /// <summary>
-    /// Augments abilities with XElement attribute values by reflecting field 
-    /// and property members by name. 
+    ///     Augments abilities with XElement attribute values by reflecting field
+    ///     and property members by name.
     /// </summary>
     public class AbilityAugmenter<TType> : ResourceValueAugmenter<Ability, TType>
     {
         /// <summary>
-        /// Store the attribute's name in [_attributeName]
+        ///     Store the attribute's name in [_attributeName]
         /// </summary>
         /// <param name="attributeName"></param>
         public AbilityAugmenter(string attributeName, string variableName)
-            : base(attributeName, variableName) { }
+            : base(attributeName, variableName)
+        {
+        }
     }
 }

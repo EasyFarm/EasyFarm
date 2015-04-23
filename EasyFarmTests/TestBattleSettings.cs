@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,10 +16,9 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EasyFarm.Classes;
 using EasyFarm.Views.Settings;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EasyFarmTests
 {
@@ -39,7 +37,7 @@ namespace EasyFarmTests
         public void ApproachReflectedInConfigTest()
         {
             // Create the view model. 
-            BattleSettingsViewModel BattleSettingsVM = 
+            var BattleSettingsVM =
                 new BattleSettingsViewModel();
 
             // Set approach to false in the vm which should also set it
@@ -54,7 +52,7 @@ namespace EasyFarmTests
         public void EngageReflectedInConfigTest()
         {
             // Create the view model. 
-            BattleSettingsViewModel BattleSettingsVM =
+            var BattleSettingsVM =
                 new BattleSettingsViewModel();
 
             // Set approach to false in the vm which should also set it

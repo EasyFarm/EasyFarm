@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -27,7 +26,7 @@ namespace EasyFarm.ViewModels
     {
         public static SinkSubscription<StringSink> LogToCollection(
             this IObservable<EventEntry> eventStream,
-            Action<String> action,
+            Action<string> action,
             IEventTextFormatter formatter = null)
         {
             var sink = new StringSink(action);

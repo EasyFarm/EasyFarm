@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,22 +16,23 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Collections.Generic;
+using System.Xml.Linq;
 using Parsing.Abilities;
 using Parsing.Mapping;
-using Parsing.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Parsing.Augmenting
 {
     public class SpecializedTypeAugmenter<TType> : AbilityAugmenter<Ability>
     {
+        /// <summary>
+        ///     A list of mappers that map strings to other objects.
+        /// </summary>
+        protected List<IObjectMapper<string, TType>> _mappers =
+            new List<IObjectMapper<string, TType>>();
+
         public SpecializedTypeAugmenter(string attributeName, string variableName) :
-            base(attributeName, variableName) 
+            base(attributeName, variableName)
         {
             // Our default implementation for the specialized mapper that handles the 
             // flags situation for enums where an enum is a combination of multiple
@@ -41,23 +41,13 @@ namespace Parsing.Augmenting
         }
 
         /// <summary>
-        /// A list of mappers that map strings to other objects.  
+        ///     Maps a string to a list of potential objects.
         /// </summary>
-        protected List<IObjectMapper<string, TType>> _mappers =
-            new List<IObjectMapper<string, TType>>();
+        public IObjectMapper<string, TType> _mapper { get; set; }
 
         /// <summary>
-        /// Maps a string to a list of potential objects. 
-        /// </summary>
-        public IObjectMapper<string, TType> _mapper 
-        { 
-            get; 
-            set; 
-        }
-
-        /// <summary>
-        /// Augment the object with the extracted and converted
-        /// enum data. 
+        ///     Augment the object with the extracted and converted
+        ///     enum data.
         /// </summary>
         /// <param name="element"></param>
         /// <param name="ability"></param>

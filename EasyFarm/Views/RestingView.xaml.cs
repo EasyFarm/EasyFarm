@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,13 +16,12 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.ViewModels;
 using System.Windows.Controls;
 
 namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for RestingView.xaml
+    ///     Interaction logic for RestingView.xaml
     /// </summary>
     public partial class RestingView : UserControl
     {

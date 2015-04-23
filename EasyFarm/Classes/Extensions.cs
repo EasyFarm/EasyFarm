@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 Copyright (C) <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
@@ -16,29 +15,25 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using FFACETools;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using ChatLine = FFACETools.FFACE.ChatTools.ChatLine;
-using ChatTools = FFACETools.FFACE.ChatTools;
 
 namespace EasyFarm.Classes
 {
     public static class Extensions
     {
         /// <summary>
-        /// Adds qoutes around the string. 
+        ///     Adds qoutes around the string.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static String QuoteWord(this String value)
+        public static string QuoteWord(this string value)
         {
             return '"' + value + '"';
         }
 
         /// <summary>
-        /// Returns the objects that repeats the most. 
+        ///     Returns the objects that repeats the most.
         /// </summary>
         /// <param name="collection"></param>
         /// <returns></returns>

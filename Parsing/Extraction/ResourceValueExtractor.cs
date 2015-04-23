@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -21,7 +20,7 @@ using System.Xml.Linq;
 
 namespace Parsing.Extraction
 {
-    public class ResourceValueExtractor : IDataExtractor<XElement, string> 
+    public class ResourceValueExtractor : IDataExtractor<XElement, string>
     {
         protected string _attributeName;
 

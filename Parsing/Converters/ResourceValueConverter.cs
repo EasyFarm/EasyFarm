@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -22,22 +21,38 @@ using System;
 namespace Parsing.Converters
 {
     /// <summary>
-    /// Provides conversion for .Nets standard predefined types. 
+    ///     Provides conversion for .Nets standard predefined types.
     /// </summary>
     /// <typeparam name="TData">
-    /// The data object that needs conversion. 
+    ///     The data object that needs conversion.
     /// </typeparam>
     public class ResourceValueConverter<TData> : IObjectConverter<TData>
     {
+        public bool CanConvert(TData obj)
+        {
+            var typeCode = (Type.GetTypeCode(obj.GetType()));
+            return !typeCode.HasFlag(TypeCode.Object | TypeCode.Empty | TypeCode.DBNull);
+        }
+
+        public TType ConvertObject<TType>(TData obj)
+        {
+            if (CanConvert(obj))
+            {
+                return ChangeType(obj, typeof (TType));
+            }
+
+            return default(TType);
+        }
+
         /// <summary>
-        /// Converts the value to the target type. 
+        ///     Converts the value to the target type.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="targetType"></param>
         /// <returns></returns>
         private dynamic ChangeType(TData value, Type targetType)
         {
-            TypeCode typeCode = Type.GetTypeCode(targetType);
+            var typeCode = Type.GetTypeCode(targetType);
 
             switch (typeCode)
             {
@@ -64,7 +79,7 @@ namespace Parsing.Converters
                 case TypeCode.Int64:
                     return Convert.ToInt64(value);
                 case TypeCode.Object:
-                    return value as object;
+                    return value;
                 case TypeCode.SByte:
                     return Convert.ToSByte(value);
                 case TypeCode.Single:
@@ -80,27 +95,11 @@ namespace Parsing.Converters
                 default:
                     // Create a friendly error message informing the user that we cannot 
                     // convert their type. 
-                    string errorMessage =
+                    var errorMessage =
                         string.Format("Conversion from type {0} to {1} not supported. ",
-                        value.GetType(), targetType);
+                            value.GetType(), targetType);
                     throw new NotSupportedException(errorMessage);
             }
-        }
-
-        public bool CanConvert(TData obj)
-        {
-            var typeCode = (Type.GetTypeCode(obj.GetType()));
-            return !typeCode.HasFlag(TypeCode.Object | TypeCode.Empty | TypeCode.DBNull);
-        }
-
-        public TType ConvertObject<TType>(TData obj)
-        {
-            if (CanConvert(obj))
-            {
-                return ChangeType(obj, typeof(TType));
-            }
-
-            return default(TType);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,21 +16,17 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using Parsing.Abilities;
 using Parsing.Mapping;
 using Parsing.Types;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace Parsing.Augmenting
 {
     /// <summary>
-    /// Augments abilities with AbilityType objects. 
+    ///     Augments abilities with AbilityType objects.
     /// </summary>
     public class AbilityTypeAugmenter : SpecializedTypeAugmenter<AbilityType>
     {
-        public AbilityTypeAugmenter(string attributeName, string variableName) : 
+        public AbilityTypeAugmenter(string attributeName, string variableName) :
             base(attributeName, variableName)
         {
             // Create mappings from ffxi command to AbilityType. 

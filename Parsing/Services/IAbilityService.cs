@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,16 +16,15 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using Parsing.Abilities;
-using System;
 using System.Collections.Generic;
+using Parsing.Abilities;
 
 namespace Parsing.Services
 {
     public interface IAbilityService
     {
         Ability CreateAbility(string name);
-        IEnumerable<Ability> GetAbilitiesWithName(String name);
+        IEnumerable<Ability> GetAbilitiesWithName(string name);
         IEnumerable<Ability> GetJobAbilitiesByName(string name);
         IEnumerable<Ability> GetSpellAbilitiesByName(string name);
         bool Exists(string actionName);

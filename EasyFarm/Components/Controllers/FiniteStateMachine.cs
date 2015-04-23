@@ -1,5 +1,4 @@
-
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,49 +16,43 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-﻿// Author: Myrmidon
+// Author: Myrmidon
 // Site: FFEVO.net
 // All credit to him!
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using EasyFarm.Components;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using FFACETools;
 using System.Threading;
 using EasyFarm.Classes;
+using FFACETools;
 
 namespace EasyFarm.Components
 {
     public class FiniteStateEngine : MachineController
     {
-        private MachineComponent LastRan = null;
+        /// <summary>
+        ///     A timer for running tasks over long
+        ///     periods of time.
+        /// </summary>
+        private readonly TaskTimer TaskTimer;
+
+        private MachineComponent LastRan;
 
         /// <summary>
-        /// FFACE Session for reading memory from the game client. 
+        ///     FFACE Session for reading memory from the game client.
         /// </summary>
         private FFACE m_fface;
-
-        /// <summary>
-        /// A timer for running tasks over long 
-        /// periods of time. 
-        /// </summary>
-        private TaskTimer TaskTimer = null;
 
         // Constructor.
         public FiniteStateEngine(FFACE fface)
         {
-            this.m_fface = fface;
+            m_fface = fface;
 
             //Create the states
-            AddComponent(new RestComponent(fface) { Priority = 2 });
-            AddComponent(new AttackContainer(fface) { Priority = 1 });
-            AddComponent(new TravelComponent(fface) { Priority = 1 });
-            AddComponent(new HealingComponent(fface) { Priority = 2 });
-            AddComponent(new EndComponent(fface) { Priority = 3 });
-            this.Components.ForEach(x => x.Enabled = true);
+            AddComponent(new RestComponent(fface) {Priority = 2});
+            AddComponent(new AttackContainer(fface) {Priority = 1});
+            AddComponent(new TravelComponent(fface) {Priority = 1});
+            AddComponent(new HealingComponent(fface) {Priority = 2});
+            AddComponent(new EndComponent(fface) {Priority = 3});
+            Components.ForEach(x => x.Enabled = true);
 
             // Threaded timer to run the main loop on. 
             TaskTimer = new TaskTimer();
@@ -74,7 +67,7 @@ namespace EasyFarm.Components
 
             // Loop through all components and if one reports ready,
             // the attack container may run. 
-            foreach (var Component in this.Components)
+            foreach (var Component in Components)
             {
                 if (Component.Enabled)
                 {
@@ -87,7 +80,7 @@ namespace EasyFarm.Components
 
         private void Run(bool timedOut)
         {
-            bool acquiredLock = false;
+            var acquiredLock = false;
 
             try
             {
@@ -104,7 +97,7 @@ namespace EasyFarm.Components
                 Components.Sort();
 
                 // Find a State that says it needs to run.
-                foreach (MachineComponent MC in Components)
+                foreach (var MC in Components)
                 {
                     // Stop operations on being signaled to stop. 
                     if (!timedOut)
@@ -114,11 +107,17 @@ namespace EasyFarm.Components
                         return;
                     }
 
-                    if (MC.Enabled == false) { continue; } // Skip disabled States.
-                    if (MC.CheckComponent() == true)
+                    if (MC.Enabled == false)
+                    {
+                        continue;
+                    } // Skip disabled States.
+                    if (MC.CheckComponent())
                     {
                         // Says it needs to run. Same State as before?
-                        if (LastRan == null) { LastRan = MC; }
+                        if (LastRan == null)
+                        {
+                            LastRan = MC;
+                        }
                         if (LastRan != MC)
                         {
                             // Make the previous State clean up and exit.

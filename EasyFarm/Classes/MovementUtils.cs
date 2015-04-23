@@ -1,20 +1,15 @@
 ﻿using FFACETools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Contains common methods for moving our character. 
+    ///     Contains common methods for moving our character.
     /// </summary>
     public class MovementUtils
     {
         /// <summary>
-        /// Moves to the unit without altering the current
-        /// distance tolerance. 
+        ///     Moves to the unit without altering the current
+        ///     distance tolerance.
         /// </summary>
         /// <param name="fface"></param>
         /// <param name="unit"></param>
@@ -36,6 +31,6 @@ namespace EasyFarm.Classes
                 // Restore old tolerance. 
                 fface.Navigator.DistanceTolerance = old;
             }
-        }        
+        }
     }
 }

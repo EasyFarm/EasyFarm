@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,33 +16,30 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using Parsing.Abilities;
-using System;
 using System.Windows;
-
+using Parsing.Abilities;
 
 namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for AbilitySelectionBox.xaml
+    ///     Interaction logic for AbilitySelectionBox.xaml
     /// </summary>
     public partial class AbilitySelectionBox : Window
     {
-        public Ability SelectedAbility { get; set; }
-
-        public AbilitySelectionBox(String name)
+        public AbilitySelectionBox(string name)
         {
             InitializeComponent();
-            this.CompleteSelectionButton.Click += CompleteSelectionButton_Click;
-            this.AbilityListBox.ItemsSource = App.AbilityService.GetAbilitiesWithName(name);
-            this.ShowDialog();
+            CompleteSelectionButton.Click += CompleteSelectionButton_Click;
+            AbilityListBox.ItemsSource = App.AbilityService.GetAbilitiesWithName(name);
+            ShowDialog();
         }
 
-        void CompleteSelectionButton_Click(object sender, RoutedEventArgs e)
+        public Ability SelectedAbility { get; set; }
+
+        private void CompleteSelectionButton_Click(object sender, RoutedEventArgs e)
         {
             SelectedAbility = AbilityListBox.SelectedValue as Ability;
-            this.Close();
+            Close();
         }
     }
 }

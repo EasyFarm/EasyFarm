@@ -6,27 +6,31 @@ namespace EasyFarm.ViewModels
 {
     public sealed class StringSink : BindableBase, IObserver<EventEntry>
     {
-        private readonly Action<String> _action;
+        private readonly Action<string> _action;
 
-        public StringSink(Action<String> action)
+        public StringSink(Action<string> action)
         {
             _action = action;
         }
 
-        public void OnCompleted() { }
+        public void OnCompleted()
+        {
+        }
 
-        public void OnError(Exception error) { }
+        public void OnError(Exception error)
+        {
+        }
 
         public void OnNext(EventEntry value)
         {
             var timestamp = GetTimeStamp(value.Timestamp);
-            var message = String.Join(" ", value.Payload);
+            var message = string.Join(" ", value.Payload);
             _action(timestamp + " " + message);
         }
 
-        public String GetTimeStamp(DateTimeOffset time)
+        public string GetTimeStamp(DateTimeOffset time)
         {
-            return String.Join(":", time.Hour, time.Minute, time.Second);
+            return string.Join(":", time.Hour, time.Minute, time.Second);
         }
     }
 }

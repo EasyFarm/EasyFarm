@@ -1,5 +1,4 @@
-
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -14,17 +13,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-*////////////////////////////////////////////////////////////////////
-
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+*/ ///////////////////////////////////////////////////////////////////
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Class for Healing Abilities
+    ///     Class for Healing Abilities
     /// </summary>
     public class HealingAbility
     {
@@ -33,26 +27,26 @@ namespace EasyFarm.Classes
             SetDefaults();
         }
 
-        public void SetDefaults()
-        { 
-            IsEnabled = false;
-            Name = "Empty";
-            TriggerLevel = 0;
-        }
-
         /// <summary>
-        /// Can we use this abilitiy?
+        ///     Can we use this abilitiy?
         /// </summary>
         public bool IsEnabled { get; set; }
 
         /// <summary>
-        /// What is its name?
+        ///     What is its name?
         /// </summary>
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// The level to which we should use the ability
+        ///     The level to which we should use the ability
         /// </summary>
         public int TriggerLevel { get; set; }
+
+        public void SetDefaults()
+        {
+            IsEnabled = false;
+            Name = "Empty";
+            TriggerLevel = 0;
+        }
     }
 }

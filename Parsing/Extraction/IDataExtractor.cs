@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -20,21 +19,21 @@ You should have received a copy of the GNU General Public License
 namespace Parsing.Extraction
 {
     /// <summary>
-    /// Defines how data can be extracted from objects. 
+    ///     Defines how data can be extracted from objects.
     /// </summary>
     /// <typeparam name="TElement">The object to extract data from. </typeparam>
     /// <typeparam name="TData">The data returned from extraction. </typeparam>
     public interface IDataExtractor<TElement, TData>
     {
         /// <summary>
-        /// Checks to see if we can extract data. 
+        ///     Checks to see if we can extract data.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         bool IsExtractable(TElement data);
 
         /// <summary>
-        /// Extract the data from the given object. 
+        ///     Extract the data from the given object.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>

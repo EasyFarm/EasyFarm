@@ -1,4 +1,3 @@
-
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -17,16 +16,14 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using Microsoft.Practices.Prism.Commands;
-using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-
+using EasyFarm.Classes;
+using Microsoft.Practices.Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Targets")]
+    [ViewModel("Targets")]
     public class TargetsViewModel : ViewModelBase
     {
         public TargetsViewModel()
@@ -36,34 +33,13 @@ namespace EasyFarm.ViewModels
             ClearCommand = new DelegateCommand(ClearTargetsCommand);
         }
 
-        private void ClearTargetsCommand()
-        {
-            Targets.Clear();
-        }
-
-        private void DeleteTargetCommand()
-        {
-            if (Targets.Contains(TargetsName))
-            {
-                Targets.Remove(TargetsName);
-            }
-        }
-
-        private void AddTargetCommand()
-        {
-            if (!Targets.Contains(TargetsName))
-            {
-                Targets.Add(TargetsName);
-            }
-        }
-
-        public String TargetsName
+        public string TargetsName
         {
             get { return Config.Instance.TargetName; }
             set { SetProperty(ref Config.Instance.TargetName, value); }
         }
 
-        public ObservableCollection<String> Targets
+        public ObservableCollection<string> Targets
         {
             get { return Config.Instance.TargetedMobs; }
             set { SetProperty(ref Config.Instance.TargetedMobs, value); }
@@ -94,9 +70,28 @@ namespace EasyFarm.ViewModels
         }
 
         public ICommand AddCommand { get; set; }
-
         public ICommand DeleteCommand { get; set; }
-
         public ICommand ClearCommand { get; set; }
+
+        private void ClearTargetsCommand()
+        {
+            Targets.Clear();
+        }
+
+        private void DeleteTargetCommand()
+        {
+            if (Targets.Contains(TargetsName))
+            {
+                Targets.Remove(TargetsName);
+            }
+        }
+
+        private void AddTargetCommand()
+        {
+            if (!Targets.Contains(TargetsName))
+            {
+                Targets.Add(TargetsName);
+            }
+        }
     }
 }

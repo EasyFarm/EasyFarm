@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -18,56 +17,46 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using FFACETools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace EasyFarm.Classes
 {
     public class Waypoint
     {
-        public Waypoint() 
+        public Waypoint()
         {
-            _position = new FFACE.Position();
+            Position = new FFACE.Position();
         }
-
-        private FFACE.Position _position;
 
         public Waypoint(FFACE.Position position)
         {
-            _position = position;
+            Position = position;
         }
 
         public float X
         {
-            get { return _position.X; }
-            set { _position.X = value; }
+            get { return Position.X; }
+            set { Position.X = value; }
         }
 
         public float Y
         {
-            get { return _position.Y; }
-            set { _position.Y = value; }
+            get { return Position.Y; }
+            set { Position.Y = value; }
         }
 
         public float Z
         {
-            get { return _position.Z; }
-            set { _position.Z = value; }
+            get { return Position.Z; }
+            set { Position.Z = value; }
         }
 
         public float H
         {
-            get { return _position.H; }
-            set { _position.H = value; }
+            get { return Position.H; }
+            set { Position.H = value; }
         }
 
-        public FFACE.Position Position
-        {
-            get { return _position; }
-            set { _position = value; }
-        }
+        public FFACE.Position Position { get; set; }
 
         public override string ToString()
         {
@@ -81,7 +70,7 @@ namespace EasyFarm.Classes
 
         public override bool Equals(object obj)
         {
-            return this.Position == (obj as Waypoint).Position;
+            return Position == (obj as Waypoint).Position;
         }
     }
 }

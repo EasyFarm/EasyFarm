@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,16 +16,16 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using Parsing.Converters;
-using Parsing.Extraction;
 using System;
 using System.Reflection;
 using System.Xml.Linq;
+using Parsing.Converters;
+using Parsing.Extraction;
 
 namespace Parsing.Augmenting
 {
     /// <summary>
-    /// Augment an TObject instance with data TData extracted from TElement.
+    ///     Augment an TObject instance with data TData extracted from TElement.
     /// </summary>
     /// <typeparam name="TElement">Element to extract data from. </typeparam>
     /// <typeparam name="TObject">Object with which to augment data</typeparam>
@@ -34,24 +33,14 @@ namespace Parsing.Augmenting
     public class ResourceValueAugmenter<TObject, TType> : IObjectAugmenter<XElement, TObject>
     {
         /// <summary>
-        /// Name of the XElement attribute to extract from. 
+        ///     Name of the XElement attribute to extract from.
         /// </summary>
         protected string _attributeName;
 
         /// <summary>
-        /// The name of the variable to augment on TObject. 
+        ///     The name of the variable to augment on TObject.
         /// </summary>
         protected string _variableName;
-
-        /// <summary>
-        /// A data extractor used to extract data from TObject. 
-        /// </summary>
-        protected ResourceValueExtractor _extractor { get; set; }
-
-        /// <summary>
-        /// Converts data to the right format. 
-        /// </summary>
-        protected ResourceValueConverter<string> _converter { get; set; }
 
         public ResourceValueAugmenter(string attributeName, string variableName)
         {
@@ -61,6 +50,16 @@ namespace Parsing.Augmenting
             _converter = new ResourceValueConverter<string>();
         }
 
+        /// <summary>
+        ///     A data extractor used to extract data from TObject.
+        /// </summary>
+        protected ResourceValueExtractor _extractor { get; set; }
+
+        /// <summary>
+        ///     Converts data to the right format.
+        /// </summary>
+        protected ResourceValueConverter<string> _converter { get; set; }
+
         public virtual bool CanAugment(XElement element)
         {
             return _extractor.IsExtractable(element);
@@ -68,13 +67,13 @@ namespace Parsing.Augmenting
 
         public virtual void Augment(XElement element, TObject obj)
         {
-            if(CanAugment(element))
+            if (CanAugment(element))
             {
                 // Extract the value from the data. 
-                string value = _extractor.ExtractData(element);
+                var value = _extractor.ExtractData(element);
 
                 // Convert the data to the new format. 
-                TType data = default(TType);
+                var data = default(TType);
 
                 // Convert the data only if it's convertable. 
                 if (_converter.CanConvert(value))
@@ -82,15 +81,15 @@ namespace Parsing.Augmenting
                     data = _converter.ConvertObject<TType>(value);
                     AugmentObject(obj, data);
                 }
-                else 
+                else
                 {
                     AugmentObject(obj, value);
-                }                
+                }
             }
         }
 
         /// <summary>
-        /// Uses reflection to augment an object with data. 
+        ///     Uses reflection to augment an object with data.
         /// </summary>
         /// <param name="obj">An object to augment</param>
         /// <param name="value">The data to augment the object with. </param>
@@ -98,13 +97,13 @@ namespace Parsing.Augmenting
         {
             // The parameter used to filter out bad object properties and fields.
             // Avoids retrieving private or static data. 
-            BindingFlags retrievalConditions = BindingFlags.Instance | BindingFlags.Public;
+            var retrievalConditions = BindingFlags.Instance | BindingFlags.Public;
 
             // Try to get the property with the given name. 
-            PropertyInfo property = obj.GetType().GetProperty(_variableName, retrievalConditions);
+            var property = obj.GetType().GetProperty(_variableName, retrievalConditions);
 
             // Try to get the field with the given name. 
-            FieldInfo field = obj.GetType().GetField(_variableName, retrievalConditions);
+            var field = obj.GetType().GetField(_variableName, retrievalConditions);
 
             // Set the value to the ability object. 
             if (property != null)
@@ -120,7 +119,7 @@ namespace Parsing.Augmenting
                 // Failed to find the variable on the given object
                 throw new ArgumentException(
                     string.Format("Failed to find {0} on the object.", _variableName)
-                );
+                    );
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,25 +16,21 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parsing.Mapping
 {
     /// <summary>
-    /// Maps a single object to multiple mappings. 
+    ///     Maps a single object to multiple mappings.
     /// </summary>
     /// <typeparam name="TObject"></typeparam>
     /// <typeparam name="TData"></typeparam>
     public class MultiObjectMapper<TObject, TData> : IObjectMultiMapper<TObject, TData>
     {
         /// <summary>
-        /// Collection of mappers to check for mappings. 
+        ///     Collection of mappers to check for mappings.
         /// </summary>
-        private IEnumerable<IObjectMapper<TObject, TData>> _mappers;
+        private readonly IEnumerable<IObjectMapper<TObject, TData>> _mappers;
 
         public MultiObjectMapper(IEnumerable<IObjectMapper<TObject, TData>> mappers)
         {
@@ -43,7 +38,7 @@ namespace Parsing.Mapping
         }
 
         /// <summary>
-        /// Check for any mappings
+        ///     Check for any mappings
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -61,13 +56,13 @@ namespace Parsing.Mapping
         }
 
         /// <summary>
-        /// Return all matching mapped data for the object. 
+        ///     Return all matching mapped data for the object.
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
         public IEnumerable<TData> GetMapping(TObject obj)
         {
-            List<TData> data = new List<TData>();
+            var data = new List<TData>();
 
             // Map all elements to their proper element
             // and combine them together into one ElementType object. 

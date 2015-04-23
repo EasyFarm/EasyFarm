@@ -1,4 +1,3 @@
-
 /*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
@@ -17,42 +16,39 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Threading;
 using FFACETools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Provides methods that allow the player to start resting or stop resting
-    /// through the use of /heal on or /heal off. 
+    ///     Provides methods that allow the player to start resting or stop resting
+    ///     through the use of /heal on or /heal off.
     /// </summary>
     public class RestingUtils
     {
         /// <summary>
-        /// Makes the character rest
+        ///     Makes the character rest
         /// </summary>
         public static void Rest(FFACE fface)
         {
             if (!fface.Player.Status.Equals(Status.Healing))
             {
                 fface.Windower.SendString(Constants.RESTING_ON);
-                System.Threading.Thread.Sleep(50);
+                Thread.Sleep(50);
             }
         }
 
         /// <summary>
-        /// Makes the character stop resting
+        ///     Makes the character stop resting
         /// </summary>
         public static void Stand(FFACE fface)
         {
             if (fface.Player.Status.Equals(Status.Healing))
             {
                 fface.Windower.SendString(Constants.RESTING_OFF);
-                System.Threading.Thread.Sleep(50);
+                Thread.Sleep(50);
             }
-        }        
+        }
     }
 }

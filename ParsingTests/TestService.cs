@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -18,16 +17,10 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Parsing.Services;
 using Parsing.Types;
-using System.Linq;
-using Parsing.Extraction;
-using System.Xml.Linq;
-using Parsing.Mapping;
-using Parsing.Augmenting;
-using Parsing.Abilities;
 
 namespace ParsingTests
 {
@@ -36,8 +29,8 @@ namespace ParsingTests
     {
         [TestMethod]
         public void TestCreateAbility()
-        {           
-            AbilityService Retriever = new AbilityService(
+        {
+            var Retriever = new AbilityService(
                 Path.Combine(Environment.CurrentDirectory, "Resources"));
 
             // Test create ability for all major skill types. 

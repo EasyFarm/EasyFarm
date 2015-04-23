@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,6 +16,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Timers;
 using EasyFarm.Classes;
 using FFACETools;
 
@@ -24,23 +24,22 @@ namespace EasyFarm.FarmingTool
 {
     public class StuckMonitor : BaseMonitor
     {
-        private MovingUnit Player { get; set; }
-
-        private int ID { get; set; }
-
-        public StuckMonitor(FFACE fface) : base(fface) 
+        public StuckMonitor(FFACE fface) : base(fface)
         {
-            this.ID = fface.Player.ID;
-            this.Player = new MovingUnit(fface, this.ID);                       
+            ID = fface.Player.ID;
+            Player = new MovingUnit(fface, ID);
         }
 
-        protected override void CheckStatus(object sender, System.Timers.ElapsedEventArgs e)
+        private MovingUnit Player { get; set; }
+        private int ID { get; set; }
+
+        protected override void CheckStatus(object sender, ElapsedEventArgs e)
         {
-            lock (this._lock)
+            lock (_lock)
             {
-                if (this.Player.IsStuck)
+                if (Player.IsStuck)
                 {
-                    this.OnChanged(new MonitorArgs<bool>(this.Player.IsStuck));
+                    OnChanged(new MonitorArgs<bool>(Player.IsStuck));
                 }
             }
         }

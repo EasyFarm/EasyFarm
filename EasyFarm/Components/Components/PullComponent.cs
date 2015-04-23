@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,33 +16,32 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Linq;
 using EasyFarm.Classes;
 using FFACETools;
-using System.Linq;
 
 namespace EasyFarm.Components
 {
     public class PullComponent : MachineComponent
     {
-        public FFACE FFACE { get; set; }
+        public PullComponent(FFACE fface)
+        {
+            FFACE = fface;
+            Executor = new Executor(fface);
+        }
 
+        public FFACE FFACE { get; set; }
         public Executor Executor { get; set; }
 
         public Unit Target
         {
             get { return AttackContainer.TargetUnit; }
             set { AttackContainer.TargetUnit = value; }
-        }        
-
-        public PullComponent(FFACE fface)
-        {
-            this.FFACE = fface;
-            this.Executor = new Executor(fface);           
         }
 
         /// <summary>
-        /// Allow component to run when moves need to be triggered or 
-        /// FightStarted state needs updating. 
+        ///     Allow component to run when moves need to be triggered or
+        ///     FightStarted state needs updating.
         /// </summary>
         /// <returns></returns>
         public override bool CheckComponent()
@@ -52,14 +50,14 @@ namespace EasyFarm.Components
             return (Target != null && !Target.IsDead && Target.ID != 0);
         }
 
-        public override void EnterComponent() 
+        public override void EnterComponent()
         {
             FFACE.Navigator.Reset();
         }
 
         /// <summary>
-        /// Use pulling moves if applicable to make the target 
-        /// mob aggressive to us. 
+        ///     Use pulling moves if applicable to make the target
+        ///     mob aggressive to us.
         /// </summary>
         public override void RunComponent()
         {
@@ -69,17 +67,17 @@ namespace EasyFarm.Components
             // Only pull if we have moves. 
             if (Config.Instance.BattleLists["Pull"]
                 .Actions.Any(x => x.IsEnabled))
-            {                
+            {
                 var usable = Config.Instance.BattleLists["Pull"]
                     .Actions.Where(x => ActionFilters.TargetedFilter(FFACE, x, Target));
-               
+
                 Executor.UseTargetedActions(usable, Target);
             }
-        }        
+        }
 
         /// <summary>
-        /// Handle all cases of setting fight started to proper values
-        /// so other components can fire. 
+        ///     Handle all cases of setting fight started to proper values
+        ///     so other components can fire.
         /// </summary>
         public override void ExitComponent()
         {

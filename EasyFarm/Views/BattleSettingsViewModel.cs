@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -19,25 +18,21 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Classes;
 using EasyFarm.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace EasyFarm.Views.Settings
 {
     public class BattleSettingsViewModel : ViewModelBase
     {
-        public bool ShouldEngage 
+        public bool ShouldEngage
         {
             get { return Config.Instance.IsEngageEnabled; }
-            set { this.SetProperty(ref Config.Instance.IsEngageEnabled, value); }
+            set { SetProperty(ref Config.Instance.IsEngageEnabled, value); }
         }
 
         public bool ShouldApproach
         {
             get { return Config.Instance.IsApproachEnabled; }
-            set { this.SetProperty(ref Config.Instance.IsApproachEnabled, value); }
+            set { SetProperty(ref Config.Instance.IsApproachEnabled, value); }
         }
-    }    
+    }
 }

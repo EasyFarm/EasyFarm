@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -18,29 +17,28 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Parsing.Augmenting;
-using Parsing.Services;
 using System.IO;
-using Parsing.Types;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Parsing.Abilities;
+using Parsing.Services;
+using Parsing.Types;
 
 namespace ParsingTests
 {
     [TestClass]
     public class TestAugmenters
     {
-        private static AbilityService Retriever = new AbilityService(
+        private static readonly AbilityService Retriever = new AbilityService(
             Path.Combine(Environment.CurrentDirectory, "resources"));
 
         // Test create ability for all major skill types. 
-        Ability cure = Retriever.CreateAbility("Cure");
-        Ability raise = Retriever.CreateAbility("Raise");
-        Ability provoke = Retriever.CreateAbility("Provoke");
-        Ability ragingAxe = Retriever.CreateAbility("Raging Axe");
+        private readonly Ability cure = Retriever.CreateAbility("Cure");
+        private readonly Ability provoke = Retriever.CreateAbility("Provoke");
+        private readonly Ability ragingAxe = Retriever.CreateAbility("Raging Axe");
+        private Ability raise = Retriever.CreateAbility("Raise");
 
         /// <summary>
-        /// Test to see if the category type was properly processed. 
+        ///     Test to see if the category type was properly processed.
         /// </summary>
         [TestMethod]
         public void TestCategoryTypeAugmenter()
@@ -51,7 +49,7 @@ namespace ParsingTests
         }
 
         /// <summary>
-        /// Test to see if the element type was properly processed. 
+        ///     Test to see if the element type was properly processed.
         /// </summary>
         [TestMethod]
         public void TestElementTypeAugmenter()
@@ -62,7 +60,7 @@ namespace ParsingTests
         }
 
         /// <summary>
-        /// Test to see if the skill type was properly retrieved. 
+        ///     Test to see if the skill type was properly retrieved.
         /// </summary>
         [TestMethod]
         public void TestSkillTypeAugmenter()
@@ -73,7 +71,7 @@ namespace ParsingTests
         }
 
         /// <summary>
-        /// Check if the TargetType field was properly processed. 
+        ///     Check if the TargetType field was properly processed.
         /// </summary>
         [TestMethod]
         public void TestTargetTypeAugmenter()

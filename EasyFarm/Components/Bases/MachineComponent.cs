@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -18,36 +17,41 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyFarm.Components
 {
     public abstract class MachineComponent : IMachineComponent, IComparable<MachineComponent>
     {
         /// <summary>
-        /// Is this component enabled?
+        ///     Is this component enabled?
         /// </summary>
         public bool Enabled { get; set; }
 
         /// <summary>
-        /// The priority of the component. 
+        ///     The priority of the component.
         /// </summary>
         public int Priority { get; set; }
 
-        public virtual bool CheckComponent() { return Enabled; }
-
-        public virtual void EnterComponent() { }
-
-        public virtual void RunComponent() { }
-
-        public virtual void ExitComponent() { }
-
         public int CompareTo(MachineComponent other)
         {
-            return -this.Priority.CompareTo(other.Priority);
+            return -Priority.CompareTo(other.Priority);
+        }
+
+        public virtual bool CheckComponent()
+        {
+            return Enabled;
+        }
+
+        public virtual void EnterComponent()
+        {
+        }
+
+        public virtual void RunComponent()
+        {
+        }
+
+        public virtual void ExitComponent()
+        {
         }
     }
 }

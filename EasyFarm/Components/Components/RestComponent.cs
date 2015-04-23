@@ -1,5 +1,4 @@
-
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -16,35 +15,70 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
-﻿
-using EasyFarm.Classes;
-using FFACETools;
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
+using EasyFarm.Classes;
+using FFACETools;
 
 namespace EasyFarm.Components
 {
     /// <summary>
-    /// Behavior for resting our character. 
+    ///     Behavior for resting our character.
     /// </summary>
     public class RestComponent : MachineComponent
     {
-        private FFACE _fface;
+        private readonly FFACE _fface;
 
         /// <summary>
-        /// Retrieves aggroing creature. 
+        ///     Retrieves aggroing creature.
         /// </summary>
-        private UnitService _units;
+        private readonly UnitService _units;
 
         public RestComponent(FFACE fface)
         {
-            this._fface = fface;
-            this._units = new UnitService(fface);
+            _fface = fface;
+            _units = new UnitService(fface);
         }
 
         /// <summary>
-        /// Determines if we should rest up our health or magic. 
+        ///     Does our player have a status effect that prevents him
+        /// </summary>
+        /// <param name="playerStatusEffects"></param>
+        /// <returns></returns>
+        public bool IsRestingBlocked
+        {
+            get
+            {
+                var RestBlockingDebuffs = new List<StatusEffect>
+                {
+                    StatusEffect.Poison,
+                    StatusEffect.Bio,
+                    StatusEffect.Sleep,
+                    StatusEffect.Sleep2,
+                    StatusEffect.Poison,
+                    StatusEffect.Petrification,
+                    StatusEffect.Stun,
+                    StatusEffect.Charm1,
+                    StatusEffect.Charm2,
+                    StatusEffect.Terror,
+                    StatusEffect.Frost,
+                    StatusEffect.Burn,
+                    StatusEffect.Choke,
+                    StatusEffect.Rasp,
+                    StatusEffect.Shock,
+                    StatusEffect.Drown,
+                    StatusEffect.Dia,
+                    StatusEffect.Requiem,
+                    StatusEffect.Lullaby
+                };
+
+                return RestBlockingDebuffs.Intersect(_fface.Player.StatusEffects).Count() != 0;
+            }
+        }
+
+        /// <summary>
+        ///     Determines if we should rest up our health or magic.
         /// </summary>
         /// <returns></returns>
         public override bool CheckComponent()
@@ -74,7 +108,7 @@ namespace EasyFarm.Components
         }
 
         /// <summary>
-        /// Begin resting our health and magic. 
+        ///     Begin resting our health and magic.
         /// </summary>
         public override void RunComponent()
         {
@@ -82,7 +116,7 @@ namespace EasyFarm.Components
         }
 
         /// <summary>
-        /// Force the player to stand up before attempting anything else. 
+        ///     Force the player to stand up before attempting anything else.
         /// </summary>
         public override void ExitComponent()
         {
@@ -93,42 +127,19 @@ namespace EasyFarm.Components
         }
 
         /// <summary>
-        /// Does our player have a status effect that prevents him
-        /// </summary>
-        /// <param name="playerStatusEffects"></param>
-        /// <returns></returns>
-        public bool IsRestingBlocked
-        {
-            get
-            {
-                var RestBlockingDebuffs = new List<StatusEffect>() 
-            { 
-                StatusEffect.Poison, StatusEffect.Bio, StatusEffect.Sleep, 
-                StatusEffect.Sleep2, StatusEffect.Poison, StatusEffect.Petrification,
-                StatusEffect.Stun, StatusEffect.Charm1, StatusEffect.Charm2, 
-                StatusEffect.Terror, StatusEffect.Frost, StatusEffect.Burn, 
-                StatusEffect.Choke, StatusEffect.Rasp, StatusEffect.Shock, 
-                StatusEffect.Drown, StatusEffect.Dia, StatusEffect.Requiem, 
-                StatusEffect.Lullaby
-            };
-
-                return RestBlockingDebuffs.Intersect(_fface.Player.StatusEffects).Count() != 0;
-            }
-        }
-
-        /// <summary>
-        /// Tells us when we should rest mp. 
+        ///     Tells us when we should rest mp.
         /// </summary>
         /// <param name="magic"></param>
         /// <param name="status"></param>
         /// <returns></returns>
         public bool ShouldRestForMagic(int magic, Status status)
         {
-            return (Config.Instance.IsMagicEnabled && (IsMagicLow(magic) || !IsMagicHigh(magic) && status == Status.Healing));
+            return (Config.Instance.IsMagicEnabled &&
+                    (IsMagicLow(magic) || !IsMagicHigh(magic) && status == Status.Healing));
         }
 
         /// <summary>
-        /// Given a value, is our mp low?
+        ///     Given a value, is our mp low?
         /// </summary>
         /// <param name="magic"></param>
         /// <returns></returns>
@@ -138,7 +149,7 @@ namespace EasyFarm.Components
         }
 
         /// <summary>
-        /// Given a value, is our mp high?
+        ///     Given a value, is our mp high?
         /// </summary>
         /// <param name="magic"></param>
         /// <returns></returns>
@@ -148,7 +159,7 @@ namespace EasyFarm.Components
         }
 
         /// <summary>
-        /// Should we rest up our magic?
+        ///     Should we rest up our magic?
         /// </summary>
         /// <param name="health"></param>
         /// <param name="status"></param>
@@ -156,11 +167,12 @@ namespace EasyFarm.Components
         public bool ShouldRestForHealth(int health, Status status)
         {
             // Rest while low and while not high
-            return (Config.Instance.IsHealthEnabled && (IsHealthLow(health) || !IsHealthHigh(health) && status == Status.Healing));
+            return (Config.Instance.IsHealthEnabled &&
+                    (IsHealthLow(health) || !IsHealthHigh(health) && status == Status.Healing));
         }
 
         /// <summary>
-        /// Given a value, is our health low?
+        ///     Given a value, is our health low?
         /// </summary>
         /// <param name="health"></param>
         /// <returns></returns>
@@ -170,7 +182,7 @@ namespace EasyFarm.Components
         }
 
         /// <summary>
-        /// Given a value, is our health high?
+        ///     Given a value, is our health high?
         /// </summary>
         /// <param name="health"></param>
         /// <returns></returns>

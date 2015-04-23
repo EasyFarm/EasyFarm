@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -20,22 +19,22 @@ You should have received a copy of the GNU General Public License
 namespace Parsing.Augmenting
 {
     /// <summary>
-    /// The interface defines how data is augmented or 
-    /// assignd data. 
+    ///     The interface defines how data is augmented or
+    ///     assignd data.
     /// </summary>
     /// <typeparam name="TElement">Element to extract data from. </typeparam>
     /// <typeparam name="TObject">The object to augment with data. </typeparam>
     public interface IObjectAugmenter<TElement, TObject>
     {
         /// <summary>
-        /// Determines whether we can extract data from the object. 
+        ///     Determines whether we can extract data from the object.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
         bool CanAugment(TElement element);
 
         /// <summary>
-        /// Assigns the element [T] to a field in [R]. 
+        ///     Assigns the element [T] to a field in [R].
         /// </summary>
         /// <param name="element"></param>
         /// <returns></returns>

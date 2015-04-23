@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 Copyright (C) <Zerolimits>
 
 This program is free software: you can redistribute it and/or modify
@@ -16,26 +15,25 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System;
+using System.Text.RegularExpressions;
 using FFACETools;
 using Parsing.Abilities;
 using Parsing.Types;
-using System;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace EasyFarm.Classes
 {
     public class AbilityUtils
     {
         /// <summary>
-        /// Checks whether a spell or ability can be recasted. 
+        ///     Checks whether a spell or ability can be recasted.
         /// </summary>
         /// <param name="fface"></param>
         /// <param name="ability"></param>
         /// <returns></returns>
         public static bool IsRecastable(FFACE fface, Ability ability)
         {
-            int recast = -1;
+            var recast = -1;
 
             /* 
              * Fix: If the action is a ranged attack,                
@@ -69,25 +67,24 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Adjusts the name of abilities to fit the 
-        /// ablity and spell list enum format. 
+        ///     Adjusts the name of abilities to fit the
+        ///     ablity and spell list enum format.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        private static String AdjustName(String name)
+        private static string AdjustName(string name)
         {
             // Strip all characters that are not words of the 
             // ability's name and convert spaces to underscores. 
             return Regex.Replace(name, @"([^a-zA-Z ])", "")
                 .Replace(" ", "_");
-
         }
 
         private static AbilityList ToAbilityList(Ability ability)
         {
             var name = AdjustName(ability.English);
 
-            AbilityList value = default(AbilityList);
+            var value = default(AbilityList);
 
             // Fixes for summoner's blood pact recast times. 
             if (ability.CategoryType.HasFlag(CategoryType.BloodPactWard))
@@ -95,16 +92,16 @@ namespace EasyFarm.Classes
             if (ability.CategoryType.HasFlag(CategoryType.BloodPactRage))
                 return AbilityList.Blood_Pact_Rage;
 
-            Enum.TryParse<AbilityList>(name, out value);
+            Enum.TryParse(name, out value);
 
             return value;
         }
 
         private static SpellList ToSpellList(Ability ability)
         {
-            string name = AdjustName(ability.English);
-            SpellList value = default(SpellList);
-            Enum.TryParse<SpellList>(name, out value);
+            var name = AdjustName(ability.English);
+            var value = default(SpellList);
+            Enum.TryParse(name, out value);
             return value;
         }
     }

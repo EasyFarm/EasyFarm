@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -21,25 +20,21 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Class for finding battle lists by name. 
+    ///     Class for finding battle lists by name.
     /// </summary>
     public class BattleLists : ObservableCollection<BattleList>
     {
-        public BattleLists() { }
-
         public IEnumerable<BattleAbility> Actions
         {
             get { return this.SelectMany(x => x.Actions); }
         }
 
         /// <summary>
-        /// Access a battle list by its name. 
+        ///     Access a battle list by its name.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -51,9 +46,10 @@ namespace EasyFarm.Classes
                 var list = this.Where(x => x.Name.Equals(index)).FirstOrDefault();
 
                 // Throw error if now found. 
-                if (list == null) throw new Exception(
-                     string.Format("No key {0} in battle lists to get value. ", index)
-                 );
+                if (list == null)
+                    throw new Exception(
+                        string.Format("No key {0} in battle lists to get value. ", index)
+                        );
 
                 // Return the list matching the name. 
                 return list;
@@ -64,15 +60,16 @@ namespace EasyFarm.Classes
                 var list = this.Where(x => x.Name.Equals(index)).FirstOrDefault();
 
                 // Throw error when key not found.
-                if (list == null) throw new Exception(
-                     string.Format("No key {0} in battle lists to set value. ", index)
-                 );
+                if (list == null)
+                    throw new Exception(
+                        string.Format("No key {0} in battle lists to set value. ", index)
+                        );
 
                 // Remove the old reference to the indexed value. 
-                this.Remove(list);
+                Remove(list);
 
                 // Add the new indexed value. 
-                this.Add(value);
+                Add(value);
             }
         }
     }

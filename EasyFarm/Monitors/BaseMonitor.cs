@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,13 +16,9 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using FFACETools;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
+using FFACETools;
 
 namespace EasyFarm.FarmingTool
 {
@@ -31,16 +26,14 @@ namespace EasyFarm.FarmingTool
 
     public abstract class BaseMonitor : IDisposable
     {
-        public event StatusChanged Changed;
-
-        protected Timer m_timer = new Timer();
-        protected Object _lock = new Object();
         protected FFACE _fface;
+        protected object _lock = new object();
+        protected Timer m_timer = new Timer();
 
         protected BaseMonitor(FFACE fface)
             : this()
         {
-            this._fface = fface;
+            _fface = fface;
         }
 
         protected BaseMonitor()
@@ -49,6 +42,19 @@ namespace EasyFarm.FarmingTool
             m_timer.AutoReset = true;
             m_timer.Interval = 30;
         }
+
+        public bool Enabled
+        {
+            get { return m_timer.Enabled; }
+            set { m_timer.Enabled = value; }
+        }
+
+        public void Dispose()
+        {
+            m_timer.Dispose();
+        }
+
+        public event StatusChanged Changed;
 
         protected virtual void OnChanged(EventArgs e)
         {
@@ -60,35 +66,24 @@ namespace EasyFarm.FarmingTool
 
         protected abstract void CheckStatus(object sender, ElapsedEventArgs e);
 
-        public void Start() { this.m_timer.Start(); }
-
-        public void Stop() { this.m_timer.Stop(); }
-
-        public bool Enabled
+        public void Start()
         {
-            get { return m_timer.Enabled; }
-            set { m_timer.Enabled = value; }
+            m_timer.Start();
         }
 
-        public void Dispose()
+        public void Stop()
         {
-            this.m_timer.Dispose();
+            m_timer.Stop();
         }
     }
 
     public class MonitorArgs<T> : EventArgs
     {
-        private T m_status;
-
         public MonitorArgs(T status)
         {
-            this.m_status = status;
+            Status = status;
         }
 
-        public T Status
-        {
-            get { return m_status; }
-            set { this.m_status = value; }
-        }
+        public T Status { get; set; }
     }
 }

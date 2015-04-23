@@ -1,20 +1,16 @@
-﻿using FFACETools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
+using FFACETools;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Methods for targeting targets. 
+    ///     Methods for targeting targets.
     /// </summary>
     public class TargetingUtils
     {
         /// <summary>
-        /// Attempts to target by tabbing and on failure will target by memory.        
+        ///     Attempts to target by tabbing and on failure will target by memory.
         /// </summary>
         /// <param name="fface"></param>
         /// <param name="unit"></param>
@@ -36,10 +32,10 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Targets unit by our target in memory. 
-        /// !!! Note !!! 
-        /// once you override your target in memory it will be almost impossible 
-        /// to determine if you are targeting the wrong target. 
+        ///     Targets unit by our target in memory.
+        ///     !!! Note !!!
+        ///     once you override your target in memory it will be almost impossible
+        ///     to determine if you are targeting the wrong target.
         /// </summary>
         /// <param name="fface"></param>
         /// <param name="unit"></param>
@@ -62,8 +58,8 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        /// Targets unit by tabbing and attempts to target until the 
-        /// attempt count is reached. 
+        ///     Targets unit by tabbing and attempts to target until the
+        ///     attempt count is reached.
         /// </summary>
         /// <param name="fface"></param>
         /// <param name="unit"></param>
@@ -72,7 +68,8 @@ namespace EasyFarm.Classes
         {
             if (fface == null) throw new ArgumentNullException("fface");
             if (unit == null) throw new ArgumentNullException("unit");
-            if (attemptCount <= 0) throw new ArgumentException("attemptCount does not allow tabbing; possible logic error?");
+            if (attemptCount <= 0)
+                throw new ArgumentException("attemptCount does not allow tabbing; possible logic error?");
 
             // Set view to first person. 
             fface.Navigator.SetViewMode(ViewMode.FirstPerson);
@@ -81,7 +78,7 @@ namespace EasyFarm.Classes
             fface.Windower.SendString("/ta <t>");
 
             // Attempt to tab to target allowing max ten attempts. 
-            int count = 0;
+            var count = 0;
             while (fface.Target.ID != unit.ID && count++ < attemptCount)
             {
                 fface.Windower.SendKeyPress(KeyCode.TabKey);

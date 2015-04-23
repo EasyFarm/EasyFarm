@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -17,20 +16,18 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Timers;
 using FFACETools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyFarm.FarmingTool
 {
     public class DeadMonitor : BaseMonitor
     {
-        public DeadMonitor(FFACE fface) : base(fface) { }
+        public DeadMonitor(FFACE fface) : base(fface)
+        {
+        }
 
-        protected override void CheckStatus(object sender, System.Timers.ElapsedEventArgs e)
+        protected override void CheckStatus(object sender, ElapsedEventArgs e)
         {
             lock (_lock)
             {

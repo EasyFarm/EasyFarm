@@ -1,5 +1,4 @@
-﻿
-/*///////////////////////////////////////////////////////////////////
+﻿/*///////////////////////////////////////////////////////////////////
 <EasyFarm, general farming utility for FFXI.>
 Copyright (C) <2013>  <Zerolimits>
 
@@ -20,30 +19,30 @@ You should have received a copy of the GNU General Public License
 namespace Parsing.Types
 {
     /// <summary>
-    /// Represents a sub-division for category types. 
-    /// <example>
-    ///     WhiteMagic contains HealingMagic, DivineMagic, etc. 
-    /// </example>
+    ///     Represents a sub-division for category types.
+    ///     <example>
+    ///         WhiteMagic contains HealingMagic, DivineMagic, etc.
+    ///     </example>
     /// </summary>
     public enum SkillType
     {
-        Unknown, 
-        HealingMagic, 
-        DivineMagic, 
+        Unknown,
+        HealingMagic,
+        DivineMagic,
         EnfeeblingMagic,
-        EnhancingMagic, 
-        ElementalMagic, 
-        DarkMagic, 
-        SummoningMagic, 
-        Ninjutsu, 
-        Singing, 
+        EnhancingMagic,
+        ElementalMagic,
+        DarkMagic,
+        SummoningMagic,
+        Ninjutsu,
+        Singing,
         BlueMagic,
-        Geomancy, 
-        ControlTrigger, 
-        GenericTrigger, 
-        ElementalTrigger, 
-        CombatTrigger, 
-        Trigger, 
+        Geomancy,
+        ControlTrigger,
+        GenericTrigger,
+        ElementalTrigger,
+        CombatTrigger,
+        Trigger,
         Ability
     }
 }
