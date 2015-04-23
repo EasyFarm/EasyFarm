@@ -24,7 +24,7 @@ namespace EasyFarm.Components
     {
         protected static FFACE FFACE;
 
-        public BaseComponent(FFACE fface)
+        protected BaseComponent(FFACE fface)
         {
             if (FFACE == null) FFACE = fface;
         }

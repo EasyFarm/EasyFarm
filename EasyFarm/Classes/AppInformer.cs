@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.ViewModels;
+using EasyFarm.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 
 namespace EasyFarm.Classes

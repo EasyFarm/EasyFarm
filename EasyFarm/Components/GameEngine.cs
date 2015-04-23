@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 using System;
 using System.Threading;
 using EasyFarm.Classes;
-using EasyFarm.FarmingTool;
+using EasyFarm.Monitors;
 using FFACETools;
 
 namespace EasyFarm.Components
@@ -31,6 +31,12 @@ namespace EasyFarm.Components
     public class GameEngine
     {
         /// <summary>
+        ///     Monitors the player status to see if their dead. If so, the monitor
+        ///     will stop the program from running.
+        /// </summary>
+        private readonly DeadMonitor _deadMonitor;
+
+        /// <summary>
         ///     Provides information about game data.
         /// </summary>
         private readonly FFACE _fface;
@@ -41,28 +47,10 @@ namespace EasyFarm.Components
         private readonly FiniteStateEngine _stateMachine;
 
         /// <summary>
-        ///     Monitors the player's status for dead and shuts down the
-        ///     program when he is.
-        /// </summary>
-        private readonly DeadMonitor _statusMonitor;
-
-        /// <summary>
         ///     Monitors for zone changes and allows for pausing / resuming
         ///     the program after zoning.
         /// </summary>
         private readonly ZoneMonitor _zoneMonitor;
-
-        /// <summary>
-        ///     Monitors for players nearby and allows for pausing / resuming
-        ///     the program on detection.
-        /// </summary>
-        private PlayerMonitor _playerMonitor;
-
-        /// <summary>
-        ///     Monitors the player tos ee if he's stuck agains a wall and
-        ///     if so stops the engine.
-        /// </summary>
-        private StuckMonitor _stuckMonitor;
 
         /// <summary>
         ///     Tells us whether the bot is working or not.
@@ -73,16 +61,14 @@ namespace EasyFarm.Components
         {
             _fface = fface;
             _zoneMonitor = new ZoneMonitor(fface);
-            _playerMonitor = new PlayerMonitor(fface);
-            _statusMonitor = new DeadMonitor(fface);
-            _stuckMonitor = new StuckMonitor(fface);
+            _deadMonitor = new DeadMonitor(fface);
             _stateMachine = new FiniteStateEngine(fface);
 
-            _zoneMonitor.Changed += ZoneMonitor_ZoneChanged;
+            _zoneMonitor.Changed += ZoneMonitorZoneChanged;
             _zoneMonitor.Start();
 
-            _statusMonitor.Changed += StatusMonitor_StatusChanged;
-            _statusMonitor.Start();
+            _deadMonitor.Changed += DeadMonitorStatusChanged;
+            _deadMonitor.Start();
         }
 
         /// <summary>
@@ -91,7 +77,7 @@ namespace EasyFarm.Components
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void StuckMonitor_StuckChanged(object sender, EventArgs e)
+        public void StuckMonitor_StuckChanged(object sender, EventArgs e)
         {
             // Do nothing if the engine is not running already. 
             if (!IsWorking)
@@ -115,7 +101,7 @@ namespace EasyFarm.Components
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void StatusMonitor_StatusChanged(object sender, EventArgs e)
+        private void DeadMonitorStatusChanged(object sender, EventArgs e)
         {
             // Do nothing if the engine is not running already. 
             if (!IsWorking)
@@ -139,7 +125,7 @@ namespace EasyFarm.Components
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PlayerMonitor_DetectedChanged(object sender, EventArgs e)
+        public void PlayerMonitor_DetectedChanged(object sender, EventArgs e)
         {
             // If the program is not running then bail out. 
             if (!IsWorking)
@@ -148,7 +134,7 @@ namespace EasyFarm.Components
             }
 
             var args = (e as MonitorArgs<bool>);
-            if (args.Status)
+            if (args != null && args.Status)
             {
                 AppInformer.InformUser("Program Paused");
                 Stop();
@@ -166,10 +152,8 @@ namespace EasyFarm.Components
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ZoneMonitor_ZoneChanged(object sender, EventArgs e)
+        private void ZoneMonitorZoneChanged(object sender, EventArgs e)
         {
-            var args = (e as MonitorArgs<Zone>);
-
             // If the program is not running then bail out. 
             if (!IsWorking)
             {

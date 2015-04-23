@@ -24,21 +24,21 @@ namespace EasyFarm.Components
 {
     public class HealingComponent : MachineComponent
     {
-        private readonly Executor Executor;
-        private readonly FFACE FFACE;
+        private readonly Executor _executor;
+        private readonly FFACE _fface;
 
         public HealingComponent(FFACE fface)
         {
-            FFACE = fface;
-            Executor = new Executor(fface);
+            _fface = fface;
+            _executor = new Executor(fface);
         }
 
         public override bool CheckComponent()
         {
-            if (new RestComponent(FFACE).CheckComponent()) return false;
+            if (new RestComponent(_fface).CheckComponent()) return false;
 
             if (!Config.Instance.BattleLists["Healing"].Actions
-                .Any(x => ActionFilters.BuffingFilter(FFACE, x)))
+                .Any(x => ActionFilters.BuffingFilter(_fface, x)))
                 return false;
 
             return true;
@@ -47,35 +47,35 @@ namespace EasyFarm.Components
         public override void EnterComponent()
         {
             // Stop resting. 
-            if (FFACE.Player.Status.Equals(Status.Healing))
+            if (_fface.Player.Status.Equals(Status.Healing))
             {
-                FFACE.Windower.SendString(Constants.RESTING_OFF);
+                _fface.Windower.SendString(Constants.RestingOff);
             }
 
             // Stop moving. 
-            FFACE.Navigator.Reset();
+            _fface.Navigator.Reset();
         }
 
         public override void RunComponent()
         {
             // Get the list of healing abilities that can be used.
-            var UsableHealingMoves = Config.Instance.BattleLists["Healing"].Actions
-                .Where(x => ActionFilters.BuffingFilter(FFACE, x))
+            var usableHealingMoves = Config.Instance.BattleLists["Healing"].Actions
+                .Where(x => ActionFilters.BuffingFilter(_fface, x))
                 .ToList();
 
             // Check if we have any moves to use. 
-            if (UsableHealingMoves.Count > 0)
+            if (usableHealingMoves.Count > 0)
             {
                 // Check for actions available
-                var Action = UsableHealingMoves.FirstOrDefault();
-                if (Action == null)
+                var action = usableHealingMoves.FirstOrDefault();
+                if (action == null)
                 {
                     return;
                 }
 
                 // Create an ability from the name and launch the move. 
-                var HealingMove = App.AbilityService.CreateAbility(Action.Name);
-                Executor.UseBuffingAction(HealingMove);
+                var healingMove = App.AbilityService.CreateAbility(action.Name);
+                _executor.UseBuffingAction(healingMove);
             }
         }
     }

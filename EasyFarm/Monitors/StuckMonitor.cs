@@ -20,22 +20,22 @@ using System.Timers;
 using EasyFarm.Classes;
 using FFACETools;
 
-namespace EasyFarm.FarmingTool
+namespace EasyFarm.Monitors
 {
     public class StuckMonitor : BaseMonitor
     {
         public StuckMonitor(FFACE fface) : base(fface)
         {
-            ID = fface.Player.ID;
-            Player = new MovingUnit(fface, ID);
+            Id = fface.Player.ID;
+            Player = new MovingUnit(fface, Id);
         }
 
         private MovingUnit Player { get; set; }
-        private int ID { get; set; }
+        private int Id { get; set; }
 
         protected override void CheckStatus(object sender, ElapsedEventArgs e)
         {
-            lock (_lock)
+            lock (Lock)
             {
                 if (Player.IsStuck)
                 {

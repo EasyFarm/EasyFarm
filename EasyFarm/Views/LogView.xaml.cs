@@ -16,14 +16,12 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System.Windows.Controls;
-
 namespace EasyFarm.Views
 {
     /// <summary>
     ///     Interaction logic for LogView.xaml
     /// </summary>
-    public partial class LogView : UserControl
+    public partial class LogView
     {
         public LogView()
         {

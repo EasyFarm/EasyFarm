@@ -2,7 +2,7 @@ using System;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Microsoft.Practices.Prism.Mvvm;
 
-namespace EasyFarm.ViewModels
+namespace EasyFarm.Logging
 {
     public sealed class StringSink : BindableBase, IObserver<EventEntry>
     {

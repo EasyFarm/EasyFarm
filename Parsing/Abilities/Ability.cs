@@ -36,10 +36,10 @@ namespace Parsing.Abilities
             Element = string.Empty;
             ElementType = ElementType.Unknown;
             English = string.Empty;
-            ID = 0;
+            Id = 0;
             Index = 0;
             Japanese = string.Empty;
-            MPCost = 0;
+            MpCost = 0;
             Postfix = string.Empty;
             Prefix = string.Empty;
             Recast = 0;
@@ -47,14 +47,14 @@ namespace Parsing.Abilities
             SkillType = SkillType.Unknown;
             Targets = string.Empty;
             TargetType = TargetType.Unknown;
-            TPCost = 0;
+            TpCost = 0;
             Type = string.Empty;
         }
 
         /// <summary>
         ///     The ability ID in its own resource file.
         /// </summary>
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         ///     Unique number that allows for retrieving ability recast times.
@@ -74,12 +74,12 @@ namespace Parsing.Abilities
         /// <summary>
         ///     The mp cost for the ability.
         /// </summary>
-        public int MPCost { get; set; }
+        public int MpCost { get; set; }
 
         /// <summary>
         ///     The tp cost for the ablility.
         /// </summary>
-        public int TPCost { get; set; }
+        public int TpCost { get; set; }
 
         /// <summary>
         ///     The alias for the ability. Not every ability
@@ -106,7 +106,7 @@ namespace Parsing.Abilities
 
         /// <summary>
         ///     The target for the ability.
-        ///     Example: <t>, <st>, <stnpc>
+        ///     Example: <t />, <st />, <stnpc />
         /// </summary>
         public string Postfix { get; set; }
 
@@ -214,7 +214,7 @@ namespace Parsing.Abilities
                 return Prefix + " " + Postfix;
             }
 
-                // Use the spell/ability syntax.
+            // Use the spell/ability syntax.
             return Prefix + " \"" + English + "\" " + Postfix;
         }
     }

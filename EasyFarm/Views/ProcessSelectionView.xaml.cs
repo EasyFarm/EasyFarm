@@ -1,12 +1,11 @@
-﻿using System.Windows;
-using EasyFarm.ViewModels;
+﻿using EasyFarm.ViewModels;
 
 namespace EasyFarm.Views
 {
     /// <summary>
     ///     Interaction logic for ProcessSelectionView.xaml
     /// </summary>
-    public partial class ProcessSelectionView : Window
+    public partial class ProcessSelectionView
     {
         public ProcessSelectionView()
         {

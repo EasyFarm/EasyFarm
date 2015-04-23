@@ -24,6 +24,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Logging;
+using EasyFarm.Mvvm;
 using EasyFarm.Views;
 using FFACETools;
 using Microsoft.Practices.Prism.Commands;
@@ -39,7 +40,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     The path of the icon file.
         /// </summary>
-        private const string TRAY_ICON_FILE_NAME = "trayicon.ico";
+        private const string TrayIconFileName = "trayicon.ico";
 
         /// <summary>
         ///     Saves and loads settings from file.
@@ -49,7 +50,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     This program's icon file.
         /// </summary>
-        private readonly NotifyIcon m_trayIcon = new NotifyIcon();
+        private readonly NotifyIcon _trayIcon = new NotifyIcon();
 
         /// <summary>
         ///     The text displayed on the start / pause button.
@@ -76,11 +77,11 @@ namespace EasyFarm.ViewModels
             SelectProcessCommand = new DelegateCommand(SelectProcess);
 
             // Hook up our trayicon for minimization to system tray 
-            if (File.Exists(TRAY_ICON_FILE_NAME))
+            if (File.Exists(TrayIconFileName))
             {
-                m_trayIcon.Icon = new Icon(TRAY_ICON_FILE_NAME);
+                _trayIcon.Icon = new Icon(TrayIconFileName);
                 MasterView.View.StateChanged += OnStateChanged;
-                m_trayIcon.Click += TrayIcon_Click;
+                _trayIcon.Click += TrayIcon_Click;
             }
         }
 
@@ -248,17 +249,17 @@ namespace EasyFarm.ViewModels
                 // Log that a process selected. 
                 Logger.Write.ProcessFound("Process found");
 
-                // Save the selected fface instance. 
-                var FFACE = new FFACE(process.Id);
+                // Save the selected FFACE instance. 
+                var fface = new FFACE(process.Id);
 
                 // Set the FFACE Session. 
-                SetSession(FFACE);
+                SetSession(fface);
 
                 // Tell the user the program has loaded the player's data
-                AppInformer.InformUser("Bot Loaded: " + FFACE.Player.Name);
+                AppInformer.InformUser("Bot Loaded: " + fface.Player.Name);
 
                 // Set the main window's title to the player's name. 
-                MainWindowTitle = "EasyFarm - " + FFACE.Player.Name;
+                MainWindowTitle = "EasyFarm - " + fface.Player.Name;
             }
         }
 
@@ -285,25 +286,26 @@ namespace EasyFarm.ViewModels
         {
             MasterView.View.WindowState = WindowState.Normal;
             MasterView.View.ShowInTaskbar = true;
-            m_trayIcon.Visible = false;
+            _trayIcon.Visible = false;
         }
 
         /// <summary>
         ///     Minimizes the application to the system tray.
         /// </summary>
+        /// <param name="sender"></param>
         /// <param name="e"></param>
         public void OnStateChanged(object sender, EventArgs e)
         {
             // Perform tray icon information update here to 
             // receive current title bar information. 
-            m_trayIcon.Text = MainWindowTitle;
-            m_trayIcon.BalloonTipText = "EasyFarm has been minimized. ";
-            m_trayIcon.BalloonTipTitle = MainWindowTitle;
+            _trayIcon.Text = MainWindowTitle;
+            _trayIcon.BalloonTipText = "EasyFarm has been minimized. ";
+            _trayIcon.BalloonTipTitle = MainWindowTitle;
 
-            if (MasterView.View.mnuMinimizeToTray.IsChecked && MasterView.View.WindowState == WindowState.Minimized)
+            if (MasterView.View.MnuMinimizeToTray.IsChecked && MasterView.View.WindowState == WindowState.Minimized)
             {
-                m_trayIcon.Visible = true;
-                m_trayIcon.ShowBalloonTip(30);
+                _trayIcon.Visible = true;
+                _trayIcon.ShowBalloonTip(30);
                 MasterView.View.ShowInTaskbar = false;
             }
         }

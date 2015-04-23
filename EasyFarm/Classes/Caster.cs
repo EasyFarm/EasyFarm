@@ -73,7 +73,6 @@ namespace EasyFarm.Classes
         ///     Ensures the command is sent to the game and
         ///     executed.
         /// </summary>
-        /// <param name="ability"></param>
         private bool EnsureCast(string command)
         {
             // Chainspelled spells will always be cast without fail so 

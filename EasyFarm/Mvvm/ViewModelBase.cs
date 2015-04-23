@@ -20,14 +20,14 @@ using EasyFarm.Components;
 using FFACETools;
 using Microsoft.Practices.Prism.Mvvm;
 
-namespace EasyFarm.ViewModels
+namespace EasyFarm.Mvvm
 {
     public class ViewModelBase : BindableBase
     {
         /// <summary>
         ///     View Model name for header in tabcontrol item.
         /// </summary>
-        public string VMName { get; set; }
+        public string VmName { get; set; }
 
         /// <summary>
         ///     Solo FFACE instance for current player.

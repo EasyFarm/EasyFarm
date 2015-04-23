@@ -16,7 +16,6 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System.Windows.Controls;
 using EasyFarm.ViewModels;
 
 namespace EasyFarm.Views
@@ -24,7 +23,7 @@ namespace EasyFarm.Views
     /// <summary>
     ///     Interaction logic for UnitFilteringView.xaml
     /// </summary>
-    public partial class SettingsView : UserControl
+    public partial class SettingsView
     {
         public SettingsView()
         {

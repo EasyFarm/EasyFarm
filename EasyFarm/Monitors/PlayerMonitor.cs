@@ -21,7 +21,7 @@ using System.Timers;
 using EasyFarm.Classes;
 using FFACETools;
 
-namespace EasyFarm.FarmingTool
+namespace EasyFarm.Monitors
 {
     public class PlayerMonitor : BaseMonitor
     {
@@ -38,10 +38,10 @@ namespace EasyFarm.FarmingTool
 
         protected override void CheckStatus(object sender, ElapsedEventArgs e)
         {
-            lock (_lock)
+            lock (Lock)
             {
-                var detected = _units.PCArray
-                    .Any(x => UnitFilters.PCFilter(_fface, x));
+                var detected = _units.PcArray
+                    .Any(x => UnitFilters.PcFilter(FFACE, x));
 
                 if (Detected != detected)
                 {

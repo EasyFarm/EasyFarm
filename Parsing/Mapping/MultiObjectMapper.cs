@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Parsing.Mapping
 {
@@ -44,15 +45,7 @@ namespace Parsing.Mapping
         /// <returns></returns>
         public bool IsMapped(TObject obj)
         {
-            foreach (var mapper in _mappers)
-            {
-                if (mapper.IsMapped(obj))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return _mappers.Any(mapper => mapper.IsMapped(obj));
         }
 
         /// <summary>
@@ -66,13 +59,8 @@ namespace Parsing.Mapping
 
             // Map all elements to their proper element
             // and combine them together into one ElementType object. 
-            foreach (var mapper in _mappers)
-            {
-                if (mapper.IsMapped(obj))
-                {
-                    data.Add(mapper.GetMapping(obj));
-                }
-            }
+            data.AddRange(_mappers.Where(x => IsMapped(obj))
+                .Select(x => x.GetMapping(obj)));
 
             return data;
         }

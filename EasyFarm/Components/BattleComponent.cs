@@ -27,13 +27,13 @@ namespace EasyFarm.Components
     /// </summary>
     public class BattleComponent : MachineComponent
     {
+        private readonly Executor _executor;
         private readonly FFACE _fface;
-        private readonly Executor Executor;
 
         public BattleComponent(FFACE fface)
         {
             _fface = fface;
-            Executor = new Executor(fface);
+            _executor = new Executor(fface);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace EasyFarm.Components
         public override bool CheckComponent()
         {
             // target null or dead. 
-            if (Target == null || Target.IsDead || Target.ID == 0) return false;
+            if (Target == null || Target.IsDead || Target.Id == 0) return false;
 
             // Mobs has not been pulled if pulling moves are available. 
             if (!AttackContainer.FightStarted) return false;
@@ -56,7 +56,7 @@ namespace EasyFarm.Components
             // Engage is enabled and we are not engaged. We cannot proceed. 
             if (Config.Instance.IsEngageEnabled)
                 return _fface.Player.Status.Equals(Status.Fighting);
-                // Engage is not checked, so just proceed to battle. 
+            // Engage is not checked, so just proceed to battle. 
             return true;
         }
 
@@ -70,12 +70,11 @@ namespace EasyFarm.Components
         {
             // Cast only one action to prevent blocking curing. 
             var action = Config.Instance.BattleLists["Battle"].Actions
-                .Where(x => ActionFilters.TargetedFilter(_fface, x, Target))
-                .FirstOrDefault();
+                .FirstOrDefault(x => ActionFilters.TargetedFilter(_fface, x, Target));
 
             if (action != null)
             {
-                Executor.UseTargetedAction(action, Target);
+                _executor.UseTargetedAction(action, Target);
             }
         }
     }

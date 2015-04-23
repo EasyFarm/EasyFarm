@@ -44,8 +44,7 @@ namespace EasyFarmTests
         [TestMethod]
         public void TestConfigPersistence()
         {
-            var conf = new Config();
-            conf.PartyFilter = false;
+            var conf = new Config {PartyFilter = false};
             Serialization.Serialize("test.xml", conf);
             conf = Serialization.Deserialize<Config>("test.xml");
             Assert.IsFalse(conf.PartyFilter);

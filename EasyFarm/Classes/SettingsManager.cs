@@ -68,23 +68,29 @@ namespace EasyFarm.Classes
 
         private string GetSavePath()
         {
-            var sfd = new SaveFileDialog();
-            sfd.OverwritePrompt = true;
-            sfd.InitialDirectory = _startPath;
-            sfd.AddExtension = true;
-            sfd.DefaultExt = _extension;
-            sfd.Filter = GetFilter();
+            var sfd = new SaveFileDialog
+            {
+                OverwritePrompt = true,
+                InitialDirectory = _startPath,
+                AddExtension = true,
+                DefaultExt = _extension,
+                Filter = GetFilter()
+            };
+
             sfd.ShowDialog();
             return sfd.FileName;
         }
 
         private string GetLoadPath()
         {
-            var ofd = new OpenFileDialog();
-            ofd.InitialDirectory = _startPath;
-            ofd.AddExtension = true;
-            ofd.DefaultExt = _extension;
-            ofd.Filter = GetFilter();
+            var ofd = new OpenFileDialog
+            {
+                InitialDirectory = _startPath,
+                AddExtension = true,
+                DefaultExt = _extension,
+                Filter = GetFilter()
+            };
+
             ofd.ShowDialog();
             return ofd.FileName;
         }

@@ -23,7 +23,7 @@ namespace Parsing.Extraction
     /// </summary>
     /// <typeparam name="TElement">The object to extract data from. </typeparam>
     /// <typeparam name="TData">The data returned from extraction. </typeparam>
-    public interface IDataExtractor<TElement, TData>
+    public interface IDataExtractor<in TElement, out TData>
     {
         /// <summary>
         ///     Checks to see if we can extract data.

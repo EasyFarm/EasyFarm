@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License
 // Site: FFEVO.net
 // All credit to him!
 
+using System.Linq;
 using System.Threading;
 using EasyFarm.Classes;
 using FFACETools;
@@ -32,20 +33,12 @@ namespace EasyFarm.Components
         ///     A timer for running tasks over long
         ///     periods of time.
         /// </summary>
-        private readonly TaskTimer TaskTimer;
+        private readonly TaskTimer _taskTimer;
 
-        private MachineComponent LastRan;
-
-        /// <summary>
-        ///     FFACE Session for reading memory from the game client.
-        /// </summary>
-        private FFACE m_fface;
-
+        private MachineComponent _lastRan;
         // Constructor.
         public FiniteStateEngine(FFACE fface)
         {
-            m_fface = fface;
-
             //Create the states
             AddComponent(new RestComponent(fface) {Priority = 2});
             AddComponent(new AttackContainer(fface) {Priority = 1});
@@ -55,25 +48,18 @@ namespace EasyFarm.Components
             Components.ForEach(x => x.Enabled = true);
 
             // Threaded timer to run the main loop on. 
-            TaskTimer = new TaskTimer();
-            TaskTimer.OnElapsed += Run;
-            TaskTimer.Interval = 100;
-            TaskTimer.AutoReset = true;
+            _taskTimer = new TaskTimer();
+            _taskTimer.OnElapsed += Run;
+            _taskTimer.Interval = 100;
+            _taskTimer.AutoReset = true;
         }
 
         public override bool CheckComponent()
         {
-            var ready = false;
-
             // Loop through all components and if one reports ready,
             // the attack container may run. 
-            foreach (var Component in Components)
-            {
-                if (Component.Enabled)
-                {
-                    ready |= Component.CheckComponent();
-                }
-            }
+
+            var ready = Components.Any(x => x.Enabled && x.CheckComponent());
 
             return ready;
         }
@@ -97,37 +83,37 @@ namespace EasyFarm.Components
                 Components.Sort();
 
                 // Find a State that says it needs to run.
-                foreach (var MC in Components)
+                foreach (var mc in Components)
                 {
                     // Stop operations on being signaled to stop. 
                     if (!timedOut)
                     {
                         // Make the last state clean up and exit (stops running if travelling)
-                        if (LastRan != null) LastRan.ExitComponent();
+                        if (_lastRan != null) _lastRan.ExitComponent();
                         return;
                     }
 
-                    if (MC.Enabled == false)
+                    if (mc.Enabled == false)
                     {
                         continue;
                     } // Skip disabled States.
-                    if (MC.CheckComponent())
+                    if (mc.CheckComponent())
                     {
                         // Says it needs to run. Same State as before?
-                        if (LastRan == null)
+                        if (_lastRan == null)
                         {
-                            LastRan = MC;
+                            _lastRan = mc;
                         }
-                        if (LastRan != MC)
+                        if (_lastRan != mc)
                         {
                             // Make the previous State clean up and exit.
-                            LastRan.ExitComponent();
-                            LastRan = MC;
-                            MC.EnterComponent();
+                            _lastRan.ExitComponent();
+                            _lastRan = mc;
+                            mc.EnterComponent();
                         }
 
                         // Run this State and stop.
-                        MC.RunComponent();
+                        mc.RunComponent();
                     }
                 }
             }
@@ -144,12 +130,12 @@ namespace EasyFarm.Components
         // Start and stop.
         public override void Start()
         {
-            TaskTimer.Start();
+            _taskTimer.Start();
         }
 
         public override void Stop()
         {
-            TaskTimer.Stop();
+            _taskTimer.Stop();
         }
     }
 }

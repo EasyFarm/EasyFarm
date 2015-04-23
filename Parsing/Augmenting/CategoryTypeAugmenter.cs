@@ -26,34 +26,34 @@ namespace Parsing.Augmenting
         public CategoryTypeAugmenter(string attributeName, string variableName) :
             base(attributeName, variableName)
         {
-            _mappers.Add(new ObjectMapper<string, CategoryType>("WhiteMagic", CategoryType.WhiteMagic));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("BlackMagic", CategoryType.BlackMagic));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("SummonerPact", CategoryType.SummonerPact));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Ninjustsu", CategoryType.Ninjustsu));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Geomancy", CategoryType.Geomancy));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("BlueMagic", CategoryType.BlueMagic));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("BardSong", CategoryType.BardSong));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Trust", CategoryType.Trust));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("WeaponSkill", CategoryType.WeaponSkill));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Misc", CategoryType.Misc));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("JobAbility", CategoryType.JobAbility));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("PetCommand", CategoryType.PetCommand));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("CorsairRoll", CategoryType.CorsairRoll));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("CorsairShot", CategoryType.CorsairShot));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Samba", CategoryType.Samba));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Waltz", CategoryType.Waltz));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Jig", CategoryType.Jig));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Step", CategoryType.Step));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Flourish1", CategoryType.Flourish1));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Flourish2", CategoryType.Flourish2));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Effusion", CategoryType.Effusion));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Rune", CategoryType.Rune));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Ward", CategoryType.Ward));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("BloodPactWard", CategoryType.BloodPactWard));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("BloodPactRage", CategoryType.BloodPactRage));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("Monster", CategoryType.Monster));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("JobTrait", CategoryType.JobTrait));
-            _mappers.Add(new ObjectMapper<string, CategoryType>("MonsterSkill", CategoryType.MonsterSkill));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("WhiteMagic", CategoryType.WhiteMagic));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("BlackMagic", CategoryType.BlackMagic));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("SummonerPact", CategoryType.SummonerPact));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Ninjustsu", CategoryType.Ninjustsu));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Geomancy", CategoryType.Geomancy));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("BlueMagic", CategoryType.BlueMagic));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("BardSong", CategoryType.BardSong));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Trust", CategoryType.Trust));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("WeaponSkill", CategoryType.WeaponSkill));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Misc", CategoryType.Misc));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("JobAbility", CategoryType.JobAbility));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("PetCommand", CategoryType.PetCommand));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("CorsairRoll", CategoryType.CorsairRoll));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("CorsairShot", CategoryType.CorsairShot));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Samba", CategoryType.Samba));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Waltz", CategoryType.Waltz));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Jig", CategoryType.Jig));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Step", CategoryType.Step));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Flourish1", CategoryType.Flourish1));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Flourish2", CategoryType.Flourish2));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Effusion", CategoryType.Effusion));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Rune", CategoryType.Rune));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Ward", CategoryType.Ward));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("BloodPactWard", CategoryType.BloodPactWard));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("BloodPactRage", CategoryType.BloodPactRage));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("Monster", CategoryType.Monster));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("JobTrait", CategoryType.JobTrait));
+            Mappers.Add(new ObjectMapper<string, CategoryType>("MonsterSkill", CategoryType.MonsterSkill));
         }
     }
 }

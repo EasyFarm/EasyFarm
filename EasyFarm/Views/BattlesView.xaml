@@ -3,10 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:views="clr-namespace:EasyFarm.Views"
-             xmlns:viewModels="clr-namespace:EasyFarm.ViewModels"
-             xmlns:local="clr-namespace:EasyFarm.Classes"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="600">
@@ -60,7 +57,7 @@
             </Grid.RowDefinitions>
 
             <!-- Master Ability View-->
-            <ListBox Name="master"
+            <ListBox Name="Master"
                      Margin="5"
                      Grid.Column="0"
                      Grid.ColumnSpan="2"
@@ -74,15 +71,15 @@
             </ListBox>
 
             <!-- Splitter -->
-            <GridSplitter Grid.Column="1"
+            <GridSplitter Grid.Row="0" Grid.Column="1"
                           Width="5" />
 
             <!-- Detail Ability View -->
-            <ScrollViewer Grid.Column="2"
+            <ScrollViewer Grid.Row="0" Grid.Column="2"
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto"
                           Margin="5">
-                <ListBox ItemsSource="{Binding ElementName=master, Path=SelectedValue.Actions}"
+                <ListBox ItemsSource="{Binding ElementName=Master, Path=SelectedValue.Actions}"
                          ItemContainerStyle="{StaticResource ListBoxItemContainer}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>

@@ -22,10 +22,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Parsing.Abilities;
 using Parsing.Services;
 
-namespace XI_Tools_Tests
+namespace EasyFarmTests
 {
     [TestClass]
-    public class TestXITools
+    public class TestXiTools
     {
         [TestInitialize]
         public void SetUp()
@@ -39,12 +39,14 @@ namespace XI_Tools_Tests
             [TestMethod]
             public void TestToString()
             {
-                var test = new Ability();
-                test.Prefix = "/magic";
-                test.English = "Cure";
-                test.Targets = "Self";
+                var test = new Ability
+                {
+                    Prefix = "/magic",
+                    English = "Cure",
+                    Targets = "Self"
+                };
                 var cure = new AbilityService("resources").CreateAbility("Cure");
-                Equals(test.ToString(), cure.ToString());
+                Assert.Equals(test.ToString(), cure.ToString());
             }
         }
     }

@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 
 namespace Parsing.Converters
 {
-    public interface IObjectConverter<TObject>
+    public interface IObjectConverter<in TObject>
     {
         /// <summary>
         ///     Whether or not we can convert the object.

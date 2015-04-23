@@ -29,7 +29,7 @@ namespace Parsing.Mapping
     /// <typeparam name="TObject">
     ///     The object compared to see if there's a mapping.
     /// </typeparam>
-    public interface IObjectMultiMapper<TObject, TData>
+    public interface IObjectMultiMapper<in TObject, out TData>
     {
         /// <summary>
         ///     Checks whether there's a mapping from obj to data.

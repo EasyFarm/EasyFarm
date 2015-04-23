@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 
 using Microsoft.Practices.Prism.PubSubEvents;
 
-namespace EasyFarm.ViewModels
+namespace EasyFarm.Mvvm
 {
     public class StatusBarUpdateEvent : PubSubEvent<string>
     {

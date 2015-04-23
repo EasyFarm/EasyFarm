@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Tracing;
 using System.Threading;
 using EasyFarm.Logging;
+using EasyFarm.Mvvm;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 
 namespace EasyFarm.ViewModels

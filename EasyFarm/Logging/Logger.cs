@@ -30,7 +30,7 @@ namespace EasyFarm.Logging
         /// <summary>
         ///     Our internal instance of our logger.
         /// </summary>
-        private static readonly Lazy<Logger> m_instance =
+        private static readonly Lazy<Logger> Instance =
             new Lazy<Logger>(() => new Logger());
 
         private readonly SynchronizationContext _syncContext;
@@ -46,105 +46,105 @@ namespace EasyFarm.Logging
         /// </summary>
         public static Logger Write
         {
-            get { return m_instance.Value; }
+            get { return Instance.Value; }
         }
 
         /// <summary>
         ///     Logs the program's start.
         /// </summary>
         /// <param name="message"></param>
-        [Event(EventID.APPLICATION_START, Level = EventLevel.Informational)]
+        [Event(EventId.ApplicationStart, Level = EventLevel.Informational)]
         public void ApplicationStart(string message)
         {
-            SimpleWrite(EventID.APPLICATION_START, message);
+            SimpleWrite(EventId.ApplicationStart, message);
         }
 
         /// <summary>
         ///     Logs the program's end.
         /// </summary>
         /// <param name="message"></param>
-        [Event(EventID.APPLICATION_END, Level = EventLevel.Informational)]
+        [Event(EventId.ApplicationEnd, Level = EventLevel.Informational)]
         public void ApplicationEnd(string message)
         {
-            SimpleWrite(EventID.APPLICATION_END, message);
+            SimpleWrite(EventId.ApplicationEnd, message);
         }
 
         /// <summary>
         ///     Logs the success of finding all resource folders / files.
         /// </summary>
         /// <param name="message"></param>
-        [Event(EventID.RESOURCES_LOCATED, Level = EventLevel.Informational)]
+        [Event(EventId.ResourcesLocated, Level = EventLevel.Informational)]
         public void ResourcesLocated(string message)
         {
-            SimpleWrite(EventID.RESOURCES_LOCATED, message);
+            SimpleWrite(EventId.ResourcesLocated, message);
         }
 
         /// <summary>
         ///     Logs events for resource files being missing.
         /// </summary>
         /// <param name="message"></param>
-        [Event(EventID.RESOURCE_FILES_MISSING, Level = EventLevel.Error)]
+        [Event(EventId.ResourceFilesMissing, Level = EventLevel.Error)]
         public void ResourceFileMissing(string message)
         {
-            SimpleWrite(EventID.RESOURCE_FILES_MISSING, message);
+            SimpleWrite(EventId.ResourceFilesMissing, message);
         }
 
         /// <summary>
         ///     Logs events for the resources folder being missing.
         /// </summary>
         /// <param name="message"></param>
-        [Event(EventID.RESOURCE_FOLDER_MISSING, Level = EventLevel.Error)]
+        [Event(EventId.ResourceFolderMissing, Level = EventLevel.Error)]
         public void ResourceFolderMissing(string message)
         {
-            SimpleWrite(EventID.RESOURCE_FOLDER_MISSING, message);
+            SimpleWrite(EventId.ResourceFolderMissing, message);
         }
 
-        [Event(EventID.PROCESS_NOT_FOUND, Level = EventLevel.Error)]
+        [Event(EventId.ProcessNotFound, Level = EventLevel.Error)]
         public void ProcessNotFound(string message)
         {
-            SimpleWrite(EventID.PROCESS_NOT_FOUND, message);
+            SimpleWrite(EventId.ProcessNotFound, message);
         }
 
-        [Event(EventID.PROCESS_FOUND, Level = EventLevel.Error)]
+        [Event(EventId.ProcessFound, Level = EventLevel.Error)]
         public void ProcessFound(string message)
         {
-            SimpleWrite(EventID.PROCESS_FOUND, message);
+            SimpleWrite(EventId.ProcessFound, message);
         }
 
-        [Event(EventID.BOT_START, Level = EventLevel.Informational)]
+        [Event(EventId.BotStart, Level = EventLevel.Informational)]
         public void BotStart(string message)
         {
-            SimpleWrite(EventID.BOT_START, message);
+            SimpleWrite(EventId.BotStart, message);
         }
 
-        [Event(EventID.BOT_STOP, Level = EventLevel.Informational)]
+        [Event(EventId.BotStop, Level = EventLevel.Informational)]
         public void BotStop(string message)
         {
-            SimpleWrite(EventID.BOT_STOP, message);
+            SimpleWrite(EventId.BotStop, message);
         }
 
-        [Event(EventID.SETTINGS_SAVE, Level = EventLevel.Informational)]
+        [Event(EventId.SettingsSave, Level = EventLevel.Informational)]
         public void SaveSettings(string message)
         {
-            SimpleWrite(EventID.SETTINGS_SAVE, message);
+            SimpleWrite(EventId.SettingsSave, message);
         }
 
-        [Event(EventID.STATE_CHECK, Level = EventLevel.Informational)]
+        [Event(EventId.StateCheck, Level = EventLevel.Informational)]
         public void StateCheck(string message, bool success)
         {
-            SimpleWrite(EventID.STATE_CHECK, message);
+            SimpleWrite(EventId.StateCheck, message);
         }
 
-        [Event(EventID.STATE_RUN, Level = EventLevel.Informational)]
+        [Event(EventId.StateRun, Level = EventLevel.Informational)]
         public void StateRun(string message)
         {
-            SimpleWrite(EventID.STATE_CHECK, message);
+            SimpleWrite(EventId.StateCheck, message);
         }
 
-        [Event(EventID.PERFORMANCE_ELAPSED_TIME, Level = EventLevel.Informational)]
+        [Event(EventId.PerformanceElapsedTime, Level = EventLevel.Informational)]
         public void PerformanceElapsedTime(string message)
         {
-            SimpleWrite(EventID.PERFORMANCE_ELAPSED_TIME, message);
+            SimpleWrite(EventId.PerformanceElapsedTime, message);
         }
 
         public void SimpleWrite(int id, string message)
@@ -163,31 +163,31 @@ namespace EasyFarm.Logging
         ///     We're using this instead of an enum to avoid conversion of
         ///     enum elements to ints 100 times..
         /// </summary>
-        private class EventID
+        public class EventId
         {
             // Application: 0 - 99
-            public const int APPLICATION_START = 1;
-            public const int APPLICATION_END = 2;
+            public const int ApplicationStart = 1;
+            public const int ApplicationEnd = 2;
             // Resources: 100 - 199
-            public const int RESOURCES_LOCATED = 100;
-            public const int RESOURCE_FOLDER_MISSING = 101;
-            public const int RESOURCE_FILES_MISSING = 102;
+            public const int ResourcesLocated = 100;
+            public const int ResourceFolderMissing = 101;
+            public const int ResourceFilesMissing = 102;
             // Processes: 200 - 299
-            public const int PROCESS_FOUND = 200;
-            public const int PROCESS_NOT_FOUND = 201;
+            public const int ProcessFound = 200;
+            public const int ProcessNotFound = 201;
             // Bot: 300 - 399
-            public const int BOT_START = 300;
-            public const int BOT_STOP = 301;
+            public const int BotStart = 300;
+            public const int BotStop = 301;
             // Settings: 400 - 499
-            public const int SETTINGS_SAVE = 400;
-            public const int SETTINGS_LOAD = 401;
+            public const int SettingsSave = 400;
+            public const int SettingsLoad = 401;
             // Settings: 500 - 599
-            public const int STATE_CHECK = 500;
-            public const int STATE_ENTER = 501;
-            public const int STATE_RUN = 502;
-            public const int STATE_EXIT = 503;
+            public const int StateCheck = 500;
+            public const int StateEnter = 501;
+            public const int StateRun = 502;
+            public const int StateExit = 503;
             // Performance: 600-699
-            public const int PERFORMANCE_ELAPSED_TIME = 600;
+            public const int PerformanceElapsedTime = 600;
         }
     }
 }

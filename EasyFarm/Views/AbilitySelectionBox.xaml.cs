@@ -24,7 +24,7 @@ namespace EasyFarm.Views
     /// <summary>
     ///     Interaction logic for AbilitySelectionBox.xaml
     /// </summary>
-    public partial class AbilitySelectionBox : Window
+    public partial class AbilitySelectionBox
     {
         public AbilitySelectionBox(string name)
         {

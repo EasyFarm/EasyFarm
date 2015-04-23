@@ -51,7 +51,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     The move's max distance.
         /// </summary>
-        private double _distance = Constants.MELEE_DISTANCE;
+        private double _distance = Constants.MeleeDistance;
 
         /// <summary>
         ///     Is this move ready for use?
@@ -348,13 +348,16 @@ namespace EasyFarm.Classes
         public Ability FindAbility(string name)
         {
             // Retriever all moves with the specified name. 
-            var moves = App.AbilityService.GetAbilitiesWithName(name);
+            var moves = App.AbilityService.GetAbilitiesWithName(name).ToArray();
 
             // Prompt user to select a move if more 
             // than one are found with the same name. 
             // Otherwise, return the first occurence or null. 
-            if (moves.Count() > 1)
+            if (moves.Length > 1)
+            {
                 return new AbilitySelectionBox(name).SelectedAbility;
+            }
+
             return moves.FirstOrDefault();
         }
     }

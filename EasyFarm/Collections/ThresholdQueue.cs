@@ -32,6 +32,7 @@ namespace EasyFarm.Collections
         ///     Create the object and set the maximum limit for the queue.
         /// </summary>
         /// <param name="limit"></param>
+        /// <param name="threshold"></param>
         public ThresholdQueue(int limit, double threshold)
             : base(limit)
         {
@@ -51,7 +52,7 @@ namespace EasyFarm.Collections
         /// <returns></returns>
         public bool IsThresholdMet(Func<T, bool> condition)
         {
-            return this.Where(x => condition(x)).Count() >= Math.Ceiling(Limit*Threshold);
+            return this.Count(condition) >= Math.Ceiling(Limit*Threshold);
         }
     }
 }

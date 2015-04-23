@@ -33,7 +33,7 @@ namespace EasyFarm.Classes
             _fface = fface;
 
             // Create the UnitArray
-            _units = Enumerable.Range(0, UNIT_ARRAY_MAX)
+            _units = Enumerable.Range(0, UnitArrayMax)
                 .Select(x => new Unit(_fface, x));
         }
 
@@ -47,12 +47,12 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     The unit array's max size: 0 - 2048
         /// </summary>
-        private const short UNIT_ARRAY_MAX = Constants.UNIT_ARRAY_MAX;
+        private const short UnitArrayMax = Constants.UnitArrayMax;
 
         /// <summary>
         ///     The mob array's max size: 0 - 768.
         /// </summary>
-        private const short MOB_ARRAY_MAX = Constants.MOB_ARRAY_MAX;
+        private const short MobArrayMax = Constants.MobArrayMax;
 
 
         // We are caching values for HasAggro, since the program will 
@@ -86,7 +86,7 @@ namespace EasyFarm.Classes
             {
                 // Return the cached value if we're checking too often. 
                 if (LastAggroCheck.AddSeconds(
-                    Constants.UNIT_ARRAY_CHECK_RATE) >
+                    Constants.UnitArrayCheckRate) >
                     DateTime.Now)
                 {
                     return LastAggroStatus;
@@ -96,7 +96,7 @@ namespace EasyFarm.Classes
                 LastAggroCheck = DateTime.Now;
 
                 // Otherwise return the current environment value. 
-                return LastAggroStatus = MOBArray.Any(x => x.HasAggroed);
+                return LastAggroStatus = MobArray.Any(x => x.HasAggroed);
             }
         }
 
@@ -105,17 +105,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public bool HasClaim
         {
-            get
-            {
-                foreach (var monster in MOBArray)
-                {
-                    if (monster.IsClaimed)
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
+            get { return MobArray.Any(monster => monster.IsClaimed); }
         }
 
         /// <summary>
@@ -129,24 +119,24 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Retrieves the list of MOBs.
         /// </summary>
-        public IEnumerable<Unit> MOBArray
+        public IEnumerable<Unit> MobArray
         {
             get
             {
-                return UnitArray.Take(MOB_ARRAY_MAX)
-                    .Where(x => x.NPCType.Equals(NPCType.Mob));
+                return UnitArray.Take(MobArrayMax)
+                    .Where(x => x.NpcType.Equals(NPCType.Mob));
             }
         }
 
         /// <summary>
         ///     Retrieves the lsit of PCs.
         /// </summary>
-        public IEnumerable<Unit> PCArray
+        public IEnumerable<Unit> PcArray
         {
             get
             {
-                return UnitArray.Skip(MOB_ARRAY_MAX)
-                    .Where(x => x.NPCType.Equals(NPCType.PC));
+                return UnitArray.Skip(MobArrayMax)
+                    .Where(x => x.NpcType.Equals(NPCType.PC));
             }
         }
 

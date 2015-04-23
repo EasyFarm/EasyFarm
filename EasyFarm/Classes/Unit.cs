@@ -31,7 +31,7 @@ namespace EasyFarm.Classes
             _fface = fface;
 
             // Set the internal id. 
-            ID = id;
+            Id = id;
 
             // Set the NPC information.
             _npc = _fface.NPC;
@@ -68,14 +68,14 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     The unit's id.
         /// </summary>
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         ///     The unit's claim id; zero for unclaimed.
         /// </summary>
-        public int ClaimedID
+        public int ClaimedId
         {
-            get { return _npc.ClaimedID(ID); }
+            get { return _npc.ClaimedID(Id); }
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public double Distance
         {
-            get { return _npc.Distance(ID); }
+            get { return _npc.Distance(Id); }
         }
 
         /// <summary>
@@ -91,15 +91,15 @@ namespace EasyFarm.Classes
         /// </summary>
         public FFACE.Position Position
         {
-            get { return _npc.GetPosition(ID); }
+            get { return _npc.GetPosition(Id); }
         }
 
         /// <summary>
         ///     The unit's health as a percent.
         /// </summary>
-        public short HPPCurrent
+        public short HppCurrent
         {
-            get { return _npc.HPPCurrent(ID); }
+            get { return _npc.HPPCurrent(Id); }
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public bool IsActive
         {
-            get { return _npc.IsActive(ID); }
+            get { return _npc.IsActive(Id); }
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public bool IsClaimed
         {
-            get { return _npc.IsClaimed(ID); }
+            get { return _npc.IsClaimed(Id); }
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public bool IsRendered
         {
-            get { return _npc.IsRendered(ID); }
+            get { return _npc.IsRendered(Id); }
         }
 
         /// <summary>
@@ -131,31 +131,31 @@ namespace EasyFarm.Classes
         /// </summary>
         public string Name
         {
-            get { return _npc.Name(ID); }
+            get { return _npc.Name(Id); }
         }
 
         /// <summary>
         ///     The unit's npc bit
         /// </summary>
-        public byte NPCBit
+        public byte NpcBit
         {
-            get { return _npc.NPCBit(ID); }
+            get { return _npc.NPCBit(Id); }
         }
 
         /// <summary>
         ///     The unit's npc type
         /// </summary>
-        public NPCType NPCType
+        public NPCType NpcType
         {
-            get { return _npc.NPCType(ID); }
+            get { return _npc.NPCType(Id); }
         }
 
         /// <summary>
         ///     The unit's pet's id.
         /// </summary>
-        public int PetID
+        public int PetId
         {
-            get { return _npc.PetID(ID); }
+            get { return _npc.PetID(Id); }
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public float PosH
         {
-            get { return _npc.PosH(ID); }
+            get { return _npc.PosH(Id); }
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public float PosX
         {
-            get { return _npc.PosX(ID); }
+            get { return _npc.PosX(Id); }
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public float PosY
         {
-            get { return _npc.PosY(ID); }
+            get { return _npc.PosY(Id); }
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public float PosZ
         {
-            get { return _npc.PosZ(ID); }
+            get { return _npc.PosZ(Id); }
         }
 
         /// <summary>
@@ -195,21 +195,21 @@ namespace EasyFarm.Classes
         /// </summary>
         public Status Status
         {
-            get { return _npc.Status(ID); }
+            get { return _npc.Status(Id); }
         }
 
         /// <summary>
         ///     The unit's current tp.
         /// </summary>
-        public short TPCurrent
+        public short TpCurrent
         {
-            get { return _npc.TPCurrent(ID); }
+            get { return _npc.TPCurrent(Id); }
         }
 
         public bool MyClaim
         {
             // Using FFACE.PartyMember[0].ServerID until FFACE.Player.PlayerServerID is fixed. 
-            get { return ClaimedID == _fface.PartyMember[0].ServerID; }
+            get { return ClaimedId == _fface.PartyMember[0].ServerID; }
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public bool IsDead
         {
-            get { return Status == Status.Dead1 || Status == Status.Dead2 || HPPCurrent <= 0; }
+            get { return Status == Status.Dead1 || Status == Status.Dead2 || HppCurrent <= 0; }
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace EasyFarm.Classes
             {
                 for (byte i = 0; i < _fface.PartyMember.Count; i++)
                 {
-                    if (_fface.PartyMember[i].ServerID != 0 && ClaimedID == _fface.PartyMember[i].ServerID)
+                    if (_fface.PartyMember[i].ServerID != 0 && ClaimedId == _fface.PartyMember[i].ServerID)
                     {
                         return true;
                     }

@@ -43,10 +43,10 @@ namespace EasyFarm.Classes
             if (string.IsNullOrWhiteSpace(action.Name)) return false;
 
             // MP Check
-            if (action.Ability.MPCost > fface.Player.MPCurrent) return false;
+            if (action.Ability.MpCost > fface.Player.MPCurrent) return false;
 
             // TP Check
-            if (action.Ability.TPCost > fface.Player.TPCurrent) return false;
+            if (action.Ability.TpCost > fface.Player.TPCurrent) return false;
 
             // Usage Limit Check. 
             if (action.UsageLimit != 0)
@@ -60,7 +60,7 @@ namespace EasyFarm.Classes
             // Limiting Status Effect Check for Spells. 
             if (CompositeAbilityTypes.IsSpell.HasFlag(action.Ability.AbilityType))
             {
-                if (ProhibitEffects.PROHIBIT_EFFECTS_SPELL.Intersect(fface.Player.StatusEffects).Any())
+                if (ProhibitEffects.ProhibitEffectsSpell.Intersect(fface.Player.StatusEffects).Any())
                 {
                     return false;
                 }
@@ -69,7 +69,7 @@ namespace EasyFarm.Classes
             // Limiting Status Effect Check for Abilities. 
             if (CompositeAbilityTypes.IsAbility.HasFlag(action.Ability.AbilityType))
             {
-                if (ProhibitEffects.PROHIBIT_EFFECTS_ABILITY.Intersect(fface.Player.StatusEffects).Any())
+                if (ProhibitEffects.ProhibitEffectsAbility.Intersect(fface.Player.StatusEffects).Any())
                 {
                     return false;
                 }
@@ -88,16 +88,16 @@ namespace EasyFarm.Classes
             // Status Effect Checks Enabled
             if (!string.IsNullOrWhiteSpace(action.StatusEffect))
             {
-                var HasEffect = fface.Player.StatusEffects.Any(effect =>
+                var hasEffect = fface.Player.StatusEffects.Any(effect =>
                     Regex.IsMatch(effect.ToString(),
                         action.StatusEffect.Replace(" ", "_"),
                         RegexOptions.IgnoreCase));
 
                 // Contains Effect Check
-                if (HasEffect && !action.TriggerOnEffectPresent) return false;
+                if (hasEffect && !action.TriggerOnEffectPresent) return false;
 
                 // Missing EFfect Check
-                if (!HasEffect && action.TriggerOnEffectPresent) return false;
+                if (!hasEffect && action.TriggerOnEffectPresent) return false;
             }
 
             return true;
@@ -119,10 +119,10 @@ namespace EasyFarm.Classes
             if (action.TargetLowerHealth != 0 || action.TargetUpperHealth != 0)
             {
                 // Target Upper Health Check
-                if (unit.HPPCurrent > action.TargetUpperHealth) return false;
+                if (unit.HppCurrent > action.TargetUpperHealth) return false;
 
                 // Target Lower Health Check
-                if (unit.HPPCurrent < action.TargetLowerHealth) return false;
+                if (unit.HppCurrent < action.TargetLowerHealth) return false;
             }
 
             // Target Name Checks Enabled.

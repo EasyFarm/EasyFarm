@@ -25,8 +25,8 @@ namespace EasyFarm.Collections
     ///     A list with a fixed limit that can return values within a
     ///     certain window of time.
     /// </summary>
-    /// <typeparam name="V"></typeparam>
-    public class TimeSortedList<V> : FixedSortedList<DateTime, V>
+    /// <typeparam name="TV"></typeparam>
+    public class TimeSortedList<TV> : FixedSortedList<DateTime, TV>
     {
         /// <summary>
         ///     Sets the max list size and window length.
@@ -47,7 +47,7 @@ namespace EasyFarm.Collections
         ///     Return all values within the window.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<V> GetValuesInWindow()
+        public IEnumerable<TV> GetValuesInWindow()
         {
             // Prevous: 1m
             // Prevous 1m 10s

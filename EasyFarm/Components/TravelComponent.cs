@@ -62,7 +62,7 @@ namespace EasyFarm.Components
 
             // We are not bound or struck by an other movement
             // disabling condition. 
-            if (ProhibitEffects.PROHIBIT_EFFECTS_MOVEMENT
+            if (ProhibitEffects.ProhibitEffectsMovement
                 .Intersect(_fface.Player.StatusEffects).Any()) return false;
 
             return true;
@@ -105,7 +105,7 @@ namespace EasyFarm.Components
         /// <returns></returns>
         public bool IsCancellationRequired()
         {
-            /// Defines some common situations to stop travel. 
+            // Defines some common situations to stop travel. 
             if (_units.HasAggro) return true;
 
             // Return when the user has pause the program. 

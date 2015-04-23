@@ -16,14 +16,14 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System.Windows.Controls;
+using EasyFarm.ViewModels;
 
-namespace EasyFarm.Views.Settings
+namespace EasyFarm.Views
 {
     /// <summary>
     ///     Interaction logic for BattleSettingsView.xaml
     /// </summary>
-    public partial class BattleSettingsView : UserControl
+    public partial class BattleSettingsView
     {
         public BattleSettingsView()
         {

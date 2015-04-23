@@ -26,7 +26,7 @@ namespace EasyFarm.Classes
                 fface.Navigator.DistanceTolerance = distance;
 
                 // Goto target at max engagement distance.
-                fface.Navigator.GotoNPC(unit.ID);
+                fface.Navigator.GotoNPC(unit.Id);
 
                 // Restore old tolerance. 
                 fface.Navigator.DistanceTolerance = old;

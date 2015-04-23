@@ -16,27 +16,20 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Linq;
+
 namespace EasyFarm.Components
 {
     public class SequenceContainer : MachineContainer
     {
-        private MachineComponent LastRan;
+        private MachineComponent _lastRan;
 
         public override bool CheckComponent()
         {
-            var ready = false;
-
             // Loop through all components and if one reports ready,
             // the attack container may run. 
-            foreach (var Component in Components)
-            {
-                if (Component.Enabled)
-                {
-                    ready |= Component.CheckComponent();
-                }
-            }
 
-            return ready;
+            return Components.Any(x => x.Enabled && x.CheckComponent());
         }
 
         public override void EnterComponent()
@@ -49,27 +42,27 @@ namespace EasyFarm.Components
             {
                 Components.Sort();
 
-                foreach (var Component in Components)
+                foreach (var component in Components)
                 {
-                    if (!Component.Enabled) continue;
-                    if (Component.CheckComponent())
+                    if (!component.Enabled) continue;
+                    if (component.CheckComponent())
                     {
-                        if (LastRan == null)
+                        if (_lastRan == null)
                         {
-                            LastRan = Component;
+                            _lastRan = component;
                             // Run the enter command or otherwise it won't 
                             // trigger on the first run component. 
-                            Component.EnterComponent();
+                            component.EnterComponent();
                         }
 
-                        if (LastRan != Component)
+                        if (_lastRan != component)
                         {
-                            LastRan.ExitComponent();
-                            LastRan = Component;
-                            Component.EnterComponent();
+                            _lastRan.ExitComponent();
+                            _lastRan = component;
+                            component.EnterComponent();
                         }
 
-                        Component.RunComponent();
+                        component.RunComponent();
                     }
                 }
             }

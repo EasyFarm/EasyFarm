@@ -16,14 +16,14 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-namespace EasyFarmTests.MachineComponentTests
+namespace EasyFarmTests
 {
     public class TestBattleAbility
     {
         private readonly bool _effectWore;
         private readonly bool _enabled;
         private readonly bool _isBuff;
-        private readonly string _name = string.Empty;
+        private readonly string _name;
 
         public TestBattleAbility(string name, bool enabled, bool isbuff, bool effectwore)
         {

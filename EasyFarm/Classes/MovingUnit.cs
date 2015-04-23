@@ -29,7 +29,7 @@ namespace EasyFarm.Classes
     /// </summary>
     public class MovingUnit : Unit, IDisposable
     {
-        private const int HISTORY_POSITION_LIMIT = 10;
+        private const int HistoryPositionLimit = 10;
 
         /// <summary>
         ///     Create an object the timers can lock onto.
@@ -37,7 +37,7 @@ namespace EasyFarm.Classes
         private readonly object _mutex;
 
         private readonly ThresholdQueue<FFACE.Position> _positionHistory =
-            new ThresholdQueue<FFACE.Position>(HISTORY_POSITION_LIMIT, .75);
+            new ThresholdQueue<FFACE.Position>(HistoryPositionLimit, .75);
 
         /// <summary>
         ///     Timer that ticks to calculate the current displacement, velocity and
@@ -49,9 +49,11 @@ namespace EasyFarm.Classes
             : base(fface, id)
         {
             _mutex = new object();
-            _timer = new Timer();
-            _timer.AutoReset = true;
-            _timer.Interval = 30;
+            _timer = new Timer
+            {
+                AutoReset = true,
+                Interval = 30
+            };
             _timer.Elapsed += TimerTick;
             _timer.Start();
         }
@@ -60,7 +62,7 @@ namespace EasyFarm.Classes
 
         public bool IsStuck
         {
-            get { return _positionHistory.IsThresholdMet(x => GetIsStuck(x)); }
+            get { return _positionHistory.IsThresholdMet(GetIsStuck); }
         }
 
         public bool IsMoving

@@ -20,7 +20,7 @@ using System;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Formatters;
 
-namespace EasyFarm.ViewModels
+namespace EasyFarm.Logging
 {
     public static class LogSinkExtensions
     {

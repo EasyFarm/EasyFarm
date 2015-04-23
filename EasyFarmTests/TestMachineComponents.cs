@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace EasyFarmTests.MachineComponentTests
+namespace EasyFarmTests
 {
     [TestClass]
     public class TestMachineComponents

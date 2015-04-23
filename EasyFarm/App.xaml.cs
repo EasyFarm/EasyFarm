@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 using System.Windows;
 using EasyFarm.Components;
 using EasyFarm.Logging;
-using EasyFarm.Prism;
+using EasyFarm.Mvvm;
 using EasyFarm.Properties;
 using Parsing.Services;
 
@@ -28,7 +28,7 @@ namespace EasyFarm
     /// <summary>
     ///     Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App
     {
         /// <summary>
         ///     XML parser for looking up ability, spell and weaponskill data.

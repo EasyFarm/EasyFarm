@@ -33,8 +33,7 @@ namespace EasyFarm.Classes
         public BattleList(string name)
         {
             _name = name;
-            _value = new ObservableCollection<BattleAbility>();
-            _value.Add(new BattleAbility());
+            _value = new ObservableCollection<BattleAbility> {new BattleAbility()};
         }
 
         public string Name

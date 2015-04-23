@@ -21,6 +21,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Threading;
 using EasyFarm.Classes;
+using EasyFarm.Mvvm;
 using FFACETools;
 using Microsoft.Practices.Prism.Commands;
 
@@ -113,7 +114,6 @@ namespace EasyFarm.ViewModels
         ///     Pauses and resumes the path recorder based on
         ///     its current state.
         /// </summary>
-        /// <param name="recordBut`ton"></param>
         public void RecordRoute()
         {
             // Return when the user has not selected a process. 

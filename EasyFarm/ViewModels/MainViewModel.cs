@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 
 using System.Collections.ObjectModel;
 using System.Linq;
+using EasyFarm.Mvvm;
 
 namespace EasyFarm.ViewModels
 {
@@ -41,7 +42,7 @@ namespace EasyFarm.ViewModels
             ViewModels = new ObservableCollection<ViewModelBase>(
                 locator.GetEnabledViewModels()
                     .Where(x => x != null)
-                    .OrderBy(x => x.VMName));
+                    .OrderBy(x => x.VmName));
         }
 
         /// <summary>

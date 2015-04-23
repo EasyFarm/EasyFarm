@@ -37,16 +37,16 @@ namespace EasyFarm.Classes
 
         public Executor(FFACE fface)
         {
-            FFACE = fface;
-            Caster = new Caster(fface);
+            _fface = fface;
+            _caster = new Caster(fface);
         }
 
         #endregion
 
         #region Member Variables
 
-        private readonly FFACE FFACE;
-        private readonly Caster Caster;
+        private readonly FFACE _fface;
+        private readonly Caster _caster;
 
         #endregion
 
@@ -66,7 +66,7 @@ namespace EasyFarm.Classes
             {
                 foreach (var action in castables.ToList())
                 {
-                    if (!ActionFilters.BuffingFilter(FFACE, action))
+                    if (!ActionFilters.BuffingFilter(_fface, action))
                     {
                         castables.Remove(action);
                         continue;
@@ -74,7 +74,7 @@ namespace EasyFarm.Classes
 
                     // Try to cast the spell. On failure, 
                     // continue and recast at a later time. 
-                    if (!Caster.CastSpell(action)) continue;
+                    if (!_caster.CastSpell(action)) continue;
 
                     // Remove spell from castables so that it 
                     // will not be casted again. 
@@ -118,10 +118,12 @@ namespace EasyFarm.Classes
             if (action == null) throw new ArgumentNullException("action");
 
             // Create new new ability and set its basic required information. 
-            var baction = new BattleAbility();
-            baction.Name = action.English;
-            baction.IsEnabled = true;
-            baction.Ability = action;
+            var baction = new BattleAbility
+            {
+                Name = action.English,
+                IsEnabled = true,
+                Ability = action
+            };
 
             // Convert ability to new battleability object. 
             UseBuffingActions(new List<BattleAbility> {baction});
@@ -135,6 +137,7 @@ namespace EasyFarm.Classes
         ///     Execute targeted actions.
         /// </summary>
         /// <param name="actions"></param>
+        /// <param name="target"></param>
         public void UseTargetedActions(IEnumerable<BattleAbility> actions, Unit target)
         {
             // Logic error to call this without setting a target first. 
@@ -146,18 +149,18 @@ namespace EasyFarm.Classes
                 MoveIntoActionRange(target, action);
 
                 // Face unit
-                FFACE.Navigator.FaceHeading(target.Position);
+                _fface.Navigator.FaceHeading(target.Position);
 
                 // Target mob if not currently targeted. 
                 SetTarget(target);
 
                 if (CompositeAbilityTypes.IsSpell.HasFlag(action.Ability.AbilityType))
                 {
-                    Caster.CastSpell(action);
+                    _caster.CastSpell(action);
                 }
                 else
                 {
-                    Caster.CastAbility(action);
+                    _caster.CastAbility(action);
                 }
 
                 // Increase usage count to limit number of usages. 
@@ -172,10 +175,10 @@ namespace EasyFarm.Classes
         /// <param name="target"></param>
         private void SetTarget(Unit target)
         {
-            if (target.ID != FFACE.Target.ID)
+            if (target.Id != _fface.Target.ID)
             {
-                FFACE.Target.SetNPCTarget(target.ID);
-                FFACE.Windower.SendString("/ta <t>");
+                _fface.Target.SetNPCTarget(target.Id);
+                _fface.Windower.SendString("/ta <t>");
             }
         }
 
@@ -190,10 +193,10 @@ namespace EasyFarm.Classes
             if (target.Distance > action.Distance)
             {
                 // Move to unit at max buff distance. 
-                var oldTolerance = FFACE.Navigator.DistanceTolerance;
-                FFACE.Navigator.DistanceTolerance = action.Distance;
-                FFACE.Navigator.GotoNPC(target.ID);
-                FFACE.Navigator.DistanceTolerance = action.Distance;
+                var oldTolerance = _fface.Navigator.DistanceTolerance;
+                _fface.Navigator.DistanceTolerance = action.Distance;
+                _fface.Navigator.GotoNPC(target.Id);
+                _fface.Navigator.DistanceTolerance = oldTolerance;
             }
         }
 
@@ -201,6 +204,7 @@ namespace EasyFarm.Classes
         ///     Execute a single action targeted type action.
         /// </summary>
         /// <param name="action"></param>
+        /// <param name="target"></param>
         public void UseTargetedAction(BattleAbility action, Unit target)
         {
             if (target == null) throw new ArgumentNullException("target");

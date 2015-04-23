@@ -95,9 +95,7 @@ namespace Parsing.Parsers
         /// <summary>
         ///     A general method for loading abilites from the .xml files.
         /// </summary>
-        /// <param name="pname">a, s or i for spell or ability</param>
-        /// <param name="XDoc"></param>
-        /// <param name="aname">Name of the ability to retrieve</param>
+        /// <param name="name"></param>
         /// <returns></returns>
         protected IEnumerable<Ability> ParseResources(string name)
         {
@@ -108,11 +106,11 @@ namespace Parsing.Parsers
             var elements = new List<XElement>();
 
             // Select all matching XElement objects. 
-            foreach (var resource in _resources)
+            foreach (var resource in Resources)
             {
                 elements.AddRange(resource.Elements()
                     .Attributes()
-                    .Where(x => x.Name != null && x.Name == "english" || x.Name == "japanese")
+                    .Where(x => x.Name == "english" || x.Name == "japanese")
                     .Where(x => x.Value.Equals(name, StringComparison.CurrentCultureIgnoreCase))
                     .Select(x => x.Parent));
             }

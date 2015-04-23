@@ -78,15 +78,15 @@ namespace EasyFarm.Components
         public override void RunComponent()
         {
             // Execute moves. 
-            var Usable = Config.Instance.BattleLists["End"].Actions
+            var usable = Config.Instance.BattleLists["End"].Actions
                 .Where(x => ActionFilters.BuffingFilter(FFACE, x));
 
-            _executor.UseBuffingActions(Usable);
+            _executor.UseBuffingActions(usable);
 
-            if (_lastTargetCheck.AddSeconds(Constants.UNIT_ARRAY_CHECK_RATE) < DateTime.Now)
+            if (_lastTargetCheck.AddSeconds(Constants.UnitArrayCheckRate) < DateTime.Now)
             {
                 // First get the first mob by distance. 
-                var mobs = _units.MOBArray.Where(x => UnitFilters.MobFilter(_fface, x))
+                var mobs = _units.MobArray.Where(x => UnitFilters.MobFilter(_fface, x))
                     .OrderByDescending(x => x.PartyClaim)
                     .ThenByDescending(x => x.HasAggroed)
                     .ThenBy(x => x.Distance)
@@ -107,7 +107,7 @@ namespace EasyFarm.Components
                     action.Usages = 0;
                 }
 
-                Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.ID);
+                Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.Id);
             }
         }
 

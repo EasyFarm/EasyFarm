@@ -46,18 +46,20 @@ namespace EasyFarm.Components
             Components.ForEach(x => x.Enabled = true);
         }
 
+        /// <summary>
+        ///     Whether the fight has started or not.
+        /// </summary>
         public static bool FightStarted { get; set; }
-        private static Unit m_targetUnit { get; set; }
+
+        /// <summary>
+        ///     The game session.
+        /// </summary>
         public FFACE FFACE { get; set; }
 
         /// <summary>
         ///     Who we are trying to kill currently
         /// </summary>
-        public static Unit TargetUnit
-        {
-            get { return m_targetUnit; }
-            set { m_targetUnit = value; }
-        }
+        public static Unit TargetUnit { get; set; }
 
         public override bool CheckComponent()
         {

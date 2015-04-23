@@ -20,7 +20,7 @@
                   IsEditable="True"
                   ItemsSource="{Binding Ignored}"
                   Text="{Binding Name}" />
-        <Label Content="Name" 
+        <Label Grid.Row="0" Grid.Column="0" Content="Name" 
                VerticalAlignment="Center"/>
         <Grid Grid.Row="1"
               Grid.Column="1">

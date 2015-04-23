@@ -27,7 +27,7 @@
                   Text="{Binding TargetsName}"
                   IsSynchronizedWithCurrentItem="True" />
 
-        <Label Grid.Row="1"
+        <Label Grid.Row="1" Grid.Column="0"
                HorizontalAlignment="Stretch"
                VerticalAlignment="Stretch"
                Content="Kill" />
@@ -63,16 +63,16 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnAddTarget"
+            <Button x:Name="BtnAddTarget"
                     Grid.Column="0"
                     Content="Add"
                     Command="{Binding AddCommand}" />
-            <Button x:Name="btnDeleteTarget"
+            <Button x:Name="BtnDeleteTarget"
                     Grid.Column="1"
                     Margin="5 0"
                     Content="Delete"
                     Command="{Binding DeleteCommand}" />
-            <Button x:Name="btnClearTarget"
+            <Button x:Name="BtnClearTarget"
                     Grid.Column="2"
                     Content="Clear"
                     Command="{Binding ClearCommand}" />

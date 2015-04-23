@@ -70,7 +70,8 @@ namespace EasyFarm.Classes
 
         public override bool Equals(object obj)
         {
-            return Position == (obj as Waypoint).Position;
+            var waypoint = obj as Waypoint;
+            return waypoint != null && Position == waypoint.Position;
         }
     }
 }

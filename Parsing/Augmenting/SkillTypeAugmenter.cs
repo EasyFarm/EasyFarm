@@ -26,18 +26,18 @@ namespace Parsing.Augmenting
         public SkillTypeAugmenter(string attributeName, string variableName) :
             base(attributeName, variableName)
         {
-            _mappers.Add(new ObjectMapper<string, SkillType>("HealingMagic", SkillType.HealingMagic));
-            _mappers.Add(new ObjectMapper<string, SkillType>("DivineMagic", SkillType.DivineMagic));
-            _mappers.Add(new ObjectMapper<string, SkillType>("EnfeeblingMagic", SkillType.EnfeeblingMagic));
-            _mappers.Add(new ObjectMapper<string, SkillType>("EnhancingMagic", SkillType.EnhancingMagic));
-            _mappers.Add(new ObjectMapper<string, SkillType>("ElementalMagic", SkillType.ElementalMagic));
-            _mappers.Add(new ObjectMapper<string, SkillType>("DarkMagic", SkillType.DarkMagic));
-            _mappers.Add(new ObjectMapper<string, SkillType>("SummoningMagic", SkillType.SummoningMagic));
-            _mappers.Add(new ObjectMapper<string, SkillType>("Ninjutsu", SkillType.Ninjutsu));
-            _mappers.Add(new ObjectMapper<string, SkillType>("Singing", SkillType.Singing));
-            _mappers.Add(new ObjectMapper<string, SkillType>("BlueMagic", SkillType.BlueMagic));
-            _mappers.Add(new ObjectMapper<string, SkillType>("Geomancy", SkillType.Geomancy));
-            _mappers.Add(new ObjectMapper<string, SkillType>("Ability", SkillType.Ability));
+            Mappers.Add(new ObjectMapper<string, SkillType>("HealingMagic", SkillType.HealingMagic));
+            Mappers.Add(new ObjectMapper<string, SkillType>("DivineMagic", SkillType.DivineMagic));
+            Mappers.Add(new ObjectMapper<string, SkillType>("EnfeeblingMagic", SkillType.EnfeeblingMagic));
+            Mappers.Add(new ObjectMapper<string, SkillType>("EnhancingMagic", SkillType.EnhancingMagic));
+            Mappers.Add(new ObjectMapper<string, SkillType>("ElementalMagic", SkillType.ElementalMagic));
+            Mappers.Add(new ObjectMapper<string, SkillType>("DarkMagic", SkillType.DarkMagic));
+            Mappers.Add(new ObjectMapper<string, SkillType>("SummoningMagic", SkillType.SummoningMagic));
+            Mappers.Add(new ObjectMapper<string, SkillType>("Ninjutsu", SkillType.Ninjutsu));
+            Mappers.Add(new ObjectMapper<string, SkillType>("Singing", SkillType.Singing));
+            Mappers.Add(new ObjectMapper<string, SkillType>("BlueMagic", SkillType.BlueMagic));
+            Mappers.Add(new ObjectMapper<string, SkillType>("Geomancy", SkillType.Geomancy));
+            Mappers.Add(new ObjectMapper<string, SkillType>("Ability", SkillType.Ability));
         }
     }
 }

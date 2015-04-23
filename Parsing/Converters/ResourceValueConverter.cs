@@ -31,7 +31,10 @@ namespace Parsing.Converters
         public bool CanConvert(TData obj)
         {
             var typeCode = (Type.GetTypeCode(obj.GetType()));
-            return !typeCode.HasFlag(TypeCode.Object | TypeCode.Empty | TypeCode.DBNull);
+
+            return typeCode == TypeCode.Object ||
+                   typeCode == TypeCode.Empty ||
+                   typeCode == TypeCode.DBNull;
         }
 
         public TType ConvertObject<TType>(TData obj)

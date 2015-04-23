@@ -29,7 +29,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     The callback to call on tick.
         /// </summary>
-        public delegate void Elapsed(bool IsCanceled);
+        public delegate void Elapsed(bool isCanceled);
 
         /// <summary>
         ///     Signals this task to stop.
@@ -91,7 +91,7 @@ namespace EasyFarm.Classes
         /// <param name="timedOut"></param>
         private void WorkerMethod(object state, bool timedOut)
         {
-            OnElapsed(timedOut);
+            if (OnElapsed != null) OnElapsed(timedOut);
         }
 
         /// <summary>

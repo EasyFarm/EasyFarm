@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace EasyFarm.ViewModels
+namespace EasyFarm.Mvvm
 {
     /// <summary>
     ///     A class to locate all enabled view models.
@@ -47,34 +47,12 @@ namespace EasyFarm.ViewModels
                     .Select(vmattribute =>
                     {
                         var viewModel = (ViewModelBase) ConstructItem(vmclass, new Type[] {});
-                        viewModel.VMName = vmattribute.Name;
+                        viewModel.VmName = vmattribute.Name;
                         return viewModel;
                     }));
 
             return viewModels.ToList();
         }
-
-        /*
-        public List<BaseState> GetEnabledStates(FFACE fface)
-        {
-            var states = GetMarkedTypes()
-                .Where(x => x.GetCustomAttributes<StateAttribute>(false)
-                .Any(attr => attr.Enabled))
-                .SelectMany(state => state.GetCustomAttributes<StateAttribute>()
-                .Select(x =>
-                {
-                    var ctor = state.GetConstructor(new[] { typeof(FFACE) });
-                    if (ctor != null)
-                    {
-                        var instance = (BaseState)ctor.Invoke(new object[] { fface });
-                        instance.Enabled = x.Enabled;
-                        instance.Priority = x.Priority;
-                        return instance;
-                    }
-                    return null;
-                }));
-            return States.ToList();
-        }*/
 
         /// <summary>
         ///     Create an object with a given contructors parameters from a given type.

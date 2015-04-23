@@ -84,7 +84,7 @@ namespace EasyFarm.Classes
         {
             var name = AdjustName(ability.English);
 
-            var value = default(AbilityList);
+            AbilityList value;
 
             // Fixes for summoner's blood pact recast times. 
             if (ability.CategoryType.HasFlag(CategoryType.BloodPactWard))
@@ -100,7 +100,7 @@ namespace EasyFarm.Classes
         private static SpellList ToSpellList(Ability ability)
         {
             var name = AdjustName(ability.English);
-            var value = default(SpellList);
+            SpellList value;
             Enum.TryParse(name, out value);
             return value;
         }

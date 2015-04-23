@@ -4,14 +4,13 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:prism="http://www.codeplex.com/prism"
                        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                       xmlns:Properties="clr-namespace:EasyFarm.Properties"
                        mc:Ignorable="d"
                        x:Name="MainForm"
                        x:Class="EasyFarm.Views.MasterView"
                        Title="{Binding MainWindowTitle}"
                        Width="550"
                        Height="400"
-                       Topmost="{Binding IsChecked, ElementName=mnuAlwaysOnTop, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                       Topmost="{Binding IsChecked, ElementName=MnuAlwaysOnTop, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
     <controls:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -45,7 +44,7 @@
         </Grid.Resources>
         <Frame Grid.ColumnSpan="2"
                Background="Black" />
-        <Menu Grid.ColumnSpan="2"
+        <Menu Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0"
               VerticalAlignment="Center">
             <MenuItem Header="_File"
                       Foreground="White"
@@ -70,17 +69,17 @@
             <MenuItem Header="_Window"
                       Foreground="White"
                       Background="Black">
-                <MenuItem x:Name="mnuAlwaysOnTop"
+                <MenuItem x:Name="MnuAlwaysOnTop"
                           Header="_Always on top"
                           IsCheckable="True" />
-                <MenuItem x:Name="mnuMinimizeToTray"
+                <MenuItem x:Name="MnuMinimizeToTray"
                           Header="_Minimize to system tray"
                           IsCheckable="True" />
             </MenuItem>
         </Menu>
 
         <ContentControl Grid.Row="1"
-                        Grid.ColumnSpan="2"
+                        Grid.ColumnSpan="2" Grid.Column="0"
                         prism:RegionManager.RegionName="MainRegion" />
 
         <StatusBar Grid.Row="2"

@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.ViewModels;
+using EasyFarm.Mvvm;
 
-namespace EasyFarm.Views.Settings
+namespace EasyFarm.ViewModels
 {
     public class BattleSettingsViewModel : ViewModelBase
     {

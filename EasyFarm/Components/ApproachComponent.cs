@@ -49,11 +49,11 @@ namespace EasyFarm.Components
             if (Target.Status.Equals(Status.Fighting)) return true;
 
             // Get usable abilities. 
-            var Usable = Config.Instance.BattleLists["Pull"].Actions
+            var usable = Config.Instance.BattleLists["Pull"].Actions
                 .Where(x => ActionFilters.BuffingFilter(FFACE, x));
 
             // Approach when there are no pulling moves available. 
-            if (!Usable.Any()) return true;
+            if (!usable.Any()) return true;
 
             // Approach mobs if their distance is close. 
             return Target.Distance < 8;
@@ -70,8 +70,8 @@ namespace EasyFarm.Components
                     // Move to unit at max buff distance. 
                     var oldTolerance = FFACE.Navigator.DistanceTolerance;
                     FFACE.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
-                    FFACE.Navigator.GotoNPC(Target.ID);
-                    FFACE.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
+                    FFACE.Navigator.GotoNPC(Target.Id);
+                    FFACE.Navigator.DistanceTolerance = oldTolerance;
                 }
             }
 
@@ -79,10 +79,10 @@ namespace EasyFarm.Components
             FFACE.Navigator.FaceHeading(Target.Position);
 
             // Target mob if not currently targeted. 
-            if (Target.ID != FFACE.Target.ID)
+            if (Target.Id != FFACE.Target.ID)
             {
                 // Set as target. 
-                FFACE.Target.SetNPCTarget(Target.ID);
+                FFACE.Target.SetNPCTarget(Target.Id);
                 FFACE.Windower.SendString("/ta <t>");
             }
 
@@ -93,7 +93,7 @@ namespace EasyFarm.Components
                 if (!FFACE.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
                 {
                     // Engage the target. 
-                    FFACE.Windower.SendString(Constants.ATTACK_TARGET);
+                    FFACE.Windower.SendString(Constants.AttackTarget);
                 }
             }
         }

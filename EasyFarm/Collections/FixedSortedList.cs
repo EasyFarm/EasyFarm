@@ -23,7 +23,7 @@ namespace EasyFarm.Collections
     /// <summary>
     ///     A sorted list of a fixed size.
     /// </summary>
-    public class FixedSortedList<K, V> : SortedList<K, List<V>>
+    public class FixedSortedList<TK, TV> : SortedList<TK, List<TV>>
     {
         /// <summary>
         ///     Create a new fixed size list with a limit.
@@ -53,11 +53,11 @@ namespace EasyFarm.Collections
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public void AddItem(K key, V value)
+        public void AddItem(TK key, TV value)
         {
             // Does not contain the key, create one. 
             if (!ContainsKey(key))
-                this[key] = new List<V>();
+                this[key] = new List<TV>();
 
             // Add a value to the key / values pairing. 
             this[key].Add(value);

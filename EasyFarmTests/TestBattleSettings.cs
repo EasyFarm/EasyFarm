@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.Views.Settings;
+using EasyFarm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EasyFarmTests
@@ -37,12 +37,10 @@ namespace EasyFarmTests
         public void ApproachReflectedInConfigTest()
         {
             // Create the view model. 
-            var BattleSettingsVM =
-                new BattleSettingsViewModel();
+            new BattleSettingsViewModel {ShouldApproach = false};
 
             // Set approach to false in the vm which should also set it
             // to false in the config. 
-            BattleSettingsVM.ShouldApproach = false;
 
             // Assert it is indeed false. 
             Assert.IsFalse(Config.Instance.IsApproachEnabled);
@@ -52,12 +50,10 @@ namespace EasyFarmTests
         public void EngageReflectedInConfigTest()
         {
             // Create the view model. 
-            var BattleSettingsVM =
-                new BattleSettingsViewModel();
+            new BattleSettingsViewModel {ShouldEngage = false};
 
             // Set approach to false in the vm which should also set it
             // to false in the config. 
-            BattleSettingsVM.ShouldEngage = false;
 
             // Assert it is indeed false. 
             Assert.IsFalse(Config.Instance.IsEngageEnabled);

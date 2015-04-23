@@ -41,9 +41,10 @@ namespace Parsing.Services
         /// <returns>a new ability</returns>
         public Ability CreateAbility(string name)
         {
-            var Abilities = GetAbilitiesWithName(name);
-            if (Abilities.Count() <= 0) return new Ability();
-            return Abilities.First();
+            var abilities = GetAbilitiesWithName(name);
+            var enumerable = abilities as Ability[] ?? abilities.ToArray();
+            if (!enumerable.Any()) return new Ability();
+            return enumerable.First();
         }
 
         /// <summary>
@@ -60,7 +61,6 @@ namespace Parsing.Services
         ///     Parses a resource in terms of an ability.
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="XMLDoc"></param>
         /// <returns></returns>
         public IEnumerable<Ability> GetJobAbilitiesByName(string name)
         {
@@ -71,7 +71,6 @@ namespace Parsing.Services
         ///     Parses a resource in terms of an spell.
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="XMLDoc"></param>
         /// <returns></returns>
         public IEnumerable<Ability> GetSpellAbilitiesByName(string name)
         {
@@ -85,7 +84,7 @@ namespace Parsing.Services
         /// <returns></returns>
         public bool Exists(string actionName)
         {
-            return GetAbilitiesWithName(actionName).Count() > 0;
+            return GetAbilitiesWithName(actionName).Any();
         }
     }
 }

@@ -44,13 +44,12 @@ namespace EasyFarm.Components
         /// <summary>
         ///     Does our player have a status effect that prevents him
         /// </summary>
-        /// <param name="playerStatusEffects"></param>
         /// <returns></returns>
         public bool IsRestingBlocked
         {
             get
             {
-                var RestBlockingDebuffs = new List<StatusEffect>
+                var restBlockingDebuffs = new List<StatusEffect>
                 {
                     StatusEffect.Poison,
                     StatusEffect.Bio,
@@ -73,7 +72,7 @@ namespace EasyFarm.Components
                     StatusEffect.Lullaby
                 };
 
-                return RestBlockingDebuffs.Intersect(_fface.Player.StatusEffects).Count() != 0;
+                return restBlockingDebuffs.Intersect(_fface.Player.StatusEffects).Count() != 0;
             }
         }
 
@@ -84,7 +83,7 @@ namespace EasyFarm.Components
         public override bool CheckComponent()
         {
             // Check for effects taht stop resting. 
-            if (ProhibitEffects.PROHIBIT_EFFECTS_DOTS
+            if (ProhibitEffects.ProhibitEffectsDots
                 .Intersect(_fface.Player.StatusEffects).Any()) return false;
 
             // Do not rest if we are being attacked. 

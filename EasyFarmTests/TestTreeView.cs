@@ -12,28 +12,28 @@ namespace EasyFarmTests
         /// <summary>
         ///     Retrieves abilities from resource files.
         /// </summary>
-        private static readonly AbilityService retriever;
+        private static readonly AbilityService Retriever;
 
         /// <summary>
         ///     Set up the ability retriever.
         /// </summary>
         static TestTreeView()
         {
-            retriever = new AbilityService("resources");
+            Retriever = new AbilityService("resources");
         }
 
         [TestMethod]
         public void TreeViewLayering()
         {
             // Create the TreeItemViewModels that will be stored in layer one. 
-            var Fire = CreateTreeItem("Fire");
-            var Water = CreateTreeItem("Water");
-            var Aero = CreateTreeItem("Aero");
+            var fire = CreateTreeItem("Fire");
+            var water = CreateTreeItem("Water");
+            var aero = CreateTreeItem("Aero");
 
             // Create a layer of tree view items. 
-            var Layer1 = CreateTreeLayer("Layer1", Fire, Water, Aero);
-            var Layer2 = CreateTreeLayer("Layer2", Fire, Water, Aero);
-            var Layer3 = CreateTreeLayer("Layer3", Layer1, Layer2);
+            var layer1 = CreateTreeLayer("Layer1", fire, water, aero);
+            var layer2 = CreateTreeLayer("Layer2", fire, water, aero);
+            CreateTreeLayer("Layer3", layer1, layer2);
         }
 
         public TreeItemViewModel<IEnumerable<TreeItemViewModel<T>>>
@@ -46,7 +46,7 @@ namespace EasyFarmTests
 
         public TreeItemViewModel<BattleAbility> CreateTreeItem(string name)
         {
-            var ability = new BattleAbility(retriever.CreateAbility(name));
+            var ability = new BattleAbility(Retriever.CreateAbility(name));
             return new TreeItemViewModel<BattleAbility>(ability.Name, ability);
         }
     }

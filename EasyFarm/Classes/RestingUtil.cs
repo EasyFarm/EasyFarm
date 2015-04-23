@@ -34,7 +34,7 @@ namespace EasyFarm.Classes
         {
             if (!fface.Player.Status.Equals(Status.Healing))
             {
-                fface.Windower.SendString(Constants.RESTING_ON);
+                fface.Windower.SendString(Constants.RestingOn);
                 Thread.Sleep(50);
             }
         }
@@ -46,7 +46,7 @@ namespace EasyFarm.Classes
         {
             if (fface.Player.Status.Equals(Status.Healing))
             {
-                fface.Windower.SendString(Constants.RESTING_OFF);
+                fface.Windower.SendString(Constants.RestingOff);
                 Thread.Sleep(50);
             }
         }

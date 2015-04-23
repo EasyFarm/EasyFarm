@@ -43,7 +43,7 @@ namespace EasyFarm.Classes
             get
             {
                 // Find the list item with that name. 
-                var list = this.Where(x => x.Name.Equals(index)).FirstOrDefault();
+                var list = this.FirstOrDefault(x => x.Name.Equals(index));
 
                 // Throw error if now found. 
                 if (list == null)
@@ -57,7 +57,7 @@ namespace EasyFarm.Classes
             set
             {
                 // Find the list item with that name. 
-                var list = this.Where(x => x.Name.Equals(index)).FirstOrDefault();
+                var list = this.FirstOrDefault(x => x.Name.Equals(index));
 
                 // Throw error when key not found.
                 if (list == null)

@@ -20,38 +20,38 @@ using System;
 using System.Timers;
 using FFACETools;
 
-namespace EasyFarm.FarmingTool
+namespace EasyFarm.Monitors
 {
     public delegate void StatusChanged(object sender, EventArgs e);
 
     public abstract class BaseMonitor : IDisposable
     {
-        protected FFACE _fface;
-        protected object _lock = new object();
-        protected Timer m_timer = new Timer();
+        protected FFACE FFACE;
+        protected object Lock = new object();
+        protected Timer Timer = new Timer();
 
         protected BaseMonitor(FFACE fface)
             : this()
         {
-            _fface = fface;
+            FFACE = fface;
         }
 
         protected BaseMonitor()
         {
-            m_timer.Elapsed += CheckStatus;
-            m_timer.AutoReset = true;
-            m_timer.Interval = 30;
+            Timer.Elapsed += CheckStatus;
+            Timer.AutoReset = true;
+            Timer.Interval = 30;
         }
 
         public bool Enabled
         {
-            get { return m_timer.Enabled; }
-            set { m_timer.Enabled = value; }
+            get { return Timer.Enabled; }
+            set { Timer.Enabled = value; }
         }
 
         public void Dispose()
         {
-            m_timer.Dispose();
+            Timer.Dispose();
         }
 
         public event StatusChanged Changed;
@@ -68,12 +68,12 @@ namespace EasyFarm.FarmingTool
 
         public void Start()
         {
-            m_timer.Start();
+            Timer.Start();
         }
 
         public void Stop()
         {
-            m_timer.Stop();
+            Timer.Stop();
         }
     }
 

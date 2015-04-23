@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 
 using System.Windows.Input;
 using EasyFarm.Classes;
+using EasyFarm.Mvvm;
 using Microsoft.Practices.Prism.Commands;
 
 namespace EasyFarm.ViewModels
@@ -84,11 +85,11 @@ namespace EasyFarm.ViewModels
 
         private void RestoreDefaults()
         {
-            DetectionDistance = Constants.DETECTION_DISTANCE;
-            HeightThreshold = Constants.HEIGHT_THRESHOLD;
-            MeleeDistance = Constants.MELEE_DISTANCE;
-            WanderDistance = Constants.DETECTION_DISTANCE;
-            GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
+            DetectionDistance = Constants.DetectionDistance;
+            HeightThreshold = Constants.HeightThreshold;
+            MeleeDistance = Constants.MeleeDistance;
+            WanderDistance = Constants.DetectionDistance;
+            GlobalCooldown = Constants.GlobalSpellCooldown;
             AppInformer.InformUser("Defaults have been restored.");
         }
     }

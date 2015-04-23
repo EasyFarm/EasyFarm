@@ -17,13 +17,15 @@ namespace EasyFarm.Classes
         /// <param name="positions"></param>
         public BoundingBox(IEnumerable<FFACE.Position> positions)
         {
+            var values = positions.ToArray();
+
             // Generate X Min and Max between all positions. 
-            XMin = positions.Min(position => position.X);
-            XMax = positions.Max(position => position.X);
+            XMin = values.Min(position => position.X);
+            XMax = values.Max(position => position.X);
 
             // Generate Y Min and Max between all positions. 
-            ZMin = positions.Min(position => position.Z);
-            ZMax = positions.Max(position => position.Z);
+            ZMin = values.Min(position => position.Z);
+            ZMax = values.Max(position => position.Z);
         }
 
         /// <summary>

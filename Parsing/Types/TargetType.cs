@@ -28,7 +28,7 @@ namespace Parsing.Types
         Player = 0x0002,
         Party = 0x0004,
         Ally = 0x0008,
-        NPC = 0x0016,
+        Npc = 0x0016,
         Enemy = 0x0032,
         Corpse = 0x0064
     }

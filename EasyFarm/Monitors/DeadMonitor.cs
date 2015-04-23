@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 using System.Timers;
 using FFACETools;
 
-namespace EasyFarm.FarmingTool
+namespace EasyFarm.Monitors
 {
     public class DeadMonitor : BaseMonitor
     {
@@ -29,11 +29,13 @@ namespace EasyFarm.FarmingTool
 
         protected override void CheckStatus(object sender, ElapsedEventArgs e)
         {
-            lock (_lock)
+            lock (Lock)
             {
-                if (_fface.Player.Status.Equals(Status.Dead1 | Status.Dead2))
+                var status = FFACE.Player.Status;
+
+                if (status == Status.Dead1 || status == Status.Dead2)
                 {
-                    OnChanged(new MonitorArgs<Status>(_fface.Player.Status));
+                    OnChanged(new MonitorArgs<Status>(FFACE.Player.Status));
                 }
             }
         }

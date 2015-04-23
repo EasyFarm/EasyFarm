@@ -47,7 +47,7 @@ namespace EasyFarm.Components
         public override bool CheckComponent()
         {
             // Target not null, dead or empty.
-            return (Target != null && !Target.IsDead && Target.ID != 0);
+            return (Target != null && !Target.IsDead && Target.Id != 0);
         }
 
         public override void EnterComponent()

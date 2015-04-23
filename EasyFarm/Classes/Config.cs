@@ -29,7 +29,7 @@ namespace EasyFarm.Classes
     /// </summary>
     public class Config : BindableBase
     {
-        [XmlIgnore] private static Lazy<Config> lazy = new Lazy<Config>(() => new Config());
+        [XmlIgnore] private static Lazy<Config> _lazy = new Lazy<Config>(() => new Config());
 
         /// <summary>
         ///     Used to filter out aggroed mobs.
@@ -50,18 +50,18 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     How far a player should detect a creature.
         /// </summary>
-        public double DetectionDistance = Constants.DETECTION_DISTANCE;
+        public double DetectionDistance = Constants.DetectionDistance;
 
         /// <summary>
         ///     Cast delay before casting next spell
         ///     (stops cannot use ability spam)
         /// </summary>
-        public int GlobalCooldown = Constants.GLOBAL_SPELL_COOLDOWN;
+        public int GlobalCooldown = Constants.GlobalSpellCooldown;
 
         /// <summary>
         ///     How high or low a player should detect a creature.
         /// </summary>
-        public double HeightThreshold = Constants.HEIGHT_THRESHOLD;
+        public double HeightThreshold = Constants.HeightThreshold;
 
         /// <summary>
         ///     The high value to stand up from resting health.
@@ -121,7 +121,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     How close the player should be when attacking a creature.
         /// </summary>
-        public double MeleeDistance = Constants.MELEE_DISTANCE;
+        public double MeleeDistance = Constants.MeleeDistance;
 
         /// <summary>
         ///     Used to filter out party claimed mobs.
@@ -151,7 +151,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     How far to go of the path for a unit.
         /// </summary>
-        public double WanderDistance = Constants.DETECTION_DISTANCE;
+        public double WanderDistance = Constants.DetectionDistance;
 
         /// <summary>
         ///     List of all waypoints that make up the bots path
@@ -185,8 +185,8 @@ namespace EasyFarm.Classes
         [XmlIgnore]
         public static Config Instance
         {
-            get { return lazy.Value; }
-            set { lazy = new Lazy<Config>(() => value); }
+            get { return _lazy.Value; }
+            set { _lazy = new Lazy<Config>(() => value); }
         }
     }
 }

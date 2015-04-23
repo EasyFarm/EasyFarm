@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 using System.Timers;
 using FFACETools;
 
-namespace EasyFarm.FarmingTool
+namespace EasyFarm.Monitors
 {
     public class ZoneMonitor : BaseMonitor
     {
@@ -31,11 +31,11 @@ namespace EasyFarm.FarmingTool
 
         protected override void CheckStatus(object sender, ElapsedEventArgs e)
         {
-            lock (_lock)
+            lock (Lock)
             {
-                var zone = _fface.Player.Zone;
+                var zone = FFACE.Player.Zone;
 
-                if (Zone != zone || _fface.Player.Stats.Str == 0)
+                if (Zone != zone || FFACE.Player.Stats.Str == 0)
                 {
                     OnChanged(new MonitorArgs<Zone>(zone));
                     Zone = zone;

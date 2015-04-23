@@ -30,15 +30,15 @@ namespace ParsingTests
         [TestMethod]
         public void TestCreateAbility()
         {
-            var Retriever = new AbilityService(
+            var retriever = new AbilityService(
                 Path.Combine(Environment.CurrentDirectory, "Resources"));
 
             // Test create ability for all major skill types. 
-            var cure = Retriever.CreateAbility("Cure");
-            var provoke = Retriever.CreateAbility("Provoke");
-            var ragingAxe = Retriever.CreateAbility("Raging Axe");
+            var cure = retriever.CreateAbility("Cure");
+            var provoke = retriever.CreateAbility("Provoke");
+            var ragingAxe = retriever.CreateAbility("Raging Axe");
 
-            Assert.AreEqual(8, cure.MPCost);
+            Assert.AreEqual(8, cure.MpCost);
             Assert.AreEqual(AbilityType.Jobability, provoke.AbilityType);
             Assert.AreEqual(AbilityType.Weaponskill, ragingAxe.AbilityType);
         }

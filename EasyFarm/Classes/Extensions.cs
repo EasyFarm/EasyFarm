@@ -35,7 +35,6 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Returns the objects that repeats the most.
         /// </summary>
-        /// <param name="collection"></param>
         /// <returns></returns>
         public static IEnumerable<T> Repeats<T>(this IEnumerable<T> values)
         {

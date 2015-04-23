@@ -189,22 +189,26 @@
     <Compile Include="Classes\MovementUtils.cs" />
     <Compile Include="Classes\Targeting.cs" />
     <Compile Include="Classes\Wanderer.cs" />
-    <Compile Include="Components\Components\TravelComponent.cs" />
+    <Compile Include="Components\BaseComponent.cs" />
+    <Compile Include="Components\GameEngine.cs" />
+    <Compile Include="Components\MachineComponent.cs" />
+    <Compile Include="Components\RestComponent.cs" />
+    <Compile Include="Components\TravelComponent.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProcessSelectionViewModel.cs" />
+    <Compile Include="ViewModels\BattlesViewModel.cs" />
+    <Compile Include="ViewModels\MasterViewModel.cs" />
+    <Compile Include="ViewModels\ProcessSelectionViewModel.cs" />
     <Compile Include="Classes\TaskTimer.cs" />
-    <Compile Include="Components\Bases\BaseComponent.cs" />
-    <Compile Include="Components\Bases\MachineComponent.cs" />
-    <Compile Include="Components\Bases\MachineContainer.cs" />
-    <Compile Include="Components\Bases\MachineController.cs" />
-    <Compile Include="Components\Components\ApproachComponent.cs" />
-    <Compile Include="Components\Components\AttackContainer.cs" />
-    <Compile Include="Components\Interfaces\IMachineComponent.cs" />
-    <Compile Include="Components\Interfaces\IMachineContainer.cs" />
+    <Compile Include="Components\MachineContainer.cs" />
+    <Compile Include="Components\MachineController.cs" />
+    <Compile Include="Components\ApproachComponent.cs" />
+    <Compile Include="Components\AttackContainer.cs" />
+    <Compile Include="Components\IMachineComponent.cs" />
+    <Compile Include="Components\IMachineContainer.cs" />
     <Compile Include="Classes\BattleAbility.cs" />
     <Compile Include="Classes\Caster.cs" />
     <Compile Include="Classes\Executor.cs" />
@@ -216,7 +220,7 @@
     <Compile Include="Collections\LimitedQueue.cs" />
     <Compile Include="Collections\ThresholdQueue.cs" />
     <Compile Include="Collections\TimeSortedList.cs" />
-    <Compile Include="Components\Containers\SequenceContainer.cs" />
+    <Compile Include="Components\SequenceContainer.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Monitors\BaseMonitor.cs" />
     <Compile Include="Monitors\DeadMonitor.cs" />
@@ -227,12 +231,10 @@
     <Compile Include="Monitors\PlayerMonitor.cs" />
     <Compile Include="Classes\UnitFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Components\Controllers\FiniteStateMachine.cs" />
-    <Compile Include="Components\Controllers\GameEngine.cs" />
-    <Compile Include="Components\Components\HealingComponent.cs" />
-    <Compile Include="Components\Interfaces\IMachineController.cs" />
-    <Compile Include="Components\Components\EndComponent.cs" />
-    <Compile Include="Components\Components\RestComponent.cs" />
+    <Compile Include="Components\FiniteStateMachine.cs" />
+    <Compile Include="Components\HealingComponent.cs" />
+    <Compile Include="Components\IMachineController.cs" />
+    <Compile Include="Components\EndComponent.cs" />
     <Compile Include="Classes\HealingAbility.cs" />
     <Compile Include="Classes\Waypoint.cs" />
     <Compile Include="Classes\Config.cs" />
@@ -240,38 +242,36 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Components\Components\BattleComponent.cs" />
-    <Compile Include="Components\Components\StartComponent.cs" />
-    <Compile Include="Components\Components\PullComponent.cs" />
-    <Compile Include="Components\Components\WeaponSkillComponent.cs" />
+    <Compile Include="Components\BattleComponent.cs" />
+    <Compile Include="Components\StartComponent.cs" />
+    <Compile Include="Components\PullComponent.cs" />
+    <Compile Include="Components\WeaponSkillComponent.cs" />
     <Compile Include="Views\AbilityView.xaml.cs">
       <DependentUpon>AbilityView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BattlesViewModel.cs" />
     <Compile Include="Mvvm\BootStrapper.cs" />
-    <Compile Include="Views\IgnoredViewModel.cs" />
+    <Compile Include="ViewModels\IgnoredViewModel.cs" />
     <Compile Include="Mvvm\Locator.cs" />
     <Compile Include="Logging\LogSinkExtensions.cs" />
-    <Compile Include="Views\LogViewModel.cs" />
+    <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="Mvvm\MainModule.cs" />
-    <Compile Include="Views\MainViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MasterViewModel.cs" />
     <Compile Include="Views\BattleSettingsView.xaml.cs">
       <DependentUpon>BattleSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BattleSettingsViewModel.cs" />
+    <Compile Include="ViewModels\BattleSettingsViewModel.cs" />
     <Compile Include="Views\ProcessSelectionView.xaml.cs">
       <DependentUpon>ProcessSelectionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Logging\StringSink.cs" />
-    <Compile Include="Views\RestingViewModel.cs" />
-    <Compile Include="Views\RoutesViewModel.cs" />
+    <Compile Include="ViewModels\RestingViewModel.cs" />
+    <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="Mvvm\StatusBarUpdateEvent.cs" />
-    <Compile Include="Views\TargetsViewModel.cs" />
+    <Compile Include="ViewModels\TargetsViewModel.cs" />
     <Compile Include="Mvvm\ViewModelAttribute.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Views\AbilitySelectionBox.xaml.cs">
@@ -279,12 +279,6 @@
     </Compile>
     <Compile Include="Views\BattlesView.xaml.cs">
       <DependentUpon>BattlesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\frmStartup.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\frmStartup.designer.cs">
-      <DependentUpon>frmStartup.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IgnoredView.xaml.cs">
       <DependentUpon>IgnoredView.xaml</DependentUpon>
@@ -314,7 +308,7 @@
     <Compile Include="Classes\Serialization.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\UnitService.cs" />
-    <Compile Include="Views\TreeItemViewModel.cs" />
+    <Compile Include="ViewModels\TreeItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

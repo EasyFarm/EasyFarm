@@ -22,7 +22,7 @@ namespace EasyFarm.Components
 {
     public abstract class MachineContainer : MachineComponent, IMachineContainer
     {
-        public MachineContainer()
+        protected MachineContainer()
         {
             Components = new List<MachineComponent>();
         }

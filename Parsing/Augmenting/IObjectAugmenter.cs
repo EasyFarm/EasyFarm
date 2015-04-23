@@ -24,12 +24,12 @@ namespace Parsing.Augmenting
     /// </summary>
     /// <typeparam name="TElement">Element to extract data from. </typeparam>
     /// <typeparam name="TObject">The object to augment with data. </typeparam>
-    public interface IObjectAugmenter<TElement, TObject>
+    public interface IObjectAugmenter<in TElement, in TObject>
     {
         /// <summary>
         ///     Determines whether we can extract data from the object.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="element"></param>
         /// <returns></returns>
         bool CanAugment(TElement element);
 
@@ -37,6 +37,7 @@ namespace Parsing.Augmenting
         ///     Assigns the element [T] to a field in [R].
         /// </summary>
         /// <param name="element"></param>
+        /// <param name="obj"></param>
         /// <returns></returns>
         void Augment(TElement element, TObject obj);
     }

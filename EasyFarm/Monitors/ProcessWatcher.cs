@@ -23,7 +23,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Timers;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.Monitors
 {
     public class ProcessEventArgs : EventArgs
     {
@@ -44,16 +44,16 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Internal timer to check process updates.
         /// </summary>
-        protected Timer m_timer = new Timer();
+        protected Timer Timer = new Timer();
 
         public ProcessWatcher(string processName)
         {
             Processes = new List<Process>();
             Mutex = new object();
             ProcessName = processName;
-            m_timer.Elapsed += CheckProcesses;
-            m_timer.AutoReset = true;
-            m_timer.Interval = 30;
+            Timer.Elapsed += CheckProcesses;
+            Timer.AutoReset = true;
+            Timer.Interval = 30;
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace EasyFarm.Classes
 
         public void Dispose()
         {
-            m_timer.Dispose();
+            Timer.Dispose();
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace EasyFarm.Classes
                     : Process.GetProcessesByName(ProcessName)).ToList();
 
                 // Get a list of processes that are not contained in "Processes".
-                plist = plist.Where(x => !Processes.Any(y => y.Id == x.Id)).ToList();
+                plist = plist.Where(x => Processes.All(y => y.Id != x.Id)).ToList();
 
                 // Fire the process entry event for new processes that 
                 // have started. 
@@ -145,12 +145,12 @@ namespace EasyFarm.Classes
 
         public void Start()
         {
-            m_timer.Start();
+            Timer.Start();
         }
 
         public void Stop()
         {
-            m_timer.Stop();
+            Timer.Stop();
         }
     }
 }

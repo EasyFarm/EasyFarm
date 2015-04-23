@@ -35,7 +35,7 @@ namespace EasyFarm.Classes
         /// <param name="fface"></param>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public static bool PCFilter(FFACE fface, Unit unit)
+        public static bool PcFilter(FFACE fface, Unit unit)
         {
             if (fface == null) throw new ArgumentNullException("fface");
             if (unit == null) throw new ArgumentNullException("unit");
@@ -44,7 +44,7 @@ namespace EasyFarm.Classes
             if (!unit.IsActive) return false;
 
             // Type is not mob 
-            if (!unit.NPCType.Equals(NPCType.PC)) return false;
+            if (!unit.NpcType.Equals(NPCType.PC)) return false;
 
             // PC is out of range
             if (unit.Distance >= 50) return false;
@@ -70,6 +70,7 @@ namespace EasyFarm.Classes
         ///     are not on the target's list or
         /// </summary>
         /// <param name="fface"></param>
+        /// <param name="mob"></param>
         /// <returns></returns>
         public static bool MobFilter(FFACE fface, Unit mob)
         {
@@ -89,7 +90,7 @@ namespace EasyFarm.Classes
             if (!mob.IsRendered) return false;
 
             // Type is not mob 
-            if (!mob.NPCType.Equals(NPCType.Mob)) return false;
+            if (!mob.NpcType.Equals(NPCType.Mob)) return false;
 
             // Mob is out of range
             if (!(mob.Distance < Config.Instance.DetectionDistance)) return false;
@@ -138,10 +139,7 @@ namespace EasyFarm.Classes
             if (mob.IsClaimed && Config.Instance.ClaimedFilter)
             {
                 // Kill creature if claim is checked. 
-                if (fface != null) return mob.ClaimedID != fface.PartyMember[0].ServerID;
-
-                // For Testing Purposes. 
-                if (fface == null) return true;
+                return mob.ClaimedId != fface.PartyMember[0].ServerID;
             }
 
             // True for all mobs that are not on ignore / target lists
@@ -159,6 +157,7 @@ namespace EasyFarm.Classes
         /// </summary>
         /// <param name="input"></param>
         /// <param name="patterns"></param>
+        /// <param name="options"></param>
         /// <returns></returns>
         private static bool MatchAny(string input, IList<string> patterns, RegexOptions options)
         {

@@ -28,7 +28,7 @@ namespace EasyFarm.Classes
             // Note: always succeeds since target.ID will be overriden. 
             if (TargetByMemory(fface, unit)) return true;
 
-            return fface.Target.ID == unit.ID;
+            return fface.Target.ID == unit.Id;
         }
 
         /// <summary>
@@ -46,15 +46,15 @@ namespace EasyFarm.Classes
             if (unit == null) throw new ArgumentNullException("unit");
 
             // Set target in memory. 
-            fface.Target.SetNPCTarget(unit.ID);
+            fface.Target.SetNPCTarget(unit.Id);
 
             // Face the target. 
-            fface.Navigator.FaceHeading(unit.ID);
+            fface.Navigator.FaceHeading(unit.Id);
 
             // Place cursor upon target. 
             fface.Windower.SendString("/ta <t>");
 
-            return fface.Target.ID == unit.ID;
+            return fface.Target.ID == unit.Id;
         }
 
         /// <summary>
@@ -63,6 +63,7 @@ namespace EasyFarm.Classes
         /// </summary>
         /// <param name="fface"></param>
         /// <param name="unit"></param>
+        /// <param name="attemptCount"></param>
         /// <returns></returns>
         public static bool TargetByTab(FFACE fface, Unit unit, int attemptCount)
         {
@@ -79,13 +80,13 @@ namespace EasyFarm.Classes
 
             // Attempt to tab to target allowing max ten attempts. 
             var count = 0;
-            while (fface.Target.ID != unit.ID && count++ < attemptCount)
+            while (fface.Target.ID != unit.Id && count++ < attemptCount)
             {
                 fface.Windower.SendKeyPress(KeyCode.TabKey);
                 Thread.Sleep(30);
             }
 
-            return fface.Target.ID == unit.ID;
+            return fface.Target.ID == unit.Id;
         }
     }
 }

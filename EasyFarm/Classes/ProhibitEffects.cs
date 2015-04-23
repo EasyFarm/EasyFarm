@@ -29,7 +29,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Effects that prevent casting.
         /// </summary>
-        public static IEnumerable<StatusEffect> PROHIBIT_EFFECTS_SPELL
+        public static IEnumerable<StatusEffect> ProhibitEffectsSpell
         {
             get
             {
@@ -37,28 +37,28 @@ namespace EasyFarm.Classes
                 {
                     StatusEffect.Silence,
                     StatusEffect.Mute
-                }.Concat(PROHIBIT_EFFECTS_CONTROL);
+                }.Concat(ProhibitEffectsControl);
             }
         }
 
         /// <summary>
         ///     Effects that prevent ability usage.
         /// </summary>
-        public static IEnumerable<StatusEffect> PROHIBIT_EFFECTS_ABILITY
+        public static IEnumerable<StatusEffect> ProhibitEffectsAbility
         {
             get
             {
                 return new List<StatusEffect>
                 {
                     StatusEffect.Amnesia
-                }.Concat(PROHIBIT_EFFECTS_CONTROL);
+                }.Concat(ProhibitEffectsControl);
             }
         }
 
         /// <summary>
         ///     Effects that prevent player action.
         /// </summary>
-        public static IEnumerable<StatusEffect> PROHIBIT_EFFECTS_CONTROL
+        public static IEnumerable<StatusEffect> ProhibitEffectsControl
         {
             get
             {
@@ -80,21 +80,21 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Effects that prevent player action.
         /// </summary>
-        public static IEnumerable<StatusEffect> PROHIBIT_EFFECTS_MOVEMENT
+        public static IEnumerable<StatusEffect> ProhibitEffectsMovement
         {
             get
             {
                 return new List<StatusEffect>
                 {
                     StatusEffect.Bind
-                }.Concat(PROHIBIT_EFFECTS_CONTROL);
+                }.Concat(ProhibitEffectsControl);
             }
         }
 
         /// <summary>
         ///     Effects that prevent resting or recovering hp / mp.
         /// </summary>
-        public static IEnumerable<StatusEffect> PROHIBIT_EFFECTS_DOTS
+        public static IEnumerable<StatusEffect> ProhibitEffectsDots
         {
             get
             {

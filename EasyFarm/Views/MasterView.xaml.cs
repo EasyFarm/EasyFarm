@@ -16,12 +16,11 @@ You should have received a copy of the GNU General Public License
 */ /////////////////////////////////////////////////////////////////// 
 
 using EasyFarm.ViewModels;
-using MahApps.Metro.Controls;
 
 namespace EasyFarm.Views
 {
     // Members and Constructors
-    public partial class MasterView : MetroWindow
+    public partial class MasterView
     {
         public static MasterView View;
 

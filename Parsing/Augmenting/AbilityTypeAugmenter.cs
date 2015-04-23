@@ -30,16 +30,16 @@ namespace Parsing.Augmenting
             base(attributeName, variableName)
         {
             // Create mappings from ffxi command to AbilityType. 
-            _mappers.Add(new ObjectMapper<string, AbilityType>("/jobability", AbilityType.Jobability));
-            _mappers.Add(new ObjectMapper<string, AbilityType>("/echo", AbilityType.Echo));
-            _mappers.Add(new ObjectMapper<string, AbilityType>("/magic", AbilityType.Magic));
-            _mappers.Add(new ObjectMapper<string, AbilityType>("/monsterskill", AbilityType.Monsterskill));
-            _mappers.Add(new ObjectMapper<string, AbilityType>("/ninjutsu", AbilityType.Ninjutsu));
-            _mappers.Add(new ObjectMapper<string, AbilityType>("/pet", AbilityType.Pet));
-            _mappers.Add(new ObjectMapper<string, AbilityType>("/range", AbilityType.Range));
-            _mappers.Add(new ObjectMapper<string, AbilityType>("/song", AbilityType.Song));
-            _mappers.Add(new ObjectMapper<string, AbilityType>("/trigger", AbilityType.Trigger));
-            _mappers.Add(new ObjectMapper<string, AbilityType>("/weaponskill", AbilityType.Weaponskill));
+            Mappers.Add(new ObjectMapper<string, AbilityType>("/jobability", AbilityType.Jobability));
+            Mappers.Add(new ObjectMapper<string, AbilityType>("/echo", AbilityType.Echo));
+            Mappers.Add(new ObjectMapper<string, AbilityType>("/magic", AbilityType.Magic));
+            Mappers.Add(new ObjectMapper<string, AbilityType>("/monsterskill", AbilityType.Monsterskill));
+            Mappers.Add(new ObjectMapper<string, AbilityType>("/ninjutsu", AbilityType.Ninjutsu));
+            Mappers.Add(new ObjectMapper<string, AbilityType>("/pet", AbilityType.Pet));
+            Mappers.Add(new ObjectMapper<string, AbilityType>("/range", AbilityType.Range));
+            Mappers.Add(new ObjectMapper<string, AbilityType>("/song", AbilityType.Song));
+            Mappers.Add(new ObjectMapper<string, AbilityType>("/trigger", AbilityType.Trigger));
+            Mappers.Add(new ObjectMapper<string, AbilityType>("/weaponskill", AbilityType.Weaponskill));
         }
     }
 }

@@ -22,7 +22,7 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.ServiceLocation;
 
-namespace EasyFarm.Prism
+namespace EasyFarm.Mvvm
 {
     public class BootStrapper : UnityBootstrapper
     {

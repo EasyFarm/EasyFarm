@@ -26,21 +26,21 @@ namespace Parsing.Mapping
     /// </summary>
     /// <typeparam name="TType"></typeparam>
     public abstract class BaseEnumMapper<TType> :
-        EnumClassUtils<TType>,
+        EnumClassUtils,
         IObjectMapper<string, TType>
     {
         /// <summary>
         ///     The internal list of mappers.
         /// </summary>
-        protected IEnumerable<IObjectMapper<string, TType>> _mappers;
+        protected IEnumerable<IObjectMapper<string, TType>> Mappers;
 
         /// <summary>
         ///     Save a list of mappers to compare values against.
         /// </summary>
         /// <param name="mappers"></param>
-        public BaseEnumMapper(IEnumerable<IObjectMapper<string, TType>> mappers)
+        protected BaseEnumMapper(IEnumerable<IObjectMapper<string, TType>> mappers)
         {
-            _mappers = mappers;
+            Mappers = mappers;
         }
 
         /// <summary>

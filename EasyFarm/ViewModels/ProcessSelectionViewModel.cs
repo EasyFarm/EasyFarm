@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
-using EasyFarm.Classes;
+using EasyFarm.Monitors;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 
@@ -13,7 +13,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     The default name of the retail client's executable.
         /// </summary>
-        private const string PROCESS_NAME = "pol";
+        private const string ClientName = "pol";
 
         /// <summary>
         ///     Monitors processes entering and leaving the system.
@@ -28,7 +28,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     The name of the process to search for.
         /// </summary>
-        public string ProcessName = PROCESS_NAME;
+        public string ProcessName = ClientName;
 
         public ProcessSelectionViewModel()
         {
@@ -88,14 +88,14 @@ namespace EasyFarm.ViewModels
         {
             // Toggle the process name. The process watcher knows that 
             // the empty string means locate all processes. 
-            if (ProcessName.Equals(PROCESS_NAME))
+            if (ProcessName.Equals(ClientName))
             {
                 ProcessName = string.Empty;
                 ToggleButtonHeader = "POL Only";
             }
             else
             {
-                ProcessName = PROCESS_NAME;
+                ProcessName = ClientName;
                 ToggleButtonHeader = "Show All";
             }
 
@@ -128,9 +128,13 @@ namespace EasyFarm.ViewModels
             // Remove the process from our sessions. 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var process = (e as ProcessEventArgs).Process;
-                if (process == null) return;
-                Sessions.Remove(process);
+                var processEventArgs = e as ProcessEventArgs;
+                if (processEventArgs != null)
+                {
+                    var process = processEventArgs.Process;
+                    if (process == null) return;
+                    Sessions.Remove(process);
+                }
             });
         }
 
@@ -150,9 +154,13 @@ namespace EasyFarm.ViewModels
             // Add the process to our sessions. 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var process = (e as ProcessEventArgs).Process;
-                if (process == null) return;
-                Sessions.Add(process);
+                var processEventArgs = e as ProcessEventArgs;
+                if (processEventArgs != null)
+                {
+                    var process = processEventArgs.Process;
+                    if (process == null) return;
+                    Sessions.Add(process);
+                }
             });
         }
 

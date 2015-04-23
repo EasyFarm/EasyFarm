@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:vm="clr-namespace:EasyFarm.ViewModels"
         mc:Ignorable="d"
         Height="300"
         Width="300">
@@ -23,7 +22,7 @@
 
         <!-- A view for currently running game sessions. -->
         <GroupBox Header="Please select your character">
-            <ListView Name="lsvGameSessons"
+            <ListView Name="LsvGameSessons"
                       ItemsSource="{Binding Sessions}"
                       SelectedItem="{Binding SelectedProcess}">
                 <ListView.View>

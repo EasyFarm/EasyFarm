@@ -28,7 +28,7 @@ namespace Parsing.Augmenting
         /// <summary>
         ///     A list of mappers that map strings to other objects.
         /// </summary>
-        protected List<IObjectMapper<string, TType>> _mappers =
+        protected List<IObjectMapper<string, TType>> Mappers =
             new List<IObjectMapper<string, TType>>();
 
         public SpecializedTypeAugmenter(string attributeName, string variableName) :
@@ -37,13 +37,13 @@ namespace Parsing.Augmenting
             // Our default implementation for the specialized mapper that handles the 
             // flags situation for enums where an enum is a combination of multiple
             // states. 
-            _mapper = new MultiValueEnumMapper<TType>(_mappers);
+            Mapper = new MultiValueEnumMapper<TType>(Mappers);
         }
 
         /// <summary>
         ///     Maps a string to a list of potential objects.
         /// </summary>
-        public IObjectMapper<string, TType> _mapper { get; set; }
+        public IObjectMapper<string, TType> Mapper { get; set; }
 
         /// <summary>
         ///     Augment the object with the extracted and converted
@@ -57,16 +57,16 @@ namespace Parsing.Augmenting
             if (!CanAugment(element)) return;
 
             // Can't extract the data. 
-            if (!_extractor.IsExtractable(element)) return;
+            if (!Extractor.IsExtractable(element)) return;
 
             // Extract the data. 
-            var value = _extractor.ExtractData(element);
+            var value = Extractor.ExtractData(element);
 
             // Get all AbilityType mappings for that command. 
-            if (_mapper.IsMapped(value))
+            if (Mapper.IsMapped(value))
             {
                 // Get the first mapped object. 
-                var mapped = _mapper.GetMapping(value);
+                var mapped = Mapper.GetMapping(value);
 
                 // Augment the ability with the data. 
                 AugmentObject(ability, mapped);

@@ -27,7 +27,7 @@ namespace Parsing.Mapping
     /// Source: http://geekswithblogs.net/BlackRabbitCoder/archive/2010/12/09/c.net-little-wonders-fun-with-enum-methods.aspx
     /// Author: Julien Lebosquain 
     /// Source: http://stackoverflow.com/questions/79126/create-generic-method-constraining-t-to-an-enum
-    public abstract class EnumClassUtils<TClass>
+    public abstract class EnumClassUtils
     {
         /// <summary>
         ///     Combine generic enums together.

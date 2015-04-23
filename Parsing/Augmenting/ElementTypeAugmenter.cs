@@ -26,19 +26,19 @@ namespace Parsing.Augmenting
         public ElementTypeAugmenter(string attributeName, string variableName) :
             base(attributeName, variableName)
         {
-            _mappers.Add(new ObjectMapper<string, ElementType>("All", ElementType.All));
-            _mappers.Add(new ObjectMapper<string, ElementType>("Any", ElementType.Any));
-            _mappers.Add(new ObjectMapper<string, ElementType>("Dark", ElementType.Dark));
-            _mappers.Add(new ObjectMapper<string, ElementType>("Earth", ElementType.Earth));
-            _mappers.Add(new ObjectMapper<string, ElementType>("Fire", ElementType.Fire));
-            _mappers.Add(new ObjectMapper<string, ElementType>("Ice", ElementType.Ice));
-            _mappers.Add(new ObjectMapper<string, ElementType>("Light", ElementType.Light));
-            _mappers.Add(new ObjectMapper<string, ElementType>("None", ElementType.None));
-            _mappers.Add(new ObjectMapper<string, ElementType>("NonElemental", ElementType.NonElemental));
-            _mappers.Add(new ObjectMapper<string, ElementType>("Thunder", ElementType.Thunder));
-            _mappers.Add(new ObjectMapper<string, ElementType>("Trigger", ElementType.trigger));
-            _mappers.Add(new ObjectMapper<string, ElementType>("Water", ElementType.Water));
-            _mappers.Add(new ObjectMapper<string, ElementType>("Wind", ElementType.Wind));
+            Mappers.Add(new ObjectMapper<string, ElementType>("All", ElementType.All));
+            Mappers.Add(new ObjectMapper<string, ElementType>("Any", ElementType.Any));
+            Mappers.Add(new ObjectMapper<string, ElementType>("Dark", ElementType.Dark));
+            Mappers.Add(new ObjectMapper<string, ElementType>("Earth", ElementType.Earth));
+            Mappers.Add(new ObjectMapper<string, ElementType>("Fire", ElementType.Fire));
+            Mappers.Add(new ObjectMapper<string, ElementType>("Ice", ElementType.Ice));
+            Mappers.Add(new ObjectMapper<string, ElementType>("Light", ElementType.Light));
+            Mappers.Add(new ObjectMapper<string, ElementType>("None", ElementType.None));
+            Mappers.Add(new ObjectMapper<string, ElementType>("NonElemental", ElementType.NonElemental));
+            Mappers.Add(new ObjectMapper<string, ElementType>("Thunder", ElementType.Thunder));
+            Mappers.Add(new ObjectMapper<string, ElementType>("Trigger", ElementType.Trigger));
+            Mappers.Add(new ObjectMapper<string, ElementType>("Water", ElementType.Water));
+            Mappers.Add(new ObjectMapper<string, ElementType>("Wind", ElementType.Wind));
         }
     }
 }

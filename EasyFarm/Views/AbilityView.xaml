@@ -1,8 +1,6 @@
 ﻿<UserControl x:Class="EasyFarm.Views.AbilityView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -10,13 +8,13 @@
     
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem x:Name="mniGeneral"
+            <MenuItem x:Name="MniGeneral"
                       Header="General Options..."
                       IsCheckable="True" />            
-            <MenuItem x:Name="mniPlayer"
+            <MenuItem x:Name="MniPlayer"
                       Header="Player Options..."
                       IsCheckable="True" />
-            <MenuItem x:Name="mniEnemy"
+            <MenuItem x:Name="MniEnemy"
                       Header="Enemy Options..."
                       IsCheckable="True" />
         </ContextMenu>
@@ -52,6 +50,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
                 <!-- Name-->
@@ -60,7 +59,7 @@
                           ToolTip="Sets the move as active. "
                           Margin="5" />
 
-                <Grid Grid.Column="1">
+                <Grid Grid.Row="0" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="3*" />
@@ -113,8 +112,8 @@
         <!--################################################################-->
         <GroupBox Header="General"
                   Grid.Row="1"
-                  Grid.ColumnSpan="2"
-                  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=mniGeneral}">
+                  Grid.ColumnSpan="2" Grid.Column="0"
+                  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=MniGeneral}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -180,8 +179,8 @@
         <!--################################################################-->
         <GroupBox Header="Player"
                   Grid.Row="2"
-                  Grid.ColumnSpan="2"
-                  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=mniPlayer}">
+                  Grid.ColumnSpan="2" Grid.Column="0"
+                  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=MniPlayer}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -213,11 +212,11 @@
                 <!-- Target's Health -->
                 <Label Content="Health"
                        Margin="5"
-                       Grid.Row="3" />
+                       Grid.Row="3" Grid.Column="0" />
 
                 <controls:RangeSlider Grid.Row="3"
                                       Grid.Column="1"
-                                      Name="playerHealthSlider"
+                                      Name="PlayerHealthSlider"
                                       Margin="5"
                                       Minimum="0"
                                       Maximum="100"
@@ -232,8 +231,8 @@
         <!--################################################################-->
         <GroupBox  Header="Enemy"
                    Grid.Row="3"
-                   Grid.ColumnSpan="2"
-                   Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=mniEnemy}">
+                   Grid.ColumnSpan="2" Grid.Column="0"
+                   Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=MniEnemy}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -260,9 +259,9 @@
 
                 <!-- Target's Health -->
                 <Label Content="Health"
-                       Grid.Row="1"
+                       Grid.Row="1" Grid.Column="0"
                        Margin="5" />
-                <controls:RangeSlider Name="targetHealthSlider"
+                <controls:RangeSlider Name="TargetHealthSlider"
                                       Margin="5"
                                       Maximum="100"
                                       Minimum="0"

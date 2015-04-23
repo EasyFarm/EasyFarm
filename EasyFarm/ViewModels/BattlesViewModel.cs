@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using EasyFarm.Classes;
+using EasyFarm.Mvvm;
 using Microsoft.Practices.Prism.Commands;
 
 namespace EasyFarm.ViewModels
@@ -77,14 +78,12 @@ namespace EasyFarm.ViewModels
         private BattleList FindListContainingAbility(BattleAbility ability)
         {
             return Config.Instance.BattleLists
-                .Where(x => x.Actions.Contains(ability))
-                .FirstOrDefault();
+                .FirstOrDefault(x => x.Actions.Contains(ability));
         }
 
         /// <summary>
         ///     Add an move to the currently selected list.
         /// </summary>
-        /// <param name="obj"></param>
         private void AddAction()
         {
             // Check to see if an ability is selected. If so, find the list with which to add the 
@@ -106,7 +105,6 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Remove an move from the currently selected list.
         /// </summary>
-        /// <param name="obj"></param>
         private void DeleteAction()
         {
             // Check if the user has selected an ability, do nothing if not. 

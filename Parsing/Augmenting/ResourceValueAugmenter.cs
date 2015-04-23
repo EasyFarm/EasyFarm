@@ -27,42 +27,41 @@ namespace Parsing.Augmenting
     /// <summary>
     ///     Augment an TObject instance with data TData extracted from TElement.
     /// </summary>
-    /// <typeparam name="TElement">Element to extract data from. </typeparam>
     /// <typeparam name="TObject">Object with which to augment data</typeparam>
-    /// <typeparam name="TData">The data extracted. </typeparam>
+    /// <typeparam name="TType"></typeparam>
     public class ResourceValueAugmenter<TObject, TType> : IObjectAugmenter<XElement, TObject>
     {
         /// <summary>
         ///     Name of the XElement attribute to extract from.
         /// </summary>
-        protected string _attributeName;
+        protected string AttributeName;
 
         /// <summary>
         ///     The name of the variable to augment on TObject.
         /// </summary>
-        protected string _variableName;
+        protected string VariableName;
 
         public ResourceValueAugmenter(string attributeName, string variableName)
         {
-            _attributeName = attributeName;
-            _variableName = variableName;
-            _extractor = new ResourceValueExtractor(attributeName);
-            _converter = new ResourceValueConverter<string>();
+            AttributeName = attributeName;
+            VariableName = variableName;
+            Extractor = new ResourceValueExtractor(attributeName);
+            Converter = new ResourceValueConverter<string>();
         }
 
         /// <summary>
         ///     A data extractor used to extract data from TObject.
         /// </summary>
-        protected ResourceValueExtractor _extractor { get; set; }
+        protected ResourceValueExtractor Extractor { get; set; }
 
         /// <summary>
         ///     Converts data to the right format.
         /// </summary>
-        protected ResourceValueConverter<string> _converter { get; set; }
+        protected ResourceValueConverter<string> Converter { get; set; }
 
         public virtual bool CanAugment(XElement element)
         {
-            return _extractor.IsExtractable(element);
+            return Extractor.IsExtractable(element);
         }
 
         public virtual void Augment(XElement element, TObject obj)
@@ -70,15 +69,13 @@ namespace Parsing.Augmenting
             if (CanAugment(element))
             {
                 // Extract the value from the data. 
-                var value = _extractor.ExtractData(element);
-
-                // Convert the data to the new format. 
-                var data = default(TType);
+                var value = Extractor.ExtractData(element);
 
                 // Convert the data only if it's convertable. 
-                if (_converter.CanConvert(value))
+                if (Converter.CanConvert(value))
                 {
-                    data = _converter.ConvertObject<TType>(value);
+                    // Convert the data to the new format. 
+                    var data = Converter.ConvertObject<TType>(value);
                     AugmentObject(obj, data);
                 }
                 else
@@ -100,10 +97,10 @@ namespace Parsing.Augmenting
             var retrievalConditions = BindingFlags.Instance | BindingFlags.Public;
 
             // Try to get the property with the given name. 
-            var property = obj.GetType().GetProperty(_variableName, retrievalConditions);
+            var property = obj.GetType().GetProperty(VariableName, retrievalConditions);
 
             // Try to get the field with the given name. 
-            var field = obj.GetType().GetField(_variableName, retrievalConditions);
+            var field = obj.GetType().GetField(VariableName, retrievalConditions);
 
             // Set the value to the ability object. 
             if (property != null)
@@ -118,7 +115,7 @@ namespace Parsing.Augmenting
             {
                 // Failed to find the variable on the given object
                 throw new ArgumentException(
-                    string.Format("Failed to find {0} on the object.", _variableName)
+                    string.Format("Failed to find {0} on the object.", VariableName)
                     );
             }
         }

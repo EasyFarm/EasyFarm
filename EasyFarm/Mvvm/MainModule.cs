@@ -20,21 +20,21 @@ using EasyFarm.Views;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 
-namespace EasyFarm.Prism
+namespace EasyFarm.Mvvm
 {
     public class MainModule : IModule
     {
-        private readonly IRegionViewRegistry regionViewRegistry;
+        private readonly IRegionViewRegistry _regionViewRegistry;
 
         public MainModule(IRegionViewRegistry regionViewRegistry)
         {
-            this.regionViewRegistry = regionViewRegistry;
+            _regionViewRegistry = regionViewRegistry;
         }
 
         public void Initialize()
         {
-            regionViewRegistry.RegisterViewWithRegion("MainRegion", typeof (MainView));
-            regionViewRegistry.RegisterViewWithRegion("MainRegion", typeof (SettingsView));
+            _regionViewRegistry.RegisterViewWithRegion("MainRegion", typeof (MainView));
+            _regionViewRegistry.RegisterViewWithRegion("MainRegion", typeof (SettingsView));
         }
     }
 }

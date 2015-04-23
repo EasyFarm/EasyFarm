@@ -22,22 +22,22 @@ namespace Parsing.Extraction
 {
     public class ResourceValueExtractor : IDataExtractor<XElement, string>
     {
-        protected string _attributeName;
+        protected string AttributeName;
 
         public ResourceValueExtractor(string attributeName)
         {
-            _attributeName = attributeName;
+            AttributeName = attributeName;
         }
 
         public bool IsExtractable(XElement data)
         {
             if (!data.HasAttributes) return false;
-            return data.Attribute(_attributeName) != null;
+            return data.Attribute(AttributeName) != null;
         }
 
         public string ExtractData(XElement data)
         {
-            return data.Attribute(_attributeName).Value;
+            return data.Attribute(AttributeName).Value;
         }
     }
 }

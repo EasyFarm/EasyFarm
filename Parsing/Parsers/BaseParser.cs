@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace Parsing.Parsers
@@ -9,7 +10,7 @@ namespace Parsing.Parsers
         /// <summary>
         ///     A collection of resources to search for values.
         /// </summary>
-        protected readonly IEnumerable<XElement> _resources;
+        protected readonly IEnumerable<XElement> Resources;
 
         /// <summary>
         ///     Retrieve all resources within the given directory.
@@ -18,7 +19,7 @@ namespace Parsing.Parsers
         protected BaseParser(string resourcesPath)
         {
             // Read in all resources in the resourcePath. 
-            _resources = LoadResources(resourcesPath);
+            Resources = LoadResources(resourcesPath);
         }
 
         /// <summary>
@@ -30,7 +31,6 @@ namespace Parsing.Parsers
         private IEnumerable<XElement> LoadResources(string path)
         {
             // List to store all read resources. 
-            var XmlDocuments = new List<XElement>();
 
             // Get a list of all resource file names. 
             if (!Directory.Exists(path)) return new List<XElement>();
@@ -38,12 +38,8 @@ namespace Parsing.Parsers
             var resources = Directory.GetFiles(path, "*.xml");
 
             // Load all resource files in the given directory. 
-            foreach (var resource in resources)
-            {
-                XmlDocuments.Add(XElement.Load(resource));
-            }
 
-            return XmlDocuments;
+            return resources.Select(XElement.Load).ToList();
         }
     }
 }

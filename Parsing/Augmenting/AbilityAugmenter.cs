@@ -30,6 +30,7 @@ namespace Parsing.Augmenting
         ///     Store the attribute's name in [_attributeName]
         /// </summary>
         /// <param name="attributeName"></param>
+        /// <param name="variableName"></param>
         public AbilityAugmenter(string attributeName, string variableName)
             : base(attributeName, variableName)
         {

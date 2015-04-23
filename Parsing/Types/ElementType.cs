@@ -37,7 +37,7 @@ namespace Parsing.Types
         Dark = 0x0128,
         NonElemental = 0x0256,
         None = 0x0512,
-        trigger = 0x1024,
+        Trigger = 0x1024,
         Any = 0x2048,
         All = 0x4096
     }

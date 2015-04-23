@@ -25,12 +25,11 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Switches the player to attack mode on the current unit
         /// </summary>
-        /// <param name="unit"></param>
         public static void Engage(FFACE fface)
         {
             if (!fface.Player.Status.Equals(Status.Fighting))
             {
-                fface.Windower.SendString(Constants.ATTACK_TARGET);
+                fface.Windower.SendString(Constants.AttackTarget);
             }
         }
 
@@ -41,7 +40,7 @@ namespace EasyFarm.Classes
         {
             if (fface.Player.Status.Equals(Status.Fighting))
             {
-                fface.Windower.SendString(Constants.ATTACK_OFF);
+                fface.Windower.SendString(Constants.AttackOff);
             }
         }
     }
