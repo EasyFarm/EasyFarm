@@ -1,7 +1,8 @@
 ﻿<UserControl x:Class="EasyFarm.Views.AbilityView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls">
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:local="clr-namespace:EasyFarm.Classes">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
@@ -147,7 +148,7 @@
                                         Grid.Column="1"
                                         Margin="5"
                                         ToolTip="MP Cost for the move."
-                                        Value="{Binding Path=Ability.MPCost}" />
+                                        Value="{Binding Path=Ability.MpCost}" />
 
                 <!-- TP Cost -->
                 <Label Grid.Column="0"
@@ -159,7 +160,7 @@
                                         Grid.Column="1"
                                         Margin="5"
                                         ToolTip="TP Cost for the move. "
-                                        Value="{Binding Path=Ability.TPCost}" />
+                                        Value="{Binding Path=Ability.TpCost}" />
 
                 <!-- Limit Use Per Battle -->
                 <Label Grid.Row="3"

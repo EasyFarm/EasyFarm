@@ -12,7 +12,7 @@
         <TabControl.ItemContainerStyle>
             <Style TargetType="{x:Type TabItem}">
                 <Setter Property="Header"
-                        Value="{Binding VMName}" />
+                        Value="{Binding VmName}" />
             </Style>
         </TabControl.ItemContainerStyle>
         <TabControl.ContentTemplate>

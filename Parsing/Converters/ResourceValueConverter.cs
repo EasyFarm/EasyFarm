@@ -32,9 +32,9 @@ namespace Parsing.Converters
         {
             var typeCode = (Type.GetTypeCode(obj.GetType()));
 
-            return typeCode == TypeCode.Object ||
-                   typeCode == TypeCode.Empty ||
-                   typeCode == TypeCode.DBNull;
+            return typeCode != TypeCode.Object ||
+                   typeCode != TypeCode.Empty ||
+                   typeCode != TypeCode.DBNull;
         }
 
         public TType ConvertObject<TType>(TData obj)

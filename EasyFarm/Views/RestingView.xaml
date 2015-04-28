@@ -24,7 +24,7 @@
             <!--Do we want to rest hp?-->
             <CheckBox Content="HP"
                       VerticalAlignment="Center"
-                      IsChecked="{Binding HPEnabled}" />
+                      IsChecked="{Binding HpEnabled}" />
             <!--When should we sit down?-->
             <Label Grid.Column="1"
                    Margin="5 10"
@@ -33,7 +33,7 @@
             <Slider Grid.Column="2"
                     VerticalAlignment="Center"
                     Maximum="100"
-                    Value="{Binding LowHP}" />
+                    Value="{Binding LowHp}" />
             <!--When should we stand up?-->
             <Label Grid.Column="3"
                    Margin="5 10"
@@ -42,7 +42,7 @@
             <Slider Grid.Column="4"
                     VerticalAlignment="Center"
                     Maximum="100"
-                    Value="{Binding HighHP}" />
+                    Value="{Binding HighHp}" />
         </Grid>
         <!--Controls for resting mp-->
         <Grid Grid.Row="1">
@@ -57,7 +57,7 @@
             <CheckBox Grid.Column="0"
                       Content="MP"
                       VerticalAlignment="Center"
-                      IsChecked="{Binding MPEnabled}" />
+                      IsChecked="{Binding MpEnabled}" />
             <!--When should we sit down?-->
             <Label Grid.Column="1"
                    Margin="5 10"
@@ -66,7 +66,7 @@
             <Slider Grid.Column="2"
                     VerticalAlignment="Center"
                     Maximum="100"
-                    Value="{Binding LowMP}" />
+                    Value="{Binding LowMp}" />
             <!--When should we stand up?-->
             <Label Grid.Column="3"
                    Margin="5 10"
@@ -75,7 +75,7 @@
             <Slider Grid.Column="4"
                     VerticalAlignment="Center"
                     Maximum="100"
-                    Value="{Binding HighMP}" />
+                    Value="{Binding HighMp}" />
         </Grid>
     </Grid>
 </UserControl>

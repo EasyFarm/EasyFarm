@@ -48,16 +48,16 @@ namespace Parsing.Parsers
             _augmenters.Add(new AbilityAugmenter<string>("alias", "Alias"));
             _augmenters.Add(new AbilityAugmenter<double>("casttime", "CastTime"));
             _augmenters.Add(new AbilityAugmenter<string>("element", "Element"));
-            _augmenters.Add(new AbilityAugmenter<int>("id", "ID"));
+            _augmenters.Add(new AbilityAugmenter<int>("id", "Id"));
             _augmenters.Add(new AbilityAugmenter<int>("index", "Index"));
-            _augmenters.Add(new AbilityAugmenter<int>("mpcost", "MPCost"));
+            _augmenters.Add(new AbilityAugmenter<int>("mpcost", "MpCost"));
             _augmenters.Add(new AbilityAugmenter<string>("english", "English"));
             _augmenters.Add(new AbilityAugmenter<string>("japanese", "Japanese"));
             _augmenters.Add(new AbilityAugmenter<string>("prefix", "Prefix"));
             _augmenters.Add(new AbilityAugmenter<double>("recast", "Recast"));
             _augmenters.Add(new AbilityAugmenter<string>("skill", "Skill"));
             _augmenters.Add(new AbilityAugmenter<string>("targets", "Targets"));
-            _augmenters.Add(new AbilityAugmenter<int>("tpcost", "TPCost"));
+            _augmenters.Add(new AbilityAugmenter<int>("tpcost", "TpCost"));
             _augmenters.Add(new AbilityAugmenter<string>("type", "Type"));
 
             // Specialized augmenters. 
