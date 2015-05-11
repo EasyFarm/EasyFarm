@@ -20,6 +20,21 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            
+            <!-- Add border around selected ability. -->
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border Background="WhiteSmoke" BorderBrush="LightGray" BorderThickness="2">
+                                    <ContentPresenter />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </UserControl.Resources>
 
