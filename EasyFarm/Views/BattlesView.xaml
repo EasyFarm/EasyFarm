@@ -80,7 +80,8 @@
                           VerticalScrollBarVisibility="Auto"
                           Margin="5">
                 <ListBox ItemsSource="{Binding ElementName=Master, Path=SelectedValue.Actions}"
-                         ItemContainerStyle="{StaticResource ListBoxItemContainer}">
+                         ItemContainerStyle="{StaticResource ListBoxItemContainer}"
+                          SelectedItem="{Binding SelectedAbility}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <views:AbilityView />
