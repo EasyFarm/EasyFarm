@@ -97,7 +97,7 @@ namespace EasyFarm.Components
                 SetPositionToNearestPoint();
             }
 
-            _fface.Navigator.Goto(Config.Instance.Waypoints[_position].Position, false, IsCancellationRequired);
+            _fface.Navigator.Goto(Config.Instance.Waypoints[_position].Position, false);
             _position++;
         }
 

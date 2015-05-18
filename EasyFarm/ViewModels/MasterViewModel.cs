@@ -17,20 +17,18 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System.Windows;
-using Microsoft.Practices.Prism.Commands;
-using System;
-using System.Windows.Input;
-using System.Linq;
-using EasyFarm.UserSettings;
-using System.Collections.ObjectModel;
+using EasyFarm.Classes;
 using EasyFarm.Logging;
+using EasyFarm.UserSettings;
+using EasyFarm.Views;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
-using EasyFarm.Views;
+using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 using System.Xml.Serialization;
-using Microsoft.Win32;
-using EasyFarm.Classes;
 
 namespace EasyFarm.ViewModels
 {

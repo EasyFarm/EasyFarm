@@ -50,15 +50,6 @@ namespace EasyFarm
             "http://www.ffevo.net/topic/2923-ashita-and-ffacetools-missing-resource-files/";
 
         /// <summary>
-        /// Set up the assembly resolution code to find embedded dll files. 
-        /// Reduces the amount of dll files in the executable's working directory. 
-        /// </summary>
-        public App()
-        {
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
-        }
-
-        /// <summary>
         /// Gets the user's selected FFACE Session and 
         /// starts up the program. 
         /// </summary>
@@ -137,32 +128,6 @@ namespace EasyFarm
         protected override void OnExit(ExitEventArgs e)
         {
             Logger.Write.ApplicationStart("Application exiting");
-        }
-
-        // Thanks to atom0s for assembly embedding code!
-
-        /// <summary>
-        /// Assembly resolve event callback to load embedded libraries.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        private static Assembly CurrentDomainOnAssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            var dllName = args.Name.Contains(",") ? args.Name.Substring(0, args.Name.IndexOf(",", System.StringComparison.InvariantCultureIgnoreCase)) : args.Name.Replace(".dll", "");
-            if (dllName.ToLower().EndsWith(".resources"))
-                return null;
-
-            var fullName = string.Format("EasyFarm.Embedded.{0}.dll", new AssemblyName(args.Name).Name);
-            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fullName))
-            {
-                if (stream == null)
-                    return null;
-
-                var data = new byte[stream.Length];
-                stream.Read(data, 0, (int)stream.Length);
-                return Assembly.Load(data);
-            }
-        }
+        }        
     }
 }

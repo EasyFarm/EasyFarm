@@ -15,7 +15,7 @@
     <controls:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Views/Master/ViewDictionary.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Views/ViewDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </controls:MetroWindow.Resources>
@@ -71,10 +71,10 @@
                           IsCheckable="True" />
                 <MenuItem x:Name="mnuShowSettings"
                           Header="{Binding SettingsHeader}"
-                          Command="{Binding SettingsCommand}"/>
+                          Command="{Binding SettingsCommand}" />
             </MenuItem>
         </Menu>
-        
+
         <ContentControl Grid.Row="1"
                         Grid.ColumnSpan="2"
                         prism:RegionManager.RegionName="MainRegion" />

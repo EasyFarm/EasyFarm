@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EasyFarm.UserSettings;
-using EasyFarm.Views.Settings;
+using EasyFarm.Views;
+using EasyFarm.ViewModels;
 
 namespace EasyFarmTests
 {

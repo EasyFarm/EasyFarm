@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EasyFarm.Views.Settings
+namespace EasyFarm.ViewModels
 {
     public class BattleSettingsViewModel : ViewModelBase
     {

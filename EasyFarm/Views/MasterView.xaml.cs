@@ -35,7 +35,14 @@ namespace EasyFarm.Views
         public MasterView()
         {
             InitializeComponent();
-            this.DataContext = new MasterViewModel();            
+            try
+            {
+                this.DataContext = new MasterViewModel();            
+            }
+            catch (Exception)
+            {                
+                throw;
+            }            
 
             if (File.Exists(TRAY_ICON_FILE_NAME))
             {

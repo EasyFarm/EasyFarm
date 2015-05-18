@@ -17,35 +17,20 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using System;
-using System.Windows;
-
+using EasyFarm.ViewModels;
+using System.Windows.Controls;
 
 namespace EasyFarm.Views
 {
     /// <summary>
-    /// Interaction logic for AbilitySelectionBox.xaml
+    /// Interaction logic for UnitFilteringView.xaml
     /// </summary>
-    public partial class AbilitySelectionBox : Window
+    public partial class SettingsView
     {
-        public Ability SelectedAbility { get; set; }
-
-        public AbilityService Retriever { get; set; }
-
-        public AbilitySelectionBox(String name)
+        public SettingsView()
         {
             InitializeComponent();
-            this.Retriever = new AbilityService();
-            this.CompleteSelectionButton.Click += CompleteSelectionButton_Click;
-            this.AbilityListBox.ItemsSource = Retriever.GetAbilitiesWithName(name);
-            this.ShowDialog();
-        }
-
-        void CompleteSelectionButton_Click(object sender, RoutedEventArgs e)
-        {
-            SelectedAbility = AbilityListBox.SelectedValue as Ability;
-            this.Close();
+            this.DataContext = new SettingsViewModel();
         }
     }
 }

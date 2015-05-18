@@ -126,9 +126,9 @@
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MahApps.Metro">
-      <HintPath>..\packages\MahApps.Metro.0.14.0.0\lib\net45\MahApps.Metro.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MahApps.Metro, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.SemanticLogging">
@@ -188,9 +188,8 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity">
-      <HintPath>..\packages\MahApps.Metro.0.14.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.XML" />
@@ -254,39 +253,39 @@
     <Compile Include="Components\Components\StartComponent.cs" />
     <Compile Include="Components\Components\PullComponent.cs" />
     <Compile Include="Components\Components\WeaponSkillComponent.cs" />
-    <Compile Include="Views\Main\BattlesViewModel.cs" />
+    <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="Mvvm\BootStrapper.cs" />
-    <Compile Include="Views\Main\HealingViewModel.cs" />
-    <Compile Include="Views\Main\IgnoredViewModel.cs" />
+    <Compile Include="ViewModels\HealingViewModel.cs" />
+    <Compile Include="ViewModels\IgnoredViewModel.cs" />
     <Compile Include="Mvvm\Locator.cs" />
     <Compile Include="Logging\LogSinkExtensions.cs" />
-    <Compile Include="Views\Main\LogViewModel.cs" />
+    <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="Mvvm\MainModule.cs" />
-    <Compile Include="Views\Main\MainViewModel.cs" />
-    <Compile Include="Views\Main\MainView.xaml.cs">
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Master\MasterViewModel.cs" />
-    <Compile Include="Views\Settings\BattleSettingsView.xaml.cs">
+    <Compile Include="ViewModels\MasterViewModel.cs" />
+    <Compile Include="Views\BattleSettingsView.xaml.cs">
       <DependentUpon>BattleSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\BattleSettingsViewModel.cs" />
-    <Compile Include="Views\Settings\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\BattleSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Logging\StringSink.cs" />
-    <Compile Include="Views\Main\RestingViewModel.cs" />
-    <Compile Include="Views\Main\RoutesViewModel.cs" />
+    <Compile Include="ViewModels\RestingViewModel.cs" />
+    <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="Mvvm\StatusBarUpdateEvent.cs" />
-    <Compile Include="Views\Main\TargetsViewModel.cs" />
+    <Compile Include="ViewModels\TargetsViewModel.cs" />
     <Compile Include="Mvvm\ViewModelAttribute.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
-    <Compile Include="Views\Main\WeaponsViewModel.cs" />
-    <Compile Include="Views\Main\AbilitySelectionBox.xaml.cs">
+    <Compile Include="ViewModels\WeaponsViewModel.cs" />
+    <Compile Include="Views\AbilitySelectionBox.xaml.cs">
       <DependentUpon>AbilitySelectionBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\AbilityView.xaml.cs">
+    <Compile Include="Views\AbilityView.xaml.cs">
       <DependentUpon>AbilityView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\BattlesView.xaml.cs">
+    <Compile Include="Views\BattlesView.xaml.cs">
       <DependentUpon>BattlesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\frmStartup.cs">
@@ -295,31 +294,31 @@
     <Compile Include="Views\frmStartup.designer.cs">
       <DependentUpon>frmStartup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\HealingView.xaml.cs">
+    <Compile Include="Views\HealingView.xaml.cs">
       <DependentUpon>HealingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\IgnoredView.xaml.cs">
+    <Compile Include="Views\IgnoredView.xaml.cs">
       <DependentUpon>IgnoredView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\LogView.xaml.cs">
+    <Compile Include="Views\LogView.xaml.cs">
       <DependentUpon>LogView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Master\MasterView.xaml.cs">
+    <Compile Include="Views\MasterView.xaml.cs">
       <DependentUpon>MasterView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\RestingView.xaml.cs">
+    <Compile Include="Views\RestingView.xaml.cs">
       <DependentUpon>RestingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\RoutesView.xaml.cs">
+    <Compile Include="Views\RoutesView.xaml.cs">
       <DependentUpon>RoutesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\TargetsView.xaml.cs">
+    <Compile Include="Views\TargetsView.xaml.cs">
       <DependentUpon>TargetsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsView.xaml.cs">
+    <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\WeaponsView.xaml.cs">
+    <Compile Include="Views\WeaponsView.xaml.cs">
       <DependentUpon>WeaponsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\AbilitiesService.cs" />
@@ -372,79 +371,79 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Main\MainView.xaml">
+    <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Main\AbilitySelectionBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Main\AbilityView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Main\BattlesView.xaml">
+    <Page Include="Views\AbilitySelectionBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Main\HealingView.xaml">
+    <Page Include="Views\AbilityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BattlesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Main\IgnoredView.xaml">
+    <Page Include="Views\HealingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Main\LogView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Master\MasterView.xaml">
+    <Page Include="Views\IgnoredView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Main\RestingView.xaml">
+    <Page Include="Views\LogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MasterView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Main\RoutesView.xaml">
+    <Page Include="Views\RestingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Main\TargetsView.xaml">
+    <Page Include="Views\RoutesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Settings\BattleSettingsView.xaml">
+    <Page Include="Views\TargetsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\BattleSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Settings\SettingsView.xaml">
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Master\ViewDictionary.xaml">
+    <Page Include="Views\ViewDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Main\WeaponsView.xaml">
+    <Page Include="Views\WeaponsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
