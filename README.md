@@ -29,8 +29,10 @@ EasyFarm is free software, licensed under the GPLv3 software license which can b
 * Visual C++ Redistributable Packages for Visual Studio 2013
 * Ashita or Windower Game Client
 
-# Support
-Bug reports and suggestions can also be made at the [FFEvo EasyFarm Support Thread](http://www.ffevo.net/topic/3137-easyfarm/). This is the primary place where questions can be answered.
+## Support
+**Note: Forums are down currently; feel free to send me an email at MikeBartron@gmail.com or use the [support issue](https://github.com/EasyFarm/EasyFarm/issues/130) for questions or feedback regarding the program.**
+
+Bug reports and suggestions can be made at the [FFEvo EasyFarm Support Thread](http://www.ffevo.net/topic/3137-easyfarm/), and is the primary place where questions can be answered.
 
 # Tutorial
 Coming soon!
@@ -38,23 +40,15 @@ Coming soon!
 # Want to contribute?
 Anyone can contribute to the project. Just make sure you've done your best to test the code you are changing and send me a pull request, and I'll add in your contribution!
 
-# FAQ
-**Does the program detect aggro?**
+## FAQ
+##### Does the program detect aggro?
+* Yes, the program can detect whether the player has aggro.
 
-Yes, the program can detect whether the player has aggro.
+##### The program has caused my character to keeping running and I can't get him to stop. What should I do?
+* Shut down the program, restart it and re-hit the start button.
 
-**Why does the new version of the program crash?**
+##### Why is the program not targeting mobs correctly or not at all?
+* Try turning off the in-game auto target feature and see if that fixes the problem.
 
-Using an old user preference file may cause the program to crash. Delete the preference file and let the program generate a new one. 
-
-**The program has caused my character to keeping running and I can't get him to stop. What should I do?**
-
-Shut down the program, restart it and re-hit the start button.
-
-**Why is the program not targeting mobs correctly or not at all?**
-
-Try turning off the in-game auto target feature and see if that fixes the problem. 
-
-**Can you please add feature X?**
-
-If the feature you request is in line with the goals of the program of course but adding additional features will take some time. 
+##### Can you please add feature X?
+* If the feature you request is in line with the goals of the program of course but adding additional features will take some time.
