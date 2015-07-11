@@ -16,38 +16,38 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
+using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Parsing.Abilities;
+using Parsing.Services;
 
-namespace EasyFarmTests
+namespace EasyFarm.Tests.UnitTests
 {
     [TestClass]
-    public class TestConfig
+    public class XIToolsTest
     {
         [TestInitialize]
-        public void Setup()
+        public void SetUp()
         {
-            // Wipe all static changed data for 
-            // every config test. 
-            Config.Instance = new Config();
+            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
         }
 
-        [TestMethod]
-        public void TestConfigSingletonInstance()
+        [TestClass]
+        public class AbilityTests
         {
-            var conf = Config.Instance;
-            conf.PartyFilter = true;
-            Assert.AreEqual(conf.PartyFilter, Config.Instance.PartyFilter);
-            Assert.AreSame(conf, Config.Instance);
-        }
-
-        [TestMethod]
-        public void TestConfigPersistence()
-        {
-            var conf = new Config {PartyFilter = false};
-            Serialization.Serialize("test.xml", conf);
-            conf = Serialization.Deserialize<Config>("test.xml");
-            Assert.IsFalse(conf.PartyFilter);
+            [TestMethod]
+            public void TestToString()
+            {
+                var test = new Ability
+                {
+                    Prefix = "/magic",
+                    English = "Cure",
+                    Targets = "Self"
+                };
+                var cure = new AbilityService("resources").CreateAbility("Cure");
+                Assert.Equals(test.ToString(), cure.ToString());
+            }
         }
     }
 }

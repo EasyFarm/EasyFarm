@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
+# Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarm", "EasyFarm\EasyFarm.csproj", "{14508978-627B-46AE-9779-1F6B4FB0611E}"
@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarm", "EasyFarm\EasyFa
 		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372} = {7008DAF7-D3AA-41A4-9D85-8EC168D5D372}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarmTests", "EasyFarmTests\EasyFarmTests.csproj", "{A55B26A6-570A-49D8-B524-51B075D126ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarm.Tests", "EasyFarmTests\EasyFarm.Tests.csproj", "{A55B26A6-570A-49D8-B524-51B075D126ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing", "Parsing\Parsing.csproj", "{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}"
 EndProject

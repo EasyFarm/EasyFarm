@@ -16,38 +16,41 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Parsing.Abilities;
-using Parsing.Services;
-
-namespace EasyFarmTests
+namespace EasyFarm.Tests.UnitTests
 {
-    [TestClass]
-    public class TestXiTools
+    public class BattleAbilityTest
     {
-        [TestInitialize]
-        public void SetUp()
+        private readonly bool _effectWore;
+        private readonly bool _enabled;
+        private readonly bool _isBuff;
+        private readonly string _name;
+
+        public BattleAbilityTest(string name, bool enabled, bool isbuff, bool effectwore)
         {
-            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            _name = name;
+            _enabled = enabled;
+            _isBuff = isbuff;
+            _effectWore = effectwore;
         }
 
-        [TestClass]
-        public class AbilityTests
+        public string Name
         {
-            [TestMethod]
-            public void TestToString()
-            {
-                var test = new Ability
-                {
-                    Prefix = "/magic",
-                    English = "Cure",
-                    Targets = "Self"
-                };
-                var cure = new AbilityService("resources").CreateAbility("Cure");
-                Assert.Equals(test.ToString(), cure.ToString());
-            }
+            get { return _name; }
+        }
+
+        public bool Enabled
+        {
+            get { return _enabled; }
+        }
+
+        public bool IsBuff
+        {
+            get { return _isBuff; }
+        }
+
+        public bool HasEffectWore
+        {
+            get { return _effectWore; }
         }
     }
 }

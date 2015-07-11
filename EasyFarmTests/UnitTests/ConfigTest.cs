@@ -17,13 +17,12 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace EasyFarmTests
+namespace EasyFarm.Tests.UnitTests
 {
     [TestClass]
-    public class TestBattleSettings
+    public class ConfigTest
     {
         [TestInitialize]
         public void Setup()
@@ -34,29 +33,21 @@ namespace EasyFarmTests
         }
 
         [TestMethod]
-        public void ApproachReflectedInConfigTest()
+        public void TestConfigSingletonInstance()
         {
-            // Create the view model. 
-            new BattleSettingsViewModel {ShouldApproach = false};
-
-            // Set approach to false in the vm which should also set it
-            // to false in the config. 
-
-            // Assert it is indeed false. 
-            Assert.IsFalse(Config.Instance.IsApproachEnabled);
+            var conf = Config.Instance;
+            conf.PartyFilter = true;
+            Assert.AreEqual(conf.PartyFilter, Config.Instance.PartyFilter);
+            Assert.AreSame(conf, Config.Instance);
         }
 
         [TestMethod]
-        public void EngageReflectedInConfigTest()
+        public void TestConfigPersistence()
         {
-            // Create the view model. 
-            new BattleSettingsViewModel {ShouldEngage = false};
-
-            // Set approach to false in the vm which should also set it
-            // to false in the config. 
-
-            // Assert it is indeed false. 
-            Assert.IsFalse(Config.Instance.IsEngageEnabled);
+            var conf = new Config {PartyFilter = false};
+            Serialization.Serialize("test.xml", conf);
+            conf = Serialization.Deserialize<Config>("test.xml");
+            Assert.IsFalse(conf.PartyFilter);
         }
     }
 }
