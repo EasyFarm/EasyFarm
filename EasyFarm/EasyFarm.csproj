@@ -233,7 +233,6 @@
     <Compile Include="DataContexts\Health.cs" />
     <Compile Include="DataContexts\Ignored.cs" />
     <Compile Include="DataContexts\Magic.cs" />
-    <Compile Include="DataContexts\Player.cs" />
     <Compile Include="DataContexts\SQLiteConfiguration.cs" />
     <Compile Include="DataContexts\SQLiteConnectionFactory.cs" />
     <Compile Include="DataContexts\Targeted.cs" />

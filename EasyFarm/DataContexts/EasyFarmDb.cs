@@ -12,7 +12,12 @@ namespace EasyFarm.DataContexts
 {
     public class EasyFarmDB : DbContext
     {
-        public DbSet<Player> Players { get; set; }
+        public DbSet<Action> Action { get; set; }
+        public DbSet<Battle> Battle { get; set; }
+        public DbSet<Health> Health { get; set; }
+        public DbSet<Ignored> Ignored { get; set; }
+        public DbSet<Magic> Magic { get; set; }
+        public DbSet<Targeted> Targeted { get; set; }
 
         public EasyFarmDB()
         {
@@ -22,31 +27,9 @@ namespace EasyFarm.DataContexts
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            var sqliteConnectionInitializer = new SqliteDropCreateDatabaseAlways<EasyFarmDB>(
+            var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<EasyFarmDB>(
                 Database.Connection.ConnectionString, modelBuilder);
-
             Database.SetInitializer(sqliteConnectionInitializer);
-
-            modelBuilder.Entity<Action>().HasKey(x => x.Id)
-                .HasRequired(x => x.Player)
-                .WithRequiredDependent();
-            modelBuilder.Entity<Magic>().HasKey(x => x.Id)
-                .HasRequired(x => x.Player)
-                .WithRequiredDependent();
-            modelBuilder.Entity<Health>().HasKey(x => x.Id)
-                .HasRequired(x => x.Player)
-                .WithRequiredDependent();
-            modelBuilder.Entity<Ignored>().HasKey(x => x.Id)
-                .HasRequired(x => x.Player)
-                .WithRequiredDependent();
-            modelBuilder.Entity<Targeted>().HasKey(x => x.Id)
-                .HasRequired(x => x.Player)
-                .WithRequiredDependent();
-            modelBuilder.Entity<Battle>().HasKey(x => x.Id)
-                .HasRequired(x => x.Player)
-                .WithRequiredDependent();
-            modelBuilder.Entity<Player>()
-                .HasKey(x => x.Id);
         }
     }
 }

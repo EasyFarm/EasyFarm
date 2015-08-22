@@ -1,10 +1,6 @@
-﻿using System;
+﻿using EasyFarm.DataContexts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using EasyFarm.DataContexts;
 using System.Linq;
-using System.Data.SQLite;
-using Action = EasyFarm.DataContexts.Action;
-using System.IO;
 
 namespace EasyFarmTests
 {
@@ -12,20 +8,21 @@ namespace EasyFarmTests
     public class DataContextTest
     {
         [TestMethod]
-        public void TestHealthOptions()
+        public void TestPersistence()
         {
             var easyfarmDb = new EasyFarmDB();
-            var player = easyfarmDb.Players.Create();
+            var health = easyfarmDb.Health.Create();
 
-            player.Health.Enabled = true;
-            player.Health.Low = 50;
-            player.Health.High = 100;
-            
+            health.Enabled = true;
+            health.Low = 50;
+            health.High = 100;
+
             // Add player to database. 
-            easyfarmDb.Players.Add(player);
+            easyfarmDb.Health.Add(health);
             easyfarmDb.SaveChanges();
 
-            Console.WriteLine(player.Id);                                   
+            var id = health.Id;
+            Assert.IsTrue(easyfarmDb.Health.Any(x => x.Id == id));
         }
     }
 }

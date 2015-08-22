@@ -110,10 +110,6 @@
     <Compile Include="UnitTests\ConfigTest.cs" />
     <Compile Include="UnitTests\BattleAbilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestBattleSettings.cs" />
-    <Compile Include="TestMachineComponents.cs" />
-    <Compile Include="TestXITools.cs" />
-    <Compile Include="TestTreeView.cs" />
     <Compile Include="DataContextTest.cs" />
     <Compile Include="UnitTests\BattleSettingsTest.cs" />
     <Compile Include="UnitTests\MachineComponentTest.cs" />
