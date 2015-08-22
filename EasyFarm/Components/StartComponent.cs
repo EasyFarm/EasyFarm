@@ -25,7 +25,7 @@ namespace EasyFarm.Components
     /// <summary>
     ///     Buffs the player.
     /// </summary>
-    public class StartComponent : MachineComponent
+    public class StartComponent : BaseState
     {
         public StartComponent(FFACE fface)
         {

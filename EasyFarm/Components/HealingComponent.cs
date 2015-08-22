@@ -22,7 +22,7 @@ using FFACETools;
 
 namespace EasyFarm.Components
 {
-    public class HealingComponent : MachineComponent
+    public class HealingComponent : BaseState
     {
         private readonly Executor _executor;
         private readonly FFACE _fface;

@@ -30,7 +30,7 @@ namespace EasyFarm.Components
     ///     lists can fire and replaces targets that are dead, null,
     ///     empty or invalid.
     /// </summary>
-    public class EndComponent : BaseComponent
+    public class EndComponent : BaseState
     {
         private readonly Executor _executor;
         private readonly FFACE _fface;
@@ -38,7 +38,6 @@ namespace EasyFarm.Components
         private DateTime _lastTargetCheck = DateTime.Now;
 
         public EndComponent(FFACE fface)
-            : base(fface)
         {
             _fface = fface;
             _executor = new Executor(fface);
@@ -79,7 +78,7 @@ namespace EasyFarm.Components
         {
             // Execute moves. 
             var usable = Config.Instance.BattleLists["End"].Actions
-                .Where(x => ActionFilters.BuffingFilter(FFACE, x));
+                .Where(x => ActionFilters.BuffingFilter(_fface, x));
 
             _executor.UseBuffingActions(usable);
 

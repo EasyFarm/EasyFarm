@@ -17,20 +17,28 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using FFACETools;
+using System;
 
 namespace EasyFarm.Components
 {
-    public abstract class BaseComponent : MachineComponent
+    public abstract class BaseState : IState, IComparable
     {
-        protected static FFACE FFACE;
+        public virtual bool Enabled { get; set; }
 
-        protected BaseComponent(FFACE fface)
-        {
-            if (FFACE == null) FFACE = fface;
-        }
+        public virtual int Priority { get; set; }
 
-        public int CompareTo(BaseComponent other)
+        public virtual bool CheckComponent() { return false; }
+
+        public virtual void EnterComponent() { }
+
+        public virtual void ExitComponent() { }
+
+        public virtual void RunComponent() { }
+
+        public virtual int CompareTo(object obj)
         {
+            var other = obj as IState;
+            if (other == null) return 1;
             return -Priority.CompareTo(other.Priority);
         }
     }

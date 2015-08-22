@@ -26,7 +26,7 @@ namespace EasyFarm.Components
     /// <summary>
     ///     Behavior for resting our character.
     /// </summary>
-    public class RestComponent : MachineComponent
+    public class RestComponent : BaseState
     {
         private readonly FFACE _fface;
 

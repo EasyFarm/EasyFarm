@@ -21,6 +21,7 @@ using System.Threading;
 using EasyFarm.Classes;
 using EasyFarm.Monitors;
 using FFACETools;
+using System.Threading.Tasks;
 
 namespace EasyFarm.Components
 {
@@ -30,12 +31,6 @@ namespace EasyFarm.Components
     /// </summary>
     public class GameEngine
     {
-        /// <summary>
-        ///     Monitors the player status to see if their dead. If so, the monitor
-        ///     will stop the program from running.
-        /// </summary>
-        private readonly DeadMonitor _deadMonitor;
-
         /// <summary>
         ///     Provides information about game data.
         /// </summary>
@@ -47,12 +42,6 @@ namespace EasyFarm.Components
         private readonly FiniteStateEngine _stateMachine;
 
         /// <summary>
-        ///     Monitors for zone changes and allows for pausing / resuming
-        ///     the program after zoning.
-        /// </summary>
-        private readonly ZoneMonitor _zoneMonitor;
-
-        /// <summary>
         ///     Tells us whether the bot is working or not.
         /// </summary>
         public bool IsWorking;
@@ -60,121 +49,7 @@ namespace EasyFarm.Components
         public GameEngine(FFACE fface)
         {
             _fface = fface;
-            _zoneMonitor = new ZoneMonitor(fface);
-            _deadMonitor = new DeadMonitor(fface);
             _stateMachine = new FiniteStateEngine(fface);
-
-            _zoneMonitor.Changed += ZoneMonitorZoneChanged;
-            _zoneMonitor.Start();
-
-            _deadMonitor.Changed += DeadMonitorStatusChanged;
-            _deadMonitor.Start();
-        }
-
-        /// <summary>
-        ///     Monitors engine status for player being stuck and
-        ///     shuts it down when detected.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void StuckMonitor_StuckChanged(object sender, EventArgs e)
-        {
-            // Do nothing if the engine is not running already. 
-            if (!IsWorking)
-            {
-                return;
-            }
-
-            // Stop program from running to next waypoint. 
-            _fface.Navigator.Reset();
-
-            // Tell the use we paused the program. 
-            AppInformer.InformUser("Program Paused");
-
-            // Stop the engine from running. 
-            Stop();
-        }
-
-        /// <summary>
-        ///     Monitors engine stats for player dead status
-        ///     and then shuts down the engine.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DeadMonitorStatusChanged(object sender, EventArgs e)
-        {
-            // Do nothing if the engine is not running already. 
-            if (!IsWorking)
-            {
-                return;
-            }
-
-            // Stop program from running to next waypoint. 
-            _fface.Navigator.Reset();
-
-            // Tell the use we paused the program. 
-            AppInformer.InformUser("Program Paused");
-
-            // Stop the engine from running. 
-            Stop();
-        }
-
-        /// <summary>
-        ///     Stops the engine when another player is detected and
-        ///     resumes afterwards.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void PlayerMonitor_DetectedChanged(object sender, EventArgs e)
-        {
-            // If the program is not running then bail out. 
-            if (!IsWorking)
-            {
-                return;
-            }
-
-            var args = (e as MonitorArgs<bool>);
-            if (args != null && args.Status)
-            {
-                AppInformer.InformUser("Program Paused");
-                Stop();
-            }
-            else
-            {
-                AppInformer.InformUser("Program Resumed");
-                Start();
-            }
-        }
-
-        /// <summary>
-        ///     Pauses the engine when the player zones and
-        ///     resumes after.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ZoneMonitorZoneChanged(object sender, EventArgs e)
-        {
-            // If the program is not running then bail out. 
-            if (!IsWorking)
-            {
-                return;
-            }
-
-            AppInformer.InformUser("Program Paused");
-
-            // Stop the state machine.
-            Stop();
-
-            // Wait until our player has zoned; 
-            while (_fface.Player.Stats.Str == 0)
-            {
-                Thread.Sleep(500);
-            }
-
-            // Start up the state machine again.
-            Start();
-
-            AppInformer.InformUser("Program Resumed");
         }
 
         /// <summary>
