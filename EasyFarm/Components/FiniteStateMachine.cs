@@ -20,122 +20,88 @@ You should have received a copy of the GNU General Public License
 // Site: FFEVO.net
 // All credit to him!
 
+using FFACETools;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using EasyFarm.Classes;
-using FFACETools;
+using System.Threading.Tasks;
 
 namespace EasyFarm.Components
 {
-    public class FiniteStateEngine : MachineController
+    public class FiniteStateEngine
     {
-        /// <summary>
-        ///     A timer for running tasks over long
-        ///     periods of time.
-        /// </summary>
-        private readonly TaskTimer _taskTimer;
+        private List<IState> _components;
+        private CancellationTokenSource _cancellation;
 
-        private MachineComponent _lastRan;
-        // Constructor.
         public FiniteStateEngine(FFACE fface)
         {
+            _components = new List<IState>();
+
             //Create the states
-            AddComponent(new RestComponent(fface) {Priority = 2});
-            AddComponent(new AttackContainer(fface) {Priority = 1});
-            AddComponent(new TravelComponent(fface) {Priority = 1});
-            AddComponent(new HealingComponent(fface) {Priority = 2});
-            AddComponent(new EndComponent(fface) {Priority = 3});
-            Components.ForEach(x => x.Enabled = true);
+            AddComponent(new RestComponent(fface) { Priority = 2 });
+            AddComponent(new AttackContainer(fface) { Priority = 1 });
+            AddComponent(new ApproachComponent(fface) { Priority = 0 });
+            AddComponent(new BattleComponent(fface) { Priority = 3 });
+            AddComponent(new WeaponSkillComponent(fface) { Priority = 2 });
+            AddComponent(new PullComponent(fface) { Priority = 4 });
+            AddComponent(new StartComponent(fface) { Priority = 5 });
+            AddComponent(new TravelComponent(fface) { Priority = 1 });
+            AddComponent(new HealingComponent(fface) { Priority = 2 });
+            AddComponent(new EndComponent(fface) { Priority = 3 });
 
-            // Threaded timer to run the main loop on. 
-            _taskTimer = new TaskTimer();
-            _taskTimer.OnElapsed += Run;
-            _taskTimer.Interval = 100;
-            _taskTimer.AutoReset = true;
+            _components.ForEach(x => x.Enabled = true);
         }
 
-        public override bool CheckComponent()
+        private async Task MainLoop()
         {
-            // Loop through all components and if one reports ready,
-            // the attack container may run. 
+            _cancellation = new CancellationTokenSource();
 
-            var ready = Components.Any(x => x.Enabled && x.CheckComponent());
-
-            return ready;
+            while (true)
+            {
+                Run();
+                Task task = Task.Delay(1000, _cancellation.Token);
+                try { await task; }
+                catch (TaskCanceledException){ return; }
+            }
         }
 
-        private void Run(bool timedOut)
+        private void Run()
         {
-            var acquiredLock = false;
+            // Sort the List, States may have updated Priorities.
+            _components.Sort();
 
-            try
+            // Find a State that says it needs to run.
+            foreach (var mc in _components.Where(x => x.Enabled))
             {
-                // Thread exit if another thread is handling this event. 
-                if (Monitor.IsEntered(Components)) return;
-
-                // Acquire access to this resource. 
-                Monitor.TryEnter(Components, ref acquiredLock);
-
-                // If we've failed to acquire the lock exit. 
-                if (!acquiredLock) return;
-
-                // Sort the List, States may have updated Priorities.
-                Components.Sort();
-
-                // Find a State that says it needs to run.
-                foreach (var mc in Components)
+                if (mc.CheckComponent())
                 {
-                    // Stop operations on being signaled to stop. 
-                    if (!timedOut)
-                    {
-                        // Make the last state clean up and exit (stops running if travelling)
-                        if (_lastRan != null) _lastRan.ExitComponent();
-                        return;
-                    }
-
-                    if (mc.Enabled == false)
-                    {
-                        continue;
-                    } // Skip disabled States.
-                    if (mc.CheckComponent())
-                    {
-                        // Says it needs to run. Same State as before?
-                        if (_lastRan == null)
-                        {
-                            _lastRan = mc;
-                        }
-                        if (_lastRan != mc)
-                        {
-                            // Make the previous State clean up and exit.
-                            _lastRan.ExitComponent();
-                            _lastRan = mc;
-                            mc.EnterComponent();
-                        }
-
-                        // Run this State and stop.
-                        mc.RunComponent();
-                    }
+                    mc.EnterComponent();
+                    mc.RunComponent();
+                    mc.ExitComponent();
                 }
             }
-            finally
-            {
-                if (acquiredLock)
-                {
-                    // Release our resources. 
-                    Monitor.Exit(Components);
-                }
-            }
+        }
+
+        public void AddComponent(IState component)
+        {
+            this._components.Add(component);
+        }
+
+        public void RemoveComponent(IState component)
+        {
+            this._components.Remove(component);
         }
 
         // Start and stop.
-        public override void Start()
+        public void Start()
         {
-            _taskTimer.Start();
+            Task.Run(() => MainLoop());
         }
 
-        public override void Stop()
+        public void Stop()
         {
-            _taskTimer.Stop();
+            _cancellation.Cancel();
         }
     }
 }

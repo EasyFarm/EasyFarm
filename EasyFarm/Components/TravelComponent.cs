@@ -24,7 +24,7 @@ using FFACETools;
 
 namespace EasyFarm.Components
 {
-    public class TravelComponent : MachineComponent
+    public class TravelComponent : BaseState
     {
         private readonly FFACE _fface;
         private readonly UnitService _units;

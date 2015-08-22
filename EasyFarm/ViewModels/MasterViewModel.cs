@@ -29,6 +29,7 @@ using EasyFarm.Views;
 using FFACETools;
 using Microsoft.Practices.Prism.Commands;
 using Application = System.Windows.Application;
+using System.Threading.Tasks;
 
 namespace EasyFarm.ViewModels
 {
@@ -162,15 +163,15 @@ namespace EasyFarm.ViewModels
             {
                 Logger.Write.BotStop("Bot now paused");
                 AppInformer.InformUser("Program paused.");
-                App.GameEngine.Stop();
                 StartPauseHeader = "St_art";
+                App.GameEngine.Stop();                
             }
             else
             {
                 Logger.Write.BotStart("Bot now running");
                 AppInformer.InformUser("Program running.");
-                App.GameEngine.Start();
                 StartPauseHeader = "P_ause";
+                App.GameEngine.Start();                
             }
         }
 

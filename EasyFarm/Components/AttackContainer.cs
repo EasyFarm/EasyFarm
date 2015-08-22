@@ -24,7 +24,7 @@ namespace EasyFarm.Components
     /// <summary>
     ///     A class for defeating monsters.
     /// </summary>
-    public class AttackContainer : SequenceContainer
+    public class AttackContainer : BaseState
     {
         static AttackContainer()
         {
@@ -34,16 +34,6 @@ namespace EasyFarm.Components
         public AttackContainer(FFACE fface)
         {
             FFACE = fface;
-
-            // Add components.
-            AddComponent(new ApproachComponent(fface) {Priority = 0});
-            AddComponent(new BattleComponent(fface) {Priority = 3});
-            AddComponent(new WeaponSkillComponent(fface) {Priority = 2});
-            AddComponent(new PullComponent(fface) {Priority = 4});
-            AddComponent(new StartComponent(fface) {Priority = 5});
-
-            // Enable all attack components. 
-            Components.ForEach(x => x.Enabled = true);
         }
 
         /// <summary>

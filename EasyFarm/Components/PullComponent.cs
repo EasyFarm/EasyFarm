@@ -22,7 +22,7 @@ using FFACETools;
 
 namespace EasyFarm.Components
 {
-    public class PullComponent : MachineComponent
+    public class PullComponent : BaseState
     {
         public PullComponent(FFACE fface)
         {

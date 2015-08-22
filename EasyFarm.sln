@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarm", "EasyFarm\EasyFa
 		{7008DAF7-D3AA-41A4-9D85-8EC168D5D372} = {7008DAF7-D3AA-41A4-9D85-8EC168D5D372}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarmTests", "EasyFarmTests\EasyFarmTests.csproj", "{A55B26A6-570A-49D8-B524-51B075D126ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarm.Tests", "EasyFarmTests\EasyFarm.Tests.csproj", "{A55B26A6-570A-49D8-B524-51B075D126ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing", "Parsing\Parsing.csproj", "{7008DAF7-D3AA-41A4-9D85-8EC168D5D372}"
 EndProject

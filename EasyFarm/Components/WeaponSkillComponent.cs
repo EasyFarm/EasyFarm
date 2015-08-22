@@ -25,7 +25,7 @@ namespace EasyFarm.Components
     /// <summary>
     ///     Performs weaponskills on targets.
     /// </summary>
-    public class WeaponSkillComponent : MachineComponent
+    public class WeaponSkillComponent : BaseState
     {
         public WeaponSkillComponent(FFACE fface)
         {

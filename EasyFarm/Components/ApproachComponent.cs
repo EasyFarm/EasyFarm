@@ -25,7 +25,7 @@ namespace EasyFarm.Components
     /// <summary>
     ///     Moves to target enemies.
     /// </summary>
-    public class ApproachComponent : MachineComponent
+    public class ApproachComponent : BaseState
     {
         public ApproachComponent(FFACE fface)
         {

@@ -25,7 +25,7 @@ namespace EasyFarm.Components
     /// <summary>
     ///     A class for defeating monsters.
     /// </summary>
-    public class BattleComponent : MachineComponent
+    public class BattleComponent : BaseState
     {
         private readonly Executor _executor;
         private readonly FFACE _fface;

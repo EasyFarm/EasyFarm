@@ -222,9 +222,9 @@
     <Compile Include="Classes\MovementUtils.cs" />
     <Compile Include="Classes\Targeting.cs" />
     <Compile Include="Classes\Wanderer.cs" />
-    <Compile Include="Components\BaseComponent.cs" />
+    <Compile Include="Components\BaseState.cs" />
     <Compile Include="Components\GameEngine.cs" />
-    <Compile Include="Components\MachineComponent.cs" />
+    <Compile Include="Components\IState.cs" />
     <Compile Include="Components\RestComponent.cs" />
     <Compile Include="Components\TravelComponent.cs" />
     <Compile Include="DataContexts\Action.cs" />
@@ -238,6 +238,7 @@
     <Compile Include="DataContexts\SQLiteConnectionFactory.cs" />
     <Compile Include="DataContexts\Targeted.cs" />
     <Compile Include="DataTypes\ListType.cs" />
+    <Compile Include="Mvvm\AsyncDelegateCommand.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -247,12 +248,8 @@
     <Compile Include="ViewModels\MasterViewModel.cs" />
     <Compile Include="ViewModels\ProcessSelectionViewModel.cs" />
     <Compile Include="Classes\TaskTimer.cs" />
-    <Compile Include="Components\MachineContainer.cs" />
-    <Compile Include="Components\MachineController.cs" />
     <Compile Include="Components\ApproachComponent.cs" />
     <Compile Include="Components\AttackContainer.cs" />
-    <Compile Include="Components\IMachineComponent.cs" />
-    <Compile Include="Components\IMachineContainer.cs" />
     <Compile Include="Classes\BattleAbility.cs" />
     <Compile Include="Classes\Caster.cs" />
     <Compile Include="Classes\Executor.cs" />
@@ -264,7 +261,6 @@
     <Compile Include="Collections\LimitedQueue.cs" />
     <Compile Include="Collections\ThresholdQueue.cs" />
     <Compile Include="Collections\TimeSortedList.cs" />
-    <Compile Include="Components\SequenceContainer.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Monitors\BaseMonitor.cs" />
     <Compile Include="Monitors\DeadMonitor.cs" />
@@ -277,7 +273,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\FiniteStateMachine.cs" />
     <Compile Include="Components\HealingComponent.cs" />
-    <Compile Include="Components\IMachineController.cs" />
     <Compile Include="Components\EndComponent.cs" />
     <Compile Include="Classes\HealingAbility.cs" />
     <Compile Include="Classes\Waypoint.cs" />
@@ -497,8 +492,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FFACE.dll" />
-    <Content Include="FFACETools.dll" />
+    <Content Include="EliteMMO.API.dll" />
+    <Content Include="FFACE.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
