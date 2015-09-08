@@ -16,44 +16,53 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using FFACETools;
+using Parsing.Abilities;
+using Parsing.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using FFACETools;
-using Parsing.Abilities;
-using Parsing.Types;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    ///     Executor targeted or buffing actions. A fuller explanation
-    ///     can be found here: https://github.com/EasyFarm/EasyFarm/wiki/Battle-List-Roles.
-    ///     See "list types" for more details.
+    /// Executor targeted or buffing actions. A fuller explanation can be found here:
+    /// https://github.com/EasyFarm/EasyFarm/wiki/Battle-List-Roles. See "list types" for more details.
     /// </summary>
     public class Executor
     {
-        #region Constructors
+        private readonly Caster _caster;
+
+        private readonly FFACE _fface;
 
         public Executor(FFACE fface)
         {
             _fface = fface;
             _caster = new Caster(fface);
         }
+        /// <summary>
+        /// Execute a single buffing type action.
+        /// </summary>
+        /// <param name="action"></param>
+        public void UseBuffingAction(Ability action)
+        {
+            if (action == null) throw new ArgumentNullException("action");
 
-        #endregion
+            // Create new new ability and set its basic required information.
+            var baction = new BattleAbility
+            {
+                Name = action.English,
+                IsEnabled = true,
+                Ability = action
+            };
 
-        #region Member Variables
-
-        private readonly FFACE _fface;
-        private readonly Caster _caster;
-
-        #endregion
-
-        #region Buffing Methods
+            // Convert ability to new battle ability object.
+            UseBuffingActions(new List<BattleAbility> { baction });
+        }
 
         /// <summary>
-        ///     Executes moves without the need for a target.
+        /// Executes moves without the need for a target.
         /// </summary>
         /// <param name="actions"></param>
         public void UseBuffingActions(IEnumerable<BattleAbility> actions)
@@ -72,75 +81,40 @@ namespace EasyFarm.Classes
                         continue;
                     }
 
-                    // Try to cast the spell. On failure, 
-                    // continue and recast at a later time. 
+                    // Try to cast the spell. On failure, continue and recast at a later time.
                     if (!_caster.CastSpell(action)) continue;
 
-                    // Remove spell from castables so that it 
-                    // will not be casted again. 
+                    // Remove spell from castables so that it will not be casted again.
                     castables.Remove(action);
 
-                    // Increase usage count to limit number of usages. 
+                    // Increase usage count to limit number of usages.
                     action.Usages++;
 
-                    // Sleep until a spell is recastable. 
+                    // Sleep until a spell is recastable.
                     Thread.Sleep(Config.Instance.GlobalCooldown);
                 }
             }
         }
-
         /// <summary>
-        ///     Execute actions that are not target oriented.
-        /// </summary>
-        /// <param name="actions"></param>
-        public void UseBuffingActions(IEnumerable<Ability> actions)
-        {
-            if (actions == null) throw new ArgumentNullException("actions");
-            UseBuffingActions(actions.Select(x => new BattleAbility {Ability = x}));
-        }
-
-        /// <summary>
-        ///     Execute a signle buffing type action.
+        /// Execute a single action targeted type action.
         /// </summary>
         /// <param name="action"></param>
-        public void UseBuffingAction(BattleAbility action)
+        /// <param name="target"></param>
+        public void UseTargetedAction(BattleAbility action, Unit target)
         {
+            if (target == null) throw new ArgumentNullException("target");
             if (action == null) throw new ArgumentNullException("action");
-            UseBuffingActions(new List<BattleAbility> {action});
+            UseTargetedActions(new List<BattleAbility> { action }, target);
         }
 
         /// <summary>
-        ///     Execute a single buffing type action.
-        /// </summary>
-        /// <param name="action"></param>
-        public void UseBuffingAction(Ability action)
-        {
-            if (action == null) throw new ArgumentNullException("action");
-
-            // Create new new ability and set its basic required information. 
-            var baction = new BattleAbility
-            {
-                Name = action.English,
-                IsEnabled = true,
-                Ability = action
-            };
-
-            // Convert ability to new battleability object. 
-            UseBuffingActions(new List<BattleAbility> {baction});
-        }
-
-        #endregion
-
-        #region Targeted Methods
-
-        /// <summary>
-        ///     Execute targeted actions.
+        /// Execute targeted actions.
         /// </summary>
         /// <param name="actions"></param>
         /// <param name="target"></param>
         public void UseTargetedActions(IEnumerable<BattleAbility> actions, Unit target)
         {
-            // Logic error to call this without setting a target first. 
+            // Logic error to call this without setting a target first.
             if (actions == null) throw new ArgumentNullException("actions");
             if (target == null) throw new ArgumentNullException("target");
 
@@ -151,7 +125,7 @@ namespace EasyFarm.Classes
                 // Face unit
                 _fface.Navigator.FaceHeading(target.Position);
 
-                // Target mob if not currently targeted. 
+                // Target mob if not currently targeted.
                 SetTarget(target);
 
                 if (CompositeAbilityTypes.IsSpell.HasFlag(action.Ability.AbilityType))
@@ -163,14 +137,32 @@ namespace EasyFarm.Classes
                     _caster.CastAbility(action);
                 }
 
-                // Increase usage count to limit number of usages. 
+                // Increase usage count to limit number of usages.
                 action.Usages++;
                 Thread.Sleep(Config.Instance.GlobalCooldown);
             }
         }
 
         /// <summary>
-        ///     Place cursor on unit
+        /// Move close enough to mob to use an ability.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="action"></param>
+        private void MoveIntoActionRange(Unit target, BattleAbility action)
+        {
+            // Move to target if out of distance.
+            if (target.Distance > action.Distance)
+            {
+                // Move to unit at max buff distance.
+                var oldTolerance = _fface.Navigator.DistanceTolerance;
+                _fface.Navigator.DistanceTolerance = action.Distance;
+                _fface.Navigator.GotoNPC(target.Id);
+                _fface.Navigator.DistanceTolerance = oldTolerance;
+            }
+        }
+
+        /// <summary>
+        /// Place cursor on unit
         /// </summary>
         /// <param name="target"></param>
         private void SetTarget(Unit target)
@@ -181,37 +173,5 @@ namespace EasyFarm.Classes
                 _fface.Windower.SendString("/ta <t>");
             }
         }
-
-        /// <summary>
-        ///     Move close enough to mob to use an ability.
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="action"></param>
-        private void MoveIntoActionRange(Unit target, BattleAbility action)
-        {
-            // Move to target if out of distance. 
-            if (target.Distance > action.Distance)
-            {
-                // Move to unit at max buff distance. 
-                var oldTolerance = _fface.Navigator.DistanceTolerance;
-                _fface.Navigator.DistanceTolerance = action.Distance;
-                _fface.Navigator.GotoNPC(target.Id);
-                _fface.Navigator.DistanceTolerance = oldTolerance;
-            }
-        }
-
-        /// <summary>
-        ///     Execute a single action targeted type action.
-        /// </summary>
-        /// <param name="action"></param>
-        /// <param name="target"></param>
-        public void UseTargetedAction(BattleAbility action, Unit target)
-        {
-            if (target == null) throw new ArgumentNullException("target");
-            if (action == null) throw new ArgumentNullException("action");
-            UseTargetedActions(new List<BattleAbility> {action}, target);
-        }
-
-        #endregion
     }
 }
