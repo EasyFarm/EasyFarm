@@ -252,10 +252,8 @@
     <Compile Include="Classes\AbilityUtils.cs" />
     <Compile Include="Classes\ProhibitEffects.cs" />
     <Compile Include="Classes\SettingsManager.cs" />
-    <Compile Include="Collections\FixedSortedList.cs" />
     <Compile Include="Collections\LimitedQueue.cs" />
     <Compile Include="Collections\ThresholdQueue.cs" />
-    <Compile Include="Collections\TimeSortedList.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Monitors\BaseMonitor.cs" />
     <Compile Include="Monitors\DeadMonitor.cs" />
