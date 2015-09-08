@@ -16,15 +16,15 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FFACETools;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    ///     Retrieves the zone's unit data.
+    /// Retrieves the zone's unit data.
     /// </summary>
     public class UnitService
     {
@@ -40,51 +40,50 @@ namespace EasyFarm.Classes
         #region Members
 
         /// <summary>
-        ///     The zone's unit array.
+        /// The zone's unit array.
         /// </summary>
         private static IEnumerable<Unit> _units;
 
         /// <summary>
-        ///     The unit array's max size: 0 - 2048
+        /// The unit array's max size: 0 - 2048
         /// </summary>
         private const short UnitArrayMax = Constants.UnitArrayMax;
 
         /// <summary>
-        ///     The mob array's max size: 0 - 768.
+        /// The mob array's max size: 0 - 768.
         /// </summary>
         private const short MobArrayMax = Constants.MobArrayMax;
 
-
-        // We are caching values for HasAggro, since the program will 
-        // call it constantly which will result in a performance jump. 
+        // We are caching values for HasAggro, since the program will call it constantly which will
+        // result in a performance jump.
 
         /// <summary>
-        ///     The last time an aggro check was performed.
+        /// The last time an aggro check was performed.
         /// </summary>
         public DateTime LastAggroCheck = DateTime.Now;
 
         /// <summary>
-        ///     The last value read from HasAggro
+        /// The last value read from HasAggro
         /// </summary>
         public bool LastAggroStatus;
 
         /// <summary>
-        ///     The player's environmental data.
+        /// The player's environmental data.
         /// </summary>
         private static FFACE _fface;
 
-        #endregion
+        #endregion Members
 
         #region Properties
 
         /// <summary>
-        ///     Does there exist a mob that has aggroed in general.
+        /// Does there exist a mob that has aggroed in general.
         /// </summary>
         public bool HasAggro
         {
             get
             {
-                // Return the cached value if we're checking too often. 
+                // Return the cached value if we're checking too often.
                 if (LastAggroCheck.AddSeconds(
                     Constants.UnitArrayCheckRate) >
                     DateTime.Now)
@@ -92,54 +91,26 @@ namespace EasyFarm.Classes
                     return LastAggroStatus;
                 }
 
-                // Update the last checked time. 
+                // Update the last checked time.
                 LastAggroCheck = DateTime.Now;
 
-                // Otherwise return the current environment value. 
+                // Otherwise return the current environment value.
                 return LastAggroStatus = MobArray.Any(x => x.HasAggroed);
             }
         }
 
         /// <summary>
-        ///     Do we have claim on any mob?
-        /// </summary>
-        public bool HasClaim
-        {
-            get { return MobArray.Any(monster => monster.IsClaimed); }
-        }
-
-        /// <summary>
-        ///     Retrieves the list of UNITs
-        /// </summary>
-        public IEnumerable<Unit> UnitArray
-        {
-            get { return _units; }
-        }
-
-        /// <summary>
-        ///     Retrieves the list of MOBs.
+        /// Retrieves the list of MOBs.
         /// </summary>
         public IEnumerable<Unit> MobArray
         {
             get
             {
-                return UnitArray.Take(MobArrayMax)
+                return _units.Take(MobArrayMax)
                     .Where(x => x.NpcType.Equals(NPCType.Mob));
             }
         }
 
-        /// <summary>
-        ///     Retrieves the lsit of PCs.
-        /// </summary>
-        public IEnumerable<Unit> PcArray
-        {
-            get
-            {
-                return UnitArray.Skip(MobArrayMax)
-                    .Where(x => x.NpcType.Equals(NPCType.PC));
-            }
-        }
-
-        #endregion
+        #endregion Properties
     }
 }
