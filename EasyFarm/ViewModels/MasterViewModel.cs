@@ -30,6 +30,7 @@ using FFACETools;
 using Microsoft.Practices.Prism.Commands;
 using Application = System.Windows.Application;
 using System.Threading.Tasks;
+using Microsoft.Practices.Prism.PubSubEvents;
 
 namespace EasyFarm.ViewModels
 {
@@ -68,7 +69,7 @@ namespace EasyFarm.ViewModels
                 );
 
             // Get events from view models to update the status bar's text.
-            AppInformer.EventAggregator.GetEvent<StatusBarUpdateEvent>().Subscribe(a => { StatusBarText = a; });
+            AppInformer.EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe(a => { StatusBarText = a; });
 
             // Bind commands to their handlers. 
             StartCommand = new DelegateCommand(Start);

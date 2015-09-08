@@ -46,7 +46,7 @@ namespace EasyFarm.Classes
         /// <param name="values"></param>
         public static void InformUser(string message, params object[] values)
         {
-            EventAggregator.GetEvent<StatusBarUpdateEvent>().Publish(string.Format(message, values));
+            EventAggregator.GetEvent<PubSubEvent<string>>().Publish(string.Format(message, values));
         }
     }
 }

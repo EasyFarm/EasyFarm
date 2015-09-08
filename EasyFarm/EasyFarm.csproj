@@ -301,7 +301,6 @@
     <Compile Include="Logging\StringSink.cs" />
     <Compile Include="ViewModels\RestingViewModel.cs" />
     <Compile Include="ViewModels\RoutesViewModel.cs" />
-    <Compile Include="Mvvm\StatusBarUpdateEvent.cs" />
     <Compile Include="ViewModels\TargetsViewModel.cs" />
     <Compile Include="Mvvm\ViewModelAttribute.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
