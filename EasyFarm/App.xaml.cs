@@ -22,6 +22,7 @@ using EasyFarm.Logging;
 using EasyFarm.Mvvm;
 using EasyFarm.Properties;
 using Parsing.Services;
+using System.Windows.Threading;
 
 namespace EasyFarm
 {
@@ -48,6 +49,15 @@ namespace EasyFarm
             Logger.Write.ResourcesLocated("Resources loaded");
         }
 
+        public App()
+        {
+            Application.Current.DispatcherUnhandledException += (sender, e) =>
+            {
+                MessageBox.Show(e.Exception.Message, "An exception has occurred. ", MessageBoxButton.OK, MessageBoxImage.Error);
+                e.Handled = true;
+            };
+        }
+
         /// <summary>
         ///     Gets the user's selected FFACE Session and
         ///     starts up the program.
@@ -72,5 +82,7 @@ namespace EasyFarm
             Logger.Write.ApplicationStart("Application exiting");
             Settings.Default.Save();
         }
+
+
     }
 }
