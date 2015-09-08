@@ -70,7 +70,7 @@ namespace EasyFarm.Components
         {
             while (_fface.Player.Status == Status.Fighting)
             {
-                CombatUtils.Disengage(_fface);
+                Player.Disengage(_fface);
             }
         }
 

@@ -33,5 +33,27 @@ namespace EasyFarm.Classes
                 Thread.Sleep(50);
             }
         }
+
+        /// <summary>
+        ///     Switches the player to attack mode on the current unit
+        /// </summary>
+        public static void Engage(FFACE fface)
+        {
+            if (!fface.Player.Status.Equals(Status.Fighting))
+            {
+                fface.Windower.SendString(Constants.AttackTarget);
+            }
+        }
+
+        /// <summary>
+        ///     Stop the character from fight the target
+        /// </summary>
+        public static void Disengage(FFACE fface)
+        {
+            if (fface.Player.Status.Equals(Status.Fighting))
+            {
+                fface.Windower.SendString(Constants.AttackOff);
+            }
+        }
     }
 }

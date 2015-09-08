@@ -218,7 +218,6 @@
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\AppInformer.cs" />
-    <Compile Include="Classes\BoundingBox.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Components\BaseState.cs" />
     <Compile Include="Components\GameEngine.cs" />
@@ -335,7 +334,6 @@
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\CombatUtils.cs" />
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\MovingUnit.cs" />
     <Compile Include="Classes\Serialization.cs" />
