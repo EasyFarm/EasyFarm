@@ -233,7 +233,6 @@
     <Compile Include="DataContexts\SQLiteConfiguration.cs" />
     <Compile Include="DataContexts\SQLiteConnectionFactory.cs" />
     <Compile Include="DataContexts\Targeted.cs" />
-    <Compile Include="DataTypes\ListType.cs" />
     <Compile Include="Mvvm\AsyncDelegateCommand.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
