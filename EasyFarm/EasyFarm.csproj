@@ -270,7 +270,6 @@
     <Compile Include="Components\FiniteStateMachine.cs" />
     <Compile Include="Components\HealingComponent.cs" />
     <Compile Include="Components\EndComponent.cs" />
-    <Compile Include="Classes\HealingAbility.cs" />
     <Compile Include="Classes\Waypoint.cs" />
     <Compile Include="Classes\Config.cs" />
     <Compile Include="App.xaml.cs">
