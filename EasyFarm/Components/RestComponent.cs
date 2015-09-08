@@ -111,7 +111,7 @@ namespace EasyFarm.Components
         /// </summary>
         public override void RunComponent()
         {
-            RestingUtils.Rest(_fface);
+            Player.Rest(_fface);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace EasyFarm.Components
         {
             while (_fface.Player.Status == Status.Healing)
             {
-                RestingUtils.Stand(_fface);
+                Player.Stand(_fface);
             }
         }
 

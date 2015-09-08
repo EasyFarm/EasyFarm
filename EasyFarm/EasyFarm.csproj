@@ -220,8 +220,7 @@
     <Compile Include="Classes\AppInformer.cs" />
     <Compile Include="Classes\BoundingBox.cs" />
     <Compile Include="Classes\MovementUtils.cs" />
-    <Compile Include="Classes\Targeting.cs" />
-    <Compile Include="Classes\Wanderer.cs" />
+    <Compile Include="Classes\Player.cs" />
     <Compile Include="Components\BaseState.cs" />
     <Compile Include="Components\GameEngine.cs" />
     <Compile Include="Components\IState.cs" />
@@ -246,7 +245,6 @@
     <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="ViewModels\MasterViewModel.cs" />
     <Compile Include="ViewModels\ProcessSelectionViewModel.cs" />
-    <Compile Include="Classes\TaskTimer.cs" />
     <Compile Include="Components\ApproachComponent.cs" />
     <Compile Include="Components\AttackContainer.cs" />
     <Compile Include="Classes\BattleAbility.cs" />
@@ -342,7 +340,6 @@
     <Compile Include="Classes\CombatUtils.cs" />
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\MovingUnit.cs" />
-    <Compile Include="Classes\RestingUtil.cs" />
     <Compile Include="Classes\Serialization.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\UnitService.cs" />

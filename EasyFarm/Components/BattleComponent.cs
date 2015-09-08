@@ -62,7 +62,7 @@ namespace EasyFarm.Components
 
         public override void EnterComponent()
         {
-            RestingUtils.Stand(_fface);
+            Player.Stand(_fface);
             _fface.Navigator.Reset();
         }
 
