@@ -16,144 +16,112 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using FFACETools;
 
 namespace EasyFarm.Classes
 {
     /// <summary>
-    ///     Helper functions for filtering units.
+    /// Helper functions for filtering units.
     /// </summary>
     public class UnitFilters
     {
-        /// <summary>
-        ///     Returns whether the player is a valid player.
-        /// </summary>
-        /// <param name="fface"></param>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static bool PcFilter(FFACE fface, Unit unit)
-        {
-            if (fface == null) throw new ArgumentNullException("fface");
-            if (unit == null) throw new ArgumentNullException("unit");
-
-            // PC is not active but in memory
-            if (!unit.IsActive) return false;
-
-            // Type is not mob 
-            if (!unit.NpcType.Equals(NPCType.PC)) return false;
-
-            // PC is out of range
-            if (unit.Distance >= 50) return false;
-
-            // PC can see us...
-            return true;
-        }
-
         #region MOBFilter
 
         /// <summary>
-        ///     This function returns whether a mob is a valid mob.
-        ///     Aftewards it will check our filtering.
-        ///     If its on the ignored list, ignore it.
-        ///     If its not on the targets list and there is a list, ignore it
-        ///     If its on the targets list check
-        ///     If the mob is our claim and is checked, attack it.
-        ///     if the mob is our partys claimand is checked, attack it.
-        ///     if the mob is unclaimed and is checked, attack it.
-        ///     if the mob is claimed and not our claimed and
-        ///     claimed checked attack it.
-        ///     The function will not attack mobs that have aggroed but
-        ///     are not on the target's list or
+        /// Returns true if a mob is attackable by the player based on the various settings in the
+        /// Config class.
         /// </summary>
         /// <param name="fface"></param>
         /// <param name="mob"></param>
         /// <returns></returns>
         public static bool MobFilter(FFACE fface, Unit mob)
         {
-            // Function to use to filter surrounding mobs by.
-            // General Mob Filtering Criteria
+            // Function to use to filter surrounding mobs by. General Mob Filtering Criteria
             if (fface == null) throw new ArgumentNullException("fface");
             if (mob == null) throw new ArgumentNullException("mob");
 
             // Mob not active
             if (!mob.IsActive) return false;
 
-            // INFO: fixes trying to attack dead mob problem. 
-            // Mob is dead
+            // INFO: fixes trying to attack dead mob problem. Mob is dead
             if (mob.IsDead) return false;
 
-            // Mob not rendered on screen. 
+            // Mob not rendered on screen.
             if (!mob.IsRendered) return false;
 
-            // Type is not mob 
+            // Type is not mob
             if (!mob.NpcType.Equals(NPCType.Mob)) return false;
 
             // Mob is out of range
             if (!(mob.Distance < Config.Instance.DetectionDistance)) return false;
 
-            // If any unit is within the wander distance then the 
+            // If any unit is within the wander distance then the
             if (Config.Instance.Waypoints.Any())
             {
                 if (!(Config.Instance.Waypoints.Any(waypoint => Distance(mob, waypoint) <=
                                                                 Config.Instance.WanderDistance))) return false;
             }
 
-            // Mob too high out of reach. 
+            // Mob too high out of reach.
             if (mob.YDifference > Config.Instance.HeightThreshold) return false;
 
             // User Specific Filtering
 
-            // Performs a case insensitve match on the mob's name. 
-            // If any part of the mob's name is in the ignored list,
-            // we will not attack it. 
+            // Performs a case insensitve match on the mob's name. If any part of the mob's name is
+            // in the ignored list, we will not attack it.
             if (MatchAny(mob.Name, Config.Instance.IgnoredMobs,
                 RegexOptions.IgnoreCase)) return false;
 
-            // Kill aggro if aggro's checked regardless of target's list but follows 
-            // the ignored list. 
+            // Kill aggro if aggro's checked regardless of target's list but follows the ignored list.
             if (mob.HasAggroed && Config.Instance.AggroFilter) return true;
 
-            // There is a target's list but the mob is not on it. 
+            // There is a target's list but the mob is not on it.
             if (!MatchAny(mob.Name, Config.Instance.TargetedMobs, RegexOptions.IgnoreCase) &&
                 Config.Instance.TargetedMobs.Any())
                 return false;
 
-            // Mob on our targets list or not on our ignore list. 
+            // Mob on our targets list or not on our ignore list.
 
-            // Kill the creature if it has aggroed and aggro is checked. 
+            // Kill the creature if it has aggroed and aggro is checked.
             if (mob.HasAggroed && Config.Instance.AggroFilter) return true;
 
-            // Kill the creature if it is claimed by party and party is checked. 
+            // Kill the creature if it is claimed by party and party is checked.
             if (mob.PartyClaim && Config.Instance.PartyFilter) return true;
 
-            // Kill the creature if it's not claimed and unclaimed is checked. 
+            // Kill the creature if it's not claimed and unclaimed is checked.
             if (!mob.IsClaimed && Config.Instance.UnclaimedFilter) return true;
 
             // Kill the creature if it's claimed and we we don't have claim but
-            // claim is checked. 
-            //FIX: Temporary fix until player.serverid is fixed. 
+            // claim is checked.
+            //FIX: Temporary fix until player.serverid is fixed.
             if (mob.IsClaimed && Config.Instance.ClaimedFilter)
             {
-                // Kill creature if claim is checked. 
+                // Kill creature if claim is checked.
                 return mob.ClaimedId != fface.PartyMember[0].ServerID;
             }
 
-            // True for all mobs that are not on ignore / target lists
-            // and meet the general criteria for being a valid mob. 
+            // True for all mobs that are not on ignore / target lists and meet the general criteria
+            // for being a valid mob.
             return false;
         }
 
+        /// <summary>
+        /// Return the 2-D distance between the unit and a position. 
+        /// </summary>
+        /// <param name="mob"></param>
+        /// <param name="waypoint"></param>
+        /// <returns></returns>
         private static double Distance(Unit mob, Waypoint waypoint)
         {
             return Math.Sqrt(Math.Pow(waypoint.X - mob.PosX, 2) + Math.Pow(waypoint.Z - mob.PosZ, 2));
         }
 
         /// <summary>
-        ///     Check multiple patterns for a match.
+        /// Check multiple patterns for a match.
         /// </summary>
         /// <param name="input"></param>
         /// <param name="patterns"></param>
@@ -166,6 +134,6 @@ namespace EasyFarm.Classes
                 .Any(matcher => matcher.IsMatch(input));
         }
 
-        #endregion
+        #endregion MOBFilter
     }
 }
