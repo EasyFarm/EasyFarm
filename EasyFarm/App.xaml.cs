@@ -54,7 +54,6 @@ namespace EasyFarm
             Application.Current.DispatcherUnhandledException += (sender, e) =>
             {
                 MessageBox.Show(e.Exception.Message, "An exception has occurred. ", MessageBoxButton.OK, MessageBoxImage.Error);
-                e.Handled = true;
             };
         }
 
