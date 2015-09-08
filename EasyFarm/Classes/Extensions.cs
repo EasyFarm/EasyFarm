@@ -22,25 +22,6 @@ namespace EasyFarm.Classes
 {
     public static class Extensions
     {
-        /// <summary>
-        ///     Adds qoutes around the string.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static string QuoteWord(this string value)
-        {
-            return '"' + value + '"';
-        }
-
-        /// <summary>
-        ///     Returns the objects that repeats the most.
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<T> Repeats<T>(this IEnumerable<T> values)
-        {
-            return RepeatsN(values, 1);
-        }
-
         public static IEnumerable<T> RepeatsN<T>(this IEnumerable<T> values, int count)
         {
             return values.GroupBy(x => x)
