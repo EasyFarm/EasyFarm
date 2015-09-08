@@ -63,8 +63,9 @@ namespace EasyFarm.ViewModels
 
         private void AddIgnoredUnit()
         {
-            if (!Ignored.Contains(Name))
-                Ignored.Add(Name);
+            if (string.IsNullOrWhiteSpace(Name)) return;
+            if (Ignored.Contains(Name)) return;
+            Ignored.Add(Name);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace EasyFarm.ViewModels
             ClearCommand = new DelegateCommand(ClearTargetsCommand);
         }
 
-        public string TargetsName
+        public string Name
         {
             get { return Config.Instance.TargetName; }
             set { SetProperty(ref Config.Instance.TargetName, value); }
@@ -81,18 +81,17 @@ namespace EasyFarm.ViewModels
 
         private void DeleteTargetCommand()
         {
-            if (Targets.Contains(TargetsName))
+            if (Targets.Contains(Name))
             {
-                Targets.Remove(TargetsName);
+                Targets.Remove(Name);
             }
         }
 
         private void AddTargetCommand()
         {
-            if (!Targets.Contains(TargetsName))
-            {
-                Targets.Add(TargetsName);
-            }
+            if (string.IsNullOrWhiteSpace(Name)) return;
+            if (Targets.Contains(Name)) return;
+            Targets.Add(Name);
         }
     }
 }
