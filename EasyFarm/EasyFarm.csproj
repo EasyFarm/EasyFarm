@@ -261,7 +261,6 @@
     <Compile Include="Monitors\DeadMonitor.cs" />
     <Compile Include="Classes\ActionFilters.cs" />
     <Compile Include="Monitors\ProcessWatcher.cs" />
-    <Compile Include="Monitors\StuckMonitor.cs" />
     <Compile Include="Monitors\ZoneMonitor.cs" />
     <Compile Include="Monitors\PlayerMonitor.cs" />
     <Compile Include="Classes\UnitFilters.cs" />

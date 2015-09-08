@@ -57,14 +57,7 @@ namespace EasyFarm.Classes
             _timer.Elapsed += TimerTick;
             _timer.Start();
         }
-
-        public bool IsVelocityEnabled { get; set; }
-
-        public bool IsStuck
-        {
-            get { return _positionHistory.IsThresholdMet(GetIsStuck); }
-        }
-
+       
         public bool IsMoving
         {
             get
@@ -109,14 +102,6 @@ namespace EasyFarm.Classes
             {
                 _positionHistory.AddItem(Position);
             }
-        }
-
-        public bool GetIsStuck(FFACE.Position velocity)
-        {
-            if (velocity.X == 0 && velocity.Z == 0) return false;
-            if (velocity.X < .125 && velocity.Z < .250) return true;
-            if (velocity.X < .250 && velocity.Z < .125) return true;
-            return false;
         }
     }
 }
