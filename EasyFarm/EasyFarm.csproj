@@ -262,7 +262,6 @@
     <Compile Include="Classes\ActionFilters.cs" />
     <Compile Include="Monitors\ProcessWatcher.cs" />
     <Compile Include="Monitors\ZoneMonitor.cs" />
-    <Compile Include="Monitors\PlayerMonitor.cs" />
     <Compile Include="Classes\UnitFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\FiniteStateMachine.cs" />
