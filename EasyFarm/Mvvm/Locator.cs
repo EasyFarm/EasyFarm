@@ -24,13 +24,12 @@ using System.Reflection;
 namespace EasyFarm.Mvvm
 {
     /// <summary>
-    ///     A class to locate all enabled view models.
+    /// A class to locate all enabled view models.
     /// </summary>
     public class Locator<T, TResult> where T : Attribute
     {
         /// <summary>
-        ///     Returns the list of all view models marked as enabled by
-        ///     ViewModelAttributes.
+        /// Returns the list of all view models marked as enabled by ViewModelAttributes.
         /// </summary>
         /// <returns></returns>
         public List<ViewModelBase> GetEnabledViewModels()
@@ -46,7 +45,7 @@ namespace EasyFarm.Mvvm
                 .SelectMany(vmclass => vmclass.GetCustomAttributes<ViewModelAttribute>(false)
                     .Select(vmattribute =>
                     {
-                        var viewModel = (ViewModelBase) ConstructItem(vmclass, new Type[] {});
+                        var viewModel = (ViewModelBase)ConstructItem(vmclass, new Type[] { });
                         viewModel.VmName = vmattribute.Name;
                         return viewModel;
                     }));
@@ -55,7 +54,7 @@ namespace EasyFarm.Mvvm
         }
 
         /// <summary>
-        ///     Create an object with a given contructors parameters from a given type.
+        /// Create an object with a given contructors parameters from a given type.
         /// </summary>
         /// <param name="x"></param>
         /// <param name="constructorArgs"></param>
@@ -64,33 +63,12 @@ namespace EasyFarm.Mvvm
         {
             var ci = x.GetConstructor(constructorArgs);
             if (ci == null) return default(TResult);
-            var value = x.GetCustomAttributes(typeof (T), false).FirstOrDefault();
+            var value = x.GetCustomAttributes(typeof(T), false).FirstOrDefault();
             return value == null ? default(TResult) : ci.Invoke(constructorArgs);
         }
 
         /// <summary>
-        ///     Returns the list of all view models marked as enabled by
-        ///     ViewModelAttributes.
-        /// </summary>
-        /// <returns></returns>
-        public List<object> GetMarkedClasses(Type[] constructorArgs)
-        {
-            return ConstructMarkedClasses(GetMarkedTypes(), constructorArgs);
-        }
-
-        /// <summary>
-        ///     Create a list of objects with the given constructor paramters from a list of types.
-        /// </summary>
-        /// <param name="types"></param>
-        /// <param name="constructorArgs"></param>
-        /// <returns></returns>
-        public List<object> ConstructMarkedClasses(List<Type> types, Type[] constructorArgs)
-        {
-            return types.Select(x => ConstructItem(x, constructorArgs)).ToList();
-        }
-
-        /// <summary>
-        ///     Get a list of types that have been marked by an attribute.
+        /// Get a list of types that have been marked by an attribute.
         /// </summary>
         /// <returns></returns>
         public List<Type> GetMarkedTypes()
