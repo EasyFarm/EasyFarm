@@ -46,7 +46,7 @@ namespace EasyFarm.Tests.UnitTests
                     Targets = "Self"
                 };
                 var cure = new AbilityService("resources").CreateAbility("Cure");
-                Assert.Equals(test.ToString(), cure.ToString());
+                Assert.AreEqual(test.ToString(), cure.ToString());
             }
         }
     }
