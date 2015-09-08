@@ -219,7 +219,6 @@
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\AppInformer.cs" />
     <Compile Include="Classes\BoundingBox.cs" />
-    <Compile Include="Classes\MovementUtils.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Components\BaseState.cs" />
     <Compile Include="Components\GameEngine.cs" />
