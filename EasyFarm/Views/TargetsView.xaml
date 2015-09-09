@@ -23,8 +23,8 @@
                   Grid.Column="1"
                   Margin="5"
                   IsEditable="True"
-                  ItemsSource="{Binding Targets}"
-                  Text="{Binding Name}"
+                  ItemsSource="{Binding Values}"
+                  Text="{Binding Value}"
                   IsSynchronizedWithCurrentItem="True" />
 
         <Label Grid.Row="1" Grid.Column="0"

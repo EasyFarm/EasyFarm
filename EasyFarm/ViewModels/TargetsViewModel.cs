@@ -25,22 +25,15 @@ using Microsoft.Practices.Prism.Commands;
 namespace EasyFarm.ViewModels
 {
     [ViewModel("Targets")]
-    public class TargetsViewModel : ViewModelBase
+    public class TargetsViewModel : ListViewModel<string>
     {
-        public TargetsViewModel()
-        {
-            AddCommand = new DelegateCommand(AddTargetCommand);
-            DeleteCommand = new DelegateCommand(DeleteTargetCommand);
-            ClearCommand = new DelegateCommand(ClearTargetsCommand);
-        }
-
-        public string Name
+        public override string Value
         {
             get { return Config.Instance.TargetName; }
             set { SetProperty(ref Config.Instance.TargetName, value); }
         }
 
-        public ObservableCollection<string> Targets
+        public override ObservableCollection<string> Values
         {
             get { return Config.Instance.TargetedMobs; }
             set { SetProperty(ref Config.Instance.TargetedMobs, value); }
@@ -70,28 +63,10 @@ namespace EasyFarm.ViewModels
             set { SetProperty(ref Config.Instance.ClaimedFilter, value); }
         }
 
-        public ICommand AddCommand { get; set; }
-        public ICommand DeleteCommand { get; set; }
-        public ICommand ClearCommand { get; set; }
-
-        private void ClearTargetsCommand()
+        protected override void Add()
         {
-            Targets.Clear();
-        }
-
-        private void DeleteTargetCommand()
-        {
-            if (Targets.Contains(Name))
-            {
-                Targets.Remove(Name);
-            }
-        }
-
-        private void AddTargetCommand()
-        {
-            if (string.IsNullOrWhiteSpace(Name)) return;
-            if (Targets.Contains(Name)) return;
-            Targets.Add(Name);
+            if(string.IsNullOrWhiteSpace(Value)) return;
+            base.Add();
         }
     }
 }

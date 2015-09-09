@@ -241,6 +241,7 @@
     </Compile>
     <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="ViewModels\MasterViewModel.cs" />
+    <Compile Include="ViewModels\MobFilterViewModel.cs" />
     <Compile Include="ViewModels\ProcessSelectionViewModel.cs" />
     <Compile Include="Components\ApproachComponent.cs" />
     <Compile Include="Components\AttackContainer.cs" />
