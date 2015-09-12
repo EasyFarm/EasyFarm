@@ -51,3 +51,5 @@ You character will run and stop at the new waypoint.
 
 ##### Why is the program not targeting mobs correctly or not at all?
 * Try turning off the in-game auto target feature.
+
+#### [Download Version: 1.11.9.18](https://github.com/EasyFarm/EasyFarm/releases/download/1.11.9.18/Release.zip)
