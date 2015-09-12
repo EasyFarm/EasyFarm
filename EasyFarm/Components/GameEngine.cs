@@ -16,44 +16,62 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using System.Threading;
 using EasyFarm.Classes;
 using EasyFarm.Monitors;
 using FFACETools;
-using System.Threading.Tasks;
+using System;
+using System.Threading;
 
 namespace EasyFarm.Components
 {
     /// <summary>
-    ///     Controls whether or not the bot should run. Basically anything
-    ///     that can pause or resume the bot's engine should be here.
+    /// Controls whether or not the bot should run. Basically anything that can pause or resume the
+    /// bot's engine should be here.
     /// </summary>
     public class GameEngine
     {
         /// <summary>
-        ///     Provides information about game data.
+        /// Tells us whether the bot is working or not.
+        /// </summary>
+        public bool IsWorking;
+
+        /// <summary>
+        /// Monitors the player status to see if their dead. If so, the monitor will stop the
+        /// program from running.
+        /// </summary>
+        private readonly DeadMonitor _deadMonitor;
+
+        /// <summary>
+        /// Provides information about game data.
         /// </summary>
         private readonly FFACE _fface;
 
         /// <summary>
-        ///     The engine that controls player actions.
+        /// The engine that controls player actions.
         /// </summary>
         private readonly FiniteStateEngine _stateMachine;
 
         /// <summary>
-        ///     Tells us whether the bot is working or not.
+        /// Monitors for zone changes and allows for pausing / resuming the program after zoning.
         /// </summary>
-        public bool IsWorking;
+        private readonly ZoneMonitor _zoneMonitor;
 
         public GameEngine(FFACE fface)
         {
             _fface = fface;
+            _zoneMonitor = new ZoneMonitor(fface);
+            _deadMonitor = new DeadMonitor(fface);
             _stateMachine = new FiniteStateEngine(fface);
-        }
 
+            _zoneMonitor.Changed += ZoneMonitorZoneChanged;
+            _zoneMonitor.Start();
+
+            _deadMonitor.Changed += DeadMonitorStatusChanged;
+            _deadMonitor.Start();
+        }
+       
         /// <summary>
-        ///     Start the bot up
+        /// Start the bot up
         /// </summary>
         public void Start()
         {
@@ -62,12 +80,65 @@ namespace EasyFarm.Components
         }
 
         /// <summary>
-        ///     Stop the bot from going any further
+        /// Stop the bot from going any further
         /// </summary>
         public void Stop()
         {
             _stateMachine.Stop();
             IsWorking = false;
+        }        
+
+        /// <summary>
+        /// Monitors engine stats for player dead status and then shuts down the engine.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeadMonitorStatusChanged(object sender, EventArgs e)
+        {
+            // Do nothing if the engine is not running already.
+            if (!IsWorking)
+            {
+                return;
+            }
+
+            // Stop program from running to next waypoint.
+            _fface.Navigator.Reset();
+
+            // Tell the use we paused the program.
+            AppInformer.InformUser("Program Paused");
+
+            // Stop the engine from running.
+            Stop();
+        }
+
+        /// <summary>
+        /// Pauses the engine when the player zones and resumes after.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ZoneMonitorZoneChanged(object sender, EventArgs e)
+        {
+            // If the program is not running then bail out.
+            if (!IsWorking)
+            {
+                return;
+            }
+
+            AppInformer.InformUser("Program Paused");
+
+            // Stop the state machine.
+            Stop();
+
+            // Wait until our player has zoned;
+            while (_fface.Player.Stats.Str == 0)
+            {
+                Thread.Sleep(500);
+            }
+
+            // Start up the state machine again.
+            Start();
+
+            AppInformer.InformUser("Program Resumed");
         }
     }
 }
