@@ -18,8 +18,8 @@
         <ComboBox Margin="5"
                   Grid.Column="1"
                   IsEditable="True"
-                  ItemsSource="{Binding Ignored}"
-                  Text="{Binding Name}" />
+                  ItemsSource="{Binding Values}"
+                  Text="{Binding Value}" />
         <Label Grid.Row="0" Grid.Column="0" Content="Name" 
                VerticalAlignment="Center"/>
         <Grid Grid.Row="1"
@@ -31,15 +31,15 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0"
                     Margin="5"
-                    Command="{Binding AddIgnoredUnitCommand}"
+                    Command="{Binding AddCommand}"
                     Content="Add" />
             <Button Grid.Column="1"
                     Margin="5"
                     Content="Delete"
-                    Command="{Binding DeleteIgnoredUnitCommand}" />
+                    Command="{Binding DeleteCommand}" />
             <Button Grid.Column="2"
                     Margin="5"
-                    Command="{Binding ClearIgnoredUnitsCommand}"
+                    Command="{Binding ClearCommand}"
                     Content="Clear" />
         </Grid>
     </Grid>
