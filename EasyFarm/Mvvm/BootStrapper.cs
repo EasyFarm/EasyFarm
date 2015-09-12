@@ -18,9 +18,8 @@ You should have received a copy of the GNU General Public License
 
 using System.Windows;
 using EasyFarm.Views;
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.UnityExtensions;
-using Microsoft.Practices.ServiceLocation;
+using Prism.Modularity;
+using Prism.Unity;
 
 namespace EasyFarm.Mvvm
 {
@@ -28,13 +27,13 @@ namespace EasyFarm.Mvvm
     {
         protected override DependencyObject CreateShell()
         {
-            return ServiceLocator.Current.GetInstance<MasterView>();
+            return new MasterView();
         }
 
         protected override void InitializeModules()
         {
             base.InitializeModules();
-            Application.Current.MainWindow = (MasterView) Shell;
+            Application.Current.MainWindow = (MasterView)Shell;
             Application.Current.MainWindow.Show();
         }
 

@@ -71,30 +71,39 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="resources\abils.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="resources\abils.xml">
+    <None Include="resources\areas.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="resources\areas.xml">
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\items_armor.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="resources\items_armor.xml">
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\items_general.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="resources\items_general.xml">
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\items_weapons.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="resources\items_weapons.xml">
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\spells.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="resources\spells.xml">
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\status.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="resources\status.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

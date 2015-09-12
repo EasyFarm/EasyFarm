@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System.Collections.ObjectModel;
-using Microsoft.Practices.Prism.Mvvm;
+using Prism.Mvvm;
 
 namespace EasyFarm.Classes
 {

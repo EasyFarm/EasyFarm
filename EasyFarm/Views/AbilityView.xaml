@@ -6,12 +6,12 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    
+
     <UserControl.ContextMenu>
         <ContextMenu>
             <MenuItem x:Name="MniGeneral"
                       Header="General Options..."
-                      IsCheckable="True" />            
+                      IsCheckable="True" />
             <MenuItem x:Name="MniPlayer"
                       Header="Player Options..."
                       IsCheckable="True" />
@@ -74,8 +74,6 @@
                     <TextBox Grid.Column="1"
                              Margin="5"
                              ToolTip="Name of the move. "
-                             controls:TextboxHelper.Watermark="Enter move's name ..."
-                             controls:TextboxHelper.ClearTextButton="True"
                              Text="{Binding Path=Name}" />
                     <ComboBox Grid.Column="2"
                               Margin="5"
@@ -206,8 +204,6 @@
                          Grid.Column="1"
                          Margin="5"
                          ToolTip="Regular expression that checks the player's status effects. "
-                         controls:TextboxHelper.Watermark="Enter status effect name ..."
-                         controls:TextboxHelper.ClearTextButton="True"
                          Text="{Binding Path=StatusEffect}" />
 
                 <!-- Target's Health -->
@@ -253,8 +249,6 @@
                 <TextBox Margin="5"
                          Text="{Binding Path=TargetName}"
                          ToolTip="Regular expression that triggers moves on specific targets. "
-                         controls:TextboxHelper.Watermark="Enter target's name filter ..."
-                         controls:TextboxHelper.ClearTextButton="True"
                          Grid.Row="0"
                          Grid.Column="1" />
 

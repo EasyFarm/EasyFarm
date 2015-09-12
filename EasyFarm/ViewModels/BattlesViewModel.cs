@@ -21,7 +21,7 @@ using System.Linq;
 using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Mvvm;
-using Microsoft.Practices.Prism.Commands;
+using Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {

@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 using System;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
-using Microsoft.Practices.Prism.Mvvm;
+using Prism.Mvvm;
 
 namespace EasyFarm.Classes
 {

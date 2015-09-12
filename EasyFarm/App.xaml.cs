@@ -22,7 +22,6 @@ using EasyFarm.Logging;
 using EasyFarm.Mvvm;
 using EasyFarm.Properties;
 using Parsing.Services;
-using System.Windows.Threading;
 
 namespace EasyFarm
 {

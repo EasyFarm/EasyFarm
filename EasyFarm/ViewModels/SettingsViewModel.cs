@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Mvvm;
-using Microsoft.Practices.Prism.Commands;
+using Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {

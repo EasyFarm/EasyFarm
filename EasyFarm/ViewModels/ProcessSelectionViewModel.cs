@@ -3,8 +3,8 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
 using EasyFarm.Monitors;
-using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Mvvm;
+using Prism.Mvvm;
+using Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {

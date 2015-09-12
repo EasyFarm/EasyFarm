@@ -27,10 +27,9 @@ using EasyFarm.Logging;
 using EasyFarm.Mvvm;
 using EasyFarm.Views;
 using FFACETools;
-using Microsoft.Practices.Prism.Commands;
 using Application = System.Windows.Application;
-using System.Threading.Tasks;
-using Microsoft.Practices.Prism.PubSubEvents;
+using Prism.Commands;
+using Prism.Events;
 
 namespace EasyFarm.ViewModels
 {

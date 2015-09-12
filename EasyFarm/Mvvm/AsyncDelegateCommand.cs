@@ -1,6 +1,6 @@
 ﻿// Author: http://jake.ginnivan.net/awaitable-delegatecommand/
 
-using Microsoft.Practices.Prism.Commands;
+using Prism.Commands;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -31,7 +31,9 @@ namespace EasyFarm.Mvvm
     public interface IAsyncCommand<in T> : IRaiseCanExecuteChanged
     {
         Task ExecuteAsync(T obj);
+
         bool CanExecute(object obj);
+
         ICommand Command { get; }
     }
 

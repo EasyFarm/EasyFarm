@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
-using Microsoft.Practices.Prism.Mvvm;
+using Prism.Mvvm;
 
 namespace EasyFarm.Logging
 {

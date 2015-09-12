@@ -23,7 +23,7 @@ using System.Windows.Threading;
 using EasyFarm.Classes;
 using EasyFarm.Mvvm;
 using FFACETools;
-using Microsoft.Practices.Prism.Commands;
+using Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {

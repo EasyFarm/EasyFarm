@@ -18,14 +18,14 @@ You should have received a copy of the GNU General Public License
 
 using EasyFarm.Components;
 using FFACETools;
-using Microsoft.Practices.Prism.Mvvm;
+using Prism.Mvvm;
 
 namespace EasyFarm.Mvvm
 {
     public class ViewModelBase : BindableBase
     {
         /// <summary>
-        ///     View Model name for header in tabcontrol item.
+        ///     View Model name for header in tab control item.
         /// </summary>
         public string VmName { get; set; }
 
