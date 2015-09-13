@@ -43,6 +43,15 @@ namespace EasyFarm.Mvvm
 
             // Create a new game engine to control our character. 
             App.GameEngine = new GameEngine(FFACE);
+
+            if (OnSessionSet != null)
+            {
+                OnSessionSet(fface);
+            }
         }
+
+        public delegate void SessionSet(FFACE fface);
+
+        public static event SessionSet OnSessionSet;
     }
 }

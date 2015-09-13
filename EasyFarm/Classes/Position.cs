@@ -20,47 +20,16 @@ using FFACETools;
 
 namespace EasyFarm.Classes
 {
-    public class Waypoint
+    public class Position
     {
-        public Waypoint()
-        {
-            Position = new FFACE.Position();
-        }
-
-        public Waypoint(FFACE.Position position)
-        {
-            Position = position;
-        }
-
-        public float X
-        {
-            get { return Position.X; }
-            set { Position.X = value; }
-        }
-
-        public float Y
-        {
-            get { return Position.Y; }
-            set { Position.Y = value; }
-        }
-
-        public float Z
-        {
-            get { return Position.Z; }
-            set { Position.Z = value; }
-        }
-
-        public float H
-        {
-            get { return Position.H; }
-            set { Position.H = value; }
-        }
-
-        public FFACE.Position Position { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
+        public float H { get; set; }
 
         public override string ToString()
         {
-            return "X: " + Position.X + "Z: " + Position.Z;
+            return "X: " + X + "Z: " + Z;
         }
 
         public override int GetHashCode()
@@ -70,8 +39,9 @@ namespace EasyFarm.Classes
 
         public override bool Equals(object obj)
         {
-            var waypoint = obj as Waypoint;
-            return waypoint != null && Position == waypoint.Position;
+            var other = obj as Position;
+            if (other == null) return false;
+            return this.X != other.X && this.Y != other.Y && this.Z != other.Z && this.H != other.H;
         }
     }
 }

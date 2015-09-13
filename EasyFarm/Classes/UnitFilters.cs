@@ -115,7 +115,7 @@ namespace EasyFarm.Classes
         /// <param name="mob"></param>
         /// <param name="waypoint"></param>
         /// <returns></returns>
-        private static double Distance(Unit mob, Waypoint waypoint)
+        private static double Distance(Unit mob, Position waypoint)
         {
             return Math.Sqrt(Math.Pow(waypoint.X - mob.PosX, 2) + Math.Pow(waypoint.Z - mob.PosZ, 2));
         }

@@ -45,11 +45,24 @@ namespace EasyFarm.Classes
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
         /// <exception cref="System.InvalidOperationException"></exception>
-        public void Save<T>(T value)
+        public bool TrySave<T>(T value)
         {
-            var path = GetSavePath();
-            if (string.IsNullOrWhiteSpace(path)) return;
-            Serialization.Serialize(path, value);
+            string path = GetSavePath();
+
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return false;
+            }
+
+            try
+            {                
+                Serialization.Serialize(path, value);
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -59,11 +72,23 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         /// ///
         /// <exception cref="InvalidOperationException"></exception>
-        public T Load<T>()
+        public T TryLoad<T>()
         {
-            var path = GetLoadPath();
-            if (!File.Exists(path)) return default(T);
-            return Serialization.Deserialize<T>(path);
+            string path = GetLoadPath();
+
+            if (!File.Exists(path))
+            {
+                return default(T);
+            }
+
+            try
+            {                
+                return Serialization.Deserialize<T>(path);
+            }
+            catch (InvalidOperationException)
+            {
+                return default(T);
+            }
         }
 
         private string GetSavePath()

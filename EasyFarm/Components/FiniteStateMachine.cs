@@ -60,7 +60,7 @@ namespace EasyFarm.Components
             while (true)
             {
                 Run();
-                Task task = Task.Delay(1000, _cancellation.Token);
+                Task task = Task.Delay(100, _cancellation.Token);
                 try { await task; }
                 catch (TaskCanceledException){ return; }
             }

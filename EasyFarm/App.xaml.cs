@@ -22,6 +22,9 @@ using EasyFarm.Logging;
 using EasyFarm.Mvvm;
 using EasyFarm.Properties;
 using Parsing.Services;
+using FFACETools;
+using AutoMapper;
+using EasyFarm.Classes;
 
 namespace EasyFarm
 {
@@ -62,11 +65,10 @@ namespace EasyFarm
         /// </summary>
         /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
-        {
+        {            
             base.OnStartup(e);
-
+            Mapper.CreateMap<FFACE.Position, Position>().ReverseMap();
             Logger.Write.ApplicationStart("Application starting");
-
             var bootStrapper = new BootStrapper();
             bootStrapper.Run();
         }
@@ -80,7 +82,5 @@ namespace EasyFarm
             Logger.Write.ApplicationStart("Application exiting");
             Settings.Default.Save();
         }
-
-
     }
 }

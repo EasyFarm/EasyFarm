@@ -21,6 +21,7 @@ using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Parsing.Abilities;
 using Parsing.Services;
+using Parsing.Types;
 
 namespace EasyFarm.Tests.UnitTests
 {
@@ -43,7 +44,7 @@ namespace EasyFarm.Tests.UnitTests
                 {
                     Prefix = "/magic",
                     English = "Cure",
-                    Targets = "Self"
+                    TargetType = TargetType.Self
                 };
                 var cure = new AbilityService("resources").CreateAbility("Cure");
                 Assert.AreEqual(test.ToString(), cure.ToString());

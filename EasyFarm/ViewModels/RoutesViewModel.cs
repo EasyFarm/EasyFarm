@@ -19,52 +19,47 @@ You should have received a copy of the GNU General Public License
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.Windows.Threading;
 using EasyFarm.Classes;
 using EasyFarm.Mvvm;
-using FFACETools;
 using Prism.Commands;
+using EasyFarm.Memory;
+using FFACETools;
+using System.Threading;
 
 namespace EasyFarm.ViewModels
 {
     [ViewModel("Routes")]
     public class RoutesViewModel : ViewModelBase
     {
-        /// <summary>
-        ///     Recorder to record new waypoints into our path.
-        /// </summary>
-        private readonly DispatcherTimer _pathRecorder;
+        private PathRecorder _recorder;
 
-        /// <summary>
-        ///     Saves the route to file on user request.
-        /// </summary>
-        private readonly SettingsManager _settingsManager;
-
-        /// <summary>
-        ///     Used by the recorder to avoid duplicate, successive waypoints.
-        ///     (Identicle waypoints are allowed, just not in succession.)
-        /// </summary>
-        private FFACE.Position _lastPosition = new FFACE.Position();
+        private SettingsManager _settings;
 
         private string _recordHeader;
 
         public RoutesViewModel()
         {
-            _pathRecorder = new DispatcherTimer();
-            _pathRecorder.Tick += RouteRecorder_Tick;
-            _pathRecorder.Interval = new TimeSpan(0, 0, 1);
-
+            _settings = new SettingsManager("ewl", "EasyFarm Waypoint List");
+                        
             ClearCommand = new DelegateCommand(ClearRoute);
-            RecordCommand = new DelegateCommand(RecordRoute);
-            SaveCommand = new DelegateCommand(SaveRoute);
-            LoadCommand = new DelegateCommand(LoadRoute);
-
-            _settingsManager = new SettingsManager(
-                "ewl",
-                "EasyFarm Waypoint List"
-                );
-
+            RecordCommand = new DelegateCommand(Record);
+            SaveCommand = new DelegateCommand(Save);
+            LoadCommand = new DelegateCommand(Load);            
             RecordHeader = "Record";
+
+            // Create recorder on loaded fface session. 
+            ViewModelBase.OnSessionSet += ViewModelBase_OnSessionSet;
+        }
+
+        private void ViewModelBase_OnSessionSet(FFACE fface)
+        {
+            _recorder = new PathRecorder(new MemorySource(fface));
+            _recorder.OnPositionAdded += _recorder_OnPositionAdded;
+        }
+
+        private void _recorder_OnPositionAdded(Position position)
+        {
+            App.Current.Dispatcher.Invoke(() => this.Route.Add(position));
         }
 
         public string RecordHeader
@@ -76,7 +71,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Exposes the list of waypoints to the user.
         /// </summary>
-        public ObservableCollection<Waypoint> Route
+        public ObservableCollection<Position> Route
         {
             get { return Config.Instance.Waypoints; }
             set { SetProperty(ref Config.Instance.Waypoints, value); }
@@ -105,7 +100,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Clears the waypoint list.
         /// </summary>
-        public void ClearRoute()
+        private void ClearRoute()
         {
             Route.Clear();
         }
@@ -114,7 +109,7 @@ namespace EasyFarm.ViewModels
         ///     Pauses and resumes the path recorder based on
         ///     its current state.
         /// </summary>
-        public void RecordRoute()
+        private void Record()
         {
             // Return when the user has not selected a process. 
             if (FFACE == null)
@@ -123,14 +118,14 @@ namespace EasyFarm.ViewModels
                 return;
             }
 
-            if (!_pathRecorder.IsEnabled)
+            if (!_recorder.IsRecording)
             {
-                _pathRecorder.Start();
+                _recorder.Start();
                 RecordHeader = "Recording!";
             }
             else
             {
-                _pathRecorder.Stop();
+                _recorder.Stop();
                 RecordHeader = "Record";
             }
         }
@@ -138,14 +133,14 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Saves the route data.
         /// </summary>
-        private void SaveRoute()
+        private void Save()
         {
-            try
+            if(_settings.TrySave<ObservableCollection<Position>>(Route))
             {
-                _settingsManager.Save(Route);
+                
                 AppInformer.InformUser("Path has been saved.");
             }
-            catch (InvalidOperationException)
+            else 
             {
                 AppInformer.InformUser("Failed to save path.");
             }
@@ -154,49 +149,18 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Loads the route data.
         /// </summary>
-        private void LoadRoute()
+        private void Load()
         {
-            try
+            Route = _settings.TryLoad<ObservableCollection<Position>>();
+
+            if (Route != null)
             {
-                // Load the path
-                var path = _settingsManager.Load<ObservableCollection<Waypoint>>();
-
-                // Did we fail to load the settings?
-                if (path == null)
-                {
-                    AppInformer.InformUser("Failed to load the path.");
-                    return;
-                }
-
                 AppInformer.InformUser("Path has been loaded.");
-
-                Route = path;
             }
-            catch (InvalidOperationException)
+            else
             {
                 AppInformer.InformUser("Failed to load the path.");
             }
-        }
-
-        /// <summary>
-        ///     Records a new path for the player to travel.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void RouteRecorder_Tick(object sender, EventArgs e)
-        {
-            // Add a new waypoint only when we are not standing at 
-            // our last position. 
-            var playerPosition = FFACE.Player.Position;
-
-            // Update the path if we've changed out position. Rotating our heading does not
-            // count as the player moving. 
-            if (playerPosition.X != _lastPosition.X || playerPosition.Z != _lastPosition.Z)
-            {
-                // Add the new waypoint. 
-                Config.Instance.Waypoints.Add(new Waypoint(playerPosition));
-                _lastPosition = playerPosition;
-            }
-        }
+        }        
     }
 }

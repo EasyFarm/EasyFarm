@@ -21,6 +21,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using EasyFarm.Classes;
 using FFACETools;
+using AutoMapper;
 
 namespace EasyFarm.Components
 {
@@ -43,7 +44,7 @@ namespace EasyFarm.Components
         /// </summary>
         public List<FFACE.Position> Path
         {
-            get { return Config.Instance.Waypoints.Select(x => x.Position).ToList(); }
+            get { return Config.Instance.Waypoints.Select(x => Mapper.Map<Position, FFACE.Position>(x)).ToList(); }
         }
 
         public override bool CheckComponent()
