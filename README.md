@@ -1,7 +1,16 @@
 ### EasyFarm
-EasyFarm is a general purpose farming tool for Final Fantasy XI.
+EasyFarm is a general purpose farming tool for Final Fantasy XI. 
 
 ![EasyFarm GUI](http://i.imgur.com/pcrEm66.png)
+
+#### Downloads 
+* [GitHub](https://github.com/EasyFarm/EasyFarm/releases)
+
+  Release.zip contains the latest version. 
+  
+* [AppVeyor](https://ci.appveyor.com/project/Mykezero/easyfarm/history) [![Build status](https://ci.appveyor.com/api/projects/status/6o73j4hrbk02xroq/branch/master?svg=true)](https://ci.appveyor.com/project/Mykezero/easyfarm/branch/master)
+
+  EasyFarm\EasyFarm.zip contains the latest version. 
 
 #### License
 EasyFarm is free software produced under the GPLv3 license with the goal of producing a first class automation software for Final Fantasy XI that is freely accessible to everyone. 
@@ -51,5 +60,3 @@ You character will run and stop at the new waypoint.
 
 ##### Why is the program not targeting mobs correctly or not at all?
 * Try turning off the in-game auto target feature.
-
-#### [Download Version: 1.11.9.18](https://github.com/EasyFarm/EasyFarm/releases/download/1.11.9.18/Release.zip)
