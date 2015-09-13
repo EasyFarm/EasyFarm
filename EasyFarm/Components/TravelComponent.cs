@@ -77,7 +77,7 @@ namespace EasyFarm.Components
             // Reverse the waypoint path. 
             if (_position == Path.Count)
             {
-                Config.Instance.Waypoints = new ObservableCollection<Waypoint>(
+                Config.Instance.Waypoints = new ObservableCollection<Position>(
                     Config.Instance.Waypoints.Reverse());
 
                 // Copy new waypoint path from config. 
