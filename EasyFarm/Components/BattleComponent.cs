@@ -25,24 +25,13 @@ namespace EasyFarm.Components
     /// <summary>
     ///     A class for defeating monsters.
     /// </summary>
-    public class BattleComponent : BaseState
+    public class BattleComponent : CombatBaseState
     {
         private readonly Executor _executor;
-        private readonly FFACE _fface;
 
-        public BattleComponent(FFACE fface)
+        public BattleComponent(FFACE fface) : base(fface)
         {
-            _fface = fface;
             _executor = new Executor(fface);
-        }
-
-        /// <summary>
-        ///     Who we are trying to kill currently
-        /// </summary>
-        public Unit Target
-        {
-            get { return AttackContainer.TargetUnit; }
-            set { AttackContainer.TargetUnit = value; }
         }
 
         public override bool CheckComponent()
@@ -51,26 +40,26 @@ namespace EasyFarm.Components
             if (Target == null || Target.IsDead || Target.Id == 0) return false;
 
             // Mobs has not been pulled if pulling moves are available. 
-            if (!AttackContainer.FightStarted) return false;
+            if (!CombatBaseState.IsFighting) return false;
 
             // Engage is enabled and we are not engaged. We cannot proceed. 
             if (Config.Instance.IsEngageEnabled)
-                return _fface.Player.Status.Equals(Status.Fighting);
+                return FFACE.Player.Status.Equals(Status.Fighting);
             // Engage is not checked, so just proceed to battle. 
             return true;
         }
 
         public override void EnterComponent()
         {
-            Player.Stand(_fface);
-            _fface.Navigator.Reset();
+            Player.Stand(FFACE);
+            FFACE.Navigator.Reset();
         }
 
         public override void RunComponent()
         {
             // Cast only one action to prevent blocking curing. 
             var action = Config.Instance.BattleLists["Battle"].Actions
-                .FirstOrDefault(x => ActionFilters.TargetedFilter(_fface, x, Target));
+                .FirstOrDefault(x => ActionFilters.TargetedFilter(FFACE, x, Target));
 
             if (action != null)
             {

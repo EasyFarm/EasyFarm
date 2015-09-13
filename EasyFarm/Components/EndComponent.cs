@@ -30,37 +30,29 @@ namespace EasyFarm.Components
     ///     lists can fire and replaces targets that are dead, null,
     ///     empty or invalid.
     /// </summary>
-    public class EndComponent : BaseState
+    public class EndComponent : CombatBaseState
     {
         private readonly Executor _executor;
-        private readonly FFACE _fface;
         private readonly UnitService _units;
         private DateTime _lastTargetCheck = DateTime.Now;
 
-        public EndComponent(FFACE fface)
+        public EndComponent(FFACE fface) : base(fface)
         {
-            _fface = fface;
             _executor = new Executor(fface);
             _units = new UnitService(fface);
-        }
-
-        public Unit Target
-        {
-            get { return AttackContainer.TargetUnit; }
-            set { AttackContainer.TargetUnit = value; }
         }
 
         public override bool CheckComponent()
         {
             // Prevent making the player stand up from resting. 
-            if (new RestComponent(_fface).CheckComponent()) return false;
+            if (new RestComponent(FFACE).CheckComponent()) return false;
 
             // Null, dead and empty mob check. 
             if (Target == null || Target.IsDead) return true;
 
             // Creature is unkillable and does not meets the 
             // user's criteria for valid mobs defined in MobFilters. 
-            return !UnitFilters.MobFilter(_fface, Target);
+            return !UnitFilters.MobFilter(FFACE, Target);
         }
 
         /// <summary>
@@ -68,9 +60,9 @@ namespace EasyFarm.Components
         /// </summary>
         public override void EnterComponent()
         {
-            while (_fface.Player.Status == Status.Fighting)
+            while (FFACE.Player.Status == Status.Fighting)
             {
-                Player.Disengage(_fface);
+                Player.Disengage(FFACE);
             }
         }
 
@@ -78,14 +70,14 @@ namespace EasyFarm.Components
         {
             // Execute moves. 
             var usable = Config.Instance.BattleLists["End"].Actions
-                .Where(x => ActionFilters.BuffingFilter(_fface, x));
+                .Where(x => ActionFilters.BuffingFilter(FFACE, x));
 
             _executor.UseBuffingActions(usable);
 
             if (_lastTargetCheck.AddSeconds(Constants.UnitArrayCheckRate) < DateTime.Now)
             {
                 // First get the first mob by distance. 
-                var mobs = _units.MobArray.Where(x => UnitFilters.MobFilter(_fface, x))
+                var mobs = _units.MobArray.Where(x => UnitFilters.MobFilter(FFACE, x))
                     .OrderByDescending(x => x.PartyClaim)
                     .ThenByDescending(x => x.HasAggroed)
                     .ThenBy(x => x.Distance)
@@ -93,7 +85,7 @@ namespace EasyFarm.Components
 
                 // Set our new target at the end so that we don't accidentaly cast on a 
                 // new target. 
-                AttackContainer.TargetUnit = mobs.FirstOrDefault();
+                Target = mobs.FirstOrDefault();
 
                 _lastTargetCheck = DateTime.Now;
             }
@@ -114,7 +106,7 @@ namespace EasyFarm.Components
         {
             // Set to false in order to use starting moves again in the 
             // attack Component. 
-            AttackContainer.FightStarted = false;
+            IsFighting = false;
         }
     }
 }

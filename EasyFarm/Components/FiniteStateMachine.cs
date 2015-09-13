@@ -33,6 +33,7 @@ namespace EasyFarm.Components
     {
         private List<IState> _components;
         private CancellationTokenSource _cancellation;
+        private IState _lastRun;
 
         public FiniteStateEngine(FFACE fface)
         {
@@ -40,7 +41,6 @@ namespace EasyFarm.Components
 
             //Create the states
             AddComponent(new RestComponent(fface) { Priority = 2 });
-            AddComponent(new AttackContainer(fface) { Priority = 1 });
             AddComponent(new ApproachComponent(fface) { Priority = 0 });
             AddComponent(new BattleComponent(fface) { Priority = 3 });
             AddComponent(new WeaponSkillComponent(fface) { Priority = 2 });
@@ -58,11 +58,11 @@ namespace EasyFarm.Components
             _cancellation = new CancellationTokenSource();
 
             while (true)
-            {
+            {                
                 Run();
                 Task task = Task.Delay(100, _cancellation.Token);
                 try { await task; }
-                catch (TaskCanceledException){ return; }
+                catch (TaskCanceledException){ return; }                
             }
         }
 
@@ -76,10 +76,22 @@ namespace EasyFarm.Components
             {
                 if (mc.CheckComponent())
                 {
-                    mc.EnterComponent();
+                    // Run current state's enter method. 
+                    if (_lastRun != mc)
+                    {
+                        mc.EnterComponent();
+                    }
+
+                    // Run current state's run method. 
                     mc.RunComponent();
-                    mc.ExitComponent();
-                }
+                    _lastRun = mc;
+
+                    // Run last state's exits method. 
+                    if (_lastRun != null && _lastRun != mc)
+                    {
+                        _lastRun.ExitComponent();
+                    }
+                }                
             }
         }
 

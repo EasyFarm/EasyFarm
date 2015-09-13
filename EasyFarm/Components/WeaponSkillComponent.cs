@@ -25,22 +25,14 @@ namespace EasyFarm.Components
     /// <summary>
     ///     Performs weaponskills on targets.
     /// </summary>
-    public class WeaponSkillComponent : BaseState
+    public class WeaponSkillComponent : CombatBaseState
     {
-        public WeaponSkillComponent(FFACE fface)
+        public WeaponSkillComponent(FFACE fface) : base(fface)
         {
-            FFACE = fface;
             Executor = new Executor(fface);
         }
 
-        public FFACE FFACE { get; set; }
         public Executor Executor { get; set; }
-
-        public Unit Target
-        {
-            get { return AttackContainer.TargetUnit; }
-            set { AttackContainer.TargetUnit = value; }
-        }
 
         public override bool CheckComponent()
         {

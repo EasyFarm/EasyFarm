@@ -24,14 +24,14 @@ namespace EasyFarm.Components
     /// <summary>
     ///     A class for defeating monsters.
     /// </summary>
-    public class AttackContainer : BaseState
+    public class CombatBaseState : BaseState
     {
-        static AttackContainer()
+        static CombatBaseState()
         {
-            FightStarted = false;
+           IsFighting = false;
         }
 
-        public AttackContainer(FFACE fface)
+        public CombatBaseState(FFACE fface)
         {
             FFACE = fface;
         }
@@ -39,31 +39,16 @@ namespace EasyFarm.Components
         /// <summary>
         ///     Whether the fight has started or not.
         /// </summary>
-        public static bool FightStarted { get; set; }
+        public static bool IsFighting { get; set; }
+
+        /// <summary>
+        ///     Who we are trying to kill currently
+        /// </summary>
+        public static Unit Target { get; set; }
 
         /// <summary>
         ///     The game session.
         /// </summary>
         public FFACE FFACE { get; set; }
-
-        /// <summary>
-        ///     Who we are trying to kill currently
-        /// </summary>
-        public static Unit TargetUnit { get; set; }
-
-        public override bool CheckComponent()
-        {
-            // If we're injured. 
-            if (new RestComponent(FFACE).CheckComponent()) return false;
-
-            if (TargetUnit != null)
-            {
-                // Target is out of distance and we should not attack it. 
-                if (TargetUnit.Distance > Config.Instance.WanderDistance) return false;
-            }
-
-            // Return if other components need to fire. 
-            return base.CheckComponent();
-        }
     }
 }

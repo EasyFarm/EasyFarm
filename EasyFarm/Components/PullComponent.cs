@@ -22,22 +22,14 @@ using FFACETools;
 
 namespace EasyFarm.Components
 {
-    public class PullComponent : BaseState
+    public class PullComponent : CombatBaseState
     {
-        public PullComponent(FFACE fface)
+        public PullComponent(FFACE fface) : base(fface)
         {
-            FFACE = fface;
             Executor = new Executor(fface);
         }
 
-        public FFACE FFACE { get; set; }
         public Executor Executor { get; set; }
-
-        public Unit Target
-        {
-            get { return AttackContainer.TargetUnit; }
-            set { AttackContainer.TargetUnit = value; }
-        }
 
         /// <summary>
         ///     Allow component to run when moves need to be triggered or
@@ -62,7 +54,7 @@ namespace EasyFarm.Components
         public override void RunComponent()
         {
             // Do not pull if we've done so already. 
-            if (AttackContainer.FightStarted) return;
+            if (CombatBaseState.IsFighting) return;
 
             // Only pull if we have moves. 
             if (Config.Instance.BattleLists["Pull"]
@@ -82,13 +74,13 @@ namespace EasyFarm.Components
         public override void ExitComponent()
         {
             if (Target.Status.Equals(Status.Fighting))
-                AttackContainer.FightStarted = true;
+                CombatBaseState.IsFighting = true;
             // No moves in pull list, set FightStarted to true to let
             // other components who depend on it trigger. 
             else if (!Config.Instance.BattleLists["Pull"].Actions.Any(x => x.IsEnabled))
-                AttackContainer.FightStarted = true;
+                CombatBaseState.IsFighting = true;
             else
-                AttackContainer.FightStarted = false;
+                CombatBaseState.IsFighting = false;
         }
     }
 }

@@ -53,7 +53,7 @@ namespace EasyFarm.Components
             if (Config.Instance.Waypoints.Count <= 0) return false;
 
             // We are not able to attack any creatures. 
-            if (new AttackContainer(_fface).CheckComponent()) return false;
+            if (new CombatBaseState(_fface).CheckComponent()) return false;
 
             // We don't have to rest. 
             if (new RestComponent(_fface).CheckComponent()) return false;

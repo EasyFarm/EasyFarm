@@ -177,7 +177,7 @@
     <Compile Include="ViewModels\MasterViewModel.cs" />
     <Compile Include="ViewModels\ProcessSelectionViewModel.cs" />
     <Compile Include="Components\ApproachComponent.cs" />
-    <Compile Include="Components\AttackContainer.cs" />
+    <Compile Include="Components\CombatBaseState.cs" />
     <Compile Include="Classes\BattleAbility.cs" />
     <Compile Include="Classes\Caster.cs" />
     <Compile Include="Classes\Executor.cs" />

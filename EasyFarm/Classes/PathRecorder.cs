@@ -92,8 +92,7 @@ namespace EasyFarm.Classes
         {
             // Add a new waypoint only when we are not standing at 
             // our last position. 
-            var position = _memory.GetPlayerPosition();
-            
+            var position = _memory.GetPlayerPosition();            
 
             // Update the path if we've changed out position. Rotating our heading does not
             // count as the player moving. 

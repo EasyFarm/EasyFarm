@@ -25,20 +25,9 @@ namespace EasyFarm.Components
     /// <summary>
     ///     Moves to target enemies.
     /// </summary>
-    public class ApproachComponent : BaseState
+    public class ApproachComponent : CombatBaseState
     {
-        public ApproachComponent(FFACE fface)
-        {
-            FFACE = fface;
-        }
-
-        public FFACE FFACE { get; set; }
-
-        public Unit Target
-        {
-            get { return AttackContainer.TargetUnit; }
-            set { AttackContainer.TargetUnit = value; }
-        }
+        public ApproachComponent(FFACE fface) : base(fface) { }
 
         public override bool CheckComponent()
         {

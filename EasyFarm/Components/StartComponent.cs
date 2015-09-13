@@ -25,22 +25,14 @@ namespace EasyFarm.Components
     /// <summary>
     ///     Buffs the player.
     /// </summary>
-    public class StartComponent : BaseState
+    public class StartComponent : CombatBaseState
     {
-        public StartComponent(FFACE fface)
+        public StartComponent(FFACE fface) : base(fface)
         {
-            FFACE = fface;
             Executor = new Executor(fface);
         }
 
-        public FFACE FFACE { get; set; }
         public Executor Executor { get; set; }
-
-        public Unit Target
-        {
-            get { return AttackContainer.TargetUnit; }
-            set { AttackContainer.TargetUnit = value; }
-        }
 
         public override bool CheckComponent()
         {
@@ -48,7 +40,7 @@ namespace EasyFarm.Components
             if (Target == null || Target.IsDead || Target.Id == 0) return false;
 
             // Return true if fight has not started. 
-            return !AttackContainer.FightStarted;
+            return !IsFighting;
         }
 
         public override void EnterComponent()
