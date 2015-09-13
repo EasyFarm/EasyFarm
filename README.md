@@ -8,7 +8,7 @@ EasyFarm is a general purpose farming tool for Final Fantasy XI.
 
   Release.zip contains the latest version. 
   
-* [AppVeyor](https://ci.appveyor.com/project/Mykezero/easyfarm/history) [![Build status](https://ci.appveyor.com/api/projects/status/6o73j4hrbk02xroq/branch/master?svg=true)](https://ci.appveyor.com/project/Mykezero/easyfarm/branch/master)
+* [AppVeyor](https://ci.appveyor.com/project/Mykezero/easyfarm/build/artifacts) [![Build status](https://ci.appveyor.com/api/projects/status/6o73j4hrbk02xroq/branch/master?svg=true)](https://ci.appveyor.com/project/Mykezero/easyfarm/branch/master)
 
   EasyFarm\EasyFarm.zip contains the latest version. 
 
