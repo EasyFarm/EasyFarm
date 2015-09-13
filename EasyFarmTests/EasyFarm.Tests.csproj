@@ -27,7 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -37,21 +37,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FFACETools, Version=1.3.1.21, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\EasyFarm\Dependencies\FFACETools.dll</HintPath>
-    </Reference>
     <Reference Include="Moq, Version=4.2.1507.118, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Data" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -77,6 +71,10 @@
     <ProjectReference Include="..\EasyFarm\EasyFarm.csproj">
       <Project>{14508978-627b-46ae-9779-1f6b4fb0611e}</Project>
       <Name>EasyFarm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FFACETools\FFACETools.csproj">
+      <Project>{37456169-2b9e-49a7-8b20-a160c180e453}</Project>
+      <Name>FFACETools</Name>
     </ProjectReference>
     <ProjectReference Include="..\Parsing\Parsing.csproj">
       <Project>{7008daf7-d3aa-41a4-9d85-8ec168d5d372}</Project>
@@ -119,7 +117,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>
