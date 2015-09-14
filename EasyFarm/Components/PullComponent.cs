@@ -38,8 +38,8 @@ namespace EasyFarm.Components
         /// <returns></returns>
         public override bool CheckComponent()
         {
-            // Target not null, dead or empty.
-            return (Target != null && !Target.IsDead && Target.Id != 0);
+            if (new RestComponent(FFACE).CheckComponent()) return false;
+            return UnitFilters.MobFilter(FFACE, Target);
         }
 
         public override void EnterComponent()
@@ -71,16 +71,6 @@ namespace EasyFarm.Components
         ///     Handle all cases of setting fight started to proper values
         ///     so other components can fire.
         /// </summary>
-        public override void ExitComponent()
-        {
-            if (Target.Status.Equals(Status.Fighting))
-                CombatBaseState.IsFighting = true;
-            // No moves in pull list, set FightStarted to true to let
-            // other components who depend on it trigger. 
-            else if (!Config.Instance.BattleLists["Pull"].Actions.Any(x => x.IsEnabled))
-                CombatBaseState.IsFighting = true;
-            else
-                CombatBaseState.IsFighting = false;
-        }
+        public override void ExitComponent() { }
     }
 }

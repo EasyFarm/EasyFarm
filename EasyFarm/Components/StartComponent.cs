@@ -36,11 +36,13 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
+            if (new RestComponent(FFACE).CheckComponent()) return false;
+
             // target dead or null. 
-            if (Target == null || Target.IsDead || Target.Id == 0) return false;
+            if (!UnitFilters.MobFilter(FFACE, Target)) return false;
 
             // Return true if fight has not started. 
-            return !IsFighting;
+            return !Target.Status.Equals(Status.Fighting);
         }
 
         public override void EnterComponent()

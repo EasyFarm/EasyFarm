@@ -163,6 +163,8 @@
     <Compile Include="Components\GameEngine.cs" />
     <Compile Include="Components\IState.cs" />
     <Compile Include="Components\RestComponent.cs" />
+    <Compile Include="Components\SetFightingState.cs" />
+    <Compile Include="Components\SetTargetState.cs" />
     <Compile Include="Components\TravelComponent.cs" />
     <Compile Include="Memory\IMemorySource.cs" />
     <Compile Include="Memory\MemorySource.cs" />

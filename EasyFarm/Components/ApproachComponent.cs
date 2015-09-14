@@ -31,8 +31,10 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
+            if (new RestComponent(FFACE).CheckComponent()) return false;
+
             // Target dead or null.
-            if (Target == null || Target.IsDead) return false;
+            if (!UnitFilters.MobFilter(FFACE, Target)) return false;
 
             // We should approach mobs that have aggroed or have been pulled. 
             if (Target.Status.Equals(Status.Fighting)) return true;

@@ -49,7 +49,7 @@ namespace EasyFarm.Components
             // Stop resting. 
             if (_fface.Player.Status.Equals(Status.Healing))
             {
-                _fface.Windower.SendString(Constants.RestingOff);
+                Player.Stand(_fface);
             }
 
             // Stop moving. 

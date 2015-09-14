@@ -41,8 +41,8 @@ namespace EasyFarm.Classes
         public static bool MobFilter(FFACE fface, Unit mob)
         {
             // Function to use to filter surrounding mobs by. General Mob Filtering Criteria
-            if (fface == null) throw new ArgumentNullException("fface");
-            if (mob == null) throw new ArgumentNullException("mob");
+            if (fface == null) return false;
+            if (mob == null) return false;
 
             // Mob not active
             if (!mob.IsActive) return false;

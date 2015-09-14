@@ -36,15 +36,20 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            // target null or dead. 
-            if (Target == null || Target.IsDead || Target.Id == 0) return false;
+            if (new RestComponent(FFACE).CheckComponent()) return false;
 
             // Mobs has not been pulled if pulling moves are available. 
-            if (!CombatBaseState.IsFighting) return false;
+            if (!IsFighting) return false;
+
+            // target null or dead. 
+            if (!UnitFilters.MobFilter(FFACE, Target)) return false;
 
             // Engage is enabled and we are not engaged. We cannot proceed. 
             if (Config.Instance.IsEngageEnabled)
+            {
                 return FFACE.Player.Status.Equals(Status.Fighting);
+            }
+
             // Engage is not checked, so just proceed to battle. 
             return true;
         }

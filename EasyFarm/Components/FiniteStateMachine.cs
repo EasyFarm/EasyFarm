@@ -31,15 +31,15 @@ namespace EasyFarm.Components
 {
     public class FiniteStateEngine
     {
-        private List<IState> _components;
-        private CancellationTokenSource _cancellation;
-        private IState _lastRun;
+        private List<IState> _components = new List<IState>();
+        private CancellationTokenSource _cancellation = new CancellationTokenSource();
+        private TypeCache<bool> _cache = new TypeCache<bool>();
 
         public FiniteStateEngine(FFACE fface)
         {
-            _components = new List<IState>();
-
             //Create the states
+            AddComponent(new SetTargetState(fface) { Priority = 6 });
+            AddComponent(new SetFightingState(fface) { Priority = 6 });
             AddComponent(new RestComponent(fface) { Priority = 2 });
             AddComponent(new ApproachComponent(fface) { Priority = 0 });
             AddComponent(new BattleComponent(fface) { Priority = 3 });
@@ -53,16 +53,21 @@ namespace EasyFarm.Components
             _components.ForEach(x => x.Enabled = true);
         }
 
-        private async Task MainLoop()
+        private void MainLoop()
         {
             _cancellation = new CancellationTokenSource();
 
             while (true)
-            {                
-                Run();
-                Task task = Task.Delay(100, _cancellation.Token);
-                try { await task; }
-                catch (TaskCanceledException){ return; }                
+            {
+                try
+                {
+                    Run();
+                    Thread.Sleep(100);
+                }                                               
+                catch (TaskCanceledException)
+                {
+                    return;                    
+                }                
             }
         }
 
@@ -74,23 +79,20 @@ namespace EasyFarm.Components
             // Find a State that says it needs to run.
             foreach (var mc in _components.Where(x => x.Enabled))
             {
-                if (mc.CheckComponent())
+                bool IsRunnable = mc.CheckComponent();
+
+                // Run last state's exits method. 
+                if (_cache[mc] != IsRunnable)
                 {
-                    // Run current state's enter method. 
-                    if (_lastRun != mc)
-                    {
-                        mc.EnterComponent();
-                    }
+                    if (IsRunnable) mc.EnterComponent();
+                    else mc.ExitComponent();
+                    _cache[mc] = IsRunnable;
+                }
 
+                if (IsRunnable)
+                {
                     // Run current state's run method. 
-                    mc.RunComponent();
-                    _lastRun = mc;
-
-                    // Run last state's exits method. 
-                    if (_lastRun != null && _lastRun != mc)
-                    {
-                        _lastRun.ExitComponent();
-                    }
+                    mc.RunComponent();               
                 }                
             }
         }
@@ -114,6 +116,41 @@ namespace EasyFarm.Components
         public void Stop()
         {
             _cancellation.Cancel();
+        }
+    }
+
+    public class TypeCache<T>
+    {
+        private Dictionary<Type, T> cache = new Dictionary<Type, T>();
+
+        public T this[object @object]
+        {
+            get
+            {
+                if (@object == null) return default(T);
+
+                if (cache.ContainsKey(@object.GetType()))
+                {
+                    return cache[@object.GetType()];                    
+                }
+                else
+                {
+                    return default(T);
+                }
+            }
+            set
+            {
+                if (@object == null) return;
+
+                if (cache.ContainsKey(@object.GetType()))
+                {
+                    cache[@object.GetType()] = value;
+                }
+                else
+                {
+                    cache.Add(@object.GetType(), value);                    
+                }
+            }
         }
     }
 }

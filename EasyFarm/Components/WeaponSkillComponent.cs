@@ -36,8 +36,9 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            // target dead or null
-            if (Target == null || Target.IsDead) return false;
+            if (new RestComponent(FFACE).CheckComponent()) return false;
+
+            if (!UnitFilters.MobFilter(FFACE, Target)) return false;
 
             // Use skill if we are engaged. 
             return (FFACE.Player.Status.Equals(Status.Fighting));
