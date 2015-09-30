@@ -57,8 +57,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Abilities\AbilityTest.cs" />
-    <Compile Include="TestAugmenters.cs" />
-    <Compile Include="TestService.cs" />
+    <Compile Include="Services\AbilityServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
