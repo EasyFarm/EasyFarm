@@ -76,10 +76,9 @@ namespace ParsingTests
         public void TestTargetTypeAugmenter()
         {
             // Refactor borked test... 
-            // Assert.IsTrue(cure.TargetType.HasFlag(TargetType.Player));
-            // Assert.IsTrue(provoke.TargetType.HasFlag(TargetType.Enemy));
-            // Assert.IsTrue(ragingAxe.TargetType.HasFlag(TargetType.Enemy));
-            // Assert.IsTrue(raise.TargetType.HasFlag(TargetType.Corpse));
+            Assert.IsTrue(_cure.TargetType.HasFlag(TargetType.Self));
+            Assert.IsTrue(_provoke.TargetType.HasFlag(TargetType.Enemy));
+            Assert.IsTrue(_ragingAxe.TargetType.HasFlag(TargetType.Enemy));
         }
     }
 }

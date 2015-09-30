@@ -23,19 +23,12 @@ using Parsing.Abilities;
 using Parsing.Services;
 using Parsing.Types;
 
-namespace EasyFarm.Tests.UnitTests
+namespace EasyFarm.ParsingTests.Abilities
 {
-    [TestClass]
-    public class XIToolsTest
+    public class AbilityTest
     {
-        [TestInitialize]
-        public void SetUp()
-        {
-            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-        }
-
         [TestClass]
-        public class AbilityTests
+        public class ToString : AbilityTest
         {
             [TestMethod]
             public void TestToString()
@@ -46,8 +39,9 @@ namespace EasyFarm.Tests.UnitTests
                     English = "Cure",
                     TargetType = TargetType.Self
                 };
-                var cure = new AbilityService("resources").CreateAbility("Cure");
-                Assert.AreEqual(test.ToString(), cure.ToString());
+
+                var expectedCommand = "/magic \"Cure\" <me>";
+                Assert.AreEqual(expectedCommand, test.ToString());
             }
         }
     }
