@@ -57,18 +57,15 @@ namespace EasyFarm.Components
         {
             _cancellation = new CancellationTokenSource();
 
-            while (true)
+            Task t = Task.Factory.StartNew(() =>
             {
-                try
+                while (true)
                 {
+                    _cancellation.Token.ThrowIfCancellationRequested();
                     Run();
                     Thread.Sleep(100);
-                }                                               
-                catch (TaskCanceledException)
-                {
-                    return;                    
-                }                
-            }
+                }
+            }, _cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
 
         private void Run()
@@ -79,9 +76,11 @@ namespace EasyFarm.Components
             // Find a State that says it needs to run.
             foreach (var mc in _components.Where(x => x.Enabled))
             {
+                _cancellation.Token.ThrowIfCancellationRequested();
+
                 bool IsRunnable = mc.CheckComponent();
 
-                // Run last state's exits method. 
+                // Run last state's exits method.
                 if (_cache[mc] != IsRunnable)
                 {
                     if (IsRunnable) mc.EnterComponent();
@@ -91,9 +90,9 @@ namespace EasyFarm.Components
 
                 if (IsRunnable)
                 {
-                    // Run current state's run method. 
-                    mc.RunComponent();               
-                }                
+                    // Run current state's run method.
+                    mc.RunComponent();
+                }
             }
         }
 
@@ -110,7 +109,7 @@ namespace EasyFarm.Components
         // Start and stop.
         public void Start()
         {
-            Task.Run(() => MainLoop());
+            MainLoop();
         }
 
         public void Stop()
@@ -131,7 +130,7 @@ namespace EasyFarm.Components
 
                 if (cache.ContainsKey(@object.GetType()))
                 {
-                    return cache[@object.GetType()];                    
+                    return cache[@object.GetType()];
                 }
                 else
                 {
@@ -148,7 +147,7 @@ namespace EasyFarm.Components
                 }
                 else
                 {
-                    cache.Add(@object.GetType(), value);                    
+                    cache.Add(@object.GetType(), value);
                 }
             }
         }

@@ -69,14 +69,14 @@ namespace EasyFarm.Components
             _deadMonitor.Changed += DeadMonitorStatusChanged;
             _deadMonitor.Start();
         }
-       
+
         /// <summary>
         /// Start the bot up
         /// </summary>
         public void Start()
-        {
-            _stateMachine.Start();
+        {            
             IsWorking = true;
+            _stateMachine.Start();
         }
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace EasyFarm.Components
         /// </summary>
         public void Stop()
         {
-            _stateMachine.Stop();
             IsWorking = false;
+            _stateMachine.Stop();
         }        
 
         /// <summary>
