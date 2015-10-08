@@ -22,7 +22,7 @@ using System.Collections.ObjectModel;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Ignored")]
+    [ViewModelAttribute("Ignored")]
     public class IgnoredViewModel : ListViewModel<string>
     {
         public override string Value

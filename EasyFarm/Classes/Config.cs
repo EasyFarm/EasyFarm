@@ -188,5 +188,15 @@ namespace EasyFarm.Classes
             get { return _lazy.Value; }
             set { _lazy = new Lazy<Config>(() => value); }
         }
+
+        /// <summary>
+        /// The distance with which to follow a player.  
+        /// </summary>
+        public double FollowDistance = 5.0;
+
+        /// <summary>
+        /// The current player to follow. 
+        /// </summary>
+        public string FollowedPlayer = string.Empty;
     }
 }

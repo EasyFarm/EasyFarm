@@ -22,12 +22,12 @@ using Prism.Mvvm;
 
 namespace EasyFarm.Mvvm
 {
-    public class ViewModelBase : BindableBase
+    public class ViewModelBase : BindableBase, IViewModel
     {
         /// <summary>
         ///     View Model name for header in tab control item.
         /// </summary>
-        public string VmName { get; set; }
+        public string ViewName { get; set; }
 
         /// <summary>
         ///     Solo FFACE instance for current player.

@@ -23,7 +23,7 @@ using Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Settings")]
+    [ViewModelAttribute("Settings")]
     public class SettingsViewModel : ViewModelBase
     {
         public SettingsViewModel()
