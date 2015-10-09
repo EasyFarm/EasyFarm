@@ -25,7 +25,7 @@ using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Log")]
+    [ViewModelAttribute("Log")]
     public class LogViewModel : ViewModelBase
     {
         private readonly SynchronizationContext _syncContext;

@@ -33,8 +33,8 @@ namespace EasyFarm.Classes
             _fface = fface;
 
             // Create the UnitArray
-            _units = Enumerable.Range(0, UnitArrayMax)
-                .Select(x => new Unit(_fface, x));
+            Units = Enumerable.Range(0, UnitArrayMax)
+                .Select(x => new Unit(_fface, x)).ToList();
         }
 
         #region Members
@@ -42,7 +42,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The zone's unit array.
         /// </summary>
-        private static IEnumerable<Unit> _units;
+        public static ICollection<Unit> Units;
 
         /// <summary>
         /// The unit array's max size: 0 - 2048
@@ -102,12 +102,23 @@ namespace EasyFarm.Classes
         /// <summary>
         /// Retrieves the list of MOBs.
         /// </summary>
-        public IEnumerable<Unit> MobArray
+        public ICollection<Unit> MobArray
         {
             get
             {
-                return _units.Take(MobArrayMax)
-                    .Where(x => x.NpcType.Equals(NPCType.Mob));
+                return Units.Take(MobArrayMax)
+                    .Where(x => x.NpcType.Equals(NPCType.Mob)).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the list of PCs
+        /// </summary>
+        public ICollection<Unit> PlayerArray
+        {
+            get
+            {
+                return Units.Where(x => x.NpcType == NPCType.PC).ToList();
             }
         }
 

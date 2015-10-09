@@ -28,7 +28,7 @@ using System.Threading;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Routes")]
+    [ViewModelAttribute("Routes")]
     public class RoutesViewModel : ViewModelBase
     {
         private PathRecorder _recorder;

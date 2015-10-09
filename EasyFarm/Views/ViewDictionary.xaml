@@ -26,4 +26,7 @@
     <DataTemplate DataType="{x:Type views:AbilityView}">
         <views:AbilityView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:FollowViewModel}">
+        <views:FollowView />
+    </DataTemplate>
 </ResourceDictionary>
