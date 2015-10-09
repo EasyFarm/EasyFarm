@@ -109,8 +109,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public bool IsWorking
         {
-            get { return App.GameEngine.IsWorking; }
-            set { SetProperty(ref App.GameEngine.IsWorking, value); }
+            get { return GameEngine.IsWorking; }
+            set { SetProperty(ref GameEngine.IsWorking, value); }
         }
 
         /// <summary>
@@ -159,19 +159,19 @@ namespace EasyFarm.ViewModels
                 return;
             }
 
-            if (App.GameEngine.IsWorking)
+            if (GameEngine.IsWorking)
             {
                 Logger.Write.BotStop("Bot now paused");
                 AppInformer.InformUser("Program paused.");
                 StartPauseHeader = "St_art";
-                App.GameEngine.Stop();                
+                GameEngine.Stop();                
             }
             else
             {
                 Logger.Write.BotStart("Bot now running");
                 AppInformer.InformUser("Program running.");
                 StartPauseHeader = "P_ause";
-                App.GameEngine.Start();                
+                GameEngine.Start();                
             }
         }
 

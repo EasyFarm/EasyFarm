@@ -38,11 +38,6 @@ namespace EasyFarm
         /// </summary>
         public static readonly AbilityService AbilityService;
 
-        /// <summary>
-        ///     Global game engine controlling the player.
-        /// </summary>
-        public static GameEngine GameEngine;
-
         static App()
         {
             // Create the ability service passing to it the resources 

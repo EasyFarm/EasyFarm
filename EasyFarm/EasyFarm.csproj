@@ -159,6 +159,7 @@
     <Compile Include="Classes\AppInformer.cs" />
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
+    <Compile Include="Components\FollowState.cs" />
     <Compile Include="Components\BaseState.cs" />
     <Compile Include="Components\GameEngine.cs" />
     <Compile Include="Components\IState.cs" />

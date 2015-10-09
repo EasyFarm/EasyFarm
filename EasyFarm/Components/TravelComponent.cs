@@ -99,18 +99,5 @@ namespace EasyFarm.Components
             _fface.Navigator.Goto(route[_position], false);
             _position++;
         }
-
-        /// <summary>
-        ///     Returns true when the player should stop traveling.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsCancellationRequired()
-        {
-            // Defines some common situations to stop travel. 
-            if (_units.HasAggro) return true;
-
-            // Return when the user has pause the program. 
-            return !App.GameEngine.IsWorking;
-        }
     }
 }

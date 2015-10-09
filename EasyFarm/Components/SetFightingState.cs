@@ -20,15 +20,15 @@ namespace EasyFarm.Components
                 // other components who depend on it trigger. 
                 if (!Config.Instance.BattleLists["Pull"].Actions.Any(x => x.IsEnabled))
                 {
-                    IsFighting = true;
+                    return IsFighting = true;
                 }
                 else
                 {
-                    IsFighting = Target.Status.Equals(Status.Fighting);
-                }                
-            }            
+                    return IsFighting = Target.Status.Equals(Status.Fighting);
+                }
+            }
 
-            return false;
+            return IsFighting = false;
         }
     }
 }

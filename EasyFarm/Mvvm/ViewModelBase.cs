@@ -34,6 +34,11 @@ namespace EasyFarm.Mvvm
         /// </summary>
         public static FFACE FFACE { get; set; }
 
+        /// <summary>
+        ///     Global game engine controlling the player.
+        /// </summary>
+        public static GameEngine GameEngine;
+
         public static void SetSession(FFACE fface)
         {
             if (fface == null) return;
@@ -42,7 +47,7 @@ namespace EasyFarm.Mvvm
             FFACE = fface;
 
             // Create a new game engine to control our character. 
-            App.GameEngine = new GameEngine(FFACE);
+            GameEngine = new GameEngine(FFACE);
 
             if (OnSessionSet != null)
             {
