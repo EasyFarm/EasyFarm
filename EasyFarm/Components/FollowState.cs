@@ -57,6 +57,9 @@ namespace EasyFarm.Components
             // Do not follow when resting. 
             if (new RestComponent(FFACE).CheckComponent()) return false;
 
+            // Avoid following empty units. 
+            if (string.IsNullOrWhiteSpace(Config.Instance.FollowedPlayer)) return false;
+
             // Get the player specified in user settings. 
             var player = GetPlayerByName(Config.Instance.FollowedPlayer);
 
