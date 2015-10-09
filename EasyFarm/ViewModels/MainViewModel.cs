@@ -32,23 +32,23 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Internal list of view models.
         /// </summary>
-        private ObservableCollection<ViewModelBase> _viewModels;
+        private ObservableCollection<IViewModel> _viewModels;
 
         public MainViewModel()
         {
-            var locator = new Locator<ViewModelAttribute, ViewModelBase>();
+            var locator = new Locator();
 
             // Get all enabled view models. 
-            ViewModels = new ObservableCollection<ViewModelBase>(
+            ViewModels = new ObservableCollection<IViewModel>(
                 locator.GetEnabledViewModels()
                     .Where(x => x != null)
-                    .OrderBy(x => x.VmName));
+                    .OrderBy(x => x.ViewName));
         }
 
         /// <summary>
         ///     List of dynamically found view models.
         /// </summary>
-        public ObservableCollection<ViewModelBase> ViewModels
+        public ObservableCollection<IViewModel> ViewModels
         {
             get { return _viewModels; }
             set { SetProperty(ref _viewModels, value); }

@@ -21,7 +21,7 @@ using EasyFarm.Mvvm;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Resting")]
+    [ViewModelAttribute("Resting")]
     public class RestingViewModel : ViewModelBase
     {
         public int LowHp

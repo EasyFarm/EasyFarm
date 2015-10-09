@@ -40,6 +40,7 @@ namespace EasyFarm.Components
             //Create the states
             AddComponent(new SetTargetState(fface) { Priority = 6 });
             AddComponent(new SetFightingState(fface) { Priority = 6 });
+            AddComponent(new FollowState(fface) { Priority = 5 });
             AddComponent(new RestComponent(fface) { Priority = 2 });
             AddComponent(new ApproachComponent(fface) { Priority = 0 });
             AddComponent(new BattleComponent(fface) { Priority = 3 });
@@ -74,7 +75,7 @@ namespace EasyFarm.Components
             _components.Sort();
 
             // Find a State that says it needs to run.
-            foreach (var mc in _components.Where(x => x.Enabled))
+            foreach (var mc in _components.Where(x => x.Enabled).ToList())
             {
                 _cancellation.Token.ThrowIfCancellationRequested();
 

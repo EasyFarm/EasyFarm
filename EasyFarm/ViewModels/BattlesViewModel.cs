@@ -25,7 +25,7 @@ using Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Battles")]
+    [ViewModelAttribute("Battles")]
     public class BattlesViewModel : ViewModelBase
     {
         public BattlesViewModel()

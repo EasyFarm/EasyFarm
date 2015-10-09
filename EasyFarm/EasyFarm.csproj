@@ -159,6 +159,7 @@
     <Compile Include="Classes\AppInformer.cs" />
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
+    <Compile Include="Components\FollowState.cs" />
     <Compile Include="Components\BaseState.cs" />
     <Compile Include="Components\GameEngine.cs" />
     <Compile Include="Components\IState.cs" />
@@ -169,12 +170,14 @@
     <Compile Include="Memory\IMemorySource.cs" />
     <Compile Include="Memory\MemorySource.cs" />
     <Compile Include="Mvvm\AsyncDelegateCommand.cs" />
+    <Compile Include="Mvvm\IViewModel.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BattlesViewModel.cs" />
+    <Compile Include="ViewModels\FollowViewModel.cs" />
     <Compile Include="ViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\MasterViewModel.cs" />
     <Compile Include="ViewModels\ProcessSelectionViewModel.cs" />
@@ -220,6 +223,9 @@
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="Mvvm\MainModule.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\FollowView.xaml.cs">
+      <DependentUpon>FollowView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -304,6 +310,10 @@
     <Page Include="Views\AbilityView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FollowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>

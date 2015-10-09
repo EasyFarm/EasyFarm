@@ -22,7 +22,7 @@ using EasyFarm.Mvvm;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Targets")]
+    [ViewModelAttribute("Targets")]
     public class TargetsViewModel : ListViewModel<string>
     {
         public override string Value
