@@ -46,7 +46,7 @@ Development has slowed, and mostly happens on the weekends. The current goals fo
     *Make sure your using the X86 version of the Visual Studio 2013 C++ Redistributable even if you have a 64 bit operating system.*
 
 #### Support
-Use the [support issue](https://github.com/EasyFarm/EasyFarm/issues/130) for questions and feedback regarding the program. You can also send me an [email](MikeBartron@gmail.com), and I'll help you out as best I can. 
+Use the [support issue](https://github.com/EasyFarm/EasyFarm/issues/130) for questions and feedback regarding the program. You can also send me an email at MikeBartron@gmail.com, and I'll help you out as best I can. 
 
 #### Want to contribute?
 Anyone can contribute to the project. Just make sure you've done your best to test the code you are changing and send me a pull request, and I'll add in your contribution!
