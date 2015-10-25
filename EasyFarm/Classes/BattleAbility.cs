@@ -334,8 +334,14 @@ namespace EasyFarm.Classes
                 Ability = ability;
                 AppInformer.InformUser("Auto-Filling for {0} complete. ", Name);
 
+                if (Ability.AbilityType == AbilityType.Weaponskill)
+                {
+                    Ability.TpCost = 1000;
+                }
+
                 // Manually signal AbilityType that a change has occured. 
                 OnPropertyChanged("AbilityType");
+                OnPropertyChanged("TpCost");
             }
         }
 
