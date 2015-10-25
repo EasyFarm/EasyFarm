@@ -154,10 +154,8 @@ namespace EasyFarm.Classes
             if (target.Distance > action.Distance)
             {
                 // Move to unit at max buff distance.
-                var oldTolerance = _fface.Navigator.DistanceTolerance;
                 _fface.Navigator.DistanceTolerance = action.Distance;
                 _fface.Navigator.GotoNPC(target.Id);
-                _fface.Navigator.DistanceTolerance = oldTolerance;
             }
         }
 

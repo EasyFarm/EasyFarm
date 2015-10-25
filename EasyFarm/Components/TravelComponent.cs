@@ -53,7 +53,7 @@ namespace EasyFarm.Components
             if (Config.Instance.Waypoints.Count <= 0) return false;
 
             // We are not able to attack any creatures. 
-            if (new CombatBaseState(_fface).CheckComponent()) return false;
+            if (new ApproachComponent(_fface).CheckComponent()) return false;
 
             // We don't have to rest. 
             if (new RestComponent(_fface).CheckComponent()) return false;
@@ -71,6 +71,9 @@ namespace EasyFarm.Components
 
         public override void RunComponent()
         {
+            // Navigator must be set by convention (other states could override)
+            _fface.Navigator.DistanceTolerance = 1;
+
             // Make a copy of the waypoint path from config. 
             var route = Path;
 
@@ -95,7 +98,7 @@ namespace EasyFarm.Components
                 _position = route.IndexOf(closest);
             }
 
-            // Run to the waypoint allowing cancellation on aggro or paused. 
+            // Run to the waypoint allowing cancellation on aggro or paused.             
             _fface.Navigator.Goto(route[_position], false);
             _position++;
         }

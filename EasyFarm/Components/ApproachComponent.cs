@@ -59,10 +59,8 @@ namespace EasyFarm.Components
                 if (Target.Distance > Config.Instance.MeleeDistance)
                 {
                     // Move to unit at max buff distance. 
-                    var oldTolerance = FFACE.Navigator.DistanceTolerance;
                     FFACE.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
                     FFACE.Navigator.GotoNPC(Target.Id);
-                    FFACE.Navigator.DistanceTolerance = oldTolerance;
                 }
             }
 

@@ -86,6 +86,7 @@ namespace EasyFarm.Components
             var player = GetPlayerByName(Config.Instance.FollowedPlayer);
 
             // Follow the player. 
+            FFACE.Navigator.DistanceTolerance = Config.Instance.FollowDistance;
             FFACE.Navigator.GotoNPC(player.Id);
         }
     }
