@@ -44,7 +44,8 @@ namespace EasyFarm.ViewModels
             ClearCommand = new DelegateCommand(ClearRoute);
             RecordCommand = new DelegateCommand(Record);
             SaveCommand = new DelegateCommand(Save);
-            LoadCommand = new DelegateCommand(Load);            
+            LoadCommand = new DelegateCommand(Load);
+            ResetNavigatorCommand = new DelegateCommand(ResetNavigator);
             RecordHeader = "Record";
 
             // Create recorder on loaded fface session. 
@@ -96,6 +97,12 @@ namespace EasyFarm.ViewModels
         ///     Binding for the load command for the GUI.
         /// </summary>
         public ICommand LoadCommand { get; set; }
+
+        /// <summary>
+        /// A command to stop the player from running navigator 
+        /// throwing an error. 
+        /// </summary>
+        public ICommand ResetNavigatorCommand { get; set; }
 
         /// <summary>
         ///     Clears the waypoint list.
@@ -161,6 +168,21 @@ namespace EasyFarm.ViewModels
             {
                 AppInformer.InformUser("Failed to load the path.");
             }
-        }        
+        }
+
+        /// <summary>
+        /// Stops the player from running continously. 
+        /// </summary>
+        private void ResetNavigator()
+        {
+            // Return when the user has not selected a process. 
+            if (FFACE == null)
+            {
+                AppInformer.InformUser("No process has been selected.");
+                return;
+            }
+
+            FFACE.Navigator.Reset();
+        }
     }
 }

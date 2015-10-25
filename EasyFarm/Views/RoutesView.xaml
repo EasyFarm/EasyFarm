@@ -27,6 +27,9 @@
             <Button Command="{Binding LoadCommand}"
                     Margin="0 5 0 0"
                     Content="Load"/>
+            <Button Command="{Binding ResetNavigatorCommand}"
+                    Margin="0 5 0 0"
+                    Content="Reset Navigator"/>
             <!--Contains the list of coordinates to display to the user.-->
         </StackPanel>
         <ListBox Grid.Column="1"
