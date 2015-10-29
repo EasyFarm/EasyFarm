@@ -13,8 +13,9 @@ These are the steps needed in order to setup a healing spell that will heal the 
 To adjust the health range in which the healing spell should be used, you'll need to do the following:
 
 1. **Right-click** on the action.
+2. Select **Player Options**
 2. Adjust the **Health** slider's ticks to set the range when this action should be triggered.
 
-  *The healing spell will be used when the player's health is within the range set.*
+*The healing spell will be used when the player's health is within the range set.*
 
 ![](images/healing.png)

@@ -5,7 +5,6 @@
 4. Check the **Enabled** checkbox.
 5. Click the **Autofill** button.
 
-  *This will prefill common settings like TPCost, Prefix, Target and Index
-  some of which can be accessed through the right-click context menu.*
+*This will prefill common settings like TPCost, Prefix, Target and Index some of which can be accessed through the right-click context menu.*
 
 ![](images/weaponskills.png)
