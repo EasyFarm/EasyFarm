@@ -11,4 +11,4 @@ This section will hopefully be filled with guides  and helpful information in us
 
 ## Guides
 * [Level enhancing magic.](level-enhancing.md)
-* [Finding index values](acton-indexes.md)
+* [Finding index values](action-indexes.md)
