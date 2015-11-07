@@ -63,4 +63,3 @@ You can use these index values in the General Options tab of EasyFarm by:
 3. Find Index, and enter in the value.
 
 ![](images/finding-index-values.png)
-[](http://ffxiclopedia.wikia.com/wiki/Main_Page)
