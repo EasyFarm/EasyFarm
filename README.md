@@ -49,7 +49,7 @@ Contributions to the tutorial section are highly welcomed! You can submit a pull
 
 #### Special Thanks!
 
-* FFEVO Team for producing the memory reading api this program could not operate without. 
+* The FFEVO Team for producing the memory reading api this program could not operate without. 
 
 * The Windower Team for producing the Windower client and resource files which make using the program a whole lot easier. 
 
