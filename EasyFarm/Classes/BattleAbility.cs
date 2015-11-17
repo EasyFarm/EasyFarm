@@ -16,15 +16,16 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Views;
+using Parsing.Abilities;
+using Parsing.Types;
+using Prism.Commands;
+using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml.Serialization;
-using EasyFarm.Views;
-using Parsing.Abilities;
-using Parsing.Types;
-using Prism.Mvvm;
-using Prism.Commands;
 
 namespace EasyFarm.Classes
 {
@@ -74,6 +75,11 @@ namespace EasyFarm.Classes
         private int _playerUpperHealth;
 
         /// <summary>
+        /// Private backing for recast in seconds.
+        /// </summary>
+        private int _recast;
+
+        /// <summary>
         ///     The status effect to check for.
         /// </summary>
         private string _statusEffect = string.Empty;
@@ -109,7 +115,6 @@ namespace EasyFarm.Classes
         ///     Private backing for usages.
         /// </summary>
         private int _usages;
-
         static BattleAbility()
         {
             var commandTypes = new ObservableCollection<AbilityType>
@@ -135,10 +140,10 @@ namespace EasyFarm.Classes
                 TargetType.Enemy
             };
 
-            // Load valid targets. 
+            // Load valid targets.
             CommandTargets = new ReadOnlyObservableCollection<TargetType>(commandPrefix);
 
-            // Ability type objects to their commands. 
+            // Ability type objects to their commands.
             CommandMapper.Add(AbilityType.Jobability, "/jobability");
             CommandMapper.Add(AbilityType.Magic, "/magic");
             CommandMapper.Add(AbilityType.Monsterskill, "/monsterskill");
@@ -168,31 +173,15 @@ namespace EasyFarm.Classes
             Name = ability.English;
         }
 
-        public bool IsEnabled
-        {
-            get { return _isEnabled; }
-            set { SetProperty(ref _isEnabled, value); }
-        }
+        /// <summary>
+        ///     List of usable command prefixes.
+        /// </summary>
+        public static ReadOnlyObservableCollection<AbilityType> CommandPrefixes { get; set; }
 
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                SetProperty(ref _name, value);
-                Ability.English = _name;
-            }
-        }
-
-        public double Distance
-        {
-            get { return _distance; }
-            set
-            {
-                SetProperty(ref _distance, (int) value);
-                AppInformer.InformUser("Distance set to {0}.", _distance);
-            }
-        }
+        /// <summary>
+        ///     List of usable command targets.
+        /// </summary>
+        public static ReadOnlyObservableCollection<TargetType> CommandTargets { get; set; }
 
         /// <summary>
         ///     Holds the resource file information for the move.
@@ -203,18 +192,59 @@ namespace EasyFarm.Classes
             set { SetProperty(ref _ability, value); }
         }
 
-        public bool TriggerOnEffectPresent
+        public AbilityType AbilityType
         {
-            get { return _triggerOnEffectPresent; }
-            set { SetProperty(ref _triggerOnEffectPresent, value); }
+            get { return Ability.AbilityType; }
+            set
+            {
+                SetProperty(ref _abilityType, value);
+
+                var prefix = CommandMapper.ContainsKey(value)
+                    ? CommandMapper[value]
+                    : string.Empty;
+
+                Ability.Prefix = prefix;
+            }
         }
 
-        public string StatusEffect
+        /// <summary>
+        ///     Sets an BattleAbility's ability object using the ability service object
+        ///     for lookups.
+        /// </summary>
+        // Delegate Commands cannot be serialized.
+        [XmlIgnore]
+        public DelegateCommand AutoFillCommand { get; set; }
+
+        public double Distance
         {
-            get { return _statusEffect; }
-            set { SetProperty(ref _statusEffect, value); }
+            get { return _distance; }
+            set
+            {
+                SetProperty(ref _distance, (int)value);
+                AppInformer.InformUser("Distance set to {0}.", _distance);
+            }
         }
 
+        public bool IsEnabled
+        {
+            get { return _isEnabled; }
+            set { SetProperty(ref _isEnabled, value); }
+        }
+
+        /// <summary>
+        /// When this move was last used. 
+        /// </summary>
+        public DateTime LastCast { get; set; }
+
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                SetProperty(ref _name, value);
+                Ability.English = _name;
+            }
+        }
         public int PlayerLowerHealth
         {
             get { return _playerLowerHealth; }
@@ -235,10 +265,18 @@ namespace EasyFarm.Classes
             }
         }
 
-        public string TargetName
+        /// <summary>
+        /// The recast in seconds when this action should be used again.
+        /// </summary>
+        public int Recast
         {
-            get { return _targetName; }
-            set { SetProperty(ref _targetName, value); }
+            get { return _recast; }
+            set { SetProperty(ref _recast, value); }
+        }
+        public string StatusEffect
+        {
+            get { return _statusEffect; }
+            set { SetProperty(ref _statusEffect, value); }
         }
 
         public int TargetLowerHealth
@@ -251,6 +289,12 @@ namespace EasyFarm.Classes
             }
         }
 
+        public string TargetName
+        {
+            get { return _targetName; }
+            set { SetProperty(ref _targetName, value); }
+        }
+
         public int TargetUpperHealth
         {
             get { return _targetUpperHealth; }
@@ -261,21 +305,11 @@ namespace EasyFarm.Classes
             }
         }
 
-        public AbilityType AbilityType
+        public bool TriggerOnEffectPresent
         {
-            get { return Ability.AbilityType; }
-            set
-            {
-                SetProperty(ref _abilityType, value);
-
-                var prefix = CommandMapper.ContainsKey(value)
-                    ? CommandMapper[value]
-                    : string.Empty;
-
-                Ability.Prefix = prefix;
-            }
+            get { return _triggerOnEffectPresent; }
+            set { SetProperty(ref _triggerOnEffectPresent, value); }
         }
-
         /// <summary>
         ///     The maximum limit of times this move can be used in battle.
         /// </summary>
@@ -284,7 +318,6 @@ namespace EasyFarm.Classes
             get { return _usageLimit; }
             set { SetProperty(ref _usageLimit, value); }
         }
-
         /// <summary>
         ///     The number of times this move has been used.
         /// </summary>
@@ -293,38 +326,19 @@ namespace EasyFarm.Classes
             get { return _usages; }
             set { SetProperty(ref _usages, value); }
         }
-
-        /// <summary>
-        ///     Sets an BattleAbility's ability object using the ability service object
-        ///     for lookups.
-        /// </summary>
-        // Delegate Commands cannot be serialized. 
-        [XmlIgnore]
-        public DelegateCommand AutoFillCommand { get; set; }
-
-        /// <summary>
-        ///     List of usable command prefixes.
-        /// </summary>
-        public static ReadOnlyObservableCollection<AbilityType> CommandPrefixes { get; set; }
-
-        /// <summary>
-        ///     List of usable command targets.
-        /// </summary>
-        public static ReadOnlyObservableCollection<TargetType> CommandTargets { get; set; }
-
         /// <summary>
         ///     Sets the ability field.
         /// </summary>
         public void AutoFill()
         {
-            // Return if string null or empty. 
+            // Return if string null or empty.
             if (string.IsNullOrWhiteSpace(Name)) return;
 
-            // Get the ability by name. 
+            // Get the ability by name.
             var ability = FindAbility(Name);
 
-            // Attempt to set the ability and inform the 
-            // user of its sucess. 
+            // Attempt to set the ability and inform the
+            // user of its sucess.
             if (ability == null)
             {
                 AppInformer.InformUser("Auto-Fill failed to find {0} in resources. ", Name);
@@ -339,7 +353,7 @@ namespace EasyFarm.Classes
                     Ability.TpCost = 1000;
                 }
 
-                // Manually signal AbilityType that a change has occured. 
+                // Manually signal AbilityType that a change has occured.
                 OnPropertyChanged("AbilityType");
                 OnPropertyChanged("TpCost");
             }
@@ -353,12 +367,12 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public Ability FindAbility(string name)
         {
-            // Retriever all moves with the specified name. 
+            // Retriever all moves with the specified name.
             var moves = App.AbilityService.GetAbilitiesWithName(name).ToArray();
 
-            // Prompt user to select a move if more 
-            // than one are found with the same name. 
-            // Otherwise, return the first occurence or null. 
+            // Prompt user to select a move if more
+            // than one are found with the same name.
+            // Otherwise, return the first occurence or null.
             if (moves.Length > 1)
             {
                 return new AbilitySelectionBox(name).SelectedAbility;

@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using FFACETools;
 using Parsing.Types;
+using System;
 
 namespace EasyFarm.Classes
 {
@@ -98,6 +99,12 @@ namespace EasyFarm.Classes
 
                 // Missing EFfect Check
                 if (!hasEffect && action.TriggerOnEffectPresent) return false;
+            }
+
+            // Check if action's recast period has passed. 
+            if (action.Recast != 0)
+            {
+                if (action.LastCast > DateTime.Now) return false;
             }
 
             return true;

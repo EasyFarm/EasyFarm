@@ -22,6 +22,7 @@ using Parsing.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace EasyFarm.Classes
@@ -33,7 +34,6 @@ namespace EasyFarm.Classes
     public class Executor
     {
         private readonly Caster _caster;
-
         private readonly FFACE _fface;
 
         public Executor(FFACE fface)
@@ -90,6 +90,9 @@ namespace EasyFarm.Classes
                     // Increase usage count to limit number of usages.
                     action.Usages++;
 
+                    // Set the recast to prevent casting before the recast period. 
+                    action.LastCast = DateTime.Now.AddSeconds(action.Recast);
+
                     // Sleep until a spell is recastable.
                     Thread.Sleep(Config.Instance.GlobalCooldown);
                 }
@@ -135,10 +138,14 @@ namespace EasyFarm.Classes
                 else
                 {
                     _caster.CastAbility(action);
-                }
+                }                
 
                 // Increase usage count to limit number of usages.
                 action.Usages++;
+
+                // Set the recast to prevent casting before the recast period. 
+                action.LastCast = DateTime.Now.AddSeconds(action.Recast);
+
                 Thread.Sleep(Config.Instance.GlobalCooldown);
             }
         }

@@ -34,9 +34,6 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!--################################################################-->
-        <!-- General -->
-        <!--################################################################-->
         <GroupBox Header="Action"
                   Grid.Row="0"
                   Grid.ColumnSpan="2">
@@ -106,9 +103,6 @@
             </Grid>
         </GroupBox>
 
-        <!--################################################################-->
-        <!-- General -->
-        <!--################################################################-->
         <GroupBox Header="General"
                   Grid.Row="1"
                   Grid.ColumnSpan="2" Grid.Column="0"
@@ -119,6 +113,7 @@
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -170,12 +165,19 @@
                                         Margin="5"
                                         ToolTip="Limits the maximum number of uses per battle"
                                         Value="{Binding Path=UsageLimit}" />
+
+                <Label Grid.Row="4"
+                       Grid.Column="0"
+                       Margin="5"
+                       Content="Recast" />
+                <controls:NumericUpDown Grid.Row="4"
+                                        Grid.Column="1"
+                                        Margin="5"
+                                        ToolTip="Limits action recast in seconds. "
+                                        Value="{Binding Path=Recast}" />
             </Grid>
         </GroupBox>
 
-        <!--################################################################-->
-        <!-- Player -->
-        <!--################################################################-->
         <GroupBox Header="Player"
                   Grid.Row="2"
                   Grid.ColumnSpan="2" Grid.Column="0"
@@ -223,9 +225,6 @@
             </Grid>
         </GroupBox>
 
-        <!--################################################################-->
-        <!-- Enemy -->
-        <!--################################################################-->
         <GroupBox  Header="Enemy"
                    Grid.Row="3"
                    Grid.ColumnSpan="2" Grid.Column="0"

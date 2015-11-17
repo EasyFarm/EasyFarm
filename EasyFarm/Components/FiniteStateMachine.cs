@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License
 // Site: FFEVO.net
 // All credit to him!
 
+using EasyFarm.Classes;
 using FFACETools;
 using System;
 using System.Collections.Generic;
@@ -31,10 +32,9 @@ namespace EasyFarm.Components
 {
     public class FiniteStateEngine
     {
-        private List<IState> _components = new List<IState>();
+        private TypeCache<bool> _cache = new TypeCache<bool>();        
         private CancellationTokenSource _cancellation = new CancellationTokenSource();
-        private TypeCache<bool> _cache = new TypeCache<bool>();
-
+        private List<IState> _components = new List<IState>();
         public FiniteStateEngine(FFACE fface)
         {
             //Create the states
@@ -50,8 +50,33 @@ namespace EasyFarm.Components
             AddComponent(new TravelComponent(fface) { Priority = 1 });
             AddComponent(new HealingComponent(fface) { Priority = 2 });
             AddComponent(new EndComponent(fface) { Priority = 3 });
+            AddComponent(new StartEngineState() { Priority = Constants.MaxPriority });
 
             _components.ForEach(x => x.Enabled = true);
+        }
+
+        public void AddComponent(IState component)
+        {
+            this._components.Add(component);
+        }
+
+        public void RemoveComponent(IState component)
+        {
+            this._components.Remove(component);
+        }
+
+        // Start and stop.
+        public void Start()
+        {
+            // Enable running of
+            IState startEngineState = _components.FirstOrDefault(x => x.GetType() == typeof(StartEngineState));
+            if (startEngineState != null) startEngineState.Enabled = true;
+            MainLoop();
+        }
+
+        public void Stop()
+        {
+            _cancellation.Cancel();
         }
 
         private void MainLoop()
@@ -95,27 +120,6 @@ namespace EasyFarm.Components
                     mc.RunComponent();
                 }
             }
-        }
-
-        public void AddComponent(IState component)
-        {
-            this._components.Add(component);
-        }
-
-        public void RemoveComponent(IState component)
-        {
-            this._components.Remove(component);
-        }
-
-        // Start and stop.
-        public void Start()
-        {
-            MainLoop();
-        }
-
-        public void Stop()
-        {
-            _cancellation.Cancel();
         }
     }
 

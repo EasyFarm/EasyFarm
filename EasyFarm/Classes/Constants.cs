@@ -74,5 +74,10 @@ namespace EasyFarm.Classes
         /// Controls the wait time between checks on the unit array to control performance.
         /// </summary>
         public const double UnitArrayCheckRate = 1;
+
+        /// <summary>
+        /// The maximum priority for states in the FSM. 
+        /// </summary>
+        public const int MaxPriority = int.MaxValue;
     }
 }
