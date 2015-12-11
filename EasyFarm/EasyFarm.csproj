@@ -416,13 +416,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FFACETools\FFACETools.csproj">
-      <Project>{37456169-2b9e-49a7-8b20-a160c180e453}</Project>
-      <Name>FFACETools</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Parsing\Parsing.csproj">
       <Project>{7008daf7-d3aa-41a4-9d85-8ec168d5d372}</Project>
       <Name>Parsing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Submodules\FFACETools\FFACETools.csproj">
+      <Project>{37456169-2b9e-49a7-8b20-a160c180e453}</Project>
+      <Name>FFACETools</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -431,8 +431,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)\Dependencies\FFACE*.*" "$(TargetDir)"
-del "$(TargetDir)*.xml", "$(TargetDir)*.pdb"
+    <PostBuildEvent>del "$(TargetDir)*.xml", "$(TargetDir)*.pdb"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

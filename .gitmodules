@@ -1,3 +1,6 @@
 [submodule "FFACETools"]
 	path = FFACETools
 	url = https://github.com/h1pp0/FFACETools_ffevo.net.git
+[submodule "Submodules/FFACETools"]
+	path = Submodules/FFACETools
+	url = https://github.com/h1pp0/FFACETools_ffevo.net.git
