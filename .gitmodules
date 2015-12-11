@@ -4,3 +4,6 @@
 [submodule "Submodules/FFACETools"]
 	path = Submodules/FFACETools
 	url = https://github.com/h1pp0/FFACETools_ffevo.net.git
+[submodule "Submodules/FFACE"]
+	path = Submodules/FFACE
+	url = http://delvl.ffevo.net/Lolwutt/FFACE4-Public.git
