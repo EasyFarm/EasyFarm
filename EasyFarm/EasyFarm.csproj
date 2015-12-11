@@ -426,12 +426,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\EliteMMO.API.dll" />
     <Content Include="Dependencies\FFACE.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del "$(TargetDir)*.xml", "$(TargetDir)*.pdb"
+    <PostBuildEvent>copy "$(ProjectDir)\Dependencies\*.*" "$(TargetDir)"
+del "$(TargetDir)*.xml", "$(TargetDir)*.pdb"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
