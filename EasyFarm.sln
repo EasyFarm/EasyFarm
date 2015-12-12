@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarm", "EasyFarm\EasyFarm.csproj", "{14508978-627B-46AE-9779-1F6B4FB0611E}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing", "Parsing\Parsing.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsingTests", "ParsingTests\ParsingTests.csproj", "{6ABC39D8-0D98-4C4A-9D4D-F9A196829357}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFACETools", "FFACETools\FFACETools.csproj", "{37456169-2B9E-49A7-8B20-A160C180E453}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFACETools", "Submodules\FFACETools\FFACETools.csproj", "{37456169-2B9E-49A7-8B20-A160C180E453}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

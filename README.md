@@ -37,7 +37,7 @@ Development has slowed, and mostly happens on the weekends.
     *Make sure your using the X86 version of the Visual Studio 2013 C++ Redistributable even if you have a 64 bit operating system.*
     
 #### Tutorials
-Visit the [tutorials](https://github.com/EasyFarm/EasyFarm/blob/master/Documentation/index.md) page for more information on setting up the program. 
+Visit the [tutorials](https://github.com/EasyFarm/EasyFarm/blob/master/Documentation/readme.md) page for more information on setting up the program. 
 
 #### Support
 Use the [support issue](https://github.com/EasyFarm/EasyFarm/issues/130) for questions and feedback regarding the program. You can also send me an email at MikeBartron@gmail.com, and I'll help you out as best I can.
