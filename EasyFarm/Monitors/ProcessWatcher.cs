@@ -21,10 +21,26 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Timers;
 
 namespace EasyFarm.Monitors
 {
+    /// <summary>
+    /// Fired when processes enter the system.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public delegate void ProcessEntry(object sender, EventArgs e);
+
+    /// <summary>
+    /// Fires when processes exit the system.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public delegate void ProcessExit(object sender, EventArgs e);
+
+    /// <summary>
+    /// Encapsulates the process that has entered / exited the system.
+    /// </summary>
     public class ProcessEventArgs : EventArgs
     {
         public ProcessEventArgs(Process process)
@@ -34,123 +50,140 @@ namespace EasyFarm.Monitors
 
         public Process Process { get; set; }
     }
-
-    public delegate void ProcessEntry(object sender, EventArgs e);
-
-    public delegate void ProcessExit(object sender, EventArgs e);
-
-    public class ProcessWatcher : IDisposable
+    /// <summary>
+    /// Keeps track of processes with a given name.
+    /// </summary>
+    public class ProcessWatcher
     {
         /// <summary>
-        ///     Internal timer to check process updates.
+        /// Internal timer to check process updates.
         /// </summary>
-        protected Timer Timer = new Timer();
+        protected BackgroundWorker backgroundWorker = new BackgroundWorker();
 
         public ProcessWatcher(string processName)
         {
+            backgroundWorker.DoWork += Bgw_DoWork;
+            backgroundWorker.WorkerSupportsCancellation = true;
             Processes = new List<Process>();
-            Mutex = new object();
             ProcessName = processName;
-            Timer.Elapsed += CheckProcesses;
-            Timer.AutoReset = true;
-            Timer.Interval = 30;
         }
 
         /// <summary>
-        ///     List of processes currently monitored.
-        /// </summary>
-        public List<Process> Processes { get; set; }
-
-        /// <summary>
-        ///     Name of the process to monitor.
-        /// </summary>
-        public string ProcessName { get; set; }
-
-        /// <summary>
-        ///     An object for locking.
-        /// </summary>
-        public object Mutex { get; set; }
-
-        public void Dispose()
-        {
-            Timer.Dispose();
-        }
-
-        /// <summary>
-        ///     An event that fires when a process has started.
+        /// An event that fires when a process has started.
         /// </summary>
         public event ProcessEntry Entry;
 
         /// <summary>
-        ///     An event that fires when a process has exited.
+        /// An event that fires when a process has exited.
         /// </summary>
         public event ProcessExit Exit;
 
-        protected void CheckProcesses(object sender, ElapsedEventArgs e)
+        /// <summary>
+        /// List of processes currently monitored.
+        /// </summary>
+        public List<Process> Processes { get; set; }
+
+        /// <summary>
+        /// Name of the process to monitor.
+        /// </summary>
+        public string ProcessName { get; set; }
+        /// <summary>
+        /// Start monitoring processes.
+        /// </summary>
+        public void Start()
         {
-            lock (Mutex)
+            backgroundWorker.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// Stop monitoring processes.
+        /// </summary>
+        public void Stop()
+        {
+            backgroundWorker.CancelAsync();
+        }
+
+        /// <summary>
+        /// Fire process enter events for new processes. 
+        /// </summary>
+        /// <param name="processes"></param>
+        protected void DoProcessEnter(List<Process> processes)
+        {
+            // Fire the process entry event for new processes that
+            // have started.
+            foreach (var process in processes)
             {
-                ///////////////////////////////////////////////////////////////////
-                // Check for new processes and fire Entry Events
-                ///////////////////////////////////////////////////////////////////
-                // Get the list of all running processes. 
+                // Add the process
+                Processes.Add(process);
 
-                var plist = (string.IsNullOrWhiteSpace(ProcessName)
-                    ? Process.GetProcesses()
-                    : Process.GetProcessesByName(ProcessName)).ToList();
-
-                // Get a list of processes that are not contained in "Processes".
-                plist = plist.Where(x => Processes.All(y => y.Id != x.Id)).ToList();
-
-                // Fire the process entry event for new processes that 
-                // have started. 
-                foreach (var process in plist)
+                if (Entry != null)
                 {
-                    // Add the process
-                    Processes.Add(process);
-
-                    if (Entry != null)
-                    {
-                        // Fire an entry event. 
-                        Entry(this, new ProcessEventArgs(process));
-                    }
-                }
-
-                ///////////////////////////////////////////////////////////////////
-                // Check for exiting processes and fire Exit events. 
-                ///////////////////////////////////////////////////////////////////
-
-                // Fire the process exit event for old processes that 
-                // have exited. 
-                try
-                {
-                    foreach (var process in Processes.Where(x => x.HasExited))
-                    {
-                        if (Exit != null)
-                        {
-                            // Fire the process Exit event. 
-                            Exit(this, new ProcessEventArgs(process));
-                        }
-                    }
-
-                    Processes.RemoveAll(x => x.HasExited);
-                }
-                catch (Win32Exception)
-                {
-                    // Non-Critical Error Trying to retrieve a process; most likely
-                    // a system process we do not have access to. 
+                    // Fire an entry event.
+                    Entry(this, new ProcessEventArgs(process));
                 }
             }
         }
 
-        public void Start()
+        /// <summary>
+        /// Run processing on all existing and new processes. 
+        /// </summary>
+        protected void DoProcesses()
         {
-            Timer.Start();
+            var processes = GetNewProcesses();
+            DoProcessEnter(processes);
+            DoProcessExit();
         }
 
-        public void Stop()
+        /// <summary>
+        /// Fire all process exit events and remove the process from our list. 
+        /// </summary>
+        protected void DoProcessExit()
         {
-            Timer.Stop();
+            try
+            {
+                foreach (var process in Processes)
+                {
+                    if (process.HasExited)
+                    {
+                        if (Exit != null)
+                        {
+                            // Fire the process Exit event.
+                            Exit(this, new ProcessEventArgs(process));
+                        }
+
+                        Processes.Remove(process);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // Non-Critical Error Trying to retrieve a process; most likely
+                // a system process we do not have access to.
+            }
+        }
+
+        /// <summary>
+        /// Get's the list of all new processes. 
+        /// </summary>
+        /// <returns></returns>
+        protected List<Process> GetNewProcesses()
+        {
+            var processes = (string.IsNullOrEmpty(ProcessName) ? Process.GetProcesses() : Process.GetProcessesByName(ProcessName)).ToList();
+
+            processes = processes.Where(x => Processes.All(y => y.Id != x.Id))
+                .Where(x => !string.IsNullOrWhiteSpace(x.MainWindowTitle))
+                .ToList();
+
+            return processes;
+        }
+
+        private void Bgw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (!backgroundWorker.CancellationPending)
+            {
+                DoProcesses();
+                System.Threading.Thread.Sleep(1000);
+            }
         }
     }
 }

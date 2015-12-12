@@ -10,7 +10,7 @@ namespace EasyFarm.Views
         public ProcessSelectionView()
         {
             InitializeComponent();
-            DataContext = new ProcessSelectionViewModel();
+            DataContext = new ProcessSelectionViewModel(this);
         }
     }
 }

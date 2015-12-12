@@ -5,6 +5,7 @@ using System.Windows;
 using EasyFarm.Monitors;
 using Prism.Mvvm;
 using Prism.Commands;
+using EasyFarm.Views;
 
 namespace EasyFarm.ViewModels
 {
@@ -29,9 +30,15 @@ namespace EasyFarm.ViewModels
         ///     The name of the process to search for.
         /// </summary>
         public string ProcessName = ClientName;
+        private readonly ProcessSelectionView view;
 
-        public ProcessSelectionViewModel()
+        public ProcessSelectionViewModel(ProcessSelectionView view)
         {
+            this.view = view;
+
+            // When window is closed through X button. 
+            view.Closing += (s, e) => OnClosing();
+
             Sessions = new ObservableCollection<Process>();
             ToggleButtonHeader = "Show All";
 
@@ -39,9 +46,11 @@ namespace EasyFarm.ViewModels
             _processWatcher = new ProcessWatcher(ProcessName);
             _processWatcher.Entry += SessionEntry;
             _processWatcher.Exit += SessionExit;
-            _processWatcher.Start();
+            _processWatcher.Start();                       
 
-            ExitCommand = new DelegateCommand(OnClosing);
+            // Close window on when "Set character" is pressed. 
+            ExitCommand = new DelegateCommand(() => view.Close());            
+
             ToggleFiltering = new DelegateCommand(ChangeFilter);
         }
 
@@ -101,7 +110,6 @@ namespace EasyFarm.ViewModels
 
             // Dispose of the old watcher. 
             _processWatcher.Stop();
-            _processWatcher.Dispose();
 
             // Clear all previously found processes.
             Sessions.Clear();
@@ -171,18 +179,9 @@ namespace EasyFarm.ViewModels
         {
             // Dispose of the running process watcher. 
             _processWatcher.Stop();
-            _processWatcher.Dispose();
-
-            // Close our window. 
-            foreach (Window window in Application.Current.Windows)
-            {
-                var viewModel = window.DataContext as ProcessSelectionViewModel;
-                if (viewModel == null) continue;
-                window.Close();
-            }
 
             // User made a choice to close this dialog. 
-            IsProcessSelected = true;
+            IsProcessSelected = true;            
         }
     }
 }
