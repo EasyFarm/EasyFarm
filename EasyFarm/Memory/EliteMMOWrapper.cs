@@ -91,7 +91,7 @@ namespace EasyFarm
             public void GotoNPC(int ID)
             {
                 var entity = api.Entity.GetEntity(ID);
-                Goto(Helpers.CreatePosition(entity.X, entity.Y, entity.Z, entity.H), false);
+                Goto(Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H), false);
             }
 
             public void Reset()
@@ -116,7 +116,7 @@ namespace EasyFarm
             public IPosition GetPosition(int id)
             {
                 var entity = api.Entity.GetEntity(id);
-                return Helpers.CreatePosition(entity.X, entity.Y, entity.Z, entity.H);
+                return Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H);
             }
 
             public short HPPCurrent(int id) { return api.Entity.GetEntity(id).HealthPercent; }
@@ -220,7 +220,7 @@ namespace EasyFarm
                     var z = api.Player.Z;
                     var h = api.Player.H;
 
-                    return Helpers.CreatePosition(x, y, z, h);
+                    return Helpers.ToPosition(x, y, z, h);
                 }
             }
 

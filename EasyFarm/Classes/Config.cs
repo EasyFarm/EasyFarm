@@ -157,7 +157,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     List of all waypoints that make up the bots path
         /// </summary>
-        public ObservableCollection<IPosition> Waypoints;
+        public ObservableCollection<Position> Waypoints;
 
         static Config()
         {
@@ -180,7 +180,7 @@ namespace EasyFarm.Classes
         {
             MainWindowTitle = "EasyFarm";
             StatusBarText = string.Empty;
-            Waypoints = new ObservableCollection<IPosition>();
+            Waypoints = new ObservableCollection<Position>();
         }
 
         [XmlIgnore]

@@ -36,8 +36,8 @@ namespace EasyFarm.Classes
         /// </summary>
         private readonly object _mutex;
 
-        private readonly ThresholdQueue<IPosition> _positionHistory =
-            new ThresholdQueue<IPosition>(HistoryPositionLimit, .75);
+        private readonly ThresholdQueue<Position> _positionHistory =
+            new ThresholdQueue<Position>(HistoryPositionLimit, .75);
 
         /// <summary>
         ///     Timer that ticks to calculate the current displacement, velocity and

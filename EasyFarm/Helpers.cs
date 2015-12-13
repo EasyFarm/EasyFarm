@@ -6,7 +6,7 @@ namespace EasyFarm
 {
     public class Helpers
     {
-        public static IPosition CreatePosition(float x, float y, float z, float h)
+        public static Position ToPosition(float x, float y, float z, float h)
         {
             var position = new Position();
 

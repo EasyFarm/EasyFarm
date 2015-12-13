@@ -249,8 +249,8 @@ namespace EasyFarm.ViewModels
                 // Log that a process selected. 
                 Logger.Write.ProcessFound("Process found");
 
-                // Save the selected FFACE instance. 
-                var fface = new EliteMMOWrapper(process.Id);
+                // Get memory reader set in config file. 
+                var fface = MemoryWrapper.Create(process.Id);
 
                 // Set the FFACE Session. 
                 SetSession(fface);

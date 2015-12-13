@@ -55,7 +55,7 @@ namespace EasyFarm.ViewModels
             _recorder.OnPositionAdded += _recorder_OnPositionAdded;
         }
 
-        private void _recorder_OnPositionAdded(IPosition position)
+        private void _recorder_OnPositionAdded(Position position)
         {
             App.Current.Dispatcher.Invoke(() => this.Route.Add(position));
         }
@@ -69,7 +69,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Exposes the list of waypoints to the user.
         /// </summary>
-        public ObservableCollection<IPosition> Route
+        public ObservableCollection<Position> Route
         {
             get { return Config.Instance.Waypoints; }
             set { SetProperty(ref Config.Instance.Waypoints, value); }
@@ -154,7 +154,7 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private void Load()
         {
-            Route = _settings.TryLoad<ObservableCollection<IPosition>>();
+            Route = _settings.TryLoad<ObservableCollection<Position>>();
 
             if (Route != null)
             {

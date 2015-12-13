@@ -13,7 +13,7 @@ namespace EasyFarm.Classes
         /// Callback for handling position added. 
         /// </summary>
         /// <param name="position"></param>
-        public delegate void PositionAdded(IPosition position);
+        public delegate void PositionAdded(Position position);
 
         /// <summary>
         /// Fired when a position is recorded. 
@@ -29,7 +29,7 @@ namespace EasyFarm.Classes
         ///     Used by the recorder to avoid duplicate, successive waypoints.
         ///     (Identicle waypoints are allowed, just not in succession.)
         /// </summary>
-        private IPosition _lastPosition = new Position();
+        private Position _lastPosition = new Position();
 
         /// <summary>
         /// The memory source to retrieve the character's position from. 
@@ -89,7 +89,15 @@ namespace EasyFarm.Classes
         {
             // Add a new waypoint only when we are not standing at 
             // our last position. 
-            var position = _memory.Player.Position;            
+            var pos = _memory.Player.Position;
+
+            Position position = new Position()
+            {
+                H = pos.H,
+                X = pos.X,
+                Y = pos.Y,
+                Z = pos.Z
+            };
 
             // Update the path if we've changed out position. Rotating our heading does not
             // count as the player moving. 

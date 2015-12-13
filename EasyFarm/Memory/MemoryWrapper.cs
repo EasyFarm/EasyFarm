@@ -1,5 +1,8 @@
 ﻿using MemoryAPI;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Reflection;
 
 public class MemoryWrapper : IMemoryAPI
 {
@@ -10,6 +13,22 @@ public class MemoryWrapper : IMemoryAPI
     ITargetTools targetTools;
     ITimerTools timerTools;
     IWindowerTools windowerTools;
+
+    public static MemoryWrapper Create(int pid)
+    {
+        try
+        {
+            string value = ConfigurationManager.AppSettings["MemoryWrapper"];
+            if (string.IsNullOrWhiteSpace(value)) return null;
+            var assembly = Assembly.GetExecutingAssembly();
+            var type = assembly.GetType(value);
+            return (MemoryWrapper)Activator.CreateInstance(type, pid);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
 
     public INavigatorTools Navigator
     {

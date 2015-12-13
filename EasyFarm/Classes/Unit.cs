@@ -89,9 +89,18 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     The unit's position.
         /// </summary>
-        public IPosition Position
+        public Position Position
         {
-            get { return _npc.GetPosition(Id); }
+
+            get
+            {
+                var position = _npc.GetPosition(Id);
+
+                return Helpers.ToPosition(
+                    position.X, 
+                    position.Y, position.Z, 
+                    position.H);
+            }
         }
 
         /// <summary>

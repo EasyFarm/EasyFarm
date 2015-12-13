@@ -61,7 +61,6 @@ namespace EasyFarm
         protected override void OnStartup(StartupEventArgs e)
         {            
             base.OnStartup(e);
-            Mapper.CreateMap<IPosition, Position>().ReverseMap();
             Logger.Write.ApplicationStart("Application starting");
             var bootStrapper = new BootStrapper();
             bootStrapper.Run();

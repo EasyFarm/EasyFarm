@@ -32,9 +32,9 @@ namespace EasyFarm.Tests.UnitTests.Classes
             /// <summary>
             /// Starts recording a new waypoint. 
             /// </summary>
-            private IPosition RecordNewPosition()
+            private Position RecordNewPosition()
             {
-                var task = new TaskCompletionSource<IPosition>();
+                var task = new TaskCompletionSource<Position>();
                 recorder.OnPositionAdded += (pos) => task.SetResult(pos);
                 recorder.Interval = 1;
                 recorder.Start();

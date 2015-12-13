@@ -96,7 +96,7 @@ namespace EasyFarm
             public IPosition GetPosition(int id)
             {
                 var position = api.NPC.GetPosition(id);
-                return Helpers.CreatePosition(position.X, position.Y, position.Z, position.H);
+                return Helpers.ToPosition(position.X, position.Y, position.Z, position.H);
             }
 
             public short HPPCurrent(int id) { return api.NPC.HPPCurrent(id); }
@@ -190,7 +190,7 @@ namespace EasyFarm
                     var z = api.Player.PosZ;
                     var h = api.Player.PosH;
 
-                    return Helpers.CreatePosition(x, y, z, h);
+                    return Helpers.ToPosition(x, y, z, h);
                 }
             }
 
