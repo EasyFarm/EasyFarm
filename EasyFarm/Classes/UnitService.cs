@@ -28,7 +28,7 @@ namespace EasyFarm.Classes
     /// </summary>
     public class UnitService
     {
-        public UnitService(FFACE fface)
+        public UnitService(MemoryWrapper fface)
         {
             _fface = fface;
 
@@ -70,7 +70,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The player's environmental data.
         /// </summary>
-        private static FFACE _fface;
+        private static MemoryWrapper _fface;
 
         #endregion Members
 

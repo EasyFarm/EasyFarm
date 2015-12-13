@@ -32,9 +32,9 @@ namespace EasyFarm.Classes
     public class Executor
     {
         private readonly Caster _caster;
-        private readonly FFACE _fface;
+        private readonly MemoryWrapper _fface;
 
-        public Executor(FFACE fface)
+        public Executor(MemoryWrapper fface)
         {
             _fface = fface;
             _caster = new Caster(fface);

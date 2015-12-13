@@ -27,7 +27,7 @@ namespace EasyFarm.Components
     /// </summary>
     public class ApproachComponent : CombatBaseState
     {
-        public ApproachComponent(FFACE fface) : base(fface) { }
+        public ApproachComponent(MemoryWrapper fface) : base(fface) { }
 
         public override bool CheckComponent()
         {

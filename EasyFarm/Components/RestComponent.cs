@@ -28,14 +28,14 @@ namespace EasyFarm.Components
     /// </summary>
     public class RestComponent : BaseState
     {
-        private readonly FFACE _fface;
+        private readonly MemoryWrapper _fface;
 
         /// <summary>
         ///     Retrieves aggroing creature.
         /// </summary>
         private readonly UnitService _units;
 
-        public RestComponent(FFACE fface)
+        public RestComponent(MemoryWrapper fface)
         {
             _fface = fface;
             _units = new UnitService(fface);

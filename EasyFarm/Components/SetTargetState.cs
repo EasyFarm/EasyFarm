@@ -11,7 +11,7 @@ namespace EasyFarm.Components
 
         private readonly UnitService _units;
 
-        public SetTargetState(FFACE fface) : base(fface)
+        public SetTargetState(MemoryWrapper fface) : base(fface)
         {
             _units = new UnitService(fface);
         }

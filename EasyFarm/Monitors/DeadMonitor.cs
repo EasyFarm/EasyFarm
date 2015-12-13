@@ -23,7 +23,7 @@ namespace EasyFarm.Monitors
 {
     public class DeadMonitor : BaseMonitor
     {
-        public DeadMonitor(FFACE fface) : base(fface)
+        public DeadMonitor(MemoryWrapper fface) : base(fface)
         {
         }
 

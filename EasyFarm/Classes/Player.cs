@@ -8,7 +8,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Makes the character rest
         /// </summary>
-        public static void Rest(FFACE fface)
+        public static void Rest(MemoryWrapper fface)
         {
             if (!fface.Player.Status.Equals(Status.Healing))
             {
@@ -20,7 +20,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Makes the character stop resting
         /// </summary>
-        public static void Stand(FFACE fface)
+        public static void Stand(MemoryWrapper fface)
         {
             if (fface.Player.Status.Equals(Status.Healing))
             {
@@ -32,7 +32,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Switches the player to attack mode on the current unit
         /// </summary>
-        public static void Engage(FFACE fface)
+        public static void Engage(MemoryWrapper fface)
         {
             if (!fface.Player.Status.Equals(Status.Fighting))
             {
@@ -43,7 +43,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Stop the character from fight the target
         /// </summary>
-        public static void Disengage(FFACE fface)
+        public static void Disengage(MemoryWrapper fface)
         {
             if (fface.Player.Status.Equals(Status.Fighting))
             {

@@ -6,7 +6,7 @@ namespace EasyFarm.Components
 {
     public class SetFightingState : CombatBaseState
     {
-        public SetFightingState(FFACE fface) : base(fface) { }
+        public SetFightingState(MemoryWrapper fface) : base(fface) { }
 
         public override bool CheckComponent()
         {

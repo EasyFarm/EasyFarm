@@ -31,9 +31,9 @@ namespace EasyFarm.Classes
     {
         // Get player object. 
         private static MovingUnit _player;
-        private readonly FFACE _fface;
+        private readonly MemoryWrapper _fface;
 
-        public Caster(FFACE fface)
+        public Caster(MemoryWrapper fface)
         {
             _fface = fface;
 

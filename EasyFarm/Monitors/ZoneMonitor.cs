@@ -23,7 +23,7 @@ namespace EasyFarm.Monitors
 {
     public class ZoneMonitor : BaseMonitor
     {
-        public ZoneMonitor(FFACE fface) : base(fface)
+        public ZoneMonitor(MemoryWrapper fface) : base(fface)
         {
         }
 

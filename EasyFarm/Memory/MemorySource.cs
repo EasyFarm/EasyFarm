@@ -6,9 +6,9 @@ namespace EasyFarm.Memory
 {
     public class MemorySource : IMemorySource
     {
-        private FFACE _fface;
+        private MemoryWrapper _fface;
 
-        public MemorySource(FFACE fface)
+        public MemorySource(MemoryWrapper fface)
         {
             this._fface = fface;
         }

@@ -32,7 +32,7 @@ namespace EasyFarm.Components
     {
         private readonly Executor _executor;
 
-        public EndComponent(FFACE fface) : base(fface)
+        public EndComponent(MemoryWrapper fface) : base(fface)
         {
             _executor = new Executor(fface);
         }

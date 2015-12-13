@@ -38,7 +38,7 @@ namespace EasyFarm.Classes
         /// <param name="fface"></param>
         /// <param name="mob"></param>
         /// <returns></returns>
-        public static bool MobFilter(FFACE fface, Unit mob)
+        public static bool MobFilter(MemoryWrapper fface, Unit mob)
         {
             // Function to use to filter surrounding mobs by. General Mob Filtering Criteria
             if (fface == null) return false;

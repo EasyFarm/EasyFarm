@@ -34,7 +34,7 @@ namespace EasyFarm.Components
         private TypeCache<bool> _cache = new TypeCache<bool>();        
         private CancellationTokenSource _cancellation = new CancellationTokenSource();
         private List<IState> _components = new List<IState>();
-        public FiniteStateEngine(FFACE fface)
+        public FiniteStateEngine(MemoryWrapper fface)
         {
             //Create the states
             AddComponent(new SetTargetState(fface) { Priority = 6 });

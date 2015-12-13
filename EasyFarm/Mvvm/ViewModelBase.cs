@@ -31,14 +31,14 @@ namespace EasyFarm.Mvvm
         /// <summary>
         ///     Solo FFACE instance for current player.
         /// </summary>
-        public static FFACE FFACE { get; set; }
+        public static MemoryWrapper FFACE { get; set; }
 
         /// <summary>
         ///     Global game engine controlling the player.
         /// </summary>
         public static GameEngine GameEngine;
 
-        public static void SetSession(FFACE fface)
+        public static void SetSession(MemoryWrapper fface)
         {
             if (fface == null) return;
 
@@ -54,7 +54,7 @@ namespace EasyFarm.Mvvm
             }
         }
 
-        public delegate void SessionSet(FFACE fface);
+        public delegate void SessionSet(MemoryWrapper fface);
 
         public static event SessionSet OnSessionSet;
     }

@@ -49,7 +49,7 @@ namespace EasyFarm.ViewModels
             ViewModelBase.OnSessionSet += ViewModelBase_OnSessionSet;
         }
 
-        private void ViewModelBase_OnSessionSet(FFACE fface)
+        private void ViewModelBase_OnSessionSet(MemoryWrapper fface)
         {
             _recorder = new PathRecorder(new MemorySource(fface));
             _recorder.OnPositionAdded += _recorder_OnPositionAdded;

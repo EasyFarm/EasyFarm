@@ -43,7 +43,7 @@ namespace EasyFarm.Components
         /// <summary>
         /// Provides information about game data.
         /// </summary>
-        private readonly FFACE _fface;
+        private readonly MemoryWrapper _fface;
 
         /// <summary>
         /// The engine that controls player actions.
@@ -55,7 +55,7 @@ namespace EasyFarm.Components
         /// </summary>
         private readonly ZoneMonitor _zoneMonitor;
 
-        public GameEngine(FFACE fface)
+        public GameEngine(MemoryWrapper fface)
         {
             _fface = fface;
             _zoneMonitor = new ZoneMonitor(fface);

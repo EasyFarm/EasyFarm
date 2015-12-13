@@ -30,7 +30,7 @@ namespace EasyFarm.Components
            IsFighting = false;
         }
 
-        public CombatBaseState(FFACE fface)
+        public CombatBaseState(MemoryWrapper fface)
         {
             FFACE = fface;
         }
@@ -48,6 +48,6 @@ namespace EasyFarm.Components
         /// <summary>
         ///     The game session.
         /// </summary>
-        public FFACE FFACE { get; set; }
+        public MemoryWrapper FFACE { get; set; }
     }
 }

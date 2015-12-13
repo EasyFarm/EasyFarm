@@ -34,7 +34,7 @@ namespace EasyFarm.Classes
         /// <param name="fface"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static bool BuffingFilter(FFACE fface, BattleAbility action)
+        public static bool BuffingFilter(MemoryWrapper fface, BattleAbility action)
         {
             // Return if not enabled. 
             if (!action.IsEnabled) return false;
@@ -116,7 +116,7 @@ namespace EasyFarm.Classes
         /// <param name="action"></param>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public static bool TargetedFilter(FFACE fface, BattleAbility action, Unit unit)
+        public static bool TargetedFilter(MemoryWrapper fface, BattleAbility action, Unit unit)
         {
             // Does not pass the base criteria for casting. 
             if (!BuffingFilter(fface, action)) return false;

@@ -29,7 +29,7 @@ namespace EasyFarm.Components
     {
         private readonly UnitService UnitService;
 
-        public FollowState(FFACE fface) : base(fface)
+        public FollowState(MemoryWrapper fface) : base(fface)
         {
             this.UnitService = new UnitService(fface);
         }

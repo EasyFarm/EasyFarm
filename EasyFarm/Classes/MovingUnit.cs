@@ -45,7 +45,7 @@ namespace EasyFarm.Classes
         /// </summary>
         private readonly Timer _timer;
 
-        public MovingUnit(FFACE fface, int id)
+        public MovingUnit(MemoryWrapper fface, int id)
             : base(fface, id)
         {
             _mutex = new object();

@@ -250,7 +250,7 @@ namespace EasyFarm.ViewModels
                 Logger.Write.ProcessFound("Process found");
 
                 // Save the selected FFACE instance. 
-                var fface = new FFACE(process.Id);
+                var fface = new MemoryWrapper(process.Id);
 
                 // Set the FFACE Session. 
                 SetSession(fface);

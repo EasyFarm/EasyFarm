@@ -27,7 +27,7 @@ namespace EasyFarm.Components
     /// </summary>
     public class StartComponent : CombatBaseState
     {
-        public StartComponent(FFACE fface) : base(fface)
+        public StartComponent(MemoryWrapper fface) : base(fface)
         {
             Executor = new Executor(fface);
         }

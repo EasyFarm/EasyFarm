@@ -25,9 +25,9 @@ namespace EasyFarm.Components
     public class HealingComponent : BaseState
     {
         private readonly Executor _executor;
-        private readonly FFACE _fface;
+        private readonly MemoryWrapper _fface;
 
-        public HealingComponent(FFACE fface)
+        public HealingComponent(MemoryWrapper fface)
         {
             _fface = fface;
             _executor = new Executor(fface);

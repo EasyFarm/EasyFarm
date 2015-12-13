@@ -27,11 +27,11 @@ namespace EasyFarm.Components
 {
     public class TravelComponent : BaseState
     {
-        private readonly FFACE _fface;
+        private readonly MemoryWrapper _fface;
         private readonly UnitService _units;
         private int _position;
 
-        public TravelComponent(FFACE fface)
+        public TravelComponent(MemoryWrapper fface)
         {
             _fface = fface;
 

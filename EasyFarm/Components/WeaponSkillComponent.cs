@@ -27,7 +27,7 @@ namespace EasyFarm.Components
     /// </summary>
     public class WeaponSkillComponent : CombatBaseState
     {
-        public WeaponSkillComponent(FFACE fface) : base(fface)
+        public WeaponSkillComponent(MemoryWrapper fface) : base(fface)
         {
             Executor = new Executor(fface);
         }

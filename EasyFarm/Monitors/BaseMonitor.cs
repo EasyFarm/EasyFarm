@@ -25,11 +25,11 @@ namespace EasyFarm.Monitors
 
     public abstract class BaseMonitor : IDisposable
     {
-        protected FFACE FFACE;
+        protected MemoryWrapper FFACE;
         protected object Lock = new object();
         protected Timer Timer = new Timer();
 
-        protected BaseMonitor(FFACE fface)
+        protected BaseMonitor(MemoryWrapper fface)
             : this()
         {
             FFACE = fface;

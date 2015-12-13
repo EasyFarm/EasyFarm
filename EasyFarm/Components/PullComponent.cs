@@ -23,7 +23,7 @@ namespace EasyFarm.Components
 {
     public class PullComponent : CombatBaseState
     {
-        public PullComponent(FFACE fface) : base(fface)
+        public PullComponent(MemoryWrapper fface) : base(fface)
         {
             Executor = new Executor(fface);
         }

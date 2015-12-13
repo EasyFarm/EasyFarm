@@ -29,7 +29,7 @@ namespace EasyFarm.Components
     {
         private readonly Executor _executor;
 
-        public BattleComponent(FFACE fface) : base(fface)
+        public BattleComponent(MemoryWrapper fface) : base(fface)
         {
             _executor = new Executor(fface);
         }
