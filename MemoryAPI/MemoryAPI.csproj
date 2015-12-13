@@ -44,24 +44,15 @@
   <ItemGroup>
     <Compile Include="Enums\enums.cs" />
     <Compile Include="Enums\Structures.cs" />
-    <Compile Include="Enums\ThreadStatus.cs" />
-    <Compile Include="AbstractMemoryAPI.cs" />
     <Compile Include="IMemoryAPI.cs" />
-    <Compile Include="Navigation\AbstractNavigationTools.cs" />
     <Compile Include="Navigation\INavigatorTools.cs" />
-    <Compile Include="NPC\AbstractNPCTools.cs" />
     <Compile Include="NPC\INPCTools.cs" />
-    <Compile Include="NPC\AbstractPosition.cs" />
     <Compile Include="NPC\IPosition.cs" />
-    <Compile Include="PartyMember\AbstractPartyMemberTools.cs" />
     <Compile Include="PartyMember\IPartyMemberTools.cs" />
-    <Compile Include="Player\AbstractPlayerTools.cs" />
     <Compile Include="Player\IPlayerTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Target\AbstractTargetTools.cs" />
     <Compile Include="Target\ITargetTools.cs" />
     <Compile Include="Timer\ITimerTools.cs" />
-    <Compile Include="Timer\AbstractTimerTools.cs" />
     <Compile Include="Windower\IWindowerTools.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,10 +1,10 @@
 ﻿namespace MemoryAPI
 {
-    public class AbstractPosition : IPosition
+    public interface IPosition
     {
-        public virtual float H { get; set; }
-        public virtual float X { get; set; }
-        public virtual float Y { get; set; }
-        public virtual float Z { get; set; }
+        float H { get; set; }
+        float X { get; set; }
+        float Y { get; set; }
+        float Z { get; set; }
     }
 }

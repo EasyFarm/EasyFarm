@@ -9,6 +9,5 @@
         ITargetTools Target { get; set; }
         ITimerTools Timer { get; set; }
         IWindowerTools Windower { get; set; }
-        int _InstanceID { get; set; }
     }
 }
