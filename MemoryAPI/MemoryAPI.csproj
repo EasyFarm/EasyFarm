@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CC6CC9BE-32F0-4B8A-A1AD-6C7C744E2FAD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MemoryAPI</RootNamespace>
+    <AssemblyName>MemoryAPI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Chat\AbstractChatLine.cs" />
+    <Compile Include="Chat\AbstractChatLogEntry.cs" />
+    <Compile Include="Chat\AbstractChatTools.cs" />
+    <Compile Include="Chat\IChatLine.cs" />
+    <Compile Include="Chat\IChatLogEntry.cs" />
+    <Compile Include="Chat\IChatTools.cs" />
+    <Compile Include="Enums\enums.cs" />
+    <Compile Include="Dialog\AbstractDialogText.cs" />
+    <Compile Include="Dialog\IDialogText.cs" />
+    <Compile Include="Enums\Structures.cs" />
+    <Compile Include="Enums\ThreadStatus.cs" />
+    <Compile Include="Fish\AbstractFishID.cs" />
+    <Compile Include="Fish\IFishID.cs" />
+    <Compile Include="Fish\AbstractFishTools.cs" />
+    <Compile Include="Fish\IFishTools.cs" />
+    <Compile Include="AbstractMemoryAPI.cs" />
+    <Compile Include="Item\AbstractInventoryItem.cs" />
+    <Compile Include="Item\IInventoryItem.cs" />
+    <Compile Include="Item\AbstractItemTools.cs" />
+    <Compile Include="Item\IItemTools.cs" />
+    <Compile Include="Item\AbstractTreasureItem.cs" />
+    <Compile Include="Item\ITreasureItem.cs" />
+    <Compile Include="IMemoryAPI.cs" />
+    <Compile Include="Menu\AbstractMenuTools.cs" />
+    <Compile Include="Menu\IMenuTools.cs" />
+    <Compile Include="Navigation\AbstractNavigationTools.cs" />
+    <Compile Include="Navigation\INavigatorTools.cs" />
+    <Compile Include="NPC\AbstractNPCTools.cs" />
+    <Compile Include="NPC\INPCTools.cs" />
+    <Compile Include="NPC\AbstractPosition.cs" />
+    <Compile Include="NPC\IPosition.cs" />
+    <Compile Include="PartyMember\AbstractPartyMemberTools.cs" />
+    <Compile Include="PartyMember\IPartyMemberTools.cs" />
+    <Compile Include="Party\AbstractPartyTools.cs" />
+    <Compile Include="Party\IPartyTools.cs" />
+    <Compile Include="Player\AbstractCraftDetails.cs" />
+    <Compile Include="Player\ICraftDetails.cs" />
+    <Compile Include="Player\AbstractPlayerTools.cs" />
+    <Compile Include="Player\IPlayerTools.cs" />
+    <Compile Include="Player\AbstractSkillDetails.cs" />
+    <Compile Include="Player\ISkillDetails.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\AbstractSearchTools.cs" />
+    <Compile Include="Search\ISearchTools.cs" />
+    <Compile Include="Target\AbstractTargetTools.cs" />
+    <Compile Include="Target\ITargetTools.cs" />
+    <Compile Include="Timer\ITimerTools.cs" />
+    <Compile Include="Timer\AbstractTimerTools.cs" />
+    <Compile Include="Timer\AbstractVanaTime.cs" />
+    <Compile Include="Timer\IVanaTime.cs" />
+    <Compile Include="Windower\ITextObject.cs" />
+    <Compile Include="Windower\IWindowerTools.cs" />
+    <Compile Include="Windower\AbstractTextObject.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

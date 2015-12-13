@@ -21,7 +21,6 @@ You should have received a copy of the GNU General Public License
 // All credit to him!
 
 using EasyFarm.Classes;
-using FFACETools;
 using System;
 using System.Collections.Generic;
 using System.Linq;

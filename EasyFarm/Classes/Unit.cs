@@ -16,8 +16,8 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using MemoryAPI;
 using System;
-using FFACETools;
 
 namespace EasyFarm.Classes
 {
@@ -59,7 +59,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Holds the data about units.
         /// </summary>
-        private readonly FFACE.NPCTools _npc;
+        private readonly INPCTools _npc;
 
         #endregion
 
@@ -89,7 +89,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     The unit's position.
         /// </summary>
-        public FFACE.Position Position
+        public IPosition Position
         {
             get { return _npc.GetPosition(Id); }
         }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EasyFarm.Classes;
-using FFACETools;
+using MemoryAPI;
 
 namespace EasyFarm.Memory
 {
@@ -15,7 +15,7 @@ namespace EasyFarm.Memory
 
         public virtual Position GetPlayerPosition()
         {
-            return Mapper.Map<FFACE.Position, Position>(_fface.Player.Position);
+            return Mapper.Map<IPosition, Position>(_fface.Player.Position);
         }
     }
 }

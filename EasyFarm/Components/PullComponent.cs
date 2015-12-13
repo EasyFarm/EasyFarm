@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 
 using System.Linq;
 using EasyFarm.Classes;
-using FFACETools;
 
 namespace EasyFarm.Components
 {

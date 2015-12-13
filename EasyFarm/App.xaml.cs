@@ -17,14 +17,13 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System.Windows;
-using EasyFarm.Components;
 using EasyFarm.Logging;
 using EasyFarm.Mvvm;
 using EasyFarm.Properties;
 using Parsing.Services;
-using FFACETools;
 using AutoMapper;
 using EasyFarm.Classes;
+using MemoryAPI;
 
 namespace EasyFarm
 {
@@ -62,7 +61,7 @@ namespace EasyFarm
         protected override void OnStartup(StartupEventArgs e)
         {            
             base.OnStartup(e);
-            Mapper.CreateMap<FFACE.Position, Position>().ReverseMap();
+            Mapper.CreateMap<IPosition, Position>().ReverseMap();
             Logger.Write.ApplicationStart("Application starting");
             var bootStrapper = new BootStrapper();
             bootStrapper.Run();

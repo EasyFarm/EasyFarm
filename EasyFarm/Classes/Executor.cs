@@ -16,13 +16,11 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using FFACETools;
 using Parsing.Abilities;
 using Parsing.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace EasyFarm.Classes

@@ -168,6 +168,7 @@
     <Compile Include="Components\SetTargetState.cs" />
     <Compile Include="Components\StartEngineState.cs" />
     <Compile Include="Components\TravelComponent.cs" />
+    <Compile Include="FFACE.cs" />
     <Compile Include="Memory\IMemorySource.cs" />
     <Compile Include="Memory\MemorySource.cs" />
     <Compile Include="Mvvm\AsyncDelegateCommand.cs" />
@@ -416,13 +417,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MemoryAPI\MemoryAPI.csproj">
+      <Project>{cc6cc9be-32f0-4b8a-a1ad-6c7c744e2fad}</Project>
+      <Name>MemoryAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Parsing\Parsing.csproj">
       <Project>{7008daf7-d3aa-41a4-9d85-8ec168d5d372}</Project>
       <Name>Parsing</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Submodules\FFACETools\FFACETools.csproj">
-      <Project>{37456169-2b9e-49a7-8b20-a160c180e453}</Project>
-      <Name>FFACETools</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

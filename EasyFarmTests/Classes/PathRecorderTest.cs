@@ -1,12 +1,6 @@
 ﻿using EasyFarm.Classes;
-using EasyFarm.Memory;
 using EasyFarm.Tests.Mocks;
-using FFACETools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
-using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace EasyFarm.Tests.UnitTests.Classes

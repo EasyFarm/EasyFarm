@@ -1,5 +1,4 @@
 ﻿using EasyFarm.Memory;
-using FFACETools;
 using System;
 using System.Collections.ObjectModel;
 using System.Timers;

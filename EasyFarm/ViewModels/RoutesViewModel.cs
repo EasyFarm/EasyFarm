@@ -16,15 +16,12 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Mvvm;
 using Prism.Commands;
 using EasyFarm.Memory;
-using FFACETools;
-using System.Threading;
 
 namespace EasyFarm.ViewModels
 {

@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 
 using System;
 using System.Timers;
-using FFACETools;
 
 namespace EasyFarm.Monitors
 {

@@ -20,7 +20,7 @@ using System;
 using System.Linq;
 using System.Timers;
 using EasyFarm.Collections;
-using FFACETools;
+using MemoryAPI;
 
 namespace EasyFarm.Classes
 {
@@ -36,8 +36,8 @@ namespace EasyFarm.Classes
         /// </summary>
         private readonly object _mutex;
 
-        private readonly ThresholdQueue<FFACE.Position> _positionHistory =
-            new ThresholdQueue<FFACE.Position>(HistoryPositionLimit, .75);
+        private readonly ThresholdQueue<IPosition> _positionHistory =
+            new ThresholdQueue<IPosition>(HistoryPositionLimit, .75);
 
         /// <summary>
         ///     Timer that ticks to calculate the current displacement, velocity and
@@ -71,7 +71,7 @@ namespace EasyFarm.Classes
                 if (end == null) return false;
 
                 // Calculate the displacement
-                var displacement = new FFACE.Position
+                var displacement = new Position
                 {
                     X = start.X - end.X,
                     Y = start.Y - end.Y,

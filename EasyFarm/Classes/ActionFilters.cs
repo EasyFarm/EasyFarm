@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 
 using System.Linq;
 using System.Text.RegularExpressions;
-using FFACETools;
 using Parsing.Types;
 using System;
 

@@ -16,17 +16,12 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using FFACETools;
+using MemoryAPI;
 
 namespace EasyFarm.Classes
 {
-    public class Position
+    public class Position : AbstractPosition
     {
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
-        public float H { get; set; }
-
         public override string ToString()
         {
             return "X: " + X + "Z: " + Z;

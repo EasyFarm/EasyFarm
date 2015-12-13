@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 
 using System;
 using System.Text.RegularExpressions;
-using FFACETools;
 using Parsing.Abilities;
 using Parsing.Types;
+using MemoryAPI;
 
 namespace EasyFarm.Classes
 {

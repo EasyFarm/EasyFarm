@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Components;
-using FFACETools;
 using Prism.Mvvm;
 
 namespace EasyFarm.Mvvm

@@ -20,8 +20,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using EasyFarm.Classes;
-using FFACETools;
 using AutoMapper;
+using MemoryAPI;
 
 namespace EasyFarm.Components
 {
@@ -42,9 +42,9 @@ namespace EasyFarm.Components
         /// <summary>
         ///     Returns a copy of the current values in our path.
         /// </summary>
-        public List<FFACE.Position> Path
+        public List<IPosition> Path
         {
-            get { return Config.Instance.Waypoints.Select(x => Mapper.Map<Position, FFACE.Position>(x)).ToList(); }
+            get { return Config.Instance.Waypoints.Select(x => Mapper.Map<Position, IPosition>(x)).ToList(); }
         }
 
         public override bool CheckComponent()

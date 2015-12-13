@@ -16,8 +16,8 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using MemoryAPI;
 using System.Timers;
-using FFACETools;
 
 namespace EasyFarm.Monitors
 {
