@@ -1,8 +1,6 @@
-﻿using EasyFarm.Memory;
+﻿using MemoryAPI;
 using System;
-using System.Collections.ObjectModel;
 using System.Timers;
-using System.Windows.Threading;
 
 namespace EasyFarm.Classes
 {
@@ -15,7 +13,7 @@ namespace EasyFarm.Classes
         /// Callback for handling position added. 
         /// </summary>
         /// <param name="position"></param>
-        public delegate void PositionAdded(Position position);
+        public delegate void PositionAdded(IPosition position);
 
         /// <summary>
         /// Fired when a position is recorded. 
@@ -31,19 +29,19 @@ namespace EasyFarm.Classes
         ///     Used by the recorder to avoid duplicate, successive waypoints.
         ///     (Identicle waypoints are allowed, just not in succession.)
         /// </summary>
-        private Position _lastPosition = new Position();
+        private IPosition _lastPosition = new Position();
 
         /// <summary>
         /// The memory source to retrieve the character's position from. 
         /// </summary>
-        private IMemorySource _memory;
+        private MemoryWrapper _memory;
 
         /// <summary>
         /// Create a new <see cref="PathRecorder"/> with saving and 
         /// loading features. 
         /// </summary>
         /// <param name="memory"></param>
-        public PathRecorder(IMemorySource memory)
+        public PathRecorder(MemoryWrapper memory)
         {
             this._memory = memory;
             _recorder = new Timer(1000);
@@ -91,7 +89,7 @@ namespace EasyFarm.Classes
         {
             // Add a new waypoint only when we are not standing at 
             // our last position. 
-            var position = _memory.GetPlayerPosition();            
+            var position = _memory.Player.Position;            
 
             // Update the path if we've changed out position. Rotating our heading does not
             // count as the player moving. 

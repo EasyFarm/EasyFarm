@@ -64,8 +64,7 @@ namespace EasyFarm.Classes
             // If any unit is within the wander distance then the
             if (Config.Instance.Waypoints.Any())
             {
-                if (!(Config.Instance.Waypoints.Any(waypoint => Distance(mob, waypoint) <=
-                                                                Config.Instance.WanderDistance))) return false;
+                if (!(Config.Instance.Waypoints.Any(waypoint => Distance(mob, waypoint) <= Config.Instance.WanderDistance))) return false;
             }
 
             // Mob too high out of reach.
@@ -117,7 +116,7 @@ namespace EasyFarm.Classes
         /// <param name="mob"></param>
         /// <param name="waypoint"></param>
         /// <returns></returns>
-        private static double Distance(Unit mob, Position waypoint)
+        private static double Distance(Unit mob, IPosition waypoint)
         {
             return Math.Sqrt(Math.Pow(waypoint.X - mob.PosX, 2) + Math.Pow(waypoint.Z - mob.PosZ, 2));
         }

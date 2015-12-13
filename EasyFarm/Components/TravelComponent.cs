@@ -44,7 +44,7 @@ namespace EasyFarm.Components
         /// </summary>
         public List<IPosition> Path
         {
-            get { return Config.Instance.Waypoints.Select(x => Mapper.Map<Position, IPosition>(x)).ToList(); }
+            get { return Config.Instance.Waypoints.ToList(); }
         }
 
         public override bool CheckComponent()
@@ -80,7 +80,7 @@ namespace EasyFarm.Components
             // Reverse the waypoint path. 
             if (_position == Path.Count)
             {
-                Config.Instance.Waypoints = new ObservableCollection<Position>(
+                Config.Instance.Waypoints = new ObservableCollection<IPosition>(
                     Config.Instance.Waypoints.Reverse());
 
                 // Copy new waypoint path from config. 

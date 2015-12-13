@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 public class MemoryWrapper : IMemoryAPI
 {
-    private int id;
-
     INavigatorTools navigatorTools;
     INPCTools npcTools;
     Dictionary<byte, IPartyMemberTools> partyMemberTools;
@@ -12,11 +10,6 @@ public class MemoryWrapper : IMemoryAPI
     ITargetTools targetTools;
     ITimerTools timerTools;
     IWindowerTools windowerTools;
-
-    public MemoryWrapper(int id)
-    {
-        this.id = id;
-    }
 
     public INavigatorTools Navigator
     {

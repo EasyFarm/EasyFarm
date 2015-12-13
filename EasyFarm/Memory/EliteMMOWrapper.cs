@@ -10,7 +10,7 @@ namespace EasyFarm
     {
         private readonly EliteAPI EliteAPI;
 
-        public EliteMMOWrapper(int pid) : base(pid)
+        public EliteMMOWrapper(int pid)
         {
             EliteAPI = new EliteAPI(pid);
             Navigator = new NavigationTools(EliteAPI);
@@ -63,13 +63,26 @@ namespace EasyFarm
             }
 
             public void Goto(IPosition position, bool KeepRunning)
-            {                
-                api.AutoFollow.IsAutoFollowing = true;
+            {
+                var distance = DistanceTo(position);                
 
-                if(DistanceTo(position) > DistanceTolerance)
+                if (DistanceTo(position) > DistanceTolerance)
                 {
-                    api.AutoFollow.SetAutoFollowCoords(position.X, position.Y, position.Z);
-                    System.Threading.Thread.Sleep(500);
+                    DateTime duration = DateTime.Now.AddSeconds(5);
+
+                    var player = api.Entity.GetLocalPlayer();
+
+                    api.AutoFollow.SetAutoFollowCoords(
+                        position.X - player.X, 
+                        0, 
+                        position.Z - player.Z);
+
+                    api.AutoFollow.IsAutoFollowing = true;
+
+                    while (DistanceTo(position) > DistanceTolerance && DateTime.Now < duration)
+                    {
+                        System.Threading.Thread.Sleep(30);
+                    }                                       
                 }
 
                 api.AutoFollow.IsAutoFollowing = false;

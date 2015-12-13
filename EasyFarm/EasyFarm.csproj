@@ -185,8 +185,6 @@
     <Compile Include="Memory\FFACEWrapper.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Memory\MemoryWrapper.cs" />
-    <Compile Include="Memory\IMemorySource.cs" />
-    <Compile Include="Memory\MemorySource.cs" />
     <Compile Include="Mvvm\AsyncDelegateCommand.cs" />
     <Compile Include="Mvvm\IViewModel.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

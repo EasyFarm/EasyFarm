@@ -10,7 +10,7 @@ namespace EasyFarm
     {
         private readonly FFACE FFACE;
 
-        public FFACEWrapper(int pid) : base(pid)
+        public FFACEWrapper(int pid)
         {
             FFACE = new FFACE(pid);
             Navigator = new NavigationTools(FFACE);

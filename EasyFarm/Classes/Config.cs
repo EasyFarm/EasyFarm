@@ -20,6 +20,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 using Prism.Mvvm;
+using MemoryAPI;
 
 namespace EasyFarm.Classes
 {
@@ -156,7 +157,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     List of all waypoints that make up the bots path
         /// </summary>
-        public ObservableCollection<Position> Waypoints;
+        public ObservableCollection<IPosition> Waypoints;
 
         static Config()
         {
@@ -179,7 +180,7 @@ namespace EasyFarm.Classes
         {
             MainWindowTitle = "EasyFarm";
             StatusBarText = string.Empty;
-            Waypoints = new ObservableCollection<Position>();
+            Waypoints = new ObservableCollection<IPosition>();
         }
 
         [XmlIgnore]

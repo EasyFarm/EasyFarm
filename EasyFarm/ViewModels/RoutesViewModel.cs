@@ -21,7 +21,7 @@ using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Mvvm;
 using Prism.Commands;
-using EasyFarm.Memory;
+using MemoryAPI;
 
 namespace EasyFarm.ViewModels
 {
@@ -51,11 +51,11 @@ namespace EasyFarm.ViewModels
 
         private void ViewModelBase_OnSessionSet(MemoryWrapper fface)
         {
-            _recorder = new PathRecorder(new MemorySource(fface));
+            _recorder = new PathRecorder(fface);
             _recorder.OnPositionAdded += _recorder_OnPositionAdded;
         }
 
-        private void _recorder_OnPositionAdded(Position position)
+        private void _recorder_OnPositionAdded(IPosition position)
         {
             App.Current.Dispatcher.Invoke(() => this.Route.Add(position));
         }
@@ -69,7 +69,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Exposes the list of waypoints to the user.
         /// </summary>
-        public ObservableCollection<Position> Route
+        public ObservableCollection<IPosition> Route
         {
             get { return Config.Instance.Waypoints; }
             set { SetProperty(ref Config.Instance.Waypoints, value); }
@@ -139,9 +139,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private void Save()
         {
-            if(_settings.TrySave<ObservableCollection<Position>>(Route))
+            if(_settings.TrySave(Route))
             {
-                
                 AppInformer.InformUser("Path has been saved.");
             }
             else 
@@ -155,7 +154,7 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private void Load()
         {
-            Route = _settings.TryLoad<ObservableCollection<Position>>();
+            Route = _settings.TryLoad<ObservableCollection<IPosition>>();
 
             if (Route != null)
             {
