@@ -135,35 +135,11 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        ///     The unit's npc bit
-        /// </summary>
-        public byte NpcBit
-        {
-            get { return _npc.NPCBit(Id); }
-        }
-
-        /// <summary>
         ///     The unit's npc type
         /// </summary>
         public NPCType NpcType
         {
             get { return _npc.NPCType(Id); }
-        }
-
-        /// <summary>
-        ///     The unit's pet's id.
-        /// </summary>
-        public int PetId
-        {
-            get { return _npc.PetID(Id); }
-        }
-
-        /// <summary>
-        ///     The unit's heading.
-        /// </summary>
-        public float PosH
-        {
-            get { return _npc.PosH(Id); }
         }
 
         /// <summary>
@@ -196,14 +172,6 @@ namespace EasyFarm.Classes
         public Status Status
         {
             get { return _npc.Status(Id); }
-        }
-
-        /// <summary>
-        ///     The unit's current tp.
-        /// </summary>
-        public short TpCurrent
-        {
-            get { return _npc.TPCurrent(Id); }
         }
 
         public bool MyClaim

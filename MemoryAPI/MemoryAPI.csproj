@@ -42,31 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chat\AbstractChatLine.cs" />
-    <Compile Include="Chat\AbstractChatLogEntry.cs" />
-    <Compile Include="Chat\AbstractChatTools.cs" />
-    <Compile Include="Chat\IChatLine.cs" />
-    <Compile Include="Chat\IChatLogEntry.cs" />
-    <Compile Include="Chat\IChatTools.cs" />
     <Compile Include="Enums\enums.cs" />
-    <Compile Include="Dialog\AbstractDialogText.cs" />
-    <Compile Include="Dialog\IDialogText.cs" />
     <Compile Include="Enums\Structures.cs" />
     <Compile Include="Enums\ThreadStatus.cs" />
-    <Compile Include="Fish\AbstractFishID.cs" />
-    <Compile Include="Fish\IFishID.cs" />
-    <Compile Include="Fish\AbstractFishTools.cs" />
-    <Compile Include="Fish\IFishTools.cs" />
     <Compile Include="AbstractMemoryAPI.cs" />
-    <Compile Include="Item\AbstractInventoryItem.cs" />
-    <Compile Include="Item\IInventoryItem.cs" />
-    <Compile Include="Item\AbstractItemTools.cs" />
-    <Compile Include="Item\IItemTools.cs" />
-    <Compile Include="Item\AbstractTreasureItem.cs" />
-    <Compile Include="Item\ITreasureItem.cs" />
     <Compile Include="IMemoryAPI.cs" />
-    <Compile Include="Menu\AbstractMenuTools.cs" />
-    <Compile Include="Menu\IMenuTools.cs" />
     <Compile Include="Navigation\AbstractNavigationTools.cs" />
     <Compile Include="Navigation\INavigatorTools.cs" />
     <Compile Include="NPC\AbstractNPCTools.cs" />
@@ -75,26 +55,14 @@
     <Compile Include="NPC\IPosition.cs" />
     <Compile Include="PartyMember\AbstractPartyMemberTools.cs" />
     <Compile Include="PartyMember\IPartyMemberTools.cs" />
-    <Compile Include="Party\AbstractPartyTools.cs" />
-    <Compile Include="Party\IPartyTools.cs" />
-    <Compile Include="Player\AbstractCraftDetails.cs" />
-    <Compile Include="Player\ICraftDetails.cs" />
     <Compile Include="Player\AbstractPlayerTools.cs" />
     <Compile Include="Player\IPlayerTools.cs" />
-    <Compile Include="Player\AbstractSkillDetails.cs" />
-    <Compile Include="Player\ISkillDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Search\AbstractSearchTools.cs" />
-    <Compile Include="Search\ISearchTools.cs" />
     <Compile Include="Target\AbstractTargetTools.cs" />
     <Compile Include="Target\ITargetTools.cs" />
     <Compile Include="Timer\ITimerTools.cs" />
     <Compile Include="Timer\AbstractTimerTools.cs" />
-    <Compile Include="Timer\AbstractVanaTime.cs" />
-    <Compile Include="Timer\IVanaTime.cs" />
-    <Compile Include="Windower\ITextObject.cs" />
     <Compile Include="Windower\IWindowerTools.cs" />
-    <Compile Include="Windower\AbstractTextObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
