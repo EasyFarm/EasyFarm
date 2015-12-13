@@ -59,6 +59,8 @@ namespace EasyFarm.Classes
             // Mob is out of range
             if (!(mob.Distance < Config.Instance.DetectionDistance)) return false;
 
+            if (mob.IsPet) return false;
+
             // If any unit is within the wander distance then the
             if (Config.Instance.Waypoints.Any())
             {

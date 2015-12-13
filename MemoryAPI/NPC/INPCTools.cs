@@ -15,5 +15,6 @@
         float PosY(int id);
         float PosZ(int id);
         Status Status(int id);
+        bool IsPet(int id);
     }
 }

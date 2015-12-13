@@ -63,13 +63,12 @@ namespace EasyFarm
             }
 
             public void Goto(IPosition position, bool KeepRunning)
-            {
-                api.AutoFollow.SetAutoFollowCoords(position.X, position.Y, position.Z);
-
+            {                
                 api.AutoFollow.IsAutoFollowing = true;
 
-                while (DistanceTo(position) > DistanceTolerance)
+                if(DistanceTo(position) > DistanceTolerance)
                 {
+                    api.AutoFollow.SetAutoFollowCoords(position.X, position.Y, position.Z);
                     System.Threading.Thread.Sleep(500);
                 }
 
@@ -111,7 +110,12 @@ namespace EasyFarm
 
             public bool IsActive(int id) { return true; }
 
-            public bool IsClaimed(int id) { return true; }
+            public bool IsClaimed(int id) { return api.Entity.GetEntity(id).ClaimID != 0; }
+
+            public bool IsPet(int id)
+            {
+                return api.Entity.GetLocalPlayer().PetIndex == id;
+            }
 
             public bool IsRendered(int id) { return true; }
 
@@ -276,7 +280,7 @@ namespace EasyFarm
 
             public int ID
             {
-                get { return (int)api.Target.GetTargetInfo().TargetId; }
+                get { return (int)api.Target.GetTargetInfo().TargetIndex; }
             }
 
             public bool SetNPCTarget(int index)

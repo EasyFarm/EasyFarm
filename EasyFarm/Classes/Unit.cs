@@ -222,6 +222,11 @@ namespace EasyFarm.Classes
             get { return Math.Abs(PosY - _fface.Player.PosY); }
         }
 
+        public bool IsPet
+        {
+            get { return _fface.NPC.IsPet(Id); }
+        }
+
         #endregion
     }
 }

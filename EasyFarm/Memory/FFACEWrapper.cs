@@ -2,6 +2,7 @@
 using MemoryAPI;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace EasyFarm
 {
@@ -103,6 +104,11 @@ namespace EasyFarm
             public bool IsActive(int id) { return api.NPC.IsActive(id); }
 
             public bool IsClaimed(int id) { return api.NPC.IsClaimed(id); }
+
+            public bool IsPet(int id)
+            {
+                return api.NPC.PetID(api.Player.ID) == id;
+            }
 
             public bool IsRendered(int id) { return api.NPC.IsRendered(id); }
 
