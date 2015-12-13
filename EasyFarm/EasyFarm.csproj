@@ -177,7 +177,9 @@
     <Compile Include="Components\SetTargetState.cs" />
     <Compile Include="Components\StartEngineState.cs" />
     <Compile Include="Components\TravelComponent.cs" />
+    <Compile Include="EliteMMOWrapper.cs" />
     <Compile Include="FFACE.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Memory\IMemorySource.cs" />
     <Compile Include="Memory\MemorySource.cs" />
     <Compile Include="Mvvm\AsyncDelegateCommand.cs" />
