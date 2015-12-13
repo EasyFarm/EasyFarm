@@ -81,7 +81,12 @@ namespace EasyFarm
 
             public string Name(int id) { return api.Entity.GetEntity(id).Name; }
 
-            public NPCType NPCType(int id) { return (MemoryAPI.NPCType)api.Entity.GetEntity(id).Type; }
+            public NPCType NPCType(int id) {
+                var entity = api.Entity.GetEntity(id);
+                if (entity.Type == 2) return MemoryAPI.NPCType.Mob;
+                else if(entity.Type == 0) return MemoryAPI.NPCType.PC;
+                else return MemoryAPI.NPCType.NPC;
+            }
 
             public float PosX(int id) { return api.Entity.GetEntity(id).X; }
 

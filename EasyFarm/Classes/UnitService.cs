@@ -106,8 +106,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Units.Take(MobArrayMax)
-                    .Where(x => x.NpcType.Equals(NPCType.Mob)).ToList();
+                return Units.Take(MobArrayMax).Where(x => x.NpcType.Equals(NPCType.Mob)).ToList();
             }
         }
 
