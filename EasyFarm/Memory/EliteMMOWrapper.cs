@@ -1,5 +1,6 @@
 ﻿using EliteMMO.API;
 using MemoryAPI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,26 +31,61 @@ namespace EasyFarm
         {
             private readonly EliteAPI api;
 
-            public double DistanceTolerance
-            {
-                get { return 0; }
-                set { }
-            }
+            public double DistanceTolerance { get; set; } = 3;
 
             public NavigationTools(EliteAPI api)
             {
                 this.api = api;
             }
 
-            public bool FaceHeading(IPosition position) { return true; }
+            /// <summary>
+            /// Makes the player look at the specified position. 
+            /// </summary>            
+            /// Author: SMD111
+            /// https://github.com/smd111/EliteMMO.Scripted
+            public bool FaceHeading(IPosition position)
+            {
+                var player = api.Entity.GetLocalPlayer();
+                var angle = (byte)(Math.Atan((position.Z - player.Z) / (position.X - player.X)) * -(128.0f / Math.PI));
+                if (player.X > position.X) angle += 128;
+                var radian = (((float)angle) / 255) * 2 * Math.PI;
+                return api.Entity.SetEntityHPosition(api.Entity.LocalPlayerIndex, (float)radian);
+            }
 
-            public double DistanceTo(IPosition position) { return 0; }
+            public double DistanceTo(IPosition position)
+            {
+                var player = api.Entity.GetLocalPlayer();
 
-            public void Goto(IPosition position, bool KeepRunning) { }
+                return Math.Sqrt(
+                    Math.Pow(position.X - player.X, 2) +
+                    Math.Pow(position.Y - player.Y, 2) +
+                    Math.Pow(position.Z - player.Z, 2));
+            }
 
-            public void GotoNPC(int ID) { }
+            public void Goto(IPosition position, bool KeepRunning)
+            {
+                api.AutoFollow.SetAutoFollowCoords(position.X, position.Y, position.Z);
 
-            public void Reset() { }
+                api.AutoFollow.IsAutoFollowing = true;
+
+                while (DistanceTo(position) > DistanceTolerance)
+                {
+                    System.Threading.Thread.Sleep(500);
+                }
+
+                api.AutoFollow.IsAutoFollowing = false;
+            }
+
+            public void GotoNPC(int ID)
+            {
+                var entity = api.Entity.GetEntity(ID);
+                Goto(Helpers.CreatePosition(entity.X, entity.Y, entity.Z, entity.H), false);
+            }
+
+            public void Reset()
+            {
+                api.AutoFollow.IsAutoFollowing = false;
+            }
         }
 
         public class NPCTools : INPCTools
@@ -81,10 +117,11 @@ namespace EasyFarm
 
             public string Name(int id) { return api.Entity.GetEntity(id).Name; }
 
-            public NPCType NPCType(int id) {
+            public NPCType NPCType(int id)
+            {
                 var entity = api.Entity.GetEntity(id);
                 if (entity.Type == 2) return MemoryAPI.NPCType.Mob;
-                else if(entity.Type == 0) return MemoryAPI.NPCType.PC;
+                else if (entity.Type == 0) return MemoryAPI.NPCType.PC;
                 else return MemoryAPI.NPCType.NPC;
             }
 
@@ -94,7 +131,11 @@ namespace EasyFarm
 
             public float PosZ(int id) { return api.Entity.GetEntity(id).Z; }
 
-            public Status Status(int id) { return (MemoryAPI.Status)api.Entity.GetEntity(id).Status; }
+            public Status Status(int id)
+            {
+                var status = (EntityStatus)api.Entity.GetEntity(id).Status;
+                return Helpers.ToStatus(status);
+            }            
         }
 
         public class PartyMemberTools : IPartyMemberTools
@@ -202,7 +243,7 @@ namespace EasyFarm
 
             public Status Status
             {
-                get { return (MemoryAPI.Status)api.Player.Status; }
+                get { return Helpers.ToStatus((EntityStatus)api.Player.Status); }
             }
 
             public MemoryAPI.StatusEffect[] StatusEffects
