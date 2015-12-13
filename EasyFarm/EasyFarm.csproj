@@ -103,6 +103,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\EliteMMO.API.dll</HintPath>
     </Reference>
+    <Reference Include="FFACETools, Version=1.3.1.21, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\FFACETools.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -177,9 +181,10 @@
     <Compile Include="Components\SetTargetState.cs" />
     <Compile Include="Components\StartEngineState.cs" />
     <Compile Include="Components\TravelComponent.cs" />
-    <Compile Include="EliteMMOWrapper.cs" />
-    <Compile Include="FFACE.cs" />
+    <Compile Include="Memory\EliteMMOWrapper.cs" />
+    <Compile Include="Memory\FFACEWrapper.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="Memory\MemoryWrapper.cs" />
     <Compile Include="Memory\IMemorySource.cs" />
     <Compile Include="Memory\MemorySource.cs" />
     <Compile Include="Mvvm\AsyncDelegateCommand.cs" />
@@ -441,6 +446,7 @@
     <Content Include="Dependencies\EliteAPI.dll" />
     <Content Include="Dependencies\EliteMMO.API.dll" />
     <Content Include="Dependencies\FFACE.dll" />
+    <Content Include="Dependencies\FFACETools.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
