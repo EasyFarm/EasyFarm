@@ -3,6 +3,7 @@ using MemoryAPI;
 using EliteMMO.API;
 using MathNet.Numerics;
 using System.Collections.Generic;
+using EasyFarm.Classes;
 
 public class MemoryWrapper : IMemoryAPI
 {
@@ -109,13 +110,25 @@ public class NPCTools : INPCTools
         this.api = api;
     }
 
-    public int ClaimedID(int id) { return 0; }
+    public int ClaimedID(int id) { return (int)api.Entity.GetEntity(id).ClaimID; }
 
-    public double Distance(int id) { return 0; }
+    public double Distance(int id) { return api.Entity.GetEntity(id).Distance; }
 
-    public IPosition GetPosition(int id) { return null; }
+    public IPosition GetPosition(int id)
+    {
+        var entity = api.Entity.GetEntity(id);
 
-    public short HPPCurrent(int id) { return 0; }
+        var position = new Position();
+
+        position.X = entity.X;
+        position.Y = entity.Y;
+        position.Z = entity.Z;
+        position.H = entity.H;
+
+        return position;
+    }
+
+    public short HPPCurrent(int id) { return api.Entity.GetEntity(id).HealthPercent; }
 
     public bool IsActive(int id) { return true; }
 
@@ -123,17 +136,17 @@ public class NPCTools : INPCTools
 
     public bool IsRendered(int id) { return true; }
 
-    public string Name(int id) { return null; }
+    public string Name(int id) { return api.Entity.GetEntity(id).Name; }
 
-    public NPCType NPCType(int id) { return MemoryAPI.NPCType.Mob; }
+    public NPCType NPCType(int id) { return (MemoryAPI.NPCType)api.Entity.GetEntity(id).Type; }
 
-    public float PosX(int id) { return 0; }
+    public float PosX(int id) { return api.Entity.GetEntity(id).X; }
 
-    public float PosY(int id) { return 0; }
+    public float PosY(int id) { return api.Entity.GetEntity(id).Y; }
 
-    public float PosZ(int id) { return 0; }
+    public float PosZ(int id) { return api.Entity.GetEntity(id).Z; }
 
-    public Status Status(int id) { return MemoryAPI.Status.Fighting; }
+    public Status Status(int id) { return (MemoryAPI.Status)api.Entity.GetEntity(id).Status; }
 }
 
 public class PartyMemberTools : IPartyMemberTools
