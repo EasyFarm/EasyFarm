@@ -2069,4 +2069,3 @@
 
     } // @ public enum NPCType
 }
-

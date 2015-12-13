@@ -4,6 +4,8 @@ using EliteMMO.API;
 using MathNet.Numerics;
 using System.Collections.Generic;
 using EasyFarm.Classes;
+using System.Linq;
+using static Helpers;
 
 public class MemoryWrapper : IMemoryAPI
 {
@@ -117,16 +119,8 @@ public class NPCTools : INPCTools
     public IPosition GetPosition(int id)
     {
         var entity = api.Entity.GetEntity(id);
-
-        var position = new Position();
-
-        position.X = entity.X;
-        position.Y = entity.Y;
-        position.Z = entity.Z;
-        position.H = entity.H;
-
-        return position;
-    }
+        return CreatePosition(entity.X, entity.Y, entity.Z, entity.H);
+    }    
 
     public short HPPCurrent(int id) { return api.Entity.GetEntity(id).HealthPercent; }
 
@@ -175,77 +169,102 @@ public class PlayerTools : IPlayerTools
 
     public short CastPercentEx
     {
-        get { return 0; }
+        get { return (short)(api.CastBar.Percent * 100); }
     }
 
     public int HPPCurrent
     {
-        get { return 100; }
+        get { return (int)api.Player.HPP; }
     }
 
     public int ID
     {
-        get { return 1000; }
+        get { return api.Player.ServerId; }
     }
 
     public int MPCurrent
     {
-        get { return 1000; }
+        get { return (int)api.Player.MP; }
     }
 
     public int MPPCurrent
     {
-        get { return 100; }
+        get { return (int)api.Player.MPP; }
     }
 
     public string Name
     {
-        get { return "Mykezero"; }
+        get { return api.Player.Name; }
     }
 
     public IPosition Position
     {
-        get { return default(IPosition); }
+        get
+        {
+            var x = api.Player.X;
+            var y = api.Player.Y;
+            var z = api.Player.Z;
+            var h = api.Player.H;
+
+            return CreatePosition(x, y, z, h);
+        }
     }
 
     public float PosX
     {
-        get { return 0; }
+        get { return Position.X; }
     }
 
     public float PosY
     {
-        get { return 0; }
+        get { return Position.Y; }
     }
 
     public float PosZ
     {
-        get { return 0; }
+        get { return Position.Z; }
     }
 
     public Structures.PlayerStats Stats
     {
-        get { return default(Structures.PlayerStats); }
+        get
+        {
+            var stats = api.Player.Stats;
+
+            return new Structures.PlayerStats()
+            {
+                Agi = stats.Agility,
+                Chr = stats.Charisma,
+                Dex = stats.Dexterity,
+                Int = stats.Intelligence,
+                Mnd = stats.Mind,
+                Str = stats.Strength,
+                Vit = stats.Vitality
+            };
+        }
     }
 
     public Status Status
     {
-        get { return Status.Fighting; }
+        get { return (MemoryAPI.Status)api.Player.Status; }
     }
 
     public MemoryAPI.StatusEffect[] StatusEffects
     {
-        get { return new MemoryAPI.StatusEffect[0]; }
+        get
+        {
+            return api.Player.Buffs.Select(x => (MemoryAPI.StatusEffect)x).ToArray();
+        }
     }
 
     public int TPCurrent
     {
-        get { return 1000; }
+        get { return (int)api.Player.TP; }
     }
 
     public Zone Zone
     {
-        get { return Zone.Rolanberry_Fields; }
+        get { return (MemoryAPI.Zone)api.Player.ZoneId; }
     }
 }
 
@@ -292,3 +311,17 @@ public class WindowerTools : IWindowerTools
     public void SendString(string stringToSend) { }
 }
 
+public class Helpers
+{
+    public static IPosition CreatePosition(float x, float y, float z, float h)
+    {
+        var position = new Position();
+
+        position.X = x;
+        position.Y = y;
+        position.Z = z;
+        position.H = h;
+
+        return position;
+    }
+}
