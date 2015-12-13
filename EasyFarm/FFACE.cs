@@ -120,7 +120,7 @@ public class NPCTools : INPCTools
     {
         var entity = api.Entity.GetEntity(id);
         return CreatePosition(entity.X, entity.Y, entity.Z, entity.H);
-    }    
+    }
 
     public short HPPCurrent(int id) { return api.Entity.GetEntity(id).HealthPercent; }
 
@@ -146,15 +146,17 @@ public class NPCTools : INPCTools
 public class PartyMemberTools : IPartyMemberTools
 {
     private readonly EliteAPI api;
+    private readonly int index;
 
-    public PartyMemberTools(EliteAPI api)
+    public PartyMemberTools(EliteAPI api, int index)
     {
         this.api = api;
+        this.index = index;
     }
 
     public int ServerID
     {
-        get { return 0; }
+        get { return (int)api.Party.GetPartyMember(index).ID; }
     }
 }
 
@@ -279,10 +281,13 @@ public class TargetTools : ITargetTools
 
     public int ID
     {
-        get { return 0; }
+        get { return (int)api.Target.GetTargetInfo().TargetId; }
     }
 
-    public bool SetNPCTarget(int index) { return true; }
+    public bool SetNPCTarget(int index)
+    {
+        return api.Target.SetTarget(index);
+    }
 }
 
 public class TimerTools : ITimerTools
@@ -294,9 +299,15 @@ public class TimerTools : ITimerTools
         this.api = api;
     }
 
-    public int GetAbilityRecast(AbilityList abil) { return 0; }
+    public int GetAbilityRecast(AbilityList abil)
+    {
+        return api.Recast.GetAbilityRecast((int)abil);
+    }
 
-    public short GetSpellRecast(SpellList spell) { return 0; }
+    public short GetSpellRecast(SpellList spell)
+    {
+        return (short)api.Recast.GetSpellRecast((int)spell);
+    }
 }
 
 public class WindowerTools : IWindowerTools
@@ -308,7 +319,10 @@ public class WindowerTools : IWindowerTools
         this.api = api;
     }
 
-    public void SendString(string stringToSend) { }
+    public void SendString(string stringToSend)
+    {
+        api.ThirdParty.SendString(stringToSend);
+    }
 }
 
 public class Helpers
