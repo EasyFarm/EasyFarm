@@ -8,6 +8,12 @@ namespace EasyFarm
 {
     public class EliteMMOWrapper : MemoryWrapper
     {
+        public enum ViewMode : int
+        {            
+            ThirdPerson = 0,
+            FirstPerson
+        }
+
         private readonly EliteAPI EliteAPI;
 
         public EliteMMOWrapper(int pid)
@@ -69,23 +75,23 @@ namespace EasyFarm
                 if (DistanceTo(position) > DistanceTolerance)
                 {
                     DateTime duration = DateTime.Now.AddSeconds(5);
-
                     var player = api.Entity.GetLocalPlayer();
-
-                    api.AutoFollow.SetAutoFollowCoords(
-                        position.X - player.X, 
-                        0, 
-                        position.Z - player.Z);
-
-                    api.AutoFollow.IsAutoFollowing = true;
+                    api.ThirdParty.KeyDown(Keys.W);
 
                     while (DistanceTo(position) > DistanceTolerance && DateTime.Now < duration)
                     {
-                        System.Threading.Thread.Sleep(30);
-                    }                                       
-                }
+                        if ((ViewMode)api.Player.ViewMode != ViewMode.FirstPerson)
+                        {
+                            api.Player.ViewMode = (int)ViewMode.FirstPerson;
+                        }
 
-                api.AutoFollow.IsAutoFollowing = false;
+                        FaceHeading(position);                        
+
+                        System.Threading.Thread.Sleep(30);
+                    }
+
+                    api.ThirdParty.KeyUp(Keys.W);
+                }
             }
 
             public void GotoNPC(int ID)
@@ -96,7 +102,7 @@ namespace EasyFarm
 
             public void Reset()
             {
-                api.AutoFollow.IsAutoFollowing = false;
+                api.ThirdParty.KeyUp(Keys.W);
             }
         }
 
