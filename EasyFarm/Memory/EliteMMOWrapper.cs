@@ -1,6 +1,7 @@
 ﻿using EliteMMO.API;
 using MemoryAPI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace EasyFarm
     public class EliteMMOWrapper : MemoryWrapper
     {
         public enum ViewMode : int
-        {            
+        {
             ThirdPerson = 0,
             FirstPerson
         }
@@ -70,13 +71,13 @@ namespace EasyFarm
 
             public void Goto(IPosition position, bool KeepRunning)
             {
-                var distance = DistanceTo(position);                
+                var distance = DistanceTo(position);
 
                 if (DistanceTo(position) > DistanceTolerance)
                 {
                     DateTime duration = DateTime.Now.AddSeconds(5);
                     var player = api.Entity.GetLocalPlayer();
-                    api.ThirdParty.KeyDown(Keys.W);
+                    api.ThirdParty.KeyDown(Keys.NUMPAD8);
 
                     while (DistanceTo(position) > DistanceTolerance && DateTime.Now < duration)
                     {
@@ -85,12 +86,12 @@ namespace EasyFarm
                             api.Player.ViewMode = (int)ViewMode.FirstPerson;
                         }
 
-                        FaceHeading(position);                        
+                        FaceHeading(position);
 
                         System.Threading.Thread.Sleep(30);
                     }
 
-                    api.ThirdParty.KeyUp(Keys.W);
+                    api.ThirdParty.KeyUp(Keys.NUMPAD8);
                 }
             }
 
@@ -102,7 +103,7 @@ namespace EasyFarm
 
             public void Reset()
             {
-                api.ThirdParty.KeyUp(Keys.W);
+                api.ThirdParty.KeyUp(Keys.NUMPAD8);
             }
         }
 
@@ -158,7 +159,7 @@ namespace EasyFarm
             {
                 var status = (EntityStatus)api.Entity.GetEntity(id).Status;
                 return Helpers.ToStatus(status);
-            }            
+            }
         }
 
         public class PartyMemberTools : IPartyMemberTools
