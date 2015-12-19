@@ -6,6 +6,10 @@ EasyFarm is a general purpose farming tool for Final Fantasy XI.
 
 ![EasyFarm GUI](http://i.imgur.com/pcrEm66.png)
 
+#### Notice: 
+The new version of the program uses a different library produced by [EliteMMO](http://www.elitemmonetwork.com/). 
+If you are receiving an "Object reference not set to an instance of an object" message try running the requirements checker which can be found here: http://www.elitemmonetwork.com/forums/viewtopic.php?f=28&t=329
+
 #### Downloads 
 * [GitHub](https://github.com/EasyFarm/EasyFarm/releases): Release.zip contains the latest version. 
 
@@ -49,7 +53,7 @@ Contributions to the tutorial section are highly welcomed! You can submit a pull
 
 #### Special Thanks!
 
-* The FFEVO Team for producing the memory reading api this program could not operate without. 
+* The FFEVO Team for producing the memory reading api this program could not operate without.
 
 * The Windower Team for producing the Windower client and resource files which make using the program a whole lot easier. 
 
