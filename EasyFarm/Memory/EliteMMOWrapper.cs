@@ -137,7 +137,20 @@ namespace EasyFarm
                 return api.Entity.GetLocalPlayer().PetIndex == id;
             }
 
-            public bool IsRendered(int id) { return true; }
+            /// <summary>
+            /// Checks to see if the object is rendered. 
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
+            /// Author: SG1234567
+            /// https://github.com/SG1234567
+            public bool IsRendered(int id)
+            {
+                //Render0000 specificaly uses 0x200 to check if the object is rendered
+                if ((api.Entity.GetEntity(id).Render0000 & 0x200) != 0x200)
+                    return false;
+                return true;
+            }
 
             public string Name(int id) { return api.Entity.GetEntity(id).Name; }
 
