@@ -48,13 +48,13 @@ namespace EasyFarm.Classes
             }
 
             // If a spell get spell recast
-            if (CompositeAbilityTypes.IsSpell.HasFlag(ability.AbilityType))
+            if (CompositeAbilityTypes.IsSpell(ability.AbilityType))
             {
                 recast = fface.Timer.GetSpellRecast(ToSpellList(ability));
             }
 
             // if ability get ability recast. 
-            if (CompositeAbilityTypes.IsAbility.HasFlag(ability.AbilityType))
+            if (CompositeAbilityTypes.IsSpell(ability.AbilityType))
             {
                 recast = fface.Timer.GetAbilityRecast(ToAbilityList(ability));
             }

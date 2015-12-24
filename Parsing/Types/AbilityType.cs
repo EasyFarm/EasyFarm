@@ -47,12 +47,37 @@ namespace Parsing.Types
         /// <summary>
         ///     Represents all the types that are spells or casted.
         /// </summary>
-        public static AbilityType IsSpell = (AbilityType.Magic | AbilityType.Ninjutsu | AbilityType.Song);
+        public static bool IsSpell(AbilityType abilityType)
+        {
+            switch (abilityType)
+            {
+                case AbilityType.Magic:
+                case AbilityType.Ninjutsu:
+                case AbilityType.Song:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
 
         /// <summary>
         ///     Represents all the types that are not spells or casted.
         /// </summary>
-        public static AbilityType IsAbility = (AbilityType.Weaponskill | AbilityType.Range | AbilityType.Jobability |
-                                               AbilityType.Pet | AbilityType.Monsterskill);
+        public static bool IsAbility(AbilityType abilityType)
+        {
+            switch (abilityType)
+            {
+                case AbilityType.Weaponskill:
+                case AbilityType.Range:
+                case AbilityType.Jobability:
+                case AbilityType.Pet:
+                case AbilityType.Monsterskill:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
     }
 }

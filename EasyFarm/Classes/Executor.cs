@@ -129,7 +129,7 @@ namespace EasyFarm.Classes
                 // Target mob if not currently targeted.
                 SetTarget(target);
 
-                if (CompositeAbilityTypes.IsSpell.HasFlag(action.Ability.AbilityType))
+                if (CompositeAbilityTypes.IsSpell(action.Ability.AbilityType))
                 {
                     _caster.CastSpell(action);
                 }
