@@ -81,7 +81,7 @@ namespace EasyFarm.Parsing
         ///     The target for the ability.
         ///     Example: <t />, <st />, <stnpc />
         /// </summary>
-        public string Postfix { get; set; }
+        public string Postfix => TargetType.HasFlag(TargetType.Self) ? "<me>" : "<t>";
 
         /// <summary>
         ///     How long the ability takes to cast.
@@ -168,20 +168,10 @@ namespace EasyFarm.Parsing
             get { return !string.IsNullOrEmpty(English); }
         }
 
-        public string Command
-        {
-            get
-            {
-                // If it was a ranged attack, use the ranged attack syntax
-                if (AbilityType.HasFlag(AbilityType.Range))
-                {
-                    return Prefix + " " + Postfix;
-                }
+        public string RangedCommand => Prefix + " " + Postfix;
 
-                // Use the spell / ability syntax.
-                var postfix = TargetType.HasFlag(TargetType.Self) ? "<me>" : "<t>";
-                return Prefix + " \"" + English + "\" " + Postfix;
-            }
-        }
+        public string ActionCommand => Prefix + " \"" + English + "\" " + Postfix;
+
+        public string Command => AbilityType.HasFlag(AbilityType.Range) ? RangedCommand : ActionCommand;
     }
 }
