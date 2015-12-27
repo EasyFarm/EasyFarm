@@ -54,7 +54,7 @@ namespace EasyFarm
         }
 
         /// <summary>
-        ///     Gets the user's selected FFACE Session and
+        ///     Gets the user's selected fface Session and
         ///     starts up the program.
         /// </summary>
         /// <param name="e"></param>

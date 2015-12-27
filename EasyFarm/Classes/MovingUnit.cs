@@ -21,6 +21,7 @@ using System.Linq;
 using System.Timers;
 using EasyFarm.Collections;
 using MemoryAPI;
+using MemoryAPI.Navigation;
 
 namespace EasyFarm.Classes
 {

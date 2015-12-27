@@ -17,9 +17,8 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System;
-using MemoryAPI;
 
-namespace EasyFarm.Classes
+namespace MemoryAPI.Navigation
 {
     public class Position : IPosition
     {
@@ -38,14 +37,20 @@ namespace EasyFarm.Classes
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return (X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode() ^ H.GetHashCode());
         }
 
         public override bool Equals(object obj)
         {
             var other = obj as Position;
             if (other == null) return false;
-            return this.X != other.X && this.Y != other.Y && this.Z != other.Z && this.H != other.H;
+
+            var deviation = Math.Abs(this.X - other.X) + 
+                Math.Abs(this.Y - other.Y) + 
+                Math.Abs(this.Z - other.Z) + 
+                Math.Abs(this.H - other.H);
+
+            return Math.Abs(deviation) <= 0;
         }
     }
 }

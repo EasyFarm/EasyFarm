@@ -36,18 +36,18 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            if (new RestComponent(FFACE).CheckComponent()) return false;
+            if (new RestComponent(fface).CheckComponent()) return false;
 
             // Mobs has not been pulled if pulling moves are available. 
             if (!IsFighting) return false;
 
             // target null or dead. 
-            if (!UnitFilters.MobFilter(FFACE, Target)) return false;
+            if (!UnitFilters.MobFilter(fface, Target)) return false;
 
             // Engage is enabled and we are not engaged. We cannot proceed. 
             if (Config.Instance.IsEngageEnabled)
             {
-                return FFACE.Player.Status.Equals(Status.Fighting);
+                return fface.Player.Status.Equals(Status.Fighting);
             }
 
             // Engage is not checked, so just proceed to battle. 
@@ -56,15 +56,15 @@ namespace EasyFarm.Components
 
         public override void EnterComponent()
         {
-            Player.Stand(FFACE);
-            FFACE.Navigator.Reset();
+            Player.Stand(fface);
+            fface.Navigator.Reset();
         }
 
         public override void RunComponent()
         {
             // Cast only one action to prevent blocking curing. 
             var action = Config.Instance.BattleLists["Battle"].Actions
-                .FirstOrDefault(x => ActionFilters.TargetedFilter(FFACE, x, Target));
+                .FirstOrDefault(x => ActionFilters.TargetedFilter(fface, x, Target));
 
             if (action != null)
             {

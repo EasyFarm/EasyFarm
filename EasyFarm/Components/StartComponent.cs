@@ -36,10 +36,10 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            if (new RestComponent(FFACE).CheckComponent()) return false;
+            if (new RestComponent(fface).CheckComponent()) return false;
 
             // target dead or null. 
-            if (!UnitFilters.MobFilter(FFACE, Target)) return false;
+            if (!UnitFilters.MobFilter(fface, Target)) return false;
 
             // Return true if fight has not started. 
             return !Target.Status.Equals(Status.Fighting);
@@ -47,13 +47,13 @@ namespace EasyFarm.Components
 
         public override void EnterComponent()
         {
-            FFACE.Navigator.Reset();
+            fface.Navigator.Reset();
         }
 
         public override void RunComponent()
         {
             var usable = Config.Instance.BattleLists["Start"]
-                .Actions.Where(x => ActionFilters.BuffingFilter(FFACE, x));
+                .Actions.Where(x => ActionFilters.BuffingFilter(fface, x));
 
             // Execute moves at target. 
             Executor.UseBuffingActions(usable);

@@ -40,11 +40,11 @@ namespace EasyFarm.Components
         public override bool CheckComponent()
         {
             // Prevent making the player stand up from resting.
-            if (new RestComponent(FFACE).CheckComponent()) return false;
+            if (new RestComponent(fface).CheckComponent()) return false;
 
             // Creature is unkillable and does not meets the
             // user's criteria for valid mobs defined in MobFilters.
-            return !UnitFilters.MobFilter(FFACE, Target);
+            return !UnitFilters.MobFilter(fface, Target);
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace EasyFarm.Components
         /// </summary>
         public override void EnterComponent()
         {
-            while (FFACE.Player.Status == Status.Fighting)
+            while (fface.Player.Status == Status.Fighting)
             {
-                Player.Disengage(FFACE);
+                Player.Disengage(fface);
             }
         }
 
@@ -62,7 +62,7 @@ namespace EasyFarm.Components
         {
             // Execute moves.
             var usable = Config.Instance.BattleLists["End"].Actions
-                .Where(x => ActionFilters.BuffingFilter(FFACE, x));
+                .Where(x => ActionFilters.BuffingFilter(fface, x));
 
             _executor.UseBuffingActions(usable);
 

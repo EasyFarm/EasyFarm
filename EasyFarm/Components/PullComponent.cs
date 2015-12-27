@@ -37,13 +37,13 @@ namespace EasyFarm.Components
         /// <returns></returns>
         public override bool CheckComponent()
         {
-            if (new RestComponent(FFACE).CheckComponent()) return false;
-            return UnitFilters.MobFilter(FFACE, Target);
+            if (new RestComponent(fface).CheckComponent()) return false;
+            return UnitFilters.MobFilter(fface, Target);
         }
 
         public override void EnterComponent()
         {
-            FFACE.Navigator.Reset();
+            fface.Navigator.Reset();
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace EasyFarm.Components
                 .Actions.Any(x => x.IsEnabled))
             {
                 var usable = Config.Instance.BattleLists["Pull"]
-                    .Actions.Where(x => ActionFilters.TargetedFilter(FFACE, x, Target));
+                    .Actions.Where(x => ActionFilters.TargetedFilter(fface, x, Target));
 
                 Executor.UseTargetedActions(usable, Target);
             }

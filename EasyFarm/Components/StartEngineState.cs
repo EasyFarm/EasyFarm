@@ -8,6 +8,8 @@ namespace EasyFarm.Components
     /// </summary>
     public class StartEngineState : BaseState
     {
+        public StartEngineState(MemoryWrapper fface) : base(fface) { }
+
         /// <summary>
         /// Setup any state before other states start firing. 
         /// </summary>

@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Mvvm;
 using Prism.Events;
 namespace EasyFarm.Classes
 {
@@ -23,9 +24,9 @@ namespace EasyFarm.Classes
     ///     Updates the main window's status bar text to
     ///     inform the user of important information.
     /// </summary>
-    public class AppInformer
+    public class EventPublisher
     {
-        static AppInformer()
+        static EventPublisher()
         {
             // Set up the event aggregator for updates to the status bar from 
             // multiple view models.
@@ -44,7 +45,17 @@ namespace EasyFarm.Classes
         /// <param name="values"></param>
         public static void InformUser(string message, params object[] values)
         {
-            EventAggregator.GetEvent<PubSubEvent<string>>().Publish(string.Format(message, values));
+            EventAggregator.GetEvent<Events.StatusBarEvent>().Publish(string.Format(message, values));
+        }
+
+        public static void SendPauseEvent()
+        {
+            EventAggregator.GetEvent<Events.PauseEvent>().Publish(string.Empty);
+        }
+
+        public static void SendResumeEvent()
+        {
+            EventAggregator.GetEvent<Events.ResumeEvent>().Publish(string.Empty);
         }
     }
 }

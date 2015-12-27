@@ -221,7 +221,7 @@ namespace EasyFarm.Classes
             set
             {
                 SetProperty(ref _distance, (int)value);
-                AppInformer.InformUser("Distance set to {0}.", _distance);
+                EventPublisher.InformUser("Distance set to {0}.", _distance);
             }
         }
 
@@ -251,7 +251,7 @@ namespace EasyFarm.Classes
             set
             {
                 SetProperty(ref _playerLowerHealth, value);
-                AppInformer.InformUser("Lower health set to {0}.", _playerLowerHealth);
+                EventPublisher.InformUser("Lower health set to {0}.", _playerLowerHealth);
             }
         }
 
@@ -261,7 +261,7 @@ namespace EasyFarm.Classes
             set
             {
                 SetProperty(ref _playerUpperHealth, value);
-                AppInformer.InformUser("Upper health set to {0}.", _playerUpperHealth);
+                EventPublisher.InformUser("Upper health set to {0}.", _playerUpperHealth);
             }
         }
 
@@ -285,7 +285,7 @@ namespace EasyFarm.Classes
             set
             {
                 SetProperty(ref _targetLowerHealth, value);
-                AppInformer.InformUser("Lower health set to {0}.", _targetLowerHealth);
+                EventPublisher.InformUser("Lower health set to {0}.", _targetLowerHealth);
             }
         }
 
@@ -301,7 +301,7 @@ namespace EasyFarm.Classes
             set
             {
                 SetProperty(ref _targetUpperHealth, value);
-                AppInformer.InformUser("Upper health set to {0}.", _targetUpperHealth);
+                EventPublisher.InformUser("Upper health set to {0}.", _targetUpperHealth);
             }
         }
 
@@ -341,12 +341,12 @@ namespace EasyFarm.Classes
             // user of its sucess.
             if (ability == null)
             {
-                AppInformer.InformUser("Auto-Fill failed to find {0} in resources. ", Name);
+                EventPublisher.InformUser("Auto-Fill failed to find {0} in resources. ", Name);
             }
             else
             {
                 Ability = ability;
-                AppInformer.InformUser("Auto-Filling for {0} complete. ", Name);
+                EventPublisher.InformUser("Auto-Filling for {0} complete. ", Name);
 
                 if (Ability.AbilityType == AbilityType.Weaponskill)
                 {

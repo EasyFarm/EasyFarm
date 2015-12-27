@@ -30,9 +30,8 @@ namespace EasyFarm.Components
            IsFighting = false;
         }
 
-        public CombatBaseState(MemoryWrapper fface)
+        public CombatBaseState(MemoryWrapper fface) : base(fface)
         {
-            FFACE = fface;
         }
 
         /// <summary>
@@ -43,11 +42,6 @@ namespace EasyFarm.Components
         /// <summary>
         ///     Who we are trying to kill currently
         /// </summary>
-        public static Unit Target { get; set; }
-
-        /// <summary>
-        ///     The game session.
-        /// </summary>
-        public MemoryWrapper FFACE { get; set; }
+        public static Unit Target { get; set; }        
     }
 }

@@ -39,7 +39,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.DetectionDistance, (int) value);
-                AppInformer.InformUser("Detection Distance Set: {0}.", (int) value);
+                EventPublisher.InformUser("Detection Distance Set: {0}.", (int) value);
             }
         }
 
@@ -49,7 +49,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.HeightThreshold, value);
-                AppInformer.InformUser("Height Threshold Set: {0:F1}.", value);
+                EventPublisher.InformUser("Height Threshold Set: {0:F1}.", value);
             }
         }
 
@@ -59,7 +59,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.MeleeDistance, value);
-                AppInformer.InformUser("Melee Distance Set: {0:F1}.", value);
+                EventPublisher.InformUser("Melee Distance Set: {0:F1}.", value);
             }
         }
 
@@ -69,7 +69,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.WanderDistance, (int) value);
-                AppInformer.InformUser("Wander Distance Set: {0}.", (int) value);
+                EventPublisher.InformUser("Wander Distance Set: {0}.", (int) value);
             }
         }
 
@@ -79,7 +79,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.GlobalCooldown, value);
-                AppInformer.InformUser("Global Cooldown Set: {0}.", value);
+                EventPublisher.InformUser("Global Cooldown Set: {0}.", value);
             }
         }
 
@@ -90,7 +90,7 @@ namespace EasyFarm.ViewModels
             MeleeDistance = Constants.MeleeDistance;
             WanderDistance = Constants.DetectionDistance;
             GlobalCooldown = Constants.GlobalSpellCooldown;
-            AppInformer.InformUser("Defaults have been restored.");
+            EventPublisher.InformUser("Defaults have been restored.");
         }
     }
 }

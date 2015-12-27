@@ -22,6 +22,7 @@ using EasyFarm.Classes;
 using EasyFarm.Mvvm;
 using Prism.Commands;
 using MemoryAPI;
+using MemoryAPI.Navigation;
 
 namespace EasyFarm.ViewModels
 {
@@ -118,7 +119,7 @@ namespace EasyFarm.ViewModels
             // Return when the user has not selected a process. 
             if (FFACE == null)
             {
-                AppInformer.InformUser("No process has been selected.");
+                EventPublisher.InformUser("No process has been selected.");
                 return;
             }
 
@@ -141,11 +142,11 @@ namespace EasyFarm.ViewModels
         {
             if(_settings.TrySave(Route))
             {
-                AppInformer.InformUser("Path has been saved.");
+                EventPublisher.InformUser("Path has been saved.");
             }
             else 
             {
-                AppInformer.InformUser("Failed to save path.");
+                EventPublisher.InformUser("Failed to save path.");
             }
         }
 
@@ -158,11 +159,11 @@ namespace EasyFarm.ViewModels
 
             if (Route != null)
             {
-                AppInformer.InformUser("Path has been loaded.");
+                EventPublisher.InformUser("Path has been loaded.");
             }
             else
             {
-                AppInformer.InformUser("Failed to load the path.");
+                EventPublisher.InformUser("Failed to load the path.");
             }
         }
 
@@ -174,7 +175,7 @@ namespace EasyFarm.ViewModels
             // Return when the user has not selected a process. 
             if (FFACE == null)
             {
-                AppInformer.InformUser("No process has been selected.");
+                EventPublisher.InformUser("No process has been selected.");
                 return;
             }
 

@@ -31,12 +31,14 @@ namespace EasyFarm.Components
 {
     public class FiniteStateEngine
     {
-        private TypeCache<bool> _cache = new TypeCache<bool>();        
+        private readonly TypeCache<bool> _cache = new TypeCache<bool>();        
         private CancellationTokenSource _cancellation = new CancellationTokenSource();
-        private List<IState> _components = new List<IState>();
+        private readonly List<IState> _components = new List<IState>();
         public FiniteStateEngine(MemoryWrapper fface)
         {
             //Create the states
+            AddComponent(new DeadState(fface) { Priority = 6});
+            AddComponent(new ZoneState(fface) { Priority = 6 });
             AddComponent(new SetTargetState(fface) { Priority = 6 });
             AddComponent(new SetFightingState(fface) { Priority = 6 });
             AddComponent(new FollowState(fface) { Priority = 5 });
@@ -49,7 +51,7 @@ namespace EasyFarm.Components
             AddComponent(new TravelComponent(fface) { Priority = 1 });
             AddComponent(new HealingComponent(fface) { Priority = 2 });
             AddComponent(new EndComponent(fface) { Priority = 3 });
-            AddComponent(new StartEngineState() { Priority = Constants.MaxPriority });
+            AddComponent(new StartEngineState(fface) { Priority = Constants.MaxPriority });
 
             _components.ForEach(x => x.Enabled = true);
         }

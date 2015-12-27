@@ -36,12 +36,12 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            if (new RestComponent(FFACE).CheckComponent()) return false;
+            if (new RestComponent(fface).CheckComponent()) return false;
 
-            if (!UnitFilters.MobFilter(FFACE, Target)) return false;
+            if (!UnitFilters.MobFilter(fface, Target)) return false;
 
             // Use skill if we are engaged. 
-            return (FFACE.Player.Status.Equals(Status.Fighting));
+            return (fface.Player.Status.Equals(Status.Fighting));
         }
 
         public override void RunComponent()
@@ -50,7 +50,7 @@ namespace EasyFarm.Components
             // FIXED: no longer return on not engage but don't execute 
             // these moves instead. Fixes the bot not attacking things 
             // from move than 30 yalms problem. 
-            if (FFACE.Player.Status.Equals(Status.Fighting))
+            if (fface.Player.Status.Equals(Status.Fighting))
             {
                 // Grab the first weaponskill or null. 
                 var weaponskill = Config.Instance.BattleLists["Weaponskill"]
@@ -60,7 +60,7 @@ namespace EasyFarm.Components
                 if (weaponskill == null) return;
 
                 // Perform the weaponskill if it is valid. 
-                if (ActionFilters.TargetedFilter(FFACE, weaponskill, Target))
+                if (ActionFilters.TargetedFilter(fface, weaponskill, Target))
                 {
                     Executor.UseTargetedAction(weaponskill, Target);
                 }

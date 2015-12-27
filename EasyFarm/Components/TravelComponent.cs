@@ -22,19 +22,17 @@ using System.Linq;
 using EasyFarm.Classes;
 using AutoMapper;
 using MemoryAPI;
+using MemoryAPI.Navigation;
 
 namespace EasyFarm.Components
 {
     public class TravelComponent : BaseState
     {
-        private readonly MemoryWrapper _fface;
         private readonly UnitService _units;
         private int _position;
 
-        public TravelComponent(MemoryWrapper fface)
+        public TravelComponent(MemoryWrapper fface) : base(fface)
         {
-            _fface = fface;
-
             // Create unit object for parsing of npc array. 
             _units = new UnitService(fface);
         }
@@ -53,18 +51,18 @@ namespace EasyFarm.Components
             if (Config.Instance.Waypoints.Count <= 0) return false;
 
             // We are not able to attack any creatures. 
-            if (new ApproachComponent(_fface).CheckComponent()) return false;
+            if (new ApproachComponent(fface).CheckComponent()) return false;
 
             // We don't have to rest. 
-            if (new RestComponent(_fface).CheckComponent()) return false;
+            if (new RestComponent(fface).CheckComponent()) return false;
 
             // We don't have to heal. 
-            if (new HealingComponent(_fface).CheckComponent()) return false;
+            if (new HealingComponent(fface).CheckComponent()) return false;
 
             // We are not bound or struck by an other movement
             // disabling condition. 
             if (ProhibitEffects.ProhibitEffectsMovement
-                .Intersect(_fface.Player.StatusEffects).Any()) return false;
+                .Intersect(fface.Player.StatusEffects).Any()) return false;
 
             return true;
         }
@@ -72,7 +70,7 @@ namespace EasyFarm.Components
         public override void RunComponent()
         {
             // Navigator must be set by convention (other states could override)
-            _fface.Navigator.DistanceTolerance = 1;
+            fface.Navigator.DistanceTolerance = 1;
 
             // Make a copy of the waypoint path from config. 
             var route = Path;
@@ -90,16 +88,16 @@ namespace EasyFarm.Components
             }
 
             // If far away from the path, set us to run to the closest waypoint
-            if (_fface.Navigator.DistanceTo(Path[_position]) > 15)
+            if (fface.Navigator.DistanceTo(Path[_position]) > 15)
             {
-                var closest = route.OrderBy(x => _fface.Navigator.DistanceTo(x))
+                var closest = route.OrderBy(x => fface.Navigator.DistanceTo(x))
                     .FirstOrDefault();
 
                 _position = route.IndexOf(closest);
             }
 
             // Run to the waypoint allowing cancellation on aggro or paused.             
-            _fface.Navigator.Goto(route[_position], false);
+            fface.Navigator.Goto(route[_position], false);
             _position++;
         }
     }

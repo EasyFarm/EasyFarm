@@ -103,10 +103,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\EliteMMO.API.dll</HintPath>
     </Reference>
-    <Reference Include="FFACETools, Version=1.3.1.21, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\FFACETools.dll</HintPath>
-    </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -170,9 +166,11 @@
     </ApplicationDefinition>
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
-    <Compile Include="Classes\AppInformer.cs" />
+    <Compile Include="Classes\EventPublisher.cs" />
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
+    <Compile Include="Components\ZoneState.cs" />
+    <Compile Include="Components\DeadState.cs" />
     <Compile Include="Components\FollowState.cs" />
     <Compile Include="Components\BaseState.cs" />
     <Compile Include="Components\GameEngine.cs" />
@@ -182,11 +180,8 @@
     <Compile Include="Components\SetTargetState.cs" />
     <Compile Include="Components\StartEngineState.cs" />
     <Compile Include="Components\TravelComponent.cs" />
-    <Compile Include="Memory\EliteMMOWrapper.cs" />
-    <Compile Include="Memory\FFACEWrapper.cs" />
-    <Compile Include="Helpers.cs" />
-    <Compile Include="Memory\MemoryWrapper.cs" />
     <Compile Include="Mvvm\AsyncDelegateCommand.cs" />
+    <Compile Include="Mvvm\Events.cs" />
     <Compile Include="Mvvm\IViewModel.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -210,17 +205,13 @@
     <Compile Include="Collections\LimitedQueue.cs" />
     <Compile Include="Collections\ThresholdQueue.cs" />
     <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Monitors\BaseMonitor.cs" />
-    <Compile Include="Monitors\DeadMonitor.cs" />
     <Compile Include="Classes\ActionFilters.cs" />
-    <Compile Include="Monitors\ProcessWatcher.cs" />
-    <Compile Include="Monitors\ZoneMonitor.cs" />
+    <Compile Include="Classes\ProcessWatcher.cs" />
     <Compile Include="Classes\UnitFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\FiniteStateMachine.cs" />
     <Compile Include="Components\HealingComponent.cs" />
     <Compile Include="Components\EndComponent.cs" />
-    <Compile Include="Classes\Position.cs" />
     <Compile Include="Classes\Config.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

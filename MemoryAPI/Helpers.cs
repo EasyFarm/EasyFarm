@@ -1,6 +1,6 @@
-﻿using EasyFarm.Classes;
-using EliteMMO.API;
+﻿using EliteMMO.API;
 using MemoryAPI;
+using MemoryAPI.Navigation;
 
 namespace EasyFarm
 {

@@ -16,19 +16,16 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Parsing.Abilities;
-using Parsing.Services;
 using Parsing.Types;
 
-namespace EasyFarm.ParsingTests.Abilities
+namespace ParsingTests.Abilities
 {
     public class AbilityTest
     {
         [TestClass]
-        public class ToString : AbilityTest
+        public class CommandFromToString : AbilityTest
         {
             [TestMethod]
             public void TestToString()
