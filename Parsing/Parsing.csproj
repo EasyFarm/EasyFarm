@@ -55,7 +55,6 @@
     <Compile Include="Mapping\SingleValueEnumMapper.cs" />
     <Compile Include="Mapping\MultiValueEnumMapper.cs" />
     <Compile Include="Mapping\MultiObjectMapper.cs" />
-    <Compile Include="Parsers\BaseParser.cs" />
     <Compile Include="Types\AbilityType.cs" />
     <Compile Include="Types\CategoryType.cs" />
     <Compile Include="Types\ElementType.cs" />

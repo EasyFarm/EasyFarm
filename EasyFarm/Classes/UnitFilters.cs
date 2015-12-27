@@ -99,15 +99,10 @@ namespace EasyFarm.Classes
             // Kill the creature if it's claimed and we we don't have claim but
             // claim is checked.
             //FIX: Temporary fix until player.serverid is fixed.
-            if (mob.IsClaimed && Config.Instance.ClaimedFilter)
-            {
-                // Kill creature if claim is checked.
-                return mob.ClaimedId != fface.PartyMember[0].ServerID;
-            }
+            if (mob.IsClaimed && Config.Instance.ClaimedFilter) return true;
 
-            // True for all mobs that are not on ignore / target lists and meet the general criteria
-            // for being a valid mob.
-            return false;
+            // Kill only mobs that we have claim on. 
+            return mob.ClaimedId == fface.PartyMember[0].ServerID;
         }
 
         /// <summary>
