@@ -16,11 +16,6 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Classes;
-using EasyFarm.Monitors;
-using System;
-using System.Threading;
-
 namespace EasyFarm.Components
 {
     /// <summary>
@@ -44,7 +39,6 @@ namespace EasyFarm.Components
         /// </summary>
         private readonly FiniteStateEngine _stateMachine;
 
-
         public GameEngine(MemoryWrapper fface)
         {
             _fface = fface;
@@ -67,32 +61,6 @@ namespace EasyFarm.Components
         {
             IsWorking = false;
             _stateMachine.Stop();
-        }        
-
-        /// <summary>
-        /// Pauses the engine when the player zones and resumes after.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ZoneMonitorZoneChanged(object sender, EventArgs e)
-        {
-            // If the program is not running then bail out.
-            if (!IsWorking)
-            {
-                return;
-            }
-
-            EventPublisher.InformUser("Program Paused");
-
-            // Stop the state machine.
-            Stop();
-
-
-
-            // Start up the state machine again.
-            Start();
-
-            EventPublisher.InformUser("Program Resumed");
-        }
+        }                
     }
 }

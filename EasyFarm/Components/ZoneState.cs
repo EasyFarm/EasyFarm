@@ -8,7 +8,10 @@ namespace EasyFarm.Components
     {
         private Zone _zone;
 
-        public ZoneState(MemoryWrapper fface) : base(fface) { }
+        public ZoneState(MemoryWrapper fface) : base(fface)
+        {
+            _zone = fface.Player.Zone;
+        }
 
         public override bool CheckComponent()
         {
