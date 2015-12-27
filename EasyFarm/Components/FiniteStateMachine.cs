@@ -31,25 +31,28 @@ namespace EasyFarm.Components
 {
     public class FiniteStateEngine
     {
-        private TypeCache<bool> _cache = new TypeCache<bool>();        
+        private readonly TypeCache<bool> _cache = new TypeCache<bool>();
         private CancellationTokenSource _cancellation = new CancellationTokenSource();
-        private List<IState> _components = new List<IState>();
+        private readonly List<IState> _components = new List<IState>();
+
         public FiniteStateEngine(MemoryWrapper fface)
         {
             //Create the states
-            AddComponent(new SetTargetState(fface) { Priority = 6 });
-            AddComponent(new SetFightingState(fface) { Priority = 6 });
-            AddComponent(new FollowState(fface) { Priority = 5 });
-            AddComponent(new RestComponent(fface) { Priority = 2 });
-            AddComponent(new ApproachComponent(fface) { Priority = 0 });
-            AddComponent(new BattleComponent(fface) { Priority = 3 });
-            AddComponent(new WeaponSkillComponent(fface) { Priority = 2 });
-            AddComponent(new PullComponent(fface) { Priority = 4 });
-            AddComponent(new StartComponent(fface) { Priority = 5 });
-            AddComponent(new TravelComponent(fface) { Priority = 1 });
-            AddComponent(new HealingComponent(fface) { Priority = 2 });
-            AddComponent(new EndComponent(fface) { Priority = 3 });
-            AddComponent(new StartEngineState() { Priority = Constants.MaxPriority });
+            AddComponent(new DeadState(fface) {Priority = 6});
+            AddComponent(new ZoneState(fface) {Priority = 6});
+            AddComponent(new SetTargetState(fface) {Priority = 6});
+            AddComponent(new SetFightingState(fface) {Priority = 6});
+            AddComponent(new FollowState(fface) {Priority = 5});
+            AddComponent(new RestComponent(fface) {Priority = 2});
+            AddComponent(new ApproachComponent(fface) {Priority = 0});
+            AddComponent(new BattleComponent(fface) {Priority = 3});
+            AddComponent(new WeaponSkillComponent(fface) {Priority = 2});
+            AddComponent(new PullComponent(fface) {Priority = 4});
+            AddComponent(new StartComponent(fface) {Priority = 5});
+            AddComponent(new TravelComponent(fface) {Priority = 1});
+            AddComponent(new HealingComponent(fface) {Priority = 2});
+            AddComponent(new EndComponent(fface) {Priority = 3});
+            AddComponent(new StartEngineState(fface) {Priority = Constants.MaxPriority});
 
             _components.ForEach(x => x.Enabled = true);
         }
@@ -68,7 +71,7 @@ namespace EasyFarm.Components
         public void Start()
         {
             // Enable running of
-            IState startEngineState = _components.FirstOrDefault(x => x.GetType() == typeof(StartEngineState));
+            IState startEngineState = _components.FirstOrDefault(x => x.GetType() == typeof (StartEngineState));
             if (startEngineState != null) startEngineState.Enabled = true;
             MainLoop();
         }
@@ -82,49 +85,44 @@ namespace EasyFarm.Components
         {
             _cancellation = new CancellationTokenSource();
 
-            Task t = Task.Factory.StartNew(() =>
+            Task.Factory.StartNew(() =>
             {
                 while (true)
-                {
-                    _cancellation.Token.ThrowIfCancellationRequested();
-                    Run();
+                {                    
+                    // Sort the List, States may have updated Priorities.
+                    _components.Sort();
+
+                    // Find a State that says it needs to run.
+                    foreach (var mc in _components.Where(x => x.Enabled).ToList())
+                    {
+                        _cancellation.Token.ThrowIfCancellationRequested();
+
+                        bool isRunnable = mc.CheckComponent();
+
+                        // Run last state's exits method.
+                        if (_cache[mc] != isRunnable)
+                        {
+                            if (isRunnable) mc.EnterComponent();
+                            else mc.ExitComponent();
+                            _cache[mc] = isRunnable;
+                        }
+
+                        if (isRunnable)
+                        {
+                            // Run current state's run method.
+                            mc.RunComponent();
+                        }
+                    }
+
                     Thread.Sleep(100);
                 }
             }, _cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-        }
-
-        private void Run()
-        {
-            // Sort the List, States may have updated Priorities.
-            _components.Sort();
-
-            // Find a State that says it needs to run.
-            foreach (var mc in _components.Where(x => x.Enabled).ToList())
-            {
-                _cancellation.Token.ThrowIfCancellationRequested();
-
-                bool IsRunnable = mc.CheckComponent();
-
-                // Run last state's exits method.
-                if (_cache[mc] != IsRunnable)
-                {
-                    if (IsRunnable) mc.EnterComponent();
-                    else mc.ExitComponent();
-                    _cache[mc] = IsRunnable;
-                }
-
-                if (IsRunnable)
-                {
-                    // Run current state's run method.
-                    mc.RunComponent();
-                }
-            }
         }
     }
 
     public class TypeCache<T>
     {
-        private Dictionary<Type, T> cache = new Dictionary<Type, T>();
+        private readonly Dictionary<Type, T> _cache = new Dictionary<Type, T>();
 
         public T this[object @object]
         {
@@ -132,26 +130,24 @@ namespace EasyFarm.Components
             {
                 if (@object == null) return default(T);
 
-                if (cache.ContainsKey(@object.GetType()))
+                if (_cache.ContainsKey(@object.GetType()))
                 {
-                    return cache[@object.GetType()];
+                    return _cache[@object.GetType()];
                 }
-                else
-                {
-                    return default(T);
-                }
+
+                return default(T);
             }
             set
             {
                 if (@object == null) return;
 
-                if (cache.ContainsKey(@object.GetType()))
+                if (_cache.ContainsKey(@object.GetType()))
                 {
-                    cache[@object.GetType()] = value;
+                    _cache[@object.GetType()] = value;
                 }
                 else
                 {
-                    cache.Add(@object.GetType(), value);
+                    _cache.Add(@object.GetType(), value);
                 }
             }
         }

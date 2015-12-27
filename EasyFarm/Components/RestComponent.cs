@@ -28,16 +28,13 @@ namespace EasyFarm.Components
     /// </summary>
     public class RestComponent : BaseState
     {
-        private readonly MemoryWrapper _fface;
-
         /// <summary>
         ///     Retrieves aggroing creature.
         /// </summary>
         private readonly UnitService _units;
 
-        public RestComponent(MemoryWrapper fface)
+        public RestComponent(MemoryWrapper fface) : base(fface)
         {
-            _fface = fface;
             _units = new UnitService(fface);
         }
 
@@ -72,7 +69,7 @@ namespace EasyFarm.Components
                     StatusEffect.Lullaby
                 };
 
-                return restBlockingDebuffs.Intersect(_fface.Player.StatusEffects).Count() != 0;
+                return restBlockingDebuffs.Intersect(fface.Player.StatusEffects).Count() != 0;
             }
         }
 
@@ -84,23 +81,23 @@ namespace EasyFarm.Components
         {
             // Check for effects taht stop resting. 
             if (ProhibitEffects.ProhibitEffectsDots
-                .Intersect(_fface.Player.StatusEffects).Any()) return false;
+                .Intersect(fface.Player.StatusEffects).Any()) return false;
 
             // Do not rest if we are being attacked. 
             if (_units.HasAggro) return false;
 
             // Check if we are fighting. 
-            if (_fface.Player.Status == Status.Fighting) return false;
+            if (fface.Player.Status == Status.Fighting) return false;
 
             // Check if we should rest for health.
             if (ShouldRestForHealth(
-                _fface.Player.HPPCurrent,
-                _fface.Player.Status)) return true;
+                fface.Player.HPPCurrent,
+                fface.Player.Status)) return true;
 
             // Check if we should rest for magic. 
             if (ShouldRestForMagic(
-                _fface.Player.MPPCurrent,
-                _fface.Player.Status)) return true;
+                fface.Player.MPPCurrent,
+                fface.Player.Status)) return true;
 
             // We do not meet the conditions for resting. 
             return false;
@@ -111,7 +108,7 @@ namespace EasyFarm.Components
         /// </summary>
         public override void RunComponent()
         {
-            Player.Rest(_fface);
+            Player.Rest(fface);
         }
 
         /// <summary>
@@ -119,9 +116,9 @@ namespace EasyFarm.Components
         /// </summary>
         public override void ExitComponent()
         {
-            while (_fface.Player.Status == Status.Healing)
+            while (fface.Player.Status == Status.Healing)
             {
-                Player.Stand(_fface);
+                Player.Stand(fface);
             }
         }
 

@@ -17,8 +17,7 @@ You should have received a copy of the GNU General Public License
 
 using System;
 using System.Text.RegularExpressions;
-using Parsing.Abilities;
-using Parsing.Types;
+using EasyFarm.Parsing;
 using MemoryAPI;
 
 namespace EasyFarm.Classes
@@ -33,36 +32,26 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public static bool IsRecastable(MemoryWrapper fface, Ability ability)
         {
-            var recast = -1;
+            var recast = 0;
 
-            /* 
-             * Fix: If the action is a ranged attack,                
-             * it will return something even when it's recastable. 
-             *                
-             * This if statement must be above process abilities since               
-             * AbilityType.Range is in AbilityType.IsAbility
-             */
-            if (AbilityType.Range.HasFlag(ability.AbilityType))
-            {
-                return true;
-            }
+            // No recast time on weaponskills. 
+            if (ability.AbilityType == AbilityType.Weaponskill) return true;
+
+            // No recast for ranged attacks. 
+            if (AbilityType.Range.HasFlag(ability.AbilityType)) return true;
 
             // If a spell get spell recast
-            if (CompositeAbilityTypes.IsSpell.HasFlag(ability.AbilityType))
+            if (ResourceHelper.IsSpell(ability.AbilityType))
             {
                 recast = fface.Timer.GetSpellRecast(ToSpellList(ability));
             }
 
             // if ability get ability recast. 
-            if (CompositeAbilityTypes.IsAbility.HasFlag(ability.AbilityType))
+            if (ResourceHelper.IsAbility(ability.AbilityType))
             {
                 recast = fface.Timer.GetAbilityRecast(ToAbilityList(ability));
             }
 
-            /*
-             * Fixed bug: recast for weaponskills returns -1 not zero. 
-             * Check for <= to zero instead of strictly == zero. 
-             */
             return recast <= 0;
         }
 

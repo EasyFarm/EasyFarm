@@ -61,13 +61,12 @@ namespace EasyFarm.ViewModels
         {
             // Create a new settings manager and associate it with our
             // .eup file type. 
-            _settingsManager = new SettingsManager(
-                "eup",
-                "EasyFarm User Preference"
-                );
+            _settingsManager = new SettingsManager("eup","EasyFarm User Preference");
 
             // Get events from view models to update the status bar's text.
-            AppInformer.EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe(a => { StatusBarText = a; });
+            EventPublisher.EventAggregator.GetEvent<Events.StatusBarEvent>().Subscribe(a => { StatusBarText = a; });
+            EventPublisher.EventAggregator.GetEvent<Events.PauseEvent>().Subscribe(x => StopEngine());
+            EventPublisher.EventAggregator.GetEvent<Events.ResumeEvent>().Subscribe(x => StartEngine());
 
             // Bind commands to their handlers. 
             StartCommand = new DelegateCommand(Start);
@@ -154,24 +153,34 @@ namespace EasyFarm.ViewModels
             // Return when the user has not selected a process. 
             if (FFACE == null)
             {
-                AppInformer.InformUser("No process has been selected.");
+                EventPublisher.InformUser("No process has been selected.");
                 return;
             }
 
             if (GameEngine.IsWorking)
             {
-                Logger.Write.BotStop("Bot now paused");
-                AppInformer.InformUser("Program paused.");
-                StartPauseHeader = "St_art";
-                GameEngine.Stop();                
+                StopEngine();
             }
             else
             {
-                Logger.Write.BotStart("Bot now running");
-                AppInformer.InformUser("Program running.");
-                StartPauseHeader = "P_ause";
-                GameEngine.Start();                
+                StartEngine();
             }
+        }
+
+        private void StartEngine()
+        {
+            Logger.Write.BotStart("Bot now running");
+            EventPublisher.InformUser("Program running.");
+            StartPauseHeader = "P_ause";
+            GameEngine.Start();
+        }
+
+        private void StopEngine()
+        {
+            Logger.Write.BotStop("Bot now paused");
+            EventPublisher.InformUser("Program paused.");
+            StartPauseHeader = "St_art";
+            GameEngine.Stop();
         }
 
         /// <summary>
@@ -182,13 +191,13 @@ namespace EasyFarm.ViewModels
             try
             {
                 _settingsManager.TrySave(Config.Instance);
-                AppInformer.InformUser("Settings have been saved.");
+                EventPublisher.InformUser("Settings have been saved.");
                 Logger.Write.SaveSettings("Settings saved");
             }
             catch (InvalidOperationException ex)
             {
                 Console.WriteLine(ex.Message);
-                AppInformer.InformUser("Failed to save settings.");
+                EventPublisher.InformUser("Failed to save settings.");
             }
         }
 
@@ -205,18 +214,18 @@ namespace EasyFarm.ViewModels
                 // Did we fail to load the settings?
                 if (settings == null)
                 {
-                    AppInformer.InformUser("Failed to load settings.");
+                    EventPublisher.InformUser("Failed to load settings.");
                     return;
                 }
 
                 // Inform the user of our success. 
                 Config.Instance = settings;
-                AppInformer.InformUser("Settings have been loaded.");
+                EventPublisher.InformUser("Settings have been loaded.");
                 Logger.Write.SaveSettings("Settings loaded");
             }
             catch (InvalidOperationException)
             {
-                AppInformer.InformUser("Failed to load settings.");
+                EventPublisher.InformUser("Failed to load settings.");
             }
         }
 
@@ -242,7 +251,7 @@ namespace EasyFarm.ViewModels
                 if (process == null || !viewModel.IsProcessSelected)
                 {
                     Logger.Write.ProcessNotFound("Process not found");
-                    AppInformer.InformUser("No valid process was selected.");
+                    EventPublisher.InformUser("No valid process was selected.");
                     return;
                 }
 
@@ -252,11 +261,11 @@ namespace EasyFarm.ViewModels
                 // Get memory reader set in config file. 
                 var fface = MemoryWrapper.Create(process.Id);
 
-                // Set the FFACE Session. 
+                // Set the fface Session. 
                 SetSession(fface);
 
                 // Tell the user the program has loaded the player's data
-                AppInformer.InformUser("Bot Loaded: " + fface.Player.Name);
+                EventPublisher.InformUser("Bot Loaded: " + fface.Player.Name);
 
                 // Set the main window's title to the player's name. 
                 MainWindowTitle = "EasyFarm - " + fface.Player.Name;

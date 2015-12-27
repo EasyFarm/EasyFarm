@@ -37,15 +37,15 @@ namespace EasyFarm.Components
         public override void EnterComponent()
         {
             // Stand up from resting. 
-            if (FFACE.Player.Status == Status.Healing)
+            if (fface.Player.Status == Status.Healing)
             {
-                Player.Stand(FFACE);
+                Player.Stand(fface);
             }
 
             // Disengage an invalid target. 
-            if (FFACE.Player.Status == Status.Fighting)
+            if (fface.Player.Status == Status.Fighting)
             {
-                Player.Disengage(FFACE);
+                Player.Disengage(fface);
             }
         }
 
@@ -55,7 +55,7 @@ namespace EasyFarm.Components
             if (IsFighting) return false;
 
             // Do not follow when resting. 
-            if (new RestComponent(FFACE).CheckComponent()) return false;
+            if (new RestComponent(fface).CheckComponent()) return false;
 
             // Avoid following empty units. 
             if (string.IsNullOrWhiteSpace(Config.Instance.FollowedPlayer)) return false;
@@ -86,8 +86,8 @@ namespace EasyFarm.Components
             var player = GetPlayerByName(Config.Instance.FollowedPlayer);
 
             // Follow the player. 
-            FFACE.Navigator.DistanceTolerance = Config.Instance.FollowDistance;
-            FFACE.Navigator.GotoNPC(player.Id);
+            fface.Navigator.DistanceTolerance = Config.Instance.FollowDistance;
+            fface.Navigator.GotoNPC(player.Id);
         }
     }
 }

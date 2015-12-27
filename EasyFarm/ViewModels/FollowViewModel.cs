@@ -20,7 +20,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 Config.Instance.FollowedPlayer = value;
-                AppInformer.InformUser("Now following {0}.", value);
+                EventPublisher.InformUser("Now following {0}.", value);
             }
         }
 
@@ -30,7 +30,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.FollowDistance, value);
-                AppInformer.InformUser(string.Format("Follow Distance: {0}.", value));
+                EventPublisher.InformUser(string.Format("Follow Distance: {0}.", value));
             }
         }
     }

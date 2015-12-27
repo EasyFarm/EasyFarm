@@ -31,17 +31,17 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            if (new RestComponent(FFACE).CheckComponent()) return false;
+            if (new RestComponent(fface).CheckComponent()) return false;
 
             // Target dead or null.
-            if (!UnitFilters.MobFilter(FFACE, Target)) return false;
+            if (!UnitFilters.MobFilter(fface, Target)) return false;
 
             // We should approach mobs that have aggroed or have been pulled. 
             if (Target.Status.Equals(Status.Fighting)) return true;
 
             // Get usable abilities. 
             var usable = Config.Instance.BattleLists["Pull"].Actions
-                .Where(x => ActionFilters.BuffingFilter(FFACE, x));
+                .Where(x => ActionFilters.BuffingFilter(fface, x));
 
             // Approach when there are no pulling moves available. 
             if (!usable.Any()) return true;
@@ -59,30 +59,30 @@ namespace EasyFarm.Components
                 if (Target.Distance > Config.Instance.MeleeDistance)
                 {
                     // Move to unit at max buff distance. 
-                    FFACE.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
-                    FFACE.Navigator.GotoNPC(Target.Id);
+                    fface.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
+                    fface.Navigator.GotoNPC(Target.Id);
                 }
             }
 
             // Face mob. 
-            FFACE.Navigator.FaceHeading(Target.Position);
+            fface.Navigator.FaceHeading(Target.Position);
 
             // Target mob if not currently targeted. 
-            if (Target.Id != FFACE.Target.ID)
+            if (Target.Id != fface.Target.ID)
             {
                 // Set as target. 
-                FFACE.Target.SetNPCTarget(Target.Id);
-                FFACE.Windower.SendString("/ta <t>");
+                fface.Target.SetNPCTarget(Target.Id);
+                fface.Windower.SendString("/ta <t>");
             }
 
             // Has the user decided we should engage in battle. 
             if (Config.Instance.IsEngageEnabled)
             {
                 // Not engaged and in range. 
-                if (!FFACE.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
+                if (!fface.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
                 {
                     // Engage the target. 
-                    FFACE.Windower.SendString(Constants.AttackTarget);
+                    fface.Windower.SendString(Constants.AttackTarget);
                 }
             }
         }

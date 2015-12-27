@@ -16,30 +16,33 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System.Windows;
-using EasyFarm.Parsing;
-
-namespace EasyFarm.Views
+namespace EasyFarm.Parsing
 {
     /// <summary>
-    ///     Interaction logic for AbilitySelectionBox.xaml
+    ///     Represents a sub-division for category types.
+    ///     <example>
+    ///         WhiteMagic contains HealingMagic, DivineMagic, etc.
+    ///     </example>
     /// </summary>
-    public partial class AbilitySelectionBox
+    public enum SkillType
     {
-        public AbilitySelectionBox(string name)
-        {
-            InitializeComponent();
-            CompleteSelectionButton.Click += CompleteSelectionButton_Click;
-            AbilityListBox.ItemsSource = App.AbilityService.GetAbilitiesWithName(name);
-            ShowDialog();
-        }
-
-        public Ability SelectedAbility { get; set; }
-
-        private void CompleteSelectionButton_Click(object sender, RoutedEventArgs e)
-        {
-            SelectedAbility = AbilityListBox.SelectedValue as Ability;
-            Close();
-        }
+        Unknown,
+        HealingMagic,
+        DivineMagic,
+        EnfeeblingMagic,
+        EnhancingMagic,
+        ElementalMagic,
+        DarkMagic,
+        SummoningMagic,
+        Ninjutsu,
+        Singing,
+        BlueMagic,
+        Geomancy,
+        ControlTrigger,
+        GenericTrigger,
+        ElementalTrigger,
+        CombatTrigger,
+        Trigger,
+        Ability
     }
 }

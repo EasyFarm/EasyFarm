@@ -29,7 +29,7 @@ namespace EasyFarm.Mvvm
         public string ViewName { get; set; }
 
         /// <summary>
-        ///     Solo FFACE instance for current player.
+        ///     Solo fface instance for current player.
         /// </summary>
         public static MemoryWrapper FFACE { get; set; }
 
@@ -42,7 +42,7 @@ namespace EasyFarm.Mvvm
         {
             if (fface == null) return;
 
-            // Save FFACE Instance
+            // Save fface Instance
             FFACE = fface;
 
             // Create a new game engine to control our character. 

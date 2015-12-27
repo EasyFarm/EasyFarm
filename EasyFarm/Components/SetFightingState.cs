@@ -10,7 +10,7 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            if (UnitFilters.MobFilter(FFACE, Target))
+            if (UnitFilters.MobFilter(fface, Target))
             {
                 // No moves in pull list, set FightStarted to true to let
                 // other components who depend on it trigger. 

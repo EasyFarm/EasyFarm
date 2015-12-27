@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 
 using MemoryAPI;
 using System;
+using MemoryAPI.Navigation;
 
 namespace EasyFarm.Classes
 {
@@ -185,7 +186,7 @@ namespace EasyFarm.Classes
 
         public bool MyClaim
         {
-            // Using FFACE.PartyMember[0].ServerID until FFACE.Player.PlayerServerID is fixed. 
+            // Using fface.PartyMember[0].ServerID until fface.Player.PlayerServerID is fixed. 
             get { return ClaimedId == _fface.PartyMember[0].ServerID; }
         }
 

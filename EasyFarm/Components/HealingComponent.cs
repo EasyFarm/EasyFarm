@@ -25,20 +25,18 @@ namespace EasyFarm.Components
     public class HealingComponent : BaseState
     {
         private readonly Executor _executor;
-        private readonly MemoryWrapper _fface;
 
-        public HealingComponent(MemoryWrapper fface)
+        public HealingComponent(MemoryWrapper fface) : base(fface)
         {
-            _fface = fface;
             _executor = new Executor(fface);
         }
 
         public override bool CheckComponent()
         {
-            if (new RestComponent(_fface).CheckComponent()) return false;
+            if (new RestComponent(fface).CheckComponent()) return false;
 
             if (!Config.Instance.BattleLists["Healing"].Actions
-                .Any(x => ActionFilters.BuffingFilter(_fface, x)))
+                .Any(x => ActionFilters.BuffingFilter(fface, x)))
                 return false;
 
             return true;
@@ -47,20 +45,20 @@ namespace EasyFarm.Components
         public override void EnterComponent()
         {
             // Stop resting. 
-            if (_fface.Player.Status.Equals(Status.Healing))
+            if (fface.Player.Status.Equals(Status.Healing))
             {
-                Player.Stand(_fface);
+                Player.Stand(fface);
             }
 
             // Stop moving. 
-            _fface.Navigator.Reset();
+            fface.Navigator.Reset();
         }
 
         public override void RunComponent()
         {
             // Get the list of healing abilities that can be used.
             var usableHealingMoves = Config.Instance.BattleLists["Healing"].Actions
-                .Where(x => ActionFilters.BuffingFilter(_fface, x))
+                .Where(x => ActionFilters.BuffingFilter(fface, x))
                 .ToList();
 
             // Check if we have any moves to use. 

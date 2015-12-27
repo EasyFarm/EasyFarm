@@ -1,6 +1,7 @@
 ﻿using MemoryAPI;
 using System;
 using System.Timers;
+using MemoryAPI.Navigation;
 
 namespace EasyFarm.Classes
 {

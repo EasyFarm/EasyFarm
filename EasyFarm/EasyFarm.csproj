@@ -103,10 +103,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\EliteMMO.API.dll</HintPath>
     </Reference>
-    <Reference Include="FFACETools, Version=1.3.1.21, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\FFACETools.dll</HintPath>
-    </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -161,6 +157,7 @@
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -170,9 +167,11 @@
     </ApplicationDefinition>
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
-    <Compile Include="Classes\AppInformer.cs" />
+    <Compile Include="Classes\EventPublisher.cs" />
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
+    <Compile Include="Components\ZoneState.cs" />
+    <Compile Include="Components\DeadState.cs" />
     <Compile Include="Components\FollowState.cs" />
     <Compile Include="Components\BaseState.cs" />
     <Compile Include="Components\GameEngine.cs" />
@@ -182,12 +181,17 @@
     <Compile Include="Components\SetTargetState.cs" />
     <Compile Include="Components\StartEngineState.cs" />
     <Compile Include="Components\TravelComponent.cs" />
-    <Compile Include="Memory\EliteMMOWrapper.cs" />
-    <Compile Include="Memory\FFACEWrapper.cs" />
-    <Compile Include="Helpers.cs" />
-    <Compile Include="Memory\MemoryWrapper.cs" />
     <Compile Include="Mvvm\AsyncDelegateCommand.cs" />
+    <Compile Include="Mvvm\Events.cs" />
     <Compile Include="Mvvm\IViewModel.cs" />
+    <Compile Include="Parsing\Ability.cs" />
+    <Compile Include="Parsing\AbilityService.cs" />
+    <Compile Include="Parsing\AbilityType.cs" />
+    <Compile Include="Parsing\CategoryType.cs" />
+    <Compile Include="Parsing\ElementType.cs" />
+    <Compile Include="Parsing\ResourceHelper.cs" />
+    <Compile Include="Parsing\SkillType.cs" />
+    <Compile Include="Parsing\TargetType.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -210,17 +214,13 @@
     <Compile Include="Collections\LimitedQueue.cs" />
     <Compile Include="Collections\ThresholdQueue.cs" />
     <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Monitors\BaseMonitor.cs" />
-    <Compile Include="Monitors\DeadMonitor.cs" />
     <Compile Include="Classes\ActionFilters.cs" />
-    <Compile Include="Monitors\ProcessWatcher.cs" />
-    <Compile Include="Monitors\ZoneMonitor.cs" />
+    <Compile Include="Classes\ProcessWatcher.cs" />
     <Compile Include="Classes\UnitFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\FiniteStateMachine.cs" />
     <Compile Include="Components\HealingComponent.cs" />
     <Compile Include="Components\EndComponent.cs" />
-    <Compile Include="Classes\Position.cs" />
     <Compile Include="Classes\Config.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -435,10 +435,6 @@
     <ProjectReference Include="..\MemoryAPI\MemoryAPI.csproj">
       <Project>{cc6cc9be-32f0-4b8a-a1ad-6c7c744e2fad}</Project>
       <Name>MemoryAPI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Parsing\Parsing.csproj">
-      <Project>{7008daf7-d3aa-41a4-9d85-8ec168d5d372}</Project>
-      <Name>Parsing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

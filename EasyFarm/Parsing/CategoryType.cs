@@ -16,30 +16,43 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System.Windows;
-using EasyFarm.Parsing;
-
-namespace EasyFarm.Views
+namespace EasyFarm.Parsing
 {
     /// <summary>
-    ///     Interaction logic for AbilitySelectionBox.xaml
+    ///     Represents an ability's catergory type which is the group
+    ///     of abilities this ability belongs to.
     /// </summary>
-    public partial class AbilitySelectionBox
+    public enum CategoryType
     {
-        public AbilitySelectionBox(string name)
-        {
-            InitializeComponent();
-            CompleteSelectionButton.Click += CompleteSelectionButton_Click;
-            AbilityListBox.ItemsSource = App.AbilityService.GetAbilitiesWithName(name);
-            ShowDialog();
-        }
-
-        public Ability SelectedAbility { get; set; }
-
-        private void CompleteSelectionButton_Click(object sender, RoutedEventArgs e)
-        {
-            SelectedAbility = AbilityListBox.SelectedValue as Ability;
-            Close();
-        }
+        Unknown,
+        WeaponSkill,
+        Misc,
+        JobAbility,
+        PetCommand,
+        CorsairRoll,
+        CorsairShot,
+        Samba,
+        Waltz,
+        Jig,
+        Step,
+        Flourish1,
+        Flourish2,
+        Effusion,
+        Rune,
+        Ward,
+        BloodPactWard,
+        BloodPactRage,
+        Monster,
+        JobTrait,
+        MonsterSkill,
+        WhiteMagic,
+        BlackMagic,
+        SummonerPact,
+        Ninjustsu,
+        Geomancy,
+        BlueMagic,
+        BardSong,
+        Trust,
+        Trigger
     }
 }

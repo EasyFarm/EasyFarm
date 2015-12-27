@@ -22,6 +22,16 @@ namespace EasyFarm.Components
 {
     public abstract class BaseState : IState, IComparable
     {
+        /// <summary>
+        ///     The game session.
+        /// </summary>
+        protected MemoryWrapper fface { get; set; }
+
+        protected BaseState(MemoryWrapper fface)
+        {
+            this.fface = fface;
+        }
+
         public virtual bool Enabled { get; set; }
 
         public virtual int Priority { get; set; }

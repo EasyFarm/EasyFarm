@@ -30,7 +30,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.LowHealth, value);
-                AppInformer.InformUser("Low hp set to " + LowHp);
+                EventPublisher.InformUser("Low hp set to " + LowHp);
             }
         }
 
@@ -40,7 +40,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.HighHealth, value);
-                AppInformer.InformUser("High hp set to " + HighHp);
+                EventPublisher.InformUser("High hp set to " + HighHp);
             }
         }
 
@@ -50,7 +50,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.LowMagic, value);
-                AppInformer.InformUser("Low mp set to " + LowMp);
+                EventPublisher.InformUser("Low mp set to " + LowMp);
             }
         }
 
@@ -60,7 +60,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 SetProperty(ref Config.Instance.HighMagic, value);
-                AppInformer.InformUser("High mp set to " + HighMp);
+                EventPublisher.InformUser("High mp set to " + HighMp);
             }
         }
 

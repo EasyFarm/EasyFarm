@@ -19,13 +19,13 @@ namespace EasyFarm.Components
         public override bool CheckComponent()
         {
             // Currently fighting, do not change target. 
-            if (!UnitFilters.MobFilter(FFACE, Target))
+            if (!UnitFilters.MobFilter(fface, Target))
             {
                 // Still not time to update for new target. 
                 if (DateTime.Now < _lastTargetCheck.AddSeconds(Constants.UnitArrayCheckRate)) return false;
 
                 // First get the first mob by distance.
-                var mobs = _units.MobArray.Where(x => UnitFilters.MobFilter(FFACE, x))
+                var mobs = _units.MobArray.Where(x => UnitFilters.MobFilter(fface, x))
                     .OrderByDescending(x => x.PartyClaim)
                     .ThenByDescending(x => x.HasAggroed)
                     .ThenBy(x => x.Distance)

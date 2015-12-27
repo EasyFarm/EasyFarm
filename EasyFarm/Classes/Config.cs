@@ -21,6 +21,7 @@ using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 using Prism.Mvvm;
 using MemoryAPI;
+using MemoryAPI.Navigation;
 
 namespace EasyFarm.Classes
 {

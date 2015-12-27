@@ -18,8 +18,8 @@ You should have received a copy of the GNU General Public License
 
 using System.Linq;
 using System.Text.RegularExpressions;
-using Parsing.Types;
 using System;
+using EasyFarm.Parsing;
 
 namespace EasyFarm.Classes
 {
@@ -58,7 +58,7 @@ namespace EasyFarm.Classes
             if (!AbilityUtils.IsRecastable(fface, action.Ability)) return false;
 
             // Limiting Status Effect Check for Spells. 
-            if (CompositeAbilityTypes.IsSpell.HasFlag(action.Ability.AbilityType))
+            if (ResourceHelper.IsSpell(action.Ability.AbilityType))
             {
                 if (ProhibitEffects.ProhibitEffectsSpell.Intersect(fface.Player.StatusEffects).Any())
                 {
@@ -67,7 +67,7 @@ namespace EasyFarm.Classes
             }
 
             // Limiting Status Effect Check for Abilities. 
-            if (CompositeAbilityTypes.IsAbility.HasFlag(action.Ability.AbilityType))
+            if (ResourceHelper.IsAbility(action.Ability.AbilityType))
             {
                 if (ProhibitEffects.ProhibitEffectsAbility.Intersect(fface.Player.StatusEffects).Any())
                 {

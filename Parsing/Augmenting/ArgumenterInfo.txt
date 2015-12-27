@@ -1,6 +1,0 @@
-﻿AbilityAugmenter is used for reading resource data values from file and 
-converting them to one of the system predefined types like int, double, etc. 
-
-[Name]TypeAugmenters are used for converting strings to strongly typed enum objects. 
-We used specialized augmenters for this purpose since they are not predefined system
-types. 

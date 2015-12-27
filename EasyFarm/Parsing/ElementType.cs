@@ -16,30 +16,29 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System.Windows;
-using EasyFarm.Parsing;
+using System;
 
-namespace EasyFarm.Views
+namespace EasyFarm.Parsing
 {
     /// <summary>
-    ///     Interaction logic for AbilitySelectionBox.xaml
+    ///     The elemental type for the ability.
     /// </summary>
-    public partial class AbilitySelectionBox
+    [Flags]
+    public enum ElementType
     {
-        public AbilitySelectionBox(string name)
-        {
-            InitializeComponent();
-            CompleteSelectionButton.Click += CompleteSelectionButton_Click;
-            AbilityListBox.ItemsSource = App.AbilityService.GetAbilitiesWithName(name);
-            ShowDialog();
-        }
-
-        public Ability SelectedAbility { get; set; }
-
-        private void CompleteSelectionButton_Click(object sender, RoutedEventArgs e)
-        {
-            SelectedAbility = AbilityListBox.SelectedValue as Ability;
-            Close();
-        }
+        Unknown = 0x0000,
+        Light = 0x0001,
+        Wind = 0x0002,
+        Earth = 0x0004,
+        Water = 0x0008,
+        Ice = 0x0016,
+        Fire = 0x0032,
+        Thunder = 0x0064,
+        Dark = 0x0128,
+        NonElemental = 0x0256,
+        None = 0x0512,
+        Trigger = 0x1024,
+        Any = 0x2048,
+        All = 0x4096
     }
 }
