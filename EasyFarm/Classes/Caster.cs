@@ -61,7 +61,7 @@ namespace EasyFarm.Classes
             // Try to cast the spell and return false if
             // we've failed to start casting or the 
             // casting was interrupted. 
-            if (EnsureCast(ability.ToString()))
+            if (EnsureCast(ability.Command))
             {
                 return MonitorCast();
             }
@@ -126,7 +126,7 @@ namespace EasyFarm.Classes
         public bool CastAbility(Ability ability)
         {
             // Send the command to the game. 
-            _fface.Windower.SendString(ability.ToString());
+            _fface.Windower.SendString(ability.Command);
             Thread.Sleep(100);
             return true;
         }

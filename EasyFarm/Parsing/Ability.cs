@@ -24,31 +24,6 @@ namespace EasyFarm.Parsing
     /// </summary>
     public class Ability
     {
-        public Ability()
-        {
-            AbilityType = AbilityType.Unknown;
-            Alias = string.Empty;
-            CastTime = 0;
-            CategoryType = CategoryType.Unknown;
-            Distance = 0;
-            Element = string.Empty;
-            ElementType = ElementType.Unknown;
-            English = string.Empty;
-            Id = 0;
-            Index = 0;
-            Japanese = string.Empty;
-            MpCost = 0;
-            Postfix = string.Empty;
-            Prefix = string.Empty;
-            Recast = 0;
-            Skill = string.Empty;
-            SkillType = SkillType.Unknown;
-            Targets = string.Empty;
-            TargetType = TargetType.Unknown;
-            TpCost = 0;
-            Type = string.Empty;
-        }
-
         /// <summary>
         ///     The ability ID in its own resource file.
         /// </summary>
@@ -193,27 +168,20 @@ namespace EasyFarm.Parsing
             get { return !string.IsNullOrEmpty(English); }
         }
 
-        public override string ToString()
+        public string Command
         {
-            // If it was intended to work on use, 
-            // set it to cast on us
-            if (TargetType.HasFlag(TargetType.Self))
+            get
             {
-                Postfix = "<me>";
-            }
-            else if (TargetType.HasFlag(TargetType.Enemy))
-            {
-                Postfix = "<t>";
-            }
+                // If it was a ranged attack, use the ranged attack syntax
+                if (AbilityType.HasFlag(AbilityType.Range))
+                {
+                    return Prefix + " " + Postfix;
+                }
 
-            // If it was a ranged attack, use the ranged attack syntax
-            if (AbilityType.HasFlag(AbilityType.Range))
-            {
-                return Prefix + " " + Postfix;
+                // Use the spell / ability syntax.
+                var postfix = TargetType.HasFlag(TargetType.Self) ? "<me>" : "<t>";
+                return Prefix + " \"" + English + "\" " + Postfix;
             }
-
-            // Use the spell/ability syntax.
-            return Prefix + " \"" + English + "\" " + Postfix;
         }
     }
 }
