@@ -17,8 +17,6 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Views;
-using Parsing.Abilities;
-using Parsing.Types;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -26,6 +24,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml.Serialization;
+using EasyFarm.Parsing;
 
 namespace EasyFarm.Classes
 {

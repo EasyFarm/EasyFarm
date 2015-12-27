@@ -16,21 +16,18 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using Parsing.Abilities;
-using Parsing.Augmenting;
-using Parsing.Types;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Parsing.Parsers
+namespace EasyFarm.Parsing
 {
     /// <summary>
     ///     A class for loading the ability and spell xmls from file.
     /// </summary>
-    public class AbilityParser
+    public class AbilityService
     {
         /// <summary>
         ///     A collection of resources to search for values.
@@ -38,42 +35,78 @@ namespace Parsing.Parsers
         protected readonly IEnumerable<XElement> Resources;
 
         /// <summary>
-        ///     List of handlers to handle the conversion of abilities from file.
-        /// </summary>
-        private readonly List<IObjectAugmenter<XElement, Ability>> _augmenters =
-            new List<IObjectAugmenter<XElement, Ability>>();
-
-        /// <summary>
         ///     Retrieve all resources within the given directory.
         /// </summary>
         /// <param name="resourcesPath"></param>
-        protected AbilityParser(string resourcesPath)
+        public AbilityService(string resourcesPath)
         {
-            // Augmenters for predefined data types.
-            _augmenters.Add(new AbilityAugmenter<string>("alias", "Alias"));
-            _augmenters.Add(new AbilityAugmenter<double>("casttime", "CastTime"));
-            _augmenters.Add(new AbilityAugmenter<string>("element", "Element"));
-            _augmenters.Add(new AbilityAugmenter<int>("id", "Id"));
-            _augmenters.Add(new AbilityAugmenter<int>("index", "Index"));
-            _augmenters.Add(new AbilityAugmenter<int>("mpcost", "MpCost"));
-            _augmenters.Add(new AbilityAugmenter<string>("english", "English"));
-            _augmenters.Add(new AbilityAugmenter<string>("japanese", "Japanese"));
-            _augmenters.Add(new AbilityAugmenter<string>("prefix", "Prefix"));
-            _augmenters.Add(new AbilityAugmenter<double>("recast", "Recast"));
-            _augmenters.Add(new AbilityAugmenter<string>("skill", "Skill"));
-            _augmenters.Add(new AbilityAugmenter<string>("targets", "Targets"));
-            _augmenters.Add(new AbilityAugmenter<int>("tpcost", "TpCost"));
-            _augmenters.Add(new AbilityAugmenter<string>("type", "Type"));
-
-            // Specialized augmenters.
-            _augmenters.Add(new AbilityTypeAugmenter("prefix", "AbilityType"));
-            _augmenters.Add(new CategoryTypeAugmenter("type", "CategoryType"));
-            _augmenters.Add(new ElementTypeAugmenter("element", "ElementType"));
-            _augmenters.Add(new SkillTypeAugmenter("skill", "SkillType"));
-            _augmenters.Add(new TargetTypeAugmenter("targets", "TargetType"));
-
             // Read in all resources in the resourcePath.
             Resources = LoadResources(resourcesPath);
+        }
+
+        /// <summary>
+        ///     Creates an ability obj. This object may be a spell
+        ///     or an ability.
+        /// </summary>
+        /// <param name="name">Ability's Name</param>
+        /// <returns>a new ability</returns>
+        public Ability CreateAbility(string name)
+        {
+            var abilities = GetAbilitiesWithName(name);
+            var enumerable = abilities as Ability[] ?? abilities.ToArray();
+            if (!enumerable.Any()) return new Ability();
+            return enumerable.First();
+        }
+
+        /// <summary>
+        ///     Returns whether abilities with the given name.
+        /// </summary>
+        /// <param name="actionName"></param>
+        /// <returns></returns>
+        public bool Exists(string actionName)
+        {
+            return GetAbilitiesWithName(actionName).Any();
+        }
+
+        /// <summary>
+        ///     Returns a list of all abilities with a specific name.
+        /// </summary>
+        /// <param name="name">Name of the action</param>
+        /// <returns>A list of actions with that name</returns>
+        public IEnumerable<Ability> GetAbilitiesWithName(string name)
+        {
+            return ParseResources(name);
+        }
+
+        /// <summary>
+        ///     Parses a resource in terms of an ability.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public IEnumerable<Ability> GetJobAbilitiesByName(string name)
+        {
+            return ParseAbilities(name);
+        }
+
+        /// <summary>
+        ///     Parses a resource in terms of an spell.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public IEnumerable<Ability> GetSpellAbilitiesByName(string name)
+        {
+            return ParseSpells(name);
+        }
+
+        public T ToValue<T>(XElement element, string attributeName)
+        {
+            if (element.HasAttributes && element.Attribute(attributeName) != null)
+            {
+                var value = element.Attribute(attributeName).Value;
+                return (T)Convert.ChangeType(value, typeof (T));
+            }
+
+            return default(T);
         }
 
         /// <summary>
@@ -83,7 +116,7 @@ namespace Parsing.Parsers
         /// <returns></returns>
         protected IEnumerable<Ability> ParseAbilities(string name)
         {
-            return ParseResources(name).Where(x => CompositeAbilityTypes.IsAbility(x.AbilityType));
+            return ParseResources(name).Where(x => ResourceHelper.IsAbility(x.AbilityType));
         }
 
         /// <summary>
@@ -114,13 +147,28 @@ namespace Parsing.Parsers
             {
                 var ability = new Ability();
 
-                // Get the list of handlers that can process this element.
-                var augmenters = _augmenters
-                    .Where(augmenter => augmenter.CanAugment(element))
-                    .ToList();
+                ability.Alias = ToValue<string>(element, "alias");
+                ability.Element = ToValue<string>(element, "element");
+                ability.English = ToValue<string>(element, "english");
+                ability.Japanese = ToValue<string>(element, "japanese");
+                ability.Prefix = ToValue<string>(element, "prefix");
+                ability.Skill = ToValue<string>(element, "skill");
+                ability.Targets = ToValue<string>(element, "targets");
+                ability.Type = ToValue<string>(element, "type");
 
-                // Assign the ability's fields for each handler
-                augmenters.ForEach(augmenter => augmenter.Augment(element, ability));
+                ability.CastTime = ToValue<double>(element, "casttime");
+                ability.Recast = ToValue<double>(element, "recast");
+
+                ability.Id = ToValue<int>(element, "id");
+                ability.Index = ToValue<int>(element, "index");
+                ability.MpCost = ToValue<int>(element, "mpcost");
+                ability.TpCost = ToValue<int>(element, "tpcost");
+
+                ability.AbilityType = ResourceHelper.ToAbilityType(ability.Prefix);
+                ability.CategoryType = ResourceHelper.ToCategoryType(ability.Type);
+                ability.ElementType = ResourceHelper.ToElementType(ability.Element);
+                ability.SkillType = ResourceHelper.ToSkillType(ability.Skill);
+                ability.TargetType = ResourceHelper.ToTargetTypeFlags(ability.Targets);
 
                 abilities.Add(ability);
             }
@@ -135,7 +183,7 @@ namespace Parsing.Parsers
         /// <returns></returns>
         protected IEnumerable<Ability> ParseSpells(string name)
         {
-            return ParseResources(name).Where(x => CompositeAbilityTypes.IsSpell(x.AbilityType));
+            return ParseResources(name).Where(x => ResourceHelper.IsSpell(x.AbilityType));
         }
 
         /// <summary>
@@ -147,14 +195,11 @@ namespace Parsing.Parsers
         private IEnumerable<XElement> LoadResources(string path)
         {
             // List to store all read resources.
-
             // Get a list of all resource file names.
             if (!Directory.Exists(path)) return new List<XElement>();
-
             var resources = Directory.GetFiles(path, "*.xml");
 
             // Load all resource files in the given directory.
-
             return resources.Select(XElement.Load).ToList();
         }
     }

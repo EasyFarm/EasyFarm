@@ -20,10 +20,7 @@ using System.Windows;
 using EasyFarm.Logging;
 using EasyFarm.Mvvm;
 using EasyFarm.Properties;
-using Parsing.Services;
-using AutoMapper;
-using EasyFarm.Classes;
-using MemoryAPI;
+using EasyFarm.Parsing;
 
 namespace EasyFarm
 {

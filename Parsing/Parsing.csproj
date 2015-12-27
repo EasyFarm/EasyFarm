@@ -39,40 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abilities\Ability.cs" />
-    <Compile Include="Augmenting\SpecializedTypeAugmenter.cs" />
-    <Compile Include="Augmenting\TargetTypeAugmenter.cs" />
-    <Compile Include="Augmenting\SkillTypeAugmenter.cs" />
-    <Compile Include="Augmenting\CategoryTypeAugmenter.cs" />
-    <Compile Include="Augmenting\ResourceValueAugmenter.cs" />
-    <Compile Include="Converters\IObjectConverter.cs" />
-    <Compile Include="Converters\ResourceValueConverter.cs" />
-    <Compile Include="Extraction\IDataExtractor.cs" />
-    <Compile Include="Extraction\ResourceValueExtractor.cs" />
-    <Compile Include="Mapping\BaseEnumMapper.cs" />
-    <Compile Include="Mapping\EnumClassUtils.cs" />
-    <Compile Include="Mapping\IObjectMultiMapper.cs" />
-    <Compile Include="Mapping\SingleValueEnumMapper.cs" />
-    <Compile Include="Mapping\MultiValueEnumMapper.cs" />
-    <Compile Include="Mapping\MultiObjectMapper.cs" />
-    <Compile Include="Types\AbilityType.cs" />
-    <Compile Include="Types\CategoryType.cs" />
-    <Compile Include="Types\ElementType.cs" />
-    <Compile Include="Types\SkillType.cs" />
-    <Compile Include="Types\TargetType.cs" />
-    <Compile Include="Parsers\AbilityParser.cs" />
-    <Compile Include="Augmenting\AbilityAugmenter.cs" />
-    <Compile Include="Augmenting\ElementTypeAugmenter.cs" />
-    <Compile Include="Augmenting\IObjectAugmenter.cs" />
-    <Compile Include="Augmenting\AbilityTypeAugmenter.cs" />
-    <Compile Include="Mapping\IObjectMapper.cs" />
-    <Compile Include="Mapping\ObjectMapper.cs" />
+    <Compile Include="Parsing\Ability.cs" />
+    <Compile Include="Parsing\ResourceHelper.cs" />
+    <Compile Include="Parsing\AbilityType.cs" />
+    <Compile Include="Parsing\CategoryType.cs" />
+    <Compile Include="Parsing\ElementType.cs" />
+    <Compile Include="Parsing\SkillType.cs" />
+    <Compile Include="Parsing\TargetType.cs" />
+    <Compile Include="Parsing\AbilityService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AbilitiesService.cs" />
-    <Compile Include="Services\IAbilityService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Augmenting\ArgumenterInfo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

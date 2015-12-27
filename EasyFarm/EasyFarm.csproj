@@ -157,6 +157,7 @@
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +184,14 @@
     <Compile Include="Mvvm\AsyncDelegateCommand.cs" />
     <Compile Include="Mvvm\Events.cs" />
     <Compile Include="Mvvm\IViewModel.cs" />
+    <Compile Include="Parsing\Ability.cs" />
+    <Compile Include="Parsing\AbilityService.cs" />
+    <Compile Include="Parsing\AbilityType.cs" />
+    <Compile Include="Parsing\CategoryType.cs" />
+    <Compile Include="Parsing\ElementType.cs" />
+    <Compile Include="Parsing\ResourceHelper.cs" />
+    <Compile Include="Parsing\SkillType.cs" />
+    <Compile Include="Parsing\TargetType.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -426,10 +435,6 @@
     <ProjectReference Include="..\MemoryAPI\MemoryAPI.csproj">
       <Project>{cc6cc9be-32f0-4b8a-a1ad-6c7c744e2fad}</Project>
       <Name>MemoryAPI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Parsing\Parsing.csproj">
-      <Project>{7008daf7-d3aa-41a4-9d85-8ec168d5d372}</Project>
-      <Name>Parsing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

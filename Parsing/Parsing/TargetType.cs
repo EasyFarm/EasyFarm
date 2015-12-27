@@ -16,43 +16,20 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-namespace Parsing.Types
+using System;
+
+namespace Parsing.Resources
 {
-    /// <summary>
-    ///     Represents an ability's catergory type which is the group
-    ///     of abilities this ability belongs to.
-    /// </summary>
-    public enum CategoryType
+    [Flags]
+    public enum TargetType
     {
-        Unknown,
-        WeaponSkill,
-        Misc,
-        JobAbility,
-        PetCommand,
-        CorsairRoll,
-        CorsairShot,
-        Samba,
-        Waltz,
-        Jig,
-        Step,
-        Flourish1,
-        Flourish2,
-        Effusion,
-        Rune,
-        Ward,
-        BloodPactWard,
-        BloodPactRage,
-        Monster,
-        JobTrait,
-        MonsterSkill,
-        WhiteMagic,
-        BlackMagic,
-        SummonerPact,
-        Ninjustsu,
-        Geomancy,
-        BlueMagic,
-        BardSong,
-        Trust,
-        Trigger
+        Unknown = 0x0000,
+        Self = 0x0001,
+        Player = 0x0002,
+        Party = 0x0004,
+        Ally = 0x0008,
+        Npc = 0x0016,
+        Enemy = 0x0032,
+        Corpse = 0x0064
     }
 }

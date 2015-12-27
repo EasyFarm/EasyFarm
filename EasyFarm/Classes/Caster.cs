@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using EasyFarm.Collections;
-using Parsing.Abilities;
+using EasyFarm.Parsing;
 using MemoryAPI;
 
 namespace EasyFarm.Classes

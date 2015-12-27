@@ -16,28 +16,20 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System.Xml.Linq;
+using System;
 
-namespace Parsing.Extraction
+namespace EasyFarm.Parsing
 {
-    public class ResourceValueExtractor : IDataExtractor<XElement, string>
+    [Flags]
+    public enum TargetType
     {
-        protected string AttributeName;
-
-        public ResourceValueExtractor(string attributeName)
-        {
-            AttributeName = attributeName;
-        }
-
-        public bool IsExtractable(XElement data)
-        {
-            if (!data.HasAttributes) return false;
-            return data.Attribute(AttributeName) != null;
-        }
-
-        public string ExtractData(XElement data)
-        {
-            return data.Attribute(AttributeName).Value;
-        }
+        Unknown = 0x0000,
+        Self = 0x0001,
+        Player = 0x0002,
+        Party = 0x0004,
+        Ally = 0x0008,
+        Npc = 0x0016,
+        Enemy = 0x0032,
+        Corpse = 0x0064
     }
 }

@@ -16,27 +16,29 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-namespace Parsing.Extraction
+using System;
+
+namespace EasyFarm.Parsing
 {
     /// <summary>
-    ///     Defines how data can be extracted from objects.
+    ///     The elemental type for the ability.
     /// </summary>
-    /// <typeparam name="TElement">The object to extract data from. </typeparam>
-    /// <typeparam name="TData">The data returned from extraction. </typeparam>
-    public interface IDataExtractor<in TElement, out TData>
+    [Flags]
+    public enum ElementType
     {
-        /// <summary>
-        ///     Checks to see if we can extract data.
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        bool IsExtractable(TElement data);
-
-        /// <summary>
-        ///     Extract the data from the given object.
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        TData ExtractData(TElement data);
+        Unknown = 0x0000,
+        Light = 0x0001,
+        Wind = 0x0002,
+        Earth = 0x0004,
+        Water = 0x0008,
+        Ice = 0x0016,
+        Fire = 0x0032,
+        Thunder = 0x0064,
+        Dark = 0x0128,
+        NonElemental = 0x0256,
+        None = 0x0512,
+        Trigger = 0x1024,
+        Any = 0x2048,
+        All = 0x4096
     }
 }

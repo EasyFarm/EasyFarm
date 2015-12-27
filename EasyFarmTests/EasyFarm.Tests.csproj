@@ -72,10 +72,6 @@
       <Project>{cc6cc9be-32f0-4b8a-a1ad-6c7c744e2fad}</Project>
       <Name>MemoryAPI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Parsing\Parsing.csproj">
-      <Project>{7008daf7-d3aa-41a4-9d85-8ec168d5d372}</Project>
-      <Name>Parsing</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\abils.xml">

@@ -17,8 +17,7 @@ You should have received a copy of the GNU General Public License
 
 using System;
 using System.Text.RegularExpressions;
-using Parsing.Abilities;
-using Parsing.Types;
+using EasyFarm.Parsing;
 using MemoryAPI;
 
 namespace EasyFarm.Classes
@@ -48,13 +47,13 @@ namespace EasyFarm.Classes
             }
 
             // If a spell get spell recast
-            if (CompositeAbilityTypes.IsSpell(ability.AbilityType))
+            if (ResourceHelper.IsSpell(ability.AbilityType))
             {
                 recast = fface.Timer.GetSpellRecast(ToSpellList(ability));
             }
 
             // if ability get ability recast. 
-            if (CompositeAbilityTypes.IsAbility(ability.AbilityType))
+            if (ResourceHelper.IsAbility(ability.AbilityType))
             {
                 recast = fface.Timer.GetAbilityRecast(ToAbilityList(ability));
             }

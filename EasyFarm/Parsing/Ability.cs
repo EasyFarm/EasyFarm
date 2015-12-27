@@ -16,9 +16,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using Parsing.Types;
-
-namespace Parsing.Abilities
+namespace EasyFarm.Parsing
 {
     /// <summary>
     ///     An action to be used on a target unit or player.

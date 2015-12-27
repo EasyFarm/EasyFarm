@@ -16,33 +16,43 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-namespace Parsing.Types
+namespace EasyFarm.Parsing
 {
     /// <summary>
-    ///     Represents a sub-division for category types.
-    ///     <example>
-    ///         WhiteMagic contains HealingMagic, DivineMagic, etc.
-    ///     </example>
+    ///     Represents an ability's catergory type which is the group
+    ///     of abilities this ability belongs to.
     /// </summary>
-    public enum SkillType
+    public enum CategoryType
     {
         Unknown,
-        HealingMagic,
-        DivineMagic,
-        EnfeeblingMagic,
-        EnhancingMagic,
-        ElementalMagic,
-        DarkMagic,
-        SummoningMagic,
-        Ninjutsu,
-        Singing,
-        BlueMagic,
+        WeaponSkill,
+        Misc,
+        JobAbility,
+        PetCommand,
+        CorsairRoll,
+        CorsairShot,
+        Samba,
+        Waltz,
+        Jig,
+        Step,
+        Flourish1,
+        Flourish2,
+        Effusion,
+        Rune,
+        Ward,
+        BloodPactWard,
+        BloodPactRage,
+        Monster,
+        JobTrait,
+        MonsterSkill,
+        WhiteMagic,
+        BlackMagic,
+        SummonerPact,
+        Ninjustsu,
         Geomancy,
-        ControlTrigger,
-        GenericTrigger,
-        ElementalTrigger,
-        CombatTrigger,
-        Trigger,
-        Ability
+        BlueMagic,
+        BardSong,
+        Trust,
+        Trigger
     }
 }

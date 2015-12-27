@@ -16,12 +16,11 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using Parsing.Abilities;
-using Parsing.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using EasyFarm.Parsing;
 
 namespace EasyFarm.Classes
 {
@@ -129,7 +128,7 @@ namespace EasyFarm.Classes
                 // Target mob if not currently targeted.
                 SetTarget(target);
 
-                if (CompositeAbilityTypes.IsSpell(action.Ability.AbilityType))
+                if (ResourceHelper.IsSpell(action.Ability.AbilityType))
                 {
                     _caster.CastSpell(action);
                 }

@@ -16,17 +16,26 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System.Collections.Generic;
-using Parsing.Abilities;
+using System;
 
-namespace Parsing.Services
+namespace Parsing.Resources
 {
-    public interface IAbilityService
+    /// <summary>
+    ///     Represents the command used to trigger the action.
+    /// </summary>
+    [Flags]
+    public enum AbilityType
     {
-        Ability CreateAbility(string name);
-        IEnumerable<Ability> GetAbilitiesWithName(string name);
-        IEnumerable<Ability> GetJobAbilitiesByName(string name);
-        IEnumerable<Ability> GetSpellAbilitiesByName(string name);
-        bool Exists(string actionName);
+        Unknown = 0x0000,
+        Magic = 0x0001,
+        Ninjutsu = 0x0002,
+        Song = 0x0004,
+        Trigger = 0x0008,
+        Weaponskill = 0x0016,
+        Range = 0x0032,
+        Echo = 0x0064,
+        Jobability = 0x0128,
+        Pet = 0x0256,
+        Monsterskill = 0x0512
     }
 }

@@ -16,20 +16,33 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-
-namespace Parsing.Types
+namespace Parsing.Resources
 {
-    [Flags]
-    public enum TargetType
+    /// <summary>
+    ///     Represents a sub-division for category types.
+    ///     <example>
+    ///         WhiteMagic contains HealingMagic, DivineMagic, etc.
+    ///     </example>
+    /// </summary>
+    public enum SkillType
     {
-        Unknown = 0x0000,
-        Self = 0x0001,
-        Player = 0x0002,
-        Party = 0x0004,
-        Ally = 0x0008,
-        Npc = 0x0016,
-        Enemy = 0x0032,
-        Corpse = 0x0064
+        Unknown,
+        HealingMagic,
+        DivineMagic,
+        EnfeeblingMagic,
+        EnhancingMagic,
+        ElementalMagic,
+        DarkMagic,
+        SummoningMagic,
+        Ninjutsu,
+        Singing,
+        BlueMagic,
+        Geomancy,
+        ControlTrigger,
+        GenericTrigger,
+        ElementalTrigger,
+        CombatTrigger,
+        Trigger,
+        Ability
     }
 }
