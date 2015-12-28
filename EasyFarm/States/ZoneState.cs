@@ -1,14 +1,13 @@
-﻿using System.Threading;
-using EasyFarm.Classes;
+﻿using EasyFarm.Classes;
 using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     public class ZoneState : BaseState
     {
         private Zone _zone;
 
-        public ZoneState(MemoryWrapper fface) : base(fface)
+        public ZoneState(IMemoryAPI fface) : base(fface)
         {
             _zone = fface.Player.Zone;
         }

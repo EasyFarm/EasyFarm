@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.Mvvm;
+using EasyFarm.Infrastructure;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Resting")]
+    [ViewModel("Resting")]
     public class RestingViewModel : ViewModelBase
     {
         public int LowHp

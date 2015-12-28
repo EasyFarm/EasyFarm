@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Mvvm;
+using EasyFarm.Infrastructure;
 using Prism.Events;
 namespace EasyFarm.Classes
 {

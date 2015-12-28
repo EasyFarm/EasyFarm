@@ -6,6 +6,8 @@ using System;
 
 namespace EasyFarm
 {
+    // ** Warning: FFACEWrapper may have methods which are NotImplemented!. ** //   
+
     public class FFACEWrapper : MemoryWrapper
     {
         private readonly FFACE FFACE;

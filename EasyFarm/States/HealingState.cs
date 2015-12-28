@@ -20,20 +20,20 @@ using System.Linq;
 using EasyFarm.Classes;
 using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
-    public class HealingComponent : BaseState
+    public class HealingState : BaseState
     {
         private readonly Executor _executor;
 
-        public HealingComponent(MemoryWrapper fface) : base(fface)
+        public HealingState(IMemoryAPI fface) : base(fface)
         {
             _executor = new Executor(fface);
         }
 
         public override bool CheckComponent()
         {
-            if (new RestComponent(fface).CheckComponent()) return false;
+            if (new RestState(fface).CheckComponent()) return false;
 
             if (!Config.Instance.BattleLists["Healing"].Actions
                 .Any(x => ActionFilters.BuffingFilter(fface, x)))

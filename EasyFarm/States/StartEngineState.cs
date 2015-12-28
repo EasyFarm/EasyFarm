@@ -1,14 +1,15 @@
-﻿using EasyFarm.Classes;
-using System;
+﻿using System;
+using EasyFarm.Classes;
+using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     /// <summary>
     /// Sets up state before other states start firing. 
     /// </summary>
     public class StartEngineState : BaseState
     {
-        public StartEngineState(MemoryWrapper fface) : base(fface) { }
+        public StartEngineState(IMemoryAPI fface) : base(fface) { }
 
         /// <summary>
         /// Setup any state before other states start firing. 

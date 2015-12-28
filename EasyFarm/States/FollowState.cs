@@ -20,7 +20,7 @@ using System.Linq;
 using EasyFarm.Classes;
 using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     /// <summary>
     ///     Moves to target enemies.
@@ -29,7 +29,7 @@ namespace EasyFarm.Components
     {
         private readonly UnitService UnitService;
 
-        public FollowState(MemoryWrapper fface) : base(fface)
+        public FollowState(IMemoryAPI fface) : base(fface)
         {
             this.UnitService = new UnitService(fface);
         }
@@ -55,7 +55,7 @@ namespace EasyFarm.Components
             if (IsFighting) return false;
 
             // Do not follow when resting. 
-            if (new RestComponent(fface).CheckComponent()) return false;
+            if (new RestState(fface).CheckComponent()) return false;
 
             // Avoid following empty units. 
             if (string.IsNullOrWhiteSpace(Config.Instance.FollowedPlayer)) return false;

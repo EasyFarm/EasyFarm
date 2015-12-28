@@ -1,11 +1,11 @@
 ﻿using EasyFarm.Classes;
 using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     public class DeadState : BaseState
     {
-        public DeadState(MemoryWrapper fface) : base(fface) { }
+        public DeadState(IMemoryAPI fface) : base(fface) { }
 
         public override bool CheckComponent()
         {

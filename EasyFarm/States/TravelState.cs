@@ -20,18 +20,17 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using EasyFarm.Classes;
-using AutoMapper;
 using MemoryAPI;
 using MemoryAPI.Navigation;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
-    public class TravelComponent : BaseState
+    public class TravelState : BaseState
     {
         private readonly UnitService _units;
         private int _position;
 
-        public TravelComponent(MemoryWrapper fface) : base(fface)
+        public TravelState(IMemoryAPI fface) : base(fface)
         {
             // Create unit object for parsing of npc array. 
             _units = new UnitService(fface);
@@ -51,13 +50,13 @@ namespace EasyFarm.Components
             if (Config.Instance.Waypoints.Count <= 0) return false;
 
             // We are not able to attack any creatures. 
-            if (new ApproachComponent(fface).CheckComponent()) return false;
+            if (new ApproachState(fface).CheckComponent()) return false;
 
             // We don't have to rest. 
-            if (new RestComponent(fface).CheckComponent()) return false;
+            if (new RestState(fface).CheckComponent()) return false;
 
             // We don't have to heal. 
-            if (new HealingComponent(fface).CheckComponent()) return false;
+            if (new HealingState(fface).CheckComponent()) return false;
 
             // We are not bound or struck by an other movement
             // disabling condition. 

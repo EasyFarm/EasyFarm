@@ -18,12 +18,13 @@ You should have received a copy of the GNU General Public License
 
 using System.Linq;
 using EasyFarm.Classes;
+using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
-    public class PullComponent : CombatBaseState
+    public class PullState : CombatBaseState
     {
-        public PullComponent(MemoryWrapper fface) : base(fface)
+        public PullState(IMemoryAPI fface) : base(fface)
         {
             Executor = new Executor(fface);
         }
@@ -37,7 +38,7 @@ namespace EasyFarm.Components
         /// <returns></returns>
         public override bool CheckComponent()
         {
-            if (new RestComponent(fface).CheckComponent()) return false;
+            if (new RestState(fface).CheckComponent()) return false;
             return UnitFilters.MobFilter(fface, Target);
         }
 

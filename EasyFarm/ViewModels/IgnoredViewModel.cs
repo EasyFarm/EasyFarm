@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.Mvvm;
 using System.Collections.ObjectModel;
+using EasyFarm.Infrastructure;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Ignored")]
+    [ViewModel("Ignored")]
     public class IgnoredViewModel : ListViewModel<string>
     {
         public override string Value

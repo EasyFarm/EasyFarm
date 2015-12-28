@@ -16,11 +16,11 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Linq;
 using EasyFarm.Classes;
 using MemoryAPI;
-using System.Linq;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     /// <summary>
     ///     Handles the end of battle situation.
@@ -28,11 +28,11 @@ namespace EasyFarm.Components
     ///     lists can fire and replaces targets that are dead, null,
     ///     empty or invalid.
     /// </summary>
-    public class EndComponent : CombatBaseState
+    public class EndState : CombatBaseState
     {
         private readonly Executor _executor;
 
-        public EndComponent(MemoryWrapper fface) : base(fface)
+        public EndState(IMemoryAPI fface) : base(fface)
         {
             _executor = new Executor(fface);
         }
@@ -40,7 +40,7 @@ namespace EasyFarm.Components
         public override bool CheckComponent()
         {
             // Prevent making the player stand up from resting.
-            if (new RestComponent(fface).CheckComponent()) return false;
+            if (new RestState(fface).CheckComponent()) return false;
 
             // Creature is unkillable and does not meets the
             // user's criteria for valid mobs defined in MobFilters.
@@ -52,6 +52,8 @@ namespace EasyFarm.Components
         /// </summary>
         public override void EnterComponent()
         {
+            fface.Navigator.Reset();
+
             while (fface.Player.Status == Status.Fighting)
             {
                 Player.Disengage(fface);

@@ -18,12 +18,12 @@ You should have received a copy of the GNU General Public License
 
 using System.Windows.Input;
 using EasyFarm.Classes;
-using EasyFarm.Mvvm;
+using EasyFarm.Infrastructure;
 using Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Settings")]
+    [ViewModel("Settings")]
     public class SettingsViewModel : ViewModelBase
     {
         public SettingsViewModel()

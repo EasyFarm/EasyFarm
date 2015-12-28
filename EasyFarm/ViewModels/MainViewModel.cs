@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 
 using System.Collections.ObjectModel;
 using System.Linq;
-using EasyFarm.Mvvm;
+using EasyFarm.Infrastructure;
 
 namespace EasyFarm.ViewModels
 {

@@ -19,14 +19,14 @@ You should have received a copy of the GNU General Public License
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using EasyFarm.Classes;
-using EasyFarm.Mvvm;
+using EasyFarm.Infrastructure;
 using Prism.Commands;
 using MemoryAPI;
 using MemoryAPI.Navigation;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Routes")]
+    [ViewModel("Routes")]
     public class RoutesViewModel : ViewModelBase
     {
         private PathRecorder _recorder;
@@ -50,7 +50,7 @@ namespace EasyFarm.ViewModels
             ViewModelBase.OnSessionSet += ViewModelBase_OnSessionSet;
         }
 
-        private void ViewModelBase_OnSessionSet(MemoryWrapper fface)
+        private void ViewModelBase_OnSessionSet(IMemoryAPI fface)
         {
             _recorder = new PathRecorder(fface);
             _recorder.OnPositionAdded += _recorder_OnPositionAdded;

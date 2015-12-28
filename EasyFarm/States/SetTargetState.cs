@@ -1,9 +1,10 @@
-﻿using EasyFarm.Classes;
-using EasyFarm.Logging;
-using System;
+﻿using System;
 using System.Linq;
+using EasyFarm.Classes;
+using EasyFarm.Logging;
+using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     public class SetTargetState : CombatBaseState
     {
@@ -11,7 +12,7 @@ namespace EasyFarm.Components
 
         private readonly UnitService _units;
 
-        public SetTargetState(MemoryWrapper fface) : base(fface)
+        public SetTargetState(IMemoryAPI fface) : base(fface)
         {
             _units = new UnitService(fface);
         }

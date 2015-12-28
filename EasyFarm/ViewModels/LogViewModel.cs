@@ -19,13 +19,13 @@ You should have received a copy of the GNU General Public License
 using System.Collections.ObjectModel;
 using System.Diagnostics.Tracing;
 using System.Threading;
+using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
-using EasyFarm.Mvvm;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModelAttribute("Log")]
+    [ViewModel("Log")]
     public class LogViewModel : ViewModelBase
     {
         private readonly SynchronizationContext _syncContext;

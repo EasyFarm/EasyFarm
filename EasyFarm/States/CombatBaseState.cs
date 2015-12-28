@@ -17,8 +17,9 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     /// <summary>
     ///     A class for defeating monsters.
@@ -30,7 +31,7 @@ namespace EasyFarm.Components
            IsFighting = false;
         }
 
-        public CombatBaseState(MemoryWrapper fface) : base(fface)
+        public CombatBaseState(IMemoryAPI fface) : base(fface)
         {
         }
 

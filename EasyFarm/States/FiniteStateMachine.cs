@@ -20,38 +20,40 @@ You should have received a copy of the GNU General Public License
 // Site: FFEVO.net
 // All credit to him!
 
-using EasyFarm.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EasyFarm.Classes;
+using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
-    public class FiniteStateEngine
+    public class FiniteStateMachine
     {
         private readonly TypeCache<bool> _cache = new TypeCache<bool>();
         private CancellationTokenSource _cancellation = new CancellationTokenSource();
         private readonly List<IState> _components = new List<IState>();
 
-        public FiniteStateEngine(MemoryWrapper fface)
+        public FiniteStateMachine(IMemoryAPI fface)
         {
             //Create the states
+            AddComponent(new TrackPlayerState(fface) { Priority = 6 });
             AddComponent(new DeadState(fface) {Priority = 6});
             AddComponent(new ZoneState(fface) {Priority = 6});
             AddComponent(new SetTargetState(fface) {Priority = 6});
             AddComponent(new SetFightingState(fface) {Priority = 6});
             AddComponent(new FollowState(fface) {Priority = 5});
-            AddComponent(new RestComponent(fface) {Priority = 2});
-            AddComponent(new ApproachComponent(fface) {Priority = 0});
-            AddComponent(new BattleComponent(fface) {Priority = 3});
-            AddComponent(new WeaponSkillComponent(fface) {Priority = 2});
-            AddComponent(new PullComponent(fface) {Priority = 4});
-            AddComponent(new StartComponent(fface) {Priority = 5});
-            AddComponent(new TravelComponent(fface) {Priority = 1});
-            AddComponent(new HealingComponent(fface) {Priority = 2});
-            AddComponent(new EndComponent(fface) {Priority = 3});
+            AddComponent(new RestState(fface) {Priority = 2});
+            AddComponent(new ApproachState(fface) {Priority = 0});
+            AddComponent(new BattleState(fface) {Priority = 3});
+            AddComponent(new WeaponskillState(fface) {Priority = 2});
+            AddComponent(new PullState(fface) {Priority = 4});
+            AddComponent(new StartState(fface) {Priority = 5});
+            AddComponent(new TravelState(fface) {Priority = 1});
+            AddComponent(new HealingState(fface) {Priority = 2});
+            AddComponent(new EndState(fface) {Priority = 3});
             AddComponent(new StartEngineState(fface) {Priority = Constants.MaxPriority});
 
             _components.ForEach(x => x.Enabled = true);

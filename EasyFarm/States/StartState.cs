@@ -20,14 +20,14 @@ using System.Linq;
 using EasyFarm.Classes;
 using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     /// <summary>
     ///     Buffs the player.
     /// </summary>
-    public class StartComponent : CombatBaseState
+    public class StartState : CombatBaseState
     {
-        public StartComponent(MemoryWrapper fface) : base(fface)
+        public StartState(IMemoryAPI fface) : base(fface)
         {
             Executor = new Executor(fface);
         }
@@ -36,7 +36,7 @@ namespace EasyFarm.Components
 
         public override bool CheckComponent()
         {
-            if (new RestComponent(fface).CheckComponent()) return false;
+            if (new RestState(fface).CheckComponent()) return false;
 
             // target dead or null. 
             if (!UnitFilters.MobFilter(fface, Target)) return false;

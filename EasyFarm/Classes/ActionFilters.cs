@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System;
 using EasyFarm.Parsing;
+using MemoryAPI;
 
 namespace EasyFarm.Classes
 {
@@ -34,7 +35,7 @@ namespace EasyFarm.Classes
         /// <param name="fface"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static bool BuffingFilter(MemoryWrapper fface, BattleAbility action)
+        public static bool BuffingFilter(IMemoryAPI fface, BattleAbility action)
         {
             // Return if not enabled. 
             if (!action.IsEnabled) return false;
@@ -116,7 +117,7 @@ namespace EasyFarm.Classes
         /// <param name="action"></param>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public static bool TargetedFilter(MemoryWrapper fface, BattleAbility action, Unit unit)
+        public static bool TargetedFilter(IMemoryAPI fface, BattleAbility action, Unit unit)
         {
             // Does not pass the base criteria for casting. 
             if (!BuffingFilter(fface, action)) return false;

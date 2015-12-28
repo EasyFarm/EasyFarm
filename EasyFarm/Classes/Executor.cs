@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using EasyFarm.Parsing;
+using MemoryAPI;
 
 namespace EasyFarm.Classes
 {
@@ -31,9 +32,9 @@ namespace EasyFarm.Classes
     public class Executor
     {
         private readonly Caster _caster;
-        private readonly MemoryWrapper _fface;
+        private readonly IMemoryAPI _fface;
 
-        public Executor(MemoryWrapper fface)
+        public Executor(IMemoryAPI fface)
         {
             _fface = fface;
             _caster = new Caster(fface);
@@ -44,7 +45,7 @@ namespace EasyFarm.Classes
         /// <param name="action"></param>
         public void UseBuffingAction(Ability action)
         {
-            if (action == null) throw new ArgumentNullException("action");
+            if (action == null) throw new ArgumentNullException(nameof(action));
 
             // Create new new ability and set its basic required information.
             var baction = new BattleAbility
@@ -64,7 +65,7 @@ namespace EasyFarm.Classes
         /// <param name="actions"></param>
         public void UseBuffingActions(IEnumerable<BattleAbility> actions)
         {
-            if (actions == null) throw new ArgumentNullException("actions");
+            if (actions == null) throw new ArgumentNullException(nameof(actions));
 
             var castables = actions.ToList();
 
@@ -102,8 +103,8 @@ namespace EasyFarm.Classes
         /// <param name="target"></param>
         public void UseTargetedAction(BattleAbility action, Unit target)
         {
-            if (target == null) throw new ArgumentNullException("target");
-            if (action == null) throw new ArgumentNullException("action");
+            if (target == null) throw new ArgumentNullException(nameof(target));
+            if (action == null) throw new ArgumentNullException(nameof(action));
             UseTargetedActions(new List<BattleAbility> { action }, target);
         }
 
@@ -115,8 +116,8 @@ namespace EasyFarm.Classes
         public void UseTargetedActions(IEnumerable<BattleAbility> actions, Unit target)
         {
             // Logic error to call this without setting a target first.
-            if (actions == null) throw new ArgumentNullException("actions");
-            if (target == null) throw new ArgumentNullException("target");
+            if (actions == null) throw new ArgumentNullException(nameof(actions));
+            if (target == null) throw new ArgumentNullException(nameof(target));
 
             foreach (var action in actions)
             {

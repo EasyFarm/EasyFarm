@@ -35,14 +35,14 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The memory source to retrieve the character's position from. 
         /// </summary>
-        private MemoryWrapper _memory;
+        private IMemoryAPI _memory;
 
         /// <summary>
         /// Create a new <see cref="PathRecorder"/> with saving and 
         /// loading features. 
         /// </summary>
         /// <param name="memory"></param>
-        public PathRecorder(MemoryWrapper memory)
+        public PathRecorder(IMemoryAPI memory)
         {
             this._memory = memory;
             _recorder = new Timer(1000);

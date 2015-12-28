@@ -30,17 +30,11 @@ namespace EasyFarm.Classes
     public class Caster
     {
         // Get player object. 
-        private static MovingUnit _player;
-        private readonly MemoryWrapper _fface;
+        private readonly IMemoryAPI _fface;
 
-        public Caster(MemoryWrapper fface)
+        public Caster(IMemoryAPI fface)
         {
             _fface = fface;
-
-            if (_player == null)
-            {
-                _player = new MovingUnit(_fface, _fface.Player.ID);
-            }
         }
 
         /// <summary>
@@ -51,13 +45,6 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public bool CastSpell(Ability ability)
         {
-            // Call for player to stop. 
-            while (_player.IsMoving)
-            {
-                _fface.Navigator.Reset();
-                Thread.Sleep(100);
-            }
-
             // Try to cast the spell and return false if
             // we've failed to start casting or the 
             // casting was interrupted. 

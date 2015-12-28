@@ -1,5 +1,4 @@
-﻿using System;
-namespace EasyFarm.Components
+﻿namespace EasyFarm.States
 {
     public interface IState
     {

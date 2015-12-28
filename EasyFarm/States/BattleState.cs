@@ -20,23 +20,23 @@ using System.Linq;
 using EasyFarm.Classes;
 using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     /// <summary>
     ///     A class for defeating monsters.
     /// </summary>
-    public class BattleComponent : CombatBaseState
+    public class BattleState : CombatBaseState
     {
         private readonly Executor _executor;
 
-        public BattleComponent(MemoryWrapper fface) : base(fface)
+        public BattleState(IMemoryAPI fface) : base(fface)
         {
             _executor = new Executor(fface);
         }
 
         public override bool CheckComponent()
         {
-            if (new RestComponent(fface).CheckComponent()) return false;
+            if (new RestState(fface).CheckComponent()) return false;
 
             // Mobs has not been pulled if pulling moves are available. 
             if (!IsFighting) return false;

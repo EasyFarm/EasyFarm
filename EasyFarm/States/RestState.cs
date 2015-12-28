@@ -21,19 +21,19 @@ using System.Linq;
 using EasyFarm.Classes;
 using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     /// <summary>
     ///     Behavior for resting our character.
     /// </summary>
-    public class RestComponent : BaseState
+    public class RestState : BaseState
     {
         /// <summary>
         ///     Retrieves aggroing creature.
         /// </summary>
         private readonly UnitService _units;
 
-        public RestComponent(MemoryWrapper fface) : base(fface)
+        public RestState(IMemoryAPI fface) : base(fface)
         {
             _units = new UnitService(fface);
         }

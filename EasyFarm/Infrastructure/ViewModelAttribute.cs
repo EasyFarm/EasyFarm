@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 
 using System;
 
-namespace EasyFarm.Mvvm
+namespace EasyFarm.Infrastructure
 {
     public class ViewModelAttribute : Attribute
     {

@@ -1,7 +1,7 @@
-﻿using EasyFarm.Mvvm;
-using Prism.Commands;
+﻿using Prism.Commands;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using EasyFarm.Infrastructure;
 
 namespace EasyFarm.ViewModels
 {

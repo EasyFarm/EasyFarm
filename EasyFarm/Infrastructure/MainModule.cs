@@ -16,32 +16,25 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System.Windows;
 using EasyFarm.Views;
 using Prism.Modularity;
-using Prism.Unity;
+using Prism.Regions;
 
-namespace EasyFarm.Mvvm
+namespace EasyFarm.Infrastructure
 {
-    public class BootStrapper : UnityBootstrapper
+    public class MainModule : IModule
     {
-        protected override DependencyObject CreateShell()
+        private readonly IRegionViewRegistry _regionViewRegistry;
+
+        public MainModule(IRegionViewRegistry regionViewRegistry)
         {
-            return new MasterView();
+            _regionViewRegistry = regionViewRegistry;
         }
 
-        protected override void InitializeModules()
+        public void Initialize()
         {
-            base.InitializeModules();
-            Application.Current.MainWindow = (MasterView)Shell;
-            Application.Current.MainWindow.Show();
-        }
-
-        protected override void ConfigureModuleCatalog()
-        {
-            base.ConfigureModuleCatalog();
-            var moduleCatalog = (ModuleCatalog) ModuleCatalog;
-            moduleCatalog.AddModule(typeof (MainModule));
+            _regionViewRegistry.RegisterViewWithRegion("MainRegion", typeof (MainView));
+            _regionViewRegistry.RegisterViewWithRegion("MainRegion", typeof (SettingsView));
         }
     }
 }

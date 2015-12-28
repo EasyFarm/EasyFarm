@@ -16,29 +16,32 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Components;
+using EasyFarm.States;
+using MemoryAPI;
 using Prism.Mvvm;
 
-namespace EasyFarm.Mvvm
+namespace EasyFarm.Infrastructure
 {
     public class ViewModelBase : BindableBase, IViewModel
     {
-        /// <summary>
-        ///     View Model name for header in tab control item.
-        /// </summary>
-        public string ViewName { get; set; }
-
-        /// <summary>
-        ///     Solo fface instance for current player.
-        /// </summary>
-        public static MemoryWrapper FFACE { get; set; }
+        public delegate void SessionSet(IMemoryAPI fface);
 
         /// <summary>
         ///     Global game engine controlling the player.
         /// </summary>
         public static GameEngine GameEngine;
 
-        public static void SetSession(MemoryWrapper fface)
+        /// <summary>
+        ///     Solo fface instance for current player.
+        /// </summary>
+        public static IMemoryAPI FFACE { get; set; }
+
+        /// <summary>
+        ///     View Model name for header in tab control item.
+        /// </summary>
+        public string ViewName { get; set; }
+
+        public static void SetSession(IMemoryAPI fface)
         {
             if (fface == null) return;
 
@@ -53,8 +56,6 @@ namespace EasyFarm.Mvvm
                 OnSessionSet(fface);
             }
         }
-
-        public delegate void SessionSet(MemoryWrapper fface);
 
         public static event SessionSet OnSessionSet;
     }

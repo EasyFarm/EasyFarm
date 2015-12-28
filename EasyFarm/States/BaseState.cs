@@ -17,17 +17,18 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System;
+using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     public abstract class BaseState : IState, IComparable
     {
         /// <summary>
         ///     The game session.
         /// </summary>
-        protected MemoryWrapper fface { get; set; }
+        protected IMemoryAPI fface { get; set; }
 
-        protected BaseState(MemoryWrapper fface)
+        protected BaseState(IMemoryAPI fface)
         {
             this.fface = fface;
         }

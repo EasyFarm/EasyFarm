@@ -16,7 +16,9 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-namespace EasyFarm.Components
+using MemoryAPI;
+
+namespace EasyFarm.States
 {
     /// <summary>
     /// Controls whether or not the bot should run. Basically anything that can pause or resume the
@@ -32,17 +34,17 @@ namespace EasyFarm.Components
         /// <summary>
         /// Provides information about game data.
         /// </summary>
-        private readonly MemoryWrapper _fface;
+        private readonly IMemoryAPI _fface;
 
         /// <summary>
         /// The engine that controls player actions.
         /// </summary>
-        private readonly FiniteStateEngine _stateMachine;
+        private readonly FiniteStateMachine _stateMachine;
 
-        public GameEngine(MemoryWrapper fface)
+        public GameEngine(IMemoryAPI fface)
         {
             _fface = fface;
-            _stateMachine = new FiniteStateEngine(fface);
+            _stateMachine = new FiniteStateMachine(fface);
         }
 
         /// <summary>

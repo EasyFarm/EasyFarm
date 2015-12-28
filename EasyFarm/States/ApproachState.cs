@@ -20,18 +20,18 @@ using System.Linq;
 using EasyFarm.Classes;
 using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     /// <summary>
     ///     Moves to target enemies.
     /// </summary>
-    public class ApproachComponent : CombatBaseState
+    public class ApproachState : CombatBaseState
     {
-        public ApproachComponent(MemoryWrapper fface) : base(fface) { }
+        public ApproachState(IMemoryAPI fface) : base(fface) { }
 
         public override bool CheckComponent()
         {
-            if (new RestComponent(fface).CheckComponent()) return false;
+            if (new RestState(fface).CheckComponent()) return false;
 
             // Target dead or null.
             if (!UnitFilters.MobFilter(fface, Target)) return false;

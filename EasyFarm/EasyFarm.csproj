@@ -170,20 +170,21 @@
     <Compile Include="Classes\EventPublisher.cs" />
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
-    <Compile Include="Components\ZoneState.cs" />
-    <Compile Include="Components\DeadState.cs" />
-    <Compile Include="Components\FollowState.cs" />
-    <Compile Include="Components\BaseState.cs" />
-    <Compile Include="Components\GameEngine.cs" />
-    <Compile Include="Components\IState.cs" />
-    <Compile Include="Components\RestComponent.cs" />
-    <Compile Include="Components\SetFightingState.cs" />
-    <Compile Include="Components\SetTargetState.cs" />
-    <Compile Include="Components\StartEngineState.cs" />
-    <Compile Include="Components\TravelComponent.cs" />
-    <Compile Include="Mvvm\AsyncDelegateCommand.cs" />
-    <Compile Include="Mvvm\Events.cs" />
-    <Compile Include="Mvvm\IViewModel.cs" />
+    <Compile Include="States\TrackPlayerState.cs" />
+    <Compile Include="States\ZoneState.cs" />
+    <Compile Include="States\DeadState.cs" />
+    <Compile Include="States\FollowState.cs" />
+    <Compile Include="States\BaseState.cs" />
+    <Compile Include="States\GameEngine.cs" />
+    <Compile Include="States\IState.cs" />
+    <Compile Include="States\RestState.cs" />
+    <Compile Include="States\SetFightingState.cs" />
+    <Compile Include="States\SetTargetState.cs" />
+    <Compile Include="States\StartEngineState.cs" />
+    <Compile Include="States\TravelState.cs" />
+    <Compile Include="Infrastructure\AsyncDelegateCommand.cs" />
+    <Compile Include="Infrastructure\Events.cs" />
+    <Compile Include="Infrastructure\IViewModel.cs" />
     <Compile Include="Parsing\Ability.cs" />
     <Compile Include="Parsing\AbilityService.cs" />
     <Compile Include="Parsing\AbilityType.cs" />
@@ -202,8 +203,8 @@
     <Compile Include="ViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\MasterViewModel.cs" />
     <Compile Include="ViewModels\ProcessSelectionViewModel.cs" />
-    <Compile Include="Components\ApproachComponent.cs" />
-    <Compile Include="Components\CombatBaseState.cs" />
+    <Compile Include="States\ApproachState.cs" />
+    <Compile Include="States\CombatBaseState.cs" />
     <Compile Include="Classes\BattleAbility.cs" />
     <Compile Include="Classes\Caster.cs" />
     <Compile Include="Classes\Executor.cs" />
@@ -218,27 +219,27 @@
     <Compile Include="Classes\ProcessWatcher.cs" />
     <Compile Include="Classes\UnitFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Components\FiniteStateMachine.cs" />
-    <Compile Include="Components\HealingComponent.cs" />
-    <Compile Include="Components\EndComponent.cs" />
+    <Compile Include="States\FiniteStateMachine.cs" />
+    <Compile Include="States\HealingState.cs" />
+    <Compile Include="States\EndState.cs" />
     <Compile Include="Classes\Config.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Components\BattleComponent.cs" />
-    <Compile Include="Components\StartComponent.cs" />
-    <Compile Include="Components\PullComponent.cs" />
-    <Compile Include="Components\WeaponSkillComponent.cs" />
+    <Compile Include="States\BattleState.cs" />
+    <Compile Include="States\StartState.cs" />
+    <Compile Include="States\PullState.cs" />
+    <Compile Include="States\WeaponskillState.cs" />
     <Compile Include="Views\AbilityView.xaml.cs">
       <DependentUpon>AbilityView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Mvvm\BootStrapper.cs" />
+    <Compile Include="Infrastructure\BootStrapper.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
-    <Compile Include="Mvvm\Locator.cs" />
+    <Compile Include="Infrastructure\Locator.cs" />
     <Compile Include="Logging\LogSinkExtensions.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
-    <Compile Include="Mvvm\MainModule.cs" />
+    <Compile Include="Infrastructure\MainModule.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\FollowView.xaml.cs">
       <DependentUpon>FollowView.xaml</DependentUpon>
@@ -258,8 +259,8 @@
     <Compile Include="ViewModels\RestingViewModel.cs" />
     <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="ViewModels\TargetsViewModel.cs" />
-    <Compile Include="Mvvm\ViewModelAttribute.cs" />
-    <Compile Include="Mvvm\ViewModelBase.cs" />
+    <Compile Include="Infrastructure\ViewModelAttribute.cs" />
+    <Compile Include="Infrastructure\ViewModelBase.cs" />
     <Compile Include="Views\AbilitySelectionBox.xaml.cs">
       <DependentUpon>AbilitySelectionBox.xaml</DependentUpon>
     </Compile>
@@ -288,7 +289,6 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Constants.cs" />
-    <Compile Include="Classes\MovingUnit.cs" />
     <Compile Include="Classes\Serialization.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\UnitService.cs" />

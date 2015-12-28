@@ -1,12 +1,12 @@
-﻿using EasyFarm.Classes;
+﻿using System.Linq;
+using EasyFarm.Classes;
 using MemoryAPI;
-using System.Linq;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     public class SetFightingState : CombatBaseState
     {
-        public SetFightingState(MemoryWrapper fface) : base(fface) { }
+        public SetFightingState(IMemoryAPI fface) : base(fface) { }
 
         public override bool CheckComponent()
         {

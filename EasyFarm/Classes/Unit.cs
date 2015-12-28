@@ -26,7 +26,7 @@ namespace EasyFarm.Classes
     {
         #region Constructors
 
-        public Unit(MemoryWrapper fface, int id)
+        public Unit(IMemoryAPI fface, int id)
         {
             // Set this unit's session data. 
             _fface = fface;
@@ -55,7 +55,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Holds all the game's data.
         /// </summary>
-        private readonly MemoryWrapper _fface;
+        private readonly IMemoryAPI _fface;
 
         /// <summary>
         ///     Holds the data about units.

@@ -21,28 +21,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace EasyFarm.Mvvm
+namespace EasyFarm.Infrastructure
 {
     /// <summary>
-    /// A class to locate all enabled view models.
+    ///     A class to locate all enabled view models.
     /// </summary>
     public class Locator
     {
         /// <summary>
-        /// Locate and build all view models with their default constructors. 
+        ///     Locate and build all view models with their default constructors.
         /// </summary>
         /// <returns></returns>
         public List<IViewModel> GetEnabledViewModels()
         {
             var typeInfo = from type in Assembly.GetExecutingAssembly().GetTypes()
-                           where type.IsClass
-                           let attribute = type.GetCustomAttribute<ViewModelAttribute>()
-                           where attribute != null && attribute.Enabled
-                           select new { type = type, attribute = attribute };
+                where type.IsClass
+                let attribute = type.GetCustomAttribute<ViewModelAttribute>()
+                where attribute != null && attribute.Enabled
+                select new {type, attribute};
 
             return typeInfo.Select(info =>
             {
-                IViewModel item = (IViewModel)Activator.CreateInstance(info.type);
+                var item = (IViewModel) Activator.CreateInstance(info.type);
                 item.ViewName = info.attribute.Name;
                 return item;
             }).ToList();

@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System.Windows;
+using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
-using EasyFarm.Mvvm;
 using EasyFarm.Properties;
 using EasyFarm.Parsing;
 

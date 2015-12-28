@@ -20,28 +20,28 @@ using System.Linq;
 using EasyFarm.Classes;
 using MemoryAPI;
 
-namespace EasyFarm.Components
+namespace EasyFarm.States
 {
     /// <summary>
     ///     Performs weaponskills on targets.
     /// </summary>
-    public class WeaponSkillComponent : CombatBaseState
+    public class WeaponskillState : CombatBaseState
     {
-        public WeaponSkillComponent(MemoryWrapper fface) : base(fface)
-        {
-            Executor = new Executor(fface);
-        }
+        private readonly Executor _executor;
 
-        public Executor Executor { get; set; }
+        public WeaponskillState(IMemoryAPI fface) : base(fface)
+        {
+            _executor = new Executor(fface);
+        }
 
         public override bool CheckComponent()
         {
-            if (new RestComponent(fface).CheckComponent()) return false;
+            if (new RestState(fface).CheckComponent()) return false;
 
             if (!UnitFilters.MobFilter(fface, Target)) return false;
 
             // Use skill if we are engaged. 
-            return (fface.Player.Status.Equals(Status.Fighting));
+            return fface.Player.Status.Equals(Status.Fighting);
         }
 
         public override void RunComponent()
@@ -62,7 +62,7 @@ namespace EasyFarm.Components
                 // Perform the weaponskill if it is valid. 
                 if (ActionFilters.TargetedFilter(fface, weaponskill, Target))
                 {
-                    Executor.UseTargetedAction(weaponskill, Target);
+                    _executor.UseTargetedAction(weaponskill, Target);
                 }
             }
         }

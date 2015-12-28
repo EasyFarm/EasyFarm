@@ -1,11 +1,11 @@
 ﻿// Author: http://jake.ginnivan.net/awaitable-delegatecommand/
 
-using Prism.Commands;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Prism.Commands;
 
-namespace EasyFarm.Mvvm
+namespace EasyFarm.Infrastructure
 {
     public interface IRaiseCanExecuteChanged
     {
@@ -30,11 +30,10 @@ namespace EasyFarm.Mvvm
 
     public interface IAsyncCommand<in T> : IRaiseCanExecuteChanged
     {
+        ICommand Command { get; }
         Task ExecuteAsync(T obj);
 
         bool CanExecute(object obj);
-
-        ICommand Command { get; }
     }
 
     public class AwaitableDelegateCommand : AwaitableDelegateCommand<object>, IAsyncCommand
@@ -82,11 +81,19 @@ namespace EasyFarm.Mvvm
             }
         }
 
-        public ICommand Command { get { return this; } }
+        public ICommand Command
+        {
+            get { return this; }
+        }
 
         public bool CanExecute(object parameter)
         {
-            return !_isExecuting && _underlyingCommand.CanExecute((T)parameter);
+            return !_isExecuting && _underlyingCommand.CanExecute((T) parameter);
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            _underlyingCommand.RaiseCanExecuteChanged();
         }
 
         public event EventHandler CanExecuteChanged
@@ -97,12 +104,7 @@ namespace EasyFarm.Mvvm
 
         public async void Execute(object parameter)
         {
-            await ExecuteAsync((T)parameter);
-        }
-
-        public void RaiseCanExecuteChanged()
-        {
-            _underlyingCommand.RaiseCanExecuteChanged();
+            await ExecuteAsync((T) parameter);
         }
     }
 }
