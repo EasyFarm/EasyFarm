@@ -331,14 +331,17 @@ namespace EasyFarm
                 this.api = api;
             }
 
-            public int GetAbilityRecast(AbilityList abil)
+            public int GetAbilityRecast(int index)
             {
-                return api.Recast.GetAbilityRecast((int)abil);
+                var ids = api.Recast.GetAbilityIds();
+                var ability = api.Resources.GetAbility((uint)index);
+                var idx = ids.IndexOf(ability.TimerID);
+                return api.Recast.GetAbilityRecast(idx);
             }
 
-            public short GetSpellRecast(SpellList spell)
+            public int GetSpellRecast(int index)
             {
-                return (short)api.Recast.GetSpellRecast((int)spell);
+                return api.Recast.GetSpellRecast(index);
             }
         }
 
