@@ -173,5 +173,10 @@ namespace EasyFarm.Parsing
         public string ActionCommand => Prefix + " \"" + English + "\" " + Postfix;
 
         public string Command => AbilityType.HasFlag(AbilityType.Range) ? RangedCommand : ActionCommand;
+
+        public override string ToString()
+        {
+            return Command;
+        }
     }
 }

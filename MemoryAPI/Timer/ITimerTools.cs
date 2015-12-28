@@ -4,7 +4,7 @@ namespace MemoryAPI
 {
     public interface ITimerTools
     {
-        int GetAbilityRecast(AbilityList abil);
-        short GetSpellRecast(SpellList spell);
+        int GetAbilityRecast(int index);
+        int GetSpellRecast(int index);
     }
 }

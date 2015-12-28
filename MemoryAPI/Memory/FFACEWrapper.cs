@@ -281,14 +281,14 @@ namespace EasyFarm
                 this.api = api;
             }
 
-            public int GetAbilityRecast(MemoryAPI.AbilityList abil)
+            public int GetAbilityRecast(int index)
             {
-                return api.Timer.GetAbilityRecast((byte)abil);
+                return api.Timer.GetAbilityRecast((byte)index);
             }
 
-            public short GetSpellRecast(MemoryAPI.SpellList spell)
+            public int GetSpellRecast(int index)
             {
-                return api.Timer.GetSpellRecast((short)spell);
+                return api.Timer.GetSpellRecast((short)index);
             }
         }
 

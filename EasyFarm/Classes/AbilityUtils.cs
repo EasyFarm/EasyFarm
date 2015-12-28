@@ -43,55 +43,17 @@ namespace EasyFarm.Classes
             // If a spell get spell recast
             if (ResourceHelper.IsSpell(ability.AbilityType))
             {
-                recast = fface.Timer.GetSpellRecast(ToSpellList(ability));
+                recast = fface.Timer.GetSpellRecast(ability.Index);
             }
 
             // if ability get ability recast. 
             if (ResourceHelper.IsAbility(ability.AbilityType))
             {
-                recast = fface.Timer.GetAbilityRecast(ToAbilityList(ability));
+                recast = fface.Timer.GetAbilityRecast(ability.Id);
             }
 
             return recast <= 0;
         }
 
-        /// <summary>
-        ///     Adjusts the name of abilities to fit the
-        ///     ablity and spell list enum format.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        private static string AdjustName(string name)
-        {
-            // Strip all characters that are not words of the 
-            // ability's name and convert spaces to underscores. 
-            return Regex.Replace(name, @"([^a-zA-Z ])", "")
-                .Replace(" ", "_");
-        }
-
-        private static AbilityList ToAbilityList(Ability ability)
-        {
-            var name = AdjustName(ability.English);
-
-            AbilityList value;
-
-            // Fixes for summoner's blood pact recast times. 
-            if (ability.CategoryType.HasFlag(CategoryType.BloodPactWard))
-                return AbilityList.Blood_Pact_Ward;
-            if (ability.CategoryType.HasFlag(CategoryType.BloodPactRage))
-                return AbilityList.Blood_Pact_Rage;
-
-            Enum.TryParse(name, out value);
-
-            return value;
-        }
-
-        private static SpellList ToSpellList(Ability ability)
-        {
-            var name = AdjustName(ability.English);
-            SpellList value;
-            Enum.TryParse(name, out value);
-            return value;
-        }
     }
 }
