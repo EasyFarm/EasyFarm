@@ -51,10 +51,7 @@ namespace EasyFarm.Infrastructure
             // Create a new game engine to control our character. 
             GameEngine = new GameEngine(FFACE);
 
-            if (OnSessionSet != null)
-            {
-                OnSessionSet(fface);
-            }
+            OnSessionSet?.Invoke(fface);
         }
 
         public static event SessionSet OnSessionSet;

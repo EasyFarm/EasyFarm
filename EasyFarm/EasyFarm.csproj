@@ -171,6 +171,7 @@
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Infrastructure\Regions.cs" />
+    <Compile Include="Infrastructure\ViewNavigator.cs" />
     <Compile Include="States\TrackPlayerState.cs" />
     <Compile Include="States\ZoneState.cs" />
     <Compile Include="States\DeadState.cs" />
@@ -183,7 +184,6 @@
     <Compile Include="States\SetTargetState.cs" />
     <Compile Include="States\StartEngineState.cs" />
     <Compile Include="States\TravelState.cs" />
-    <Compile Include="Infrastructure\AsyncDelegateCommand.cs" />
     <Compile Include="Infrastructure\Events.cs" />
     <Compile Include="Infrastructure\IViewModel.cs" />
     <Compile Include="Parsing\Ability.cs" />

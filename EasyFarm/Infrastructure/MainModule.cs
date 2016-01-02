@@ -24,16 +24,17 @@ namespace EasyFarm.Infrastructure
 {
     public class MainModule : IModule
     {
-        private readonly IRegionViewRegistry _regionViewRegistry;
+        private readonly IRegionManager _regionManager;
 
-        public MainModule(IRegionViewRegistry regionViewRegistry)
+        public MainModule(IRegionManager regionManager)
         {
-            _regionViewRegistry = regionViewRegistry;
+            _regionManager = regionManager;
+            ViewNavigator.RegionManager = _regionManager;
         }
 
         public void Initialize()
-        {
-            _regionViewRegistry.RegisterViewWithRegion(Regions.MainRegion, typeof (MainView));
+        {            
+            _regionManager.RegisterViewWithRegion(Regions.MainRegion, typeof (MainView));
         }
     }
 }

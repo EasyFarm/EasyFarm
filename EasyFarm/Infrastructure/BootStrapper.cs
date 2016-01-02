@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System.Windows;
+using EasyFarm.Classes;
 using EasyFarm.Views;
 using Prism.Modularity;
 using Prism.Unity;
@@ -32,7 +33,7 @@ namespace EasyFarm.Infrastructure
 
         protected override void InitializeShell()
         {
-            ((Window) Shell).Show();
+            ((Window) Shell).Show();            
         }
 
         protected override void ConfigureModuleCatalog()
