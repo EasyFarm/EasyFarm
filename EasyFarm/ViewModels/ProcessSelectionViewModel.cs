@@ -1,80 +1,37 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Windows;
-using EasyFarm.Monitors;
-using Prism.Mvvm;
-using Prism.Commands;
+using System.Linq;
 using EasyFarm.Views;
+using Prism.Commands;
+using Prism.Mvvm;
 
 namespace EasyFarm.ViewModels
 {
     public class ProcessSelectionViewModel : BindableBase
     {
         /// <summary>
-        ///     The default name of the retail client's executable.
+        ///     The name of the Processes to search for.
         /// </summary>
-        private const string ClientName = "pol";
+        private const string ProcessName = "pol";
 
-        /// <summary>
-        ///     Monitors processes entering and leaving the system.
-        /// </summary>
-        private ProcessWatcher _processWatcher;
-
-        /// <summary>
-        ///     Internal backing for the toggle button header.
-        /// </summary>
-        private string _toggleButtonHeader;
-
-        /// <summary>
-        ///     The name of the process to search for.
-        /// </summary>
-        public string ProcessName = ClientName;
-        private readonly ProcessSelectionView view;
+        private readonly ProcessSelectionView _view;
 
         public ProcessSelectionViewModel(ProcessSelectionView view)
         {
-            this.view = view;
-
             // When window is closed through X button. 
-            view.Closing += (s, e) => OnClosing();
-
-            Sessions = new ObservableCollection<Process>();
-            ToggleButtonHeader = "Show All";
-
-            // Create and start a new process watcher to monitor processes. 
-            _processWatcher = new ProcessWatcher(ProcessName);
-            _processWatcher.Entry += SessionEntry;
-            _processWatcher.Exit += SessionExit;
-            _processWatcher.Start();                       
+            _view = view;
+            Processes = new ObservableCollection<Process>();
 
             // Close window on when "Set character" is pressed. 
-            ExitCommand = new DelegateCommand(() => view.Close());            
+            SelectCommand = new DelegateCommand(OnSelect);
+            RefreshCommand = new DelegateCommand(OnRefresh);
 
-            ToggleFiltering = new DelegateCommand(ChangeFilter);
+            OnRefresh();
         }
 
         /// <summary>
-        ///     List of running game sessions.
-        /// </summary>
-        public ObservableCollection<Process> Sessions { get; set; }
-
-        /// <summary>
-        ///     The current header of the toggle process button.
-        /// </summary>
-        public string ToggleButtonHeader
-        {
-            get { return _toggleButtonHeader; }
-            set { SetProperty(ref _toggleButtonHeader, value); }
-        }
-
-        /// <summary>
-        ///     The currently selected game session.
-        /// </summary>
-        public Process SelectedProcess { get; set; }
-
-        /// <summary>
-        ///     If the user has selected a process.
+        ///     If the user has selected a Processes.
         /// </summary>
         public bool IsProcessSelected { get; set; }
 
@@ -82,106 +39,48 @@ namespace EasyFarm.ViewModels
         ///     Toggles whether the program show only pol.exe processes or
         ///     all processes (in case they are targeting a private server).
         /// </summary>
-        public DelegateCommand ToggleFiltering { get; set; }
+        public DelegateCommand RefreshCommand { get; set; }
+
+        /// <summary>
+        ///     The currently selected game session.
+        /// </summary>
+        public Process SelectedProcess { get; set; }
 
         /// <summary>
         ///     Makes the binded window exit.
         /// </summary>
-        public DelegateCommand ExitCommand { get; set; }
+        public DelegateCommand SelectCommand { get; set; }
+
+        public ObservableCollection<Process> Processes { get; set; }
 
         /// <summary>
-        ///     Toggles whether we should show only pol.exe processes or
-        ///     all processes.
+        /// Refresh the processes. 
         /// </summary>
-        private void ChangeFilter()
+        private void OnRefresh()
         {
-            // Toggle the process name. The process watcher knows that 
-            // the empty string means locate all processes. 
-            if (ProcessName.Equals(ClientName))
-            {
-                ProcessName = string.Empty;
-                ToggleButtonHeader = "POL Only";
-            }
-            else
-            {
-                ProcessName = ClientName;
-                ToggleButtonHeader = "Show All";
-            }
+            Processes.Clear();
 
-            // Dispose of the old watcher. 
-            _processWatcher.Stop();
+            Processes.AddRange(Process.GetProcessesByName(ProcessName)
+                .Where(x => string.IsNullOrWhiteSpace((x.MainWindowTitle)))
+                .ToList());
 
-            // Clear all previously found processes.
-            Sessions.Clear();
+            if(Processes.Count > 0) return;
 
-            // Start up the new watcher. 
-            _processWatcher = new ProcessWatcher(ProcessName);
-            _processWatcher.Entry += SessionEntry;
-            _processWatcher.Exit += SessionExit;
-            _processWatcher.Start();
+            Processes.AddRange(Process.GetProcesses()
+                .Where(x => !string.IsNullOrWhiteSpace(x.MainWindowTitle))
+                .ToList());
         }
 
         /// <summary>
-        ///     Event that fires when processes exit the system.
+        ///     Cleans up Processes watcher resources.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SessionExit(object sender, EventArgs e)
+        private void OnSelect()
         {
-            // Checks for the app class for null since if the program is exiting
-            // it may not be available. 
-            if (Application.Current == null) return;
-            if (Application.Current.Dispatcher == null) return;
-
-            // Remove the process from our sessions. 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                var processEventArgs = e as ProcessEventArgs;
-                if (processEventArgs != null)
-                {
-                    var process = processEventArgs.Process;
-                    if (process == null) return;
-                    Sessions.Remove(process);
-                }
-            });
-        }
-
-        /// <summary>
-        ///     Event that fires when processes enters the system. We add the new processes
-        ///     to our internal list for a view to bind to.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SessionEntry(object sender, EventArgs e)
-        {
-            // Checks for the app class for null since if the program is exiting
-            // it may not be available. 
-            if (Application.Current == null) return;
-            if (Application.Current.Dispatcher == null) return;
-
-            // Add the process to our sessions. 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                var processEventArgs = e as ProcessEventArgs;
-                if (processEventArgs != null)
-                {
-                    var process = processEventArgs.Process;
-                    if (process == null) return;
-                    Sessions.Add(process);
-                }
-            });
-        }
-
-        /// <summary>
-        ///     Cleans up process watcher resources.
-        /// </summary>
-        private void OnClosing()
-        {
-            // Dispose of the running process watcher. 
-            _processWatcher.Stop();
+            // Close the character selection screen. 
+            _view.Close();
 
             // User made a choice to close this dialog. 
-            IsProcessSelected = true;            
+            IsProcessSelected = true;
         }
     }
 }

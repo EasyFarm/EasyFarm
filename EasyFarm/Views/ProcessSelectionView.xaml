@@ -14,16 +14,16 @@
             </Grid.ColumnDefinitions>
             <!-- Shuts down the process selection view. -->
             <Button Content="Set Character"
-                    Command="{Binding Path=ExitCommand}" />
+                    Command="{Binding SelectCommand}" />
             <Button Grid.Column="1"
-                    Content="{Binding ToggleButtonHeader}"
-                    Command="{Binding ToggleFiltering}"/>
+                    Content="Refresh"
+                    Command="{Binding RefreshCommand}"/>
         </Grid>
 
         <!-- A view for currently running game sessions. -->
         <GroupBox Header="Please select your character">
             <ListView Name="LsvGameSessons"
-                      ItemsSource="{Binding Sessions}"
+                      ItemsSource="{Binding Processes}"
                       SelectedItem="{Binding SelectedProcess}">
                 <ListView.View>
                     <!-- The headers for session information. -->
