@@ -16,27 +16,22 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System;
 using EasyFarm.Infrastructure;
 using Prism.Events;
+
 namespace EasyFarm.Classes
 {
     /// <summary>
     ///     Updates the main window's status bar text to
     ///     inform the user of important information.
     /// </summary>
-    public class EventPublisher
+    public class AppServices
     {
-        static EventPublisher()
-        {
-            // Set up the event aggregator for updates to the status bar from 
-            // multiple view models.
-            EventAggregator = new EventAggregator();
-        }
-
         /// <summary>
         ///     Sends messages mostly to the status bar.
         /// </summary>
-        public static IEventAggregator EventAggregator { get; set; }
+        public static IEventAggregator EventAggregator { get; set; } = new EventAggregator();
 
         /// <summary>
         ///     Update the user on what's happening.
@@ -45,17 +40,28 @@ namespace EasyFarm.Classes
         /// <param name="values"></param>
         public static void InformUser(string message, params object[] values)
         {
-            EventAggregator.GetEvent<Events.StatusBarEvent>().Publish(string.Format(message, values));
+            var statusBarEvent = new Events.StatusBarEvent {Message = string.Format(message, values)};
+            PublishEvent(statusBarEvent);
         }
 
         public static void SendPauseEvent()
         {
-            EventAggregator.GetEvent<Events.PauseEvent>().Publish(string.Empty);
+            PublishEvent<Events.PauseEvent>();
         }
 
         public static void SendResumeEvent()
         {
-            EventAggregator.GetEvent<Events.ResumeEvent>().Publish(string.Empty);
+            PublishEvent<Events.ResumeEvent>();
+        }
+
+        private static void PublishEvent<T>(T value = default(T)) where T : class
+        {
+            EventAggregator.GetEvent<PubSubEvent<T>>().Publish(value);
+        }
+
+        public static void RegisterEvent<T>(Action<T> action)
+        {
+            EventAggregator.GetEvent<PubSubEvent<T>>().Subscribe(action);
         }
     }
 }

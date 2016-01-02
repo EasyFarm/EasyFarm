@@ -119,7 +119,7 @@ namespace EasyFarm.ViewModels
             // Return when the user has not selected a process. 
             if (FFACE == null)
             {
-                EventPublisher.InformUser("No process has been selected.");
+                AppServices.InformUser("No process has been selected.");
                 return;
             }
 
@@ -142,11 +142,11 @@ namespace EasyFarm.ViewModels
         {
             if(_settings.TrySave(Route))
             {
-                EventPublisher.InformUser("Path has been saved.");
+                AppServices.InformUser("Path has been saved.");
             }
             else 
             {
-                EventPublisher.InformUser("Failed to save path.");
+                AppServices.InformUser("Failed to save path.");
             }
         }
 
@@ -159,11 +159,11 @@ namespace EasyFarm.ViewModels
 
             if (Route != null)
             {
-                EventPublisher.InformUser("Path has been loaded.");
+                AppServices.InformUser("Path has been loaded.");
             }
             else
             {
-                EventPublisher.InformUser("Failed to load the path.");
+                AppServices.InformUser("Failed to load the path.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace EasyFarm.ViewModels
             // Return when the user has not selected a process. 
             if (FFACE == null)
             {
-                EventPublisher.InformUser("No process has been selected.");
+                AppServices.InformUser("No process has been selected.");
                 return;
             }
 

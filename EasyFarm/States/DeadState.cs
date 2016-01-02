@@ -19,7 +19,7 @@ namespace EasyFarm.States
             fface.Navigator.Reset();
 
             // Stop the engine from running.
-            EventPublisher.SendPauseEvent();
+            AppServices.SendPauseEvent();
         }
     }
 }

@@ -64,9 +64,9 @@ namespace EasyFarm.ViewModels
             _settingsManager = new SettingsManager("eup","EasyFarm User Preference");
 
             // Get events from view models to update the status bar's text.
-            EventPublisher.EventAggregator.GetEvent<Events.StatusBarEvent>().Subscribe(a => { StatusBarText = a; });
-            EventPublisher.EventAggregator.GetEvent<Events.PauseEvent>().Subscribe(x => StopEngine());
-            EventPublisher.EventAggregator.GetEvent<Events.ResumeEvent>().Subscribe(x => StartEngine());
+            AppServices.RegisterEvent<Events.StatusBarEvent>(e => StatusBarText = e.Message);
+            AppServices.RegisterEvent<Events.PauseEvent>(x => StopEngine());
+            AppServices.RegisterEvent<Events.ResumeEvent>(x => StartEngine());
 
             // Bind commands to their handlers. 
             StartCommand = new DelegateCommand(Start);
@@ -153,7 +153,7 @@ namespace EasyFarm.ViewModels
             // Return when the user has not selected a process. 
             if (FFACE == null)
             {
-                EventPublisher.InformUser("No process has been selected.");
+                AppServices.InformUser("No process has been selected.");
                 return;
             }
 
@@ -170,7 +170,7 @@ namespace EasyFarm.ViewModels
         private void StartEngine()
         {
             Logger.Write.BotStart("Bot now running");
-            EventPublisher.InformUser("Program running.");
+            AppServices.InformUser("Program running.");
             StartPauseHeader = "P_ause";
             GameEngine.Start();
         }
@@ -178,7 +178,7 @@ namespace EasyFarm.ViewModels
         private void StopEngine()
         {
             Logger.Write.BotStop("Bot now paused");
-            EventPublisher.InformUser("Program paused.");
+            AppServices.InformUser("Program paused.");
             StartPauseHeader = "St_art";
             GameEngine.Stop();
         }
@@ -191,13 +191,13 @@ namespace EasyFarm.ViewModels
             try
             {
                 _settingsManager.TrySave(Config.Instance);
-                EventPublisher.InformUser("Settings have been saved.");
+                AppServices.InformUser("Settings have been saved.");
                 Logger.Write.SaveSettings("Settings saved");
             }
             catch (InvalidOperationException ex)
             {
                 Console.WriteLine(ex.Message);
-                EventPublisher.InformUser("Failed to save settings.");
+                AppServices.InformUser("Failed to save settings.");
             }
         }
 
@@ -214,18 +214,18 @@ namespace EasyFarm.ViewModels
                 // Did we fail to load the settings?
                 if (settings == null)
                 {
-                    EventPublisher.InformUser("Failed to load settings.");
+                    AppServices.InformUser("Failed to load settings.");
                     return;
                 }
 
                 // Inform the user of our success. 
                 Config.Instance = settings;
-                EventPublisher.InformUser("Settings have been loaded.");
+                AppServices.InformUser("Settings have been loaded.");
                 Logger.Write.SaveSettings("Settings loaded");
             }
             catch (InvalidOperationException)
             {
-                EventPublisher.InformUser("Failed to load settings.");
+                AppServices.InformUser("Failed to load settings.");
             }
         }
 
@@ -251,7 +251,7 @@ namespace EasyFarm.ViewModels
                 if (process == null || !viewModel.IsProcessSelected)
                 {
                     Logger.Write.ProcessNotFound("Process not found");
-                    EventPublisher.InformUser("No valid process was selected.");
+                    AppServices.InformUser("No valid process was selected.");
                     return;
                 }
 
@@ -265,7 +265,7 @@ namespace EasyFarm.ViewModels
                 SetSession(fface);
 
                 // Tell the user the program has loaded the player's data
-                EventPublisher.InformUser("Bot Loaded: " + fface.Player.Name);
+                AppServices.InformUser("Bot Loaded: " + fface.Player.Name);
 
                 // Set the main window's title to the player's name. 
                 MainWindowTitle = "EasyFarm - " + fface.Player.Name;

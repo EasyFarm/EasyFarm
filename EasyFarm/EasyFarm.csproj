@@ -167,7 +167,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
-    <Compile Include="Classes\EventPublisher.cs" />
+    <Compile Include="Classes\AppServices.cs" />
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="States\TrackPlayerState.cs" />

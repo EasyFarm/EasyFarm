@@ -4,16 +4,13 @@ namespace EasyFarm.Infrastructure
 {
     public class Events
     {
-        public class StatusBarEvent : PubSubEvent<string>
+        public class StatusBarEvent
         {
+            public string Message { get; set; }
         }
 
-        public class PauseEvent : PubSubEvent<string>
-        {
-        }
+        public class PauseEvent { }
 
-        public class ResumeEvent : PubSubEvent<string>
-        {
-        }
-    }
+        public class ResumeEvent { }
+    }    
 }

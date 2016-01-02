@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
+        Title="Please Select Your Character"
         Height="300"
         Width="300">
     <DockPanel>
@@ -21,20 +22,18 @@
         </Grid>
 
         <!-- A view for currently running game sessions. -->
-        <GroupBox Header="Please select your character">
-            <ListView Name="LsvGameSessons"
-                      ItemsSource="{Binding Processes}"
-                      SelectedItem="{Binding SelectedProcess}">
-                <ListView.View>
-                    <!-- The headers for session information. -->
-                    <GridView>
-                        <GridViewColumn Header="Process ID"
-                                        DisplayMemberBinding="{Binding Path=Id}" />
-                        <GridViewColumn Header="Character Name"
-                                        DisplayMemberBinding="{Binding Path=MainWindowTitle}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </GroupBox>
+        <ListView Name="LsvGameSessons"
+                  ItemsSource="{Binding Processes}"
+                  SelectedItem="{Binding SelectedProcess}">
+            <ListView.View>
+                <!-- The headers for session information. -->
+                <GridView>
+                    <GridViewColumn Header="Process ID"
+                                    DisplayMemberBinding="{Binding Path=Id}" />
+                    <GridViewColumn Header="Character Name"
+                                    DisplayMemberBinding="{Binding Path=MainWindowTitle}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </DockPanel>
 </Window>
