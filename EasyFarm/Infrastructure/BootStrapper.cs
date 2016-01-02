@@ -23,18 +23,16 @@ using Prism.Unity;
 
 namespace EasyFarm.Infrastructure
 {
-    public class BootStrapper : UnityBootstrapper
+    public class Bootstrapper : UnityBootstrapper
     {
         protected override DependencyObject CreateShell()
         {
-            return new MasterView();
+            return Container.TryResolve<MasterView>();
         }
 
-        protected override void InitializeModules()
+        protected override void InitializeShell()
         {
-            base.InitializeModules();
-            Application.Current.MainWindow = (MasterView) Shell;
-            Application.Current.MainWindow.Show();
+            ((Window) Shell).Show();
         }
 
         protected override void ConfigureModuleCatalog()

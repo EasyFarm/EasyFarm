@@ -33,8 +33,7 @@ namespace EasyFarm.Infrastructure
 
         public void Initialize()
         {
-            _regionViewRegistry.RegisterViewWithRegion("MainRegion", typeof (MainView));
-            _regionViewRegistry.RegisterViewWithRegion("MainRegion", typeof (SettingsView));
+            _regionViewRegistry.RegisterViewWithRegion(Regions.MainRegion, typeof (MainView));
         }
     }
 }

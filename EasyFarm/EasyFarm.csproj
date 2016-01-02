@@ -170,6 +170,7 @@
     <Compile Include="Classes\AppServices.cs" />
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
+    <Compile Include="Infrastructure\Regions.cs" />
     <Compile Include="States\TrackPlayerState.cs" />
     <Compile Include="States\ZoneState.cs" />
     <Compile Include="States\DeadState.cs" />
@@ -233,7 +234,7 @@
     <Compile Include="Views\AbilityView.xaml.cs">
       <DependentUpon>AbilityView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\BootStrapper.cs" />
+    <Compile Include="Infrastructure\Bootstrapper.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
     <Compile Include="Infrastructure\Locator.cs" />
     <Compile Include="Logging\LogSinkExtensions.cs" />

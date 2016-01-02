@@ -59,7 +59,7 @@ namespace EasyFarm
         {            
             base.OnStartup(e);
             Logger.Write.ApplicationStart("Application starting");
-            var bootStrapper = new BootStrapper();
+            var bootStrapper = new Bootstrapper();
             bootStrapper.Run();
         }
 
