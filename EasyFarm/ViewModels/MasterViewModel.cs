@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 
 using System;
 using System.Drawing;
-using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -26,9 +25,9 @@ using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
 using EasyFarm.Views;
-using Application = System.Windows.Application;
 using Prism.Commands;
-using Prism.Events;
+using Application = System.Windows.Application;
+using EasyFarm.Properties;
 
 namespace EasyFarm.ViewModels
 {
@@ -37,11 +36,6 @@ namespace EasyFarm.ViewModels
     /// </summary>
     public class MasterViewModel : ViewModelBase
     {
-        /// <summary>
-        ///     The path of the icon file.
-        /// </summary>
-        private const string TrayIconFileName = "trayicon.ico";
-
         /// <summary>
         ///     Saves and loads settings from file.
         /// </summary>
@@ -61,7 +55,7 @@ namespace EasyFarm.ViewModels
         {
             // Create a new settings manager and associate it with our
             // .eup file type. 
-            _settingsManager = new SettingsManager("eup","EasyFarm User Preference");
+            _settingsManager = new SettingsManager("eup", "EasyFarm User Preference");
 
             // Get events from view models to update the status bar's text.
             AppServices.RegisterEvent<Events.StatusBarEvent>(e => StatusBarText = e.Message);
@@ -76,12 +70,9 @@ namespace EasyFarm.ViewModels
             SelectProcessCommand = new DelegateCommand(SelectProcess);
 
             // Hook up our trayicon for minimization to system tray 
-            if (File.Exists(TrayIconFileName))
-            {
-                _trayIcon.Icon = new Icon(TrayIconFileName);
-                MasterView.View.StateChanged += OnStateChanged;
-                _trayIcon.Click += TrayIcon_Click;
-            }
+            _trayIcon.Icon = Resources.trayicon;
+            MasterView.View.StateChanged += OnStateChanged;
+            _trayIcon.Click += TrayIcon_Click;
         }
 
         /// <summary>
