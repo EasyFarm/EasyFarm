@@ -131,6 +131,8 @@ namespace EasyFarm.Classes
 
                 if (ResourceHelper.IsSpell(action.Ability.AbilityType))
                 {
+                    _fface.Navigator.Reset();
+                    Thread.Sleep(100);
                     _caster.CastSpell(action);
                 }
                 else

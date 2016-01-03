@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EasyFarm.Classes;
-using EasyFarm.Collections;
 using MemoryAPI;
 using MemoryAPI.Navigation;
 
@@ -11,8 +11,7 @@ namespace EasyFarm.States
     {
         private const int HistoryPositionLimit = 10;
 
-        private readonly ThresholdQueue<Position> _positionHistory =
-            new ThresholdQueue<Position>(HistoryPositionLimit, .75);
+        private readonly Queue<Position> _positionHistory = new Queue<Position>();
 
         public TrackPlayerState(IMemoryAPI fface) : base(fface)
         {
@@ -21,7 +20,8 @@ namespace EasyFarm.States
         public override void RunComponent()
         {
             var position = fface.Player.Position;
-            _positionHistory.AddItem(Helpers.ToPosition(position.X, position.Y, position.Z, position.H));
+            _positionHistory.Enqueue(Helpers.ToPosition(position.X, position.Y, position.Z, position.H));
+            if (_positionHistory.Count == 100) _positionHistory.Dequeue();
             Player.Instance.IsMoving = IsMoving();
         }
 

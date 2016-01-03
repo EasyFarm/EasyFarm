@@ -16,9 +16,9 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using EasyFarm.Collections;
 using EasyFarm.Parsing;
 using MemoryAPI;
 
@@ -86,27 +86,22 @@ namespace EasyFarm.Classes
         {
             // Monitor the cast and break when either the player 
             // moved or casting has been finished. 
-            var position = _fface.Player.Position;
-            var castHistory = new LimitedQueue<short>(100);
+            var castHistory = new List<short>();
             var prior = _fface.Player.CastPercentEx;
 
-            while (!castHistory.RepeatsN(30).Any())
+            while (castHistory.All(x => castHistory.Count(y => x == y) != 30))
             {
                 if (prior == _fface.Player.CastPercentEx)
-                    castHistory.AddItem(_fface.Player.CastPercentEx);
-
-                // Has moved 
-                if (position.X != _fface.Player.PosX ||
-                    position.Y != _fface.Player.PosY ||
-                    position.Z != _fface.Player.PosZ) return false;
+                {
+                    castHistory.Add(_fface.Player.CastPercentEx);
+                }
 
                 prior = _fface.Player.CastPercentEx;
-
                 Thread.Sleep(100);
             }
 
             // Report success
-            if (castHistory.RepeatsN(30).Any(x => x.Equals(100))) return true;
+            if (castHistory.Count(x => x == 100) == 30) return true;
             return false;
         }
 

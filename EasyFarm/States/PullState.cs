@@ -38,8 +38,10 @@ namespace EasyFarm.States
         /// <returns></returns>
         public override bool CheckComponent()
         {
+            if (IsFighting) return false;
             if (new RestState(fface).CheckComponent()) return false;
-            return UnitFilters.MobFilter(fface, Target);
+            if (!UnitFilters.MobFilter(fface, Target)) return false;
+            return Config.Instance.BattleLists["Pull"].Actions.Any(x => x.IsEnabled);
         }
 
         public override void EnterComponent()
@@ -53,24 +55,16 @@ namespace EasyFarm.States
         /// </summary>
         public override void RunComponent()
         {
-            // Do not pull if we've done so already. 
-            if (CombatBaseState.IsFighting) return;
-
-            // Only pull if we have moves. 
-            if (Config.Instance.BattleLists["Pull"]
-                .Actions.Any(x => x.IsEnabled))
-            {
-                var usable = Config.Instance.BattleLists["Pull"]
-                    .Actions.Where(x => ActionFilters.TargetedFilter(fface, x, Target));
-
-                Executor.UseTargetedActions(usable, Target);
-            }
+            var actions = Config.Instance.BattleLists["Pull"].Actions.ToList();
+            Executor.UseTargetedActions(actions, Target);
         }
 
         /// <summary>
         ///     Handle all cases of setting fight started to proper values
         ///     so other components can fire.
         /// </summary>
-        public override void ExitComponent() { }
+        public override void ExitComponent()
+        {
+        }
     }
 }

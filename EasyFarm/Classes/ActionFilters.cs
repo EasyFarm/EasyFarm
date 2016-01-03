@@ -139,9 +139,6 @@ namespace EasyFarm.Classes
                 if (!Regex.IsMatch(unit.Name, action.TargetName, RegexOptions.IgnoreCase)) return false;
             }
 
-            // Distance Check
-            if (unit.Distance > action.Distance) return false;
-
             return true;
         }
     }

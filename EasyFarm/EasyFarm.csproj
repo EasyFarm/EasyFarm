@@ -221,8 +221,6 @@
     <Compile Include="Classes\AbilityUtils.cs" />
     <Compile Include="Classes\ProhibitEffects.cs" />
     <Compile Include="Classes\SettingsManager.cs" />
-    <Compile Include="Collections\LimitedQueue.cs" />
-    <Compile Include="Collections\ThresholdQueue.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Classes\ActionFilters.cs" />
     <Compile Include="Classes\UnitFilters.cs" />
