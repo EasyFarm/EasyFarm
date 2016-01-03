@@ -71,7 +71,7 @@ namespace EasyFarm.ViewModels
 
             // Hook up our trayicon for minimization to system tray 
             _trayIcon.Icon = Resources.trayicon;
-            MasterView.View.StateChanged += OnStateChanged;
+            Application.Current.MainWindow.StateChanged += OnStateChanged;
             _trayIcon.Click += TrayIcon_Click;
         }
 
@@ -109,6 +109,14 @@ namespace EasyFarm.ViewModels
         {
             get { return _startStopHeader; }
             set { SetProperty(ref _startStopHeader, value); }
+        }
+
+        private bool _minimizedToTray;
+
+        public bool MinimizeToTray
+        {
+            get { return _minimizedToTray; }
+            set { SetProperty(ref _minimizedToTray, value); }
         }
 
         /// <summary>
@@ -271,11 +279,6 @@ namespace EasyFarm.ViewModels
             Application.Current.Shutdown();
         }
 
-        /* 
-         * View Specific Data 
-         * We should refactor this out eventually, but it's better to have the code here than
-         * in the code behind. This makes it a little bit easier to swap views out. 
-         */
 
         /// <summary>
         ///     Shows the main window when we click this icon in the system tray.
@@ -284,8 +287,8 @@ namespace EasyFarm.ViewModels
         /// <param name="e"></param>
         public void TrayIcon_Click(object sender, EventArgs e)
         {
-            MasterView.View.WindowState = WindowState.Normal;
-            MasterView.View.ShowInTaskbar = true;
+            Application.Current.MainWindow.WindowState = WindowState.Normal;
+            Application.Current.MainWindow.ShowInTaskbar = true;
             _trayIcon.Visible = false;
         }
 
@@ -295,18 +298,12 @@ namespace EasyFarm.ViewModels
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void OnStateChanged(object sender, EventArgs e)
-        {
-            // Perform tray icon information update here to 
-            // receive current title bar information. 
-            _trayIcon.Text = MainWindowTitle;
-            _trayIcon.BalloonTipText = "EasyFarm has been minimized. ";
-            _trayIcon.BalloonTipTitle = MainWindowTitle;
-
-            if (MasterView.View.MnuMinimizeToTray.IsChecked && MasterView.View.WindowState == WindowState.Minimized)
+        {           
+            if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
             {
                 _trayIcon.Visible = true;
-                _trayIcon.ShowBalloonTip(30);
-                MasterView.View.ShowInTaskbar = false;
+                _trayIcon.ShowBalloonTip(30, MainWindowTitle, @"EasyFarm has been minimized.", ToolTipIcon.Info);
+                Application.Current.MainWindow.ShowInTaskbar = false;
             }
         }
     }
