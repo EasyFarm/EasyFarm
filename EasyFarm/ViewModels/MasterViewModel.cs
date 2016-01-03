@@ -299,6 +299,8 @@ namespace EasyFarm.ViewModels
         /// <param name="e"></param>
         public void OnStateChanged(object sender, EventArgs e)
         {           
+            if(!MinimizeToTray) return;
+
             if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
             {
                 _trayIcon.Visible = true;

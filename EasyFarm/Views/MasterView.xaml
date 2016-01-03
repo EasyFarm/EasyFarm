@@ -74,7 +74,8 @@
                           IsCheckable="True" />
                 <MenuItem x:Name="MnuMinimizeToTray"
                           Header="_Minimize to system tray"
-                          IsCheckable="True" />
+                          IsCheckable="True"
+                          IsChecked="{Binding MinimizeToTray}" />
             </MenuItem>
         </Menu>
 
