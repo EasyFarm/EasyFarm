@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 
 using System.Collections.ObjectModel;
 using System.Diagnostics.Tracing;
+using System.Linq;
 using System.Threading;
 using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
@@ -51,9 +52,24 @@ namespace EasyFarm.ViewModels
         public void PublishLogItem(string message)
         {
             if (_syncContext == SynchronizationContext.Current)
-                LoggedItems.Add(message);
+                AddLogItem(message);
             else
-                _syncContext.Send(o => LoggedItems.Add(message), null);
+                _syncContext.Send(o => AddLogItem(message), null);
+        }
+
+        /// <summary>
+        /// Add message to log without while preventing a <see cref="OutOfMemoryException"/>. 
+        /// </summary>
+        /// <param name="message"></param>
+        public void AddLogItem(string message)
+        {
+            LoggedItems.Add(message);
+
+            // Limit list to only 1000 items: prevent system out of memory exception. 
+            if (LoggedItems.Count > 1000)
+            {
+                LoggedItems.Remove(LoggedItems.Last());
+            }
         }
     }
 }

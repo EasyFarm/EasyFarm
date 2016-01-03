@@ -45,7 +45,7 @@ namespace EasyFarm.Infrastructure
         {
             if (fface == null) return;
 
-            // Save fface Instance
+            // Save fface Write
             FFACE = fface;
 
             // Create a new game engine to control our character. 

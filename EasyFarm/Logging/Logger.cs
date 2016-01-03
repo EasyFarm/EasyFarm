@@ -16,9 +16,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
 using System.Diagnostics.Tracing;
-using System.Threading;
 
 namespace EasyFarm.Logging
 {
@@ -28,26 +26,9 @@ namespace EasyFarm.Logging
     public class Logger : EventSource
     {
         /// <summary>
-        ///     Our internal instance of our logger.
+        ///     Our internal Write of our logger.
         /// </summary>
-        private static readonly Lazy<Logger> Instance =
-            new Lazy<Logger>(() => new Logger());
-
-        private readonly SynchronizationContext _syncContext;
-
-        public Logger()
-        {
-            _syncContext = SynchronizationContext.Current ?? new SynchronizationContext();
-        }
-
-        /// <summary>
-        ///     Returns a static instance to our logger object for
-        ///     writing log messages.
-        /// </summary>
-        public static Logger Write
-        {
-            get { return Instance.Value; }
-        }
+        public static Logger Write = new Logger();
 
         /// <summary>
         ///     Logs the program's start.
@@ -138,7 +119,7 @@ namespace EasyFarm.Logging
         [Event(EventId.StateRun, Level = EventLevel.Informational)]
         public void StateRun(string message)
         {
-            SimpleWrite(EventId.StateCheck, message);
+            SimpleWrite(EventId.StateRun, message);
         }
 
         [Event(EventId.PerformanceElapsedTime, Level = EventLevel.Informational)]
@@ -151,10 +132,7 @@ namespace EasyFarm.Logging
         {
             if (IsEnabled())
             {
-                if (_syncContext == SynchronizationContext.Current)
-                    WriteEvent(id, message);
-                else
-                    _syncContext.Send(o => WriteEvent(id, message), null);
+                while(true) WriteEvent(id, message);
             }
         }
 
