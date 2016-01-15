@@ -132,7 +132,7 @@ namespace EasyFarm.Logging
         {
             if (IsEnabled())
             {
-                while(true) WriteEvent(id, message);
+                WriteEvent(id, message);
             }
         }
 
