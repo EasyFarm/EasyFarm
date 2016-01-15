@@ -32,15 +32,7 @@ namespace EasyFarm
         /// <summary>
         ///     XML parser for looking up ability, spell and weaponskill data.
         /// </summary>
-        public static readonly AbilityService AbilityService;
-
-        static App()
-        {
-            // Create the ability service passing to it the resources 
-            // folder named "resources"
-            AbilityService = new AbilityService("resources");
-            Logger.Write.ResourcesLocated("Resources loaded");
-        }
+        public static AbilityService AbilityService;
 
         public App()
         {
@@ -56,11 +48,15 @@ namespace EasyFarm
         /// </summary>
         /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
-        {            
-            base.OnStartup(e);
-            Logger.Write.ApplicationStart("Application starting");
+        {
+            Log.InitializeLogger();
+
+            Log.Write("Resources loaded");
+            AbilityService = new AbilityService("resources");
+
+            Log.Write("Application starting");
             var bootStrapper = new Bootstrapper();
-            bootStrapper.Run();
+            bootStrapper.Run();            
         }
 
         /// <summary>
@@ -69,7 +65,7 @@ namespace EasyFarm
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
-            Logger.Write.ApplicationStart("Application exiting");
+            Log.Write("Application exiting");
             Settings.Default.Save();
         }
     }
