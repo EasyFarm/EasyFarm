@@ -40,7 +40,7 @@ namespace EasyFarm.States
 
                 if (Target != null)
                 {
-                    Logger.Write.StateRun("Now targeting " + Target.Name + " : " + Target.Id);
+                    Log.Write("Now targeting " + Target.Name + " : " + Target.Id);
                 }
             }
 

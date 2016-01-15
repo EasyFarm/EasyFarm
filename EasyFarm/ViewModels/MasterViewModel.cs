@@ -168,7 +168,7 @@ namespace EasyFarm.ViewModels
 
         private void StartEngine()
         {
-            Logger.Write.BotStart("Bot now running");
+            Log.Write("Bot now running");
             AppServices.InformUser("Program running.");
             StartPauseHeader = "P_ause";
             GameEngine.Start();
@@ -176,7 +176,7 @@ namespace EasyFarm.ViewModels
 
         private void StopEngine()
         {
-            Logger.Write.BotStop("Bot now paused");
+            Log.Write("Bot now paused");
             AppServices.InformUser("Program paused.");
             StartPauseHeader = "St_art";
             GameEngine.Stop();
@@ -191,7 +191,7 @@ namespace EasyFarm.ViewModels
             {
                 _settingsManager.TrySave(Config.Instance);
                 AppServices.InformUser("Settings have been saved.");
-                Logger.Write.SaveSettings("Settings saved");
+                Log.Write("Settings saved");
             }
             catch (InvalidOperationException ex)
             {
@@ -220,7 +220,7 @@ namespace EasyFarm.ViewModels
                 // Inform the user of our success. 
                 Config.Instance = settings;
                 AppServices.InformUser("Settings have been loaded.");
-                Logger.Write.SaveSettings("Settings loaded");
+                Log.Write("Settings loaded");
             }
             catch (InvalidOperationException)
             {
@@ -249,13 +249,13 @@ namespace EasyFarm.ViewModels
                 // User never selected a process. 
                 if (process == null || !viewModel.IsProcessSelected)
                 {
-                    Logger.Write.ProcessNotFound("Process not found");
+                    Log.Write("Process not found");
                     AppServices.InformUser("No valid process was selected.");
                     return;
                 }
 
                 // Log that a process selected. 
-                Logger.Write.ProcessFound("Process found");
+                Log.Write("Process found");
 
                 // Get memory reader set in config file. 
                 var fface = MemoryWrapper.Create(process.Id);

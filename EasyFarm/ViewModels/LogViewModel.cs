@@ -16,44 +16,23 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Tracing;
+using System.Linq;
 using System.Threading;
 using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
-using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
+using NLog;
 
 namespace EasyFarm.ViewModels
 {
     [ViewModel("Log")]
     public class LogViewModel : ViewModelBase
     {
-        private readonly SynchronizationContext _syncContext;
-
-        public LogViewModel()
+        public ObservableCollection<string> LoggedItems
         {
-            LoggedItems = new ObservableCollection<string>();
-            EventListener = new ObservableEventListener();
-            EventListener.EnableEvents(Logger.Write, EventLevel.Verbose);
-            _syncContext = SynchronizationContext.Current;
-            EventListener.LogToCollection(PublishLogItem);
-            // Can only be called on the dispatcher's thread. 
-        }
-
-        public ObservableCollection<string> LoggedItems { get; set; }
-        public StringSink EventSink { get; set; }
-        public ObservableEventListener EventListener { get; set; }
-
-        /// <summary>
-        ///     Publish log item under the right thread context.
-        /// </summary>
-        /// <param name="message"></param>
-        public void PublishLogItem(string message)
-        {
-            if (_syncContext == SynchronizationContext.Current)
-                LoggedItems.Add(message);
-            else
-                _syncContext.Send(o => LoggedItems.Add(message), null);
-        }
+            get { return Log.LoggedItems; }
+            set { SetProperty(ref Log.LoggedItems, value); }
+        } 
     }
 }
