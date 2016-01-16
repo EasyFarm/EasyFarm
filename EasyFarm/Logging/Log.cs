@@ -14,7 +14,7 @@ namespace EasyFarm.Logging
 
         public static ObservableCollection<string> LoggedItems = new ObservableCollection<string>();
 
-        public static void InitializeLogger()
+        public static void Initialize()
         {
             LogManager.ThrowExceptions = true;
             var config = new LoggingConfiguration();

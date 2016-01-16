@@ -3,40 +3,97 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:infrastructure="clr-namespace:EasyFarm.Infrastructure"
              mc:Ignorable="d"
-             d:DesignHeight="200"
-             d:DesignWidth="400">
+             d:DesignHeight="271"
+             d:DesignWidth="442">
+    <UserControl.Resources>
+        <infrastructure:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel>
-            <!--Begins record waypoints and adding them to the list.-->
-            <Button x:Name="BtnRecordWaypoints"
-                    Margin="0 5 0 0"
-                    Command="{Binding RecordCommand}"
-                    Content="{Binding RecordHeader}" />
-            <!--Clears all the waypoints in the waypoint list-->
-            <Button Command="{Binding ClearCommand}"
-                    Margin="0 5 0 0"
-                    Content="Clear" />
-            <Button Command="{Binding SaveCommand}"
-                    Margin="0 5 0 0"
-                    Content="Save"/>
-            <Button Command="{Binding LoadCommand}"
-                    Margin="0 5 0 0"
-                    Content="Load"/>
-            <Button Command="{Binding ResetNavigatorCommand}"
-                    Margin="0 5 0 0"
-                    Content="Reset Navigator"/>
-            <!--Contains the list of coordinates to display to the user.-->
-        </StackPanel>
-        <ListBox Grid.Column="1"
-                 BorderBrush="Black"
-                 BorderThickness="1"
-                 ItemsSource="{Binding Route}"
-                 Margin="5"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="2"
+              Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="StraightRoute"
+                          Grid.Column="0"
+                          Content="Straight"
+                          IsChecked="{Binding Straight, FallbackValue=True}" />
+            <ToggleButton x:Name="CircularRoute"
+                          Grid.Row="0"
+                          Grid.Column="1"
+                          Content="Circular"
+                          IsChecked="{Binding ElementName=StraightRoute, Path=IsChecked, Converter={StaticResource InverseBooleanConverter }}">
+            </ToggleButton>
+        </Grid>
+
+        <GroupBox Grid.Row="0"
+                  Header="Navigation Commands">
+            <DockPanel>
+                <Grid DockPanel.Dock="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="2"
+                            Command="{Binding ClearCommand}"
+                            Margin="0 5 0 0"
+                            Content="Clear" />
+                    <Button Grid.Column="1"
+                            Command="{Binding SaveCommand}"
+                            Margin="0 5 0 0"
+                            Content="Save" />
+                    <Button Grid.Column="0"
+                            Command="{Binding LoadCommand}"
+                            Margin="0 5 0 0"
+                            Content="Load" />
+                </Grid>
+
+                <Grid DockPanel.Dock="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <!--Begins record waypoints and adding them to the list.-->
+                    <Button x:Name="BtnRecordWaypoints"
+                            Grid.Column="0"
+                            Margin="0 5 0 0"
+                            Command="{Binding RecordCommand}"
+                            Content="{Binding RecordHeader, FallbackValue=Record}" />
+                    <!--Clears all the waypoints in the waypoint list-->
+
+                    <Button Command="{Binding ResetNavigatorCommand}"
+                            Grid.Column="1"
+                            Margin="0 5 0 0"
+                            Content="Stop Player" />
+                </Grid>
+
+                <!--Contains the list of coordinates to display to the user.-->
+                <ListBox BorderBrush="Black"
+                         BorderThickness="1"
+                         ItemsSource="{Binding Route}"
+                         Margin="5" />
+            </DockPanel>
+        </GroupBox>
+
+        
     </Grid>
 </UserControl>
-

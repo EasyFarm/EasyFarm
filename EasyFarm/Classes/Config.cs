@@ -192,6 +192,11 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
+        /// Bot runs a straight route. 
+        /// </summary>
+        public bool StraightRoute = true;
+
+        /// <summary>
         /// The distance with which to follow a player.  
         /// </summary>
         public double FollowDistance = 5.0;

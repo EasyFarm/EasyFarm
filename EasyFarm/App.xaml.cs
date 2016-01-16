@@ -49,7 +49,7 @@ namespace EasyFarm
         /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
-            Log.InitializeLogger();
+            Log.Initialize();
 
             Log.Write("Resources loaded");
             AbilityService = new AbilityService("resources");

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
@@ -31,7 +32,7 @@ namespace EasyFarm.ViewModels
     {
         private PathRecorder _recorder;
 
-        private SettingsManager _settings;
+        private readonly SettingsManager _settings;
 
         private string _recordHeader;
 
@@ -47,7 +48,7 @@ namespace EasyFarm.ViewModels
             RecordHeader = "Record";
 
             // Create recorder on loaded fface session. 
-            ViewModelBase.OnSessionSet += ViewModelBase_OnSessionSet;
+            OnSessionSet += ViewModelBase_OnSessionSet;
         }
 
         private void ViewModelBase_OnSessionSet(IMemoryAPI fface)
@@ -58,7 +59,7 @@ namespace EasyFarm.ViewModels
 
         private void _recorder_OnPositionAdded(Position position)
         {
-            App.Current.Dispatcher.Invoke(() => this.Route.Add(position));
+            Application.Current.Dispatcher.Invoke(() => Route.Add(position));
         }
 
         public string RecordHeader
@@ -74,6 +75,15 @@ namespace EasyFarm.ViewModels
         {
             get { return Config.Instance.Waypoints; }
             set { SetProperty(ref Config.Instance.Waypoints, value); }
+        }
+
+        /// <summary>
+        /// Makes the bot run a straight path. 
+        /// </summary>
+        public bool Straight
+        {
+            get { return Config.Instance.StraightRoute; }
+            set { SetProperty(ref Config.Instance.StraightRoute, value); }
         }
 
         /// <summary>
@@ -140,14 +150,7 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private void Save()
         {
-            if(_settings.TrySave(Route))
-            {
-                AppServices.InformUser("Path has been saved.");
-            }
-            else 
-            {
-                AppServices.InformUser("Failed to save path.");
-            }
+            AppServices.InformUser(_settings.TrySave(Route) ? "Path has been saved." : "Failed to save path.");
         }
 
         /// <summary>
@@ -156,15 +159,7 @@ namespace EasyFarm.ViewModels
         private void Load()
         {
             Route = _settings.TryLoad<ObservableCollection<Position>>();
-
-            if (Route != null)
-            {
-                AppServices.InformUser("Path has been loaded.");
-            }
-            else
-            {
-                AppServices.InformUser("Failed to load the path.");
-            }
+            AppServices.InformUser(Route != null ? "Path has been loaded." : "Failed to load the path.");
         }
 
         /// <summary>
