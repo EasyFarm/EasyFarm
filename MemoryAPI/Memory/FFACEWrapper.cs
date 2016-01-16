@@ -107,10 +107,7 @@ namespace EasyFarm
 
             public bool IsClaimed(int id) { return api.NPC.IsClaimed(id); }
 
-            public bool IsPet(int id)
-            {
-                return api.NPC.PetID(api.Player.ID) == id;
-            }
+            public int PetID(int id) => api.NPC.PetID(id);
 
             public bool IsRendered(int id) { return api.NPC.IsRendered(id); }
 

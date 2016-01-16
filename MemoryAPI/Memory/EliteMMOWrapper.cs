@@ -131,10 +131,7 @@ namespace EasyFarm
 
             public bool IsClaimed(int id) { return api.Entity.GetEntity(id).ClaimID != 0; }
 
-            public bool IsPet(int id)
-            {
-                return api.Entity.GetLocalPlayer().PetIndex == id;
-            }
+            public int PetID(int id) => api.Entity.GetEntity(id).PetIndex;
 
             /// <summary>
             /// Checks to see if the object is rendered. 
@@ -156,9 +153,22 @@ namespace EasyFarm
             public NPCType NPCType(int id)
             {
                 var entity = api.Entity.GetEntity(id);
-                if (entity.Type == 2) return MemoryAPI.NPCType.Mob;
-                else if (entity.Type == 0) return MemoryAPI.NPCType.PC;
-                else return MemoryAPI.NPCType.NPC;
+                if (entity.ServerID == 0)
+                {
+                    return MemoryAPI.NPCType.InanimateObject;
+                }
+                else if (entity.Type == 2 && entity.SpawnFlags == 16)
+                {
+                    return MemoryAPI.NPCType.Mob;
+                }
+                else if (entity.Type == 0)
+                {
+                    return MemoryAPI.NPCType.PC;
+                }
+                else
+                {
+                    return MemoryAPI.NPCType.InanimateObject;
+                }
             }
 
             public float PosX(int id) { return api.Entity.GetEntity(id).X; }

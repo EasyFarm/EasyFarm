@@ -38,10 +38,7 @@ namespace EasyFarm.States
                 // Update last time target was updated. 
                 _lastTargetCheck = DateTime.Now;
 
-                if (Target != null)
-                {
-                    Log.Write("Now targeting " + Target.Name + " : " + Target.Id);
-                }
+                if (Target != null) Log.Write("Now targeting " + Target.Name + " : " + Target.Id);
             }
 
             return false;

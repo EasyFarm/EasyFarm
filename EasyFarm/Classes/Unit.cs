@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 
 using MemoryAPI;
 using System;
+using System.Linq;
 using MemoryAPI.Navigation;
 
 namespace EasyFarm.Classes
@@ -234,7 +235,14 @@ namespace EasyFarm.Classes
 
         public bool IsPet
         {
-            get { return _fface.NPC.IsPet(Id); }
+            get
+            {
+                var playerIds = Enumerable.Range(0, 2048)
+                    .Where(x => _npc.NPCType(x) == NPCType.PC)
+                    .ToList();
+
+                return playerIds.Any(x => _npc.PetID(x) == Id);
+            }
         }
 
         #endregion
