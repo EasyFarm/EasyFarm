@@ -60,7 +60,7 @@ namespace EasyFarm.States
             fface.Navigator.DistanceTolerance = 1;
 
             // Make a copy of the waypoint path from config. 
-            var route = Config.Instance.Waypoints.ToList();
+            var route = Config.Instance.Waypoints.ToList();            
 
             // Reverse the waypoint path. 
             if (_position == route.Count)
@@ -72,6 +72,13 @@ namespace EasyFarm.States
                 }
 
                 _position = 0;
+            }
+
+            // If far away from the path, set us to run to the closest waypoint
+            if (fface.Navigator.DistanceTo(route[_position]) > 15)
+            {
+                Position closest = route.OrderBy(x => fface.Navigator.DistanceTo(x)).FirstOrDefault();
+                fface.Navigator.Goto(closest, false);
             }
 
             // Run to the waypoint allowing cancellation on aggro or paused.             
