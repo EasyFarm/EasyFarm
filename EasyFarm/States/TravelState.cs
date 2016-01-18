@@ -55,7 +55,7 @@ namespace EasyFarm.States
         }
 
         public override void RunComponent()
-        {
+        {            
             // Navigator must be set by convention (other states could override)
             fface.Navigator.DistanceTolerance = 1;
 
@@ -77,8 +77,8 @@ namespace EasyFarm.States
             // If far away from the path, set us to run to the closest waypoint
             if (fface.Navigator.DistanceTo(route[_position]) > 15)
             {
-                Position closest = route.OrderBy(x => fface.Navigator.DistanceTo(x)).FirstOrDefault();
-                fface.Navigator.Goto(closest, false);
+                var closest = route.OrderBy(x => fface.Navigator.DistanceTo(x)).FirstOrDefault();
+                _position = route.IndexOf(closest);
             }
 
             // Run to the waypoint allowing cancellation on aggro or paused.             
