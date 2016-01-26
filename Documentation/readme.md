@@ -4,6 +4,7 @@ This section will hopefully be filled with guides  and helpful information in us
 Guide | Description
 ---|---
 [Creating a weaponskill](weaponskills.md) | How to setup a weaponskill. 
+[Set enemy health before using weaponskills](weaponskill-health.md) | How to setup a weaponskill to be used based on the enemies health. 
 [Creating a battle ability](battle.md) | How to setup an action to be used in during battle.  
 [Creating a healing spell](healing.md) | How to setup an action to be used when the player is injured. 
 [Creating a erase spell](erase.md) | How to setup an action to be used when the player is afflicated with a status effect. 
