@@ -32,19 +32,22 @@ Development has slowed, and mostly happens on the weekends.
 
 #### Requirements
 * Ashita or Windower
-* [FFace.dll](http://delvl.ffevo.net/Lolwutt/FFACE4-Public/blob/master/FFACE.dll)
-* [FFaceTools.dll](https://github.com/h1pp0/FFACETools_ffevo.net/tree/master/Binary)
 * Resource Files (Optional)
 * [Microsoft .NET Framework 4.5](https://www.microsoft.com/en-US/Download/details.aspx?id=30653)
-* [Visual C++ Redistributable Packages for Visual Studio 2013](https://www.microsoft.com/en-us/download/details.aspx?id=40784)
+* [Visual C++ Redistributable Packages for Visual Studio 2013]
 
+    *Use the tool provided by EliteMMO to check for missing packages: http://www.elitemmonetwork.com/forums/viewtopic.php?f=28&t=329*
+    
     *Make sure your using the X86 version of the Visual Studio 2013 C++ Redistributable even if you have a 64 bit operating system.*
     
 #### Tutorials
 Visit the [tutorials](https://github.com/EasyFarm/EasyFarm/blob/master/Documentation/readme.md) page for more information on setting up the program. 
 
 #### Support
-Use the [support issue](https://github.com/EasyFarm/EasyFarm/issues/130) for questions and feedback regarding the program. You can also send me an email at MikeBartron@gmail.com, and I'll help you out as best I can.
+There's a few ways you can ask questions about the program or make suggestions to improve it. No option is preferred over the others so feel free to shoot me an email directly if you'd like! ^^;
+* [EliteMMO Forums](http://www.elitemmonetwork.com/forums/viewtopic.php?f=10&t=394&sid=8152260e9de28e6e0a8319cae7701bd0)
+* [Support Issue](https://github.com/EasyFarm/EasyFarm/issues/130) 
+* [MikeBartron@gmail.com]
 
 #### Want to contribute?
 Anyone can contribute to the project. Just make sure you've done your best to test the code you are changing and send me a pull request, and I'll add in your contribution!
@@ -53,7 +56,9 @@ Contributions to the tutorial section are highly welcomed! You can submit a pull
 
 #### Special Thanks!
 
-* The FFEVO Team for producing the memory reading api this program could not operate without.
+* The FFEVO Team for producing the previous memory reading api this program could not operate without.
+
+* Atom0s and EliteMMO for producing the current memory reading api this program could not operate without. 
 
 * The Windower Team for producing the Windower client and resource files which make using the program a whole lot easier. 
 
