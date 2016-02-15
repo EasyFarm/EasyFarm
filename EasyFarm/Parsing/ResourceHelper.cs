@@ -211,8 +211,8 @@
                 case AbilityType.Magic:
                 case AbilityType.Ninjutsu:
                 case AbilityType.Song:
+                case AbilityType.Item:
                     return true;
-
                 default:
                     return false;
             }

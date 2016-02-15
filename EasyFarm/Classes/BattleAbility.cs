@@ -114,6 +114,7 @@ namespace EasyFarm.Classes
         ///     Private backing for usages.
         /// </summary>
         private int _usages;
+
         static BattleAbility()
         {
             var commandTypes = new ObservableCollection<AbilityType>
@@ -126,7 +127,8 @@ namespace EasyFarm.Classes
                 AbilityType.Pet,
                 AbilityType.Range,
                 AbilityType.Song,
-                AbilityType.Weaponskill
+                AbilityType.Weaponskill, 
+                AbilityType.Item
             };
 
             // Load valid prefixes.
@@ -151,6 +153,7 @@ namespace EasyFarm.Classes
             CommandMapper.Add(AbilityType.Range, "/range");
             CommandMapper.Add(AbilityType.Song, "/song");
             CommandMapper.Add(AbilityType.Weaponskill, "/weaponskill");
+            CommandMapper.Add(AbilityType.Item, "/item");
         }
 
         /// <summary>
