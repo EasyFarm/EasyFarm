@@ -35,10 +35,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\EasyFarm\Dependencies\EliteMMO.API.dll</HintPath>
     </Reference>
-    <Reference Include="FFACETools, Version=1.3.1.21, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\EasyFarm\Dependencies\FFACETools.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -56,7 +52,6 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="IMemoryAPI.cs" />
     <Compile Include="Memory\EliteMMOWrapper.cs" />
-    <Compile Include="Memory\FFACEWrapper.cs" />
     <Compile Include="Memory\MemoryWrapper.cs" />
     <Compile Include="Navigation\Position.cs" />
     <Compile Include="Navigation\INavigatorTools.cs" />

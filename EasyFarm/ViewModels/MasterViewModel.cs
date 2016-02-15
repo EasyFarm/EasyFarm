@@ -28,6 +28,7 @@ using EasyFarm.Views;
 using Prism.Commands;
 using Application = System.Windows.Application;
 using EasyFarm.Properties;
+using MemoryAPI.Memory;
 
 namespace EasyFarm.ViewModels
 {

@@ -294,7 +294,6 @@
   </ItemGroup>
   <ItemGroup>
     <AppDesigner Include="Properties\" />
-    <Content Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
@@ -437,8 +436,6 @@
   <ItemGroup>
     <Content Include="Dependencies\EliteAPI.dll" />
     <Content Include="Dependencies\EliteMMO.API.dll" />
-    <Content Include="Dependencies\FFACE.dll" />
-    <Content Include="Dependencies\FFACETools.dll" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -448,9 +445,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)\Dependencies\*.*" "$(TargetDir)"
-del "$(TargetDir)*.xml", "$(TargetDir)*.pdb"
-</PostBuildEvent>
+    <PostBuildEvent>del "$(TargetDir)*.xml", "$(TargetDir)*.pdb"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
