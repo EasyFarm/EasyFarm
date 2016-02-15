@@ -101,6 +101,7 @@
     <Reference Include="EliteMMO.API, Version=1.0.0.21, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\EliteMMO.API.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
@@ -434,18 +435,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\EliteAPI.dll" />
-    <Content Include="Dependencies\EliteMMO.API.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dependencies\EliteAPI.dll" />
+    <Content Include="Dependencies\EliteMMO.API.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(ProjectDir)\Dependencies\*.*" "$(TargetDir)
+    <PostBuildEvent>copy "$(ProjectDir)\Dependencies\*.*" "$(TargetDir)"
 del "$(TargetDir)*.xml", "$(TargetDir)*.pdb"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
