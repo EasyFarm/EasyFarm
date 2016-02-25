@@ -46,13 +46,13 @@ Visit the [tutorials](https://github.com/EasyFarm/EasyFarm/blob/master/Documenta
 #### Support
 There's a few ways you can ask questions about the program or make suggestions to improve it. No option is preferred over the others so feel free to shoot me an email directly if you'd like! ^^;
 * [EliteMMO Forums](http://www.elitemmonetwork.com/forums/viewtopic.php?f=10&t=394&sid=8152260e9de28e6e0a8319cae7701bd0)
-* [Support Issue](https://github.com/EasyFarm/EasyFarm/issues/130) 
+* [Support Issue](https://github.com/EasyFarm/EasyFarm/issues/192) 
 * [MikeBartron@gmail.com]
 
 #### Want to contribute?
 Anyone can contribute to the project. Just make sure you've done your best to test the code you are changing and send me a pull request, and I'll add in your contribution!
 
-Contributions to the tutorial section are highly welcomed! You can submit a pull request if your tech savvy or post in the [support issue](https://github.com/EasyFarm/EasyFarm/issues/130) and I'll add in your contribution!!
+Contributions to the tutorial section are highly welcomed! You can submit a pull request if your tech savvy or post in the [support issue](https://github.com/EasyFarm/EasyFarm/issues/192) and I'll add in your contribution!!
 
 #### Special Thanks!
 
