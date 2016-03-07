@@ -3,7 +3,7 @@ using EasyFarm.Classes;
 using MemoryAPI;
 using MemoryAPI.Memory;
 using MemoryAPI.Navigation;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace EasyFarm.Tests.Classes
 {
@@ -11,20 +11,20 @@ namespace EasyFarm.Tests.Classes
     {
         protected PathRecorder recorder;
 
-        [TestInitialize]
+        [SetUp]
         public void Initialize()
         {
             recorder = new PathRecorder(new MMemoryWrapper());
             recorder.Interval = 5;
         }
 
-        [TestClass]
+        [TestFixture]
         public class Start : PathRecorderTest
         {
             /// <summary>
             /// Test whether the position recorder records positions. 
             /// </summary>
-            [TestMethod]
+            [Test]
             public void Adds_Waypoint_To_Path()
             {                
                 var position = RecordNewPosition();

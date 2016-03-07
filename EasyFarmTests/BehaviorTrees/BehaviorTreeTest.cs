@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using EasyFarm.Tests.Behaviors;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace EasyFarm.Tests.BehaviorTrees
 {
-    [TestClass]
+    [TestFixture]
     public class BehaviorTreeTest
     {
-        [TestClass]
+        [TestFixture]
         public class BuildTree
         {
-            [TestMethod]
+            [Test]
             public void BehaviorsInCorrectOrder()
             {
                 var behaviors = BehaviorTree.BuildTree(BehaviorTypes.Battle);
@@ -29,14 +29,14 @@ namespace EasyFarm.Tests.BehaviorTrees
                 CustomAssertions.AssertTypesEqual(expectedTypes, behaviors);
             }
 
-            [TestMethod]
+            [Test]
             public void BuildsTreeWithOnetype()
             {
                 var behaviors = BehaviorTree.BuildTree(BehaviorTypes.Healing);
                 Assert.AreEqual(1, behaviors.Count);
             }
 
-            [TestMethod]
+            [Test]
             public void BuildsTreeWithTwoTypes()
             {
                 var behaviors = BehaviorTree.BuildTree(BehaviorTypes.Healing, BehaviorTypes.Buffing);

@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using CuttingEdge.Conditions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace EasyFarm.Tests
 {
@@ -23,9 +23,7 @@ namespace EasyFarm.Tests
 
             while (instancesEnumerator.MoveNext() && typesEnumerator.MoveNext())
             {
-                Assert.IsInstanceOfType(
-                    instancesEnumerator.Current,
-                    (Type)typesEnumerator.Current);
+                Assert.IsInstanceOf((Type)typesEnumerator.Current, instancesEnumerator.Current);
             }
         }
 
