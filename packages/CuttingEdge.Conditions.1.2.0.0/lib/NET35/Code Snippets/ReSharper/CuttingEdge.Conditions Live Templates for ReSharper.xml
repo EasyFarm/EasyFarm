@@ -1,0 +1,42 @@
+<TemplatesExport family="Live Templates">
+  <Template uid="ef94acb4-182f-44ff-bb33-b3451eb1eb06" text="Condition.Requires($argument$, &quot;$argument$&quot;)$END$" shortcut="requires" description="Tests a method precondition." reformat="true" shortenQualifiedReferences="true">
+    <Context>
+      <VBContext context="Statement" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="argument" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+  <Template uid="9bea7298-983e-435d-b3b1-e1dd0d3ca922" text="Condition.Ensures($argument$, &quot;$argument$&quot;)$END$" shortcut="ensures" description="Tests a postcondition." reformat="true" shortenQualifiedReferences="true">
+    <Context>
+      <VBContext context="Statement" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="argument" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+  <Template uid="d6993420-e1b6-4710-8f3b-49fe1eb20bb2" text="Condition.Requires($argument$, &quot;$argument$&quot;)$END$" shortcut="requires" description="Tests a method precondition." reformat="true" shortenQualifiedReferences="true">
+    <Context>
+      <CSharpContext context="Statement" minimumLanguageVersion="3.0" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="argument" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+  <Template uid="3094555b-3d0f-4938-bb6a-8bbeb089e607" text="Condition.Ensures($argument$, &quot;$argument$&quot;)$END$" shortcut="ensures" description="Tests a postcondition." reformat="true" shortenQualifiedReferences="true">
+    <Context>
+      <CSharpContext context="Statement" minimumLanguageVersion="3.0" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="argument" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+</TemplatesExport>

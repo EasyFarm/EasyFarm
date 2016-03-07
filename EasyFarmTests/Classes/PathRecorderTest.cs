@@ -1,11 +1,11 @@
-﻿using EasyFarm.Classes;
+﻿using System.Threading.Tasks;
+using EasyFarm.Classes;
 using MemoryAPI;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading.Tasks;
 using MemoryAPI.Memory;
 using MemoryAPI.Navigation;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace EasyFarm.Tests.UnitTests.Classes
+namespace EasyFarm.Tests.Classes
 {
     public class PathRecorderTest
     {
