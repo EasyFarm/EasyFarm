@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using EasyFarm.Tests.Behaviors;
-using NUnit.Framework;
+using Xunit;
 
 namespace EasyFarm.Tests.BehaviorTrees
 {
-    [TestFixture]
     public class BehaviorTreeTest
     {
-        [TestFixture]
         public class BuildTree
         {
-            [Test]
+            [Fact]
             public void BehaviorsInCorrectOrder()
             {
                 var behaviors = BehaviorTree.BuildTree(BehaviorTypes.Battle);
@@ -29,18 +27,18 @@ namespace EasyFarm.Tests.BehaviorTrees
                 CustomAssertions.AssertTypesEqual(expectedTypes, behaviors);
             }
 
-            [Test]
+            [Fact]
             public void BuildsTreeWithOnetype()
             {
                 var behaviors = BehaviorTree.BuildTree(BehaviorTypes.Healing);
-                Assert.AreEqual(1, behaviors.Count);
+                Assert.Equal(1, behaviors.Count);
             }
 
-            [Test]
+            [Fact]
             public void BuildsTreeWithTwoTypes()
             {
                 var behaviors = BehaviorTree.BuildTree(BehaviorTypes.Healing, BehaviorTypes.Buffing);
-                Assert.AreEqual(2, behaviors.Count);
+                Assert.Equal(2, behaviors.Count);
             }
         }
     }

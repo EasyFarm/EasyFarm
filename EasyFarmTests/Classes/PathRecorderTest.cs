@@ -1,84 +1,48 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using EasyFarm.Classes;
 using MemoryAPI;
 using MemoryAPI.Memory;
 using MemoryAPI.Navigation;
-using NUnit.Framework;
+using Moq;
+using Ploeh.AutoFixture.Xunit2;
+using Xunit;
 
 namespace EasyFarm.Tests.Classes
 {
     public class PathRecorderTest
     {
-        protected PathRecorder recorder;
-
-        [SetUp]
-        public void Initialize()
+        /// <summary>
+        /// Test whether the position recorder records positions. 
+        /// </summary>
+        [Theory, AutoMoqData]
+        public void Adds_Waypoint_To_Path([Frozen]Mock<IMemoryAPI> memoryApi)
         {
-            recorder = new PathRecorder(new MMemoryWrapper());
-            recorder.Interval = 5;
+            var recorder = new PathRecorder(memoryApi.Object);
+            var position = RecordNewPosition(recorder);
+            Assert.NotNull(position);
         }
 
-        [TestFixture]
-        public class Start : PathRecorderTest
+        /// <summary>
+        /// Starts recording a new waypoint. 
+        /// </summary>
+        private Position RecordNewPosition(PathRecorder recorder)
         {
-            /// <summary>
-            /// Test whether the position recorder records positions. 
-            /// </summary>
-            [Test]
-            public void Adds_Waypoint_To_Path()
-            {                
-                var position = RecordNewPosition();
-                Assert.IsNotNull(position);
-            }
+            Position position = null;
 
-            /// <summary>
-            /// Starts recording a new waypoint. 
-            /// </summary>
-            private Position RecordNewPosition()
+            recorder.OnPositionAdded += (pos) =>
             {
-                var task = new TaskCompletionSource<Position>();
-                recorder.OnPositionAdded += (pos) => task.SetResult(pos);
-                recorder.Interval = 1;
-                recorder.Start();
-                var position = task.Task.GetAwaiter().GetResult();
-                recorder.Stop();
-                return position;
-            }            
-        }        
-    }
+                position = pos;
+            };
 
-    public class MMemoryWrapper : MemoryWrapper
-    {
-        public MMemoryWrapper()
-        {
-            this.Player = new MPlayerTools();
-        }
+            recorder.Interval = 1;
 
-        public class MPlayerTools : IPlayerTools
-        {
-            public short CastPercentEx { get; }
-            public int HPPCurrent { get; }
-            public int ID { get; }
-            public int MPCurrent { get; }
-            public int MPPCurrent { get; }
-            public string Name { get; }
+            recorder.Start();
 
-            public IPosition Position
-            {
-                get
-                {
-                    return new Position() { H = 1, X = 1, Y = 1, Z = 1 };
-                }
-            }
-
-            public float PosX { get; }
-            public float PosY { get; }
-            public float PosZ { get; }
-            public Structures.PlayerStats Stats { get; }
-            public Status Status { get; }
-            public StatusEffect[] StatusEffects { get; }
-            public int TPCurrent { get; }
-            public Zone Zone { get; }
+            DateTime start = DateTime.Now;
+            while (position == null && DateTime.Now < start.AddSeconds(5)) { }
+            recorder.Stop();
+            return position;
         }
     }
 }

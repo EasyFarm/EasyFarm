@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using CuttingEdge.Conditions;
-using NUnit.Framework;
+using Xunit;
 
 namespace EasyFarm.Tests
 {
@@ -23,7 +23,7 @@ namespace EasyFarm.Tests
 
             while (instancesEnumerator.MoveNext() && typesEnumerator.MoveNext())
             {
-                Assert.IsInstanceOf((Type)typesEnumerator.Current, instancesEnumerator.Current);
+                Assert.IsType((Type)typesEnumerator.Current, instancesEnumerator.Current);
             }
         }
 
@@ -33,9 +33,19 @@ namespace EasyFarm.Tests
             {
                 if (!value.GetType().IsSubclassOf(type))
                 {
-                    Assert.Fail($"The Precondition 'All values should be of type {type}' failed. ");
+                    Fail($"The Precondition 'All values should be of type {type}' failed. ");
                 }
             }
+        }
+
+        public static void Fail(string message)
+        {
+            Assert.True(false, message);
+        }
+
+        public static void Fail(string message, params object[] args)
+        {
+            Assert.True(false, string.Format(message, args));
         }
     }
 }
