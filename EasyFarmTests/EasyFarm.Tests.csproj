@@ -101,6 +101,8 @@
     <Compile Include="BehaviorTrees\BehaviorTypeAttribute.cs" />
     <Compile Include="BehaviorTrees\BehaviorTypes.cs" />
     <Compile Include="Behaviors\StandUpTest.cs" />
+    <Compile Include="Classes\CastTime.cs" />
+    <Compile Include="Classes\CastTimeTest.cs" />
     <Compile Include="ConditionExtensions.cs" />
     <Compile Include="CustomAssertions.cs" />
     <Compile Include="Behaviors\Engage.cs" />
