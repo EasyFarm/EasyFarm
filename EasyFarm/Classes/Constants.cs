@@ -63,12 +63,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The upper limit of the spawn array. (Monsters, NPCs, Players)
         /// </summary>
-        public const int UnitArrayMax = 2048;
-
-        /// <summary>
-        /// The upper limit of the mob array. (Monsters, NPCS)
-        /// </summary>
-        public const int MobArrayMax = 768;
+        public const int UnitArrayMax = 4096;
 
         /// <summary>
         /// Controls the wait time between checks on the unit array to control performance.

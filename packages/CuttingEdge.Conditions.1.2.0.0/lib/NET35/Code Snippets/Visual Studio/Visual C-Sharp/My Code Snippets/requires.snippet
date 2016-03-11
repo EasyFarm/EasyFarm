@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Requires</Title>
+			<Shortcut>requires</Shortcut>
+			<Description>Code snippet for argument validation</Description>
+			<Author>S. van Deursen</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>argument</ID>
+					<ToolTip>The argument to check</ToolTip>
+					<Default>myArg</Default>
+				</Literal>			
+			</Declarations>
+			<Code Language="csharp"><![CDATA[Condition.Requires($argument$, "$argument$")$end$]]></Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

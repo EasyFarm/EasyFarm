@@ -10,7 +10,7 @@
         bool IsClaimed(int id);
         bool IsRendered(int id);
         string Name(int id);
-        NPCType NPCType(int id);
+        NpcType NPCType(int id);
         float PosX(int id);
         float PosY(int id);
         float PosZ(int id);

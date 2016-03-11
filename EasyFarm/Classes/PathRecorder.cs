@@ -30,12 +30,12 @@ namespace EasyFarm.Classes
         ///     Used by the recorder to avoid duplicate, successive waypoints.
         ///     (Identicle waypoints are allowed, just not in succession.)
         /// </summary>
-        private Position _lastPosition = new Position();
+        private Position _lastPosition;
 
         /// <summary>
         /// The memory source to retrieve the character's position from. 
         /// </summary>
-        private IMemoryAPI _memory;
+        private readonly IMemoryAPI _memory;
 
         /// <summary>
         /// Create a new <see cref="PathRecorder"/> with saving and 
@@ -44,7 +44,7 @@ namespace EasyFarm.Classes
         /// <param name="memory"></param>
         public PathRecorder(IMemoryAPI memory)
         {
-            this._memory = memory;
+            _memory = memory;
             _recorder = new Timer(1000);
             _recorder.Elapsed += RouteRecorder_Tick;
         }
@@ -102,14 +102,12 @@ namespace EasyFarm.Classes
 
             // Update the path if we've changed out position. Rotating our heading does not
             // count as the player moving. 
-            if (position.X != _lastPosition.X || position.Z != _lastPosition.Z)
+            if (_lastPosition == null || 
+                position.X != _lastPosition.X || 
+                position.Z != _lastPosition.Z)
             {
                 // Fire positon added event. 
-                if (OnPositionAdded != null)
-                {
-                    OnPositionAdded(position);
-                }
-
+                OnPositionAdded?.Invoke(position);
                 _lastPosition = position;
             }
         }

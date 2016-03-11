@@ -148,7 +148,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     The unit's npc type
         /// </summary>
-        public NPCType NpcType
+        public NpcType NpcType
         {
             get { return _npc.NPCType(Id); }
         }
@@ -238,7 +238,7 @@ namespace EasyFarm.Classes
             get
             {
                 var playerIds = Enumerable.Range(0, 2048)
-                    .Where(x => _npc.NPCType(x) == NPCType.PC)
+                    .Where(x => _npc.NPCType(x) == NpcType.PC)
                     .ToList();
 
                 return playerIds.Any(x => _npc.PetID(x) == Id);
