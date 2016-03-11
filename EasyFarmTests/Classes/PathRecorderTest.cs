@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
 using EasyFarm.Classes;
 using MemoryAPI;
-using MemoryAPI.Memory;
 using MemoryAPI.Navigation;
 using Moq;
 using Ploeh.AutoFixture.Xunit2;

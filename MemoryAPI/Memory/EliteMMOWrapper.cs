@@ -143,33 +143,25 @@ namespace EasyFarm
             /// https://github.com/SG1234567
             public bool IsRendered(int id)
             {
-                //Render0000 specificaly uses 0x200 to check if the object is rendered
-                if ((api.Entity.GetEntity(id).Render0000 & 0x200) != 0x200)
-                    return false;
-                return true;
+                return (api.Entity.GetEntity(id).Render0000 & 0x200) == 0x200;
             }
 
             public string Name(int id) { return api.Entity.GetEntity(id).Name; }
 
-            public NPCType NPCType(int id)
+            public NpcType NPCType(int id)
             {
                 var entity = api.Entity.GetEntity(id);
-                if (entity.ServerID == 0)
-                {
-                    return MemoryAPI.NPCType.InanimateObject;
-                }
-                else if (entity.Type == 2 && entity.SpawnFlags == 16)
-                {
-                    return MemoryAPI.NPCType.Mob;
-                }
-                else if (entity.Type == 0)
-                {
-                    return MemoryAPI.NPCType.PC;
-                }
-                else
-                {
-                    return MemoryAPI.NPCType.InanimateObject;
-                }
+                if (entity.WarpPointer == 0) return NpcType.InanimateObject;
+                if (IsOfType(entity.SpawnFlags, (int)NpcType.Mob)) return NpcType.Mob;
+                if (IsOfType(entity.SpawnFlags, (int)NpcType.NPC)) return NpcType.NPC;
+                if (IsOfType(entity.SpawnFlags, (int)NpcType.PC)) return NpcType.PC;
+                if (IsOfType(entity.SpawnFlags, (int)NpcType.Self)) return NpcType.Self;
+                return NpcType.InanimateObject;
+            }
+
+            private bool IsOfType(int one, int other)
+            {
+                return (one & other) == other;
             }
 
             public float PosX(int id) { return api.Entity.GetEntity(id).X; }

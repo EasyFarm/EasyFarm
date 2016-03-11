@@ -2054,18 +2054,7 @@
         Requiescat = 994,
         Uriel_Blade = 1006,
         Glory_Slash = 1007
-    }   
+    }
 
-    /// <summary>
-    /// Type of NPC returned from GetNPCType
-    /// </summary>
-    public enum NPCType : byte
-    {
-        PC = 0x01,
-        NPC = 0x02,
-        Self = 0x0D,
-        Mob = 0x10,
-        InanimateObject,
-
-    } // @ public enum NPCType
+    // @ public enum NPCType
 }

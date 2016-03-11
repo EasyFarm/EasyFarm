@@ -49,11 +49,6 @@ namespace EasyFarm.Classes
         /// </summary>
         private const short UnitArrayMax = Constants.UnitArrayMax;
 
-        /// <summary>
-        /// The mob array's max size: 0 - 768.
-        /// </summary>
-        private const short MobArrayMax = Constants.MobArrayMax;
-
         // We are caching values for HasAggro, since the program will call it constantly which will
         // result in a performance jump.
 
@@ -106,7 +101,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Units.Take(MobArrayMax).Where(x => x.NpcType.Equals(NPCType.Mob)).ToList();
+                return Units.Where(x => x.NpcType.Equals(NpcType.Mob)).ToList();
             }
         }
 
@@ -117,7 +112,7 @@ namespace EasyFarm.Classes
         {
             get
             {
-                return Units.Where(x => x.NpcType == NPCType.PC).ToList();
+                return Units.Where(x => x.NpcType == NpcType.PC).ToList();
             }
         }
 

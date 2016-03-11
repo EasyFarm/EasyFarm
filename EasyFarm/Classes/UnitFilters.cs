@@ -55,7 +55,7 @@ namespace EasyFarm.Classes
             if (!mob.IsRendered) return false;
 
             // Type is not mob
-            if (!mob.NpcType.Equals(NPCType.Mob)) return false;
+            if (!mob.NpcType.Equals(NpcType.Mob)) return false;
 
             // Mob is out of range
             if (!(mob.Distance < Config.Instance.DetectionDistance)) return false;
