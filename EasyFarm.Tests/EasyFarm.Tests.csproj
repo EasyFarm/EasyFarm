@@ -83,26 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMoqDataAttribute.cs" />
-    <Compile Include="Behaviors\Approach.cs" />
-    <Compile Include="Behaviors\BattleBehavior.cs" />
-    <Compile Include="Behaviors\BehaviorBase.cs" />
-    <Compile Include="Behaviors\BuffingBehavior.cs" />
-    <Compile Include="Behaviors\Engage.cs" />
-    <Compile Include="Behaviors\HealingBehavior.cs" />
-    <Compile Include="Behaviors\SpotTarget.cs" />
-    <Compile Include="Behaviors\StandUp.cs" />
-    <Compile Include="Behaviors\StandUpTest.cs" />
-    <Compile Include="Behaviors\TargetEnemy.cs" />
-    <Compile Include="BehaviorTrees\BehaviorTree.cs" />
-    <Compile Include="BehaviorTrees\BehaviorTreeTest.cs" />
-    <Compile Include="BehaviorTrees\BehaviorTypeAttribute.cs" />
-    <Compile Include="BehaviorTrees\BehaviorTypes.cs" />
-    <Compile Include="BehaviorTrees\IBehavior.cs" />
-    <Compile Include="Classes\CastTime.cs" />
-    <Compile Include="Classes\CastTimeTest.cs" />
     <Compile Include="Classes\PathRecorderTest.cs" />
-    <Compile Include="ConditionExtensions.cs" />
-    <Compile Include="CustomAssertions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
