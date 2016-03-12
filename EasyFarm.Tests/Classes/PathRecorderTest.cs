@@ -2,23 +2,27 @@
 using EasyFarm.Classes;
 using MemoryAPI;
 using MemoryAPI.Navigation;
-using Moq;
-using Ploeh.AutoFixture.Xunit2;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.AutoMoq;
 
 namespace EasyFarm.Tests.Classes
 {
+    [TestClass]
     public class PathRecorderTest
     {
         /// <summary>
         /// Test whether the position recorder records positions. 
         /// </summary>
-        [Theory, AutoMoqData]
-        public void Adds_Waypoint_To_Path([Frozen]Mock<IMemoryAPI> memoryApi)
+        [TestMethod]
+        public void Adds_Waypoint_To_Path()
         {
-            var recorder = new PathRecorder(memoryApi.Object);
+            IFixture fixture = new Fixture().Customize(new AutoMoqCustomization());
+            var memory = fixture.Create<IMemoryAPI>();
+
+            var recorder = new PathRecorder(memory);
             var position = RecordNewPosition(recorder);
-            Assert.NotNull(position);
+            Assert.IsNotNull(position);
         }
 
         /// <summary>
@@ -28,13 +32,8 @@ namespace EasyFarm.Tests.Classes
         {
             Position position = null;
 
-            recorder.OnPositionAdded += (pos) =>
-            {
-                position = pos;
-            };
-
+            recorder.OnPositionAdded += pos => position = pos;
             recorder.Interval = 1;
-
             recorder.Start();
 
             DateTime start = DateTime.Now;
