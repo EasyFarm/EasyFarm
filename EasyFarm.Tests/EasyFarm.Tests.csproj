@@ -33,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CuttingEdge.Conditions, Version=1.2.0.11174, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
@@ -130,5 +131,3 @@
   </Target>
   -->
 </Project>
-
-

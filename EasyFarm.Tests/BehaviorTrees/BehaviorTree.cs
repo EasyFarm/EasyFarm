@@ -11,7 +11,7 @@ namespace EasyFarm.Tests.BehaviorTrees
         public static List<BehaviorBase> BuildTree(params BehaviorTypes[] behaviorTypes)
         {
             return Assembly.GetAssembly(typeof(BehaviorTree)).GetTypes()
-                .Where(x => CustomAttributeExtensions.GetCustomAttributes<BehaviorTypeAttribute>((MemberInfo) x)
+                .Where(x => x.GetCustomAttributes<BehaviorTypeAttribute>()
                     .Any(behaviorAttribute => behaviorAttribute.HasBehaviors(behaviorTypes)))
                 .Where(x => x.BaseType == typeof(BehaviorBase))
                 .Select(Activator.CreateInstance)
