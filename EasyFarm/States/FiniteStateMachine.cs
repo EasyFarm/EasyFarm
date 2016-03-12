@@ -39,7 +39,6 @@ namespace EasyFarm.States
         public FiniteStateMachine(IMemoryAPI fface)
         {
             //Create the states
-            AddComponent(new TrackPlayerState(fface) { Priority = 6 });
             AddComponent(new DeadState(fface) {Priority = 6});
             AddComponent(new ZoneState(fface) {Priority = 6});
             AddComponent(new SetTargetState(fface) {Priority = 6});

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using EasyFarm.Parsing;
@@ -48,11 +49,7 @@ namespace EasyFarm.Classes
             // Try to cast the spell and return false if
             // we've failed to start casting or the 
             // casting was interrupted. 
-            if (EnsureCast(ability.Command))
-            {
-                return MonitorCast();
-            }
-
+            if (EnsureCast(ability.Command)) return MonitorCast();
             return false;
         }
 
@@ -62,6 +59,11 @@ namespace EasyFarm.Classes
         /// </summary>
         private bool EnsureCast(string command)
         {
+            while (Player.Instance.IsMoving)
+            {
+                Thread.Sleep(100);
+            }
+
             // Chainspelled spells will always be cast without fail so 
             // cast it and return immediately. 
             if (_fface.Player.StatusEffects.Contains(StatusEffect.Chainspell))
@@ -73,36 +75,40 @@ namespace EasyFarm.Classes
             // Ensure command has been successfully sent. 
             var previous = _fface.Player.CastPercentEx;
             var startTime = DateTime.Now;
-            while (previous == _fface.Player.CastPercentEx && DateTime.Now < startTime.AddSeconds(3))
+
+            while (DateTime.Now < startTime.AddSeconds(3))
             {
+                if (previous != _fface.Player.CastPercentEx) return true;
                 _fface.Windower.SendString(command);
                 Thread.Sleep(100);
             }
 
-            return true;
+            return false;
         }
 
         private bool MonitorCast()
         {
-            // Monitor the cast and break when either the player 
-            // moved or casting has been finished. 
-            var castHistory = new List<short>();
             var prior = _fface.Player.CastPercentEx;
 
-            while (castHistory.All(x => castHistory.Count(y => x == y) != 30))
+            var stopwatch = new Stopwatch();
+
+            while (stopwatch.Elapsed.TotalSeconds < 2)
             {
-                if (prior == _fface.Player.CastPercentEx)
+                if (Math.Abs(prior - _fface.Player.CastPercentEx) < .5)
                 {
-                    castHistory.Add(_fface.Player.CastPercentEx);
+                    if(!stopwatch.IsRunning) stopwatch.Start();
+                }
+                else
+                {
+                    stopwatch.Reset();
                 }
 
                 prior = _fface.Player.CastPercentEx;
+
                 Thread.Sleep(100);
             }
 
-            // Report success
-            if (castHistory.Count(x => x == 100) == 30) return true;
-            return false;
+            return Math.Abs(prior - 100) < .5;
         }
 
         public bool CastAbility(Ability ability)

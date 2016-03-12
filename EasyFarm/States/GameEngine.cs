@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes;
 using MemoryAPI;
 
 namespace EasyFarm.States
@@ -41,10 +42,13 @@ namespace EasyFarm.States
         /// </summary>
         private readonly FiniteStateMachine _stateMachine;
 
+        private readonly PlayerMonitor _playerMonitor;
+
         public GameEngine(IMemoryAPI fface)
         {
             _fface = fface;
             _stateMachine = new FiniteStateMachine(fface);
+            _playerMonitor = new PlayerMonitor(fface);
         }
 
         /// <summary>
@@ -54,6 +58,7 @@ namespace EasyFarm.States
         {            
             IsWorking = true;
             _stateMachine.Start();
+            _playerMonitor.Start();
         }
 
         /// <summary>
@@ -63,6 +68,7 @@ namespace EasyFarm.States
         {
             IsWorking = false;
             _stateMachine.Stop();
+            _playerMonitor.Stop();
         }                
     }
 }

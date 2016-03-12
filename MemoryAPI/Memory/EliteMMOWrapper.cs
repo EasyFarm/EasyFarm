@@ -203,9 +203,9 @@ namespace EasyFarm
                 this.api = api;
             }
 
-            public short CastPercentEx
+            public float CastPercentEx
             {
-                get { return (short)(api.CastBar.Percent * 100); }
+                get { return (api.CastBar.Percent * 100); }
             }
 
             public int HPPCurrent

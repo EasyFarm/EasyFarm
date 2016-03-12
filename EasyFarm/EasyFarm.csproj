@@ -168,6 +168,7 @@
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\AppServices.cs" />
+    <Compile Include="Classes\PlayerMonitor.cs" />
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
@@ -179,7 +180,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="States\TrackPlayerState.cs" />
+    <Compile Include="States\PlayerMovementTracker.cs" />
     <Compile Include="States\ZoneState.cs" />
     <Compile Include="States\DeadState.cs" />
     <Compile Include="States\FollowState.cs" />
@@ -448,9 +449,7 @@
     <Content Include="Dependencies\EliteAPI.dll" />
     <Content Include="Dependencies\EliteMMO.API.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Behaviors\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)\Dependencies\*.*" "$(TargetDir)"

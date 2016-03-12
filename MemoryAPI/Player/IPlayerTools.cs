@@ -2,7 +2,7 @@
 {
     public interface IPlayerTools
     {
-        short CastPercentEx { get; }
+        float CastPercentEx { get; }
         int HPPCurrent { get; }
         int ID { get; }       
         int MPCurrent { get; }
