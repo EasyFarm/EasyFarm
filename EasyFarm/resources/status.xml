@@ -333,6 +333,7 @@
   <b id="336" duration="0" jp="マイザーロール" enLog="Miser's Roll">Miser's Roll</b>
   <b id="337" duration="0" jp="コンパニオンロール" enLog="Companion's Roll">Companion's Roll</b>
   <b id="338" duration="0" jp="カウンターロール" enLog="Avenger's Roll">Avenger's Roll</b>
+  <b id="339" duration="0" jp="ナチュラリストロール" enLog="Naturalist's Roll">Naturalist's Roll</b>
   <b id="340" duration="0" jp="ウォリアーチャージ" enLog="Warrior's Charge">Warrior's Charge</b>
   <b id="341" duration="0" jp="無想無念" enLog="Formless Strikes">Formless Strikes</b>
   <b id="342" duration="0" jp="アサシンチャージ" enLog="Assassin's Charge">Assassin's Charge</b>
@@ -572,4 +573,28 @@
   <b id="585" duration="0" jp="コスチューム" enLog="costumed">Costume</b>
   <b id="586" duration="0" jp="被ケアル回復量アップ" enLog="Curing Conduit">Curing Conduit</b>
   <b id="587" duration="0" jp="TPボーナスアップ" enLog="TP Bonus">TP Bonus</b>
+  <b id="588" duration="0" jp="フィニシングムーブ(5+)" enLog="Finishing Move (6+)">Finishing Move (6+)</b>
+  <b id="589" duration="0" jp="熱波の陣II" enLog="Firestorm">Firestorm</b>
+  <b id="590" duration="0" jp="吹雪の陣II" enLog="Hailstorm">Hailstorm</b>
+  <b id="591" duration="0" jp="烈風の陣II" enLog="Windstorm">Windstorm</b>
+  <b id="592" duration="0" jp="砂塵の陣II" enLog="Sandstorm">Sandstorm</b>
+  <b id="593" duration="0" jp="疾雷の陣II" enLog="Thunderstorm">Thunderstorm</b>
+  <b id="594" duration="0" jp="豪雨の陣II" enLog="Rainstorm">Rainstorm</b>
+  <b id="595" duration="0" jp="極光の陣II" enLog="Aurorastorm">Aurorastorm</b>
+  <b id="596" duration="0" jp="妖霧の陣II" enLog="Voidstorm">Voidstorm</b>
+  <b id="597" duration="0" jp="イナンデーション" enLog="innundated">Inundation</b>
+  <b id="598" duration="0" jp="カスケード" enLog="Cascade">Cascade</b>
+  <b id="599" duration="0" jp="コンスームマナ" enLog="Consume Mana">Consume Mana</b>
+  <b id="600" duration="0" jp="ルーニストロール" enLog="Runeist's Roll">Runeist's Roll</b>
+  <b id="601" duration="0" jp="クルケッドカード" enLog="Crooked Cards">Crooked Cards</b>
+  <b id="602" duration="0" jp="神符" enLog="Vorseal">Vorseal</b>
+  <b id="603" duration="0" jp="祈祷神符" enLog="Elvorseal">Elvorseal</b>
+  <b id="604" duration="0" jp="マイティガード" enLog="mightly guarded">Mighty Guard</b>
+  <b id="605" duration="0" jp="ゲイルスパイク" enLog="Gale Spikes">Gale Spikes</b>
+  <b id="606" duration="0" jp="クロッドスパイク" enLog="Clod Spikes">Clod Spikes</b>
+  <b id="607" duration="0" jp="グリントスパイク" enLog="Glint Spikes">Glint Spikes</b>
+  <b id="608" duration="0" jp="ネゲートウィルス" enLog="Negate Virus">Negate Virus</b>
+  <b id="609" duration="0" jp="ネゲートカーズ" enLog="Negate Curse">Negate Curse</b>
+  <b id="610" duration="0" jp="ネゲートチャーム" enLog="Negate Charm">Negate Charm</b>
+  <b id="611" duration="0" jp="魔法回避率アップ" enLog="Magic Evasion Boost">Magic Evasion Boost</b>
 </status>
