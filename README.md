@@ -1,19 +1,16 @@
-﻿[![Build status](https://ci.appveyor.com/api/projects/status/6o73j4hrbk02xroq?svg=true)](https://ci.appveyor.com/project/Mykezero/easyfarm)
-
-
 ### EasyFarm
-EasyFarm is a general purpose farming tool for Final Fantasy XI. 
+General purpose farming tool for Final Fantasy XI. 
 
-![EasyFarm GUI](http://i.imgur.com/pcrEm66.png)
-
-#### Notice: 
-The new version of the program uses a different library produced by [EliteMMO](http://www.elitemmonetwork.com/). 
-If you are receiving an "Object reference not set to an instance of an object" message try running the requirements checker which can be found here: http://www.elitemmonetwork.com/forums/viewtopic.php?f=28&t=329
+![EasyFarm GUI](https://cloud.githubusercontent.com/assets/5349608/15102711/9fc40d76-1570-11e6-97fb-09b338c5322b.png)
 
 #### Downloads 
-* [GitHub](https://github.com/EasyFarm/EasyFarm/releases): Release.zip contains the latest version. 
+[![Build status](https://ci.appveyor.com/api/projects/status/6o73j4hrbk02xroq?svg=true)](https://ci.appveyor.com/project/Mykezero/easyfarm)
 
-#### License
+The newest version of EaryFarm can be found under [Releases](https://github.com/EasyFarm/EasyFarm/releases).
+
+#### EasyFarm is Free Software
+![GPLv3](http://www.gnu.org/graphics/gplv3-127x51.png)
+
 EasyFarm is free software produced under the GPLv3 license with the goal of producing a first class automation software for Final Fantasy XI that is freely accessible to everyone. 
 
 #### Project Status
@@ -35,10 +32,11 @@ Development has slowed, and mostly happens on the weekends.
 * Resource Files (Optional)
 * [Microsoft .NET Framework 4.5](https://www.microsoft.com/en-US/Download/details.aspx?id=30653)
 * [Visual C++ Redistributable Packages for Visual Studio 2013]
-
+* [Visual C++ Redistributable Packages for Visual Studio 2015]
+* 
     *Use the tool provided by EliteMMO to check for missing packages: http://www.elitemmonetwork.com/forums/viewtopic.php?f=28&t=329*
     
-    *Make sure your using the X86 version of the Visual Studio 2013 C++ Redistributable even if you have a 64 bit operating system.*
+    *Make sure your using the X86 version of the Visual Studio C++ Redistributables even if you have a 64 bit operating system.*
     
 #### Tutorials
 Visit the [tutorials](https://github.com/EasyFarm/EasyFarm/blob/master/Documentation/readme.md) page for more information on setting up the program. 
@@ -47,11 +45,11 @@ Visit the [tutorials](https://github.com/EasyFarm/EasyFarm/blob/master/Documenta
 There's a few ways you can ask questions about the program or make suggestions to improve it. No option is preferred over the others so feel free to shoot me an email directly if you'd like! ^^;
 * [EliteMMO Forums](http://www.elitemmonetwork.com/forums/viewtopic.php?f=10&t=394&sid=8152260e9de28e6e0a8319cae7701bd0)
 * [Support Issue](https://github.com/EasyFarm/EasyFarm/issues/192) 
+* [By Email: nortrabkeim@liamg.moc](nortrabkeim@liamg.moc) 
+* *Just reverse the words, for example: oof@rab.zab -> foo@bar.baz :wink:*
 
 #### Want to contribute?
-Anyone can contribute to the project. Just make sure you've done your best to test the code you are changing and send me a pull request, and I'll add in your contribution!
-
-Contributions to the tutorial section are highly welcomed! You can submit a pull request if your tech savvy or post in the [support issue](https://github.com/EasyFarm/EasyFarm/issues/192) and I'll add in your contribution!!
+Anyone can contribute to the project. Do your best to test the code, and I'll add in your contribution! Contributions to the tutorial section are highly welcomed!
 
 #### Special Thanks!
 
