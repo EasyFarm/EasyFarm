@@ -7,4 +7,4 @@
 
 *This will prefill common settings like TPCost, Prefix, Target and Index some of which can be accessed through the right-click context menu.*
 
-![](images/weaponskills.png)
+![image](https://cloud.githubusercontent.com/assets/5349608/16570537/f54dc478-4214-11e6-9ccf-4c48f89699b0.png)
