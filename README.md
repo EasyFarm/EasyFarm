@@ -40,7 +40,7 @@ Development has slowed, and mostly happens on the weekends.
 **Important:** *Make sure you're using the X86 version of the Visual Studio C++ Redistributables even if you have a 64 bit operating system.*
     
 #### Tutorials
-Visit the [tutorials](https://github.com/EasyFarm/EasyFarm/blob/master/Documentation/readme.md) page for more information on setting up the program. 
+Visit the [tutorials](https://github.com/EasyFarm/EasyFarm/wiki) page for more information on setting up the program. 
 
 #### Support
 There's a few ways you can ask questions about the program or make suggestions to improve it. No option is preferred over the others so feel free to shoot me an email directly if you'd like! ^^;
