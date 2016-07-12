@@ -46,7 +46,6 @@ Visit the [tutorials](https://github.com/EasyFarm/EasyFarm/wiki) page for more i
 There's a few ways you can ask questions about the program or make suggestions to improve it. No option is preferred over the others so feel free to shoot me an email directly if you'd like! ^^;
 * [EliteMMO Forums](http://www.elitemmonetwork.com/forums/viewtopic.php?f=10&t=394&sid=8152260e9de28e6e0a8319cae7701bd0)
 * [Github Issues](https://github.com/EasyFarm/EasyFarm/issues)
-* [Email](mikebartron@gmail.com)
 
 #### Want to contribute?
 Anyone can contribute to the project. Do your best to test the code, and I'll add in your contribution! Contributions to the tutorial section are highly welcomed!
