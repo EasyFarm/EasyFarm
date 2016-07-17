@@ -31,15 +31,16 @@ Development has slowed, and mostly happens on the weekends.
 * Ashita or Windower
 * Resource Files (Optional)
 * [Microsoft .NET Framework 4.5](https://www.microsoft.com/en-US/Download/details.aspx?id=30653)
-* [Visual C++ Redistributable Packages for Visual Studio 2013]
-* [Visual C++ Redistributable Packages for Visual Studio 2015]
-* 
-    *Use the tool provided by EliteMMO to check for missing packages: http://www.elitemmonetwork.com/forums/viewtopic.php?f=28&t=329*
-    
-    *Make sure your using the X86 version of the Visual Studio C++ Redistributables even if you have a 64 bit operating system.*
+* Visual C++ Redistributable Packages for Visual Studio 2013  
+* Visual C++ Redistributable Packages for Visual Studio 2015  
+
+**Note:** You can use the EliteMMO system checker tool to check for missing packages:  
+* http://www.elitemmonetwork.com/forums/viewtopic.php?f=28&t=329. 
+
+**Important:** *Make sure you're using the X86 version of the Visual Studio C++ Redistributables even if you have a 64 bit operating system.*
     
 #### Tutorials
-Visit the [tutorials](https://github.com/EasyFarm/EasyFarm/blob/master/Documentation/readme.md) page for more information on setting up the program. 
+Visit the [tutorials](https://github.com/EasyFarm/EasyFarm/wiki) page for more information on setting up the program. 
 
 #### Support
 There's a few ways you can ask questions about the program or make suggestions to improve it. No option is preferred over the others so feel free to shoot me an email directly if you'd like! ^^;
