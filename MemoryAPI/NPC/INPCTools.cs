@@ -1,10 +1,12 @@
-﻿namespace MemoryAPI
+﻿using MemoryAPI.Navigation;
+
+namespace MemoryAPI
 {
     public interface INPCTools
     {
         int ClaimedID(int id);
         double Distance(int id);
-        IPosition GetPosition(int id);
+        Position GetPosition(int id);
         short HPPCurrent(int id);
         bool IsActive(int id);
         bool IsClaimed(int id);

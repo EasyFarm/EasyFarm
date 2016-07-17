@@ -20,7 +20,7 @@ using System;
 
 namespace MemoryAPI.Navigation
 {
-    public class Position : IPosition
+    public class Position
     {
         public float H { get; set; }
 

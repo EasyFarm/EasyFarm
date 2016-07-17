@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 using System;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
+using EasyFarm.States;
 using Prism.Mvvm;
 using MemoryAPI;
 using MemoryAPI.Navigation;
@@ -155,11 +156,6 @@ namespace EasyFarm.Classes
         /// </summary>
         public double WanderDistance = Constants.DetectionDistance;
 
-        /// <summary>
-        ///     List of all waypoints that make up the bots path
-        /// </summary>
-        public ObservableCollection<Position> Waypoints;
-
         static Config()
         {
             // Add battle moves at the start only once since deserialization
@@ -181,7 +177,6 @@ namespace EasyFarm.Classes
         {
             MainWindowTitle = "EasyFarm";
             StatusBarText = string.Empty;
-            Waypoints = new ObservableCollection<Position>();
         }
 
         [XmlIgnore]
@@ -191,10 +186,12 @@ namespace EasyFarm.Classes
             set { _lazy = new Lazy<Config>(() => value); }
         }
 
+        public Route Route = new Route();
+
         /// <summary>
         /// Bot runs a straight route. 
         /// </summary>
-        public bool StraightRoute = true;
+        public bool StraightRoute => Route.StraightRoute;
 
         /// <summary>
         /// The distance with which to follow a player.  

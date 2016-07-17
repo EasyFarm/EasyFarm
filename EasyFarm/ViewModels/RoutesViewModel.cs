@@ -21,6 +21,7 @@ using System.Windows;
 using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
+using EasyFarm.States;
 using Prism.Commands;
 using MemoryAPI;
 using MemoryAPI.Navigation;
@@ -73,17 +74,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ObservableCollection<Position> Route
         {
-            get { return Config.Instance.Waypoints; }
-            set { SetProperty(ref Config.Instance.Waypoints, value); }
-        }
-
-        /// <summary>
-        /// Makes the bot run a straight path. 
-        /// </summary>
-        public bool Straight
-        {
-            get { return Config.Instance.StraightRoute; }
-            set { SetProperty(ref Config.Instance.StraightRoute, value); }
+            get { return Config.Instance.Route.Waypoints; }
+            set { SetProperty(ref Config.Instance.Route.Waypoints, value); }
         }
 
         /// <summary>
@@ -117,7 +109,7 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private void ClearRoute()
         {
-            Route.Clear();
+            Config.Instance.Route.Reset();
         }
 
         /// <summary>
@@ -125,13 +117,21 @@ namespace EasyFarm.ViewModels
         ///     its current state.
         /// </summary>
         private void Record()
-        {
+        {            
             // Return when the user has not selected a process. 
             if (FFACE == null)
             {
                 AppServices.InformUser("No process has been selected.");
                 return;
             }
+
+            if (FFACE.Player.Zone != Config.Instance.Route.Zone && Config.Instance.Route.Zone != Zone.Unknown)
+            {
+                AppServices.InformUser("Cannot record waypoints from a different zone.");
+                return;
+            }
+
+            Config.Instance.Route.Zone = FFACE.Player.Zone;
 
             if (!_recorder.IsRecording)
             {
@@ -150,7 +150,7 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private void Save()
         {
-            AppServices.InformUser(_settings.TrySave(Route) ? "Path has been saved." : "Failed to save path.");
+            AppServices.InformUser(_settings.TrySave(Config.Instance.Route) ? "Path has been saved." : "Failed to save path.");
         }
 
         /// <summary>
@@ -158,7 +158,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private void Load()
         {
-            Route = _settings.TryLoad<ObservableCollection<Position>>();
+            var route = _settings.TryLoad<Route>();
+            if (route != null) Config.Instance.Route = route;
             AppServices.InformUser(Route != null ? "Path has been loaded." : "Failed to load the path.");
         }
 

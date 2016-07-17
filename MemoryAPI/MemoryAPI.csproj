@@ -59,7 +59,6 @@
     <Compile Include="Navigation\Position.cs" />
     <Compile Include="Navigation\INavigatorTools.cs" />
     <Compile Include="NPC\INPCTools.cs" />
-    <Compile Include="NPC\IPosition.cs" />
     <Compile Include="PartyMember\IPartyMemberTools.cs" />
     <Compile Include="Player\IPlayerTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

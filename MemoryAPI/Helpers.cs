@@ -8,12 +8,13 @@ namespace EasyFarm
     {
         public static Position ToPosition(float x, float y, float z, float h)
         {
-            var position = new Position();
-
-            position.X = x;
-            position.Y = y;
-            position.Z = z;
-            position.H = h;
+            var position = new Position
+            {
+                X = x,
+                Y = y,
+                Z = z,
+                H = h
+            };
 
             return position;
         }

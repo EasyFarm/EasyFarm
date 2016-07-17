@@ -1,4 +1,5 @@
-﻿using EasyFarm.Classes;
+﻿using System.Threading;
+using EasyFarm.Classes;
 using MemoryAPI;
 
 namespace EasyFarm.States
@@ -26,8 +27,11 @@ namespace EasyFarm.States
             // Stop program from running to next waypoint.
             fface.Navigator.Reset();
 
-            // Stop the engine from running.
-            AppServices.SendPauseEvent();
+            // Wait until we are done zoning.
+            while (fface.Player.Stats.Str == 0)
+            {
+                Thread.Sleep(500);
+            }
         }
     }
 }

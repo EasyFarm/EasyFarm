@@ -1,4 +1,6 @@
-﻿namespace MemoryAPI
+﻿using MemoryAPI.Navigation;
+
+namespace MemoryAPI
 {
     public interface IPlayerTools
     {
@@ -8,7 +10,7 @@
         int MPCurrent { get; }
         int MPPCurrent { get; }
         string Name { get; }
-        IPosition Position { get; }
+        Position Position { get; }
         float PosX { get; }
         float PosY { get; }
         float PosZ { get; }

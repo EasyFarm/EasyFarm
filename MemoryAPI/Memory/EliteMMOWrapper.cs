@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MemoryAPI.Memory;
+using MemoryAPI.Navigation;
 
 namespace EasyFarm
 {
@@ -45,12 +46,7 @@ namespace EasyFarm
                 this.api = api;
             }
 
-            /// <summary>
-            /// Makes the player look at the specified position. 
-            /// </summary>            
-            /// Author: SMD111
-            /// https://github.com/smd111/EliteMMO.Scripted
-            public bool FaceHeading(IPosition position)
+            public bool FaceHeading(Position position)
             {
                 var player = api.Entity.GetLocalPlayer();
                 var angle = (byte)(Math.Atan((position.Z - player.Z) / (position.X - player.X)) * -(128.0f / Math.PI));
@@ -59,7 +55,7 @@ namespace EasyFarm
                 return api.Entity.SetEntityHPosition(api.Entity.LocalPlayerIndex, (float)radian);
             }
 
-            public double DistanceTo(IPosition position)
+            public double DistanceTo(Position position)
             {
                 var player = api.Entity.GetLocalPlayer();
 
@@ -69,7 +65,7 @@ namespace EasyFarm
                     Math.Pow(position.Z - player.Z, 2));
             }
 
-            public void Goto(IPosition position, bool KeepRunning)
+            public void Goto(Position position, bool KeepRunning)
             {
                 var distance = DistanceTo(position);
 
@@ -120,7 +116,7 @@ namespace EasyFarm
 
             public double Distance(int id) { return api.Entity.GetEntity(id).Distance; }
 
-            public IPosition GetPosition(int id)
+            public Position GetPosition(int id)
             {
                 var entity = api.Entity.GetEntity(id);
                 return Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H);
@@ -233,7 +229,7 @@ namespace EasyFarm
                 get { return api.Player.Name; }
             }
 
-            public IPosition Position
+            public Position Position
             {
                 get
                 {

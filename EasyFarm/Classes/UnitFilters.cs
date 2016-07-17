@@ -63,9 +63,9 @@ namespace EasyFarm.Classes
             if (mob.IsPet) return false;
 
             // If any unit is within the wander distance then the
-            if (Config.Instance.Waypoints.Any())
+            if (Config.Instance.Route.Waypoints.Any())
             {
-                if (!(Config.Instance.Waypoints.Any(waypoint => Distance(mob, waypoint) <= Config.Instance.WanderDistance))) return false;
+                if (!(Config.Instance.Route.Waypoints.Any(waypoint => Distance(mob, waypoint) <= Config.Instance.WanderDistance))) return false;
             }
 
             // Mob too high out of reach.

@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using EasyFarm.Classes;
 using MemoryAPI;
@@ -27,14 +26,20 @@ namespace EasyFarm.States
 {
     public class TravelState : BaseState
     {
-        private int _position;
+        private Route Route => Config.Instance.Route;
 
         public TravelState(IMemoryAPI fface) : base(fface) { }
 
         public override bool CheckComponent()
         {
             // Waypoint list is empty.
-            if (Config.Instance.Waypoints.Count <= 0) return false;
+            if (!Route.HasWaypoints) return false;
+
+            // Route belongs to a different zone.
+            if (Route.Zone != fface.Player.Zone) return false;
+
+            // Route is out of walking distance. 
+            if (!Route.IsWithinDistance(fface.Player.Position, 20)) return false;
 
             // We are not able to attack any creatures. 
             if (new ApproachState(fface).CheckComponent()) return false;
@@ -52,38 +57,17 @@ namespace EasyFarm.States
                 return false;
 
             return true;
-        }
+        }        
 
         public override void RunComponent()
         {            
             // Navigator must be set by convention (other states could override)
             fface.Navigator.DistanceTolerance = 1;
 
-            // Make a copy of the waypoint path from config. 
-            var route = Config.Instance.Waypoints.ToList();            
-
-            // Reverse the waypoint path. 
-            if (_position == route.Count)
-            {
-                if (Config.Instance.StraightRoute)
-                {
-                    Config.Instance.Waypoints = new ObservableCollection<Position>(Config.Instance.Waypoints.Reverse());
-                    route = Config.Instance.Waypoints.ToList();
-                }
-
-                _position = 0;
-            }
-
-            // If far away from the path, set us to run to the closest waypoint
-            if (fface.Navigator.DistanceTo(route[_position]) > 15)
-            {
-                var closest = route.OrderBy(x => fface.Navigator.DistanceTo(x)).FirstOrDefault();
-                _position = route.IndexOf(closest);
-            }
+            var nextPosition = Route.GetNextPosition(fface.Player.Position);
 
             // Run to the waypoint allowing cancellation on aggro or paused.             
-            fface.Navigator.Goto(route[_position], false);
-            _position++;
+            fface.Navigator.Goto(nextPosition, false);            
         }
     }
 }

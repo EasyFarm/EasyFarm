@@ -181,6 +181,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="States\PlayerMovementTracker.cs" />
+    <Compile Include="States\Route.cs" />
     <Compile Include="States\ZoneState.cs" />
     <Compile Include="States\DeadState.cs" />
     <Compile Include="States\FollowState.cs" />
