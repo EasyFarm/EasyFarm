@@ -4,41 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:EasyFarm.Views"
+             xmlns:local="clr-namespace:EasyFarm.Classes"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="600">
     <UserControl.Resources>
-        <!-- Removes the blue border around selected and hovered over items. -->
-        <Style x:Key="ListBoxItemContainer"
-               TargetType="{x:Type ListBoxItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border Background="Transparent">
-                            <ContentPresenter />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        <HierarchicalDataTemplate DataType="{x:Type local:BattleList}"
+                                  ItemsSource="{Binding Path=Actions}">
+            <TextBlock Text="{Binding Path=Name}" />
+        </HierarchicalDataTemplate>
 
-            <!-- Add border around selected ability. -->
-            <Style.Triggers>
-                <Trigger Property="IsSelected"
-                         Value="True">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListBoxItem">
-                                <Border Background="WhiteSmoke"
-                                        BorderBrush="LightGray"
-                                        BorderThickness="2">
-                                    <ContentPresenter />
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+        <HierarchicalDataTemplate DataType="{x:Type local:BattleAbility}">
+            <TextBlock Text="{Binding Path=Name, TargetNullValue='New Action'}" />
+        </HierarchicalDataTemplate>
+
+        <ControlTemplate x:Key="DetailsTemplate">
+            <views:AbilityView />
+        </ControlTemplate>
     </UserControl.Resources>
 
     <DockPanel>
@@ -75,11 +57,12 @@
             </Grid.RowDefinitions>
 
             <!-- Master Ability View-->
-            <TreeView Margin="5"
+            <TreeView Name="Master"
+                      Margin="5"
                       Grid.Column="0"
                       Grid.ColumnSpan="2"
-                      Width="100"
                       ItemsSource="{Binding BattleLists}"
+                      SelectedItemChanged="Master_OnSelectedItemChanged">
             </TreeView>
 
             <!-- Splitter -->
@@ -88,9 +71,14 @@
                           Width="5" />
 
             <!-- Detail Ability View -->
-            <views:AbilityView Grid.Row="0"
-                               Grid.Column="2"
-                               Margin="5" />
+            <ScrollViewer Grid.Row="0"
+                          Grid.Column="2"
+                          Margin="5">
+                <ContentControl Name="Details"
+                                Template="{StaticResource DetailsTemplate}"
+                                Content="{Binding ElementName=Master, Path=SelectedItem}">
+                </ContentControl>
+            </ScrollViewer>
         </Grid>
     </DockPanel>
 </UserControl>

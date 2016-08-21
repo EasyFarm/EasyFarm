@@ -49,6 +49,14 @@ namespace EasyFarm.Classes
             // TP Check
             if (action.Ability.TpCost > fface.Player.TPCurrent) return false;
 
+            // MP Range
+            var mpReserve = new Range(action.MPReserveLow, action.MPReserveHigh);
+            if (!mpReserve.InRange(fface.Player.MPPCurrent) && !mpReserve.NotSet()) return false;
+
+            // TP Range
+            var tpReserve = new Range(action.TPReserveLow, action.TPReserveHigh);
+            if (!mpReserve.InRange(fface.Player.TPCurrent) && !tpReserve.NotSet()) return false;
+
             // Usage Limit Check. 
             if (action.UsageLimit != 0)
             {

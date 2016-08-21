@@ -16,6 +16,10 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Windows;
+using EasyFarm.Classes;
+using EasyFarm.ViewModels;
+
 namespace EasyFarm.Views
 {
     /// <summary>
@@ -26,6 +30,17 @@ namespace EasyFarm.Views
         public BattlesView()
         {
             InitializeComponent();
+        }
+
+        private void Master_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            var model = DataContext as BattlesViewModel;
+            if (model == null) return;
+
+            model.SelectedAbility = e.NewValue as BattleAbility;
+            model.SelectedList = e.NewValue as BattleList;
+
+            Details.DataContext = (e.NewValue as BattleAbility);
         }
     }
 }

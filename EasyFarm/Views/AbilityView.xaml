@@ -29,6 +29,12 @@
                           SelectedItem="{Binding Ability.TargetType}" />
             </UniformGrid>
 
+            <!-- AutoFill -->
+            <Button Margin="5"
+                    Content="Auto-Fill"
+                    ToolTip="Auto-fill fields with information from Windower's resource files. "
+                    Command="{Binding AutoFillCommand}" />
+
             <GroupBox>
                 <UniformGrid>
                     <!-- Distance -->
@@ -79,6 +85,31 @@
                     <controls:NumericUpDown Margin="5"
                                             ToolTip="Limits action recast in seconds. "
                                             Value="{Binding Recast}" />
+
+                    <!-- MP Range-->
+                    <Label Margin="5"
+                           Content="MP Range" />
+
+                    <controls:RangeSlider Margin="5"
+                                          Maximum="100"
+                                          Minimum="0"
+                                          LowerValue="{Binding MPReserveLow}"
+                                          UpperValue="{Binding MPReserveHigh}"
+                                          ToolTip="Use action only when MP is within range." />
+                    
+                    <!-- TP Range-->
+                    <Label Margin="5"
+                           Content="TP Range" />
+
+                    <controls:RangeSlider Margin="5"
+                                          Maximum="3000"
+                                          Minimum="0"
+                                          TickFrequency="100"
+                                          IsSnapToTickEnabled="True"
+                                          LowerValue="{Binding TPReserveLow}"
+                                          UpperValue="{Binding TPReserveHigh}"
+                                          ToolTip="Use action only when TP is within range." />
+
                 </UniformGrid>
             </GroupBox>
 
@@ -121,12 +152,6 @@
                                           RenderTransformOrigin="0.478,0.471" />
                 </UniformGrid>
             </GroupBox>
-
-            <!-- AutoFill -->
-            <Button Margin="5"
-                    Content="Auto-Fill"
-                    ToolTip="Auto-fill fields with information from Windower's resource files. "
-                    Command="{Binding AutoFillCommand}" />
         </StackPanel>
     </GroupBox>
 </UserControl>

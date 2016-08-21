@@ -115,6 +115,12 @@ namespace EasyFarm.Classes
         /// </summary>
         private int _usages;
 
+        private int _mpReserveLow;
+        private int _mpReserveHigh;
+
+        private int _tpReserveLow;
+        private int _tpReserveHigh;
+
         static BattleAbility()
         {
             var commandTypes = new ObservableCollection<AbilityType>
@@ -127,7 +133,7 @@ namespace EasyFarm.Classes
                 AbilityType.Pet,
                 AbilityType.Range,
                 AbilityType.Song,
-                AbilityType.Weaponskill, 
+                AbilityType.Weaponskill,
                 AbilityType.Item
             };
 
@@ -307,6 +313,46 @@ namespace EasyFarm.Classes
             }
         }
 
+        public int MPReserveLow
+        {
+            get { return _mpReserveLow; }
+            set
+            {
+                SetProperty(ref _mpReserveLow, value);
+                AppServices.InformUser($"MP range set {_mpReserveLow} TO {_mpReserveHigh}.");
+            }
+        }
+
+        public int MPReserveHigh
+        {
+            get { return _mpReserveHigh; }
+            set
+            {
+                SetProperty(ref _mpReserveHigh, value);
+                AppServices.InformUser($"MP range set {_mpReserveLow} TO {_mpReserveHigh}.");
+            }
+        }
+
+        public int TPReserveLow
+        {
+            get { return _tpReserveLow; }
+            set
+            {
+                SetProperty(ref _tpReserveLow, value);
+                AppServices.InformUser($"TP range set {_tpReserveLow} TO {_tpReserveHigh}.");
+            }
+        }
+
+        public int TPReserveHigh
+        {
+            get { return _tpReserveHigh; }
+            set
+            {
+                SetProperty(ref _tpReserveHigh, value);
+                AppServices.InformUser($"TP range set {_tpReserveLow} TO {_tpReserveHigh}.");
+            }
+        }        
+        
         public bool TriggerOnEffectPresent
         {
             get { return _triggerOnEffectPresent; }
@@ -327,7 +373,8 @@ namespace EasyFarm.Classes
         {
             get { return _usages; }
             set { SetProperty(ref _usages, value); }
-        }
+        }        
+
         /// <summary>
         ///     Sets the ability field.
         /// </summary>
@@ -381,6 +428,6 @@ namespace EasyFarm.Classes
             }
 
             return moves.FirstOrDefault();
-        }
+        }    
     }
 }
