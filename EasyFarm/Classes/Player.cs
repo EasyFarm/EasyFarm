@@ -60,5 +60,11 @@ namespace EasyFarm.Classes
                 fface.Windower.SendString(Constants.AttackOff);
             }
         }
+
+        public static void StopRunning(IMemoryAPI fface)
+        {
+            fface.Navigator.Reset();
+            Thread.Sleep(100);
+        }
     }
 }

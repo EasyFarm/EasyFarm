@@ -58,29 +58,33 @@ namespace EasyFarm.Classes
         ///     executed.
         /// </summary>
         private bool EnsureCast(string command)
-        {
-            while (Player.Instance.IsMoving)
-            {
-                Thread.Sleep(100);
-            }
-
-            // Chainspelled spells will always be cast without fail so 
-            // cast it and return immediately. 
-            if (_fface.Player.StatusEffects.Contains(StatusEffect.Chainspell))
-            {
-                _fface.Windower.SendString(command);
-                return true;
-            }
-
+        {            
             // Ensure command has been successfully sent. 
             var previous = _fface.Player.CastPercentEx;
             var startTime = DateTime.Now;
+            var interval = startTime.AddSeconds(3);
 
-            while (DateTime.Now < startTime.AddSeconds(3))
+            while (DateTime.Now < interval)
             {
-                if (previous != _fface.Player.CastPercentEx) return true;
+                while(Player.Instance.IsMoving)
+                {
+                    Player.StopRunning(_fface);
+                }
+
+                if (_fface.Player.Status == Status.Healing)
+                {
+                    Player.Stand(_fface);
+                }
+
+                if (_fface.Player.StatusEffects.Contains(StatusEffect.Chainspell))
+                {
+                    _fface.Windower.SendString(command);
+                    return true;
+                }                             
+
+                if (Math.Abs(previous - _fface.Player.CastPercentEx) > .5) return true;
                 _fface.Windower.SendString(command);
-                Thread.Sleep(100);
+                Thread.Sleep(500);
             }
 
             return false;
@@ -96,7 +100,7 @@ namespace EasyFarm.Classes
             {
                 if (Math.Abs(prior - _fface.Player.CastPercentEx) < .5)
                 {
-                    if(!stopwatch.IsRunning) stopwatch.Start();
+                    if (!stopwatch.IsRunning) stopwatch.Start();
                 }
                 else
                 {

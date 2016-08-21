@@ -20,14 +20,17 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            
+
             <!-- Add border around selected ability. -->
             <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
+                <Trigger Property="IsSelected"
+                         Value="True">
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ListBoxItem">
-                                <Border Background="WhiteSmoke" BorderBrush="LightGray" BorderThickness="2">
+                                <Border Background="WhiteSmoke"
+                                        BorderBrush="LightGray"
+                                        BorderThickness="2">
                                     <ContentPresenter />
                                 </Border>
                             </ControlTemplate>
@@ -72,38 +75,22 @@
             </Grid.RowDefinitions>
 
             <!-- Master Ability View-->
-            <ListBox Name="Master"
-                     Margin="5"
-                     Grid.Column="0"
-                     Grid.ColumnSpan="2"
-                     ItemsSource="{Binding BattleLists}"
-                     SelectedItem="{Binding SelectedList}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Label Content="{Binding Name}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <TreeView Margin="5"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="2"
+                      Width="100"
+                      ItemsSource="{Binding BattleLists}"
+            </TreeView>
 
             <!-- Splitter -->
-            <GridSplitter Grid.Row="0" Grid.Column="1"
+            <GridSplitter Grid.Row="0"
+                          Grid.Column="1"
                           Width="5" />
 
             <!-- Detail Ability View -->
-            <ScrollViewer Grid.Row="0" Grid.Column="2"
-                          HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Auto"
-                          Margin="5">
-                <ListBox ItemsSource="{Binding ElementName=Master, Path=SelectedValue.Actions}"
-                         ItemContainerStyle="{StaticResource ListBoxItemContainer}"
-                          SelectedItem="{Binding SelectedAbility}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <views:AbilityView />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </ScrollViewer>
+            <views:AbilityView Grid.Row="0"
+                               Grid.Column="2"
+                               Margin="5" />
         </Grid>
     </DockPanel>
 </UserControl>
