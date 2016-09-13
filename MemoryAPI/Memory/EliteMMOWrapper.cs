@@ -3,6 +3,7 @@ using MemoryAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using MemoryAPI.Memory;
 using MemoryAPI.Navigation;
 
@@ -51,7 +52,7 @@ namespace EasyFarm
                 var player = api.Entity.GetLocalPlayer();
                 var angle = (byte)(Math.Atan((position.Z - player.Z) / (position.X - player.X)) * -(128.0f / Math.PI));
                 if (player.X > position.X) angle += 128;
-                var radian = (((float)angle) / 255) * 2 * Math.PI;
+                var radian = (float)angle / 255 * 2 * Math.PI;
                 return api.Entity.SetEntityHPosition(api.Entity.LocalPlayerIndex, (float)radian);
             }
 
@@ -65,14 +66,11 @@ namespace EasyFarm
                     Math.Pow(position.Z - player.Z, 2));
             }
 
-            public void Goto(Position position, bool KeepRunning)
+            public void Goto(Position position)
             {
-                var distance = DistanceTo(position);
-
                 if (DistanceTo(position) > DistanceTolerance)
                 {
                     DateTime duration = DateTime.Now.AddSeconds(5);
-                    var player = api.Entity.GetLocalPlayer();
                     api.ThirdParty.KeyDown(Keys.NUMPAD8);
 
                     while (DistanceTo(position) > DistanceTolerance && DateTime.Now < duration)
@@ -84,17 +82,94 @@ namespace EasyFarm
 
                         FaceHeading(position);
 
-                        System.Threading.Thread.Sleep(30);
+                        AvoidObstacles();
+
+                        Thread.Sleep(30);
                     }
 
                     api.ThirdParty.KeyUp(Keys.NUMPAD8);
                 }
             }
 
+            /// <summary>
+            /// Attempts to get a stuck player moving again. 
+            /// </summary>
+            private void AvoidObstacles()
+            {
+                if (IsStuck())
+                {
+                    if (IsEngaged()) Disengage();
+                    WiggleCharacter(attempts: 3);
+                }                
+            }
+
+            /// <summary>
+            /// Determines if the player has become stuck. 
+            /// </summary>
+            /// <returns></returns>
+            /// <remarks>
+            /// Author: dlsmd
+            /// http://www.elitemmonetwork.com/forums/viewtopic.php?p=4627#p4627
+            /// </remarks>
+            private bool IsStuck()
+            {
+                var firstX = api.Player.X;
+                var firstZ = api.Player.Z;
+                Thread.Sleep(TimeSpan.FromSeconds(0.5));
+                var dchange = Math.Pow(firstX - api.Player.X, 2) + Math.Pow(firstZ - api.Player.Z, 2);
+                return Math.Abs(dchange) < 1;
+            }
+
+            /// <summary>
+            /// If the player is in fighting stance. 
+            /// </summary>
+            /// <returns></returns>
+            private bool IsEngaged()
+            {
+                return api.Player.Status == (ulong) Status.Fighting;
+            }
+
+            /// <summary>
+            /// Stop fighting the current target. 
+            /// </summary>
+            private void Disengage()
+            {
+                api.ThirdParty.SendString("/attack off");
+                Thread.Sleep(30);
+            }
+
+            /// <summary>
+            /// Wiggles the character left and right to become unstuck when stuck on an object.
+            /// </summary>
+            /// <returns></returns>
+            /// <remarks>
+            /// Author: dlsmd 
+            /// http://www.elitemmonetwork.com/forums/viewtopic.php?p=4627#p4627
+            /// </remarks>
+            private void WiggleCharacter(int attempts)
+            {
+                int count = 0;
+                float dir = -45;
+                while (IsStuck() && attempts-- > 0)
+                {
+                    api.Entity.GetLocalPlayer().H = api.Player.H + (float)(Math.PI / 180 * dir);
+                    api.ThirdParty.KeyDown(Keys.NUMPAD8);
+                    Thread.Sleep(TimeSpan.FromSeconds(2));
+                    api.ThirdParty.KeyUp(Keys.NUMPAD8);
+                    count++;
+                    if (count == 4)
+                    {
+                        dir = (Math.Abs(dir - -45) < .001 ? 45 : -45);
+                        count = 0;
+                    }
+                }
+                api.ThirdParty.KeyUp(Keys.NUMPAD8);
+            }
+
             public void GotoNPC(int ID)
             {
                 var entity = api.Entity.GetEntity(ID);
-                Goto(Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H), false);
+                Goto(Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H));
             }
 
             public void Reset()

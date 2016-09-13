@@ -61,13 +61,9 @@ namespace EasyFarm.States
 
         public override void RunComponent()
         {            
-            // Navigator must be set by convention (other states could override)
             fface.Navigator.DistanceTolerance = 1;
-
             var nextPosition = Route.GetNextPosition(fface.Player.Position);
-
-            // Run to the waypoint allowing cancellation on aggro or paused.             
-            fface.Navigator.Goto(nextPosition, false);            
+            fface.Navigator.Goto(nextPosition);            
         }
     }
 }
