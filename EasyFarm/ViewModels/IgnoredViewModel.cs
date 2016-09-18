@@ -40,13 +40,17 @@ namespace EasyFarm.ViewModels
             set { SetProperty(ref Config.Instance.IgnoredMobs, value); }
         }
 
-        /// <summary>
-        /// Overload for excluding blanks strings from being added. 
-        /// </summary>
         protected override void Add()
         {
             if (string.IsNullOrWhiteSpace(Value)) return;
             base.Add();
+            Value = "";
+        }
+
+        protected override void Clear()
+        {
+            base.Clear();
+            Value = "";
         }
     }
 }

@@ -66,8 +66,15 @@ namespace EasyFarm.ViewModels
 
         protected override void Add()
         {
-            if(string.IsNullOrWhiteSpace(Value)) return;
+            if(string.IsNullOrWhiteSpace(Value)) return;            
             base.Add();
+            Value = "";
+        }
+
+        protected override void Clear()
+        {
+            base.Clear();
+            Value = "";
         }
     }
 }
