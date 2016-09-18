@@ -25,7 +25,6 @@ using Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Battles")]
     public class BattlesViewModel : ViewModelBase
     {
         public BattlesViewModel()
@@ -33,6 +32,7 @@ namespace EasyFarm.ViewModels
             AddActionCommand = new DelegateCommand(AddAction);
             DeleteActionCommand = new DelegateCommand(DeleteAction);
             ClearActionsCommand = new DelegateCommand(ClearActions);
+            ViewName = "Battles";
         }
 
         public ObservableCollection<BattleList> BattleLists

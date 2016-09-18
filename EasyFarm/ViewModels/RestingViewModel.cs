@@ -21,9 +21,13 @@ using EasyFarm.Infrastructure;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Resting")]
     public class RestingViewModel : ViewModelBase
     {
+        public RestingViewModel()
+        {
+            ViewName = "Resting";
+        }
+
         public int LowHp
         {
             get { return Config.Instance.LowHealth; }

@@ -23,12 +23,12 @@ using Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Settings")]
     public class SettingsViewModel : ViewModelBase
     {
         public SettingsViewModel()
         {
             RestoreDefaultsCommand = new DelegateCommand(RestoreDefaults);
+            ViewName = "Settings";
         }
 
         public ICommand RestoreDefaultsCommand { get; set; }

@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System.Windows;
-using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
 using EasyFarm.Properties;
 using EasyFarm.Parsing;
@@ -50,13 +49,10 @@ namespace EasyFarm
         protected override void OnStartup(StartupEventArgs e)
         {
             Log.Initialize();
-
             Log.Write("Resources loaded");
             AbilityService = new AbilityService("resources");
-
-            Log.Write("Application starting");
-            var bootStrapper = new Bootstrapper();
-            bootStrapper.Run();            
+            Log.Write("Application starting");        
+            base.OnStartup(e);
         }
 
         /// <summary>

@@ -29,4 +29,7 @@
     <DataTemplate DataType="{x:Type viewModels:FollowViewModel}">
         <views:FollowView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:MainViewModel}">
+        <views:MainView />
+    </DataTemplate>
 </ResourceDictionary>

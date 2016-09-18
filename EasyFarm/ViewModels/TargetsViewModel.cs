@@ -18,13 +18,16 @@ You should have received a copy of the GNU General Public License
 
 using System.Collections.ObjectModel;
 using EasyFarm.Classes;
-using EasyFarm.Infrastructure;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Targets")]
     public class TargetsViewModel : ListViewModel<string>
     {
+        public TargetsViewModel()
+        {
+            ViewName = "Targets";
+        }
+
         public override string Value
         {
             get { return Config.Instance.TargetName; }
