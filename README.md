@@ -1,7 +1,7 @@
 ### EasyFarm
 General purpose farming tool for Final Fantasy XI. 
 
-![EasyFarm GUI](https://cloud.githubusercontent.com/assets/5349608/15102711/9fc40d76-1570-11e6-97fb-09b338c5322b.png)
+![EasyFarm GUI](https://cloud.githubusercontent.com/assets/5349608/18617645/662f66d8-7da2-11e6-8039-af1f54a52dcb.png)
 
 #### Downloads 
 [![Build status](https://ci.appveyor.com/api/projects/status/6o73j4hrbk02xroq?svg=true)](https://ci.appveyor.com/project/Mykezero/easyfarm)
