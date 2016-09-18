@@ -117,11 +117,6 @@ namespace EasyFarm.Classes
         public int LowMagic = 50;
 
         /// <summary>
-        ///     The window's name: player's name.
-        /// </summary>
-        [XmlIgnore] public string MainWindowTitle;
-
-        /// <summary>
         ///     How close the player should be when attacking a creature.
         /// </summary>
         public double MeleeDistance = Constants.MeleeDistance;
@@ -130,11 +125,6 @@ namespace EasyFarm.Classes
         ///     Used to filter out party claimed mobs.
         /// </summary>
         public bool PartyFilter = true;
-
-        /// <summary>
-        ///     The text dislayed at the bottom of the screen
-        /// </summary>
-        [XmlIgnore] public string StatusBarText;
 
         /// <summary>
         ///     A list of mobs that we should only kill.
@@ -167,16 +157,6 @@ namespace EasyFarm.Classes
             Instance.BattleLists.Add(new BattleList("End"));
             Instance.BattleLists.Add(new BattleList("Healing"));
             Instance.BattleLists.Add(new BattleList("Weaponskill"));
-        }
-
-        /// <summary>
-        ///     Sets up the default values for player settings.
-        ///     Used also for unit testing purposes.
-        /// </summary>
-        public Config()
-        {
-            MainWindowTitle = "EasyFarm";
-            StatusBarText = string.Empty;
         }
 
         [XmlIgnore]

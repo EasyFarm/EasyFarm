@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System;
-using System.Drawing;
-using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
@@ -27,7 +24,6 @@ using EasyFarm.Logging;
 using EasyFarm.Views;
 using Prism.Commands;
 using Application = System.Windows.Application;
-using EasyFarm.Properties;
 using MemoryAPI.Memory;
 
 namespace EasyFarm.ViewModels
@@ -37,61 +33,52 @@ namespace EasyFarm.ViewModels
     /// </summary>
     public class MasterViewModel : ViewModelBase
     {
+        private readonly ISystemTray _systemTray;
+
         /// <summary>
         ///     Saves and loads settings from file.
         /// </summary>
-        private readonly SettingsManager _settingsManager;
-
-        /// <summary>
-        ///     This program's icon file.
-        /// </summary>
-        private readonly NotifyIcon _trayIcon = new NotifyIcon();
+        private readonly SettingsManager _settingsManager;        
 
         /// <summary>
         ///     The text displayed on the start / pause button.
         /// </summary>
         private string _startStopHeader = "St_art";
 
-        public MasterViewModel()
+        public MasterViewModel(ISystemTray systemTray)
         {
-            // Create a new settings manager and associate it with our
-            // .eup file type. 
+            _systemTray = systemTray;            
             _settingsManager = new SettingsManager("eup", "EasyFarm User Preference");
 
-            // Get events from view models to update the status bar's text.
+            _systemTray.ConfigureSystemTray(SendToSystemTray, SendToTaskBar);            
+
             AppServices.RegisterEvent<Events.StatusBarEvent>(e => StatusBarText = e.Message);
             AppServices.RegisterEvent<Events.PauseEvent>(x => StopEngine());
             AppServices.RegisterEvent<Events.ResumeEvent>(x => StartEngine());
 
-            // Bind commands to their handlers. 
             StartCommand = new DelegateCommand(Start);
             ExitCommand = new DelegateCommand(Exit);
             SaveCommand = new DelegateCommand(Save);
             LoadCommand = new DelegateCommand(Load);
-            SelectProcessCommand = new DelegateCommand(SelectProcess);
+            SelectProcessCommand = new DelegateCommand(SelectProcess);            
 
-            // Hook up our trayicon for minimization to system tray 
-            _trayIcon.Icon = Resources.trayicon;
-            Application.Current.MainWindow.StateChanged += OnStateChanged;
-            _trayIcon.Click += TrayIcon_Click;
+            OnLoad();
         }
 
-        /// <summary>
-        ///     Bind for the title bar's text.
-        /// </summary>
+        private string _mainWindowTitle;
+
         public string MainWindowTitle
         {
-            get { return Config.Instance.MainWindowTitle; }
-            set { SetProperty(ref Config.Instance.MainWindowTitle, value); }
+            get { return _mainWindowTitle; }
+            set { SetProperty(ref _mainWindowTitle, value); }
         }
 
-        /// <summary>
-        ///     Binding for the status bar's text.
-        /// </summary>
+        private string _statusBarText;
+
         public string StatusBarText
         {
-            get { return Config.Instance.StatusBarText; }
-            set { SetProperty(ref Config.Instance.StatusBarText, value); }
+            get { return _statusBarText; }
+            set { SetProperty(ref _statusBarText, value); }
         }
 
         /// <summary>
@@ -112,7 +99,7 @@ namespace EasyFarm.ViewModels
             set { SetProperty(ref _startStopHeader, value); }
         }
 
-        private bool _minimizedToTray;
+        private bool _minimizedToTray;        
 
         public bool MinimizeToTray
         {
@@ -280,34 +267,23 @@ namespace EasyFarm.ViewModels
             Application.Current.Shutdown();
         }
 
-
-        /// <summary>
-        ///     Shows the main window when we click this icon in the system tray.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void TrayIcon_Click(object sender, EventArgs e)
+        public void SendToSystemTray()
         {
-            Application.Current.MainWindow.WindowState = WindowState.Normal;
-            Application.Current.MainWindow.ShowInTaskbar = true;
-            _trayIcon.Visible = false;
+            if (MinimizeToTray)
+            {
+                _systemTray.Minimize(MainWindowTitle, @"EasyFarm has been minimized.");
+            }            
         }
 
-        /// <summary>
-        ///     Minimizes the application to the system tray.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void OnStateChanged(object sender, EventArgs e)
-        {           
-            if(!MinimizeToTray) return;
+        public void SendToTaskBar()
+        {
+            _systemTray.Unminimize();
+        }
 
-            if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
-            {
-                _trayIcon.Visible = true;
-                _trayIcon.ShowBalloonTip(30, MainWindowTitle, @"EasyFarm has been minimized.", ToolTipIcon.Info);
-                Application.Current.MainWindow.ShowInTaskbar = false;
-            }
+        public void OnLoad()
+        {
+            MainWindowTitle = "EasyFarm";
+            StatusBarText = "";
         }
     }
 }

@@ -210,6 +210,7 @@
     </Compile>
     <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="ViewModels\FollowViewModel.cs" />
+    <Compile Include="Classes\ISystemTray.cs" />
     <Compile Include="ViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\MasterViewModel.cs" />
     <Compile Include="ViewModels\ProcessSelectionViewModel.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="States\StartState.cs" />
     <Compile Include="States\PullState.cs" />
     <Compile Include="States\WeaponskillState.cs" />
+    <Compile Include="Classes\SystemTray.cs" />
     <Compile Include="Views\AbilityView.xaml.cs">
       <DependentUpon>AbilityView.xaml</DependentUpon>
     </Compile>
