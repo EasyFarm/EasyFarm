@@ -237,6 +237,7 @@
     <Compile Include="States\PullState.cs" />
     <Compile Include="States\WeaponskillState.cs" />
     <Compile Include="Classes\SystemTray.cs" />
+    <Compile Include="ViewModels\TargetingViewModel.cs" />
     <Compile Include="Views\AbilityView.xaml.cs">
       <DependentUpon>AbilityView.xaml</DependentUpon>
     </Compile>
@@ -283,6 +284,9 @@
     </Compile>
     <Compile Include="Views\RoutesView.xaml.cs">
       <DependentUpon>RoutesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TargetingView.xaml.cs">
+      <DependentUpon>TargetingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TargetsView.xaml.cs">
       <DependentUpon>TargetsView.xaml</DependentUpon>
@@ -381,6 +385,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\TargetingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TargetsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

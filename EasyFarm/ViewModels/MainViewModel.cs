@@ -43,8 +43,7 @@ namespace EasyFarm.ViewModels
                 new List<IViewModel>
                 {
                     new BattlesViewModel(),                    
-                    new TargetsViewModel(),
-                    new IgnoredViewModel(),
+                    new TargetingViewModel(),
                     new RestingViewModel(),
                     new RoutesViewModel(),
                     new FollowViewModel(),
