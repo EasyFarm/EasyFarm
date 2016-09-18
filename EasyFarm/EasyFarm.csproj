@@ -250,10 +250,6 @@
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BattleSettingsView.xaml.cs">
-      <DependentUpon>BattleSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\BattleSettingsViewModel.cs" />
     <Compile Include="Views\ProcessSelectionView.xaml.cs">
       <DependentUpon>ProcessSelectionView.xaml</DependentUpon>
     </Compile>
@@ -395,10 +391,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\BattleSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
