@@ -16,19 +16,19 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading;
 using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
-using NLog;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Log")]
     public class LogViewModel : ViewModelBase
     {
+        public LogViewModel()
+        {
+            ViewName = "Log";
+        }
+
         public ObservableCollection<string> LoggedItems
         {
             get { return Log.LoggedItems; }

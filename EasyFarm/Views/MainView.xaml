@@ -6,6 +6,9 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary Source="ViewDictionary.xaml"/>
+    </UserControl.Resources>
     <TabControl x:Name="MainTabControl"
                 ItemsSource="{Binding ViewModels}"
                 SelectedIndex="{Binding SelectedIndex}">

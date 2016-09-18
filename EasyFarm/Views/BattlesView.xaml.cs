@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System.Windows;
+using System.Windows.Controls;
 using EasyFarm.Classes;
 using EasyFarm.ViewModels;
 
@@ -41,6 +42,6 @@ namespace EasyFarm.Views
             model.SelectedList = e.NewValue as BattleList;
 
             Details.DataContext = (e.NewValue as BattleAbility);
-        }
+        }        
     }
 }

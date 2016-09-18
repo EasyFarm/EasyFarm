@@ -172,8 +172,6 @@
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
-    <Compile Include="Infrastructure\Regions.cs" />
-    <Compile Include="Infrastructure\ViewNavigator.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -239,14 +237,12 @@
     <Compile Include="States\PullState.cs" />
     <Compile Include="States\WeaponskillState.cs" />
     <Compile Include="Classes\SystemTray.cs" />
+    <Compile Include="ViewModels\TargetingViewModel.cs" />
     <Compile Include="Views\AbilityView.xaml.cs">
       <DependentUpon>AbilityView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Bootstrapper.cs" />
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
-    <Compile Include="Infrastructure\Locator.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
-    <Compile Include="Infrastructure\MainModule.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\FollowView.xaml.cs">
       <DependentUpon>FollowView.xaml</DependentUpon>
@@ -254,10 +250,6 @@
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BattleSettingsView.xaml.cs">
-      <DependentUpon>BattleSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\BattleSettingsViewModel.cs" />
     <Compile Include="Views\ProcessSelectionView.xaml.cs">
       <DependentUpon>ProcessSelectionView.xaml</DependentUpon>
     </Compile>
@@ -288,6 +280,9 @@
     </Compile>
     <Compile Include="Views\RoutesView.xaml.cs">
       <DependentUpon>RoutesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TargetingView.xaml.cs">
+      <DependentUpon>TargetingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TargetsView.xaml.cs">
       <DependentUpon>TargetsView.xaml</DependentUpon>
@@ -386,16 +381,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\TargetingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TargetsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\BattleSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

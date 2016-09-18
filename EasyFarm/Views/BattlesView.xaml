@@ -15,7 +15,19 @@
         </HierarchicalDataTemplate>
 
         <HierarchicalDataTemplate DataType="{x:Type local:BattleAbility}">
-            <TextBlock Text="{Binding Path=Name, TargetNullValue='New Action'}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox
+                    Grid.Column="0"
+                    IsChecked="{Binding IsEnabled}"
+                    ToolTip="Sets the move as active. "/>
+                <TextBlock 
+                    Grid.Column="1"
+                    Text="{Binding Path=Name, TargetNullValue='New Action'}" />
+            </Grid>
         </HierarchicalDataTemplate>
 
         <ControlTemplate x:Key="DetailsTemplate">
@@ -68,7 +80,7 @@
             <!-- Splitter -->
             <GridSplitter Grid.Row="0"
                           Grid.Column="1"
-                          Width="5" />
+                          Width="1" />
 
             <!-- Detail Ability View -->
             <ScrollViewer Grid.Row="0"

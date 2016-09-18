@@ -9,11 +9,6 @@
              d:DesignWidth="522">
     <GroupBox Header="Action">
         <StackPanel>
-            <controls:ToggleSwitch IsChecked="{Binding IsEnabled}"
-                                   Content="Enabled"
-                                   ToolTip="Sets the move as active. "
-                                   Margin="5" />
-
             <UniformGrid Columns="3">
                 <ComboBox Margin="5"
                           IsReadOnly="True"
@@ -34,7 +29,7 @@
                     Content="Auto-Fill"
                     ToolTip="Auto-fill fields with information from Windower's resource files. "
                     Command="{Binding AutoFillCommand}" />
-
+            
             <GroupBox>
                 <UniformGrid>
                     <!-- Distance -->
@@ -96,7 +91,7 @@
                                           LowerValue="{Binding MPReserveLow}"
                                           UpperValue="{Binding MPReserveHigh}"
                                           ToolTip="Use action only when MP is within range." />
-                    
+
                     <!-- TP Range-->
                     <Label Margin="5"
                            Content="TP Range" />
@@ -114,19 +109,19 @@
             </GroupBox>
 
             <GroupBox>
-                <UniformGrid Columns="2">
+                <UniformGrid Columns="4">
                     <!-- Recasting -->
                     <CheckBox Margin="5,9,5,1"
                               IsChecked="{Binding TriggerOnEffectPresent}"
                               ToolTip="Toggles type of status effect check. Check to trigger moves on status effect present. Uncheck to trigger on status effect missing. "
-                              Content="On Status Effect Missing / Received" />
+                              Content="On Status" />
 
                     <TextBox Margin="5"
                              ToolTip="Regular expression that checks the player's status effects. "
                              Text="{Binding StatusEffect}" />
 
                     <!-- Player Health -->
-                    <Label Content="When Player's Health Between"
+                    <Label Content="Player HPP"
                            Margin="5" />
 
                     <controls:RangeSlider Margin="5"
@@ -134,14 +129,14 @@
                                           Maximum="100"
                                           LowerValue="{Binding PlayerLowerHealth}"
                                           UpperValue="{Binding PlayerUpperHealth}"
-                                          ToolTip="Use a move when our character's health falls in this range." />
+                                          ToolTip="Use move when the player's health in range." />
                     <Label Margin="5,5,5,4"
-                           Content="On Enemies Matching Name"
+                           Content="Mob Name"
                            RenderTransformOrigin="0.73,-0.63" />
                     <TextBox Margin="5,5,5,4"
                              Text="{Binding TargetName}"
-                             ToolTip="Regular expression that triggers moves on specific targets. " />
-                    <Label Content="When Enemy's Health Between"
+                             ToolTip="Use move on mobs matching the given name. " />
+                    <Label Content="Mob HPP"
                            Margin="5,5,5,4" />
                     <controls:RangeSlider Margin="5,5,5,14"
                                           Maximum="100"

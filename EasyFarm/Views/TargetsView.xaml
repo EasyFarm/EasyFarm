@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label VerticalAlignment="Center"
@@ -34,30 +34,46 @@
 
         <!--Used to filter what types of creatures we want to kill. 
         Do we want to only kill things are party attack for example?-->
-        <UniformGrid Grid.Row="1"
+        <Grid Grid.Row="1"
                      Grid.Column="1"
                      Margin="5 0">
-            <CheckBox Margin="0 0 0 5"
-                      Content="Aggro"
-                      IsChecked="{Binding Aggro}" />
-            <CheckBox Margin="0 0 0 5"
-                      Content="Party Claimed"
-                      IsChecked="{Binding PartyClaimed}" />
-            <CheckBox Margin="0 0 0 5"
-                      Content="Unclaimed"
-                      IsChecked="{Binding Unclaimed}" />
-            <CheckBox Margin="0 0 0 5"
-                      Content="Claimed"
-                      IsChecked="{Binding Claimed}" />
-        </UniformGrid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <CheckBox 
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="0 0 0 5"
+                Content="Aggro"
+                IsChecked="{Binding Aggro}" />
+            <CheckBox 
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0 0 0 5"
+                Content="Party Claimed"
+                IsChecked="{Binding PartyClaimed}" />
+            <CheckBox 
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0 0 0 5"
+                Content="Unclaimed"
+                IsChecked="{Binding Unclaimed}" />
+            <CheckBox 
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0 0 0 5"
+                Content="Claimed"
+                IsChecked="{Binding Claimed}" />
+        </Grid>
 
-        <!--Used to manipulate the list items. 
-            Delete will delete the currently selected item. 
-            Add will add the comboboxes text to the list of items
-            Clear will remove all items. -->
         <Grid Grid.Row="2"
               Grid.Column="1"
-              Margin="5">
+            Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />

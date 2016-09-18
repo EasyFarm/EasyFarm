@@ -28,7 +28,6 @@ using MemoryAPI.Navigation;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Routes")]
     public class RoutesViewModel : ViewModelBase
     {
         private PathRecorder _recorder;
@@ -50,6 +49,8 @@ namespace EasyFarm.ViewModels
 
             // Create recorder on loaded fface session. 
             OnSessionSet += ViewModelBase_OnSessionSet;
+
+            ViewName = "Routes";
         }
 
         private void ViewModelBase_OnSessionSet(IMemoryAPI fface)

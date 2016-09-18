@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using EasyFarm.Infrastructure;
@@ -30,19 +31,25 @@ namespace EasyFarm.ViewModels
         private int _selectedIndex;
 
         /// <summary>
+        /// 
         ///     Internal list of view models.
         /// </summary>
         private ObservableCollection<IViewModel> _viewModels;
 
         public MainViewModel()
         {
-            var locator = new Locator();
-
             // Get all enabled view models. 
             ViewModels = new ObservableCollection<IViewModel>(
-                locator.GetEnabledViewModels()
-                    .Where(x => x != null)
-                    .OrderBy(x => x.ViewName));
+                new List<IViewModel>
+                {
+                    new BattlesViewModel(),                    
+                    new TargetingViewModel(),
+                    new RestingViewModel(),
+                    new RoutesViewModel(),
+                    new FollowViewModel(),
+                    new LogViewModel(),
+                    new SettingsViewModel()
+                });
         }
 
         /// <summary>

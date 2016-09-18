@@ -23,15 +23,27 @@ using Prism.Commands;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Settings")]
     public class SettingsViewModel : ViewModelBase
     {
         public SettingsViewModel()
         {
             RestoreDefaultsCommand = new DelegateCommand(RestoreDefaults);
+            ViewName = "Settings";
         }
 
         public ICommand RestoreDefaultsCommand { get; set; }
+
+        public bool ShouldEngage
+        {
+            get { return Config.Instance.IsEngageEnabled; }
+            set { SetProperty(ref Config.Instance.IsEngageEnabled, value); }
+        }
+
+        public bool ShouldApproach
+        {
+            get { return Config.Instance.IsApproachEnabled; }
+            set { SetProperty(ref Config.Instance.IsApproachEnabled, value); }
+        }
 
         public double DetectionDistance
         {

@@ -1,18 +1,17 @@
 ﻿using EasyFarm.Classes;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EasyFarm.Infrastructure;
 
 namespace EasyFarm.ViewModels
 {
-    [ViewModel("Follow")]
     public class FollowViewModel : BindableBase, IViewModel
     {
         public string ViewName { get; set; }
+
+        public FollowViewModel()
+        {
+            ViewName = "Follow";
+        }
 
         public string Name
         {
