@@ -63,7 +63,7 @@ namespace EasyFarm.States
         {            
             fface.Navigator.DistanceTolerance = 1;
             var nextPosition = Route.GetNextPosition(fface.Player.Position);
-            fface.Navigator.Goto(nextPosition);            
+            fface.Navigator.Goto(nextPosition, Config.Instance.IsObjectAvoidanceEnabled);            
         }
     }
 }

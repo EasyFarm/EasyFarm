@@ -60,7 +60,7 @@ namespace EasyFarm.States
                 {
                     // Move to unit at max buff distance. 
                     fface.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
-                    fface.Navigator.GotoNPC(Target.Id);
+                    fface.Navigator.GotoNPC(Target.Id, Config.Instance.IsObjectAvoidanceEnabled);
                 }
             }
 

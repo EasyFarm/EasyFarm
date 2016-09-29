@@ -174,6 +174,11 @@ namespace EasyFarm.Classes
         public bool StraightRoute => Route.StraightRoute;
 
         /// <summary>
+        /// Whether the player should avoid objects when becoming stuck.
+        /// </summary>
+        public bool IsObjectAvoidanceEnabled = false;
+
+        /// <summary>
         /// The distance with which to follow a player.  
         /// </summary>
         public double FollowDistance = 5.0;

@@ -95,6 +95,15 @@ namespace EasyFarm.ViewModels
             }
         }
 
+        public bool AvoidObjects
+        {
+            get { return Config.Instance.IsObjectAvoidanceEnabled; }
+            set
+            {
+                SetProperty(ref Config.Instance.IsObjectAvoidanceEnabled, value);
+            }
+        }
+
         private void RestoreDefaults()
         {
             DetectionDistance = Constants.DetectionDistance;

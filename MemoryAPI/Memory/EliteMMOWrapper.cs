@@ -66,7 +66,7 @@ namespace EasyFarm
                     Math.Pow(position.Z - player.Z, 2));
             }
 
-            public void Goto(Position position)
+            public void Goto(Position position, bool useObjectAvoidance)
             {
                 if (DistanceTo(position) > DistanceTolerance)
                 {
@@ -82,7 +82,10 @@ namespace EasyFarm
 
                         FaceHeading(position);
 
-                        AvoidObstacles();
+                        if (useObjectAvoidance)
+                        {
+                            AvoidObstacles();
+                        }                        
 
                         Thread.Sleep(30);
                     }
@@ -166,10 +169,10 @@ namespace EasyFarm
                 api.ThirdParty.KeyUp(Keys.NUMPAD8);
             }
 
-            public void GotoNPC(int ID)
+            public void GotoNPC(int ID, bool useObjectAvoidance)
             {
                 var entity = api.Entity.GetEntity(ID);
-                Goto(Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H));
+                Goto(Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H), useObjectAvoidance);
             }
 
             public void Reset()

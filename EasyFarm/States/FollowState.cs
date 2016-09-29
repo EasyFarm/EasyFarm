@@ -87,7 +87,7 @@ namespace EasyFarm.States
 
             // Follow the player. 
             fface.Navigator.DistanceTolerance = Config.Instance.FollowDistance;
-            fface.Navigator.GotoNPC(player.Id);
+            fface.Navigator.GotoNPC(player.Id, Config.Instance.IsObjectAvoidanceEnabled);
         }
     }
 }
