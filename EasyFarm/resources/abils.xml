@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <abils>
   <a id="1" index="900" prefix="/weaponskill" english="Combo" japanese="コンボ" type="WeaponSkill" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" wsA="Impaction" wsB="" wsC="" />
   <a id="2" index="900" prefix="/weaponskill" english="Shoulder Tackle" japanese="タックル" type="WeaponSkill" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" wsA="Impaction" wsB="Reverberation" wsC="" />
@@ -930,6 +930,7 @@
   <a id="1660" index="0" prefix="/echo" english="Superior" japanese="スペリア" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1661" index="0" prefix="/echo" english="Magic Acc. Bonus" japanese="魔法命中率アップ" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1662" index="0" prefix="/echo" english="Magic Eva. Bonus" japanese="魔法回避率アップ" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
+  <a id="1663" index="0" prefix="/echo" english="Smite" japanese="スマイト" type="JobTrait" element="None" targets="None" skill="Ability" mpcost="0" tpcost="0" casttime="0" recast="0" duration="0" alias="" />
   <a id="1793" index="900" prefix="/monsterskill" english="Foot Kick" japanese="フットキック" type="MonsterSkill" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="232" casttime="0" recast="0" duration="0" alias="" />
   <a id="1794" index="900" prefix="/monsterskill" english="Dust Cloud" japanese="土煙" type="MonsterSkill" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="32" casttime="0" recast="0" duration="0" alias="" />
   <a id="1795" index="900" prefix="/monsterskill" english="Whirl Claws" japanese="爪旋風脚" type="MonsterSkill" element="None" targets="Enemy" skill="Ability" mpcost="0" tpcost="8" casttime="0" recast="0" duration="0" alias="" />

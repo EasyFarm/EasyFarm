@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <spells>
   <s id="1" index="1" prefix="/magic" english="Cure" japanese="ケアル" type="WhiteMagic" element="Light" targets="Self, Player, Party, Ally, NPC, Enemy" skill="HealingMagic" mpcost="8" casttime="2" recast="5" duration="0" alias="c1|c" />
   <s id="2" index="2" prefix="/magic" english="Cure II" japanese="ケアルII" type="WhiteMagic" element="Light" targets="Self, Player, Party, Ally, NPC, Enemy" skill="HealingMagic" mpcost="24" casttime="2.25" recast="5.5" duration="0" alias="c2" />
@@ -114,7 +114,7 @@
   <s id="48" index="112" prefix="/magic" english="Flash" japanese="フラッシュ" type="WhiteMagic" element="Light" targets="Enemy" skill="DivineMagic" mpcost="25" casttime="0.5" recast="45" duration="0" alias="" />
   <s id="135" index="113" prefix="/magic" english="Rainstorm" japanese="豪雨の陣" type="WhiteMagic" element="Water" targets="Self, Party" skill="EnhancingMagic" mpcost="30" casttime="2" recast="18" duration="180" alias="" />
   <s id="137" index="114" prefix="/magic" english="Windstorm" japanese="烈風の陣" type="WhiteMagic" element="Wind" targets="Self, Party" skill="EnhancingMagic" mpcost="30" casttime="2" recast="18" duration="180" alias="" />
-  <s index="115" duration="180" />
+  <s id="139" index="115" prefix="/magic" english="Firestorm" japanese="熱波の陣" type="WhiteMagic" element="Fire" targets="Self, Party" skill="EnhancingMagic" mpcost="30" casttime="2" recast="18" duration="180" alias="" />
   <s id="141" index="116" prefix="/magic" english="Hailstorm" japanese="吹雪の陣" type="WhiteMagic" element="Ice" targets="Self, Party" skill="EnhancingMagic" mpcost="30" casttime="2" recast="18" duration="180" alias="" />
   <s id="143" index="117" prefix="/magic" english="Thunderstorm" japanese="疾雷の陣" type="WhiteMagic" element="Thunder" targets="Self, Party" skill="EnhancingMagic" mpcost="30" casttime="2" recast="18" duration="180" alias="" />
   <s id="145" index="118" prefix="/magic" english="Voidstorm" japanese="妖霧の陣" type="WhiteMagic" element="Dark" targets="Self, Party" skill="EnhancingMagic" mpcost="30" casttime="2" recast="18" duration="180" alias="" />
@@ -711,12 +711,14 @@
   <s id="436" index="769" prefix="/magic" english="Indi-Poison" japanese="インデポイズン" type="Geomancy" element="Water" targets="Self" skill="Geomancy" mpcost="12" casttime="2" recast="12" duration="0" alias="" />
   <s id="437" index="770" prefix="/magic" english="Indi-Refresh" japanese="インデリフレシュ" type="Geomancy" element="Light" targets="Self" skill="Geomancy" mpcost="63" casttime="2" recast="12" duration="0" alias="" />
   <s id="438" index="771" prefix="/magic" english="Indi-Haste" japanese="インデヘイスト" type="Geomancy" element="Wind" targets="Self" skill="Geomancy" mpcost="100" casttime="2" recast="12" duration="0" alias="" />
+  <s id="439" index="772" prefix="/magic" english="Indi-STR" japanese="インデスト" type="Geomancy" element="Fire" targets="Self" skill="Geomancy" mpcost="63" casttime="2" recast="12" duration="0" alias="" />
   <s id="440" index="773" prefix="/magic" english="Indi-DEX" japanese="インデデック" type="Geomancy" element="Thunder" targets="Self" skill="Geomancy" mpcost="63" casttime="2" recast="12" duration="0" alias="" />
   <s id="441" index="774" prefix="/magic" english="Indi-VIT" japanese="インデバイト" type="Geomancy" element="Earth" targets="Self" skill="Geomancy" mpcost="63" casttime="2" recast="12" duration="0" alias="" />
   <s id="442" index="775" prefix="/magic" english="Indi-AGI" japanese="インデアジル" type="Geomancy" element="Wind" targets="Self" skill="Geomancy" mpcost="63" casttime="2" recast="12" duration="0" alias="" />
   <s id="443" index="776" prefix="/magic" english="Indi-INT" japanese="インデイン" type="Geomancy" element="Ice" targets="Self" skill="Geomancy" mpcost="63" casttime="2" recast="12" duration="0" alias="" />
   <s id="444" index="777" prefix="/magic" english="Indi-MND" japanese="インデマイン" type="Geomancy" element="Water" targets="Self" skill="Geomancy" mpcost="63" casttime="2" recast="12" duration="0" alias="" />
   <s id="445" index="778" prefix="/magic" english="Indi-CHR" japanese="インデカリス" type="Geomancy" element="Light" targets="Self" skill="Geomancy" mpcost="63" casttime="2" recast="12" duration="0" alias="" />
+  <s id="446" index="779" prefix="/magic" english="Indi-Fury" japanese="インデフューリー" type="Geomancy" element="Fire" targets="Self" skill="Geomancy" mpcost="70" casttime="2" recast="12" duration="0" alias="" />
   <s id="447" index="780" prefix="/magic" english="Indi-Barrier" japanese="インデバリア" type="Geomancy" element="Earth" targets="Self" skill="Geomancy" mpcost="59" casttime="2" recast="12" duration="0" alias="" />
   <s id="448" index="781" prefix="/magic" english="Indi-Acumen" japanese="インデアキュメン" type="Geomancy" element="Ice" targets="Self" skill="Geomancy" mpcost="91" casttime="2" recast="12" duration="0" alias="" />
   <s id="449" index="782" prefix="/magic" english="Indi-Fend" japanese="インデフェンド" type="Geomancy" element="Water" targets="Self" skill="Geomancy" mpcost="80" casttime="2" recast="12" duration="0" alias="" />
@@ -726,6 +728,7 @@
   <s id="453" index="786" prefix="/magic" english="Indi-Attunement" japanese="インデアトゥーン" type="Geomancy" element="Light" targets="Self" skill="Geomancy" mpcost="38" casttime="2" recast="12" duration="0" alias="" />
   <s id="454" index="787" prefix="/magic" english="Indi-Wilt" japanese="インデウィルト" type="Geomancy" element="Water" targets="Self" skill="Geomancy" mpcost="161" casttime="2" recast="12" duration="0" alias="" />
   <s id="455" index="788" prefix="/magic" english="Indi-Frailty" japanese="インデフレイル" type="Geomancy" element="Wind" targets="Self" skill="Geomancy" mpcost="147" casttime="2" recast="12" duration="0" alias="" />
+  <s id="456" index="789" prefix="/magic" english="Indi-Fade" japanese="インデフェイド" type="Geomancy" element="Fire" targets="Self" skill="Geomancy" mpcost="186" casttime="2" recast="12" duration="0" alias="" />
   <s id="457" index="790" prefix="/magic" english="Indi-Malaise" japanese="インデマレーズ" type="Geomancy" element="Thunder" targets="Self" skill="Geomancy" mpcost="174" casttime="2" recast="12" duration="0" alias="" />
   <s id="458" index="791" prefix="/magic" english="Indi-Slip" japanese="インデスリップ" type="Geomancy" element="Earth" targets="Self" skill="Geomancy" mpcost="112" casttime="2" recast="12" duration="0" alias="" />
   <s id="459" index="792" prefix="/magic" english="Indi-Torpor" japanese="インデトーパー" type="Geomancy" element="Ice" targets="Self" skill="Geomancy" mpcost="101" casttime="2" recast="12" duration="0" alias="" />
@@ -738,12 +741,14 @@
   <s id="466" index="799" prefix="/magic" english="Geo-Poison" japanese="ジオポイズン" type="Geomancy" element="Water" targets="Enemy" skill="Geomancy" mpcost="25" casttime="2" recast="12" duration="0" alias="" />
   <s id="467" index="800" prefix="/magic" english="Geo-Refresh" japanese="ジオリフレシュ" type="Geomancy" element="Light" targets="Self, Party" skill="Geomancy" mpcost="126" casttime="2" recast="12" duration="0" alias="" />
   <s id="468" index="801" prefix="/magic" english="Geo-Haste" japanese="ジオヘイスト" type="Geomancy" element="Wind" targets="Self, Party" skill="Geomancy" mpcost="200" casttime="2" recast="12" duration="0" alias="" />
+  <s id="469" index="802" prefix="/magic" english="Geo-STR" japanese="ジオスト" type="Geomancy" element="Fire" targets="Self, Party" skill="Geomancy" mpcost="126" casttime="2" recast="12" duration="0" alias="" />
   <s id="470" index="803" prefix="/magic" english="Geo-DEX" japanese="ジオデック" type="Geomancy" element="Thunder" targets="Self, Party" skill="Geomancy" mpcost="126" casttime="2" recast="12" duration="0" alias="" />
   <s id="471" index="804" prefix="/magic" english="Geo-VIT" japanese="ジオバイト" type="Geomancy" element="Earth" targets="Self, Party" skill="Geomancy" mpcost="126" casttime="2" recast="12" duration="0" alias="" />
   <s id="472" index="805" prefix="/magic" english="Geo-AGI" japanese="ジオアジル" type="Geomancy" element="Wind" targets="Self, Party" skill="Geomancy" mpcost="126" casttime="2" recast="12" duration="0" alias="" />
   <s id="473" index="806" prefix="/magic" english="Geo-INT" japanese="ジオイン" type="Geomancy" element="Ice" targets="Self, Party" skill="Geomancy" mpcost="126" casttime="2" recast="12" duration="0" alias="" />
   <s id="474" index="807" prefix="/magic" english="Geo-MND" japanese="ジオマイン" type="Geomancy" element="Water" targets="Self, Party" skill="Geomancy" mpcost="126" casttime="2" recast="12" duration="0" alias="" />
   <s id="475" index="808" prefix="/magic" english="Geo-CHR" japanese="ジオカリス" type="Geomancy" element="Light" targets="Self, Party" skill="Geomancy" mpcost="126" casttime="2" recast="12" duration="0" alias="" />
+  <s id="476" index="809" prefix="/magic" english="Geo-Fury" japanese="ジオフューリー" type="Geomancy" element="Fire" targets="Self, Party" skill="Geomancy" mpcost="140" casttime="2" recast="12" duration="0" alias="" />
   <s id="477" index="810" prefix="/magic" english="Geo-Barrier" japanese="ジオバリア" type="Geomancy" element="Earth" targets="Self, Party" skill="Geomancy" mpcost="119" casttime="2" recast="12" duration="0" alias="" />
   <s id="478" index="811" prefix="/magic" english="Geo-Acumen" japanese="ジオアキュメン" type="Geomancy" element="Ice" targets="Self, Party" skill="Geomancy" mpcost="182" casttime="2" recast="12" duration="0" alias="" />
   <s id="479" index="812" prefix="/magic" english="Geo-Fend" japanese="ジオフェンド" type="Geomancy" element="Water" targets="Self, Party" skill="Geomancy" mpcost="161" casttime="2" recast="12" duration="0" alias="" />
@@ -753,6 +758,7 @@
   <s id="483" index="816" prefix="/magic" english="Geo-Attunement" japanese="ジオアトゥーン" type="Geomancy" element="Light" targets="Self, Party" skill="Geomancy" mpcost="77" casttime="2" recast="12" duration="0" alias="" />
   <s id="484" index="817" prefix="/magic" english="Geo-Wilt" japanese="ジオウィルト" type="Geomancy" element="Water" targets="Enemy" skill="Geomancy" mpcost="322" casttime="2" recast="12" duration="0" alias="" />
   <s id="485" index="818" prefix="/magic" english="Geo-Frailty" japanese="ジオフレイル" type="Geomancy" element="Wind" targets="Enemy" skill="Geomancy" mpcost="294" casttime="2" recast="12" duration="0" alias="" />
+  <s id="486" index="819" prefix="/magic" english="Geo-Fade" japanese="ジオフェイド" type="Geomancy" element="Fire" targets="Enemy" skill="Geomancy" mpcost="372" casttime="2" recast="12" duration="0" alias="" />
   <s id="487" index="820" prefix="/magic" english="Geo-Malaise" japanese="ジオマレーズ" type="Geomancy" element="Thunder" targets="Enemy" skill="Geomancy" mpcost="348" casttime="2" recast="12" duration="0" alias="" />
   <s id="488" index="821" prefix="/magic" english="Geo-Slip" japanese="ジオスリップ" type="Geomancy" element="Earth" targets="Enemy" skill="Geomancy" mpcost="225" casttime="2" recast="12" duration="0" alias="" />
   <s id="489" index="822" prefix="/magic" english="Geo-Torpor" japanese="ジオトーパー" type="Geomancy" element="Ice" targets="Enemy" skill="Geomancy" mpcost="203" casttime="2" recast="12" duration="0" alias="" />
@@ -793,6 +799,7 @@
   <s id="134" index="857" prefix="/magic" english="Sandstorm II" japanese="砂塵の陣II" type="WhiteMagic" element="Earth" targets="Self, Party" skill="EnhancingMagic" mpcost="60" casttime="2" recast="18" duration="0" alias="" />
   <s id="136" index="858" prefix="/magic" english="Rainstorm II" japanese="豪雨の陣II" type="WhiteMagic" element="Water" targets="Self, Party" skill="EnhancingMagic" mpcost="60" casttime="2" recast="18" duration="0" alias="" />
   <s id="138" index="859" prefix="/magic" english="Windstorm II" japanese="烈風の陣II" type="WhiteMagic" element="Wind" targets="Self, Party" skill="EnhancingMagic" mpcost="60" casttime="2" recast="18" duration="0" alias="" />
+  <s id="140" index="860" prefix="/magic" english="Firestorm II" japanese="熱波の陣II" type="WhiteMagic" element="Fire" targets="Self, Party" skill="EnhancingMagic" mpcost="60" casttime="2" recast="18" duration="0" alias="" />
   <s id="142" index="861" prefix="/magic" english="Hailstorm II" japanese="吹雪の陣II" type="WhiteMagic" element="Ice" targets="Self, Party" skill="EnhancingMagic" mpcost="60" casttime="2" recast="18" duration="0" alias="" />
   <s id="144" index="862" prefix="/magic" english="Thunderstorm II" japanese="疾雷の陣II" type="WhiteMagic" element="Thunder" targets="Self, Party" skill="EnhancingMagic" mpcost="60" casttime="2" recast="18" duration="0" alias="" />
   <s id="146" index="863" prefix="/magic" english="Voidstorm II" japanese="妖霧の陣II" type="WhiteMagic" element="Dark" targets="Self, Party" skill="EnhancingMagic" mpcost="60" casttime="2" recast="18" duration="0" alias="" />
