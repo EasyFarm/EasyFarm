@@ -6,7 +6,7 @@ General purpose farming tool for Final Fantasy XI.
 #### Downloads 
 [![Build status](https://ci.appveyor.com/api/projects/status/6o73j4hrbk02xroq?svg=true)](https://ci.appveyor.com/project/Mykezero/easyfarm)
 
-The newest version of EaryFarm can be found under [Releases](https://github.com/EasyFarm/EasyFarm/releases).
+The newest version of EasyFarm can be found under [Releases](https://github.com/EasyFarm/EasyFarm/releases).
 
 #### EasyFarm is Free Software
 ![GPLv3](http://www.gnu.org/graphics/gplv3-127x51.png)
