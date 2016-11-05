@@ -409,6 +409,20 @@
     <None Include="trayicon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MemoryAPI\MemoryAPI.csproj">
+      <Project>{cc6cc9be-32f0-4b8a-a1ad-6c7c744e2fad}</Project>
+      <Name>MemoryAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dependencies\EliteAPI.dll" />
+    <Content Include="Dependencies\EliteMMO.API.dll" />
     <None Include="resources\abils.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -430,23 +444,6 @@
     <None Include="resources\status.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MemoryAPI\MemoryAPI.csproj">
-      <Project>{cc6cc9be-32f0-4b8a-a1ad-6c7c744e2fad}</Project>
-      <Name>MemoryAPI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Content Include="Dependencies\EliteAPI.dll" />
-    <Content Include="Dependencies\EliteMMO.API.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

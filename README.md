@@ -6,12 +6,17 @@ General purpose farming tool for Final Fantasy XI.
 #### Downloads 
 [![Build status](https://ci.appveyor.com/api/projects/status/6o73j4hrbk02xroq?svg=true)](https://ci.appveyor.com/project/Mykezero/easyfarm)
 
-The newest version of EaryFarm can be found under [Releases](https://github.com/EasyFarm/EasyFarm/releases).
+The newest version of EasyFarm can be found under [Releases](https://github.com/EasyFarm/EasyFarm/releases).
 
 #### EasyFarm is Free Software
 ![GPLv3](http://www.gnu.org/graphics/gplv3-127x51.png)
 
 EasyFarm is free software produced under the GPLv3 license with the goal of producing a first class automation software for Final Fantasy XI that is freely accessible to everyone. 
+
+#### Powered by EliteMMO Network
+[![EliteMMO Network, your source for cheat, hacks, tutorials and more!!!](http://www.elitemmonetwork.com/img/468_60_FFXI.gif)](http://www.elitemmonetwork.com)
+
+EasyFarm uses the EliteMMO API provided by Wiccaan at EliteMMO Network. Without his hard work and generosity in keeping the EliteAPI free to use, progress on this program would not be possible. 
 
 #### Project Status
 Development has slowed, and mostly happens on the weekends.

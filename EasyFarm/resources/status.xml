@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <status>
   <b id="0" duration="0" jp="戦闘不能" enLog="KO'd">KO</b>
   <b id="1" duration="0" jp="衰弱" enLog="weakened">weakness</b>
@@ -247,7 +247,7 @@
   <b id="249" duration="0" jp="専心" enLog="Dedication">Dedication</b>
   <b id="250" duration="0" jp="遠征軍参加資格" enLog="EF Badge">EF Badge</b>
   <b id="251" duration="0" jp="食事" enLog="Food">Food</b>
-  <b id="252" duration="0" jp="チョコボ" enLog="Chocobo">Chocobo</b>
+  <b id="252" duration="0" jp="マウント" enLog="Mounted">Mounted</b>
   <b id="253" duration="0" jp="シグネット" enLog="Signet">Signet</b>
   <b id="254" duration="0" jp="バトルフィールド" enLog="Battlefield">Battlefield</b>
   <b id="256" duration="0" jp="サンクション" enLog="Sanction">Sanction</b>
@@ -472,6 +472,7 @@
   <b id="478" duration="0" jp="パリセード" enLog="Palisade">Palisade</b>
   <b id="479" duration="0" jp="レッドデリリアム" enLog="Scarlet Delirium">Scarlet Delirium</b>
   <b id="480" duration="0" jp="レッドデリリアム" enLog="Scarlet Delirium">Scarlet Delirium</b>
+  <b id="481" duration="0" jp="アブダルスの焼印" enLog="Abdhaljs Seal">Abdhaljs Seal</b>
   <b id="482" duration="0" jp="デコイショット" enLog="Decoy Shot">Decoy Shot</b>
   <b id="483" duration="0" jp="葉隠" enLog="Hagakure">Hagakure</b>
   <b id="484" duration="0" jp="一隻眼" enLog="Issekigan">Issekigan</b>

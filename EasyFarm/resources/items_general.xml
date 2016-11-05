@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <items>
   <i id="1" enl="pile of chocobo bedding" jp="チョコボの寝ワラ" jpl="" targets="None">Chocobo Bedding</i>
   <i id="2" enl="simple bed" jp="粗末な寝台" jpl="" targets="None">Simple Bed</i>
@@ -178,6 +178,7 @@
   <i id="284" enl="goobbue statue" jp="グゥーブーの像" jpl="" targets="None">Goobbue Statue</i>
   <i id="286" enl="Nanaa Mihgo statue" jp="ナナー・ミーゴの像" jpl="" targets="None">Nanaa Mihgo Statue</i>
   <i id="287" enl="Nanaa Mihgo statue II" jp="ナナー・ミーゴ像II" jpl="" targets="None">Nanaa Mihgo S. II</i>
+  <i id="295" enl="bonfire" jp="ボンファイア" jpl="" targets="None">Bonfire</i>
   <i id="303" enl="Crystal Stakes gold cup" jp="ＣＳＲ黄金杯" jpl="" targets="None">CS Gold Cup</i>
   <i id="304" enl="Crystal Stakes mythril cup" jp="ＣＳＲ霊銀杯" jpl="" targets="None">CS Mythril Cup</i>
   <i id="305" enl="Crystal Stakes bronze cup" jp="ＣＳＲ青銅杯" jpl="" targets="None">CS Bronze Cup</i>
@@ -3182,6 +3183,9 @@
   <i id="3342" enl="savory shank" jp="麝香牛肉" jpl="" targets="None">Savory Shank</i>
   <i id="3343" enl="clump of blue pondweed" jp="青浮草" jpl="" targets="None">Blue Pondweed</i>
   <i id="3344" enl="clump of red pondweed" jp="赤浮草" jpl="" targets="None">Red Pondweed</i>
+  <i id="3345" enl="Treatise on Monochromacy" jp="白と黒の書" jpl="" targets="None">Tr. On Monochro.</i>
+  <i id="3346" enl="gloomy charm" jp="暗晦の玉" jpl="" targets="None">Gloomy Charm</i>
+  <i id="3347" enl="beckoning bell" jp="魔障の鈴" jpl="" targets="None">Beckoning Bell</i>
   <i id="3351" enl="phobos orb" jp="ポボスオーブ" jpl="" targets="None">Phobos Orb</i>
   <i id="3352" enl="deimos orb" jp="デイモスオーブ" jpl="" targets="None">Deimos Orb</i>
   <i id="3353" enl="barbaric bijou" jp="蛮兵の玉" jpl="" targets="None">Barbaric Bijou</i>
@@ -3420,7 +3424,7 @@
   <i id="3595" enl="gemscope" jp="ジェムスコープ" jpl="" targets="None">Gemscope</i>
   <i id="3596" enl="ornament case" jp="オーナメントケース" jpl="" targets="None">Ornament Case</i>
   <i id="3598" enl="opus shelf" jp="オーパスシェルフ" jpl="" targets="None">Opus Shelf</i>
-  <i id="3600" enl="bongo drum" jp="ボンゴドラム" jpl="" targets="None">Bongo Drums</i>
+  <i id="3600" enl="bongo drum" jp="ボンゴドラム" jpl="" targets="None">Bongo Drum</i>
   <i id="3608" enl="fictile pot" jp="フィクティルポット" jpl="" targets="None">Fictile Pot</i>
   <i id="3609" enl="stepping stool" jp="ステップスツール" jpl="" targets="None">Stepping Stool</i>
   <i id="3610" enl="red mariner's bed" jp="マリナーベッドＲ" jpl="" targets="None">Mariner's Bed R</i>
@@ -3518,6 +3522,17 @@
   <i id="3706" enl="Vana'clock" jp="ヴァナクロック" jpl="" targets="None">Vana'clock</i>
   <i id="3707" enl="murrey grisaille" jp="マリーグリザイユ" jpl="" targets="None">Murrey Grisaille</i>
   <i id="3708" enl="moss green grisaille" jp="モスグリザイユ" jpl="" targets="None">Moss Gr. Grisaille</i>
+  <i id="3709" enl="valance" jp="ヴァランス" jpl="" targets="None">Valance</i>
+  <i id="3710" enl="Windurstian sill" jp="ウィンダスシル" jpl="" targets="None">Windurstian Sill</i>
+  <i id="3711" enl="San d'Orian sill" jp="サンドリアシル" jpl="" targets="None">San d'Orian Sill</i>
+  <i id="3712" enl="Bastokan sill" jp="バストゥークシル" jpl="" targets="None">Bastokan Sill</i>
+  <i id="3713" enl="pot of wards" jp="ウォードポット" jpl="" targets="None">Pot of Wards</i>
+  <i id="3714" enl="pot of white clematis" jp="ホワイトクレマテス" jpl="" targets="None">White Clematis</i>
+  <i id="3715" enl="pot of pink clematis" jp="ピンククレマテス" jpl="" targets="None">Pink Clematis</i>
+  <i id="3717" enl="birch tree" jp="カバノキ" jpl="" targets="None">Birch Tree</i>
+  <i id="3729" enl="light chest" jp="ライトチェスト" jpl="" targets="None">Light Chest</i>
+  <i id="3730" enl="bulky coffer" jp="バルキーコッファー" jpl="" targets="None">Bulky Coffer</i>
+  <i id="3731" enl="azure chest" jp="アジュールチェスト" jpl="" targets="None">Azure Chest</i>
   <i id="3840" enl="pulse cell: Mx" jp="パルス管【Mx】" jpl="" targets="None">Pulse Cell: Mx</i>
   <i id="3841" enl="pulse cell: An" jp="パルス管【An】" jpl="" targets="None">Pulse Cell: An</i>
   <i id="3842" enl="pulse cell: Fa" jp="パルス管【Fa】" jpl="" targets="None">Pulse Cell: Fa</i>
@@ -3947,9 +3962,9 @@
   <i id="4290" enl="Elshimo frog" jp="エルシモフロッグ" jpl="" targets="Self" casttime="1">Elshimo Frog</i>
   <i id="4291" enl="sandfish" jp="サンドフィッシュ" jpl="" targets="Self" casttime="1">Sandfish</i>
   <i id="4292" enl="loaf of pain de neige" jp="パン・ド・ネージュ" jpl="" targets="Self" casttime="1">Pain de Neige</i>
-  <i id="4293" enl="serving of monastic sautee" jp="修道院御用達ソテー" jpl="" targets="Self" casttime="1">Monastic Sautee</i>
+  <i id="4293" enl="serving of monastic saute" jp="修道院御用達ソテー" jpl="" targets="Self" casttime="1">Monastic Saute</i>
   <i id="4294" enl="serving of medicinal quus" jp="キュスの薬膳焼き" jpl="" targets="Self" casttime="1">Medicinal Quus</i>
-  <i id="4295" enl="plate of royal sautee" jp="王族御用達ソテー" jpl="" targets="Self" casttime="1">Royal Sautee</i>
+  <i id="4295" enl="plate of royal saute" jp="王族御用達ソテー" jpl="" targets="Self" casttime="1">Royal Saute</i>
   <i id="4296" enl="serving of green curry" jp="グリーンカレー" jpl="" targets="Self" casttime="1">Green Curry</i>
   <i id="4297" enl="serving of black curry" jp="ブラックカレー" jpl="" targets="Self" casttime="1">Black Curry</i>
   <i id="4298" enl="serving of red curry" jp="レッドカレー" jpl="" targets="Self" casttime="1">Red Curry</i>
@@ -4202,12 +4217,12 @@
   <i id="4545" enl="bunch of gysahl greens" jp="ギサールの野菜" jpl="" targets="Self" casttime="1">Gysahl Greens</i>
   <i id="4546" enl="piece of raisin bread" jp="レーズンブレッド" jpl="" targets="Self" casttime="1">Raisin Bread</i>
   <i id="4547" enl="bowl of boiled cockatrice" jp="コカトリスの煮込み" jpl="" targets="Self" casttime="1">Boiled Cockatrice</i>
-  <i id="4548" enl="plate of coeurl sautee" jp="クァールのソテー" jpl="" targets="Self" casttime="1">Coeurl Sautee</i>
+  <i id="4548" enl="plate of coeurl saute" jp="クァールのソテー" jpl="" targets="Self" casttime="1">Coeurl Saute</i>
   <i id="4549" enl="bowl of dragon soup" jp="ドラゴンスープ" jpl="" targets="Self" casttime="1">Dragon Soup</i>
   <i id="4550" enl="plate of bream risotto" jp="ブリームのリゾット" jpl="" targets="Self" casttime="1">Bream Risotto</i>
   <i id="4551" enl="salmon croute" jp="サーモンのクルート" jpl="" targets="Self" casttime="1">Salmon Croute</i>
   <i id="4552" enl="serving of herb crawler eggs" jp="蟲卵の香味焼き" jpl="" targets="Self" casttime="1">Herb Crawler Eggs</i>
-  <i id="4553" enl="serving of batagreen sautee" jp="バタリア菜のソテー" jpl="" targets="Self" casttime="1">Batagreen Sautee</i>
+  <i id="4553" enl="serving of batagreen saute" jp="バタリア菜のソテー" jpl="" targets="Self" casttime="1">Batagreen Saute</i>
   <i id="4554" enl="serving of shallops tropicale" jp="シャル貝パイン蒸し" jpl="" targets="Self" casttime="1">Shallops Tropicale</i>
   <i id="4555" enl="Windurst salad" jp="ウィンダス風サラダ" jpl="" targets="Self" casttime="1">Windurst Salad</i>
   <i id="4556" enl="serving of icecap rolanberry" jp="雪山のロランベリー" jpl="" targets="Self" casttime="1">Icecap Rolanberry</i>
@@ -4226,7 +4241,7 @@
   <i id="4569" enl="bowl of Quadav stew" jp="クゥダフ風シチュー" jpl="" targets="Self" casttime="1">Quadav Stew</i>
   <i id="4570" enl="bird egg" jp="鳥の卵" jpl="" targets="Self" casttime="1">Bird Egg</i>
   <i id="4571" enl="clump of beaugreens" jp="ボスディン菜" jpl="" targets="Self" casttime="1">Beaugreens</i>
-  <i id="4572" enl="serving of beaugreen sautee" jp="ボスディン菜のソテー" jpl="" targets="Self" casttime="1">Beaugr. Sautee</i>
+  <i id="4572" enl="serving of beaugreen saute" jp="ボスディン菜のソテー" jpl="" targets="Self" casttime="1">Beaugr. Saute</i>
   <i id="4573" enl="loaf of steel bread" jp="スチールパン" jpl="" targets="Self" casttime="1">Steel Bread</i>
   <i id="4574" enl="meat chiefkabob" jp="族長専用山の幸串焼" jpl="" targets="Self" casttime="1">Meat Chiefkabob</i>
   <i id="4575" enl="fish chiefkabob" jp="族長専用海の幸串焼" jpl="" targets="Self" casttime="1">Fish Chiefkabob</i>
@@ -4244,7 +4259,7 @@
   <i id="4587" enl="broiled trout" jp="マスの姿焼き" jpl="" targets="Self" casttime="1">Broiled Trout</i>
   <i id="4588" enl="broiled eel" jp="ウナギの姿焼き" jpl="" targets="Self" casttime="1">Broiled Eel</i>
   <i id="4589" enl="bowl of wild stew" jp="ワイルドシチュー" jpl="" targets="Self" casttime="1">Wild Stew</i>
-  <i id="4590" enl="salmon rice ball" jp="鮭おにぎり" jpl="" targets="Self" casttime="1">Salmon Riceball</i>
+  <i id="4590" enl="salmon rice ball" jp="鮭おにぎり" jpl="" targets="Self" casttime="1">Salmon Rice Ball</i>
   <i id="4591" enl="loaf of pumpernickel" jp="プンパニッケル" jpl="" targets="Self" casttime="1">Pumpernickel</i>
   <i id="4592" enl="bowl of wisdom soup" jp="知恵のスープ" jpl="" targets="Self" casttime="1">Wisdom Soup</i>
   <i id="4593" enl="block of rock cheese" jp="ロックチーズ" jpl="" targets="Self" casttime="1">Rock Cheese</i>
@@ -4258,7 +4273,7 @@
   <i id="4601" enl="bowl of sopa de pez blanco" jp="真白身魚のシチュー" jpl="" targets="Self" casttime="1">Sopa Pez Blanco</i>
   <i id="4602" enl="warm egg" jp="温かい卵" jpl="" targets="Self" casttime="1">Warm Egg</i>
   <i id="4603" enl="cup of chamomile tea" jp="カモミールティー" jpl="" targets="Self" casttime="1">Chamomile Tea</i>
-  <i id="4604" enl="rogue rice ball" jp="山賊おにぎり" jpl="" targets="Self" casttime="1">Rogue R.Ball</i>
+  <i id="4604" enl="rogue rice ball" jp="山賊おにぎり" jpl="" targets="Self" casttime="1">Rogue Rice Ball</i>
   <i id="4605" enl="naval rice ball" jp="水軍おにぎり" jpl="" targets="Self" casttime="1">Naval Rice Ball</i>
   <i id="4606" enl="scroll of Dia" jp="ディア" jpl="" targets="Self" casttime="1">Dia</i>
   <i id="4607" enl="scroll of Stone" jp="ストーン" jpl="" targets="Self" casttime="1">Stone</i>
@@ -4748,7 +4763,7 @@
   <i id="5181" enl="tortilla buena" jp="トルティーヤブエノ" jpl="" targets="Self" casttime="1">Tortilla Buena</i>
   <i id="5182" enl="salty bretzel" jp="ザルツブレーツェル" jpl="" targets="Self" casttime="1">Salty Bretzel</i>
   <i id="5183" enl="Viking herring" jp="バイキング風塩漬け" jpl="" targets="Self" casttime="1">Viking Herring</i>
-  <i id="5184" enl="plate of vegan sautee" jp="ヴィーガンソテー" jpl="" targets="Self" casttime="1">Vegan Sautee</i>
+  <i id="5184" enl="plate of vegan saute" jp="ヴィーガンソテー" jpl="" targets="Self" casttime="1">Vegan Saute</i>
   <i id="5185" enl="Leremieu salad" jp="ルルーミュサラダ" jpl="" targets="Self" casttime="1">Leremieu Salad</i>
   <i id="5186" enl="plate of Yahata-style carp sushi" jp="八幡フナずし" jpl="" targets="Self" casttime="1">Yahata Sushi</i>
   <i id="5187" enl="Elshimo coconut" jp="エルシモパームの実" jpl="" targets="Self" casttime="1">Elshimo Coconut</i>
@@ -4762,7 +4777,7 @@
   <i id="5195" enl="sprig of Misareaux parsley" jp="ミザレオパセリ" jpl="" targets="Self" casttime="1">Misx. Parsley</i>
   <i id="5196" enl="strip of buffalo jerky" jp="野牛の干し肉" jpl="" targets="Self" casttime="1">Buffalo Jerky</i>
   <i id="5197" enl="dish of spaghetti peperoncino +1" jp="ペペロンチーノ+1" jpl="" targets="Self" casttime="1">Peperoncino +1</i>
-  <i id="5198" enl="dish of spag. vongole rosso +1" jp="ボンゴレロッソ+1" jpl="" targets="Self" casttime="1">Vongole R. +1</i>
+  <i id="5198" enl="dish of spag. vongole rosso +1" jp="ボンゴレロッソ+1" jpl="" targets="Self" casttime="1">Vongole Rosso +1</i>
   <i id="5199" enl="dish of spaghetti carbonara +1" jp="カルボナーラ+1" jpl="" targets="Self" casttime="1">Carbonara +1</i>
   <i id="5200" enl="dish of spaghetti pescatora +1" jp="ペスカトーレ+1" jpl="" targets="Self" casttime="1">Pescatora +1</i>
   <i id="5201" enl="dish of spaghetti boscaiola +1" jp="ボスカイオーラ+1" jpl="" targets="Self" casttime="1">Boscaiola +1</i>
@@ -4780,7 +4795,7 @@
   <i id="5213" enl="dish of spaghetti melanzane" jp="メランザーネ" jpl="" targets="Self" casttime="1">Melanzane</i>
   <i id="5214" enl="dish of spaghetti melanzane +1" jp="メランザーネ+1" jpl="" targets="Self" casttime="1">Melanzane +1</i>
   <i id="5215" enl="plate of tentacle sushi" jp="ゲソズシ" jpl="" targets="Self" casttime="1">Tentacle Sushi</i>
-  <i id="5216" enl="plate of tentacle sushi +1" jp="ゲソズシ+1" jpl="" targets="Self" casttime="1">Tentcl. Sushi +1</i>
+  <i id="5216" enl="plate of tentacle sushi +1" jp="ゲソズシ+1" jpl="" targets="Self" casttime="1">Tentacle Sushi +1</i>
   <i id="5217" enl="serving of salmon eggs" jp="サーモンの腹子" jpl="" targets="Self" casttime="1">Salmon Eggs</i>
   <i id="5218" enl="serving of salmon roe" jp="サーモンロウ" jpl="" targets="Self" casttime="1">Salmon Roe</i>
   <i id="5219" enl="plate of ikra gunkan" jp="イクラグンカン" jpl="" targets="Self" casttime="1">Ikra Gunkan</i>
@@ -4802,7 +4817,7 @@
   <i id="5235" enl="head of napa" jp="ナパ" jpl="" targets="Self" casttime="1">Napa</i>
   <i id="5236" enl="clump of shungiku" jp="春菊" jpl="" targets="Self" casttime="1">Shungiku</i>
   <i id="5237" enl="bundle of shirataki" jp="白滝" jpl="" targets="Self" casttime="1">Shirataki</i>
-  <i id="5238" enl="seafood stewpot" jp="寄せ鍋" jpl="" targets="Self" casttime="1">Seafd. Stewpot</i>
+  <i id="5238" enl="seafood stewpot" jp="寄せ鍋" jpl="" targets="Self" casttime="1">Seafood Stewpot</i>
   <i id="5239" enl="prime seafood stewpot" jp="寄せ鍋目付" jpl="" targets="Self" casttime="1">Prm. Sfd. Stewpot</i>
   <i id="5240" enl="prized seafood stewpot" jp="寄せ鍋奉行" jpl="" targets="Self" casttime="1">Prz. Sfd. Stewpot</i>
   <i id="5241" enl="bottle of giant's drink" jp="巨人の薬" jpl="" targets="Self" casttime="2">Giant's Drink</i>
@@ -5111,7 +5126,7 @@
   <i id="5545" enl="prime crab stewpot" jp="蟹鍋目付" jpl="" targets="Self" casttime="1">Prm. Crab Stewpot</i>
   <i id="5546" enl="prized crab stewpot" jp="蟹鍋奉行" jpl="" targets="Self" casttime="1">Prz. Crab Stewpot</i>
   <i id="5547" enl="beef stewpot" jp="牛鍋" jpl="" targets="Self" casttime="1">Beef Stewpot</i>
-  <i id="5548" enl="prime beef stewpot" jp="牛鍋目付" jpl="" targets="Self" casttime="1">Prm. Bf. Stewpot</i>
+  <i id="5548" enl="prime beef stewpot" jp="牛鍋目付" jpl="" targets="Self" casttime="1">Prm. Beef Stewpot</i>
   <i id="5549" enl="prized beef stewpot" jp="牛鍋奉行" jpl="" targets="Self" casttime="1">Prz. Beef Stewpot</i>
   <i id="5550" enl="roll of buche au chocolat" jp="ブッシュオショコラ" jpl="" targets="Self" casttime="1">Buche au Choco.</i>
   <i id="5551" enl="roll of sylvan excursion" jp="木洩れ日に包まれて" jpl="" targets="Self" casttime="1">Sylvan Excursion</i>
@@ -5122,7 +5137,7 @@
   <i id="5556" enl="cone of seraph's kiss" jp="氷の女王の微笑み" jpl="" targets="Self" casttime="1">Seraph's Kiss</i>
   <i id="5557" enl="serving of mont blanc" jp="モンブラン" jpl="" targets="Self" casttime="1">Mont Blanc</i>
   <i id="5558" enl="serving of golden royale" jp="白銀の貴婦人" jpl="" targets="Self" casttime="1">Golden Royale</i>
-  <i id="5559" enl="serving of mille feuille" jp="ミルフィーユ" jpl="" targets="Self" casttime="1">Mille Feuille</i>
+  <i id="5559" enl="serving of mille-feuille" jp="ミルフィーユ" jpl="" targets="Self" casttime="1">Mille-Feuille</i>
   <i id="5560" enl="serving of elysian eclair" jp="谷間の姫百合" jpl="" targets="Self" casttime="1">Elysian Eclair</i>
   <i id="5561" enl="moogle pie" jp="モーグリパイ" jpl="" targets="Self" casttime="1">Moogle Pie</i>
   <i id="5562" enl="pot of white honey" jp="白蜜" jpl="" targets="Self" casttime="1">White Honey</i>
@@ -5156,7 +5171,7 @@
   <i id="5590" enl="balik sandvici" jp="バルックサンド" jpl="" targets="Self" casttime="1">Balik Sandvici</i>
   <i id="5591" enl="balik sandvici +1" jp="バルックサンド+1" jpl="" targets="Self" casttime="1">Blk. Sandvici +1</i>
   <i id="5592" enl="cup of Imperial coffee" jp="アルザビコーヒー" jpl="" targets="Self" casttime="1">Imperial Coffee</i>
-  <i id="5593" enl="cup of Imperial coffee +1" jp="アルザビコーヒー+1" jpl="" targets="Self" casttime="1">Imperial Coffee+1</i>
+  <i id="5593" enl="cup of Imperial coffee +1" jp="アルザビコーヒー+1" jpl="" targets="Self" casttime="1">Imperial Coffee +1</i>
   <i id="5594" enl="cup of chai +1" jp="チャイ+1" jpl="" targets="Self" casttime="1">Chai +1</i>
   <i id="5595" enl="bowl of Nashmau stew" jp="ナシュモ風シチュー" jpl="" targets="Self" casttime="1">Nashmau Stew</i>
   <i id="5596" enl="simit" jp="スィミット" jpl="" targets="Self" casttime="1">Simit</i>
@@ -5239,8 +5254,8 @@
   <i id="5673" enl="rolsin" jp="ドライベリー+1" jpl="" targets="Self" casttime="1">Rolsin</i>
   <i id="5674" enl="Aileen's delight" jp="アイリーンのパイ" jpl="" targets="Self" casttime="1">Aileen's Delight</i>
   <i id="5675" enl="withered rolanberry" jp="オールドベリー" jpl="" targets="Self" casttime="1">Withered Berry</i>
-  <i id="5676" enl="serving of mushroom sautee" jp="森のソテー" jpl="" targets="Self" casttime="1">Mushroom Sautee</i>
-  <i id="5677" enl="serving of patriarch sautee" jp="元老院御用達ソテー" jpl="" targets="Self" casttime="1">Patriarch Sautee</i>
+  <i id="5676" enl="serving of mushroom saute" jp="森のソテー" jpl="" targets="Self" casttime="1">Mushroom Saute</i>
+  <i id="5677" enl="serving of patriarch saute" jp="元老院御用達ソテー" jpl="" targets="Self" casttime="1">Patriarch Saute</i>
   <i id="5678" enl="mushroom salad" jp="森のサラダ" jpl="" targets="Self" casttime="1">Mushroom Salad</i>
   <i id="5679" enl="cathedral salad" jp="大聖堂御用達サラダ" jpl="" targets="Self" casttime="1">Cathedral Salad</i>
   <i id="5680" enl="agaricus mushroom" jp="アガリクス" jpl="" targets="Self" casttime="1">Agaricus</i>
@@ -5257,7 +5272,7 @@
   <i id="5691" enl="plate of shrimp sushi" jp="シュリンプスシ" jpl="" targets="Self" casttime="1">Shrimp Sushi</i>
   <i id="5692" enl="plate of shrimp sushi +1" jp="シュリンプスシ+1" jpl="" targets="Self" casttime="1">Shrimp Sushi +1</i>
   <i id="5693" enl="plate of octopus sushi" jp="オクトパススシ" jpl="" targets="Self" casttime="1">Octopus Sushi</i>
-  <i id="5694" enl="plate of octopus sushi +1" jp="オクトパススシ+1" jpl="" targets="Self" casttime="1">Octps. Sushi +1</i>
+  <i id="5694" enl="plate of octopus sushi +1" jp="オクトパススシ+1" jpl="" targets="Self" casttime="1">Octopus Sushi +1</i>
   <i id="5695" enl="margherita pizza" jp="マルゲリータピザ" jpl="" targets="Self" casttime="1">Margherita Pizza</i>
   <i id="5696" enl="margherita pizza +1" jp="マルゲリータピザ+1" jpl="" targets="Self" casttime="1">Marg. Pizza +1</i>
   <i id="5697" enl="pepperoni pizza" jp="ペパロニピザ" jpl="" targets="Self" casttime="1">Pepperoni Pizza</i>
@@ -5967,6 +5982,8 @@
   <i id="6417" enl="divine quiver" jp="箙【ディバイン】" jpl="" targets="Self" casttime="1">Divine Quiver</i>
   <i id="6427" enl="divine bolt quiver" jp="矢筒【ディバイン】" jpl="" targets="Self" casttime="1">Div. Bolt Quiver</i>
   <i id="6437" enl="divine bullet quiver" jp="胴乱【ディバイン】" jpl="" targets="Self" casttime="1">Div. Bul. Quiver</i>
+  <i id="6447" enl="sasuke shuriken pouch" jp="合切袋【佐助】" jpl="" targets="Self" casttime="1">Sasu. Sh. Pouch</i>
+  <i id="6448" enl="sasuke shuriken pouch +1" jp="合切袋【佐助改】" jpl="" targets="Self" casttime="1">Sa. Sh. Pouch +1</i>
   <i id="6457" enl="flarelet" jp="プチフレア" jpl="" targets="Self" casttime="1">Flarelet</i>
   <i id="6458" enl="bowl of soy ramen" jp="醤油ラーメン" jpl="" targets="Self" casttime="1">Soy Ramen</i>
   <i id="6459" enl="bowl of soy ramen +1" jp="醤油ラーメン+1" jpl="" targets="Self" casttime="1">Soy Ramen +1</i>
@@ -5998,6 +6015,8 @@
   <i id="6488" enl="frayed sack of opulence" jp="古い袋【黒魂石】" jpl="" targets="Self" casttime="1">Frayed Sack (Tau)</i>
   <i id="6489" enl="Far East puffer" jp="ネオタキタロ" jpl="" targets="Self" casttime="1">Far East Puffer</i>
   <i id="6498" enl="bunch of fortune fruits" jp="ラッキーフルーツ" jpl="" targets="Self" casttime="1">Fortune Fruits</i>
+  <i id="6499" enl="patio design plan document" jp="モグの中庭の設計図" jpl="" targets="Self" casttime="1">Patio Design Plans</i>
+  <i id="6500" enl="Abdhaljs seal" jp="アブダルスの焼印" jpl="" targets="Self" casttime="1">Abdhaljs Seal</i>
   <i id="8193" enl="Harlequin head" jp="湎用ヘッド" jpl="">Harlequin Head</i>
   <i id="8194" enl="Valoredge X-900 head" jp="白兵戦ヘッド" jpl="">Valoredge Head</i>
   <i id="8195" enl="Sharpshot Z-500 head" jp="射撃戦ヘッド" jpl="">Sharpshot Head</i>
@@ -6021,6 +6040,8 @@
   <i id="8459" enl="inhibitor II" jp="インヒビターII" jpl="">Inhibitor II</i>
   <i id="8460" enl="tension spring IV" jp="Ｔ．スプリングIV" jpl="">Tension Spring IV</i>
   <i id="8461" enl="heat capacitor II" jp="Ｈ．キャパシターII" jpl="">Heat Capacitor II</i>
+  <i id="8462" enl="speedloader" jp="チェインアンプ" jpl="">Speedloader</i>
+  <i id="8463" enl="speedloader II" jp="チェインアンプII" jpl="">Speedloader II</i>
   <i id="8481" enl="mana booster" jp="マナブースター" jpl="">Mana Booster</i>
   <i id="8482" enl="loudspeaker" jp="ラウドスピーカー" jpl="">Loudspeaker</i>
   <i id="8483" enl="scanner" jp="スキャナー" jpl="">Scanner</i>
@@ -6029,7 +6050,7 @@
   <i id="8486" enl="tranquilizer" jp="トランキライザー" jpl="">Tranquilizer</i>
   <i id="8487" enl="ice maker" jp="アイスメーカー" jpl="">Ice Maker</i>
   <i id="8488" enl="power cooler" jp="パワークーラー" jpl="">Power Cooler</i>
-  <i id="8489" enl="loudspeaker II" jp="ラウドスピーカーIII" jpl="">Loudspeaker II</i>
+  <i id="8489" enl="loudspeaker III" jp="ラウドスピーカーIII" jpl="">Loudspeaker III</i>
   <i id="8490" enl="tranquilizer II" jp="トランキライザーII" jpl="">Tranquilizer II</i>
   <i id="8491" enl="amplifier" jp="アンプリファイアー" jpl="">Amplifier</i>
   <i id="8492" enl="loudspeaker IV" jp="ラウドスピーカーIV" jpl="">Loudspeaker IV</i>
@@ -6088,6 +6109,7 @@
   <i id="8619" enl="resister" jp="レジスター" jpl="">Resister</i>
   <i id="8620" enl="resister II" jp="レジスターII" jpl="">Resister II</i>
   <i id="8621" enl="mana jammer IV" jp="マナジャマーIV" jpl="">Mana Jammer IV</i>
+  <i id="8622" enl="mana channeler II" jp="マナチャネラーII" jpl="">Mana Channeler II</i>
   <i id="8641" enl="auto-repair kit" jp="オートリペアキット" jpl="">Auto-Repair Kit</i>
   <i id="8642" enl="flashbulb" jp="フラッシュバルブ" jpl="">Flashbulb</i>
   <i id="8643" enl="damage gauge" jp="ダメージゲージ" jpl="">Damage Gauge</i>
@@ -6100,6 +6122,8 @@
   <i id="8651" enl="arcanic cell" jp="アカニックセル" jpl="">Arcanic Cell</i>
   <i id="8652" enl="arcanic cell II" jp="アカニックセルII" jpl="">Arcanic Cell II</i>
   <i id="8653" enl="auto-repair kit IV" jp="Ａ．リペアキットIV" jpl="">Auto-Repair Kit IV</i>
+  <i id="8654" enl="optic fiber II" jp="Ｏ．ファイバーII" jpl="">Optic Fiber II</i>
+  <i id="8655" enl="damage gauge II" jp="ダメージゲージII" jpl="">Damage Gauge II</i>
   <i id="8673" enl="mana tank" jp="マナタンク" jpl="">Mana Tank</i>
   <i id="8674" enl="mana converter" jp="マナコンバーター" jpl="">Mana Converter</i>
   <i id="8675" enl="mana conserver" jp="マナコンサーバー" jpl="">Mana Conserver</i>
@@ -6217,6 +6241,8 @@
   <i id="8812" enl="woodworking kit 40" jp="木工キット40" jpl="" targets="None">Wood. Kit 40</i>
   <i id="8813" enl="woodworking kit 45" jp="木工キット45" jpl="" targets="None">Wood. Kit 45</i>
   <i id="8814" enl="woodworking kit 50" jp="木工キット50" jpl="" targets="None">Wood. Kit 50</i>
+  <i id="8815" enl="woodworking kit 55" jp="木工キット55" jpl="" targets="None">Wood. Kit 55</i>
+  <i id="8816" enl="woodworking kit 60" jp="木工キット60" jpl="" targets="None">Wood. Kit 60</i>
   <i id="8819" enl="smithing kit 5" jp="鍛冶キット5" jpl="" targets="None">Smith. Kit 5</i>
   <i id="8820" enl="smithing kit 10" jp="鍛冶キット10" jpl="" targets="None">Smith. Kit 10</i>
   <i id="8821" enl="smithing kit 15" jp="鍛冶キット15" jpl="" targets="None">Smith. Kit 15</i>
@@ -6227,6 +6253,8 @@
   <i id="8826" enl="smithing kit 40" jp="鍛冶キット40" jpl="" targets="None">Smith. Kit 40</i>
   <i id="8827" enl="smithing kit 45" jp="鍛冶キット45" jpl="" targets="None">Smith. Kit 45</i>
   <i id="8828" enl="smithing kit 50" jp="鍛冶キット50" jpl="" targets="None">Smith. Kit 50</i>
+  <i id="8829" enl="smithing kit 55" jp="鍛冶キット55" jpl="" targets="None">Smith. Kit 55</i>
+  <i id="8830" enl="smithing kit 60" jp="鍛冶キット60" jpl="" targets="None">Smith. Kit 60</i>
   <i id="8833" enl="goldsmithing kit 5" jp="彫金キット5" jpl="" targets="None">Gold. Kit 5</i>
   <i id="8834" enl="goldsmithing kit 10" jp="彫金キット10" jpl="" targets="None">Gold. Kit 10</i>
   <i id="8835" enl="goldsmithing kit 15" jp="彫金キット15" jpl="" targets="None">Gold. Kit 15</i>
@@ -6237,6 +6265,8 @@
   <i id="8840" enl="goldsmithing kit 40" jp="彫金キット40" jpl="" targets="None">Gold. Kit 40</i>
   <i id="8841" enl="goldsmithing kit 45" jp="彫金キット45" jpl="" targets="None">Gold. Kit 45</i>
   <i id="8842" enl="goldsmithing kit 50" jp="彫金キット50" jpl="" targets="None">Gold. Kit 50</i>
+  <i id="8843" enl="goldsmithing kit 55" jp="彫金キット55" jpl="" targets="None">Gold. Kit 55</i>
+  <i id="8844" enl="goldsmithing kit 60" jp="彫金キット60" jpl="" targets="None">Gold. Kit 60</i>
   <i id="8847" enl="clothcraft kit 5" jp="裁縫キット5" jpl="" targets="None">Cloth. Kit 5</i>
   <i id="8848" enl="clothcraft kit 10" jp="裁縫キット10" jpl="" targets="None">Cloth. Kit 10</i>
   <i id="8849" enl="clothcraft kit 15" jp="裁縫キット15" jpl="" targets="None">Cloth. Kit 15</i>
@@ -6247,6 +6277,8 @@
   <i id="8854" enl="clothcraft kit 40" jp="裁縫キット40" jpl="" targets="None">Cloth. Kit 40</i>
   <i id="8855" enl="clothcraft kit 45" jp="裁縫キット45" jpl="" targets="None">Cloth. Kit 45</i>
   <i id="8856" enl="clothcraft kit 50" jp="裁縫キット50" jpl="" targets="None">Cloth. Kit 50</i>
+  <i id="8857" enl="clothcraft kit 55" jp="裁縫キット55" jpl="" targets="None">Cloth. Kit 55</i>
+  <i id="8858" enl="clothcraft kit 60" jp="裁縫キット60" jpl="" targets="None">Cloth. Kit 60</i>
   <i id="8861" enl="leathercraft kit 5" jp="革細工キット5" jpl="" targets="None">Leath. Kit 5</i>
   <i id="8862" enl="leathercraft kit 10" jp="革細工キット10" jpl="" targets="None">Leath. Kit 10</i>
   <i id="8863" enl="leathercraft kit 15" jp="革細工キット15" jpl="" targets="None">Leath. Kit 15</i>
@@ -6257,6 +6289,8 @@
   <i id="8868" enl="leathercraft kit 40" jp="革細工キット40" jpl="" targets="None">Leath. Kit 40</i>
   <i id="8869" enl="leathercraft kit 45" jp="革細工キット45" jpl="" targets="None">Leath. Kit 45</i>
   <i id="8870" enl="leathercraft kit 50" jp="革細工キット50" jpl="" targets="None">Leath. Kit 50</i>
+  <i id="8871" enl="leathercraft kit 55" jp="革細工キット55" jpl="" targets="None">Leath. Kit 55</i>
+  <i id="8872" enl="leathercraft kit 60" jp="革細工キット60" jpl="" targets="None">Leath. Kit 60</i>
   <i id="8875" enl="bonecraft kit 5" jp="骨細工キット5" jpl="" targets="None">Bone. Kit 5</i>
   <i id="8876" enl="bonecraft kit 10" jp="骨細工キット10" jpl="" targets="None">Bone. Kit 10</i>
   <i id="8877" enl="bonecraft kit 15" jp="骨細工キット15" jpl="" targets="None">Bone. Kit 15</i>
@@ -6267,6 +6301,8 @@
   <i id="8882" enl="bonecraft kit 40" jp="骨細工キット40" jpl="" targets="None">Bone. Kit 40</i>
   <i id="8883" enl="bonecraft kit 45" jp="骨細工キット45" jpl="" targets="None">Bone. Kit 45</i>
   <i id="8884" enl="bonecraft kit 50" jp="骨細工キット50" jpl="" targets="None">Bone. Kit 50</i>
+  <i id="8885" enl="bonecraft kit 55" jp="骨細工キット55" jpl="" targets="None">Bone. Kit 55</i>
+  <i id="8886" enl="bonecraft kit 60" jp="骨細工キット60" jpl="" targets="None">Bone. Kit 60</i>
   <i id="8889" enl="alchemy kit 5" jp="錬金術キット5" jpl="" targets="None">Alch. Kit 5</i>
   <i id="8890" enl="alchemy kit 10" jp="錬金術キット10" jpl="" targets="None">Alch. Kit 10</i>
   <i id="8891" enl="alchemy kit 15" jp="錬金術キット15" jpl="" targets="None">Alch. Kit 15</i>
@@ -6277,6 +6313,8 @@
   <i id="8896" enl="alchemy kit 40" jp="錬金術キット40" jpl="" targets="None">Alch. Kit 40</i>
   <i id="8897" enl="alchemy kit 45" jp="錬金術キット45" jpl="" targets="None">Alch. Kit 45</i>
   <i id="8898" enl="alchemy kit 50" jp="錬金術キット50" jpl="" targets="None">Alch. Kit 50</i>
+  <i id="8899" enl="alchemy kit 55" jp="錬金術キット55" jpl="" targets="None">Alch. Kit 55</i>
+  <i id="8900" enl="alchemy kit 60" jp="錬金術キット60" jpl="" targets="None">Alch. Kit 60</i>
   <i id="8903" enl="cooking kit 5" jp="調理キット5" jpl="" targets="None">Cook. Kit 5</i>
   <i id="8904" enl="cooking kit 10" jp="調理キット10" jpl="" targets="None">Cook. Kit 10</i>
   <i id="8905" enl="cooking kit 15" jp="調理キット15" jpl="" targets="None">Cook. Kit 15</i>
@@ -6287,6 +6325,8 @@
   <i id="8910" enl="cooking kit 40" jp="調理キット40" jpl="" targets="None">Cook. Kit 40</i>
   <i id="8911" enl="cooking kit 45" jp="調理キット45" jpl="" targets="None">Cook. Kit 45</i>
   <i id="8912" enl="cooking kit 50" jp="調理キット50" jpl="" targets="None">Cook. Kit 50</i>
+  <i id="8913" enl="cooking kit 55" jp="調理キット55" jpl="" targets="None">Cook. Kit 55</i>
+  <i id="8914" enl="cooking kit 60" jp="調理キット60" jpl="" targets="None">Cook. Kit 60</i>
   <i id="8917" enl="queen of the night" jp="月下美人" jpl="" targets="None">Night Queen</i>
   <i id="8918" enl="pinch of soot" jp="煤" jpl="" targets="None">Soot</i>
   <i id="8919" enl="ifritear" jp="炎将の涙" jpl="" targets="None">Ifritear</i>
@@ -6534,6 +6574,16 @@
   <i id="9180" enl="Kupon AW-UWII" jp="クーポンAW-UWII" jpl="" targets="None">Kupon AW-UWII</i>
   <i id="9181" enl="Mog Kupon AW-UW" jp="クーポンAW-UW" jpl="" targets="None">Kupon AW-UW</i>
   <i id="9182" enl="Mog Kupon AW-Cos" jp="クーポンAW-Cos" jpl="" targets="None">Kupon AW-Cos</i>
+  <i id="9183" enl="Mog Kupon W-R119" jp="クーポンW-R119" jpl="" targets="None">Kupon W-R119</i>
+  <i id="9184" enl="Mog Kupon W-M119" jp="クーポンW-M119" jpl="" targets="None">Kupon W-M119</i>
+  <i id="9185" enl="Mog Kupon W-E119" jp="クーポンW-E119" jpl="" targets="None">Kupon W-E119</i>
+  <i id="9186" enl="Mog Kupon W-A119" jp="クーポンW-A119" jpl="" targets="None">Kupon W-A119</i>
+  <i id="9187" enl="Mog Kupon AW-GeIV" jp="クーポンAW-GeIV" jpl="" targets="None">Kupon AW-GeIV</i>
+  <i id="9188" enl="Mog Kupon W-EMI" jp="クーポンW-EMI" jpl="" targets="None">Kupon W-EMI</i>
+  <i id="9189" enl="Mog Kupon W-SRW" jp="クーポンW-SRR" jpl="" targets="None">Kupon W-SRW</i>
+  <i id="9190" enl="Mog Kupon W-SCC" jp="クーポンW-SCI" jpl="" targets="None">Kupon W-SCC</i>
+  <i id="9191" enl="Mog Kupon W-ASRW" jp="クーポンW-ASRR" jpl="" targets="None">Kupon W-ASRW</i>
+  <i id="9192" enl="Mog Kupon W-ASCC" jp="クーポンW-ASCI" jpl="" targets="None">Kupon W-ASCC</i>
   <i id="9193" enl="jar of miso" jp="味噌" jpl="" targets="None">Miso</i>
   <i id="9194" enl="bottle of soy sauce" jp="醤油" jpl="" targets="None">Soy Sauce</i>
   <i id="9195" enl="handful of dried bonito" jp="鰹節" jpl="" targets="None">Dried Bonito</i>
@@ -6558,6 +6608,39 @@
   <i id="9215" enl="tuft of void grass" jp="ヴォイドグラス" jpl="" targets="None">Void Grass</i>
   <i id="9216" enl="voidsnapper" jp="ヴォイドキンギョ" jpl="" targets="None">Voidsnapper</i>
   <i id="9217" enl="dial key #Ab" jp="ダイヤルキー#Ab" jpl="" targets="None">Dial Key #Ab</i>
+  <i id="9220" enl="spool of Abdhaljs thread" jp="アブダルスの糸" jpl="" targets="None">Abdhaljs Thread</i>
+  <i id="9221" enl="pinch of Abdhaljs dust" jp="アブダルスの金粉" jpl="" targets="None">Abdhaljs Dust</i>
+  <i id="9222" enl="pot of Abdhaljs dye" jp="アブダルスの染料" jpl="" targets="None">Abdhaljs Dye</i>
+  <i id="9223" enl="bottle of Abdhaljs sap" jp="アブダルスの水油" jpl="" targets="None">Abdhaljs Sap</i>
+  <i id="9225" enl="Abdhaljs needle" jp="アブダルスエギーユ" jpl="" targets="None">Abdhaljs Needle</i>
+  <i id="9226" enl="Mog Kupon A-EMI" jp="クーポンA-EMI" jpl="" targets="None">Kupon A-EMI</i>
+  <i id="9227" enl="Mog Kupon A-SYW" jp="クーポンA-SYO" jpl="" targets="None">Kupon A-SYW</i>
+  <i id="9228" enl="Mog Kupon A-ASYW" jp="クーポンA-ASYO" jpl="" targets="None">Kupon A-ASYW</i>
+  <i id="9229" enl="speedloader" jp="チェインアンプ" jpl="" targets="None">Speedloader</i>
+  <i id="9230" enl="speedloader II" jp="チェインアンプII" jpl="" targets="None">Speedloader II</i>
+  <i id="9232" enl="tropical cactus" jp="トロピカルカクタス" jpl="" targets="None">Tropical Cactus</i>
+  <i id="9233" enl="mana channeler II" jp="マナチャネラーII" jpl="" targets="None">Mana Channeler II</i>
+  <i id="9234" enl="optic fiber II" jp="Ｏ．ファイバーII" jpl="" targets="None">Optic Fiber II</i>
+  <i id="9235" enl="Ambuscade voucher: head" jp="Ａ．チケット：頭" jpl="" targets="None">A. Voucher: Head</i>
+  <i id="9236" enl="Ambuscade voucher: body" jp="Ａ．チケット：胴" jpl="" targets="None">A. Voucher: Body</i>
+  <i id="9237" enl="Ambuscade voucher: hands" jp="Ａ．チケット：手" jpl="" targets="None">A. Voucher: Hands</i>
+  <i id="9238" enl="Ambuscade voucher: legs" jp="Ａ．チケット：脚" jpl="" targets="None">A. Voucher: Legs</i>
+  <i id="9239" enl="Ambuscade voucher: feet" jp="Ａ．チケット：足" jpl="" targets="None">A. Voucher: Feet</i>
+  <i id="9240" enl="Ambuscade voucher: head +1" jp="Ａ．チケット：頭+1" jpl="" targets="None">A. Vou.: Head +1</i>
+  <i id="9241" enl="Ambuscade voucher: body +1" jp="Ａ．チケット：胴+1" jpl="" targets="None">A. Vou.: Body +1</i>
+  <i id="9242" enl="Ambuscade voucher: hands +1" jp="Ａ．チケット：手+1" jpl="" targets="None">A. Vou.: Hands +1</i>
+  <i id="9243" enl="Ambuscade voucher: legs +1" jp="Ａ．チケット：脚+1" jpl="" targets="None">A. Vou.: Legs +1</i>
+  <i id="9244" enl="Ambuscade voucher: feet +1" jp="Ａ．チケット：足+1" jpl="" targets="None">A. Vou.: Feet +1</i>
+  <i id="9280" enl="damage gauge II" jp="ダメージゲージII" jpl="" targets="None">Damage Gauge II</i>
+  <i id="10049" enl="♪Raptor" jp="♪ラプトル" jpl="" targets="None">♪Raptor</i>
+  <i id="10050" enl="♪Tiger" jp="♪剣虎" jpl="" targets="None">♪Tiger</i>
+  <i id="10051" enl="♪Crab" jp="♪クラブ" jpl="" targets="None">♪Crab</i>
+  <i id="10052" enl="♪Red Crab" jp="♪赤クラブ" jpl="" targets="None">♪Red Crab</i>
+  <i id="10053" enl="♪Bomb" jp="♪ボム" jpl="" targets="None">♪Bomb</i>
+  <i id="10054" enl="♪Ram" jp="♪大羊" jpl="" targets="None">♪Ram</i>
+  <i id="10055" enl="♪Morbol" jp="♪モルボル" jpl="" targets="None">♪Morbol</i>
+  <i id="10056" enl="♪Crawler" jp="♪クロウラー" jpl="" targets="None">♪Crawler</i>
+  <i id="10057" enl="♪Fenrir" jp="♪フェンリル" jpl="" targets="None">♪Fenrir</i>
   <i id="10112" enl="cipher of Zeid's alter ego" jp="盟-ザイド" jpl="" targets="None">Cipher: Zeid</i>
   <i id="10113" enl="cipher of Lion's alter ego" jp="盟-ライオン" jpl="" targets="None">Cipher: Lion</i>
   <i id="10114" enl="cipher of Tenzen's alter ego" jp="盟-テンゼン" jpl="" targets="None">Cipher: Tenzen</i>
@@ -6634,11 +6717,8 @@
   <i id="10185" enl="cipher of Iroha's alter ego" jp="盟-イロハ" jpl="" targets="None">Cipher: Iroha</i>
   <i id="10186" enl="cipher of Iroha's alter ego II" jp="盟-イロハII" jpl="" targets="None">Cipher: Iroha II</i>
   <i id="10187" enl="cipher of Shantotto's alter ego II" jp="盟-シャントットII" jpl="" targets="None">Cipher: Shantotto II</i>
-  <i id="10188" enl="cipher of AA HM's alter ego" jp="盟-ＡｒｋＨＭ" jpl="" targets="None">Cipher: Ark HM</i>
-  <i id="10189" enl="cipher of AA TT's alter ego" jp="盟-ＡｒｋＴＴ" jpl="" targets="None">Cipher: Ark TT</i>
-  <i id="10190" enl="cipher of AA MR's alter ego" jp="盟-ＡｒｋＭＲ" jpl="" targets="None">Cipher: Ark MR</i>
-  <i id="10191" enl="cipher of AA EV's alter ego" jp="盟-ＡｒｋＥＶ" jpl="" targets="None">Cipher: Ark EV</i>
-  <i id="10192" enl="cipher of AA GK's alter ego" jp="盟-ＡｒｋＧＫ" jpl="" targets="None">Cipher: Ark GK</i>
+  <i id="10191" enl="cipher of AA EV's alter ego" jp="盟-アークEV" jpl="" targets="None">Cipher: Ark EV</i>
+  <i id="10192" enl="cipher of AA GK's alter ego" jp="盟-アークGK" jpl="" targets="None">Cipher: Ark GK</i>
   <i id="28672" enl="Maze Tabula M01" jp="メイズタビュラM01" jpl="">Maze Tabula M01</i>
   <i id="28673" enl="Maze Tabula M02" jp="メイズタビュラM02" jpl="">Maze Tabula M02</i>
   <i id="28674" enl="Maze Tabula M03" jp="メイズタビュラM03" jpl="">Maze Tabula M03</i>
@@ -6776,6 +6856,7 @@
   <i id="29331" enl="moogle storage slip 20" jp="モグの預り帳【20】" jpl="">Storage Slip 20</i>
   <i id="29332" enl="moogle storage slip 21" jp="モグの預り帳【21】" jpl="">Storage Slip 21</i>
   <i id="29333" enl="moogle storage slip 22" jp="モグの預り帳【22】" jpl="">Storage Slip 22</i>
+  <i id="29334" enl="moogle storage slip 23" jp="モグの預り帳【23】" jpl="">Storage Slip 23</i>
   <i id="29695" enl="mangled mess" jp="？？？" jpl="">Mangled Mess</i>
   <i id="61441" enl="Rabbit" jp="ウサギ族" jpl="">Rabbit</i>
   <i id="61442" enl="Behemoth" jp="ベヒーモス族" jpl="">Behemoth</i>
