@@ -25,7 +25,7 @@ namespace EasyFarm.States
     /// <summary>
     ///     Moves to target enemies.
     /// </summary>
-    public class FollowState : CombatBaseState
+    public class FollowState : CombatState
     {
         private readonly UnitService UnitService;
 
@@ -34,7 +34,7 @@ namespace EasyFarm.States
             this.UnitService = new UnitService(fface);
         }
 
-        public override void EnterComponent()
+        public override void Enter()
         {
             // Stand up from resting. 
             if (fface.Player.Status == Status.Healing)
@@ -49,13 +49,13 @@ namespace EasyFarm.States
             }
         }
 
-        public override bool CheckComponent()
+        public override bool Check()
         {
             // Do not follow during fighting. 
             if (IsFighting) return false;
 
             // Do not follow when resting. 
-            if (new RestState(fface).CheckComponent()) return false;
+            if (new RestState(fface).Check()) return false;
 
             // Avoid following empty units. 
             if (string.IsNullOrWhiteSpace(Config.Instance.FollowedPlayer)) return false;
@@ -80,7 +80,7 @@ namespace EasyFarm.States
             return UnitService.Units.FirstOrDefault(x => x.Name == name);
         }
 
-        public override void RunComponent()
+        public override void Run()
         {
             // Get the player specified in user settings. 
             var player = GetPlayerByName(Config.Instance.FollowedPlayer);

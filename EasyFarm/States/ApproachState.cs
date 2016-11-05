@@ -25,13 +25,13 @@ namespace EasyFarm.States
     /// <summary>
     ///     Moves to target enemies.
     /// </summary>
-    public class ApproachState : CombatBaseState
+    public class ApproachState : CombatState
     {
         public ApproachState(IMemoryAPI fface) : base(fface) { }
 
-        public override bool CheckComponent()
+        public override bool Check()
         {
-            if (new RestState(fface).CheckComponent()) return false;
+            if (new RestState(fface).Check()) return false;
 
             // Target dead or null.
             if (!UnitFilters.MobFilter(fface, Target)) return false;
@@ -50,7 +50,7 @@ namespace EasyFarm.States
             return Target.Distance < 8;
         }
 
-        public override void RunComponent()
+        public override void Run()
         {
             // Has the user decided that we should approach targets?
             if (Config.Instance.IsApproachEnabled)

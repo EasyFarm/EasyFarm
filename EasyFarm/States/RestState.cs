@@ -77,7 +77,7 @@ namespace EasyFarm.States
         ///     Determines if we should rest up our health or magic.
         /// </summary>
         /// <returns></returns>
-        public override bool CheckComponent()
+        public override bool Check()
         {
             // Check for effects taht stop resting. 
             if (ProhibitEffects.ProhibitEffectsDots
@@ -106,7 +106,7 @@ namespace EasyFarm.States
         /// <summary>
         ///     Begin resting our health and magic.
         /// </summary>
-        public override void RunComponent()
+        public override void Run()
         {
             Player.Rest(fface);
         }
@@ -114,7 +114,7 @@ namespace EasyFarm.States
         /// <summary>
         ///     Force the player to stand up before attempting anything else.
         /// </summary>
-        public override void ExitComponent()
+        public override void Exit()
         {
             while (fface.Player.Status == Status.Healing)
             {

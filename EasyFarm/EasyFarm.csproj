@@ -180,6 +180,7 @@
     </Compile>
     <Compile Include="States\PlayerMovementTracker.cs" />
     <Compile Include="States\Route.cs" />
+    <Compile Include="States\TypeCache.cs" />
     <Compile Include="States\ZoneState.cs" />
     <Compile Include="States\DeadState.cs" />
     <Compile Include="States\FollowState.cs" />
@@ -213,7 +214,7 @@
     <Compile Include="ViewModels\MasterViewModel.cs" />
     <Compile Include="ViewModels\ProcessSelectionViewModel.cs" />
     <Compile Include="States\ApproachState.cs" />
-    <Compile Include="States\CombatBaseState.cs" />
+    <Compile Include="States\CombatState.cs" />
     <Compile Include="Classes\BattleAbility.cs" />
     <Compile Include="Classes\Caster.cs" />
     <Compile Include="Classes\Executor.cs" />

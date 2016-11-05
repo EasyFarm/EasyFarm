@@ -28,7 +28,7 @@ namespace EasyFarm.States
     ///     lists can fire and replaces targets that are dead, null,
     ///     empty or invalid.
     /// </summary>
-    public class EndState : CombatBaseState
+    public class EndState : CombatState
     {
         private readonly Executor _executor;
 
@@ -37,10 +37,10 @@ namespace EasyFarm.States
             _executor = new Executor(fface);
         }
 
-        public override bool CheckComponent()
+        public override bool Check()
         {
             // Prevent making the player stand up from resting.
-            if (new RestState(fface).CheckComponent()) return false;
+            if (new RestState(fface).Check()) return false;
 
             // Creature is unkillable and does not meets the
             // user's criteria for valid mobs defined in MobFilters.
@@ -50,7 +50,7 @@ namespace EasyFarm.States
         /// <summary>
         ///     Force player when changing targets.
         /// </summary>
-        public override void EnterComponent()
+        public override void Enter()
         {
             fface.Navigator.Reset();
 
@@ -60,7 +60,7 @@ namespace EasyFarm.States
             }
         }
 
-        public override void RunComponent()
+        public override void Run()
         {
             // Execute moves.
             var usable = Config.Instance.BattleLists["End"].Actions

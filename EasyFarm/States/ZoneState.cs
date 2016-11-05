@@ -13,13 +13,13 @@ namespace EasyFarm.States
             _zone = fface.Player.Zone;
         }
 
-        public override bool CheckComponent()
+        public override bool Check()
         {
             var zone = fface.Player.Zone;
             return _zone != zone || fface.Player.Stats.Str == 0;
         }
 
-        public override void RunComponent()
+        public override void Run()
         {
             // Set new zone.
             _zone = fface.Player.Zone;

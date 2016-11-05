@@ -15,7 +15,7 @@ namespace EasyFarm.States
         /// Setup any state before other states start firing. 
         /// </summary>
         /// <returns></returns>
-        public override bool CheckComponent()
+        public override bool Check()
         {
             /// Reset all action's last cast times on FSM start. 
             foreach (var action in Config.Instance.BattleLists.Actions) action.LastCast = DateTime.Now;
