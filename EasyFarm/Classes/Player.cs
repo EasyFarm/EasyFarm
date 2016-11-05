@@ -46,6 +46,7 @@ namespace EasyFarm.Classes
             if (fface.Player.Status.Equals(Status.Fighting))
             {
                 fface.Windower.SendString(Constants.AttackOff);
+                Thread.Sleep(50);
             }
         }
 
@@ -88,6 +89,7 @@ namespace EasyFarm.Classes
         {
             // Face mob. 
             fface.Navigator.FaceHeading(target.Position);
+            Thread.Sleep(50);
         }
 
         /// <summary>
@@ -103,6 +105,7 @@ namespace EasyFarm.Classes
                 // Set as target. 
                 fface.Target.SetNPCTarget(target.Id);
                 fface.Windower.SendString("/ta <t>");
+                Thread.Sleep(50);
             }
         }
 
@@ -121,6 +124,7 @@ namespace EasyFarm.Classes
                 {
                     // Engage the target. 
                     fface.Windower.SendString(Constants.AttackTarget);
+                    Thread.Sleep(50);
                 }
             }
         }
@@ -129,10 +133,13 @@ namespace EasyFarm.Classes
         {
             if (target.Id != fface.Target.ID)
             {
-                Player.Disengage(fface);
-                Player.FaceMob(target, fface);
-                Player.SetTarget(target, fface);
-                Player.Engage(target, fface);
+                for (int i = 0; i < 3; i++)
+                {
+                    Disengage(fface);
+                    FaceMob(target, fface);
+                    SetTarget(target, fface);
+                    Engage(target, fface);
+                }
             }
         }
     }
