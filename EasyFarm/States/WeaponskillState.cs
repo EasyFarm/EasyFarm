@@ -46,10 +46,9 @@ namespace EasyFarm.States
 
         public override void Run()
         {
-            // Check engaged
-            // FIXED: no longer return on not engage but don't execute 
-            // these moves instead. Fixes the bot not attacking things 
-            // from move than 30 yalms problem. 
+            Player.SwitchTarget(Target, fface);
+
+            // Check engaged 
             if (fface.Player.Status.Equals(Status.Fighting))
             {
                 // Grab the first weaponskill or null. 

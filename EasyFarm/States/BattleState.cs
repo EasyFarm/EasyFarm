@@ -62,6 +62,8 @@ namespace EasyFarm.States
 
         public override void Run()
         {
+            Player.SwitchTarget(Target, fface);
+
             // Cast only one action to prevent blocking curing. 
             var action = Config.Instance.BattleLists["Battle"].Actions
                 .FirstOrDefault(x => ActionFilters.TargetedFilter(fface, x, Target));

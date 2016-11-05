@@ -27,13 +27,15 @@ namespace EasyFarm.States
     /// </summary>
     public class ApproachState : CombatState
     {
-        public ApproachState(IMemoryAPI fface) : base(fface) { }
+        public ApproachState(IMemoryAPI fface) : base(fface)
+        {
+        }
 
         public override bool Check()
         {
             if (new RestState(fface).Check()) return false;
 
-            // Target dead or null.
+            // target dead or null.
             if (!UnitFilters.MobFilter(fface, Target)) return false;
 
             // We should approach mobs that have aggroed or have been pulled. 
@@ -52,39 +54,8 @@ namespace EasyFarm.States
 
         public override void Run()
         {
-            // Has the user decided that we should approach targets?
-            if (Config.Instance.IsApproachEnabled)
-            {
-                // Move to target if out of melee range. 
-                if (Target.Distance > Config.Instance.MeleeDistance)
-                {
-                    // Move to unit at max buff distance. 
-                    fface.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
-                    fface.Navigator.GotoNPC(Target.Id, Config.Instance.IsObjectAvoidanceEnabled);
-                }
-            }
-
-            // Face mob. 
-            fface.Navigator.FaceHeading(Target.Position);
-
-            // Target mob if not currently targeted. 
-            if (Target.Id != fface.Target.ID)
-            {
-                // Set as target. 
-                fface.Target.SetNPCTarget(Target.Id);
-                fface.Windower.SendString("/ta <t>");
-            }
-
-            // Has the user decided we should engage in battle. 
-            if (Config.Instance.IsEngageEnabled)
-            {
-                // Not engaged and in range. 
-                if (!fface.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
-                {
-                    // Engage the target. 
-                    fface.Windower.SendString(Constants.AttackTarget);
-                }
-            }
-        }
+            Player.SwitchTarget(Target, fface);
+            Player.ApproachMob(Target, fface);            
+        }        
     }
 }
