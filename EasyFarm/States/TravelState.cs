@@ -30,7 +30,7 @@ namespace EasyFarm.States
 
         public TravelState(IMemoryAPI fface) : base(fface) { }
 
-        public override bool CheckComponent()
+        public override bool Check()
         {
             // Waypoint list is empty.
             if (!Route.HasWaypoints) return false;
@@ -42,13 +42,13 @@ namespace EasyFarm.States
             if (!Route.IsWithinDistance(fface.Player.Position, 20)) return false;
 
             // We are not able to attack any creatures. 
-            if (new ApproachState(fface).CheckComponent()) return false;
+            if (new ApproachState(fface).Check()) return false;
 
             // We don't have to rest. 
-            if (new RestState(fface).CheckComponent()) return false;
+            if (new RestState(fface).Check()) return false;
 
             // We don't have to heal. 
-            if (new HealingState(fface).CheckComponent()) return false;
+            if (new HealingState(fface).Check()) return false;
 
             // We are not bound or struck by an other movement
             // disabling condition. 
@@ -59,7 +59,7 @@ namespace EasyFarm.States
             return true;
         }        
 
-        public override void RunComponent()
+        public override void Run()
         {            
             fface.Navigator.DistanceTolerance = 1;
             var nextPosition = Route.GetNextPosition(fface.Player.Position);

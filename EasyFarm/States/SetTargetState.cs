@@ -6,7 +6,7 @@ using MemoryAPI;
 
 namespace EasyFarm.States
 {
-    public class SetTargetState : CombatBaseState
+    public class SetTargetState : CombatState
     {
         private DateTime _lastTargetCheck = DateTime.Now;
 
@@ -17,7 +17,7 @@ namespace EasyFarm.States
             _units = new UnitService(fface);
         }
 
-        public override bool CheckComponent()
+        public override bool Check()
         {
             // Currently fighting, do not change target. 
             if (!UnitFilters.MobFilter(fface, Target))

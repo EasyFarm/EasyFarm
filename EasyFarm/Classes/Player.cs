@@ -11,8 +11,7 @@ namespace EasyFarm.Classes
 
         public static Player Instance
         {
-            get { return _instance = _instance ?? new Player(); ; }
-            private set { _instance = value; }
+            get { return _instance = _instance ?? new Player(); }
         }
 
         /// <summary>
@@ -40,17 +39,6 @@ namespace EasyFarm.Classes
         }
 
         /// <summary>
-        ///     Switches the player to attack mode on the current unit
-        /// </summary>
-        public static void Engage(IMemoryAPI fface)
-        {
-            if (!fface.Player.Status.Equals(Status.Fighting))
-            {
-                fface.Windower.SendString(Constants.AttackTarget);
-            }
-        }
-
-        /// <summary>
         ///     Stop the character from fight the target
         /// </summary>
         public static void Disengage(IMemoryAPI fface)
@@ -58,13 +46,101 @@ namespace EasyFarm.Classes
             if (fface.Player.Status.Equals(Status.Fighting))
             {
                 fface.Windower.SendString(Constants.AttackOff);
+                Thread.Sleep(50);
             }
         }
 
+        /// <summary>
+        /// Makes the player stop moving. 
+        /// </summary>
+        /// <param name="fface"></param>
         public static void StopRunning(IMemoryAPI fface)
         {
             fface.Navigator.Reset();
             Thread.Sleep(100);
+        }
+
+        /// <summary>
+        /// Makes the player move closer towards the target mob. 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="fface"></param>
+        public static void ApproachMob(Unit target, IMemoryAPI fface)
+        {
+            // Has the user decided that we should approach targets?
+            if (Config.Instance.IsApproachEnabled)
+            {
+                // Move to target if out of melee range. 
+                if (target.Distance > Config.Instance.MeleeDistance)
+                {
+                    // Move to unit at max buff distance. 
+                    fface.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
+                    fface.Navigator.GotoNPC(target.Id, Config.Instance.IsObjectAvoidanceEnabled);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Make player look at the target mob. 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="fface"></param>
+        public static void FaceMob(Unit target, IMemoryAPI fface)
+        {
+            // Face mob. 
+            fface.Navigator.FaceHeading(target.Position);
+            Thread.Sleep(50);
+        }
+
+        /// <summary>
+        /// Places cursor on target mob. 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="fface"></param>
+        public static void SetTarget(Unit target, IMemoryAPI fface)
+        {
+            // target mob if not currently targeted. 
+            if (target.Id != fface.Target.ID)
+            {
+                // Set as target. 
+                fface.Target.SetNPCTarget(target.Id);
+                fface.Windower.SendString("/ta <t>");
+                Thread.Sleep(50);
+            }
+        }
+
+        /// <summary>
+        /// Make the player pull out weapon and engage target. 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="fface"></param>
+        public static void Engage(Unit target, IMemoryAPI fface)
+        {
+            // Has the user decided we should engage in battle. 
+            if (Config.Instance.IsEngageEnabled)
+            {
+                // Not engaged and in range. 
+                if (!fface.Player.Status.Equals(Status.Fighting) && target.Distance < 25)
+                {
+                    // Engage the target. 
+                    fface.Windower.SendString(Constants.AttackTarget);
+                    Thread.Sleep(50);
+                }
+            }
+        }
+
+        public static void SwitchTarget(Unit target, IMemoryAPI fface)
+        {
+            if (target.Id != fface.Target.ID)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Disengage(fface);
+                    FaceMob(target, fface);
+                    SetTarget(target, fface);
+                    Engage(target, fface);
+                }
+            }
         }
     }
 }

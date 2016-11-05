@@ -22,7 +22,7 @@ using MemoryAPI;
 
 namespace EasyFarm.States
 {
-    public class PullState : CombatBaseState
+    public class PullState : CombatState
     {
         public PullState(IMemoryAPI fface) : base(fface)
         {
@@ -36,15 +36,15 @@ namespace EasyFarm.States
         ///     FightStarted state needs updating.
         /// </summary>
         /// <returns></returns>
-        public override bool CheckComponent()
+        public override bool Check()
         {
             if (IsFighting) return false;
-            if (new RestState(fface).CheckComponent()) return false;
+            if (new RestState(fface).Check()) return false;
             if (!UnitFilters.MobFilter(fface, Target)) return false;
             return Config.Instance.BattleLists["Pull"].Actions.Any(x => x.IsEnabled);
         }
 
-        public override void EnterComponent()
+        public override void Enter()
         {
             fface.Navigator.Reset();
         }
@@ -53,8 +53,9 @@ namespace EasyFarm.States
         ///     Use pulling moves if applicable to make the target
         ///     mob aggressive to us.
         /// </summary>
-        public override void RunComponent()
+        public override void Run()
         {
+            Player.SwitchTarget(Target, fface);
             var actions = Config.Instance.BattleLists["Pull"].Actions.ToList();
             var usable = actions.Where(x => ActionFilters.TargetedFilter(fface, x, Target)).ToList();
             Executor.UseTargetedActions(usable, Target);
@@ -64,7 +65,7 @@ namespace EasyFarm.States
         ///     Handle all cases of setting fight started to proper values
         ///     so other components can fire.
         /// </summary>
-        public override void ExitComponent()
+        public override void Exit()
         {
         }
     }

@@ -25,7 +25,7 @@ namespace EasyFarm.States
     /// <summary>
     ///     A class for defeating monsters.
     /// </summary>
-    public class BattleState : CombatBaseState
+    public class BattleState : CombatState
     {
         private readonly Executor _executor;
 
@@ -34,9 +34,9 @@ namespace EasyFarm.States
             _executor = new Executor(fface);
         }
 
-        public override bool CheckComponent()
+        public override bool Check()
         {
-            if (new RestState(fface).CheckComponent()) return false;
+            if (new RestState(fface).Check()) return false;
 
             // Mobs has not been pulled if pulling moves are available. 
             if (!IsFighting) return false;
@@ -54,14 +54,16 @@ namespace EasyFarm.States
             return true;
         }
 
-        public override void EnterComponent()
+        public override void Enter()
         {
             Player.Stand(fface);
             fface.Navigator.Reset();
         }
 
-        public override void RunComponent()
+        public override void Run()
         {
+            Player.SwitchTarget(Target, fface);
+
             // Cast only one action to prevent blocking curing. 
             var action = Config.Instance.BattleLists["Battle"].Actions
                 .FirstOrDefault(x => ActionFilters.TargetedFilter(fface, x, Target));

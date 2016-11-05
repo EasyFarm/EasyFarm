@@ -25,7 +25,7 @@ namespace EasyFarm.States
     /// <summary>
     ///     Performs weaponskills on targets.
     /// </summary>
-    public class WeaponskillState : CombatBaseState
+    public class WeaponskillState : CombatState
     {
         private readonly Executor _executor;
 
@@ -34,9 +34,9 @@ namespace EasyFarm.States
             _executor = new Executor(fface);
         }
 
-        public override bool CheckComponent()
+        public override bool Check()
         {
-            if (new RestState(fface).CheckComponent()) return false;
+            if (new RestState(fface).Check()) return false;
 
             if (!UnitFilters.MobFilter(fface, Target)) return false;
 
@@ -44,12 +44,11 @@ namespace EasyFarm.States
             return fface.Player.Status.Equals(Status.Fighting);
         }
 
-        public override void RunComponent()
+        public override void Run()
         {
-            // Check engaged
-            // FIXED: no longer return on not engage but don't execute 
-            // these moves instead. Fixes the bot not attacking things 
-            // from move than 30 yalms problem. 
+            Player.SwitchTarget(Target, fface);
+
+            // Check engaged 
             if (fface.Player.Status.Equals(Status.Fighting))
             {
                 // Grab the first weaponskill or null. 

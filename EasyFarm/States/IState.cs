@@ -5,10 +5,10 @@
         bool Enabled { get; set; }
         int Priority { get; set; }
 
-        bool CheckComponent();        
-        void EnterComponent();
-        void ExitComponent();        
-        void RunComponent();
+        bool Check();        
+        void Enter();
+        void Exit();        
+        void Run();
 
         int CompareTo(object other);        
     }

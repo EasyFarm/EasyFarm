@@ -24,25 +24,25 @@ namespace EasyFarm.States
     /// <summary>
     ///     A class for defeating monsters.
     /// </summary>
-    public class CombatBaseState : BaseState
+    public class CombatState : BaseState
     {
-        static CombatBaseState()
+        static CombatState()
         {
            IsFighting = false;
         }
 
-        public CombatBaseState(IMemoryAPI fface) : base(fface)
+        protected CombatState(IMemoryAPI fface) : base(fface)
         {
         }
 
         /// <summary>
         ///     Whether the fight has started or not.
         /// </summary>
-        public static bool IsFighting { get; set; }
+        protected static bool IsFighting { get; set; }
 
         /// <summary>
         ///     Who we are trying to kill currently
         /// </summary>
-        public static Unit Target { get; set; }        
+        protected static Unit Target { get; set; }        
     }
 }

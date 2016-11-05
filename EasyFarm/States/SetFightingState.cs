@@ -4,11 +4,11 @@ using MemoryAPI;
 
 namespace EasyFarm.States
 {
-    public class SetFightingState : CombatBaseState
+    public class SetFightingState : CombatState
     {
         public SetFightingState(IMemoryAPI fface) : base(fface) { }
 
-        public override bool CheckComponent()
+        public override bool Check()
         {
             if (UnitFilters.MobFilter(fface, Target))
             {

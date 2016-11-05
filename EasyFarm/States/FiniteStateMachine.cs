@@ -20,7 +20,6 @@ You should have received a copy of the GNU General Public License
 // Site: FFEVO.net
 // All credit to him!
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -34,45 +33,45 @@ namespace EasyFarm.States
     {
         private readonly TypeCache<bool> _cache = new TypeCache<bool>();
         private CancellationTokenSource _cancellation = new CancellationTokenSource();
-        private readonly List<IState> _components = new List<IState>();
+        private readonly List<IState> _states = new List<IState>();
 
         public FiniteStateMachine(IMemoryAPI fface)
         {
             //Create the states
-            AddComponent(new DeadState(fface) {Priority = 6});
-            AddComponent(new ZoneState(fface) {Priority = 6});
-            AddComponent(new SetTargetState(fface) {Priority = 6});
-            AddComponent(new SetFightingState(fface) {Priority = 6});
-            AddComponent(new FollowState(fface) {Priority = 5});
-            AddComponent(new RestState(fface) {Priority = 2});
-            AddComponent(new ApproachState(fface) {Priority = 0});
-            AddComponent(new BattleState(fface) {Priority = 3});
-            AddComponent(new WeaponskillState(fface) {Priority = 2});
-            AddComponent(new PullState(fface) {Priority = 4});
-            AddComponent(new StartState(fface) {Priority = 5});
-            AddComponent(new TravelState(fface) {Priority = 1});
-            AddComponent(new HealingState(fface) {Priority = 2});
-            AddComponent(new EndState(fface) {Priority = 3});
-            AddComponent(new StartEngineState(fface) {Priority = Constants.MaxPriority});
+            AddState(new DeadState(fface) {Priority = 6});
+            AddState(new ZoneState(fface) {Priority = 6});
+            AddState(new SetTargetState(fface) {Priority = 6});
+            AddState(new SetFightingState(fface) {Priority = 6});
+            AddState(new FollowState(fface) {Priority = 5});
+            AddState(new RestState(fface) {Priority = 2});
+            AddState(new ApproachState(fface) {Priority = 0});
+            AddState(new BattleState(fface) {Priority = 3});
+            AddState(new WeaponskillState(fface) {Priority = 2});
+            AddState(new PullState(fface) {Priority = 4});
+            AddState(new StartState(fface) {Priority = 5});
+            AddState(new TravelState(fface) {Priority = 1});
+            AddState(new HealingState(fface) {Priority = 2});
+            AddState(new EndState(fface) {Priority = 3});
+            AddState(new StartEngineState(fface) {Priority = Constants.MaxPriority});
 
-            _components.ForEach(x => x.Enabled = true);
+            _states.ForEach(x => x.Enabled = true);
         }
 
-        public void AddComponent(IState component)
+        public void AddState(IState component)
         {
-            this._components.Add(component);
+            _states.Add(component);
         }
 
-        public void RemoveComponent(IState component)
+        public void RemoveState(IState component)
         {
-            this._components.Remove(component);
+            _states.Remove(component);
         }
 
         // Start and stop.
         public void Start()
         {
             // Enable running of
-            IState startEngineState = _components.FirstOrDefault(x => x.GetType() == typeof (StartEngineState));
+            IState startEngineState = _states.FirstOrDefault(x => x.GetType() == typeof (StartEngineState));
             if (startEngineState != null) startEngineState.Enabled = true;
             MainLoop();
         }
@@ -91,66 +90,33 @@ namespace EasyFarm.States
                 while (true)
                 {                    
                     // Sort the List, States may have updated Priorities.
-                    _components.Sort();
+                    _states.Sort();
 
                     // Find a State that says it needs to run.
-                    foreach (var mc in _components.Where(x => x.Enabled).ToList())
+                    foreach (var mc in _states.Where(x => x.Enabled).ToList())
                     {
                         _cancellation.Token.ThrowIfCancellationRequested();
 
-                        bool isRunnable = mc.CheckComponent();
+                        bool isRunnable = mc.Check();
 
                         // Run last state's exits method.
                         if (_cache[mc] != isRunnable)
                         {
-                            if (isRunnable) mc.EnterComponent();
-                            else mc.ExitComponent();
+                            if (isRunnable) mc.Enter();
+                            else mc.Exit();
                             _cache[mc] = isRunnable;
                         }
 
                         if (isRunnable)
                         {
                             // Run current state's run method.
-                            mc.RunComponent();
+                            mc.Run();
                         }
                     }
 
                     Thread.Sleep(100);
                 }
             }, _cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-        }
-    }
-
-    public class TypeCache<T>
-    {
-        private readonly Dictionary<Type, T> _cache = new Dictionary<Type, T>();
-
-        public T this[object @object]
-        {
-            get
-            {
-                if (@object == null) return default(T);
-
-                if (_cache.ContainsKey(@object.GetType()))
-                {
-                    return _cache[@object.GetType()];
-                }
-
-                return default(T);
-            }
-            set
-            {
-                if (@object == null) return;
-
-                if (_cache.ContainsKey(@object.GetType()))
-                {
-                    _cache[@object.GetType()] = value;
-                }
-                else
-                {
-                    _cache.Add(@object.GetType(), value);
-                }
-            }
         }
     }
 }

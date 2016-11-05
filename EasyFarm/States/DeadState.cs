@@ -7,13 +7,13 @@ namespace EasyFarm.States
     {
         public DeadState(IMemoryAPI fface) : base(fface) { }
 
-        public override bool CheckComponent()
+        public override bool Check()
         {
             var status = fface.Player.Status;
             return status == Status.Dead1 || status == Status.Dead2;
         }
 
-        public override void RunComponent()
+        public override void Run()
         {
             // Stop program from running to next waypoint.
             fface.Navigator.Reset();

@@ -25,7 +25,7 @@ namespace EasyFarm.States
     /// <summary>
     ///     Buffs the player.
     /// </summary>
-    public class StartState : CombatBaseState
+    public class StartState : CombatState
     {
         public StartState(IMemoryAPI fface) : base(fface)
         {
@@ -34,9 +34,9 @@ namespace EasyFarm.States
 
         public Executor Executor { get; set; }
 
-        public override bool CheckComponent()
+        public override bool Check()
         {
-            if (new RestState(fface).CheckComponent()) return false;
+            if (new RestState(fface).Check()) return false;
 
             // target dead or null. 
             if (!UnitFilters.MobFilter(fface, Target)) return false;
@@ -45,12 +45,12 @@ namespace EasyFarm.States
             return !Target.Status.Equals(Status.Fighting);
         }
 
-        public override void EnterComponent()
+        public override void Enter()
         {
             fface.Navigator.Reset();
         }
 
-        public override void RunComponent()
+        public override void Run()
         {
             var usable = Config.Instance.BattleLists["Start"]
                 .Actions.Where(x => ActionFilters.BuffingFilter(fface, x));

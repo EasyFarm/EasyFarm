@@ -37,13 +37,13 @@ namespace EasyFarm.States
 
         public virtual int Priority { get; set; }
 
-        public virtual bool CheckComponent() { return false; }
+        public virtual bool Check() { return false; }
 
-        public virtual void EnterComponent() { }
+        public virtual void Enter() { }
 
-        public virtual void ExitComponent() { }
+        public virtual void Exit() { }
 
-        public virtual void RunComponent() { }
+        public virtual void Run() { }
 
         public virtual int CompareTo(object obj)
         {
