@@ -59,12 +59,12 @@ namespace EasyFarm.States
 
         public void AddState(IState component)
         {
-            _states.Add(component);
+            this._states.Add(component);
         }
 
         public void RemoveState(IState component)
         {
-            _states.Remove(component);
+            this._states.Remove(component);
         }
 
         // Start and stop.

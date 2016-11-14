@@ -31,18 +31,18 @@ namespace EasyFarm.States
            IsFighting = false;
         }
 
-        protected CombatState(IMemoryAPI fface) : base(fface)
+        public CombatState(IMemoryAPI fface) : base(fface)
         {
         }
 
         /// <summary>
         ///     Whether the fight has started or not.
         /// </summary>
-        protected static bool IsFighting { get; set; }
+        public static bool IsFighting { get; set; }
 
         /// <summary>
         ///     Who we are trying to kill currently
         /// </summary>
-        protected static Unit Target { get; set; }        
+        public static Unit Target { get; set; }        
     }
 }

@@ -55,7 +55,6 @@ namespace EasyFarm.States
         /// </summary>
         public override void Run()
         {
-            Player.SwitchTarget(Target, fface);
             var actions = Config.Instance.BattleLists["Pull"].Actions.ToList();
             var usable = actions.Where(x => ActionFilters.TargetedFilter(fface, x, Target)).ToList();
             Executor.UseTargetedActions(usable, Target);
