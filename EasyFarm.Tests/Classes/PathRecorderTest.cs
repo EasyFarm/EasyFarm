@@ -1,9 +1,5 @@
-﻿using System;
-using EasyFarm.Classes;
-using MemoryAPI;
+﻿using EasyFarm.Classes;
 using MemoryAPI.Navigation;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoMoq;
 using Xunit;
 
 namespace EasyFarm.Tests.Classes
@@ -11,28 +7,17 @@ namespace EasyFarm.Tests.Classes
     public class PathRecorderTest
     {
         [Fact]
-        public void WilRecordNewWaypoint()
+        public void AddNewPositionWithPositionWillRecordIt()
         {
-            IFixture fixture = new Fixture().Customize(new AutoMoqCustomization());
-            var memory = fixture.Create<IMemoryAPI>();
+            Position expected = new Position {H = 1, X = 1, Y = 1, Z = 1};
+            Position result = null;
 
-            var recorder = new PathRecorder(memory);
-            var position = RecordNewPosition(recorder);
-            Assert.NotNull(position);
-        }
+            var recorder = new PathRecorder(null);
 
-        private Position RecordNewPosition(PathRecorder recorder)
-        {
-            Position position = null;
-
-            recorder.OnPositionAdded += pos => position = pos;
-            recorder.Interval = 1;
-            recorder.Start();
-
-            DateTime start = DateTime.Now;
-            while (position == null && DateTime.Now < start.AddSeconds(5)) { }
-            recorder.Stop();
-            return position;
+            recorder.OnPositionAdded += actual => result = actual;
+            recorder.AddNewPosition(expected);
+        
+            Assert.Equal(expected, result);
         }
     }
 }

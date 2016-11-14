@@ -100,10 +100,15 @@ namespace EasyFarm.Classes
                 Z = pos.Z
             };
 
+            AddNewPosition(position);
+        }
+
+        public void AddNewPosition(Position position)
+        {
             // Update the path if we've changed out position. Rotating our heading does not
             // count as the player moving. 
-            if (_lastPosition == null || 
-                position.X != _lastPosition.X || 
+            if (_lastPosition == null ||
+                position.X != _lastPosition.X ||
                 position.Z != _lastPosition.Z)
             {
                 // Fire positon added event. 
