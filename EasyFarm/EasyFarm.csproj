@@ -421,8 +421,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\EliteAPI.dll" />
-    <Content Include="Dependencies\EliteMMO.API.dll" />
     <None Include="resources\abils.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -444,6 +442,10 @@
     <None Include="resources\status.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dependencies\EliteAPI.dll" />
+    <Content Include="Dependencies\EliteMMO.API.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
