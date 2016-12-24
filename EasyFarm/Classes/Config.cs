@@ -149,8 +149,8 @@ namespace EasyFarm.Classes
         static Config()
         {
             // Add battle moves at the start only once since deserialization
-            // can cause duplicate entries when the default constructor is 
-            // called. 
+            // can cause duplicate entries when the default constructor is
+            // called.
             Instance.BattleLists.Add(new BattleList("Start"));
             Instance.BattleLists.Add(new BattleList("Pull"));
             Instance.BattleLists.Add(new BattleList("Battle"));
@@ -169,7 +169,7 @@ namespace EasyFarm.Classes
         public Route Route = new Route();
 
         /// <summary>
-        /// Bot runs a straight route. 
+        /// Bot runs a straight route.
         /// </summary>
         public bool StraightRoute => Route.StraightRoute;
 
@@ -179,35 +179,13 @@ namespace EasyFarm.Classes
         public bool IsObjectAvoidanceEnabled = false;
 
         /// <summary>
-        /// The distance with which to follow a player.  
+        /// The distance with which to follow a player.
         /// </summary>
         public double FollowDistance = 5.0;
 
         /// <summary>
-        /// The current player to follow. 
+        /// The current player to follow.
         /// </summary>
         public string FollowedPlayer = string.Empty;
-    }
-
-    public class Range
-    {
-        public int Low { get; }
-        public int High { get; }
-
-        public Range(int low, int high)
-        {
-            Low = low;
-            High = high;
-        }
-
-        public bool InRange(int value)
-        {
-            return Low <= value && value <= High;
-        }
-
-        public bool NotSet()
-        {
-            return Low == 0 && High == 0;
-        }
-    }
+    }  
 }
