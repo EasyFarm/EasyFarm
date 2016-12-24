@@ -171,6 +171,7 @@
     <Compile Include="Classes\PlayerMonitor.cs" />
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
+    <Compile Include="Classes\Range.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -452,7 +453,7 @@
     <PostBuildEvent>copy "$(ProjectDir)\Dependencies\*.*" "$(TargetDir)"
 del "$(TargetDir)*.xml", "$(TargetDir)*.pdb"</PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
