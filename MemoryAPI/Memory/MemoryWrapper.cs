@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using EasyFarm;
 
 namespace MemoryAPI.Memory
 {

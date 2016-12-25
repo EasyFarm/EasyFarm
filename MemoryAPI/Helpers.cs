@@ -2,7 +2,7 @@
 using MemoryAPI;
 using MemoryAPI.Navigation;
 
-namespace EasyFarm
+namespace MemoryAPI
 {
     public class Helpers
     {

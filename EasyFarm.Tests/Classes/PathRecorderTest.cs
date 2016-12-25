@@ -1,4 +1,4 @@
-﻿using EasyFarm.Classes;
+using EasyFarm.Classes;
 using MemoryAPI.Navigation;
 using Xunit;
 
@@ -16,7 +16,7 @@ namespace EasyFarm.Tests.Classes
 
             recorder.OnPositionAdded += actual => result = actual;
             recorder.AddNewPosition(expected);
-        
+
             Assert.Equal(expected, result);
         }
     }

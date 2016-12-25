@@ -37,7 +37,7 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public static bool BuffingFilter(IMemoryAPI fface, BattleAbility action)
         {
-            // Return if not enabled. 
+            // Return if not enabled.
             if (!action.IsEnabled) return false;
 
             // Name Check
@@ -51,13 +51,13 @@ namespace EasyFarm.Classes
 
             // MP Range
             var mpReserve = new Range(action.MPReserveLow, action.MPReserveHigh);
-            if (!mpReserve.InRange(fface.Player.MPPCurrent) && !mpReserve.NotSet()) return false;
+            if (mpReserve.InRange(fface.Player.MPPCurrent) && !mpReserve.NotSet()) return false;
 
             // TP Range
             var tpReserve = new Range(action.TPReserveLow, action.TPReserveHigh);
             if (!mpReserve.InRange(fface.Player.TPCurrent) && !tpReserve.NotSet()) return false;
 
-            // Usage Limit Check. 
+            // Usage Limit Check.
             if (action.UsageLimit != 0)
             {
                 if (action.Usages > action.UsageLimit) return false;
@@ -66,7 +66,7 @@ namespace EasyFarm.Classes
             // Recast Check
             if (!AbilityUtils.IsRecastable(fface, action.Ability)) return false;
 
-            // Limiting Status Effect Check for Spells. 
+            // Limiting Status Effect Check for Spells.
             if (ResourceHelper.IsSpell(action.Ability.AbilityType))
             {
                 if (ProhibitEffects.ProhibitEffectsSpell.Intersect(fface.Player.StatusEffects).Any())
@@ -75,7 +75,7 @@ namespace EasyFarm.Classes
                 }
             }
 
-            // Limiting Status Effect Check for Abilities. 
+            // Limiting Status Effect Check for Abilities.
             if (ResourceHelper.IsAbility(action.Ability.AbilityType))
             {
                 if (ProhibitEffects.ProhibitEffectsAbility.Intersect(fface.Player.StatusEffects).Any())
@@ -84,7 +84,7 @@ namespace EasyFarm.Classes
                 }
             }
 
-            // Player HP Checks Enabled. 
+            // Player HP Checks Enabled.
             if (action.PlayerLowerHealth != 0 || action.PlayerUpperHealth != 0)
             {
                 // Player Upper HP Check
@@ -109,7 +109,7 @@ namespace EasyFarm.Classes
                 if (!hasEffect && action.TriggerOnEffectPresent) return false;
             }
 
-            // Check if action's recast period has passed. 
+            // Check if action's recast period has passed.
             if (action.Recast != 0)
             {
                 if (action.LastCast > DateTime.Now) return false;
@@ -127,10 +127,10 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public static bool TargetedFilter(IMemoryAPI fface, BattleAbility action, Unit unit)
         {
-            // Does not pass the base criteria for casting. 
+            // Does not pass the base criteria for casting.
             if (!BuffingFilter(fface, action)) return false;
 
-            // Target HP Checks Enabled. 
+            // Target HP Checks Enabled.
             if (action.TargetLowerHealth != 0 || action.TargetUpperHealth != 0)
             {
                 // Target Upper Health Check
@@ -143,7 +143,7 @@ namespace EasyFarm.Classes
             // Target Name Checks Enabled.
             if (!string.IsNullOrWhiteSpace(action.TargetName))
             {
-                // Target Name Check. 
+                // Target Name Check.
                 if (!Regex.IsMatch(unit.Name, action.TargetName, RegexOptions.IgnoreCase)) return false;
             }
 

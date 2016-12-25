@@ -7,7 +7,7 @@ using System.Threading;
 using MemoryAPI.Memory;
 using MemoryAPI.Navigation;
 
-namespace EasyFarm
+namespace MemoryAPI
 {
     public class EliteMMOWrapper : MemoryWrapper
     {
@@ -85,7 +85,7 @@ namespace EasyFarm
                         if (useObjectAvoidance)
                         {
                             AvoidObstacles();
-                        }                        
+                        }
 
                         Thread.Sleep(30);
                     }
@@ -95,7 +95,7 @@ namespace EasyFarm
             }
 
             /// <summary>
-            /// Attempts to get a stuck player moving again. 
+            /// Attempts to get a stuck player moving again.
             /// </summary>
             private void AvoidObstacles()
             {
@@ -103,11 +103,11 @@ namespace EasyFarm
                 {
                     if (IsEngaged()) Disengage();
                     WiggleCharacter(attempts: 3);
-                }                
+                }
             }
 
             /// <summary>
-            /// Determines if the player has become stuck. 
+            /// Determines if the player has become stuck.
             /// </summary>
             /// <returns></returns>
             /// <remarks>
@@ -124,7 +124,7 @@ namespace EasyFarm
             }
 
             /// <summary>
-            /// If the player is in fighting stance. 
+            /// If the player is in fighting stance.
             /// </summary>
             /// <returns></returns>
             private bool IsEngaged()
@@ -133,7 +133,7 @@ namespace EasyFarm
             }
 
             /// <summary>
-            /// Stop fighting the current target. 
+            /// Stop fighting the current target.
             /// </summary>
             private void Disengage()
             {
@@ -146,7 +146,7 @@ namespace EasyFarm
             /// </summary>
             /// <returns></returns>
             /// <remarks>
-            /// Author: dlsmd 
+            /// Author: dlsmd
             /// http://www.elitemmonetwork.com/forums/viewtopic.php?p=4627#p4627
             /// </remarks>
             private void WiggleCharacter(int attempts)
@@ -209,7 +209,7 @@ namespace EasyFarm
             public int PetID(int id) => api.Entity.GetEntity(id).PetIndex;
 
             /// <summary>
-            /// Checks to see if the object is rendered. 
+            /// Checks to see if the object is rendered.
             /// </summary>
             /// <param name="id"></param>
             /// <returns></returns>
