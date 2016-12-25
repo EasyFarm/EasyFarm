@@ -1,0 +1,1 @@
+%LOCALAPPDATA%\atom\bin\atom .. 
