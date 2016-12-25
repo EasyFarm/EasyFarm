@@ -55,7 +55,7 @@ namespace EasyFarm.Classes
 
             // TP Range
             var tpReserve = new Range(action.TPReserveLow, action.TPReserveHigh);
-            if (!mpReserve.InRange(fface.Player.TPCurrent) && !tpReserve.NotSet()) return false;
+            if (!tpReserve.InRange(fface.Player.TPCurrent) && !tpReserve.NotSet()) return false;
 
             // Usage Limit Check.
             if (action.UsageLimit != 0)

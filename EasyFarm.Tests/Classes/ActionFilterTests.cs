@@ -57,7 +57,7 @@ namespace EasyFarm.Tests.Classes
         }
 
         [Fact]
-        public void AbilityNotUsableWhenMpNotInReserveRag()
+        public void AbilityNotUsableWhenMpNotInReserveRange()
         {
             var battleAbility = FindAbility();
             battleAbility.MPReserveLow = 0;
@@ -65,6 +65,45 @@ namespace EasyFarm.Tests.Classes
 
             var player = FindPlayer();
             player.MPPCurrent = 100;
+            var memoryAPI = FindMemoryApi(player);
+
+            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void AbilityNotUsableWhenTpNotInReserveRange()
+        {
+            var battleAbility = FindAbility();
+
+            battleAbility.TPReserveLow = 1000;
+            battleAbility.TPReserveHigh = 1000;
+
+            var player = FindPlayer();
+            player.TPCurrent = 1;
+            var memoryAPI = FindMemoryApi(player);
+
+            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
+            Assert.False(result);
+        }
+
+        /// <summary>
+        /// Fixed bug where MPReserve was being used to calculate whether a
+        /// weaponskill could be used: should have been using TPReserve
+        /// </summary>
+        [Fact]
+        public void MpReserveWasUseInsteadOfTpReserveWhenCheckingTpReserveValue()
+        {
+            var battleAbility = FindAbility();
+            battleAbility.MPReserveLow = 1;
+            battleAbility.MPReserveHigh = 1;
+
+            battleAbility.TPReserveLow = 1000;
+            battleAbility.TPReserveHigh = 1000;
+
+            var player = FindPlayer();
+            player.MPPCurrent = 1;
+            player.TPCurrent = 1;
             var memoryAPI = FindMemoryApi(player);
 
             var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
