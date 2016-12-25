@@ -60,7 +60,7 @@ namespace EasyFarm.Classes
             // Usage Limit Check.
             if (action.UsageLimit != 0)
             {
-                if (action.Usages > action.UsageLimit) return false;
+                if (action.Usages >= action.UsageLimit) return false;
             }
 
             // Recast Check

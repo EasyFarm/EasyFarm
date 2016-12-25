@@ -110,6 +110,20 @@ namespace EasyFarm.Tests.Classes
             Assert.False(result);
         }
 
+        [Fact]
+        public void AbilityNotUsableWhenUsageLimitIsReached()
+        {
+            var battleAbility = FindAbility();
+            battleAbility.UsageLimit = 1;
+            battleAbility.Usages = 1;
+
+            var player = FindPlayer();
+            var memoryAPI = FindMemoryApi(player);
+
+            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
+            Assert.False(result);
+        }
+
         public IMemoryAPI FindMemoryApi(IPlayerTools player)
         {
             var memoryAPI = new Mock<IMemoryAPI>();
