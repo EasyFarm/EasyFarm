@@ -2,25 +2,29 @@
 #tool "nuget:?package=OpenCover"
 #tool "nuget:?package=ReportGenerator"
 
-var target = Argument("target", "default");
+var target = Argument("target", "build");
 
-Task("default")
-	.IsDependentOn("build")
-	.IsDependentOn("cover")
-	.IsDependentOn("report");
+Task("build")
+	.IsDependentOn("build-it")
+	.IsDependentOn("cover-it")
+	.IsDependentOn("report-it");
 
-Task("build").Does(() => {
+Task("test")
+	.IsDependentOn("build-it")
+	.IsDependentOn("test-it");
+
+Task("build-it").Does(() => {
 	MSBuild("../EasyFarm.sln");
 });
 
-Task("test").Does(() => {
+Task("test-it").Does(() => {
 	XUnit2("../**/bin/Debug/*.Tests.dll", new XUnit2Settings() {
 		ToolPath = "./tools/xunit.runner.console/tools/xunit.console.x86.exe",
 		ShadowCopy = false
 	});
 });
 
-Task("cover").Does(() => {
+Task("cover-it").Does(() => {
 	OpenCover(tool => {
 		tool.XUnit2("../**/bin/Debug/*.Tests.dll", new XUnit2Settings() {
 			ToolPath = "./tools/xunit.runner.console/tools/xunit.console.x86.exe",
@@ -34,7 +38,7 @@ Task("cover").Does(() => {
 		.WithFilter("-[EasyFarm.Tests]*"));
 });
 
-Task("report").Does(() => {
+Task("report-it").Does(() => {
 	ReportGenerator("./result.xml", "./coverage");
 });
 

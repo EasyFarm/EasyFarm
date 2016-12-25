@@ -51,7 +51,7 @@ namespace EasyFarm.Classes
 
             // MP Range
             var mpReserve = new Range(action.MPReserveLow, action.MPReserveHigh);
-            if (mpReserve.InRange(fface.Player.MPPCurrent) && !mpReserve.NotSet()) return false;
+            if (!mpReserve.InRange(fface.Player.MPPCurrent) && !mpReserve.NotSet()) return false;
 
             // TP Range
             var tpReserve = new Range(action.TPReserveLow, action.TPReserveHigh);

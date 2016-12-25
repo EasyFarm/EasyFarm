@@ -57,14 +57,14 @@ namespace EasyFarm.Tests.Classes
         }
 
         [Fact]
-        public void AbilityNotUsableWithMpInReserveRange()
+        public void AbilityNotUsableWhenMpNotInReserveRag()
         {
             var battleAbility = FindAbility();
             battleAbility.MPReserveLow = 0;
             battleAbility.MPReserveHigh = 25;
 
             var player = FindPlayer();
-            player.MPPCurrent = 10;
+            player.MPPCurrent = 100;
             var memoryAPI = FindMemoryApi(player);
 
             var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
