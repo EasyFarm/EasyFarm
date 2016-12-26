@@ -138,6 +138,14 @@ namespace EasyFarm.Tests.Classes
             VerifyActionNotUsable();
         }
 
+        [Fact]
+        public void ActionNotUsableWhenRecastPeriodHasNotPassed()
+        {
+            battleAbility.Recast = 1;
+            battleAbility.LastCast = DateTime.Now.AddMinutes(1);
+            VerifyActionNotUsable();
+        }
+
         public void VerifyActionNotUsable()
         {
             var memoryAPI = FindMemoryApi();
