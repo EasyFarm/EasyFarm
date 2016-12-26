@@ -14,11 +14,13 @@ namespace EasyFarm.ActionRules
             this.Rules.Add(new NameValidActionRule());
             this.Rules.Add(new UsageLimitActionRule());
             this.Rules.Add(new RecastPeriodActionRule());
+            this.Rules.Add(new HasEnoughMpActionRule());
+            this.Rules.Add(new HasEnoughTpActionRule());
         }
 
         public bool IsValid(ActionContext context)
         {
             return Rules.All(x => x.IsValid(context));
         }
-    }    
+    }
 }

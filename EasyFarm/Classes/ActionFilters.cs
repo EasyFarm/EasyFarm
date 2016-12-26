@@ -47,12 +47,6 @@ namespace EasyFarm.Classes
             var actionRules = new ActionRulesComposite();
             if (!actionRules.IsValid(actionContext)) return false;
 
-            // MP Check
-            if (action.Ability.MpCost > fface.Player.MPCurrent) return false;
-
-            // TP Check
-            if (action.Ability.TpCost > fface.Player.TPCurrent) return false;
-
             // MP Range
             var mpReserve = new Range(action.MPReserveLow, action.MPReserveHigh);
             if (!mpReserve.InRange(fface.Player.MPPCurrent) && !mpReserve.NotSet()) return false;
