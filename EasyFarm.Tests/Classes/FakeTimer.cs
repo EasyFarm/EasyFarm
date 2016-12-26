@@ -4,17 +4,16 @@ namespace MemoryAPI.Tests
 {
     public class FakeTimer : ITimerTools
     {
-        public int SpellRecast { get; set; }
-        public int AbilityRecast { get; set; }
+        public int ActionRecast { get; set; }
 
         public int GetAbilityRecast(int index)
         {
-            return AbilityRecast;
+            return ActionRecast;
         }
 
         public int GetSpellRecast(int index)
         {
-            return SpellRecast;
+            return ActionRecast;
         }
     }
 }

@@ -99,11 +99,13 @@ namespace EasyFarm.Tests.Classes
             VerifyActionNotUsable();
         }
 
-        [Fact]
-        public void SpellNotUsableWithSpellOnRecast()
+        [Theory]
+        [InlineData(AbilityType.Magic)]
+        [InlineData(AbilityType.Jobability)]
+        public void SpellNotUsableWhenOnRecast(AbilityType abilityType)
         {
-            battleAbility.Ability.AbilityType = AbilityType.Magic;
-            timer.SpellRecast = 1;
+            battleAbility.Ability.AbilityType = abilityType;
+            timer.ActionRecast = 1;
             VerifyActionNotUsable();
         }
 
