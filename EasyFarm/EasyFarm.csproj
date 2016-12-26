@@ -165,6 +165,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ActionRules\AbilityBlockedActionRule.cs" />
+    <Compile Include="ActionRules\IsRecastableActionRule.cs" />
+    <Compile Include="ActionRules\PlayerHealthActionRule.cs" />
+    <Compile Include="ActionRules\ReserveMpActionRule.cs" />
+    <Compile Include="ActionRules\ReserveTpActionRule.cs" />
+    <Compile Include="ActionRules\SpellBlockedActionRule.cs" />
+    <Compile Include="ActionRules\StatusEffectActionRule.cs" />
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\AppServices.cs" />
@@ -224,7 +231,7 @@
     <Compile Include="Classes\ProhibitEffects.cs" />
     <Compile Include="Classes\SettingsManager.cs" />
     <Compile Include="Classes\ActionFilters.cs" />
-    <Compile Include="ActionRules\ActionRulesComposite.cs" />
+    <Compile Include="ActionRules\TargetedActionRules.cs" />
     <Compile Include="ActionRules\IActionRule.cs" />
     <Compile Include="ActionRules\ActionContext.cs" />
     <Compile Include="ActionRules\IsEnabledActionRule.cs" />

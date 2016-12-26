@@ -1,5 +1,3 @@
-using EasyFarm.Classes;
-
 namespace EasyFarm.ActionRules
 {
     public class UsageLimitActionRule : IActionRule

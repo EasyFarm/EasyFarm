@@ -38,70 +38,14 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public static bool BuffingFilter(IMemoryAPI fface, BattleAbility action)
         {
-            var actionContext = new ActionContext()
+            var actionContext = new ActionContext
             {
                 MemoryAPI = fface,
                 BattleAbility = action
             };
 
-            var actionRules = new ActionRulesComposite();
-            if (!actionRules.IsValid(actionContext)) return false;
-
-            // MP Range
-            var mpReserve = new Range(action.MPReserveLow, action.MPReserveHigh);
-            if (!mpReserve.InRange(fface.Player.MPPCurrent) && !mpReserve.NotSet()) return false;
-
-            // TP Range
-            var tpReserve = new Range(action.TPReserveLow, action.TPReserveHigh);
-            if (!tpReserve.InRange(fface.Player.TPCurrent) && !tpReserve.NotSet()) return false;
-
-            // Recast Check
-            if (!AbilityUtils.IsRecastable(fface, action.Ability)) return false;
-
-            // Limiting Status Effect Check for Spells.
-            if (ResourceHelper.IsSpell(action.Ability.AbilityType))
-            {
-                if (ProhibitEffects.ProhibitEffectsSpell.Intersect(fface.Player.StatusEffects).Any())
-                {
-                    return false;
-                }
-            }
-
-            // Limiting Status Effect Check for Abilities.
-            if (ResourceHelper.IsAbility(action.Ability.AbilityType))
-            {
-                if (ProhibitEffects.ProhibitEffectsAbility.Intersect(fface.Player.StatusEffects).Any())
-                {
-                    return false;
-                }
-            }
-
-            // Player HP Checks Enabled.
-            if (action.PlayerLowerHealth != 0 || action.PlayerUpperHealth != 0)
-            {
-                // Player Upper HP Check
-                if (fface.Player.HPPCurrent > action.PlayerUpperHealth) return false;
-
-                // Player Lower HP Check
-                if (fface.Player.HPPCurrent < action.PlayerLowerHealth) return false;
-            }
-
-            // Status Effect Checks Enabled
-            if (!string.IsNullOrWhiteSpace(action.StatusEffect))
-            {
-                var hasEffect = fface.Player.StatusEffects.Any(effect =>
-                    Regex.IsMatch(effect.ToString(),
-                        action.StatusEffect.Replace(" ", "_"),
-                        RegexOptions.IgnoreCase));
-
-                // Contains Effect Check
-                if (hasEffect && !action.TriggerOnEffectPresent) return false;
-
-                // Missing EFfect Check
-                if (!hasEffect && action.TriggerOnEffectPresent) return false;
-            }
-
-            return true;
+            var actionRules = new TargetedActionRules();
+            return actionRules.IsValid(actionContext);
         }
 
         /// <summary>
