@@ -14,13 +14,25 @@ namespace EasyFarm.Tests.Classes
         [InlineData(AbilityType.Magic)]
         [InlineData(AbilityType.Jobability)]
         [InlineData(AbilityType.Weaponskill)]
-        public void Tests(AbilityType abilityType)
+        public void IsRecastableWhenNotOnRecast(AbilityType abilityType)
         {
             ability.AbilityType = abilityType;
             var memoryApi = new FakeMemoryAPI();
             memoryApi.Timer = new FakeTimer();
             var result = AbilityUtils.IsRecastable(memoryApi, ability);
             Assert.True(result);
+        }
+
+        [Theory]
+        [InlineData(AbilityType.Magic)]
+        [InlineData(AbilityType.Jobability)]
+        public void NotRecastableWhenOnRecast(AbilityType abilityType)
+        {
+            ability.AbilityType = abilityType;
+            var memoryApi = new FakeMemoryAPI();
+            memoryApi.Timer = new FakeTimer() { ActionRecast = 1 };
+            var result = AbilityUtils.IsRecastable(memoryApi, ability);
+            Assert.False(result);
         }
     }
 }
