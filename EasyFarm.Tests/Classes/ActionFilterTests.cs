@@ -5,6 +5,7 @@ using MemoryAPI;
 using MemoryAPI.Navigation;
 using MemoryAPI.Tests;
 using EasyFarm.Classes;
+using EasyFarm.Parsing;
 
 namespace EasyFarm.Tests.Classes
 {
@@ -14,21 +15,21 @@ namespace EasyFarm.Tests.Classes
         private readonly FakePlayer player = FindPlayer();
 
         [Fact]
-        public void AbilityNotUsableWhenDisabled()
+        public void ActionNotUsableWhenDisabled()
         {
             battleAbility.IsEnabled = false;
             VerifyActionNotUsable(null, battleAbility);
         }
 
         [Fact]
-        public void AbilityNotUsableWithBlankName()
+        public void ActionNotUsableWithBlankName()
         {
             battleAbility.Name = "";
             VerifyActionNotUsable(null, battleAbility);
         }
 
         [Fact]
-        public void AbilityNotUsableWithTooLittleMp()
+        public void ActionNotUsableWithTooLittleMp()
         {
             battleAbility.Ability.MpCost = 1;
             player.MPCurrent = 0;
@@ -36,7 +37,7 @@ namespace EasyFarm.Tests.Classes
         }
 
         [Fact]
-        public void AbilityNotUsableWithTooLittleTp()
+        public void ActionNotUsableWithTooLittleTp()
         {
             battleAbility.Ability.TpCost = 1;
             player.TPCurrent = 0;
@@ -44,7 +45,7 @@ namespace EasyFarm.Tests.Classes
         }
 
         [Fact]
-        public void AbilityNotUsableWhenMpNotInReserveRange()
+        public void ActionNotUsableWhenMpNotInReserveRange()
         {
             battleAbility.MPReserveLow = 0;
             battleAbility.MPReserveHigh = 25;
@@ -53,7 +54,7 @@ namespace EasyFarm.Tests.Classes
         }
 
         [Fact]
-        public void AbilityNotUsableWhenTpNotInReserveRange()
+        public void ActionNotUsableWhenTpNotInReserveRange()
         {
             battleAbility.TPReserveLow = 1000;
             battleAbility.TPReserveHigh = 1000;
@@ -78,10 +79,18 @@ namespace EasyFarm.Tests.Classes
         }
 
         [Fact]
-        public void AbilityNotUsableWhenUsageLimitIsReached()
+        public void ActionNotUsableWhenUsageLimitIsReached()
         {
             battleAbility.UsageLimit = 1;
             battleAbility.Usages = 1;
+            VerifyActionNotUsable(player, battleAbility);
+        }
+
+        [Fact]
+        public void SpellNotUsableWhenBlockedBySpellCastingBlockingEffect()
+        {
+            battleAbility.Ability.AbilityType = AbilityType.Magic;
+            player.StatusEffects = new StatusEffect[] { StatusEffect.Silence };
             VerifyActionNotUsable(player, battleAbility);
         }
 
@@ -96,6 +105,7 @@ namespace EasyFarm.Tests.Classes
         {
             var memoryAPI = new Mock<IMemoryAPI>();
             memoryAPI.Setup(x => x.Player).Returns(player);
+            memoryAPI.Setup(x => x.Timer).Returns(Mock.Of<ITimerTools>());
             return memoryAPI.Object;
         }
 
