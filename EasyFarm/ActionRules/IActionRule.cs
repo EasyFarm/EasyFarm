@@ -4,6 +4,6 @@ namespace EasyFarm.ActionRules
 {
     public interface IActionRule
     {
-        bool IsValid(BattleAbility action);
+        bool IsValid(ActionContext context);
     }
 }

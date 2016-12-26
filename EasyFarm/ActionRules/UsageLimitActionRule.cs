@@ -4,10 +4,10 @@ namespace EasyFarm.ActionRules
 {
     public class UsageLimitActionRule : IActionRule
     {
-        public bool IsValid(BattleAbility action)
+        public bool IsValid(ActionContext context)
         {
-            if (action.UsageLimit == 0) return true;
-            return action.Usages < action.UsageLimit;
+            var action = context.BattleAbility;
+            return action.UsageLimit == 0 || action.Usages < action.UsageLimit;
         }
     }
 }

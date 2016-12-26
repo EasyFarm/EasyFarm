@@ -4,6 +4,10 @@ namespace EasyFarm.ActionRules
 {
     public class IsEnabledActionRule : IActionRule
     {
-        public bool IsValid(BattleAbility action) => action.IsEnabled;
+        public bool IsValid(ActionContext context)
+        {
+            var action = context.BattleAbility;
+            return action.IsEnabled;
+        }
     }
 }

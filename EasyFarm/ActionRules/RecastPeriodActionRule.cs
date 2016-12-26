@@ -5,8 +5,9 @@ namespace EasyFarm.ActionRules
 {
     public class RecastPeriodActionRule : IActionRule
     {
-        public bool IsValid(BattleAbility action)
+        public bool IsValid(ActionContext context)
         {
+            var action = context.BattleAbility;
             return action.Recast == 0 || action.LastCast <= DateTime.Now;
         }
     }

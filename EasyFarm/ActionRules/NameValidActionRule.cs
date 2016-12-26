@@ -4,6 +4,10 @@ namespace EasyFarm.ActionRules
 {
     public class NameValidActionRule : IActionRule
     {
-        public bool IsValid(BattleAbility action) => !string.IsNullOrWhiteSpace(action.Name);
+        public bool IsValid(ActionContext context)
+        {
+            var action = context.BattleAbility;
+            return !string.IsNullOrWhiteSpace(action.Name);
+        }
     }
 }

@@ -38,8 +38,14 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public static bool BuffingFilter(IMemoryAPI fface, BattleAbility action)
         {
+            var actionContext = new ActionContext()
+            {
+                MemoryAPI = fface,
+                BattleAbility = action
+            };
+
             var actionRules = new ActionRulesComposite();
-            if (!actionRules.IsValid(action)) return false;
+            if (!actionRules.IsValid(actionContext)) return false;
 
             // MP Check
             if (action.Ability.MpCost > fface.Player.MPCurrent) return false;
@@ -99,7 +105,7 @@ namespace EasyFarm.Classes
 
                 // Missing EFfect Check
                 if (!hasEffect && action.TriggerOnEffectPresent) return false;
-            }            
+            }
 
             return true;
         }

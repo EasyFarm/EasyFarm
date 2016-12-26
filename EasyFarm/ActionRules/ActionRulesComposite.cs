@@ -16,9 +16,9 @@ namespace EasyFarm.ActionRules
             this.Rules.Add(new RecastPeriodActionRule());
         }
 
-        public bool IsValid(BattleAbility action)
+        public bool IsValid(ActionContext context)
         {
-            return Rules.All(x => x.IsValid(action));
+            return Rules.All(x => x.IsValid(context));
         }
-    }
+    }    
 }

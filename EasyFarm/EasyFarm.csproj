@@ -226,6 +226,7 @@
     <Compile Include="Classes\ActionFilters.cs" />
     <Compile Include="ActionRules\ActionRulesComposite.cs" />
     <Compile Include="ActionRules\IActionRule.cs" />
+    <Compile Include="ActionRules\ActionContext.cs" />
     <Compile Include="ActionRules\IsEnabledActionRule.cs" />
     <Compile Include="ActionRules\NameValidActionRule.cs" />
     <Compile Include="ActionRules\UsageLimitActionRule.cs" />
