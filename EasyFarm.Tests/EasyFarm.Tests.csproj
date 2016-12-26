@@ -95,6 +95,7 @@
     <Compile Include="Classes\RangeTests.cs" />
     <Compile Include="Classes\PathRecorderTest.cs" />
     <Compile Include="Classes\ActionFilterTests.cs" />
+    <Compile Include="Classes\AbilityUtilsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MasterViewModelTest.cs" />
   </ItemGroup>

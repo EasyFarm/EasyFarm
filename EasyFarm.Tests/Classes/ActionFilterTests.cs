@@ -102,7 +102,7 @@ namespace EasyFarm.Tests.Classes
         [Theory]
         [InlineData(AbilityType.Magic)]
         [InlineData(AbilityType.Jobability)]
-        public void SpellNotUsableWhenOnRecast(AbilityType abilityType)
+        public void ActionNotUsableWhenOnRecast(AbilityType abilityType)
         {
             battleAbility.Ability.AbilityType = abilityType;
             timer.ActionRecast = 1;
