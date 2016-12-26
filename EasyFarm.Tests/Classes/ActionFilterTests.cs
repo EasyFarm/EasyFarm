@@ -87,11 +87,15 @@ namespace EasyFarm.Tests.Classes
             VerifyActionNotUsable();
         }
 
-        [Fact]
-        public void SpellNotUsableWhenBlockedBySpellCastingBlockingEffect()
+        [Theory]
+        [InlineData(AbilityType.Magic, StatusEffect.Silence)]
+        [InlineData(AbilityType.Jobability, StatusEffect.Amnesia)]
+        public void ActionNotUsableWhenBlockedByStatusEffect(
+            AbilityType abilityType,
+            StatusEffect statusEffect)
         {
-            battleAbility.Ability.AbilityType = AbilityType.Magic;
-            player.StatusEffects = new StatusEffect[] { StatusEffect.Silence };
+            battleAbility.Ability.AbilityType = abilityType;
+            player.StatusEffects = new StatusEffect[] { statusEffect };
             VerifyActionNotUsable();
         }
 
@@ -134,7 +138,7 @@ namespace EasyFarm.Tests.Classes
             player.MPPCurrent = 100;
             player.Name = "Mykezero";
             player.Status = Status.Standing;
-            player.TPCurrent = 100;
+            player.TPCurrent = 1000;
             player.StatusEffects = new StatusEffect[]{ };
             return player;
         }
