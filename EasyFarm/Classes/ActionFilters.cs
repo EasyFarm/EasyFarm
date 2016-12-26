@@ -37,11 +37,8 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public static bool BuffingFilter(IMemoryAPI fface, BattleAbility action)
         {
-            // Return if not enabled.
-            if (!action.IsEnabled) return false;
-
-            // Name Check
-            if (string.IsNullOrWhiteSpace(action.Name)) return false;
+            var actionRules = new ActionRulesComposite();
+            if (!actionRules.IsValid(action)) return false;
 
             // MP Check
             if (action.Ability.MpCost > fface.Player.MPCurrent) return false;
@@ -55,13 +52,7 @@ namespace EasyFarm.Classes
 
             // TP Range
             var tpReserve = new Range(action.TPReserveLow, action.TPReserveHigh);
-            if (!tpReserve.InRange(fface.Player.TPCurrent) && !tpReserve.NotSet()) return false;
-
-            // Usage Limit Check.
-            if (action.UsageLimit != 0)
-            {
-                if (action.Usages >= action.UsageLimit) return false;
-            }
+            if (!tpReserve.InRange(fface.Player.TPCurrent) && !tpReserve.NotSet()) return false;            
 
             // Recast Check
             if (!AbilityUtils.IsRecastable(fface, action.Ability)) return false;
