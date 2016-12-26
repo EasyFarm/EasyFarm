@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace EasyFarm.ActionRules
 {
-    public class TargetedActionRules : IActionRule
+    public class BuffingActionRules : IActionRule
     {
         private readonly List<IActionRule> rules = new List<IActionRule>();
 
-        public TargetedActionRules()
+        public BuffingActionRules()
         {
             rules.Add(new AbilityBlockedActionRule());
             rules.Add(new HasEnoughMpActionRule());

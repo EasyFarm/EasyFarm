@@ -231,7 +231,7 @@
     <Compile Include="Classes\ProhibitEffects.cs" />
     <Compile Include="Classes\SettingsManager.cs" />
     <Compile Include="Classes\ActionFilters.cs" />
-    <Compile Include="ActionRules\TargetedActionRules.cs" />
+    <Compile Include="ActionRules\BuffingActionRules.cs" />
     <Compile Include="ActionRules\IActionRule.cs" />
     <Compile Include="ActionRules\ActionContext.cs" />
     <Compile Include="ActionRules\IsEnabledActionRule.cs" />

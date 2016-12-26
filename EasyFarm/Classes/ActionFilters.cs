@@ -44,7 +44,7 @@ namespace EasyFarm.Classes
                 BattleAbility = action
             };
 
-            var actionRules = new TargetedActionRules();
+            var actionRules = new BuffingActionRules();
             return actionRules.IsValid(actionContext);
         }
 
