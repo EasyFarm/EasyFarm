@@ -13,6 +13,7 @@ namespace EasyFarm.Tests.Classes
     {
         private readonly BattleAbility battleAbility = FindAbility();
         private readonly FakePlayer player = FindPlayer();
+        private readonly FakeTimer timer = FindTimer();
 
         [Fact]
         public void ActionNotUsableWhenDisabled()
@@ -94,19 +95,29 @@ namespace EasyFarm.Tests.Classes
             VerifyActionNotUsable(player, battleAbility);
         }
 
+        [Fact]
+        public void SpellNotUsableWithSpellOnRecast()
+        {
+            battleAbility.Ability.AbilityType = AbilityType.Magic;
+            timer.SpellRecast = 1;
+            VerifyActionNotUsable(player, battleAbility);
+        }
+
         public void VerifyActionNotUsable(IPlayerTools player, BattleAbility action)
         {
             var memoryAPI = FindMemoryApi(player);
+            memoryAPI.Player = player;
+            memoryAPI.Timer = timer;
             var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
             Assert.False(result);
         }
 
         public IMemoryAPI FindMemoryApi(IPlayerTools player)
         {
-            var memoryAPI = new Mock<IMemoryAPI>();
-            memoryAPI.Setup(x => x.Player).Returns(player);
-            memoryAPI.Setup(x => x.Timer).Returns(Mock.Of<ITimerTools>());
-            return memoryAPI.Object;
+            var memoryAPI = new FakeMemoryAPI();
+            memoryAPI.Player = player;
+            memoryAPI.Timer = timer;
+            return memoryAPI;
         }
 
         public static BattleAbility FindAbility()
@@ -120,13 +131,20 @@ namespace EasyFarm.Tests.Classes
         public static FakePlayer FindPlayer()
         {
             var player = new FakePlayer();
-            player.HPPCurrent=100;
-            player.MPCurrent=10000;
-            player.MPPCurrent=100;
-            player.Name="Mykezero";
-            player.Status=Status.Standing;
-            player.TPCurrent=100;
+            player.HPPCurrent = 100;
+            player.MPCurrent = 10000;
+            player.MPPCurrent = 100;
+            player.Name = "Mykezero";
+            player.Status = Status.Standing;
+            player.TPCurrent = 100;
+            player.StatusEffects = new StatusEffect[]{ };
             return player;
+        }
+
+        public static FakeTimer FindTimer()
+        {
+            var timer = new FakeTimer();
+            return timer;
         }
     }
 }

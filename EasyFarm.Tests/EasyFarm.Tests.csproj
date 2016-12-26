@@ -90,6 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\FakePlayer.cs" />
+    <Compile Include="Classes\FakeTimer.cs" />
+    <Compile Include="Classes\FakeMemoryAPI.cs" />
     <Compile Include="Classes\RangeTests.cs" />
     <Compile Include="Classes\PathRecorderTest.cs" />
     <Compile Include="Classes\ActionFilterTests.cs" />
