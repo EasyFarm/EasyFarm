@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System;
 using EasyFarm.Parsing;
+using EasyFarm.ActionRules;
 using MemoryAPI;
 
 namespace EasyFarm.Classes
@@ -52,7 +53,7 @@ namespace EasyFarm.Classes
 
             // TP Range
             var tpReserve = new Range(action.TPReserveLow, action.TPReserveHigh);
-            if (!tpReserve.InRange(fface.Player.TPCurrent) && !tpReserve.NotSet()) return false;            
+            if (!tpReserve.InRange(fface.Player.TPCurrent) && !tpReserve.NotSet()) return false;
 
             // Recast Check
             if (!AbilityUtils.IsRecastable(fface, action.Ability)) return false;
@@ -98,13 +99,7 @@ namespace EasyFarm.Classes
 
                 // Missing EFfect Check
                 if (!hasEffect && action.TriggerOnEffectPresent) return false;
-            }
-
-            // Check if action's recast period has passed.
-            if (action.Recast != 0)
-            {
-                if (action.LastCast > DateTime.Now) return false;
-            }
+            }            
 
             return true;
         }
