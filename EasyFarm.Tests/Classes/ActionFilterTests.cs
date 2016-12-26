@@ -19,14 +19,14 @@ namespace EasyFarm.Tests.Classes
         public void ActionNotUsableWhenDisabled()
         {
             battleAbility.IsEnabled = false;
-            VerifyActionNotUsable(null, battleAbility);
+            VerifyActionNotUsable();
         }
 
         [Fact]
         public void ActionNotUsableWithBlankName()
         {
             battleAbility.Name = "";
-            VerifyActionNotUsable(null, battleAbility);
+            VerifyActionNotUsable();
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace EasyFarm.Tests.Classes
         {
             battleAbility.Ability.MpCost = 1;
             player.MPCurrent = 0;
-            VerifyActionNotUsable(player, battleAbility);
+            VerifyActionNotUsable();
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace EasyFarm.Tests.Classes
         {
             battleAbility.Ability.TpCost = 1;
             player.TPCurrent = 0;
-            VerifyActionNotUsable(player, battleAbility);
+            VerifyActionNotUsable();
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace EasyFarm.Tests.Classes
             battleAbility.MPReserveLow = 0;
             battleAbility.MPReserveHigh = 25;
             player.MPPCurrent = 100;
-            VerifyActionNotUsable(player, battleAbility);
+            VerifyActionNotUsable();
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace EasyFarm.Tests.Classes
             battleAbility.TPReserveLow = 1000;
             battleAbility.TPReserveHigh = 1000;
             player.TPCurrent = 1;
-            VerifyActionNotUsable(player, battleAbility);
+            VerifyActionNotUsable();
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace EasyFarm.Tests.Classes
             battleAbility.TPReserveHigh = 1000;
             player.MPPCurrent = 1;
             player.TPCurrent = 1;
-            VerifyActionNotUsable(player, battleAbility);
+            VerifyActionNotUsable();
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace EasyFarm.Tests.Classes
         {
             battleAbility.UsageLimit = 1;
             battleAbility.Usages = 1;
-            VerifyActionNotUsable(player, battleAbility);
+            VerifyActionNotUsable();
         }
 
         [Fact]
@@ -92,7 +92,7 @@ namespace EasyFarm.Tests.Classes
         {
             battleAbility.Ability.AbilityType = AbilityType.Magic;
             player.StatusEffects = new StatusEffect[] { StatusEffect.Silence };
-            VerifyActionNotUsable(player, battleAbility);
+            VerifyActionNotUsable();
         }
 
         [Fact]
@@ -100,19 +100,17 @@ namespace EasyFarm.Tests.Classes
         {
             battleAbility.Ability.AbilityType = AbilityType.Magic;
             timer.SpellRecast = 1;
-            VerifyActionNotUsable(player, battleAbility);
+            VerifyActionNotUsable();
         }
 
-        public void VerifyActionNotUsable(IPlayerTools player, BattleAbility action)
+        public void VerifyActionNotUsable()
         {
-            var memoryAPI = FindMemoryApi(player);
-            memoryAPI.Player = player;
-            memoryAPI.Timer = timer;
+            var memoryAPI = FindMemoryApi();
             var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
             Assert.False(result);
         }
 
-        public IMemoryAPI FindMemoryApi(IPlayerTools player)
+        public IMemoryAPI FindMemoryApi()
         {
             var memoryAPI = new FakeMemoryAPI();
             memoryAPI.Player = player;
