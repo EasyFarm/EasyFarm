@@ -10,81 +10,55 @@ namespace EasyFarm.Tests.Classes
 {
     public class ActionFilterTest
     {
+        private readonly BattleAbility battleAbility = FindAbility();
+        private readonly FakePlayer player = FindPlayer();
+
         [Fact]
         public void AbilityNotUsableWhenDisabled()
         {
-            var battleAbility = FindAbility();
             battleAbility.IsEnabled = false;
-            var result = ActionFilters.BuffingFilter(null, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable(null, battleAbility);
         }
 
         [Fact]
         public void AbilityNotUsableWithBlankName()
         {
-            var battleAbility = FindAbility();
             battleAbility.Name = "";
-            var result = ActionFilters.BuffingFilter(null, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable(null, battleAbility);
         }
 
         [Fact]
         public void AbilityNotUsableWithTooLittleMp()
         {
-            var battleAbility = FindAbility();
             battleAbility.Ability.MpCost = 1;
-
-            var player = FindPlayer();
             player.MPCurrent = 0;
-            var memoryAPI = FindMemoryApi(player);
-
-            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable(player, battleAbility);
         }
 
         [Fact]
         public void AbilityNotUsableWithTooLittleTp()
         {
-            var battleAbility = FindAbility();
             battleAbility.Ability.TpCost = 1;
-
-            var player = FindPlayer();
             player.TPCurrent = 0;
-            var memoryAPI = FindMemoryApi(player);
-
-            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable(player, battleAbility);
         }
 
         [Fact]
         public void AbilityNotUsableWhenMpNotInReserveRange()
         {
-            var battleAbility = FindAbility();
             battleAbility.MPReserveLow = 0;
             battleAbility.MPReserveHigh = 25;
-
-            var player = FindPlayer();
             player.MPPCurrent = 100;
-            var memoryAPI = FindMemoryApi(player);
-
-            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable(player, battleAbility);
         }
 
         [Fact]
         public void AbilityNotUsableWhenTpNotInReserveRange()
         {
-            var battleAbility = FindAbility();
-
             battleAbility.TPReserveLow = 1000;
             battleAbility.TPReserveHigh = 1000;
-
-            var player = FindPlayer();
             player.TPCurrent = 1;
-            var memoryAPI = FindMemoryApi(player);
-
-            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable(player, battleAbility);
         }
 
         /// <summary>
@@ -94,32 +68,26 @@ namespace EasyFarm.Tests.Classes
         [Fact]
         public void MpReserveWasUseInsteadOfTpReserveWhenCheckingTpReserveValue()
         {
-            var battleAbility = FindAbility();
             battleAbility.MPReserveLow = 1;
             battleAbility.MPReserveHigh = 1;
-
             battleAbility.TPReserveLow = 1000;
             battleAbility.TPReserveHigh = 1000;
-
-            var player = FindPlayer();
             player.MPPCurrent = 1;
             player.TPCurrent = 1;
-            var memoryAPI = FindMemoryApi(player);
-
-            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable(player, battleAbility);
         }
 
         [Fact]
         public void AbilityNotUsableWhenUsageLimitIsReached()
         {
-            var battleAbility = FindAbility();
             battleAbility.UsageLimit = 1;
             battleAbility.Usages = 1;
+            VerifyActionNotUsable(player, battleAbility);
+        }
 
-            var player = FindPlayer();
+        public void VerifyActionNotUsable(IPlayerTools player, BattleAbility action)
+        {
             var memoryAPI = FindMemoryApi(player);
-
             var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
             Assert.False(result);
         }
@@ -131,7 +99,7 @@ namespace EasyFarm.Tests.Classes
             return memoryAPI.Object;
         }
 
-        public BattleAbility FindAbility()
+        public static BattleAbility FindAbility()
         {
             var battleAbility = new BattleAbility();
             battleAbility.IsEnabled = true;
@@ -139,7 +107,7 @@ namespace EasyFarm.Tests.Classes
             return battleAbility;
         }
 
-        public FakePlayer FindPlayer()
+        public static FakePlayer FindPlayer()
         {
             var player = new FakePlayer();
             player.HPPCurrent=100;
