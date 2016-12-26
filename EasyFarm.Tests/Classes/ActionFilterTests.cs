@@ -109,6 +109,35 @@ namespace EasyFarm.Tests.Classes
             VerifyActionNotUsable();
         }
 
+        [Theory]
+        [InlineData(75)]
+        [InlineData(0)]
+        public void ActionNotUsableWhenPlayersHealthNotInRange(int hppCurrent)
+        {
+            battleAbility.PlayerLowerHealth = 25;
+            battleAbility.PlayerUpperHealth = 50;
+            player.HPPCurrent = hppCurrent;
+            VerifyActionNotUsable();
+        }
+
+        [Fact]
+        public void ActionNotUsableWhenStatusEffectPresentButActionSetToTriggerOnEffectMissing()
+        {
+            battleAbility.StatusEffect = "Magic Acc Down";
+            battleAbility.TriggerOnEffectPresent = false;
+            player.StatusEffects = new StatusEffect[] { StatusEffect.Magic_Acc_Down };
+            VerifyActionNotUsable();
+        }
+
+        [Fact]
+        public void ActionNotUsableWhenStatusEffectMissingButActionSetToTriggerOnEffectPresent()
+        {
+            battleAbility.StatusEffect = "Dia";
+            battleAbility.TriggerOnEffectPresent = true;
+            player.StatusEffects = new StatusEffect[] { };
+            VerifyActionNotUsable();
+        }
+
         public void VerifyActionNotUsable()
         {
             var memoryAPI = FindMemoryApi();
