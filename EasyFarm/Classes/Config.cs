@@ -174,6 +174,12 @@ namespace EasyFarm.Classes
         public bool StraightRoute => Route.StraightRoute;
 
         /// <summary>
+        /// Toggles whether program should target things using memory or by
+        /// tabbing to its target.
+        /// </summary>
+        public bool EnableTabTargeting = false;
+
+        /// <summary>
         /// Whether the player should avoid objects when becoming stuck.
         /// </summary>
         public bool IsObjectAvoidanceEnabled = false;

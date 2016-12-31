@@ -104,6 +104,15 @@ namespace EasyFarm.ViewModels
             }
         }
 
+        public bool EnableTabTargeting
+        {
+            get { return Config.Instance.EnableTabTargeting; }
+            set
+            {
+                SetProperty(ref Config.Instance.EnableTabTargeting, value);
+            }
+        }
+
         private void RestoreDefaults()
         {
             DetectionDistance = Constants.DetectionDistance;
@@ -111,6 +120,10 @@ namespace EasyFarm.ViewModels
             MeleeDistance = Constants.MeleeDistance;
             WanderDistance = Constants.DetectionDistance;
             GlobalCooldown = Constants.GlobalSpellCooldown;
+            EnableTabTargeting = false;
+            AvoidObjects = false;
+            ShouldApproach = true;
+            ShouldEngage = true;
             AppServices.InformUser("Defaults have been restored.");
         }
     }

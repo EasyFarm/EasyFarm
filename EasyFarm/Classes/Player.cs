@@ -1,5 +1,8 @@
-﻿using MemoryAPI;
+﻿using System;
+using System.Diagnostics;
+using MemoryAPI;
 using System.Threading;
+using EliteMMO.API;
 
 namespace EasyFarm.Classes
 {
@@ -65,6 +68,44 @@ namespace EasyFarm.Classes
         {
             fface.Navigator.Reset();
             Thread.Sleep(100);
+        }
+
+        public static void SetTarget(IMemoryAPI fface, Unit target)
+        {
+            if (!Config.Instance.EnableTabTargeting)
+            {
+                SetTargetUsingMemory(fface, target);
+            }
+            else
+            {
+                SetTargetByTabbing(fface, target);
+            }
+        }
+
+        private static void SetTargetByTabbing(IMemoryAPI fface, Unit target)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            while (target.Id != fface.Target.ID)
+            {
+                if (stopwatch.Elapsed == TimeSpan.FromSeconds(1))
+                {
+                    break;
+                }
+
+                fface.Windower.SendKeyPress(Keys.TAB);
+                Thread.Sleep(200);
+            }
+        }
+
+        private static void SetTargetUsingMemory(IMemoryAPI fface, Unit target)
+        {
+            if (target.Id != fface.Target.ID)
+            {
+                fface.Target.SetNPCTarget(target.Id);
+                fface.Windower.SendString("/ta <t>");
+            }
         }
     }
 }

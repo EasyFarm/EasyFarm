@@ -1,4 +1,6 @@
-﻿namespace MemoryAPI
+﻿using MemoryAPI.Windower;
+
+namespace MemoryAPI
 {
     public interface IMemoryAPI
     {        

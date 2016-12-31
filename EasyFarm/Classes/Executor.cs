@@ -22,7 +22,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using EasyFarm.Parsing;
+using EliteMMO.API;
 using MemoryAPI;
+using StatusEffect = MemoryAPI.StatusEffect;
 
 namespace EasyFarm.Classes
 {   
@@ -92,7 +94,7 @@ namespace EasyFarm.Classes
             {
                 MoveIntoActionRange(target, action);
                 _fface.Navigator.FaceHeading(target.Position);
-                SetTarget(target);
+                Player.SetTarget(_fface, target);
 
                 if (ResourceHelper.IsSpell(action.Ability.AbilityType))
                 {
@@ -119,16 +121,7 @@ namespace EasyFarm.Classes
                 _fface.Navigator.DistanceTolerance = action.Distance;
                 _fface.Navigator.GotoNPC(target.Id, Config.Instance.IsObjectAvoidanceEnabled);
             }
-        }
-        
-        private void SetTarget(Unit target)
-        {
-            if (target.Id != _fface.Target.ID)
-            {
-                _fface.Target.SetNPCTarget(target.Id);
-                _fface.Windower.SendString("/ta <t>");
-            }
-        }
+        }        
 
         private bool CastSpell(Ability ability)
         {

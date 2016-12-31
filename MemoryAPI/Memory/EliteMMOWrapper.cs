@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using MemoryAPI.Memory;
 using MemoryAPI.Navigation;
+using MemoryAPI.Windower;
 
 namespace MemoryAPI
 {
@@ -431,8 +432,13 @@ namespace MemoryAPI
             }
 
             public void SendString(string stringToSend)
-            {
+            {                
                 api.ThirdParty.SendString(stringToSend);
+            }
+
+            public void SendKeyPress(Keys keys)
+            {
+                api.ThirdParty.KeyPress(keys);
             }
         }
     }

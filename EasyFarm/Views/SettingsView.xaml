@@ -29,6 +29,7 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -86,7 +87,14 @@
                             Grid.Column="1"
                             Margin="5 0 0 0"
                               IsChecked="{Binding AvoidObjects}" />
-                    <Button Grid.Row="6"
+                    <Label Grid.Row="6"
+                           Grid.Column="0"
+                           Content="Use Tab Targeting" />
+                    <CheckBox Grid.Row="6"
+                            Grid.Column="1"
+                            Margin="5 0 0 0"
+                              IsChecked="{Binding EnableTabTargeting}" />
+                    <Button Grid.Row="7"
                             Grid.ColumnSpan="2" Grid.Column="0"
                                 Margin="0 5 0 0"
                             Command="{Binding RestoreDefaultsCommand}"
