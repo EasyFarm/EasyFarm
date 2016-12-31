@@ -1,8 +1,6 @@
 using System;
 using Xunit;
-using Moq;
 using MemoryAPI;
-using MemoryAPI.Navigation;
 using MemoryAPI.Tests;
 using EasyFarm.Classes;
 using EasyFarm.Parsing;

@@ -18,36 +18,27 @@ You should have received a copy of the GNU General Public License
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using EasyFarm.Parsing;
 using MemoryAPI;
 
 namespace EasyFarm.Classes
-{
-    /// <summary>
-    /// Executor targeted or buffing actions. A fuller explanation can be found here:
-    /// https://github.com/EasyFarm/EasyFarm/wiki/Battle-List-Roles. See "list types" for more details.
-    /// </summary>
+{   
     public class Executor
     {
-        private readonly Caster _caster;
         private readonly IMemoryAPI _fface;
 
         public Executor(IMemoryAPI fface)
         {
             _fface = fface;
-            _caster = new Caster(fface);
         }
-        /// <summary>
-        /// Execute a single buffing type action.
-        /// </summary>
-        /// <param name="action"></param>
+         
         public void UseBuffingAction(Ability action)
         {
             if (action == null) throw new ArgumentNullException(nameof(action));
 
-            // Create new new ability and set its basic required information.
             var baction = new BattleAbility
             {
                 Name = action.English,
@@ -55,14 +46,9 @@ namespace EasyFarm.Classes
                 Ability = action
             };
 
-            // Convert ability to new battle ability object.
             UseBuffingActions(new List<BattleAbility> { baction });
         }
 
-        /// <summary>
-        /// Executes moves without the need for a target.
-        /// </summary>
-        /// <param name="actions"></param>
         public void UseBuffingActions(IEnumerable<BattleAbility> actions)
         {
             if (actions == null) throw new ArgumentNullException(nameof(actions));
@@ -79,28 +65,17 @@ namespace EasyFarm.Classes
                         continue;
                     }
 
-                    // Try to cast the spell. On failure, continue and recast at a later time.
-                    if (!_caster.CastSpell(action)) continue;
+                    if (!CastSpell(action)) continue;
 
-                    // Remove spell from castables so that it will not be casted again.
                     castables.Remove(action);
-
-                    // Increase usage count to limit number of usages.
                     action.Usages++;
-
-                    // Set the recast to prevent casting before the recast period. 
                     action.LastCast = DateTime.Now.AddSeconds(action.Recast);
 
-                    // Sleep until a spell is recastable.
                     Thread.Sleep(Config.Instance.GlobalCooldown);
                 }
             }
-        }
-        /// <summary>
-        /// Execute a single action targeted type action.
-        /// </summary>
-        /// <param name="action"></param>
-        /// <param name="target"></param>
+        }   
+    
         public void UseTargetedAction(BattleAbility action, Unit target)
         {
             if (target == null) throw new ArgumentNullException(nameof(target));
@@ -108,68 +83,44 @@ namespace EasyFarm.Classes
             UseTargetedActions(new List<BattleAbility> { action }, target);
         }
 
-        /// <summary>
-        /// Execute targeted actions.
-        /// </summary>
-        /// <param name="actions"></param>
-        /// <param name="target"></param>
         public void UseTargetedActions(IEnumerable<BattleAbility> actions, Unit target)
         {
-            // Logic error to call this without setting a target first.
             if (actions == null) throw new ArgumentNullException(nameof(actions));
             if (target == null) throw new ArgumentNullException(nameof(target));
 
             foreach (var action in actions)
             {
                 MoveIntoActionRange(target, action);
-
-                // Face unit
                 _fface.Navigator.FaceHeading(target.Position);
-
-                // Target mob if not currently targeted.
                 SetTarget(target);
 
                 if (ResourceHelper.IsSpell(action.Ability.AbilityType))
                 {
                     _fface.Navigator.Reset();
                     Thread.Sleep(100);
-                    _caster.CastSpell(action);
+                    CastSpell(action);
                 }
                 else
                 {
-                    _caster.CastAbility(action);
+                    CastAbility(action);
                 }                
 
-                // Increase usage count to limit number of usages.
                 action.Usages++;
-
-                // Set the recast to prevent casting before the recast period. 
                 action.LastCast = DateTime.Now.AddSeconds(action.Recast);
 
                 Thread.Sleep(Config.Instance.GlobalCooldown);
             }
         }
 
-        /// <summary>
-        /// Move close enough to mob to use an ability.
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="action"></param>
         private void MoveIntoActionRange(Unit target, BattleAbility action)
         {
-            // Move to target if out of distance.
             if (target.Distance > action.Distance)
             {
-                // Move to unit at max buff distance.
                 _fface.Navigator.DistanceTolerance = action.Distance;
                 _fface.Navigator.GotoNPC(target.Id, Config.Instance.IsObjectAvoidanceEnabled);
             }
         }
-
-        /// <summary>
-        /// Place cursor on unit
-        /// </summary>
-        /// <param name="target"></param>
+        
         private void SetTarget(Unit target)
         {
             if (target.Id != _fface.Target.ID)
@@ -177,6 +128,86 @@ namespace EasyFarm.Classes
                 _fface.Target.SetNPCTarget(target.Id);
                 _fface.Windower.SendString("/ta <t>");
             }
+        }
+
+        private bool CastSpell(Ability ability)
+        {
+            if (EnsureCast(ability.Command)) return MonitorCast();
+            return false;
+        }
+
+        private bool EnsureCast(string command)
+        {            
+            var previous = _fface.Player.CastPercentEx;
+            var startTime = DateTime.Now;
+            var interval = startTime.AddSeconds(3);
+
+            while (DateTime.Now < interval)
+            {
+                while(Player.Instance.IsMoving)
+                {
+                    Player.StopRunning(_fface);
+                }
+
+                if (_fface.Player.Status == Status.Healing)
+                {
+                    Player.Stand(_fface);
+                }
+
+                if (_fface.Player.StatusEffects.Contains(StatusEffect.Chainspell))
+                {
+                    _fface.Windower.SendString(command);
+                    return true;
+                }                             
+
+                if (Math.Abs(previous - _fface.Player.CastPercentEx) > .5) return true;
+                _fface.Windower.SendString(command);
+                Thread.Sleep(500);
+            }
+
+            return false;
+        }
+
+        private bool MonitorCast()
+        {
+            var prior = _fface.Player.CastPercentEx;
+
+            var stopwatch = new Stopwatch();
+
+            while (stopwatch.Elapsed.TotalSeconds < 2)
+            {
+                if (Math.Abs(prior - _fface.Player.CastPercentEx) < .5)
+                {
+                    if (!stopwatch.IsRunning) stopwatch.Start();
+                }
+                else
+                {
+                    stopwatch.Reset();
+                }
+
+                prior = _fface.Player.CastPercentEx;
+
+                Thread.Sleep(100);
+            }
+
+            return Math.Abs(prior - 100) < .5;
+        }
+
+        private bool CastAbility(Ability ability)
+        {
+            _fface.Windower.SendString(ability.Command);
+            Thread.Sleep(100);
+            return true;
+        }
+
+        private bool CastAbility(BattleAbility ability)
+        {
+            return CastAbility(ability.Ability);
+        }
+
+        private bool CastSpell(BattleAbility ability)
+        {
+            return CastSpell(ability.Ability);
         }
     }
 }
