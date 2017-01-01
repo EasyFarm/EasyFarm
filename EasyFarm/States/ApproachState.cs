@@ -74,7 +74,7 @@ namespace EasyFarm.States
             if (Config.Instance.IsEngageEnabled)
             {
                 // Not engaged and in range. 
-                if (!fface.Player.Status.Equals(Status.Fighting))
+                if (!fface.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
                 {
                     // Engage the target. 
                     fface.Windower.SendString(Constants.AttackTarget);
