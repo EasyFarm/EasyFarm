@@ -68,18 +68,13 @@ namespace EasyFarm.States
             fface.Navigator.FaceHeading(Target.Position);
 
             // Target mob if not currently targeted. 
-            if (Target.Id != fface.Target.ID)
-            {
-                // Set as target. 
-                fface.Target.SetNPCTarget(Target.Id);
-                fface.Windower.SendString("/ta <t>");
-            }
+            Player.SetTarget(fface, Target);
 
             // Has the user decided we should engage in battle. 
             if (Config.Instance.IsEngageEnabled)
             {
                 // Not engaged and in range. 
-                if (!fface.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
+                if (!fface.Player.Status.Equals(Status.Fighting))
                 {
                     // Engage the target. 
                     fface.Windower.SendString(Constants.AttackTarget);

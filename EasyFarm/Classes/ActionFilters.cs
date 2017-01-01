@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System;
 using EasyFarm.Parsing;
+using EasyFarm.ActionRules;
 using MemoryAPI;
 
 namespace EasyFarm.Classes
@@ -37,85 +38,14 @@ namespace EasyFarm.Classes
         /// <returns></returns>
         public static bool BuffingFilter(IMemoryAPI fface, BattleAbility action)
         {
-            // Return if not enabled.
-            if (!action.IsEnabled) return false;
-
-            // Name Check
-            if (string.IsNullOrWhiteSpace(action.Name)) return false;
-
-            // MP Check
-            if (action.Ability.MpCost > fface.Player.MPCurrent) return false;
-
-            // TP Check
-            if (action.Ability.TpCost > fface.Player.TPCurrent) return false;
-
-            // MP Range
-            var mpReserve = new Range(action.MPReserveLow, action.MPReserveHigh);
-            if (!mpReserve.InRange(fface.Player.MPPCurrent) && !mpReserve.NotSet()) return false;
-
-            // TP Range
-            var tpReserve = new Range(action.TPReserveLow, action.TPReserveHigh);
-            if (!tpReserve.InRange(fface.Player.TPCurrent) && !tpReserve.NotSet()) return false;
-
-            // Usage Limit Check.
-            if (action.UsageLimit != 0)
+            var actionContext = new ActionContext
             {
-                if (action.Usages >= action.UsageLimit) return false;
-            }
+                MemoryAPI = fface,
+                BattleAbility = action
+            };
 
-            // Recast Check
-            if (!AbilityUtils.IsRecastable(fface, action.Ability)) return false;
-
-            // Limiting Status Effect Check for Spells.
-            if (ResourceHelper.IsSpell(action.Ability.AbilityType))
-            {
-                if (ProhibitEffects.ProhibitEffectsSpell.Intersect(fface.Player.StatusEffects).Any())
-                {
-                    return false;
-                }
-            }
-
-            // Limiting Status Effect Check for Abilities.
-            if (ResourceHelper.IsAbility(action.Ability.AbilityType))
-            {
-                if (ProhibitEffects.ProhibitEffectsAbility.Intersect(fface.Player.StatusEffects).Any())
-                {
-                    return false;
-                }
-            }
-
-            // Player HP Checks Enabled.
-            if (action.PlayerLowerHealth != 0 || action.PlayerUpperHealth != 0)
-            {
-                // Player Upper HP Check
-                if (fface.Player.HPPCurrent > action.PlayerUpperHealth) return false;
-
-                // Player Lower HP Check
-                if (fface.Player.HPPCurrent < action.PlayerLowerHealth) return false;
-            }
-
-            // Status Effect Checks Enabled
-            if (!string.IsNullOrWhiteSpace(action.StatusEffect))
-            {
-                var hasEffect = fface.Player.StatusEffects.Any(effect =>
-                    Regex.IsMatch(effect.ToString(),
-                        action.StatusEffect.Replace(" ", "_"),
-                        RegexOptions.IgnoreCase));
-
-                // Contains Effect Check
-                if (hasEffect && !action.TriggerOnEffectPresent) return false;
-
-                // Missing EFfect Check
-                if (!hasEffect && action.TriggerOnEffectPresent) return false;
-            }
-
-            // Check if action's recast period has passed.
-            if (action.Recast != 0)
-            {
-                if (action.LastCast > DateTime.Now) return false;
-            }
-
-            return true;
+            var actionRules = new BuffingActionRules();
+            return actionRules.IsValid(actionContext);
         }
 
         /// <summary>

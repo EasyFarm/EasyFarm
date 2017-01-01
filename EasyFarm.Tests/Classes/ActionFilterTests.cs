@@ -1,90 +1,64 @@
 using System;
 using Xunit;
-using Moq;
 using MemoryAPI;
-using MemoryAPI.Navigation;
 using MemoryAPI.Tests;
 using EasyFarm.Classes;
+using EasyFarm.Parsing;
 
 namespace EasyFarm.Tests.Classes
 {
     public class ActionFilterTest
     {
+        private readonly BattleAbility battleAbility = FindAbility();
+        private readonly FakePlayer player = FindPlayer();
+        private readonly FakeTimer timer = FindTimer();
+
         [Fact]
-        public void AbilityNotUsableWhenDisabled()
+        public void ActionNotUsableWhenDisabled()
         {
-            var battleAbility = FindAbility();
             battleAbility.IsEnabled = false;
-            var result = ActionFilters.BuffingFilter(null, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable();
         }
 
         [Fact]
-        public void AbilityNotUsableWithBlankName()
+        public void ActionNotUsableWithBlankName()
         {
-            var battleAbility = FindAbility();
             battleAbility.Name = "";
-            var result = ActionFilters.BuffingFilter(null, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable();
         }
 
         [Fact]
-        public void AbilityNotUsableWithTooLittleMp()
+        public void ActionNotUsableWithTooLittleMp()
         {
-            var battleAbility = FindAbility();
             battleAbility.Ability.MpCost = 1;
-
-            var player = FindPlayer();
             player.MPCurrent = 0;
-            var memoryAPI = FindMemoryApi(player);
-
-            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable();
         }
 
         [Fact]
-        public void AbilityNotUsableWithTooLittleTp()
+        public void ActionNotUsableWithTooLittleTp()
         {
-            var battleAbility = FindAbility();
             battleAbility.Ability.TpCost = 1;
-
-            var player = FindPlayer();
             player.TPCurrent = 0;
-            var memoryAPI = FindMemoryApi(player);
-
-            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable();
         }
 
         [Fact]
-        public void AbilityNotUsableWhenMpNotInReserveRange()
+        public void ActionNotUsableWhenMpNotInReserveRange()
         {
-            var battleAbility = FindAbility();
             battleAbility.MPReserveLow = 0;
             battleAbility.MPReserveHigh = 25;
-
-            var player = FindPlayer();
             player.MPPCurrent = 100;
-            var memoryAPI = FindMemoryApi(player);
-
-            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable();
         }
 
         [Fact]
-        public void AbilityNotUsableWhenTpNotInReserveRange()
+        public void ActionNotUsableWhenTpNotInReserveRange()
         {
-            var battleAbility = FindAbility();
-
             battleAbility.TPReserveLow = 1000;
             battleAbility.TPReserveHigh = 1000;
-
-            var player = FindPlayer();
             player.TPCurrent = 1;
-            var memoryAPI = FindMemoryApi(player);
-
-            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable();
         }
 
         /// <summary>
@@ -94,44 +68,98 @@ namespace EasyFarm.Tests.Classes
         [Fact]
         public void MpReserveWasUseInsteadOfTpReserveWhenCheckingTpReserveValue()
         {
-            var battleAbility = FindAbility();
             battleAbility.MPReserveLow = 1;
             battleAbility.MPReserveHigh = 1;
-
             battleAbility.TPReserveLow = 1000;
             battleAbility.TPReserveHigh = 1000;
-
-            var player = FindPlayer();
             player.MPPCurrent = 1;
             player.TPCurrent = 1;
-            var memoryAPI = FindMemoryApi(player);
-
-            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
-            Assert.False(result);
+            VerifyActionNotUsable();
         }
 
         [Fact]
-        public void AbilityNotUsableWhenUsageLimitIsReached()
+        public void ActionNotUsableWhenUsageLimitIsReached()
         {
-            var battleAbility = FindAbility();
             battleAbility.UsageLimit = 1;
             battleAbility.Usages = 1;
+            VerifyActionNotUsable();
+        }
 
-            var player = FindPlayer();
-            var memoryAPI = FindMemoryApi(player);
+        [Theory]
+        [InlineData(AbilityType.Magic, StatusEffect.Silence)]
+        [InlineData(AbilityType.Jobability, StatusEffect.Amnesia)]
+        public void ActionNotUsableWhenBlockedByStatusEffect(
+            AbilityType abilityType,
+            StatusEffect statusEffect)
+        {
+            battleAbility.Ability.AbilityType = abilityType;
+            player.StatusEffects = new StatusEffect[] { statusEffect };
+            VerifyActionNotUsable();
+        }
 
+        [Theory]
+        [InlineData(AbilityType.Magic)]
+        [InlineData(AbilityType.Jobability)]
+        public void ActionNotUsableWhenOnRecast(AbilityType abilityType)
+        {
+            battleAbility.Ability.AbilityType = abilityType;
+            timer.ActionRecast = 1;
+            VerifyActionNotUsable();
+        }
+
+        [Theory]
+        [InlineData(75)]
+        [InlineData(0)]
+        public void ActionNotUsableWhenPlayersHealthNotInRange(int hppCurrent)
+        {
+            battleAbility.PlayerLowerHealth = 25;
+            battleAbility.PlayerUpperHealth = 50;
+            player.HPPCurrent = hppCurrent;
+            VerifyActionNotUsable();
+        }
+
+        [Fact]
+        public void ActionNotUsableWhenStatusEffectPresentButActionSetToTriggerOnEffectMissing()
+        {
+            battleAbility.StatusEffect = "Magic Acc Down";
+            battleAbility.TriggerOnEffectPresent = false;
+            player.StatusEffects = new StatusEffect[] { StatusEffect.Magic_Acc_Down };
+            VerifyActionNotUsable();
+        }
+
+        [Fact]
+        public void ActionNotUsableWhenStatusEffectMissingButActionSetToTriggerOnEffectPresent()
+        {
+            battleAbility.StatusEffect = "Dia";
+            battleAbility.TriggerOnEffectPresent = true;
+            player.StatusEffects = new StatusEffect[] { };
+            VerifyActionNotUsable();
+        }
+
+        [Fact]
+        public void ActionNotUsableWhenRecastPeriodHasNotPassed()
+        {
+            battleAbility.Recast = 1;
+            battleAbility.LastCast = DateTime.Now.AddMinutes(1);
+            VerifyActionNotUsable();
+        }
+
+        public void VerifyActionNotUsable()
+        {
+            var memoryAPI = FindMemoryApi();
             var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
             Assert.False(result);
         }
 
-        public IMemoryAPI FindMemoryApi(IPlayerTools player)
+        public IMemoryAPI FindMemoryApi()
         {
-            var memoryAPI = new Mock<IMemoryAPI>();
-            memoryAPI.Setup(x => x.Player).Returns(player);
-            return memoryAPI.Object;
+            var memoryAPI = new FakeMemoryAPI();
+            memoryAPI.Player = player;
+            memoryAPI.Timer = timer;
+            return memoryAPI;
         }
 
-        public BattleAbility FindAbility()
+        public static BattleAbility FindAbility()
         {
             var battleAbility = new BattleAbility();
             battleAbility.IsEnabled = true;
@@ -139,16 +167,23 @@ namespace EasyFarm.Tests.Classes
             return battleAbility;
         }
 
-        public FakePlayer FindPlayer()
+        public static FakePlayer FindPlayer()
         {
             var player = new FakePlayer();
-            player.HPPCurrent=100;
-            player.MPCurrent=10000;
-            player.MPPCurrent=100;
-            player.Name="Mykezero";
-            player.Status=Status.Standing;
-            player.TPCurrent=100;
+            player.HPPCurrent = 100;
+            player.MPCurrent = 10000;
+            player.MPPCurrent = 100;
+            player.Name = "Mykezero";
+            player.Status = Status.Standing;
+            player.TPCurrent = 1000;
+            player.StatusEffects = new StatusEffect[]{ };
             return player;
+        }
+
+        public static FakeTimer FindTimer()
+        {
+            var timer = new FakeTimer();
+            return timer;
         }
     }
 }

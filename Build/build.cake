@@ -2,16 +2,19 @@
 #tool "nuget:?package=OpenCover"
 #tool "nuget:?package=ReportGenerator"
 
-var target = Argument("target", "build");
+var target = Argument("target", "Default");
 
-Task("build")
-	.IsDependentOn("build-it")
-	.IsDependentOn("cover-it")
-	.IsDependentOn("report-it");
+Task("Default")
+	.IsDependentOn("test");
 
 Task("test")
 	.IsDependentOn("build-it")
 	.IsDependentOn("test-it");
+
+Task("cover")
+	.IsDependentOn("build-it")
+	.IsDependentOn("cover-it")
+	.IsDependentOn("report-it");
 
 Task("build-it").Does(() => {
 	MSBuild("../EasyFarm.sln");

@@ -1,27 +1,15 @@
-﻿using System.Collections.Generic;
 using MemoryAPI.Windower;
 
-namespace MemoryAPI.Memory
+namespace MemoryAPI.Tests
 {
-    public class MemoryWrapper : IMemoryAPI
+    public class FakeMemoryAPI : IMemoryAPI
     {
-        public static MemoryWrapper Create(int pid)
-        {
-            return new EliteMMOWrapper(pid);
-        }
-
         public INavigatorTools Navigator { get; set; }
-
         public INPCTools NPC { get; set; }
-
-        public Dictionary<byte, IPartyMemberTools> PartyMember { get; set; }
-
+        public System.Collections.Generic.Dictionary<byte, IPartyMemberTools> PartyMember { get; set; }
         public IPlayerTools Player { get; set; }
-
         public ITargetTools Target { get; set; }
-
         public ITimerTools Timer { get; set; }
-
         public IWindowerTools Windower { get; set; }
     }
 }
