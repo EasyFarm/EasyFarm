@@ -160,8 +160,18 @@ namespace EasyFarm.ViewModels
         private void Load()
         {
             var route = _settings.TryLoad<Route>();
-            if (route != null) Config.Instance.Route = route;
-            AppServices.InformUser(Route != null ? "Path has been loaded." : "Failed to load the path.");
+
+            var isRouteLoaded = route != null;
+
+            if (isRouteLoaded)
+            {
+                Config.Instance.Route = route;
+                AppServices.InformUser("Path has been loaded.");
+            }
+            else
+            {
+                AppServices.InformUser("Failed to load the path.");
+            }
         }
 
         /// <summary>

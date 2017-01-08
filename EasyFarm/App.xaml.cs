@@ -20,6 +20,8 @@ using System.Windows;
 using EasyFarm.Logging;
 using EasyFarm.Properties;
 using EasyFarm.Parsing;
+using EasyFarm.ViewModels;
+using SimpleInjector;
 
 namespace EasyFarm
 {
@@ -33,10 +35,13 @@ namespace EasyFarm
         /// </summary>
         public static AbilityService AbilityService;
 
+        private Container _container = new Container();
+
         public App()
         {
             Application.Current.DispatcherUnhandledException += (sender, e) =>
             {
+                Logger.Log(new LogEntry(LoggingEventType.Fatal, "Unhandled Exception", e.Exception));
                 MessageBox.Show(e.Exception.Message, "An exception has occurred. ", MessageBoxButton.OK, MessageBoxImage.Error);
             };
         }
@@ -48,11 +53,11 @@ namespace EasyFarm
         /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
-            Log.Initialize();
-            Log.Write("Resources loaded");
-            AbilityService = new AbilityService("resources");
-            Log.Write("Application starting");        
             base.OnStartup(e);
+            LogViewModel.Write("Resources loaded");
+            AbilityService = new AbilityService("resources");
+            LogViewModel.Write("Application starting");
+            Logger.Log(new LogEntry(LoggingEventType.Information, "EasyFarm Started ..."));
         }
 
         /// <summary>
@@ -61,7 +66,7 @@ namespace EasyFarm
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
-            Log.Write("Application exiting");
+            LogViewModel.Write("Application exiting");
             Settings.Default.Save();
         }
     }

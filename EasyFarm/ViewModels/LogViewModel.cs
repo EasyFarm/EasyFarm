@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System.Collections.ObjectModel;
+using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
 
@@ -24,6 +25,9 @@ namespace EasyFarm.ViewModels
 {
     public class LogViewModel : ViewModelBase
     {
+        private static readonly LogEntries LogEntries = new LogEntries();
+        private static readonly object LockObject = new object();
+
         public LogViewModel()
         {
             ViewName = "Log";
@@ -31,8 +35,16 @@ namespace EasyFarm.ViewModels
 
         public ObservableCollection<string> LoggedItems
         {
-            get { return Log.LoggedItems; }
-            set { SetProperty(ref Log.LoggedItems, value); }
-        } 
+            get { return LogEntries.LoggedItems; }
+            set { SetProperty(ref LogEntries.LoggedItems, value); }
+        }
+
+        public static void Write(string message)
+        {
+            lock (LockObject)
+            {
+                LogEntries.Write(message);
+            }            
+        }
     }
 }

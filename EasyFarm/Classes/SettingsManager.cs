@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 
 using System;
 using System.IO;
+using EasyFarm.Logging;
 using Microsoft.Win32;
 
 namespace EasyFarm.Classes
@@ -59,8 +60,9 @@ namespace EasyFarm.Classes
                 Serialization.Serialize(path, value);
                 return true;
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
+                Logger.Log(new LogEntry(LoggingEventType.Error, $"{GetType()}.{nameof(TrySave)} : Failure on serialize settings", ex));
                 return false;
             }
         }
@@ -85,8 +87,9 @@ namespace EasyFarm.Classes
             {                
                 return Serialization.Deserialize<T>(path);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
+                Logger.Log(new LogEntry(LoggingEventType.Error, $"{GetType()}.{nameof(TrySave)} : Failure on de-serialize settings", ex));
                 return default(T);
             }
         }

@@ -38,7 +38,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Saves and loads settings from file.
         /// </summary>
-        private readonly SettingsManager _settingsManager;        
+        private readonly SettingsManager _settingsManager;
 
         /// <summary>
         ///     The text displayed on the start / pause button.
@@ -47,10 +47,10 @@ namespace EasyFarm.ViewModels
 
         public MasterViewModel(ISystemTray systemTray)
         {
-            _systemTray = systemTray;            
+            _systemTray = systemTray;
             _settingsManager = new SettingsManager("eup", "EasyFarm User Preference");
 
-            _systemTray.ConfigureSystemTray(SendToSystemTray, SendToTaskBar);            
+            _systemTray.ConfigureSystemTray(SendToSystemTray, SendToTaskBar);
 
             AppServices.RegisterEvent<Events.StatusBarEvent>(e => StatusBarText = e.Message);
             AppServices.RegisterEvent<Events.PauseEvent>(x => StopEngine());
@@ -60,7 +60,7 @@ namespace EasyFarm.ViewModels
             ExitCommand = new DelegateCommand(Exit);
             SaveCommand = new DelegateCommand(Save);
             LoadCommand = new DelegateCommand(Load);
-            SelectProcessCommand = new DelegateCommand(SelectProcess);            
+            SelectProcessCommand = new DelegateCommand(SelectProcess);
 
             OnLoad();
         }
@@ -99,7 +99,7 @@ namespace EasyFarm.ViewModels
             set { SetProperty(ref _startStopHeader, value); }
         }
 
-        private bool _minimizedToTray;        
+        private bool _minimizedToTray;
 
         public bool MinimizeToTray
         {
@@ -137,7 +137,7 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public void Start()
         {
-            // Return when the user has not selected a process. 
+            // Return when the user has not selected a process.
             if (FFACE == null)
             {
                 AppServices.InformUser("No process has been selected.");
@@ -156,7 +156,7 @@ namespace EasyFarm.ViewModels
 
         private void StartEngine()
         {
-            Log.Write("Bot now running");
+            LogViewModel.Write("Bot now running");
             AppServices.InformUser("Program running.");
             StartPauseHeader = "P_ause";
             GameEngine.Start();
@@ -164,7 +164,7 @@ namespace EasyFarm.ViewModels
 
         private void StopEngine()
         {
-            Log.Write("Bot now paused");
+            LogViewModel.Write("Bot now paused");
             AppServices.InformUser("Program paused.");
             StartPauseHeader = "St_art";
             GameEngine.Stop();
@@ -179,12 +179,12 @@ namespace EasyFarm.ViewModels
             {
                 _settingsManager.TrySave(Config.Instance);
                 AppServices.InformUser("Settings have been saved.");
-                Log.Write("Settings saved");
+                LogViewModel.Write("Settings saved");
             }
             catch (InvalidOperationException ex)
-            {
-                Console.WriteLine(ex.Message);
+            {                
                 AppServices.InformUser("Failed to save settings.");
+                Logger.Log(new LogEntry(LoggingEventType.Error, $"{GetType()}.{nameof(Save)} : Failure on save settings", ex));
             }
         }
 
@@ -205,14 +205,15 @@ namespace EasyFarm.ViewModels
                     return;
                 }
 
-                // Inform the user of our success. 
+                // Inform the user of our success.
                 Config.Instance = settings;
                 AppServices.InformUser("Settings have been loaded.");
-                Log.Write("Settings loaded");
+                LogViewModel.Write("Settings loaded");
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
                 AppServices.InformUser("Failed to load settings.");
+                Logger.Log(new LogEntry(LoggingEventType.Error, $"{GetType()}.{nameof(Load)} : Failed to load settings", ex));
             }
         }
 
@@ -225,36 +226,36 @@ namespace EasyFarm.ViewModels
             var selectionView = new ProcessSelectionView();
             selectionView.ShowDialog();
 
-            // Grab the view model with the game sessions. 
+            // Grab the view model with the game sessions.
             var viewModel = selectionView.DataContext as ProcessSelectionViewModel;
 
-            // If the view has a process selection view model binded to it. 
+            // If the view has a process selection view model binded to it.
             if (viewModel != null)
             {
-                // Get the selected process. 
+                // Get the selected process.
                 var process = viewModel.SelectedProcess;
 
-                // User never selected a process. 
+                // User never selected a process.
                 if (process == null || !viewModel.IsProcessSelected)
                 {
-                    Log.Write("Process not found");
+                    LogViewModel.Write("Process not found");
                     AppServices.InformUser("No valid process was selected.");
                     return;
                 }
 
-                // Log that a process selected. 
-                Log.Write("Process found");
+                // Log that a process selected.
+                LogViewModel.Write("Process found");
 
-                // Get memory reader set in config file. 
+                // Get memory reader set in config file.
                 var fface = MemoryWrapper.Create(process.Id);
 
-                // Set the fface Session. 
+                // Set the fface Session.
                 SetSession(fface);
 
                 // Tell the user the program has loaded the player's data
                 AppServices.InformUser("Bot Loaded: " + fface.Player.Name);
 
-                // Set the main window's title to the player's name. 
+                // Set the main window's title to the player's name.
                 MainWindowTitle = "EasyFarm - " + fface.Player.Name;
             }
         }
@@ -272,7 +273,7 @@ namespace EasyFarm.ViewModels
             if (MinimizeToTray)
             {
                 _systemTray.Minimize(MainWindowTitle, @"EasyFarm has been minimized.");
-            }            
+            }
         }
 
         public void SendToTaskBar()
