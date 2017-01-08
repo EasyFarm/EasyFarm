@@ -20,11 +20,14 @@ You should have received a copy of the GNU General Public License
 // Site: FFEVO.net
 // All credit to him!
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EasyFarm.Classes;
+using EasyFarm.Logging;
+using EasyFarm.ViewModels;
 using MemoryAPI;
 
 namespace EasyFarm.States
@@ -38,42 +41,41 @@ namespace EasyFarm.States
         public FiniteStateMachine(IMemoryAPI fface)
         {
             //Create the states
-            AddState(new DeadState(fface) {Priority = 6});
-            AddState(new ZoneState(fface) {Priority = 6});
-            AddState(new SetTargetState(fface) {Priority = 6});
-            AddState(new SetFightingState(fface) {Priority = 6});
-            AddState(new FollowState(fface) {Priority = 5});
-            AddState(new RestState(fface) {Priority = 2});
-            AddState(new ApproachState(fface) {Priority = 0});
-            AddState(new BattleState(fface) {Priority = 3});
-            AddState(new WeaponskillState(fface) {Priority = 2});
-            AddState(new PullState(fface) {Priority = 4});
-            AddState(new StartState(fface) {Priority = 5});
-            AddState(new TravelState(fface) {Priority = 1});
-            AddState(new HealingState(fface) {Priority = 2});
-            AddState(new EndState(fface) {Priority = 3});
-            AddState(new StartEngineState(fface) {Priority = Constants.MaxPriority});
+            AddState(new DeadState(fface) { Priority = 6 });
+            AddState(new ZoneState(fface) { Priority = 6 });
+            AddState(new SetTargetState(fface) { Priority = 6 });
+            AddState(new SetFightingState(fface) { Priority = 6 });
+            AddState(new FollowState(fface) { Priority = 5 });
+            AddState(new RestState(fface) { Priority = 2 });
+            AddState(new ApproachState(fface) { Priority = 0 });
+            AddState(new BattleState(fface) { Priority = 3 });
+            AddState(new WeaponskillState(fface) { Priority = 2 });
+            AddState(new PullState(fface) { Priority = 4 });
+            AddState(new StartState(fface) { Priority = 5 });
+            AddState(new TravelState(fface) { Priority = 1 });
+            AddState(new HealingState(fface) { Priority = 2 });
+            AddState(new EndState(fface) { Priority = 3 });
+            AddState(new StartEngineState(fface) { Priority = Constants.MaxPriority });
 
             _states.ForEach(x => x.Enabled = true);
         }
 
-        public void AddState(IState component)
+        private void AddState(IState component)
         {
-            this._states.Add(component);
-        }
-
-        public void RemoveState(IState component)
-        {
-            this._states.Remove(component);
+            _states.Add(component);
         }
 
         // Start and stop.
         public void Start()
         {
-            // Enable running of
-            IState startEngineState = _states.FirstOrDefault(x => x.GetType() == typeof (StartEngineState));
+            ReEnableStartState();
+            RunFiniteStateMainWithThread();
+        }
+
+        private void ReEnableStartState()
+        {
+            IState startEngineState = _states.FirstOrDefault(x => x.GetType() == typeof(StartEngineState));
             if (startEngineState != null) startEngineState.Enabled = true;
-            MainLoop();
         }
 
         public void Stop()
@@ -81,42 +83,59 @@ namespace EasyFarm.States
             _cancellation.Cancel();
         }
 
-        private void MainLoop()
+        private void RunFiniteStateMainWithThread()
         {
             _cancellation = new CancellationTokenSource();
 
             Task.Factory.StartNew(() =>
             {
-                while (true)
-                {                    
-                    // Sort the List, States may have updated Priorities.
-                    _states.Sort();
-
-                    // Find a State that says it needs to run.
-                    foreach (var mc in _states.Where(x => x.Enabled).ToList())
-                    {
-                        _cancellation.Token.ThrowIfCancellationRequested();
-
-                        bool isRunnable = mc.Check();
-
-                        // Run last state's exits method.
-                        if (_cache[mc] != isRunnable)
-                        {
-                            if (isRunnable) mc.Enter();
-                            else mc.Exit();
-                            _cache[mc] = isRunnable;
-                        }
-
-                        if (isRunnable)
-                        {
-                            // Run current state's run method.
-                            mc.Run();
-                        }
-                    }
-
-                    Thread.Sleep(100);
+                try
+                {
+                    RunStateMachine();
+                }
+                catch (OperationCanceledException)
+                {
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log(new LogEntry(LoggingEventType.Error, "FSM error", ex));
+                    LogViewModel.Write("An error has occurred: please check easyfarm.log for more information");
                 }
             }, _cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        }
+
+        private void RunStateMachine()
+        {
+            while (true)
+            {
+                // Sort the List, States may have updated Priorities.
+                _states.Sort();
+
+                // Find a State that says it needs to run.
+                foreach (var mc in _states.Where(x => x.Enabled).ToList())
+                {
+                    _cancellation.Token.ThrowIfCancellationRequested();
+
+                    bool isRunnable = mc.Check();
+
+                    // Run last state's exits method.
+                    if (_cache[mc] != isRunnable)
+                    {
+                        if (isRunnable) mc.Enter();
+                        else mc.Exit();
+                        _cache[mc] = isRunnable;
+                    }
+
+                    if (isRunnable)
+                    {
+                        // Run current state's run method.
+                        mc.Run();
+                    }
+                }
+
+                Thread.Sleep(100);
+            }
+            // ReSharper disable once FunctionNeverReturns
         }
     }
 }

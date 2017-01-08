@@ -9,7 +9,7 @@ General purpose farming tool for Final Fantasy XI.
 The newest version of EasyFarm can be found under [Releases](https://github.com/EasyFarm/EasyFarm/releases).
 
 #### EasyFarm is Free Software
-![GPLv3](http://www.gnu.org/graphics/gplv3-127x51.png)
+[![GPLv3](http://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/philosophy/free-sw.html)
 
 EasyFarm is free software produced under the GPLv3 license with the goal of producing a first class automation software for Final Fantasy XI that is freely accessible to everyone. 
 
@@ -53,7 +53,24 @@ There's a few ways you can ask questions about the program or make suggestions t
 * [Github Issues](https://github.com/EasyFarm/EasyFarm/issues)
 
 #### Want to contribute?
-Anyone can contribute to the project. Do your best to test the code, and I'll add in your contribution! Contributions to the tutorial section are highly welcomed!
+Anyone can contribute to the project. Do your best to test the code, and I'll add in your contribution! Contributions to the tutorial section are highly welcomed! 
+
+I'm not strict when it comes to program design or automated testing; code quality and test coverage can be improved over time. I welcome anyone to contribute to the project no matter what level of experience.
+
+#### Building The Project
+You should be able to build the project using Visual Studio (I'm currently using 2015 version). 
+
+If you choose to use Atom (which I occasionally do to get away from Visual Studio), the build directory contains build scripts for automating the build, test and code-coverage processes. 
+
+For building and running the tests, you can run this command: 
+
+`./build.ps1`
+
+If you want the code coverage information, then the -cover target can be added to the end of the command: 
+
+`./build.ps1 -target cover`
+
+This should generate a coverage folder containing a index.htm file containing the code coverage report. You can open that up in chrome to see the coverage metrics. 
 
 #### Special Thanks!
 
