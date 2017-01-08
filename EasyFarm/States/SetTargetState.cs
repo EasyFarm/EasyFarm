@@ -2,6 +2,7 @@
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.Logging;
+using EasyFarm.ViewModels;
 using MemoryAPI;
 
 namespace EasyFarm.States
@@ -38,7 +39,7 @@ namespace EasyFarm.States
                 // Update last time target was updated. 
                 _lastTargetCheck = DateTime.Now;
 
-                if (Target != null) Log.Write("Now targeting " + Target.Name + " : " + Target.Id);
+                if (Target != null) LogViewModel.Write("Now targeting " + Target.Name + " : " + Target.Id);
             }
 
             return false;

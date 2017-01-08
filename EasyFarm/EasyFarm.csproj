@@ -146,6 +146,10 @@
       <HintPath>$(SolutionDir)packages\Prism.Wpf.6.1.0\lib\net45\Prism.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SimpleInjector, Version=3.3.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.3.3.2\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Drawing" />
@@ -180,7 +184,12 @@
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Range.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
-    <Compile Include="Logging\Log.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\NLogTextFileLogger.cs" />
+    <Compile Include="Classes\LogEntries.cs" />
+    <Compile Include="Logging\LogEntry.cs" />
+    <Compile Include="Logging\LoggingEventType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -224,7 +233,6 @@
     <Compile Include="States\ApproachState.cs" />
     <Compile Include="States\CombatState.cs" />
     <Compile Include="Classes\BattleAbility.cs" />
-    <Compile Include="Classes\Caster.cs" />
     <Compile Include="Classes\Executor.cs" />
     <Compile Include="Classes\Extensions.cs" />
     <Compile Include="Classes\AbilityUtils.cs" />
@@ -272,7 +280,6 @@
       <DependentUpon>ProcessSelectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="Logging\LogSink.cs" />
     <Compile Include="ViewModels\RestingViewModel.cs" />
     <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="ViewModels\TargetsViewModel.cs" />
@@ -464,6 +471,7 @@
     <Content Include="Dependencies\EliteAPI.dll" />
     <Content Include="Dependencies\EliteMMO.API.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)\Dependencies\*.*" "$(TargetDir)"</PostBuildEvent>
