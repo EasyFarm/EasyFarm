@@ -57,6 +57,7 @@ namespace EasyFarm
             LogViewModel.Write("Resources loaded");
             AbilityService = new AbilityService("resources");
             LogViewModel.Write("Application starting");
+            Logger.Log(new LogEntry(LoggingEventType.Information, "EasyFarm Started ..."));
         }
 
         /// <summary>

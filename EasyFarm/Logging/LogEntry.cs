@@ -14,5 +14,17 @@ namespace EasyFarm.Logging
             Message = message;
             Exception = exception;
         }
+
+        public LogEntry IncludeExceptionInMessage()
+        {
+            if (Exception == null) return this;
+
+            var extendedMessage = string.Join(
+                Environment.NewLine,
+                Message,
+                Exception?.ToString());
+
+            return new LogEntry(Severity, extendedMessage, Exception);
+        }
     }
 }

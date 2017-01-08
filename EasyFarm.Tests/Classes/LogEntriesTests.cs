@@ -2,12 +2,11 @@
 using System.Linq;
 using System.Windows.Threading;
 using EasyFarm.Classes;
-using EasyFarm.Logging;
 using Xunit;
 
-namespace EasyFarm.Tests.Logging
+namespace EasyFarm.Tests.Classes
 {
-    public class LogViewDataSourceTests
+    public class LogEntriesTests
     {
         // ReSharper disable once InconsistentNaming
         private static readonly DateTime Jan_1st_At_08_00_36 = new DateTime(2000, 1, 1, 08, 00, 36);
