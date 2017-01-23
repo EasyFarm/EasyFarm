@@ -1,7 +1,7 @@
-using Xunit;
 using EasyFarm.Classes;
+using Xunit;
 
-namespace EasyFarm.Tests
+namespace EasyFarm.Tests.Classes
 {
     public class RangeTests
     {

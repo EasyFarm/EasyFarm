@@ -179,10 +179,14 @@
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\AppServices.cs" />
+    <Compile Include="Classes\Persister.cs" />
+    <Compile Include="Classes\JsonPersister.cs" />
     <Compile Include="Classes\PlayerMonitor.cs" />
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Range.cs" />
+    <Compile Include="Classes\Serialization.cs" />
+    <Compile Include="Classes\XmlPersister.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
@@ -316,7 +320,7 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Constants.cs" />
-    <Compile Include="Classes\Serialization.cs" />
+    <Compile Include="Classes\IPersister.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\UnitService.cs" />
   </ItemGroup>
