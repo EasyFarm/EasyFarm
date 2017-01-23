@@ -98,6 +98,7 @@
     <Compile Include="Classes\AbilityUtilsTests.cs" />
     <Compile Include="Classes\ExecutorTests.cs" />
     <Compile Include="Classes\LogEntriesTests.cs" />
+    <Compile Include="Classes\SerializationTests.cs" />
     <Compile Include="Logging\LogEntryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MasterViewModelTest.cs" />
