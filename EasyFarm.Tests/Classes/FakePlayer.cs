@@ -1,4 +1,3 @@
-using MemoryAPI;
 using MemoryAPI.Navigation;
 
 namespace MemoryAPI.Tests
