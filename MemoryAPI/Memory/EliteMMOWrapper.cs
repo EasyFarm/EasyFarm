@@ -49,16 +49,16 @@ namespace MemoryAPI
                 this.api = api;
             }
 
-            public bool FaceHeading(Position position)
+            public void FaceHeading(Position position)
             {
                 var player = api.Entity.GetLocalPlayer();
                 var angle = (byte)(Math.Atan((position.Z - player.Z) / (position.X - player.X)) * -(128.0f / Math.PI));
                 if (player.X > position.X) angle += 128;
                 var radian = (float)angle / 255 * 2 * Math.PI;
-                return api.Entity.SetEntityHPosition(api.Entity.LocalPlayerIndex, (float)radian);
+                api.Entity.SetEntityHPosition(api.Entity.LocalPlayerIndex, (float)radian);
             }
 
-            public double DistanceTo(Position position)
+            private double DistanceTo(Position position)
             {
                 var player = api.Entity.GetLocalPlayer();
 
@@ -68,16 +68,27 @@ namespace MemoryAPI
                     Math.Pow(position.Z - player.Z, 2));
             }
 
-            public void Goto(Position position, bool useObjectAvoidance, bool keepRunning)
+            public void GotoWaypoint(Position position, bool useObjectAvoidance)
             {
-                MoveTowardPosition(position, useObjectAvoidance, keepRunning);
-                KeepOneYalmBack(position);
+                MoveForwardTowardsPosition(position, useObjectAvoidance);
+                KeepRunningWithKeyboard();
+                FaceHeading(position);
             }
 
-            private void MoveTowardPosition(
+            public void GotoNPC(int ID, bool useObjectAvoidance)
+            {                
+                var entity = api.Entity.GetEntity(ID);
+                var position = Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H);
+
+                Reset();
+                MoveForwardTowardsPosition(position, useObjectAvoidance);
+                KeepOneYalmBack(position);
+                FaceHeading(position);
+            }
+
+            private void MoveForwardTowardsPosition(
                 Position targetPosition,
-                bool useObjectAvoidance,
-                bool keepRunning)
+                bool useObjectAvoidance)
             {
                 if (!(DistanceTo(targetPosition) > DistanceTolerance)) return;
 
@@ -102,17 +113,12 @@ namespace MemoryAPI
                     Thread.Sleep(30);
                 }
 
-                KeepRunningWithKeyboard(keepRunning);
-
                 api.AutoFollow.IsAutoFollowing = false;
             }
 
-            private void KeepRunningWithKeyboard(bool keepRunning)
+            private void KeepRunningWithKeyboard()
             {
-                if (keepRunning)
-                {
-                    api.ThirdParty.KeyDown(Keys.NUMPAD8);
-                }
+                api.ThirdParty.KeyDown(Keys.NUMPAD8);
             }
 
             private void KeepOneYalmBack(Position position)
@@ -122,7 +128,7 @@ namespace MemoryAPI
                 DateTime duration = DateTime.Now.AddSeconds(5);
                 api.ThirdParty.KeyDown(Keys.NUMPAD2);
 
-                while (DistanceTo(position) > TooCloseDistance && DateTime.Now < duration)
+                while (DistanceTo(position) <= TooCloseDistance && DateTime.Now < duration)
                 {
                     SetViewMode(ViewMode.FirstPerson);
                     FaceHeading(position);
@@ -213,13 +219,6 @@ namespace MemoryAPI
                     }
                 }
                 api.ThirdParty.KeyUp(Keys.NUMPAD8);
-            }
-
-            public void GotoNPC(int ID, bool useObjectAvoidance, bool keepRunning)
-            {
-                var entity = api.Entity.GetEntity(ID);
-                var position = Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H);
-                Goto(position, useObjectAvoidance, keepRunning);
             }
 
             public void Reset()
