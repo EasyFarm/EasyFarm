@@ -39,6 +39,7 @@ namespace MemoryAPI
 
         public class NavigationTools : INavigatorTools
         {
+            private const double TooCloseDistance = 1.5;
             private readonly EliteAPI api;
 
             public double DistanceTolerance { get; set; } = 3;
@@ -69,29 +70,50 @@ namespace MemoryAPI
 
             public void Goto(Position position, bool useObjectAvoidance)
             {
-                if (DistanceTo(position) > DistanceTolerance)
+                MoveTowardPosition(position, useObjectAvoidance);
+                KeepOneYalmBack(position);
+            }
+
+            private void MoveTowardPosition(Position position, bool useObjectAvoidance)
+            {
+                if (!(DistanceTo(position) > DistanceTolerance)) return;
+
+                DateTime duration = DateTime.Now.AddSeconds(5);
+                api.ThirdParty.KeyDown(Keys.NUMPAD8);
+
+                while (DistanceTo(position) > DistanceTolerance && DateTime.Now < duration)
                 {
-                    DateTime duration = DateTime.Now.AddSeconds(5);
-                    api.ThirdParty.KeyDown(Keys.NUMPAD8);
+                    SetViewMode(ViewMode.FirstPerson);
+                    FaceHeading(position);
+                    if (useObjectAvoidance) AvoidObstacles();
+                    Thread.Sleep(30);
+                }
 
-                    while (DistanceTo(position) > DistanceTolerance && DateTime.Now < duration)
-                    {
-                        if ((ViewMode)api.Player.ViewMode != ViewMode.FirstPerson)
-                        {
-                            api.Player.ViewMode = (int)ViewMode.FirstPerson;
-                        }
+                api.ThirdParty.KeyUp(Keys.NUMPAD8);
+            }
 
-                        FaceHeading(position);
+            private void KeepOneYalmBack(Position position)
+            {
+                if (DistanceTo(position) > TooCloseDistance) return;
 
-                        if (useObjectAvoidance)
-                        {
-                            AvoidObstacles();
-                        }
+                DateTime duration = DateTime.Now.AddSeconds(5);
+                api.ThirdParty.KeyDown(Keys.NUMPAD2);
 
-                        Thread.Sleep(30);
-                    }
+                while (DistanceTo(position) > TooCloseDistance && DateTime.Now < duration)
+                {
+                    SetViewMode(ViewMode.FirstPerson);
+                    FaceHeading(position);
+                    Thread.Sleep(30);
+                }
 
-                    api.ThirdParty.KeyUp(Keys.NUMPAD8);
+                api.ThirdParty.KeyUp(Keys.NUMPAD2);
+            }
+
+            private void SetViewMode(ViewMode viewMode)
+            {
+                if ((ViewMode) api.Player.ViewMode != viewMode)
+                {
+                    api.Player.ViewMode = (int) viewMode;
                 }
             }
 
