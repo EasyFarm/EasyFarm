@@ -30,7 +30,7 @@ namespace EasyFarm.ViewModels
 {
     public class RoutesViewModel : ViewModelBase
     {
-        private PathRecorder _recorder;
+        private readonly PathRecorder _recorder;
 
         private readonly SettingsManager _settings;
 
@@ -38,25 +38,18 @@ namespace EasyFarm.ViewModels
 
         public RoutesViewModel()
         {
-            _settings = new SettingsManager("ewl", "EasyFarm Waypoint List");
-                        
+            _recorder = new PathRecorder(FFACE);
+            _recorder.OnPositionAdded += _recorder_OnPositionAdded;
+            _settings = new SettingsManager("ewl", "EasyFarm Waypoint List");            
+
             ClearCommand = new DelegateCommand(ClearRoute);
             RecordCommand = new DelegateCommand(Record);
             SaveCommand = new DelegateCommand(Save);
             LoadCommand = new DelegateCommand(Load);
             ResetNavigatorCommand = new DelegateCommand(ResetNavigator);
+
             RecordHeader = "Record";
-
-            // Create recorder on loaded fface session. 
-            OnSessionSet += ViewModelBase_OnSessionSet;
-
             ViewName = "Routes";
-        }
-
-        private void ViewModelBase_OnSessionSet(IMemoryAPI fface)
-        {
-            _recorder = new PathRecorder(fface);
-            _recorder.OnPositionAdded += _recorder_OnPositionAdded;
         }
 
         private void _recorder_OnPositionAdded(Position position)

@@ -61,11 +61,10 @@ namespace EasyFarm.Tests.Logging
 
             private static Exception FindExceptionWithStackTrace(string message)
             {
-                return Record.Exception(() =>
+                return Record.ExceptionAsync(() =>
                 {
                     throw new Exception(message);
-                    return new object();
-                });
+                })?.GetAwaiter().GetResult();
             }
         }
     }
