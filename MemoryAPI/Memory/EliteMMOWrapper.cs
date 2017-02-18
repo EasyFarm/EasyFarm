@@ -74,22 +74,32 @@ namespace MemoryAPI
                 KeepOneYalmBack(position);
             }
 
-            private void MoveTowardPosition(Position position, bool useObjectAvoidance)
+            private void MoveTowardPosition(Position targetPosition, bool useObjectAvoidance)
             {
-                if (!(DistanceTo(position) > DistanceTolerance)) return;
+                if (!(DistanceTo(targetPosition) > DistanceTolerance)) return;
 
                 DateTime duration = DateTime.Now.AddSeconds(5);
-                api.ThirdParty.KeyDown(Keys.NUMPAD8);
 
-                while (DistanceTo(position) > DistanceTolerance && DateTime.Now < duration)
+                while (DistanceTo(targetPosition) > DistanceTolerance && DateTime.Now < duration)
                 {
+                    var player = api.Player;
+
                     SetViewMode(ViewMode.FirstPerson);
-                    FaceHeading(position);
+                    FaceHeading(targetPosition);
+
+                    api.AutoFollow.SetAutoFollowCoords(
+                        targetPosition.X - player.X,
+                        targetPosition.Y - player.Y,
+                        targetPosition.Z - player.Z);
+
+                    api.AutoFollow.IsAutoFollowing = true;
+
                     if (useObjectAvoidance) AvoidObstacles();
+
                     Thread.Sleep(30);
                 }
 
-                api.ThirdParty.KeyUp(Keys.NUMPAD8);
+                api.AutoFollow.IsAutoFollowing = false;
             }
 
             private void KeepOneYalmBack(Position position)
