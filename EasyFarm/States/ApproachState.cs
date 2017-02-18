@@ -56,12 +56,8 @@ namespace EasyFarm.States
             if (Config.Instance.IsApproachEnabled)
             {
                 // Move to target if out of melee range. 
-                if (Target.Distance > Config.Instance.MeleeDistance)
-                {
-                    // Move to unit at max buff distance. 
-                    fface.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
-                    fface.Navigator.GotoNPC(Target.Id, Config.Instance.IsObjectAvoidanceEnabled);
-                }
+                fface.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
+                fface.Navigator.GotoNPC(Target.Id, Config.Instance.IsObjectAvoidanceEnabled);
             }
 
             // Face mob. 

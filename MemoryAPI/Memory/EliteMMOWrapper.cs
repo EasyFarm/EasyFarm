@@ -39,6 +39,7 @@ namespace MemoryAPI
 
         public class NavigationTools : INavigatorTools
         {
+            private const double TooCloseDistance = 1.5;
             private readonly EliteAPI api;
 
             public double DistanceTolerance { get; set; } = 3;
@@ -48,16 +49,16 @@ namespace MemoryAPI
                 this.api = api;
             }
 
-            public bool FaceHeading(Position position)
+            public void FaceHeading(Position position)
             {
                 var player = api.Entity.GetLocalPlayer();
                 var angle = (byte)(Math.Atan((position.Z - player.Z) / (position.X - player.X)) * -(128.0f / Math.PI));
                 if (player.X > position.X) angle += 128;
                 var radian = (float)angle / 255 * 2 * Math.PI;
-                return api.Entity.SetEntityHPosition(api.Entity.LocalPlayerIndex, (float)radian);
+                api.Entity.SetEntityHPosition(api.Entity.LocalPlayerIndex, (float)radian);
             }
 
-            public double DistanceTo(Position position)
+            private double DistanceTo(Position position)
             {
                 var player = api.Entity.GetLocalPlayer();
 
@@ -67,31 +68,81 @@ namespace MemoryAPI
                     Math.Pow(position.Z - player.Z, 2));
             }
 
-            public void Goto(Position position, bool useObjectAvoidance)
+            public void GotoWaypoint(Position position, bool useObjectAvoidance)
             {
-                if (DistanceTo(position) > DistanceTolerance)
+                MoveForwardTowardsPosition(position, useObjectAvoidance);
+                KeepRunningWithKeyboard();
+                FaceHeading(position);
+            }
+
+            public void GotoNPC(int ID, bool useObjectAvoidance)
+            {                
+                var entity = api.Entity.GetEntity(ID);
+                var position = Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H);
+
+                Reset();
+                MoveForwardTowardsPosition(position, useObjectAvoidance);
+                KeepOneYalmBack(position);
+                FaceHeading(position);
+            }
+
+            private void MoveForwardTowardsPosition(
+                Position targetPosition,
+                bool useObjectAvoidance)
+            {
+                if (!(DistanceTo(targetPosition) > DistanceTolerance)) return;
+
+                DateTime duration = DateTime.Now.AddSeconds(5);
+
+                while (DistanceTo(targetPosition) > DistanceTolerance && DateTime.Now < duration)
                 {
-                    DateTime duration = DateTime.Now.AddSeconds(5);
-                    api.ThirdParty.KeyDown(Keys.NUMPAD8);
+                    var player = api.Player;
 
-                    while (DistanceTo(position) > DistanceTolerance && DateTime.Now < duration)
-                    {
-                        if ((ViewMode)api.Player.ViewMode != ViewMode.FirstPerson)
-                        {
-                            api.Player.ViewMode = (int)ViewMode.FirstPerson;
-                        }
+                    SetViewMode(ViewMode.FirstPerson);
+                    FaceHeading(targetPosition);
 
-                        FaceHeading(position);
+                    api.AutoFollow.SetAutoFollowCoords(
+                        targetPosition.X - player.X,
+                        targetPosition.Y - player.Y,
+                        targetPosition.Z - player.Z);
 
-                        if (useObjectAvoidance)
-                        {
-                            AvoidObstacles();
-                        }
+                    api.AutoFollow.IsAutoFollowing = true;
 
-                        Thread.Sleep(30);
-                    }
+                    if (useObjectAvoidance) AvoidObstacles();
 
-                    api.ThirdParty.KeyUp(Keys.NUMPAD8);
+                    Thread.Sleep(30);
+                }
+
+                api.AutoFollow.IsAutoFollowing = false;
+            }
+
+            private void KeepRunningWithKeyboard()
+            {
+                api.ThirdParty.KeyDown(Keys.NUMPAD8);
+            }
+
+            private void KeepOneYalmBack(Position position)
+            {
+                if (DistanceTo(position) > TooCloseDistance) return;
+
+                DateTime duration = DateTime.Now.AddSeconds(5);
+                api.ThirdParty.KeyDown(Keys.NUMPAD2);
+
+                while (DistanceTo(position) <= TooCloseDistance && DateTime.Now < duration)
+                {
+                    SetViewMode(ViewMode.FirstPerson);
+                    FaceHeading(position);
+                    Thread.Sleep(30);
+                }
+
+                api.ThirdParty.KeyUp(Keys.NUMPAD2);
+            }
+
+            private void SetViewMode(ViewMode viewMode)
+            {
+                if ((ViewMode)api.Player.ViewMode != viewMode)
+                {
+                    api.Player.ViewMode = (int)viewMode;
                 }
             }
 
@@ -130,7 +181,7 @@ namespace MemoryAPI
             /// <returns></returns>
             private bool IsEngaged()
             {
-                return api.Player.Status == (ulong) Status.Fighting;
+                return api.Player.Status == (ulong)Status.Fighting;
             }
 
             /// <summary>
@@ -170,15 +221,11 @@ namespace MemoryAPI
                 api.ThirdParty.KeyUp(Keys.NUMPAD8);
             }
 
-            public void GotoNPC(int ID, bool useObjectAvoidance)
-            {
-                var entity = api.Entity.GetEntity(ID);
-                Goto(Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H), useObjectAvoidance);
-            }
-
             public void Reset()
             {
+                api.AutoFollow.IsAutoFollowing = false;
                 api.ThirdParty.KeyUp(Keys.NUMPAD8);
+                api.ThirdParty.KeyUp(Keys.NUMPAD2);
             }
         }
 
@@ -432,7 +479,7 @@ namespace MemoryAPI
             }
 
             public void SendString(string stringToSend)
-            {                
+            {
                 api.ThirdParty.SendString(stringToSend);
             }
 

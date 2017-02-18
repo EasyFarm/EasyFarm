@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using EasyFarm.Classes;
 using EasyFarm.States;
 using MemoryAPI;
 using Prism.Mvvm;
@@ -24,24 +25,31 @@ namespace EasyFarm.Infrastructure
 {
     public class ViewModelBase : BindableBase, IViewModel
     {
-        public delegate void SessionSet(IMemoryAPI fface);
-
         /// <summary>
         ///     Global game engine controlling the player.
         /// </summary>
-        public static GameEngine GameEngine;
+        protected static GameEngine GameEngine { get; set; }
 
         /// <summary>
         ///     Solo fface instance for current player.
         /// </summary>
-        public static IMemoryAPI FFACE { get; set; }
+        protected static IMemoryAPI FFACE { get; set; }
 
         /// <summary>
         ///     View Model name for header in tab control item.
         /// </summary>
         public string ViewName { get; set; }
 
-        public static void SetSession(IMemoryAPI fface)
+        /// <summary>
+        /// Path record to let users record waypoint paths
+        /// </summary>
+        protected static PathRecorder PathRecorder { get; set; }
+
+        /// <summary>
+        /// Set up session from given fface session.
+        /// </summary>
+        /// <param name="fface"></param>
+        protected static void SetSession(IMemoryAPI fface)
         {
             if (fface == null) return;
 
@@ -51,9 +59,8 @@ namespace EasyFarm.Infrastructure
             // Create a new game engine to control our character. 
             GameEngine = new GameEngine(FFACE);
 
-            OnSessionSet?.Invoke(fface);
+            // Create path record for navigation
+            PathRecorder = new PathRecorder(FFACE);
         }
-
-        public static event SessionSet OnSessionSet;
     }
 }

@@ -29,37 +29,26 @@ using MemoryAPI.Navigation;
 namespace EasyFarm.ViewModels
 {
     public class RoutesViewModel : ViewModelBase
-    {
-        private PathRecorder _recorder;
-
+    {        
         private readonly SettingsManager _settings;
 
         private string _recordHeader;
 
         public RoutesViewModel()
-        {
-            _settings = new SettingsManager("ewl", "EasyFarm Waypoint List");
-                        
+        {            
+            _settings = new SettingsManager("ewl", "EasyFarm Waypoint List");            
+
             ClearCommand = new DelegateCommand(ClearRoute);
             RecordCommand = new DelegateCommand(Record);
             SaveCommand = new DelegateCommand(Save);
             LoadCommand = new DelegateCommand(Load);
             ResetNavigatorCommand = new DelegateCommand(ResetNavigator);
+
             RecordHeader = "Record";
-
-            // Create recorder on loaded fface session. 
-            OnSessionSet += ViewModelBase_OnSessionSet;
-
             ViewName = "Routes";
         }
 
-        private void ViewModelBase_OnSessionSet(IMemoryAPI fface)
-        {
-            _recorder = new PathRecorder(fface);
-            _recorder.OnPositionAdded += _recorder_OnPositionAdded;
-        }
-
-        private void _recorder_OnPositionAdded(Position position)
+        private void PathRecorder_OnPositionAdded(Position position)
         {
             Application.Current.Dispatcher.Invoke(() => Route.Add(position));
         }
@@ -134,14 +123,16 @@ namespace EasyFarm.ViewModels
 
             Config.Instance.Route.Zone = FFACE.Player.Zone;
 
-            if (!_recorder.IsRecording)
+            if (!PathRecorder.IsRecording)
             {
-                _recorder.Start();
+                PathRecorder.OnPositionAdded += PathRecorder_OnPositionAdded;
+                PathRecorder.Start();
                 RecordHeader = "Recording!";
             }
             else
             {
-                _recorder.Stop();
+                PathRecorder.OnPositionAdded -= PathRecorder_OnPositionAdded;
+                PathRecorder.Stop();
                 RecordHeader = "Record";
             }
         }

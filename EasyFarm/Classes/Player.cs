@@ -89,7 +89,7 @@ namespace EasyFarm.Classes
 
             while (target.Id != fface.Target.ID)
             {
-                if (stopwatch.Elapsed == TimeSpan.FromSeconds(1))
+                if (stopwatch.Elapsed >= TimeSpan.FromSeconds(1))
                 {
                     break;
                 }

@@ -96,14 +96,15 @@ namespace EasyFarm.Classes
                 _fface.Navigator.FaceHeading(target.Position);
                 Player.SetTarget(_fface, target);
 
+                _fface.Navigator.Reset();
+                Thread.Sleep(100);
+
                 if (ResourceHelper.IsSpell(action.Ability.AbilityType))
                 {
-                    _fface.Navigator.Reset();
-                    Thread.Sleep(100);
                     CastSpell(action);
                 }
                 else
-                {
+                {                    
                     CastAbility(action);
                 }                
 
