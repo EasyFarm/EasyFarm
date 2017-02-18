@@ -29,17 +29,13 @@ using MemoryAPI.Navigation;
 namespace EasyFarm.ViewModels
 {
     public class RoutesViewModel : ViewModelBase
-    {
-        private readonly PathRecorder _recorder;
-
+    {        
         private readonly SettingsManager _settings;
 
         private string _recordHeader;
 
         public RoutesViewModel()
-        {
-            _recorder = new PathRecorder(FFACE);
-            _recorder.OnPositionAdded += _recorder_OnPositionAdded;
+        {            
             _settings = new SettingsManager("ewl", "EasyFarm Waypoint List");            
 
             ClearCommand = new DelegateCommand(ClearRoute);
@@ -52,7 +48,7 @@ namespace EasyFarm.ViewModels
             ViewName = "Routes";
         }
 
-        private void _recorder_OnPositionAdded(Position position)
+        private void PathRecorder_OnPositionAdded(Position position)
         {
             Application.Current.Dispatcher.Invoke(() => Route.Add(position));
         }
@@ -127,14 +123,16 @@ namespace EasyFarm.ViewModels
 
             Config.Instance.Route.Zone = FFACE.Player.Zone;
 
-            if (!_recorder.IsRecording)
+            if (!PathRecorder.IsRecording)
             {
-                _recorder.Start();
+                PathRecorder.OnPositionAdded += PathRecorder_OnPositionAdded;
+                PathRecorder.Start();
                 RecordHeader = "Recording!";
             }
             else
             {
-                _recorder.Stop();
+                PathRecorder.OnPositionAdded -= PathRecorder_OnPositionAdded;
+                PathRecorder.Stop();
                 RecordHeader = "Record";
             }
         }
