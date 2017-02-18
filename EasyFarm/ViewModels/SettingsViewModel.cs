@@ -113,6 +113,15 @@ namespace EasyFarm.ViewModels
             }
         }
 
+        public bool HomePointOnDeath
+        {
+            get { return Config.Instance.HomePointOnDeath; }
+            set
+            {
+                SetProperty(ref Config.Instance.HomePointOnDeath, value);
+            }
+        }
+
         private void RestoreDefaults()
         {
             DetectionDistance = Constants.DetectionDistance;
@@ -124,7 +133,8 @@ namespace EasyFarm.ViewModels
             AvoidObjects = false;
             ShouldApproach = true;
             ShouldEngage = true;
+            HomePointOnDeath = false;
             AppServices.InformUser("Defaults have been restored.");
-        }
+        }        
     }
 }

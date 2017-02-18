@@ -75,8 +75,8 @@ namespace MemoryAPI
             }
 
             private void MoveTowardPosition(
-                Position targetPosition, 
-                bool useObjectAvoidance, 
+                Position targetPosition,
+                bool useObjectAvoidance,
                 bool keepRunning)
             {
                 if (!(DistanceTo(targetPosition) > DistanceTolerance)) return;
@@ -100,7 +100,7 @@ namespace MemoryAPI
                     if (useObjectAvoidance) AvoidObstacles();
 
                     Thread.Sleep(30);
-                }                
+                }
 
                 KeepRunningWithKeyboard(keepRunning);
 
@@ -134,9 +134,9 @@ namespace MemoryAPI
 
             private void SetViewMode(ViewMode viewMode)
             {
-                if ((ViewMode) api.Player.ViewMode != viewMode)
+                if ((ViewMode)api.Player.ViewMode != viewMode)
                 {
-                    api.Player.ViewMode = (int) viewMode;
+                    api.Player.ViewMode = (int)viewMode;
                 }
             }
 
@@ -175,7 +175,7 @@ namespace MemoryAPI
             /// <returns></returns>
             private bool IsEngaged()
             {
-                return api.Player.Status == (ulong) Status.Fighting;
+                return api.Player.Status == (ulong)Status.Fighting;
             }
 
             /// <summary>
@@ -480,7 +480,7 @@ namespace MemoryAPI
             }
 
             public void SendString(string stringToSend)
-            {                
+            {
                 api.ThirdParty.SendString(stringToSend);
             }
 

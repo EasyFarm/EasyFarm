@@ -173,6 +173,8 @@ namespace EasyFarm.Classes
         /// </summary>
         public bool StraightRoute => Route.StraightRoute;
 
+        public bool HomePointOnDeath = false;
+
         /// <summary>
         /// Toggles whether program should target things using memory or by
         /// tabbing to its target.
