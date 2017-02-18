@@ -68,13 +68,16 @@ namespace MemoryAPI
                     Math.Pow(position.Z - player.Z, 2));
             }
 
-            public void Goto(Position position, bool useObjectAvoidance)
+            public void Goto(Position position, bool useObjectAvoidance, bool keepRunning)
             {
-                MoveTowardPosition(position, useObjectAvoidance);
+                MoveTowardPosition(position, useObjectAvoidance, keepRunning);
                 KeepOneYalmBack(position);
             }
 
-            private void MoveTowardPosition(Position targetPosition, bool useObjectAvoidance)
+            private void MoveTowardPosition(
+                Position targetPosition, 
+                bool useObjectAvoidance, 
+                bool keepRunning)
             {
                 if (!(DistanceTo(targetPosition) > DistanceTolerance)) return;
 
@@ -97,9 +100,19 @@ namespace MemoryAPI
                     if (useObjectAvoidance) AvoidObstacles();
 
                     Thread.Sleep(30);
-                }
+                }                
+
+                KeepRunningWithKeyboard(keepRunning);
 
                 api.AutoFollow.IsAutoFollowing = false;
+            }
+
+            private void KeepRunningWithKeyboard(bool keepRunning)
+            {
+                if (keepRunning)
+                {
+                    api.ThirdParty.KeyDown(Keys.NUMPAD8);
+                }
             }
 
             private void KeepOneYalmBack(Position position)
@@ -202,15 +215,18 @@ namespace MemoryAPI
                 api.ThirdParty.KeyUp(Keys.NUMPAD8);
             }
 
-            public void GotoNPC(int ID, bool useObjectAvoidance)
+            public void GotoNPC(int ID, bool useObjectAvoidance, bool keepRunning)
             {
                 var entity = api.Entity.GetEntity(ID);
-                Goto(Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H), useObjectAvoidance);
+                var position = Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H);
+                Goto(position, useObjectAvoidance, keepRunning);
             }
 
             public void Reset()
             {
+                api.AutoFollow.IsAutoFollowing = false;
                 api.ThirdParty.KeyUp(Keys.NUMPAD8);
+                api.ThirdParty.KeyUp(Keys.NUMPAD2);
             }
         }
 
