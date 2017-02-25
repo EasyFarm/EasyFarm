@@ -7,57 +7,57 @@ using EasyFarm.Parsing;
 
 namespace EasyFarm.Tests.Classes
 {
-    public class ActionFilterTest
+    public class ActionFilterTest : AbstractTestFixture
     {
-        private readonly BattleAbility battleAbility = FindAbility();
-        private readonly FakePlayer player = FindPlayer();
-        private readonly FakeTimer timer = FindTimer();
+        private readonly BattleAbility _battleAbility = FindAbility();
+        private readonly FakePlayer _player = FindPlayer();
+        private readonly FakeTimer _timer = FindTimer();
 
         [Fact]
         public void ActionNotUsableWhenDisabled()
         {
-            battleAbility.IsEnabled = false;
+            _battleAbility.IsEnabled = false;
             VerifyActionNotUsable();
         }
 
         [Fact]
         public void ActionNotUsableWithBlankName()
         {
-            battleAbility.Name = "";
+            _battleAbility.Name = "";
             VerifyActionNotUsable();
         }
 
         [Fact]
         public void ActionNotUsableWithTooLittleMp()
         {
-            battleAbility.Ability.MpCost = 1;
-            player.MPCurrent = 0;
+            _battleAbility.Ability.MpCost = 1;
+            _player.MPCurrent = 0;
             VerifyActionNotUsable();
         }
 
         [Fact]
         public void ActionNotUsableWithTooLittleTp()
         {
-            battleAbility.Ability.TpCost = 1;
-            player.TPCurrent = 0;
+            _battleAbility.Ability.TpCost = 1;
+            _player.TPCurrent = 0;
             VerifyActionNotUsable();
         }
 
         [Fact]
         public void ActionNotUsableWhenMpNotInReserveRange()
         {
-            battleAbility.MPReserveLow = 0;
-            battleAbility.MPReserveHigh = 25;
-            player.MPPCurrent = 100;
+            _battleAbility.MPReserveLow = 0;
+            _battleAbility.MPReserveHigh = 25;
+            _player.MPPCurrent = 100;
             VerifyActionNotUsable();
         }
 
         [Fact]
         public void ActionNotUsableWhenTpNotInReserveRange()
         {
-            battleAbility.TPReserveLow = 1000;
-            battleAbility.TPReserveHigh = 1000;
-            player.TPCurrent = 1;
+            _battleAbility.TPReserveLow = 1000;
+            _battleAbility.TPReserveHigh = 1000;
+            _player.TPCurrent = 1;
             VerifyActionNotUsable();
         }
 
@@ -68,20 +68,20 @@ namespace EasyFarm.Tests.Classes
         [Fact]
         public void MpReserveWasUseInsteadOfTpReserveWhenCheckingTpReserveValue()
         {
-            battleAbility.MPReserveLow = 1;
-            battleAbility.MPReserveHigh = 1;
-            battleAbility.TPReserveLow = 1000;
-            battleAbility.TPReserveHigh = 1000;
-            player.MPPCurrent = 1;
-            player.TPCurrent = 1;
+            _battleAbility.MPReserveLow = 1;
+            _battleAbility.MPReserveHigh = 1;
+            _battleAbility.TPReserveLow = 1000;
+            _battleAbility.TPReserveHigh = 1000;
+            _player.MPPCurrent = 1;
+            _player.TPCurrent = 1;
             VerifyActionNotUsable();
         }
 
         [Fact]
         public void ActionNotUsableWhenUsageLimitIsReached()
         {
-            battleAbility.UsageLimit = 1;
-            battleAbility.Usages = 1;
+            _battleAbility.UsageLimit = 1;
+            _battleAbility.Usages = 1;
             VerifyActionNotUsable();
         }
 
@@ -92,8 +92,8 @@ namespace EasyFarm.Tests.Classes
             AbilityType abilityType,
             StatusEffect statusEffect)
         {
-            battleAbility.Ability.AbilityType = abilityType;
-            player.StatusEffects = new StatusEffect[] { statusEffect };
+            _battleAbility.Ability.AbilityType = abilityType;
+            _player.StatusEffects = new StatusEffect[] { statusEffect };
             VerifyActionNotUsable();
         }
 
@@ -102,8 +102,8 @@ namespace EasyFarm.Tests.Classes
         [InlineData(AbilityType.Jobability)]
         public void ActionNotUsableWhenOnRecast(AbilityType abilityType)
         {
-            battleAbility.Ability.AbilityType = abilityType;
-            timer.ActionRecast = 1;
+            _battleAbility.Ability.AbilityType = abilityType;
+            _timer.ActionRecast = 1;
             VerifyActionNotUsable();
         }
 
@@ -112,78 +112,51 @@ namespace EasyFarm.Tests.Classes
         [InlineData(0)]
         public void ActionNotUsableWhenPlayersHealthNotInRange(int hppCurrent)
         {
-            battleAbility.PlayerLowerHealth = 25;
-            battleAbility.PlayerUpperHealth = 50;
-            player.HPPCurrent = hppCurrent;
+            _battleAbility.PlayerLowerHealth = 25;
+            _battleAbility.PlayerUpperHealth = 50;
+            _player.HPPCurrent = hppCurrent;
             VerifyActionNotUsable();
         }
 
         [Fact]
         public void ActionNotUsableWhenStatusEffectPresentButActionSetToTriggerOnEffectMissing()
         {
-            battleAbility.StatusEffect = "Magic Acc Down";
-            battleAbility.TriggerOnEffectPresent = false;
-            player.StatusEffects = new StatusEffect[] { StatusEffect.Magic_Acc_Down };
+            _battleAbility.StatusEffect = "Magic Acc Down";
+            _battleAbility.TriggerOnEffectPresent = false;
+            _player.StatusEffects = new StatusEffect[] { StatusEffect.Magic_Acc_Down };
             VerifyActionNotUsable();
         }
 
         [Fact]
         public void ActionNotUsableWhenStatusEffectMissingButActionSetToTriggerOnEffectPresent()
         {
-            battleAbility.StatusEffect = "Dia";
-            battleAbility.TriggerOnEffectPresent = true;
-            player.StatusEffects = new StatusEffect[] { };
+            _battleAbility.StatusEffect = "Dia";
+            _battleAbility.TriggerOnEffectPresent = true;
+            _player.StatusEffects = new StatusEffect[] { };
             VerifyActionNotUsable();
         }
 
         [Fact]
         public void ActionNotUsableWhenRecastPeriodHasNotPassed()
         {
-            battleAbility.Recast = 1;
-            battleAbility.LastCast = DateTime.Now.AddMinutes(1);
+            _battleAbility.Recast = 1;
+            _battleAbility.LastCast = DateTime.Now.AddMinutes(1);
             VerifyActionNotUsable();
         }
 
         public void VerifyActionNotUsable()
         {
             var memoryAPI = FindMemoryApi();
-            var result = ActionFilters.BuffingFilter(memoryAPI, battleAbility);
+            var result = ActionFilters.BuffingFilter(memoryAPI, _battleAbility);
             Assert.False(result);
         }
 
         public IMemoryAPI FindMemoryApi()
         {
             var memoryAPI = new FakeMemoryAPI();
-            memoryAPI.Player = player;
-            memoryAPI.Timer = timer;
+            memoryAPI.Player = _player;
+            memoryAPI.Timer = _timer;
             return memoryAPI;
-        }
-
-        public static BattleAbility FindAbility()
-        {
-            var battleAbility = new BattleAbility();
-            battleAbility.IsEnabled = true;
-            battleAbility.Name = "valid";
-            return battleAbility;
-        }
-
-        public static FakePlayer FindPlayer()
-        {
-            var player = new FakePlayer();
-            player.HPPCurrent = 100;
-            player.MPCurrent = 10000;
-            player.MPPCurrent = 100;
-            player.Name = "Mykezero";
-            player.Status = Status.Standing;
-            player.TPCurrent = 1000;
-            player.StatusEffects = new StatusEffect[]{ };
-            return player;
-        }
-
-        public static FakeTimer FindTimer()
-        {
-            var timer = new FakeTimer();
-            return timer;
         }
     }
 }

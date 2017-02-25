@@ -70,7 +70,7 @@ namespace EasyFarm.Classes
             Thread.Sleep(100);
         }
 
-        public static void SetTarget(IMemoryAPI fface, Unit target)
+        public static void SetTarget(IMemoryAPI fface, IUnit target)
         {
             if (!Config.Instance.EnableTabTargeting)
             {
@@ -82,7 +82,7 @@ namespace EasyFarm.Classes
             }
         }
 
-        private static void SetTargetByTabbing(IMemoryAPI fface, Unit target)
+        private static void SetTargetByTabbing(IMemoryAPI fface, IUnit target)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -99,7 +99,7 @@ namespace EasyFarm.Classes
             }
         }
 
-        private static void SetTargetUsingMemory(IMemoryAPI fface, Unit target)
+        private static void SetTargetUsingMemory(IMemoryAPI fface, IUnit target)
         {
             if (target.Id != fface.Target.ID)
             {

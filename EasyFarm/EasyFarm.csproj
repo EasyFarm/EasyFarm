@@ -179,6 +179,7 @@
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\AppServices.cs" />
+    <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\Persister.cs" />
     <Compile Include="Classes\JsonPersister.cs" />
     <Compile Include="Classes\PlayerMonitor.cs" />

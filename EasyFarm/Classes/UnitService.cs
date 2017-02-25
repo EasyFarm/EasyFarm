@@ -34,7 +34,8 @@ namespace EasyFarm.Classes
 
             // Create the UnitArray
             Units = Enumerable.Range(0, UnitArrayMax)
-                .Select(x => new Unit(_fface, x)).ToList();
+                .Select(x => new Unit(_fface, x))
+                .Cast<IUnit>().ToList();
         }
 
         #region Members
@@ -42,7 +43,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// The zone's unit array.
         /// </summary>
-        public static ICollection<Unit> Units;
+        public static ICollection<IUnit> Units;
 
         /// <summary>
         /// The unit array's max size: 0 - 2048
@@ -97,7 +98,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// Retrieves the list of MOBs.
         /// </summary>
-        public ICollection<Unit> MobArray
+        public ICollection<IUnit> MobArray
         {
             get
             {
@@ -108,7 +109,7 @@ namespace EasyFarm.Classes
         /// <summary>
         /// Retrieves the list of PCs
         /// </summary>
-        public ICollection<Unit> PlayerArray
+        public ICollection<IUnit> PlayerArray
         {
             get
             {

@@ -43,6 +43,10 @@
       <HintPath>$(SolutionDir)packages\CuttingEdge.Conditions.1.2.0.0\lib\NET35\CuttingEdge.Conditions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EliteMMO.API, Version=1.3.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EasyFarm\Dependencies\EliteMMO.API.dll</HintPath>
+    </Reference>
     <Reference Include="Moq, Version=4.5.21.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.5.21\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
@@ -89,9 +93,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\FakePlayer.cs" />
-    <Compile Include="Classes\FakeTimer.cs" />
-    <Compile Include="Classes\FakeMemoryAPI.cs" />
+    <Compile Include="Classes\AbstractTestFixture.cs" />
+    <Compile Include="TestTypes\FakeNavigator.cs" />
+    <Compile Include="TestTypes\FakePlayer.cs" />
+    <Compile Include="TestTypes\FakeTarget.cs" />
+    <Compile Include="TestTypes\FakeTimer.cs" />
+    <Compile Include="TestTypes\FakeMemoryAPI.cs" />
+    <Compile Include="TestTypes\FakeUnit.cs" />
+    <Compile Include="TestTypes\FakeWindower.cs" />
     <Compile Include="Classes\RangeTests.cs" />
     <Compile Include="Classes\PathRecorderTest.cs" />
     <Compile Include="Classes\ActionFilterTests.cs" />

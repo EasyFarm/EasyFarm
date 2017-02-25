@@ -64,12 +64,9 @@ namespace EasyFarm.States
         {
             // Cast only one action to prevent blocking curing. 
             var action = Config.Instance.BattleLists["Battle"].Actions
-                .FirstOrDefault(x => ActionFilters.TargetedFilter(fface, x, Target));
-
-            if (action != null)
-            {
-                _executor.UseTargetedAction(action, Target);
-            }
+                .FirstOrDefault(x => ActionFilters.TargetedFilter(fface, x, Target));        
+            if (action == null) return;
+            _executor.UseTargetedActions(new[] { action }, Target);
         }
     }
 }

@@ -50,21 +50,11 @@ namespace EasyFarm.States
             // FIXED: no longer return on not engage but don't execute 
             // these moves instead. Fixes the bot not attacking things 
             // from move than 30 yalms problem. 
-            if (fface.Player.Status.Equals(Status.Fighting))
-            {
-                // Grab the first weaponskill or null. 
-                var weaponskill = Config.Instance.BattleLists["Weaponskill"]
-                    .Actions.FirstOrDefault();
-
-                // See if they the user set a weaponskill. 
-                if (weaponskill == null) return;
-
-                // Perform the weaponskill if it is valid. 
-                if (ActionFilters.TargetedFilter(fface, weaponskill, Target))
-                {
-                    _executor.UseTargetedAction(weaponskill, Target);
-                }
-            }
+            if (!fface.Player.Status.Equals(Status.Fighting)) return;
+            var weaponskill = Config.Instance.BattleLists["Weaponskill"].Actions
+                .FirstOrDefault(x => ActionFilters.TargetedFilter(fface, x, Target));
+            if (weaponskill == null) return;
+            _executor.UseTargetedActions(new [] { weaponskill }, Target);
         }
     }
 }

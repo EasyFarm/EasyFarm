@@ -55,7 +55,7 @@ namespace EasyFarm.Classes
         /// <param name="action"></param>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public static bool TargetedFilter(IMemoryAPI fface, BattleAbility action, Unit unit)
+        public static bool TargetedFilter(IMemoryAPI fface, BattleAbility action, IUnit unit)
         {
             // Does not pass the base criteria for casting.
             if (!BuffingFilter(fface, action)) return false;
