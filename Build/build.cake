@@ -1,6 +1,7 @@
 #tool "nuget:?package=xunit.runner.console"
 #tool "nuget:?package=OpenCover"
 #tool "nuget:?package=ReportGenerator"
+#tool "nuget:?package=JetBrains.ReSharper.CommandLineTools"
 
 var target = Argument("target", "Default");
 
@@ -15,6 +16,9 @@ Task("cover")
 	.IsDependentOn("build-it")
 	.IsDependentOn("cover-it")
 	.IsDependentOn("report-it");
+
+Task("analyze")
+    .IsDependentOn("analyze-it");
 
 Task("build-it").Does(() => {
 	MSBuild("../EasyFarm.sln");
@@ -44,5 +48,14 @@ Task("cover-it").Does(() => {
 Task("report-it").Does(() => {
 	ReportGenerator("./result.xml", "./coverage");
 });
+
+Task("analyze-it").Does(() => {
+     DupFinder("../EasyFarm.sln", new DupFinderSettings {
+     ShowStats = true,
+     ShowText = true,
+     OutputFile = "./duplication.xml"
+    });
+ });
+
 
 RunTarget(target);

@@ -39,10 +39,6 @@
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CuttingEdge.Conditions, Version=1.2.0.11174, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\CuttingEdge.Conditions.1.2.0.0\lib\NET35\CuttingEdge.Conditions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="EliteMMO.API, Version=1.3.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\EasyFarm\Dependencies\EliteMMO.API.dll</HintPath>
@@ -94,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AbstractTestFixture.cs" />
+    <Compile Include="States\BattleStateTests.cs" />
     <Compile Include="TestTypes\FakeNavigator.cs" />
     <Compile Include="TestTypes\FakePlayer.cs" />
     <Compile Include="TestTypes\FakeTarget.cs" />

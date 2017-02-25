@@ -1,5 +1,4 @@
 using EasyFarm.Classes;
-using EasyFarm.Parsing;
 using MemoryAPI;
 using MemoryAPI.Tests;
 
@@ -13,6 +12,11 @@ namespace EasyFarm.Tests.Classes
             battleAbility.IsEnabled = true;
             battleAbility.Name = "valid";
             return battleAbility;
+        }
+
+        public static IUnit FindNonValidUnit()
+        {
+            return new FakeUnit();
         }
 
         public static IUnit FindUnit()

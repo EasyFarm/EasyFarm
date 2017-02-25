@@ -38,8 +38,6 @@ namespace EasyFarm.Classes
                 .Cast<IUnit>().ToList();
         }
 
-        #region Members
-
         /// <summary>
         /// The zone's unit array.
         /// </summary>
@@ -67,10 +65,6 @@ namespace EasyFarm.Classes
         /// The player's environmental data.
         /// </summary>
         private static IMemoryAPI _fface;
-
-        #endregion Members
-
-        #region Properties
 
         /// <summary>
         /// Does there exist a mob that has aggroed in general.
@@ -104,19 +98,6 @@ namespace EasyFarm.Classes
             {
                 return Units.Where(x => x.NpcType.Equals(NpcType.Mob)).ToList();
             }
-        }
-
-        /// <summary>
-        /// Retrieves the list of PCs
-        /// </summary>
-        public ICollection<IUnit> PlayerArray
-        {
-            get
-            {
-                return Units.Where(x => x.NpcType == NpcType.PC).ToList();
-            }
-        }
-
-        #endregion Properties
+        }        
     }
 }
