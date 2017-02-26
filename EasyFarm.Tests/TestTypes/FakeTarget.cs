@@ -1,6 +1,6 @@
 using MemoryAPI;
 
-namespace EasyFarm.Tests.Classes
+namespace EasyFarm.Tests.TestTypes
 {
     public class FakeTarget : ITargetTools
     {

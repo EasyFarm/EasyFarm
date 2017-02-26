@@ -26,7 +26,7 @@ namespace EasyFarm.Classes
             if (!fface.Player.Status.Equals(Status.Healing))
             {
                 fface.Windower.SendString(Constants.RestingOn);
-                Thread.Sleep(50);
+                TimeWaiter.Pause(50);
             }
         }
 
@@ -38,7 +38,7 @@ namespace EasyFarm.Classes
             if (fface.Player.Status.Equals(Status.Healing))
             {
                 fface.Windower.SendString(Constants.RestingOff);
-                Thread.Sleep(50);
+                TimeWaiter.Pause(50);
             }
         }
 
@@ -67,7 +67,7 @@ namespace EasyFarm.Classes
         public static void StopRunning(IMemoryAPI fface)
         {
             fface.Navigator.Reset();
-            Thread.Sleep(100);
+            TimeWaiter.Pause(100);
         }
 
         public static void SetTarget(IMemoryAPI fface, IUnit target)
@@ -95,7 +95,7 @@ namespace EasyFarm.Classes
                 }
 
                 fface.Windower.SendKeyPress(Keys.TAB);
-                Thread.Sleep(200);
+                TimeWaiter.Pause(200);
             }
         }
 

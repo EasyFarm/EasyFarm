@@ -2,7 +2,7 @@ using EasyFarm.Classes;
 using MemoryAPI;
 using MemoryAPI.Navigation;
 
-namespace EasyFarm.Tests.Classes
+namespace EasyFarm.Tests.TestTypes
 {
     public class FakeUnit : IUnit
     {

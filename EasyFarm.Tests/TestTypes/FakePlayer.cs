@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
+using MemoryAPI;
 using MemoryAPI.Navigation;
 
-namespace MemoryAPI.Tests
+namespace EasyFarm.Tests.TestTypes
 {
     public class FakePlayer : IPlayerTools
     {
-        private static IEnumerator<float> _castPercentExEnumerator = 
+        private static readonly IEnumerator<float> CastPercentExEnumerator = 
             CastPercentExValues()
             .GetEnumerator();
 
@@ -15,9 +14,8 @@ namespace MemoryAPI.Tests
         {
             get
             {
-                var value = _castPercentExEnumerator.Current;
-                var result = _castPercentExEnumerator.MoveNext();
-                if (!result) _castPercentExEnumerator = CastPercentExValues().GetEnumerator();
+                var value = CastPercentExEnumerator.Current;
+                CastPercentExEnumerator.MoveNext();
                 return value;
             }
         }
@@ -46,18 +44,10 @@ namespace MemoryAPI.Tests
             yield return 50;
             yield return 50;
 
-            yield return 100;
-            yield return 100;
-            yield return 100;
-
-            var values = Enumerable.Range(0, 100)
-                .Select(x => 100f)
-                .ToList();
-
-            foreach (var value in values)
+            while (true)
             {
-                yield return value;
-            }
+                yield return 100;
+            }           
         }
     }
 }

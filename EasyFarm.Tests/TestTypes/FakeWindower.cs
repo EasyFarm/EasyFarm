@@ -1,8 +1,7 @@
-using System;
 using EliteMMO.API;
 using MemoryAPI.Windower;
 
-namespace EasyFarm.Tests.Classes
+namespace EasyFarm.Tests.TestTypes
 {
     public class FakeWindower : IWindowerTools
     {

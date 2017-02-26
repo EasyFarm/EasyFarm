@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using EasyFarm.Classes;
+using EasyFarm.Parsing;
 using EasyFarm.States;
 using EasyFarm.Tests.Classes;
+using EasyFarm.Tests.TestTypes;
 using MemoryAPI;
-using MemoryAPI.Tests;
 using Xunit;
 
 namespace EasyFarm.Tests.States
@@ -126,6 +128,53 @@ namespace EasyFarm.Tests.States
                 Assert.False(result);
 
                 // Teardown
+            }
+        }
+
+        public class Run
+        {
+            [Fact]
+            public void WithValidActionAndTargetWillSendCommandToGame()
+            {
+                // Fixture setup
+                var player = FindPlayer();
+                var windower = FindWindower();
+                var navigator = FindNavigator();
+                var target = FindTarget();
+
+                var sut = new BattleState(new FakeMemoryAPI()
+                {
+                    Player = player,
+                    Windower = windower,
+                    Navigator = navigator,
+                    Target = target
+                });
+                
+                var actions = FindBattleActions();
+                actions.Clear();
+
+                var battleAbility = FindAbility();
+                actions.Add(battleAbility);
+
+                battleAbility.Name = "test";
+                battleAbility.AbilityType = AbilityType.Jobability;
+                battleAbility.Ability.TargetType = TargetType.Self;
+
+                CombatState.Target = FindUnit();
+                
+                // Exercise system
+                sut.Run();
+
+                // Verify outcome
+                Assert.Equal("/jobability \"test\" <me>", windower.LastCommand);
+
+                // Teardown
+            }
+
+            private static ObservableCollection<BattleAbility> FindBattleActions()
+            {
+                var moves = Config.Instance.BattleLists["Battle"].Actions;
+                return moves;
             }
         }
     }

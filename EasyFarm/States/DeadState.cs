@@ -31,11 +31,11 @@ namespace EasyFarm.States
 
         private void HomePointOnDeath()
         {
-            Thread.Sleep(300);
+            TimeWaiter.Pause(300);
             fface.Windower.SendKeyPress(Keys.NUMPADENTER);
-            Thread.Sleep(300);
+            TimeWaiter.Pause(300);
             fface.Windower.SendKeyPress(Keys.LEFT);
-            Thread.Sleep(300);
+            TimeWaiter.Pause(300);
             fface.Windower.SendKeyPress(Keys.NUMPADENTER);
         }
     }

@@ -1,11 +1,11 @@
 using EasyFarm.Classes;
+using EasyFarm.Tests.Classes;
 using MemoryAPI;
-using MemoryAPI.Tests;
 
-namespace EasyFarm.Tests.Classes
+namespace EasyFarm.Tests.TestTypes
 {
     public class AbstractTestFixture
-    {    
+    {
         public static BattleAbility FindAbility()
         {
             var battleAbility = new BattleAbility();

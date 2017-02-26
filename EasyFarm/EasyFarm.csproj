@@ -187,6 +187,7 @@
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Range.cs" />
     <Compile Include="Classes\Serialization.cs" />
+    <Compile Include="Classes\TimeWaiter.cs" />
     <Compile Include="Classes\XmlPersister.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
     <Compile Include="Logging\ILogger.cs" />

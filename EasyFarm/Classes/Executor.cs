@@ -59,7 +59,7 @@ namespace EasyFarm.Classes
                     action.Usages++;
                     action.LastCast = DateTime.Now.AddSeconds(action.Recast);
 
-                    Thread.Sleep(Config.Instance.GlobalCooldown);
+                    TimeWaiter.Pause(Config.Instance.GlobalCooldown);
                 }
             }
         }   
@@ -76,7 +76,7 @@ namespace EasyFarm.Classes
                 Player.SetTarget(_fface, target);
 
                 _fface.Navigator.Reset();
-                Thread.Sleep(100);
+                TimeWaiter.Pause(100);
 
                 if (ResourceHelper.IsSpell(action.Ability.AbilityType))
                 {
@@ -90,7 +90,7 @@ namespace EasyFarm.Classes
                 action.Usages++;
                 action.LastCast = DateTime.Now.AddSeconds(action.Recast);
 
-                Thread.Sleep(Config.Instance.GlobalCooldown);
+                TimeWaiter.Pause(Config.Instance.GlobalCooldown);
             }
         }
 
@@ -129,7 +129,7 @@ namespace EasyFarm.Classes
 
                 if (Math.Abs(previous - _fface.Player.CastPercentEx) > .5) return true;
                 _fface.Windower.SendString(command);
-                Thread.Sleep(500);
+                TimeWaiter.Pause(500);
             }
 
             return false;
@@ -154,7 +154,7 @@ namespace EasyFarm.Classes
 
                 prior = _fface.Player.CastPercentEx;
 
-                Thread.Sleep(100);
+                TimeWaiter.Pause(100);
             }
 
             return Math.Abs(prior - 100) < .5;
@@ -163,7 +163,7 @@ namespace EasyFarm.Classes
         private bool CastAbility(BattleAbility ability)
         {
             _fface.Windower.SendString(ability.Ability.Command);
-            Thread.Sleep(100);
+            TimeWaiter.Pause(100);
             return true;
         }
 

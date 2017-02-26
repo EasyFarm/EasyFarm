@@ -133,7 +133,7 @@ namespace EasyFarm.States
                     }
                 }
 
-                Thread.Sleep(100);
+                TimeWaiter.Pause(100);
             }
             // ReSharper disable once FunctionNeverReturns
         }

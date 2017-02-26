@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using EasyFarm.Classes;
 using MemoryAPI;
 
 namespace EasyFarm.States
@@ -8,7 +9,7 @@ namespace EasyFarm.States
     {
         public Zone Zone;
 
-        public Action ZoningAction { get; set; } = () => Thread.Sleep(500);
+        public Action ZoningAction { get; set; } = () => TimeWaiter.Pause(500);
 
         public ZoneState(IMemoryAPI fface) : base(fface)
         {

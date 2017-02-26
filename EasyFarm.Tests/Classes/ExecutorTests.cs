@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Xunit;
 using EasyFarm.Classes;
 using EasyFarm.Parsing;
-using MemoryAPI.Tests;
+using EasyFarm.Tests.TestTypes;
 
 namespace EasyFarm.Tests.Classes
 {
