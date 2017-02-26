@@ -61,6 +61,44 @@ namespace EasyFarm.Tests.ViewModels
         }
 
         [Fact]
+        public void DeleteCommandWithNonValuesDoesNothing()
+        {
+            // Fixture setup
+            var sut = new IgnoredViewModel
+            {
+                Value = "test",
+                Values = new ObservableCollection<string>()
+            };
+
+            // Exercise system
+            sut.DeleteCommand.Execute(null);
+
+            // Verify outcome
+            Assert.Empty(sut.Values);
+
+            // Teardown
+        }
+
+        [Fact]
+        public void AddCommandWithAlreadyExistingValueDoesNothing()
+        {
+            // Fixture setup
+            var sut = new IgnoredViewModel
+            {
+                Value = "test",
+                Values = new ObservableCollection<string>() { "test" }
+            };
+
+            // Exercise system
+            sut.AddCommand.Execute(null);
+
+            // Verify outcome
+            Assert.Contains("test", sut.Values);
+
+            // Teardown
+        }
+
+        [Fact]
         public void ClearCommandWithValuesClearsThem()
         {
             // Fixture setup
