@@ -1,5 +1,5 @@
 using EasyFarm.Classes;
-using EasyFarm.Tests.Classes;
+using EasyFarm.Parsing;
 using MemoryAPI;
 
 namespace EasyFarm.Tests.TestTypes

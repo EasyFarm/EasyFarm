@@ -6,6 +6,7 @@ namespace EasyFarm.Tests.TestTypes
     public class FakeNavigator : INavigatorTools
     {
         public double DistanceTolerance { get; set; }
+        public bool ResetWasCalled { get; set; }
 
         public void FaceHeading(Position position)
         {            
@@ -20,7 +21,8 @@ namespace EasyFarm.Tests.TestTypes
         }
 
         public void Reset()
-        {            
+        {
+            ResetWasCalled = true;
         }
     }
 }
