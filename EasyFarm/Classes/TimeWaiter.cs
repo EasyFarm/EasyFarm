@@ -11,7 +11,7 @@ namespace EasyFarm.Classes
             if (IsEnabled)
             {
                 Thread.Sleep(milliseconds);
-            }            
+            }
         }
     }
 }

@@ -16,14 +16,11 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System;
-
 namespace EasyFarm.Parsing
 {
     /// <summary>
     ///     Represents the command used to trigger the action.
     /// </summary>
-    [Flags]
     public enum AbilityType
     {
         Unknown,

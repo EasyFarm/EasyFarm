@@ -159,24 +159,5 @@ namespace EasyFarm.Parsing
         ///     String representation of the target type.
         /// </summary>
         public string Targets { get; set; }
-
-        /// <summary>
-        ///     Indicates whether we created a valid ability or not.
-        /// </summary>
-        public bool IsValidName
-        {
-            get { return !string.IsNullOrEmpty(English); }
-        }
-
-        public string RangedCommand => Prefix + " " + Postfix;
-
-        public string ActionCommand => Prefix + " \"" + English + "\" " + Postfix;
-
-        public string Command => AbilityType.HasFlag(AbilityType.Range) ? RangedCommand : ActionCommand;
-
-        public override string ToString()
-        {
-            return Command;
-        }
     }
 }

@@ -206,12 +206,13 @@ namespace EasyFarm.Classes
             set
             {
                 SetProperty(ref _abilityType, value);
+                Ability.AbilityType = value;
 
                 var prefix = CommandMapper.ContainsKey(value)
                     ? CommandMapper[value]
                     : string.Empty;
 
-                Ability.Prefix = prefix;
+                Ability.Prefix = prefix;                
             }
         }
 
@@ -373,7 +374,21 @@ namespace EasyFarm.Classes
         {
             get { return _usages; }
             set { SetProperty(ref _usages, value); }
-        }        
+        }
+
+        public string Command
+        {
+            get
+            {
+                if (AbilityType == AbilityType.Range)
+                {
+                    return Ability.Prefix + " " + Ability.Postfix;
+                }
+
+                var commandName = Name.Contains(" ") ? $"\"{Name}\"" : Name;
+                return $@"{Ability.Prefix} {commandName} {Ability.Postfix}";
+            }
+        }
 
         /// <summary>
         ///     Sets the ability field.

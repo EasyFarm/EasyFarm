@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using EasyFarm.Classes;
 using EasyFarm.Parsing;
@@ -158,22 +157,29 @@ namespace EasyFarm.Tests.States
 
         public class Run
         {
-            [Fact]
-            public void WithValidActionWillSendCommand()
+            [Theory]
+            [InlineData(AbilityType.Jobability, TargetType.Self, "test", "/jobability test <me>")]
+            [InlineData(AbilityType.Range, TargetType.Enemy, "Ranged", "/range <t>")]
+            [InlineData(AbilityType.Magic, TargetType.Self, "ケアルIII", "/magic ケアルIII <me>")]
+            [InlineData(AbilityType.Magic, TargetType.Self, "Cure III", "/magic \"Cure III\" <me>")]
+            public void WithValidActionWillSendCommand(
+                AbilityType abilityType, 
+                TargetType targetType,
+                string actionName,
+                string expectedCommand)
             {
-                // Fixture setup
                 var windower = FindWindower();
                 var sut = CreateSut(windower);
                 var actions = FindBattleActions();
 
-                var ability = FindJobAbility("test");
+                var ability = FindAction(abilityType, targetType, actionName);
                 actions.Add(ability);
 
                 // Exercise system
                 sut.Run();
 
                 // Verify outcome
-                Assert.Equal("/jobability \"test\" <me>", windower.LastCommand);
+                Assert.Equal(expectedCommand, windower.LastCommand);
 
                 // Teardown
             }
@@ -197,6 +203,18 @@ namespace EasyFarm.Tests.States
                 Assert.Null(windower.LastCommand);
             }
 
+            private static BattleAbility FindAction(
+                AbilityType abilityType, 
+                TargetType targetType, 
+                string actionName)
+            {
+                var battleAbility = FindAbility();
+                battleAbility.Name = actionName;
+                battleAbility.AbilityType = abilityType;
+                battleAbility.Ability.TargetType = targetType;
+                return battleAbility;
+            }
+
             private static BattleAbility FindJobAbility(string actionName)
             {
                 var battleAbility = FindAbility();
@@ -211,13 +229,15 @@ namespace EasyFarm.Tests.States
                 var player = FindPlayer();
                 var navigator = FindNavigator();
                 var target = FindTarget();
+                var timer = FindTimer();
 
                 var sut = new BattleState(new FakeMemoryAPI()
                 {
                     Player = player,
                     Windower = windower,
                     Navigator = navigator,
-                    Target = target
+                    Target = target,
+                    Timer = timer
                 });
 
                 CombatState.Target = FindUnit();
