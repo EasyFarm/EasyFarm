@@ -4,7 +4,7 @@ namespace EasyFarm.Classes
 {
     public class TimeWaiter
     {
-        public static bool IsEnabled { get; set; }
+        public static bool IsEnabled { get; set; } = true;
 
         public static void Pause(int milliseconds)
         {

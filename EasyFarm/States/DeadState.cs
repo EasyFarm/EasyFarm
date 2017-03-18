@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using EasyFarm.Classes;
+﻿using EasyFarm.Classes;
 using EliteMMO.API;
 using MemoryAPI;
 
@@ -31,11 +30,11 @@ namespace EasyFarm.States
 
         private void HomePointOnDeath()
         {
-            TimeWaiter.Pause(300);
+            TimeWaiter.Pause(2000);
             fface.Windower.SendKeyPress(Keys.NUMPADENTER);
-            TimeWaiter.Pause(300);
+            TimeWaiter.Pause(1000);
             fface.Windower.SendKeyPress(Keys.LEFT);
-            TimeWaiter.Pause(300);
+            TimeWaiter.Pause(1000);
             fface.Windower.SendKeyPress(Keys.NUMPADENTER);
         }
     }

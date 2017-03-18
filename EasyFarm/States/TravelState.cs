@@ -31,7 +31,7 @@ namespace EasyFarm.States
         public TravelState(IMemoryAPI fface) : base(fface) { }
 
         public override bool Check()
-        {            
+        {
             // Waypoint list is empty.
             if (!Route.HasWaypoints) return false;
 
@@ -57,13 +57,19 @@ namespace EasyFarm.States
                 return false;
 
             return true;
-        }        
+        }
 
         public override void Run()
-        {            
+        {
             fface.Navigator.DistanceTolerance = 1;
+
             var nextPosition = Route.GetNextPosition(fface.Player.Position);
-            fface.Navigator.GotoWaypoint(nextPosition, Config.Instance.IsObjectAvoidanceEnabled);            
+            var shouldKeepRunningToNextWaypoint = Config.Instance.Route.Waypoints.Count != 1;
+
+            fface.Navigator.GotoWaypoint(
+                nextPosition, 
+                Config.Instance.IsObjectAvoidanceEnabled, 
+                shouldKeepRunningToNextWaypoint);
         }
 
         public override void Exit()

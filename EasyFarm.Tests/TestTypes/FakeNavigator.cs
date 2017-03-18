@@ -12,7 +12,7 @@ namespace EasyFarm.Tests.TestTypes
         {            
         }
 
-        public void GotoWaypoint(Position position, bool useObjectAvoidance)
+        public void GotoWaypoint(Position position, bool useObjectAvoidance, bool keepRunning)
         {            
         }
 

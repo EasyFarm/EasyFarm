@@ -28,15 +28,21 @@ namespace EasyFarm.Classes
     /// </summary>
     public class UnitService
     {
+        private static bool _isInitialized;
+
         public UnitService(IMemoryAPI fface)
         {
             _fface = fface;
+
+            if (_isInitialized) return;
 
             // Create the UnitArray
             Units = Enumerable.Range(0, UnitArrayMax)
                 .Select(x => new Unit(_fface, x))
                 .Cast<IUnit>().ToList();
-        }
+
+            _isInitialized = true;
+        }        
 
         /// <summary>
         /// The zone's unit array.
