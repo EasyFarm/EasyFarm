@@ -37,7 +37,7 @@ namespace EasyFarm.Classes
 
                 _movementTracker.RunComponent();
 
-                Thread.Sleep(100);
+                TimeWaiter.Pause(100);
             }
         }
     }

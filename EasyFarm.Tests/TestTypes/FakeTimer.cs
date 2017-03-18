@@ -1,6 +1,6 @@
 using MemoryAPI;
 
-namespace MemoryAPI.Tests
+namespace EasyFarm.Tests.TestTypes
 {
     public class FakeTimer : ITimerTools
     {

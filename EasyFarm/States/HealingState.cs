@@ -57,24 +57,13 @@ namespace EasyFarm.States
         public override void Run()
         {
             // Get the list of healing abilities that can be used.
-            var usableHealingMoves = Config.Instance.BattleLists["Healing"].Actions
+            var healingMoves = Config.Instance.BattleLists["Healing"].Actions
                 .Where(x => ActionFilters.BuffingFilter(fface, x))
                 .ToList();
 
-            // Check if we have any moves to use. 
-            if (usableHealingMoves.Count > 0)
-            {
-                // Check for actions available
-                var action = usableHealingMoves.FirstOrDefault();
-                if (action == null)
-                {
-                    return;
-                }
-
-                // Create an ability from the name and launch the move. 
-                var healingMove = App.AbilityService.CreateAbility(action.Name);
-                _executor.UseBuffingAction(healingMove);
-            }
+            if (healingMoves.Count <= 0) return;
+            var healingMove = healingMoves.First();
+            _executor.UseBuffingActions(new[] { healingMove });
         }
     }
 }

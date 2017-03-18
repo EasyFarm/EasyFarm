@@ -1,6 +1,7 @@
+using MemoryAPI;
 using MemoryAPI.Windower;
 
-namespace MemoryAPI.Tests
+namespace EasyFarm.Tests.TestTypes
 {
     public class FakeMemoryAPI : IMemoryAPI
     {

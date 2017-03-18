@@ -28,21 +28,26 @@ namespace EasyFarm.Classes
     /// </summary>
     public class UnitService
     {
+        private static bool _isInitialized;
+
         public UnitService(IMemoryAPI fface)
         {
             _fface = fface;
 
+            if (_isInitialized) return;
+
             // Create the UnitArray
             Units = Enumerable.Range(0, UnitArrayMax)
-                .Select(x => new Unit(_fface, x)).ToList();
-        }
+                .Select(x => new Unit(_fface, x))
+                .Cast<IUnit>().ToList();
 
-        #region Members
+            _isInitialized = true;
+        }        
 
         /// <summary>
         /// The zone's unit array.
         /// </summary>
-        public static ICollection<Unit> Units;
+        public static ICollection<IUnit> Units;
 
         /// <summary>
         /// The unit array's max size: 0 - 2048
@@ -66,10 +71,6 @@ namespace EasyFarm.Classes
         /// The player's environmental data.
         /// </summary>
         private static IMemoryAPI _fface;
-
-        #endregion Members
-
-        #region Properties
 
         /// <summary>
         /// Does there exist a mob that has aggroed in general.
@@ -97,25 +98,12 @@ namespace EasyFarm.Classes
         /// <summary>
         /// Retrieves the list of MOBs.
         /// </summary>
-        public ICollection<Unit> MobArray
+        public ICollection<IUnit> MobArray
         {
             get
             {
                 return Units.Where(x => x.NpcType.Equals(NpcType.Mob)).ToList();
             }
-        }
-
-        /// <summary>
-        /// Retrieves the list of PCs
-        /// </summary>
-        public ICollection<Unit> PlayerArray
-        {
-            get
-            {
-                return Units.Where(x => x.NpcType == NpcType.PC).ToList();
-            }
-        }
-
-        #endregion Properties
+        }        
     }
 }

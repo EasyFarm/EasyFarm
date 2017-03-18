@@ -179,6 +179,7 @@
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\AppServices.cs" />
+    <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\Persister.cs" />
     <Compile Include="Classes\JsonPersister.cs" />
     <Compile Include="Classes\PlayerMonitor.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Range.cs" />
     <Compile Include="Classes\Serialization.cs" />
+    <Compile Include="Classes\TimeWaiter.cs" />
     <Compile Include="Classes\XmlPersister.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
     <Compile Include="Logging\ILogger.cs" />

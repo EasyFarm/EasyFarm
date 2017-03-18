@@ -34,12 +34,14 @@ namespace EasyFarm.States
 {
     public class FiniteStateMachine
     {
+        private readonly IMemoryAPI _fface;
         private readonly TypeCache<bool> _cache = new TypeCache<bool>();
         private CancellationTokenSource _cancellation = new CancellationTokenSource();
         private readonly List<IState> _states = new List<IState>();
 
         public FiniteStateMachine(IMemoryAPI fface)
         {
+            _fface = fface;
             //Create the states
             AddState(new DeadState(fface) { Priority = 6 });
             AddState(new ZoneState(fface) { Priority = 6 });
@@ -101,6 +103,10 @@ namespace EasyFarm.States
                     Logger.Log(new LogEntry(LoggingEventType.Error, "FSM error", ex));
                     LogViewModel.Write("An error has occurred: please check easyfarm.log for more information");
                 }
+                finally
+                {
+                    _fface.Navigator.Reset();
+                }
             }, _cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
 
@@ -133,7 +139,7 @@ namespace EasyFarm.States
                     }
                 }
 
-                Thread.Sleep(100);
+                TimeWaiter.Pause(100);
             }
             // ReSharper disable once FunctionNeverReturns
         }

@@ -28,21 +28,23 @@ namespace EasyFarm.States
     public class BattleState : CombatState
     {
         private readonly Executor _executor;
+        private RestState _restState;
 
         public BattleState(IMemoryAPI fface) : base(fface)
         {
             _executor = new Executor(fface);
+            _restState = new RestState(fface);
         }
 
         public override bool Check()
         {
-            if (new RestState(fface).Check()) return false;
+            if (_restState.Check()) return false;
 
             // Mobs has not been pulled if pulling moves are available. 
             if (!IsFighting) return false;
 
             // target null or dead. 
-            if (!UnitFilters.MobFilter(fface, Target)) return false;
+            if (!UnitFilters.MobFilter(fface, Target)) return false;            
 
             // Engage is enabled and we are not engaged. We cannot proceed. 
             if (Config.Instance.IsEngageEnabled)
@@ -64,12 +66,9 @@ namespace EasyFarm.States
         {
             // Cast only one action to prevent blocking curing. 
             var action = Config.Instance.BattleLists["Battle"].Actions
-                .FirstOrDefault(x => ActionFilters.TargetedFilter(fface, x, Target));
-
-            if (action != null)
-            {
-                _executor.UseTargetedAction(action, Target);
-            }
+                .FirstOrDefault(x => ActionFilters.TargetedFilter(fface, x, Target));        
+            if (action == null) return;
+            _executor.UseTargetedActions(new[] { action }, Target);
         }
     }
 }

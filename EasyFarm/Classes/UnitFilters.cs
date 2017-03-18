@@ -39,7 +39,7 @@ namespace EasyFarm.Classes
         /// <param name="fface"></param>
         /// <param name="mob"></param>
         /// <returns></returns>
-        public static bool MobFilter(IMemoryAPI fface, Unit mob)
+        public static bool MobFilter(IMemoryAPI fface, IUnit mob)
         {
             // Function to use to filter surrounding mobs by. General Mob Filtering Criteria
             if (fface == null) return false;
@@ -112,7 +112,7 @@ namespace EasyFarm.Classes
         /// <param name="mob"></param>
         /// <param name="waypoint"></param>
         /// <returns></returns>
-        private static double Distance(Unit mob, Position waypoint)
+        private static double Distance(IUnit mob, Position waypoint)
         {
             return Math.Sqrt(Math.Pow(waypoint.X - mob.PosX, 2) + Math.Pow(waypoint.Z - mob.PosZ, 2));
         }

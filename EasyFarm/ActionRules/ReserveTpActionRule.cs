@@ -9,7 +9,7 @@ namespace EasyFarm.ActionRules
             var action = context.BattleAbility;
             var memory = context.MemoryAPI;
             var tpReserve = new Range(action.TPReserveLow, action.TPReserveHigh);
-            return tpReserve.InRange(memory.Player.TPCurrent) || tpReserve.NotSet();
+            return tpReserve.NotSet() || tpReserve.InRange(memory.Player.TPCurrent);
         }
     }
 }

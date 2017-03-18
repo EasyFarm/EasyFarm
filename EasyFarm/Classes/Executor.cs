@@ -35,21 +35,7 @@ namespace EasyFarm.Classes
         public Executor(IMemoryAPI fface)
         {
             _fface = fface;
-        }
-         
-        public void UseBuffingAction(Ability action)
-        {
-            if (action == null) throw new ArgumentNullException(nameof(action));
-
-            var baction = new BattleAbility
-            {
-                Name = action.English,
-                IsEnabled = true,
-                Ability = action
-            };
-
-            UseBuffingActions(new List<BattleAbility> { baction });
-        }
+        }                
 
         public void UseBuffingActions(IEnumerable<BattleAbility> actions)
         {
@@ -73,19 +59,12 @@ namespace EasyFarm.Classes
                     action.Usages++;
                     action.LastCast = DateTime.Now.AddSeconds(action.Recast);
 
-                    Thread.Sleep(Config.Instance.GlobalCooldown);
+                    TimeWaiter.Pause(Config.Instance.GlobalCooldown);
                 }
             }
         }   
-    
-        public void UseTargetedAction(BattleAbility action, Unit target)
-        {
-            if (target == null) throw new ArgumentNullException(nameof(target));
-            if (action == null) throw new ArgumentNullException(nameof(action));
-            UseTargetedActions(new List<BattleAbility> { action }, target);
-        }
 
-        public void UseTargetedActions(IEnumerable<BattleAbility> actions, Unit target)
+        public void UseTargetedActions(IEnumerable<BattleAbility> actions, IUnit target)
         {
             if (actions == null) throw new ArgumentNullException(nameof(actions));
             if (target == null) throw new ArgumentNullException(nameof(target));
@@ -97,7 +76,7 @@ namespace EasyFarm.Classes
                 Player.SetTarget(_fface, target);
 
                 _fface.Navigator.Reset();
-                Thread.Sleep(100);
+                TimeWaiter.Pause(100);
 
                 if (ResourceHelper.IsSpell(action.Ability.AbilityType))
                 {
@@ -111,11 +90,11 @@ namespace EasyFarm.Classes
                 action.Usages++;
                 action.LastCast = DateTime.Now.AddSeconds(action.Recast);
 
-                Thread.Sleep(Config.Instance.GlobalCooldown);
+                TimeWaiter.Pause(Config.Instance.GlobalCooldown);
             }
         }
 
-        private void MoveIntoActionRange(Unit target, BattleAbility action)
+        private void MoveIntoActionRange(IUnit target, BattleAbility action)
         {
             if (target.Distance > action.Distance)
             {
@@ -123,12 +102,6 @@ namespace EasyFarm.Classes
                 _fface.Navigator.GotoNPC(target.Id, Config.Instance.IsObjectAvoidanceEnabled);
             }
         }        
-
-        private bool CastSpell(Ability ability)
-        {
-            if (EnsureCast(ability.Command)) return MonitorCast();
-            return false;
-        }
 
         private bool EnsureCast(string command)
         {            
@@ -156,7 +129,7 @@ namespace EasyFarm.Classes
 
                 if (Math.Abs(previous - _fface.Player.CastPercentEx) > .5) return true;
                 _fface.Windower.SendString(command);
-                Thread.Sleep(500);
+                TimeWaiter.Pause(500);
             }
 
             return false;
@@ -181,27 +154,23 @@ namespace EasyFarm.Classes
 
                 prior = _fface.Player.CastPercentEx;
 
-                Thread.Sleep(100);
+                TimeWaiter.Pause(100);
             }
 
             return Math.Abs(prior - 100) < .5;
         }
 
-        private bool CastAbility(Ability ability)
-        {
-            _fface.Windower.SendString(ability.Command);
-            Thread.Sleep(100);
-            return true;
-        }
-
         private bool CastAbility(BattleAbility ability)
         {
-            return CastAbility(ability.Ability);
+            _fface.Windower.SendString(ability.Ability.Command);
+            TimeWaiter.Pause(100);
+            return true;
         }
 
         private bool CastSpell(BattleAbility ability)
         {
-            return CastSpell(ability.Ability);
+            if (EnsureCast(ability.Ability.Command)) return MonitorCast();
+            return false;
         }
     }
 }

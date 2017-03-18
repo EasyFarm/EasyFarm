@@ -68,15 +68,14 @@ namespace MemoryAPI
                     Math.Pow(position.Z - player.Z, 2));
             }
 
-            public void GotoWaypoint(Position position, bool useObjectAvoidance)
+            public void GotoWaypoint(Position position, bool useObjectAvoidance, bool keepRunning)
             {
                 MoveForwardTowardsPosition(position, useObjectAvoidance);
-                KeepRunningWithKeyboard();
-                FaceHeading(position);
+                if (keepRunning) KeepRunningWithKeyboard();
             }
 
             public void GotoNPC(int ID, bool useObjectAvoidance)
-            {                
+            {
                 var entity = api.Entity.GetEntity(ID);
                 var position = Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H);
 

@@ -26,7 +26,7 @@ namespace EasyFarm.Classes
             if (!fface.Player.Status.Equals(Status.Healing))
             {
                 fface.Windower.SendString(Constants.RestingOn);
-                Thread.Sleep(50);
+                TimeWaiter.Pause(50);
             }
         }
 
@@ -38,7 +38,7 @@ namespace EasyFarm.Classes
             if (fface.Player.Status.Equals(Status.Healing))
             {
                 fface.Windower.SendString(Constants.RestingOff);
-                Thread.Sleep(50);
+                TimeWaiter.Pause(50);
             }
         }
 
@@ -67,10 +67,10 @@ namespace EasyFarm.Classes
         public static void StopRunning(IMemoryAPI fface)
         {
             fface.Navigator.Reset();
-            Thread.Sleep(100);
+            TimeWaiter.Pause(100);
         }
 
-        public static void SetTarget(IMemoryAPI fface, Unit target)
+        public static void SetTarget(IMemoryAPI fface, IUnit target)
         {
             if (!Config.Instance.EnableTabTargeting)
             {
@@ -82,7 +82,7 @@ namespace EasyFarm.Classes
             }
         }
 
-        private static void SetTargetByTabbing(IMemoryAPI fface, Unit target)
+        private static void SetTargetByTabbing(IMemoryAPI fface, IUnit target)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -95,11 +95,11 @@ namespace EasyFarm.Classes
                 }
 
                 fface.Windower.SendKeyPress(Keys.TAB);
-                Thread.Sleep(200);
+                TimeWaiter.Pause(200);
             }
         }
 
-        private static void SetTargetUsingMemory(IMemoryAPI fface, Unit target)
+        private static void SetTargetUsingMemory(IMemoryAPI fface, IUnit target)
         {
             if (target.Id != fface.Target.ID)
             {

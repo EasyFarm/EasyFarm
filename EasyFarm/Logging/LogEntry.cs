@@ -19,10 +19,12 @@ namespace EasyFarm.Logging
         {
             if (Exception == null) return this;
 
+            var exceptionMessage = Exception.ToString();
+
             var extendedMessage = string.Join(
                 Environment.NewLine,
                 Message,
-                Exception?.ToString());
+                exceptionMessage);
 
             return new LogEntry(Severity, extendedMessage, Exception);
         }

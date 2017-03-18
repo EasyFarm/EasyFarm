@@ -1,6 +1,6 @@
 ﻿using EasyFarm.States;
+using EasyFarm.Tests.TestTypes;
 using MemoryAPI;
-using MemoryAPI.Tests;
 using Moq;
 using Xunit;
 

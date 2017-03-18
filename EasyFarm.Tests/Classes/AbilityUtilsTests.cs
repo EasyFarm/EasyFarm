@@ -1,7 +1,7 @@
 using MemoryAPI;
 using EasyFarm.Classes;
 using EasyFarm.Parsing;
-using MemoryAPI.Tests;
+using EasyFarm.Tests.TestTypes;
 using Xunit;
 
 namespace EasyFarm.Tests.Classes

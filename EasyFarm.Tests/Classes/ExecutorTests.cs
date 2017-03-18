@@ -1,41 +1,99 @@
 using System;
+using System.Collections.Generic;
 using Xunit;
 using EasyFarm.Classes;
-using MemoryAPI.Tests;
+using EasyFarm.Parsing;
+using EasyFarm.Tests.TestTypes;
 
 namespace EasyFarm.Tests.Classes
 {
-    public class ExecutorTests
+    public class ExecutorTests : AbstractTestFixture
     {
-        private static readonly FakeMemoryAPI Memory = new FakeMemoryAPI();
-        private static readonly FakePlayer Player = new FakePlayer();
-
-        public class UseBuffingAction
+        [Fact]
+        public void UseBuffingActionsWillUseAbilityNameToCastCommand()
         {
-            [Fact]
-            public void UseBuffingActionWithNullAbilityThrows()
-            {
-                var sut = CreateSut();
-                var result = Record.Exception(() => sut.UseBuffingAction(null));
-                Assert.IsType<ArgumentNullException>(result);
-            }
+            // Fixture setup
+            var battleAbility = FindAbility();
+            battleAbility.Name = "test";
+            battleAbility.AbilityType = AbilityType.Magic;
+
+            var windower = FindWindower();
+            var player = FindPlayer();
+
+            var sut = CreateSut(windower, player);
+
+            // Exercise system
+            sut.UseBuffingActions(new List<BattleAbility> { battleAbility });
+
+            // Verify outcome
+            Assert.Equal("/magic \"test\" <t>", windower.LastCommand);
+
+            // Teardown
         }
 
-        public class UseBuffingActions
+        [Fact]
+        public void UsedTargetedActionsWillUseAbilityNameToCastCommand()
         {
-            [Fact]
-            public void UseBuffingActionsWithNullActionListThrows()
-            {
-                var sut = CreateSut();
-                var result = Record.Exception(() => sut.UseBuffingActions(null));
-                Assert.IsType<ArgumentNullException>(result);
-            }
+            // Fixture setup
+            var battleAbility = FindAbility();
+            battleAbility.Name = "test";
+            battleAbility.AbilityType = AbilityType.Magic;
+
+            var windower = FindWindower();
+            var player = FindPlayer();
+            var navigator = FindNavigator();
+            var target = FindTarget();
+
+            var unit = FindUnit();
+            var sut = CreateSut(windower, player, navigator, target);
+
+            // Exercise system
+            sut.UseTargetedActions(new List<BattleAbility> { battleAbility }, unit);
+
+            // Verify outcome
+            Assert.Equal("/magic \"test\" <t>", windower.LastCommand);
+
+            // Teardown
         }        
 
-        private static Executor CreateSut()
+        [Fact]
+        public void UseBuffingActionsWithNullActionListThrows()
         {
-            Memory.Player = Player;
-            var sut = new Executor(Memory);
+            var sut = CreateSut();
+            var result = Record.Exception(() => sut.UseBuffingActions(null));
+            Assert.IsType<ArgumentNullException>(result);
+        }
+
+        private Executor CreateSut()
+        {
+            var memory = new FakeMemoryAPI();
+            var sut = new Executor(memory);
+            return sut;
+        }
+
+        private Executor CreateSut(FakeWindower windower, FakePlayer player)
+        {
+            var memory = new FakeMemoryAPI();
+            memory.Player = player;
+            memory.Windower = windower;
+
+            var sut = new Executor(memory);
+            return sut;
+        }
+
+        private Executor CreateSut(
+            FakeWindower windower, 
+            FakePlayer player, 
+            FakeNavigator navigator, 
+            FakeTarget target)
+        {
+            var memory = new FakeMemoryAPI();
+            memory.Player = player;
+            memory.Windower = windower;
+            memory.Navigator = navigator;
+            memory.Target = target;
+
+            var sut = new Executor(memory);
             return sut;
         }
     }

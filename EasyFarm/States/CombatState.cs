@@ -43,6 +43,6 @@ namespace EasyFarm.States
         /// <summary>
         ///     Who we are trying to kill currently
         /// </summary>
-        public static Unit Target { get; set; }        
+        public static IUnit Target { get; set; }        
     }
 }

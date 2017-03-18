@@ -23,10 +23,8 @@ using MemoryAPI.Navigation;
 
 namespace EasyFarm.Classes
 {
-    public class Unit
+    public class Unit : IUnit
     {
-        #region Constructors
-
         public Unit(IMemoryAPI fface, int id)
         {
             // Set this unit's session data. 
@@ -39,20 +37,6 @@ namespace EasyFarm.Classes
             _npc = _fface.NPC;
         }
 
-        #endregion
-
-        #region Methods
-
-        // Make it default to printing units name
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        #endregion
-
-        #region Members
-
         /// <summary>
         ///     Holds all the game's data.
         /// </summary>
@@ -62,10 +46,6 @@ namespace EasyFarm.Classes
         ///     Holds the data about units.
         /// </summary>
         private readonly INPCTools _npc;
-
-        #endregion
-
-        #region Player Data
 
         /// <summary>
         ///     The unit's id.
@@ -93,7 +73,6 @@ namespace EasyFarm.Classes
         /// </summary>
         public Position Position
         {
-
             get
             {
                 var position = _npc.GetPosition(Id);
@@ -244,7 +223,5 @@ namespace EasyFarm.Classes
                 return playerIds.Any(x => _npc.PetID(x) == Id);
             }
         }
-
-        #endregion
     }
 }

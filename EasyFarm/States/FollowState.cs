@@ -75,7 +75,7 @@ namespace EasyFarm.States
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        private Unit GetPlayerByName(string name)
+        private IUnit GetPlayerByName(string name)
         {
             return UnitService.Units.FirstOrDefault(x => x.Name == name);
         }
