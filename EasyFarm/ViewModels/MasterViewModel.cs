@@ -157,9 +157,10 @@ namespace EasyFarm.ViewModels
         private void StartEngine()
         {
             LogViewModel.Write("Bot now running");
-            AppServices.InformUser("Program running.");
+            AppServices.InformUser("Program running.");            
+            var isStarted = GameEngine.Start();
+            if (!isStarted) return;
             StartPauseHeader = "P_ause";
-            GameEngine.Start();
         }
 
         private void StopEngine()
