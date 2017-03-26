@@ -33,13 +33,10 @@ namespace EasyFarm.States
         public override bool Check()
         {
             // Waypoint list is empty.
-            if (!Route.HasWaypoints) return false;
+            if (!Route.IsPathSet) return false;
 
             // Route belongs to a different zone.
-            if (Route.Zone != fface.Player.Zone) return false;
-
-            // Route is out of walking distance. 
-            if (!Route.IsWithinDistance(fface.Player.Position, 20)) return false;
+            if (Route.Zone != fface.Player.Zone) return false;            
 
             // Has valid target to fight.
             if (UnitFilters.MobFilter(fface, CombatState.Target)) return false;

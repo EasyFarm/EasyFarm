@@ -54,11 +54,21 @@ namespace EasyFarm.States
         /// <summary>
         /// Start the bot up
         /// </summary>
-        public void Start()
-        {            
-            IsWorking = true;
-            _stateMachine.Start();
-            _playerMonitor.Start();
+        public bool Start()
+        {
+            var route = Config.Instance.Route;
+            var isPathReachable = !route.IsPathSet || route.IsPathUnreachable(_fface);
+
+            if (isPathReachable)
+            {
+                IsWorking = true;
+                _stateMachine.Start();
+                _playerMonitor.Start();
+                return true;
+            }
+
+            AppServices.InformUser("The route is not reachable");
+            return false;
         }
 
         /// <summary>

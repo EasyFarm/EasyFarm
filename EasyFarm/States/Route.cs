@@ -16,7 +16,7 @@ namespace EasyFarm.States
 
         private List<Position> _positions = new List<Position>();
 
-        public bool HasWaypoints => Waypoints.Any();
+        public bool IsPathSet => Waypoints.Any();
 
         public Position GetNextPosition(Position playerPosition)
         {
@@ -63,6 +63,11 @@ namespace EasyFarm.States
         public bool IsWithinDistance(Position position, double distance)
         {
             return Waypoints.Any(x => Distance(position, x) <= distance);
+        }
+
+        public bool IsPathUnreachable(IMemoryAPI fface)
+        {
+            return Zone == fface.Player.Zone && IsWithinDistance(fface.Player.Position, 20);
         }
     }
 }
