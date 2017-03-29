@@ -19,14 +19,15 @@ namespace EasyFarm.Tests.Classes
 
             var windower = FindWindower();
             var player = FindPlayer();
+            var timer = FindTimer();
 
-            var sut = CreateSut(windower, player);
+            var sut = CreateSut(windower, player, timer);
 
             // Exercise system
             sut.UseBuffingActions(new List<BattleAbility> { battleAbility });
 
             // Verify outcome
-            Assert.Equal("/magic \"test\" <t>", windower.LastCommand);
+            Assert.Equal("/magic test <t>", windower.LastCommand);
 
             // Teardown
         }
@@ -51,7 +52,7 @@ namespace EasyFarm.Tests.Classes
             sut.UseTargetedActions(new List<BattleAbility> { battleAbility }, unit);
 
             // Verify outcome
-            Assert.Equal("/magic \"test\" <t>", windower.LastCommand);
+            Assert.Equal("/magic test <t>", windower.LastCommand);
 
             // Teardown
         }        
@@ -71,11 +72,15 @@ namespace EasyFarm.Tests.Classes
             return sut;
         }
 
-        private Executor CreateSut(FakeWindower windower, FakePlayer player)
+        private Executor CreateSut(
+            FakeWindower windower, 
+            FakePlayer player, 
+            FakeTimer timer)
         {
             var memory = new FakeMemoryAPI();
             memory.Player = player;
             memory.Windower = windower;
+            memory.Timer = timer;
 
             var sut = new Executor(memory);
             return sut;
