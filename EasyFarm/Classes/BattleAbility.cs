@@ -443,6 +443,11 @@ namespace EasyFarm.Classes
             }
 
             return moves.FirstOrDefault();
-        }    
+        }
+
+        public override string ToString()
+        {
+            return Command;
+        }
     }
 }
