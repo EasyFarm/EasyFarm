@@ -20,9 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using EasyFarm.Parsing;
-using EliteMMO.API;
 using MemoryAPI;
 using StatusEffect = MemoryAPI.StatusEffect;
 
@@ -162,14 +160,14 @@ namespace EasyFarm.Classes
 
         private bool CastAbility(BattleAbility ability)
         {
-            _fface.Windower.SendString(ability.Ability.Command);
+            _fface.Windower.SendString(ability.Command);
             TimeWaiter.Pause(100);
             return true;
         }
 
         private bool CastSpell(BattleAbility ability)
         {
-            if (EnsureCast(ability.Ability.Command)) return MonitorCast();
+            if (EnsureCast(ability.Command)) return MonitorCast();
             return false;
         }
     }

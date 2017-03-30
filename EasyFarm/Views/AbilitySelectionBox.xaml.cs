@@ -16,7 +16,9 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
+using System.Linq;
 using System.Windows;
+using EasyFarm.Classes;
 using EasyFarm.Parsing;
 
 namespace EasyFarm.Views
@@ -30,7 +32,7 @@ namespace EasyFarm.Views
         {
             InitializeComponent();
             CompleteSelectionButton.Click += CompleteSelectionButton_Click;
-            AbilityListBox.ItemsSource = App.AbilityService.GetAbilitiesWithName(name);
+            AbilityListBox.ItemsSource = App.AbilityService.GetAbilitiesWithName(name).Select(x => new BattleAbility(x));
             ShowDialog();
         }
 
@@ -38,7 +40,7 @@ namespace EasyFarm.Views
 
         private void CompleteSelectionButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectedAbility = AbilityListBox.SelectedValue as Ability;
+            SelectedAbility = ((BattleAbility)AbilityListBox.SelectedValue).Ability;
             Close();
         }
     }
