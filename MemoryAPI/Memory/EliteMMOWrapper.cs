@@ -1,5 +1,4 @@
 ﻿using EliteMMO.API;
-using MemoryAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,24 +94,12 @@ namespace MemoryAPI
 
                 while (DistanceTo(targetPosition) > DistanceTolerance && DateTime.Now < duration)
                 {
-                    var player = api.Player;
-
                     SetViewMode(ViewMode.FirstPerson);
                     FaceHeading(targetPosition);
-
-                    api.AutoFollow.SetAutoFollowCoords(
-                        targetPosition.X - player.X,
-                        targetPosition.Y - player.Y,
-                        targetPosition.Z - player.Z);
-
-                    api.AutoFollow.IsAutoFollowing = true;
-
+                    api.ThirdParty.KeyDown(Keys.NUMPAD8);
                     if (useObjectAvoidance) AvoidObstacles();
-
                     Thread.Sleep(30);
                 }
-
-                api.AutoFollow.IsAutoFollowing = false;
             }
 
             private void KeepRunningWithKeyboard()
@@ -222,7 +209,6 @@ namespace MemoryAPI
 
             public void Reset()
             {
-                api.AutoFollow.IsAutoFollowing = false;
                 api.ThirdParty.KeyUp(Keys.NUMPAD8);
                 api.ThirdParty.KeyUp(Keys.NUMPAD2);
             }
