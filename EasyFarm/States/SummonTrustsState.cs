@@ -55,23 +55,6 @@ namespace EasyFarm.States {
             return null;
         }
 
-        private bool IsCasterTrust(IPartyMemberTools trust) {
-            if (!trust.UnitPresent) return false;
-            return false;
-
-            // @FIXME: Trusts don't have jobs, need another way to tell.
-            //return (
-            //    trust.Job == Job.WhiteMage ||
-            //    trust.Job == Job.RedMage ||
-            //    trust.Job == Job.Scholar ||
-            //    trust.Job == Job.BlackMage ||
-            //    trust.Job == Job.Geomancer ||
-            //    trust.Job == Job.Summon ||
-            //    trust.Job == Job.BlueMage ||
-            //    trust.Job == Job.Paladin
-            //);
-        }
-
         private bool TrustInParty(BattleAbility trust) {
             var t = FindPartyMember(trust);
             return (t != null);
@@ -87,9 +70,23 @@ namespace EasyFarm.States {
         private bool TrustNeedsDismissal(BattleAbility trust) {
             var t = FindPartyMember(trust);
 
-            if (t.HPPCurrent < 60 || (IsCasterTrust(t) && t.MPPCurrent < 95))
-                return true;
+            // If the trust is set to be resummonable, respect that setting.
+            if (trust.ResummonOnLowMP)
+            {
+                if (t.MPPCurrent <= trust.ResummonMPHigh && t.MPPCurrent >= trust.ResummonMPLow)
+                {
+                    return true;
+                }
+            }
 
+            if (trust.ResummonOnLowHP)
+            {
+                if (t.HPPCurrent <= trust.ResummonHPHigh && t.HPPCurrent >= trust.ResummonHPLow)
+                {
+                    return true;
+                }
+            }
+        
             return false;
         }
 

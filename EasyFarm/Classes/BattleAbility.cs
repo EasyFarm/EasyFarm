@@ -120,10 +120,36 @@ namespace EasyFarm.Classes
         private int _tpReserveLow;
         private int _tpReserveHigh;
 
+        /// <summary>
+        /// Whether or not the trust should be resummoned if their HP is in a given range
+        /// </summary>
+        private bool _resummonIfHpLow = false;
 
+        /// <summary>
+        /// Whether or not the trust should be resummoned if their MP is in a given range
+        /// </summary>
         private bool _resummonIfMpLow = false;
-        private int _targetMpLow;
-        private int _targetMpHigh;
+
+        /// <summary>
+        /// Resummon HP Low End
+        /// </summary>
+        private int _resummonHpLow;
+
+        /// <summary>
+        /// Resummon HP High End
+        /// </summary>
+        private int _resummonHpHigh;
+
+        /// <summary>
+        /// Resummon MP Low End
+        /// </summary>
+        private int _resummonMpLow;
+
+        /// <summary>
+        /// Resummon MP High End
+        /// </summary>
+        private int _resummonMpHigh;
+
 
         static BattleAbility()
         {
@@ -358,6 +384,22 @@ namespace EasyFarm.Classes
             }
         }
         
+        public bool ResummonOnLowHP
+        {
+            get { return _resummonIfHpLow; }
+            set
+            {
+                SetProperty(ref _resummonIfHpLow, value);
+                if (value)
+                {
+                    AppServices.InformUser($"Resummon if HP is low turned on.");
+                }
+                else
+                {
+                    AppServices.InformUser($"Resummon if HP is low turned off.");
+                }
+            }
+        }
 
         public bool ResummonOnLowMP
         {
@@ -368,30 +410,52 @@ namespace EasyFarm.Classes
                 if (value)
                 {
                     AppServices.InformUser($"Resummon if MP is low turned on.");
-                } else
+                }
+                else
                 {
                     AppServices.InformUser($"Resummon if MP is low turned off.");
                 }
             }
         }
 
-        public int TargetMPLow
+
+        public int ResummonHPLow
         {
-            get { return _targetMpLow; }
+            get { return _resummonHpLow; }
             set
             {
-                SetProperty(ref _targetMpLow, value);
-                AppServices.InformUser($"Resummon Range set {_targetMpLow} TO {_targetMpHigh}.");
+                SetProperty(ref _resummonHpLow, value);
+                AppServices.InformUser($"Resummon HP Range set {_resummonHpLow} TO {_resummonHpHigh}.");
             }
         }
 
-        public int TargetMPHigh
+        public int ResummonHPHigh
         {
-            get { return _targetMpHigh; }
+            get { return _resummonHpHigh; }
             set
             {
-                SetProperty(ref _targetMpHigh, value);
-                AppServices.InformUser($"Resummon Range set {_targetMpLow} TO {_targetMpHigh}.");
+                SetProperty(ref _resummonHpHigh, value);
+                AppServices.InformUser($"Resummon HP Range set {_resummonHpLow} TO {_resummonHpHigh}.");
+            }
+        }
+
+        public int ResummonMPLow
+        {
+            get { return _resummonMpLow; }
+            set
+            {
+                SetProperty(ref _resummonMpLow, value);
+                AppServices.InformUser($"Resummon MP Range set {_resummonMpLow} TO {_resummonMpHigh}.");
+            }
+        }
+
+        public int ResummonMPHigh
+        {
+            get { return _resummonMpHigh; }
+            set
+            {
+                SetProperty(ref _resummonMpHigh, value);
+                AppServices.InformUser($"Resummon MP Range set {_resummonMpLow} TO {_resummonMpHigh}.");
             }
         }
         
