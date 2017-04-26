@@ -70,7 +70,7 @@ namespace EasyFarm.States {
         private bool TrustNeedsDismissal(BattleAbility trust) {
             var t = FindPartyMember(trust);
 
-            // If the trust is set to be resummonable, respect that setting.
+            // If the trust is set to be resummonable, respect the MP.
             if (trust.ResummonOnLowMP)
             {
                 if (t.MPPCurrent <= trust.ResummonMPHigh && t.MPPCurrent >= trust.ResummonMPLow)
@@ -79,6 +79,7 @@ namespace EasyFarm.States {
                 }
             }
 
+            // If the trust is set to be resummonable, respect the HP 
             if (trust.ResummonOnLowHP)
             {
                 if (t.HPPCurrent <= trust.ResummonHPHigh && t.HPPCurrent >= trust.ResummonHPLow)
@@ -120,10 +121,7 @@ namespace EasyFarm.States {
 
         public override void Run() {
             if (fface.Player.Status.Equals(Status.Fighting)) return;
-
             var trusts = Config.Instance.BattleLists["Trusts"].Actions;
-
-            var toCast = new List<BattleAbility>();
             foreach(var trust in trusts) {
                 if (TrustNeedsSummoning(trust)) {
                     // @TODO: Check for trust summoning cooldown?
