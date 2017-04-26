@@ -203,6 +203,7 @@
     </Compile>
     <Compile Include="States\PlayerMovementTracker.cs" />
     <Compile Include="States\Route.cs" />
+    <Compile Include="States\SummonTrustsState.cs" />
     <Compile Include="States\TypeCache.cs" />
     <Compile Include="States\ZoneState.cs" />
     <Compile Include="States\DeadState.cs" />
@@ -476,6 +477,9 @@
   <ItemGroup>
     <Content Include="Dependencies\EliteAPI.dll" />
     <Content Include="Dependencies\EliteMMO.API.dll" />
+    <None Include="resources\trusts.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

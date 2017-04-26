@@ -152,6 +152,7 @@ namespace EasyFarm.Classes
             // can cause duplicate entries when the default constructor is
             // called.
             Instance.BattleLists.Add(new BattleList("Start"));
+            Instance.BattleLists.Add(new BattleList("Trusts"));
             Instance.BattleLists.Add(new BattleList("Pull"));
             Instance.BattleLists.Add(new BattleList("Battle"));
             Instance.BattleLists.Add(new BattleList("End"));

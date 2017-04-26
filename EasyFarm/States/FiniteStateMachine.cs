@@ -49,6 +49,7 @@ namespace EasyFarm.States
             AddState(new SetFightingState(fface) { Priority = 6 });
             AddState(new FollowState(fface) { Priority = 5 });
             AddState(new RestState(fface) { Priority = 2 });
+            AddState(new SummonTrustsState(fface) { Priority = 0 });
             AddState(new ApproachState(fface) { Priority = 0 });
             AddState(new BattleState(fface) { Priority = 3 });
             AddState(new WeaponskillState(fface) { Priority = 2 });
