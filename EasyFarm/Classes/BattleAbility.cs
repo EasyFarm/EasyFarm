@@ -117,9 +117,13 @@ namespace EasyFarm.Classes
 
         private int _mpReserveLow;
         private int _mpReserveHigh;
-
         private int _tpReserveLow;
         private int _tpReserveHigh;
+
+
+        private bool _resummonIfMpLow = false;
+        private int _targetMpLow;
+        private int _targetMpHigh;
 
         static BattleAbility()
         {
@@ -352,7 +356,44 @@ namespace EasyFarm.Classes
                 SetProperty(ref _tpReserveHigh, value);
                 AppServices.InformUser($"TP range set {_tpReserveLow} TO {_tpReserveHigh}.");
             }
-        }        
+        }
+        
+
+        public bool ResummonOnLowMP
+        {
+            get { return _resummonIfMpLow; }
+            set
+            {
+                SetProperty(ref _resummonIfMpLow, value);
+                if (value)
+                {
+                    AppServices.InformUser($"Resummon if MP is low turned on.");
+                } else
+                {
+                    AppServices.InformUser($"Resummon if MP is low turned off.");
+                }
+            }
+        }
+
+        public int TargetMPLow
+        {
+            get { return _targetMpLow; }
+            set
+            {
+                SetProperty(ref _targetMpLow, value);
+                AppServices.InformUser($"Resummon Range set {_targetMpLow} TO {_targetMpHigh}.");
+            }
+        }
+
+        public int TargetMPHigh
+        {
+            get { return _targetMpHigh; }
+            set
+            {
+                SetProperty(ref _targetMpHigh, value);
+                AppServices.InformUser($"Resummon Range set {_targetMpLow} TO {_targetMpHigh}.");
+            }
+        }
         
         public bool TriggerOnEffectPresent
         {

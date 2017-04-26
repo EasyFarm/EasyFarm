@@ -477,9 +477,6 @@
   <ItemGroup>
     <Content Include="Dependencies\EliteAPI.dll" />
     <Content Include="Dependencies\EliteMMO.API.dll" />
-    <None Include="resources\trusts.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
