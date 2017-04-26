@@ -91,7 +91,14 @@ namespace EasyFarm.States {
         }
 
         private void ReleaseTrust(BattleAbility trust) {
-            var command = string.Format("/refa {0}", trust.Name);
+            var comp = trust.Name;
+            if (comp.Contains("(UC)") || comp.Contains("II"))
+            {
+                comp = comp.Replace(" (UC)", "");
+                comp = comp.Replace(" II", "");
+            }
+
+            var command = string.Format("/refa {0}", comp);
             fface.Windower.SendString(command);
         }
 
@@ -100,8 +107,15 @@ namespace EasyFarm.States {
             if (fface.Player.Status.Equals(Status.Fighting)) return false;
 
             var trusts = Config.Instance.BattleLists["Trusts"].Actions;
-            
-            return true;
+            foreach (var trust in trusts)
+            {
+                if (TrustNeedsDismissal(trust) || (!TrustInParty(trust) && PartyHasSpace())) 
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public override void Run() {
