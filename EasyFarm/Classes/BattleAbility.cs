@@ -379,11 +379,13 @@ namespace EasyFarm.Classes
         public string Command
         {
             get
-            {
+            {                
                 if (AbilityType == AbilityType.Range)
                 {
                     return Ability.Prefix + " " + Ability.Postfix;
                 }
+
+                if (Name == null) return "";
 
                 var commandName = Name.Contains(" ") ? $"\"{Name}\"" : Name;
                 return $@"{Ability.Prefix} {commandName} {Ability.Postfix}";
