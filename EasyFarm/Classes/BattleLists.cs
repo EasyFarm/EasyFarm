@@ -28,6 +28,18 @@ namespace EasyFarm.Classes
     /// </summary>
     public class BattleLists : ObservableCollection<BattleList>
     {
+        public BattleLists()
+        {
+        }
+
+        public BattleLists(List<BattleList> list) : base(list)
+        {
+        }
+
+        public BattleLists(IEnumerable<BattleList> collection) : base(collection)
+        {
+        }
+
         public IEnumerable<BattleAbility> Actions
         {
             get { return this.SelectMany(x => x.Actions); }

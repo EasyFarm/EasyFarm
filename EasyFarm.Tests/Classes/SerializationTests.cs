@@ -1,13 +1,47 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using EasyFarm.Classes;
 using MemoryAPI;
+using Ploeh.AutoFixture;
 using Xunit;
 
 namespace EasyFarm.Tests.Classes
 {
     public class SerializationTests
     {
+        [Fact]
+        public void CanSerializeBattleAbilityWithNullName()
+        {
+            // Fixture setup
+            var config = FindConfigContainingBattleAbilityWithNullName();
+            var path = FindFilePath();
+
+            // Exercise system        
+            var result = Record.Exception(() => Serialization.Serialize(path, config));
+
+            // Verify outcome
+            Assert.Null(result);
+
+            // Teardown
+            File.Delete(path);
+        }
+
+        private static Config FindConfigContainingBattleAbilityWithNullName()
+        {
+            var fixture = new Fixture();
+            var config = fixture.Build<Config>()
+                .With(x => x.BattleLists, new BattleLists(fixture.CreateMany<BattleList>()))
+                .Create();
+
+            var battleAbility = fixture.Build<BattleAbility>()
+                .With(x => x.Name, null)
+                .Create();
+
+            config.BattleLists[0].Actions.Add(battleAbility);
+            return config;
+        }
+
         [Fact]
         public void SerializationWithUndefinedEnumValueReturnsThatValue()
         {
