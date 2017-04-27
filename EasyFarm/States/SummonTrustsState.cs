@@ -69,6 +69,7 @@ namespace EasyFarm.States {
 
         private bool TrustNeedsDismissal(BattleAbility trust) {
             var t = FindPartyMember(trust);
+            if (t == null) return false;
 
             // If the trust is set to be resummonable, respect the MP.
             if (trust.ResummonOnLowMP)
