@@ -1,4 +1,25 @@
-﻿using MemoryAPI;
+﻿/*///////////////////////////////////////////////////////////////////
+<EasyFarm, general farming utility for FFXI.>
+Copyright (C) <2013>  <Zerolimits>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+*/
+///////////////////////////////////////////////////////////////////
+
+// Author: Azo
+// Trust implementation
+
+using MemoryAPI;
 using System.Linq;
 using EasyFarm.Classes;
 using System.Collections.Generic;
@@ -34,23 +55,6 @@ namespace EasyFarm.States {
             return null;
         }
 
-        private bool IsCasterTrust(IPartyMemberTools trust) {
-            if (!trust.UnitPresent) return false;
-            return false;
-
-            // @FIXME: Trusts don't have jobs, need another way to tell.
-            //return (
-            //    trust.Job == Job.WhiteMage ||
-            //    trust.Job == Job.RedMage ||
-            //    trust.Job == Job.Scholar ||
-            //    trust.Job == Job.BlackMage ||
-            //    trust.Job == Job.Geomancer ||
-            //    trust.Job == Job.Summon ||
-            //    trust.Job == Job.BlueMage ||
-            //    trust.Job == Job.Paladin
-            //);
-        }
-
         private bool TrustInParty(BattleAbility trust) {
             var t = FindPartyMember(trust);
             return (t != null);
@@ -65,15 +69,38 @@ namespace EasyFarm.States {
 
         private bool TrustNeedsDismissal(BattleAbility trust) {
             var t = FindPartyMember(trust);
+            if (t == null) return false;
 
-            if (t.HPPCurrent < 60 || (IsCasterTrust(t) && t.MPPCurrent < 95))
-                return true;
+            // If the trust is set to be resummonable, respect the MP.
+            if (trust.ResummonOnLowMP)
+            {
+                if (t.MPPCurrent <= trust.ResummonMPHigh && t.MPPCurrent >= trust.ResummonMPLow)
+                {
+                    return true;
+                }
+            }
 
+            // If the trust is set to be resummonable, respect the HP 
+            if (trust.ResummonOnLowHP)
+            {
+                if (t.HPPCurrent <= trust.ResummonHPHigh && t.HPPCurrent >= trust.ResummonHPLow)
+                {
+                    return true;
+                }
+            }
+        
             return false;
         }
 
         private void ReleaseTrust(BattleAbility trust) {
-            var command = string.Format("/refa {0}", trust.Name);
+            var comp = trust.Name;
+            if (comp.Contains("(UC)") || comp.Contains("II"))
+            {
+                comp = comp.Replace(" (UC)", "");
+                comp = comp.Replace(" II", "");
+            }
+
+            var command = string.Format("/refa {0}", comp);
             fface.Windower.SendString(command);
         }
 
@@ -82,16 +109,20 @@ namespace EasyFarm.States {
             if (fface.Player.Status.Equals(Status.Fighting)) return false;
 
             var trusts = Config.Instance.BattleLists["Trusts"].Actions;
-            
-            return true;
+            foreach (var trust in trusts)
+            {
+                if (TrustNeedsDismissal(trust) || (!TrustInParty(trust) && PartyHasSpace())) 
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public override void Run() {
             if (fface.Player.Status.Equals(Status.Fighting)) return;
-
             var trusts = Config.Instance.BattleLists["Trusts"].Actions;
-
-            var toCast = new List<BattleAbility>();
             foreach(var trust in trusts) {
                 if (TrustNeedsSummoning(trust)) {
                     // @TODO: Check for trust summoning cooldown?

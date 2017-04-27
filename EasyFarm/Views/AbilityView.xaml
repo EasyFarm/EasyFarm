@@ -147,6 +147,39 @@
                                           RenderTransformOrigin="0.478,0.471" />
                 </UniformGrid>
             </GroupBox>
+
+            <GroupBox Name="grpTrusts" Header="Trust Settings">
+                <UniformGrid Columns="2">
+                    <CheckBox Margin="5,5,5,5"
+                              IsChecked="{Binding ResummonOnLowHP}"
+                              ToolTip="Toggles whether or not the trust will be resummoned if their HP is low."
+                              Content="Re-summon based on HP" />
+
+
+                    <controls:RangeSlider Margin="5,5,5,5"
+                                          Maximum="100"
+                                          Minimum="0"
+                                          LowerValue="{Binding ResummonHPLow}"
+                                          UpperValue="{Binding ResummonHPHigh}"
+                                          ToolTip="Releases on resummons trust if HP is in the given range."
+                                          RenderTransformOrigin="0.478,0.471" />
+                    
+                    <CheckBox Margin="5,5,5,5"
+                              IsChecked="{Binding ResummonOnLowMP}"
+                              ToolTip="Toggles whether or not the trust will be resummoned if their MP is low."
+                              Content="Re-summon based on MP" />
+
+                    
+                    <controls:RangeSlider Margin="5,5,5,5"
+                                          Maximum="100"
+                                          Minimum="0"
+                                          LowerValue="{Binding ResummonMPLow}"
+                                          UpperValue="{Binding ResummonMPHigh}"
+                                          ToolTip="Releases on resummons trust if MP is in range."
+                                          RenderTransformOrigin="0.478,0.471" />
+
+                </UniformGrid>
+            </GroupBox>
         </StackPanel>
     </GroupBox>
 </UserControl>
