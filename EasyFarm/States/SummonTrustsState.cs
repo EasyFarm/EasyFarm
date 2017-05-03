@@ -108,15 +108,7 @@ namespace EasyFarm.States {
 
         public override bool Check() {
             if (new RestState(fface).Check()) return false;
-            if (
-                fface.Player.Status.Equals(Status.CatchMonster) ||
-                fface.Player.Status.Equals(Status.Chocobo) ||
-                fface.Player.Status.Equals(Status.Dead1) ||
-                fface.Player.Status.Equals(Status.Dead2) ||
-                fface.Player.Status.Equals(Status.Event) ||
-                fface.Player.Status.Equals(Status.Fighting) ||
-                fface.Player.Status.Equals(Status.Healing)
-            ) return false;
+            if (!fface.Player.Status.Equals(Status.Standing)) return false;
 
             var trusts = Config.Instance.BattleLists["Trusts"].Actions.Where(t => t.IsEnabled);
             foreach (var trust in trusts)
