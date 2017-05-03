@@ -43,13 +43,13 @@ namespace EasyFarm.States
         {
             _fface = fface;
             //Create the states
-            AddState(new DeadState(fface) { Priority = 6 });
-            AddState(new ZoneState(fface) { Priority = 6 });
-            AddState(new SetTargetState(fface) { Priority = 6 });
-            AddState(new SetFightingState(fface) { Priority = 6 });
+            AddState(new DeadState(fface) { Priority = 7 });
+            AddState(new ZoneState(fface) { Priority = 7 });
+            AddState(new SetTargetState(fface) { Priority = 7 });
+            AddState(new SetFightingState(fface) { Priority = 7 });
             AddState(new FollowState(fface) { Priority = 5 });
             AddState(new RestState(fface) { Priority = 2 });
-            AddState(new SummonTrustsState(fface) { Priority = 0 });
+            AddState(new SummonTrustsState(fface) { Priority = 6 });
             AddState(new ApproachState(fface) { Priority = 0 });
             AddState(new BattleState(fface) { Priority = 3 });
             AddState(new WeaponskillState(fface) { Priority = 2 });

@@ -30,6 +30,8 @@ namespace MemoryAPI
             Timer = new TimerTools(EliteAPI);
             Windower = new WindowerTools(EliteAPI);
 
+            //EliteAPI.Player.GetPlayerInfo().StatsModifiers.
+
             for (byte i = 0; i < 16; i++)
             {
                 PartyMember.Add(i, new PartyMemberTools(EliteAPI, i));

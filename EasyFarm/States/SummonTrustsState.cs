@@ -108,9 +108,17 @@ namespace EasyFarm.States {
 
         public override bool Check() {
             if (new RestState(fface).Check()) return false;
-            if (fface.Player.Status.Equals(Status.Fighting)) return false;
+            if (
+                fface.Player.Status.Equals(Status.CatchMonster) ||
+                fface.Player.Status.Equals(Status.Chocobo) ||
+                fface.Player.Status.Equals(Status.Dead1) ||
+                fface.Player.Status.Equals(Status.Dead2) ||
+                fface.Player.Status.Equals(Status.Event) ||
+                fface.Player.Status.Equals(Status.Fighting) ||
+                fface.Player.Status.Equals(Status.Healing)
+            ) return false;
 
-            var trusts = Config.Instance.BattleLists["Trusts"].Actions;
+            var trusts = Config.Instance.BattleLists["Trusts"].Actions.Where(t => t.IsEnabled);
             foreach (var trust in trusts)
             {
                 if (TrustNeedsDismissal(trust) || (!TrustInParty(trust) && PartyHasSpace())) 
@@ -124,10 +132,9 @@ namespace EasyFarm.States {
 
         public override void Run() {
             if (fface.Player.Status.Equals(Status.Fighting)) return;
-            var trusts = Config.Instance.BattleLists["Trusts"].Actions;
+            var trusts = Config.Instance.BattleLists["Trusts"].Actions.Where(t => t.IsEnabled);
             foreach(var trust in trusts) {
-                if (TrustNeedsSummoning(trust)) {
-                    // @TODO: Check for trust summoning cooldown?
+                if (TrustNeedsSummoning(trust) && AbilityUtils.IsRecastable(fface, trust.Ability)) {
                     Executor.UseBuffingActions(new[] { trust });
                 }
             }
