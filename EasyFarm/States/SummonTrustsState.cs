@@ -41,6 +41,8 @@ namespace EasyFarm.States {
         }
 
         private IPartyMemberTools FindPartyMember(BattleAbility trust) {
+            if (string.IsNullOrEmpty(trust.Name)) return null;
+
             for (int i = 1; i < 6; i++) {
                 var p = fface.PartyMember[(byte)i];
                 var comp = trust.Name;

@@ -40,6 +40,7 @@ namespace EasyFarm.States
         {
             if (IsFighting) return false;
             if (new RestState(fface).Check()) return false;
+            if (new SummonTrustsState(fface).Check()) return false;
             if (!UnitFilters.MobFilter(fface, Target)) return false;
             return Config.Instance.BattleLists["Pull"].Actions.Any(x => x.IsEnabled);
         }

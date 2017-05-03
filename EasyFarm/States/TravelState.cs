@@ -47,6 +47,9 @@ namespace EasyFarm.States
             // We don't have to heal. 
             if (new HealingState(fface).Check()) return false;
 
+            // We don't need to summon trusts
+            if (new SummonTrustsState(fface).Check()) return false;
+
             // We are not bound or struck by an other movement
             // disabling condition. 
             if (ProhibitEffects.ProhibitEffectsMovement
