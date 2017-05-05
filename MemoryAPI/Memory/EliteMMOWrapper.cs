@@ -30,6 +30,8 @@ namespace MemoryAPI
             Timer = new TimerTools(EliteAPI);
             Windower = new WindowerTools(EliteAPI);
 
+            //EliteAPI.Player.GetPlayerInfo().StatsModifiers.
+
             for (byte i = 0; i < 16; i++)
             {
                 PartyMember.Add(i, new PartyMemberTools(EliteAPI, i));
@@ -289,15 +291,70 @@ namespace MemoryAPI
             private readonly EliteAPI api;
             private readonly int index;
 
+            private EliteAPI.PartyMember unit
+            {
+                get
+                {
+                    return api.Party.GetPartyMember(index);
+                }
+            }
+
             public PartyMemberTools(EliteAPI api, int index)
             {
                 this.api = api;
                 this.index = index;
             }
 
+            public bool UnitPresent
+            {
+                get { return Convert.ToBoolean(unit.Active); }
+            }
+
+
             public int ServerID
             {
-                get { return (int)api.Party.GetPartyMember(index).ID; }
+                get { return (int)unit.ID; }
+            }
+
+            public string Name
+            {
+                get { return unit.Name; }
+            }
+
+            public int HPCurrent
+            {
+                get { return (int)unit.CurrentHP; }
+            }
+
+            public int HPPCurrent
+            {
+                get { return (int)unit.CurrentHPP; }
+            }
+
+            public int MPCurrent
+            {
+                get { return (int)unit.CurrentMP; }
+            }
+
+            public int MPPCurrent
+            {
+                get { return (int)unit.CurrentMPP; }
+            }
+
+            public int TPCurrent
+            {
+                get { return (int)unit.CurrentTP; }
+            }
+
+
+            public Job Job
+            {
+                get { return (Job)unit.MainJob; }
+            }
+
+            public Job SubJob
+            {
+                get { return (Job)unit.SubJob; }
             }
         }
 
@@ -408,6 +465,16 @@ namespace MemoryAPI
             public Zone Zone
             {
                 get { return (MemoryAPI.Zone)api.Player.ZoneId; }
+            }
+
+            public Job Job
+            {
+                get { return (Job)api.Player.MainJob; }
+            }
+
+            public Job SubJob
+            {
+                get { return (Job)api.Player.SubJob; }
             }
         }
 

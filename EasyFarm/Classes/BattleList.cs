@@ -44,7 +44,9 @@ namespace EasyFarm.Classes
 
         public ObservableCollection<BattleAbility> Actions
         {
-            get { return _value; }
+            get {
+                return _value;
+            }
             set { SetProperty(ref _value, value); }
         }
     }
