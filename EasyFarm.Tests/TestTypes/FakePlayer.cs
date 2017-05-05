@@ -33,6 +33,9 @@ namespace EasyFarm.Tests.TestTypes
         public StatusEffect[] StatusEffects { get; set; }
         public int TPCurrent { get; set; }
         public Zone Zone { get; set; }
+        public Job Job { get; set; }
+        public Job SubJob { get; set; }
+
 
         public static IEnumerable<float> CastPercentExValues()
         {

@@ -4,7 +4,7 @@
                     xmlns:views="clr-namespace:EasyFarm.Views">
     <DataTemplate DataType="{x:Type viewModels:BattlesViewModel}">
         <views:BattlesView />
-    </DataTemplate>   
+    </DataTemplate>
     <DataTemplate DataType="{x:Type viewModels:IgnoredViewModel}">
         <views:IgnoredView />
     </DataTemplate>

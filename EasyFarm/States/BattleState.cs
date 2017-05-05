@@ -40,6 +40,9 @@ namespace EasyFarm.States
         {
             if (_restState.Check()) return false;
 
+            // Make sure we don't need trusts
+            if (new SummonTrustsState(fface).Check()) return false;
+
             // Mobs has not been pulled if pulling moves are available. 
             if (!IsFighting) return false;
 

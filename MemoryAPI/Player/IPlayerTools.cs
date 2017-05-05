@@ -18,6 +18,8 @@ namespace MemoryAPI
         Status Status { get; }
         StatusEffect[] StatusEffects { get; }        
         int TPCurrent { get; }       
-        Zone Zone { get; }       
+        Zone Zone { get; }
+        Job Job { get; }
+        Job SubJob { get; }
     }
 }
