@@ -39,5 +39,20 @@ namespace MemoryAPI
                     return MemoryAPI.Status.Unknown;
             }
         }
+
+        public static NpcType GetNpcType(EliteAPI.XiEntity entity)
+        {
+            if (entity.WarpPointer == 0) return NpcType.InanimateObject;
+            if (IsOfType(entity.SpawnFlags, (int)NpcType.Mob)) return NpcType.Mob;
+            if (IsOfType(entity.SpawnFlags, (int)NpcType.NPC)) return NpcType.NPC;
+            if (IsOfType(entity.SpawnFlags, (int)NpcType.PC)) return NpcType.PC;
+            if (IsOfType(entity.SpawnFlags, (int)NpcType.Self)) return NpcType.Self;
+            return NpcType.InanimateObject;
+        }
+
+        private static bool IsOfType(int one, int other)
+        {
+            return (one & other) == other;
+        }
     }
 }

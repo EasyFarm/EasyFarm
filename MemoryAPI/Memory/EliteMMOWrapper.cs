@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Threading;
 using MemoryAPI.Memory;
 using MemoryAPI.Navigation;
@@ -71,36 +72,40 @@ namespace MemoryAPI
 
             public void GotoWaypoint(Position position, bool useObjectAvoidance, bool keepRunning)
             {
-                MoveForwardTowardsPosition(position, useObjectAvoidance);
+                MoveForwardTowardsPosition(() => position, useObjectAvoidance);
                 if (keepRunning) KeepRunningWithKeyboard();
             }
 
             public void GotoNPC(int ID, bool useObjectAvoidance)
             {
+                Reset();
+                MoveForwardTowardsPosition(() => GetEntityPosition(ID), useObjectAvoidance);
+                KeepOneYalmBack(GetEntityPosition(ID));
+                FaceHeading(GetEntityPosition(ID));
+            }
+
+            private Position GetEntityPosition(int ID)
+            {
                 var entity = api.Entity.GetEntity(ID);
                 var position = Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H);
-
-                Reset();
-                MoveForwardTowardsPosition(position, useObjectAvoidance);
-                KeepOneYalmBack(position);
-                FaceHeading(position);
+                return position;
             }
 
             private void MoveForwardTowardsPosition(
-                Position targetPosition,
+                Func<Position> targetPosition,
                 bool useObjectAvoidance)
             {
-                if (!(DistanceTo(targetPosition) > DistanceTolerance)) return;
+                if (!(DistanceTo(targetPosition()) > DistanceTolerance)) return;
 
                 DateTime duration = DateTime.Now.AddSeconds(5);
 
-                while (DistanceTo(targetPosition) > DistanceTolerance && DateTime.Now < duration)
+                while (DistanceTo(targetPosition()) > DistanceTolerance && DateTime.Now < duration)
                 {
                     SetViewMode(ViewMode.FirstPerson);
-                    FaceHeading(targetPosition);
+                    FaceHeading(targetPosition());
                     api.ThirdParty.KeyDown(Keys.NUMPAD8);
                     if (useObjectAvoidance) AvoidObstacles();
-                    Thread.Sleep(30);
+                    Thread.Sleep(100);
                 }
             }
 
@@ -260,18 +265,8 @@ namespace MemoryAPI
             public NpcType NPCType(int id)
             {
                 var entity = api.Entity.GetEntity(id);
-                if (entity.WarpPointer == 0) return NpcType.InanimateObject;
-                if (IsOfType(entity.SpawnFlags, (int)NpcType.Mob)) return NpcType.Mob;
-                if (IsOfType(entity.SpawnFlags, (int)NpcType.NPC)) return NpcType.NPC;
-                if (IsOfType(entity.SpawnFlags, (int)NpcType.PC)) return NpcType.PC;
-                if (IsOfType(entity.SpawnFlags, (int)NpcType.Self)) return NpcType.Self;
-                return NpcType.InanimateObject;
-            }
-
-            private bool IsOfType(int one, int other)
-            {
-                return (one & other) == other;
-            }
+                return Helpers.GetNpcType(entity);
+            }                        
 
             public float PosX(int id) { return api.Entity.GetEntity(id).X; }
 
@@ -295,9 +290,10 @@ namespace MemoryAPI
             {
                 get
                 {
-                    return api.Party.GetPartyMember(index);
+                    var member = api.Party.GetPartyMember(index);
+                    return member;
                 }
-            }
+            }            
 
             public PartyMemberTools(EliteAPI api, int index)
             {
@@ -309,7 +305,6 @@ namespace MemoryAPI
             {
                 get { return Convert.ToBoolean(unit.Active); }
             }
-
 
             public int ServerID
             {
@@ -346,7 +341,6 @@ namespace MemoryAPI
                 get { return (int)unit.CurrentTP; }
             }
 
-
             public Job Job
             {
                 get { return (Job)unit.MainJob; }
@@ -355,6 +349,32 @@ namespace MemoryAPI
             public Job SubJob
             {
                 get { return (Job)unit.SubJob; }
+            }            
+
+            public NpcType NpcType
+            {
+                get
+                {
+                    var key = $"PartyMember.NpcType.{index}";
+                    var result = RuntimeCache.Get<NpcType?>(key);
+
+                    if (result == null)
+                    {
+                        var entity = FindEntityByServerId(ServerID);
+                        var npcType = Helpers.GetNpcType(entity);
+                        RuntimeCache.Set(key, npcType, DateTimeOffset.Now.AddSeconds(3));
+                        return npcType;
+                    }
+
+                    return result.Value;
+                }
+            }
+
+            private EliteAPI.XiEntity FindEntityByServerId(int serverId)
+            {
+                return Enumerable.Range(0, 4096)
+                    .Select(api.Entity.GetEntity)
+                    .FirstOrDefault(x => x.ServerID == serverId);
             }
         }
 

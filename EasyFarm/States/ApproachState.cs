@@ -33,6 +33,9 @@ namespace EasyFarm.States
         {
             if (new RestState(fface).Check()) return false;
 
+            // Make sure we don't need trusts
+            if (new SummonTrustsState(fface).Check()) return false;
+
             // Target dead or null.
             if (!UnitFilters.MobFilter(fface, Target)) return false;
 

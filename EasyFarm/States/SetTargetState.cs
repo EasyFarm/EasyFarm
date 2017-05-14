@@ -20,9 +20,6 @@ namespace EasyFarm.States
 
         public override bool Check()
         {
-            // Do NOT fight if we need to summon trusts bro.    
-            if (new SummonTrustsState(fface).Check()) return false;
-
             // Currently fighting, do not change target. 
             if (!UnitFilters.MobFilter(fface, Target))
             {

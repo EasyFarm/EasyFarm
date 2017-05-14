@@ -122,6 +122,15 @@ namespace EasyFarm.ViewModels
             }
         }
 
+        public int TrustPartySize
+        {
+            get { return Config.Instance.TrustPartySize; }
+            set
+            {
+                SetProperty(ref Config.Instance.TrustPartySize, value);
+            }
+        }
+
         private void RestoreDefaults()
         {
             DetectionDistance = Constants.DetectionDistance;
@@ -134,6 +143,7 @@ namespace EasyFarm.ViewModels
             ShouldApproach = true;
             ShouldEngage = true;
             HomePointOnDeath = false;
+            TrustPartySize = Constants.TrustPartySize;
             AppServices.InformUser("Defaults have been restored.");
         }        
     }

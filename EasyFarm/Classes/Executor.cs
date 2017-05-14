@@ -33,7 +33,27 @@ namespace EasyFarm.Classes
         public Executor(IMemoryAPI fface)
         {
             _fface = fface;
-        }                
+        }
+
+        public void UseActions(IEnumerable<BattleAbility> actions)
+        {
+            if (actions == null) throw new ArgumentNullException(nameof(actions));
+
+            foreach (var action in actions.ToList())
+            {
+                if (!ActionFilters.BuffingFilter(_fface, action))
+                {
+                    continue;
+                }
+
+                if (!CastSpell(action)) continue;
+
+                action.Usages++;
+                action.LastCast = DateTime.Now.AddSeconds(action.Recast);
+
+                TimeWaiter.Pause(Config.Instance.GlobalCooldown);
+            }
+        }
 
         public void UseBuffingActions(IEnumerable<BattleAbility> actions)
         {

@@ -74,5 +74,10 @@ namespace EasyFarm.Classes
         /// The maximum priority for states in the FSM. 
         /// </summary>
         public const int MaxPriority = int.MaxValue;
+
+        /// <summary>
+        /// The maximum number of trusts allowed in the party.
+        /// </summary>
+        public static int TrustPartySize = 5;
     }
 }
