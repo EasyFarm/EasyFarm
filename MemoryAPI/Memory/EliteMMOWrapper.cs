@@ -72,16 +72,17 @@ namespace MemoryAPI
 
             public void GotoWaypoint(Position position, bool useObjectAvoidance, bool keepRunning)
             {
+                if (!(DistanceTo(position) > DistanceTolerance)) return;
                 MoveForwardTowardsPosition(() => position, useObjectAvoidance);
-                if (keepRunning) KeepRunningWithKeyboard();
+                if (!keepRunning) Reset();
             }
 
             public void GotoNPC(int ID, bool useObjectAvoidance)
             {
-                Reset();
                 MoveForwardTowardsPosition(() => GetEntityPosition(ID), useObjectAvoidance);
                 KeepOneYalmBack(GetEntityPosition(ID));
                 FaceHeading(GetEntityPosition(ID));
+                Reset();
             }
 
             private Position GetEntityPosition(int ID)
@@ -106,7 +107,7 @@ namespace MemoryAPI
                     api.ThirdParty.KeyDown(Keys.NUMPAD8);
                     if (useObjectAvoidance) AvoidObstacles();
                     Thread.Sleep(100);
-                }
+                }                
             }
 
             private void KeepRunningWithKeyboard()
