@@ -16,42 +16,45 @@ You should have received a copy of the GNU General Public License
 */
 ///////////////////////////////////////////////////////////////////
 
-using System.Collections.Generic;
-using System.Linq;
 using EasyFarm.Classes;
 using MemoryAPI;
-using MemoryAPI.Navigation;
+using System.Linq;
 
 namespace EasyFarm.States
 {
     public class TravelState : BaseState
     {
-        private Route Route => Config.Instance.Route;
+        private readonly IConfigFactory _configFactory;
 
-        public TravelState(IMemoryAPI fface) : base(fface) { }
+        public TravelState(IMemoryAPI fface, IConfigFactory configFactory) : base(fface)
+        {
+            _configFactory = configFactory;
+        }
 
         public override bool Check()
         {
+            var config = _configFactory.GetConfig();
+
             // Waypoint list is empty.
-            if (!Route.IsPathSet) return false;
+            if (!config.Route.IsPathSet) return false;
 
             // Route belongs to a different zone.
-            if (Route.Zone != fface.Player.Zone) return false;            
+            if (config.Route.Zone != fface.Player.Zone) return false;
 
             // Has valid target to fight.
             if (UnitFilters.MobFilter(fface, CombatState.Target)) return false;
 
-            // We don't have to rest. 
+            // We don't have to rest.
             if (new RestState(fface).Check()) return false;
 
-            // We don't have to heal. 
+            // We don't have to heal.
             if (new HealingState(fface).Check()) return false;
 
             // We don't need to summon trusts
             if (new SummonTrustsState(fface).Check()) return false;
 
             // We are not bound or struck by an other movement
-            // disabling condition. 
+            // disabling condition.
             if (ProhibitEffects.ProhibitEffectsMovement
                 .Intersect(fface.Player.StatusEffects).Any())
                 return false;
@@ -61,14 +64,16 @@ namespace EasyFarm.States
 
         public override void Run()
         {
+            var config = _configFactory.GetConfig();
+
             fface.Navigator.DistanceTolerance = 1;
 
-            var nextPosition = Route.GetNextPosition(fface.Player.Position);
-            var shouldKeepRunningToNextWaypoint = Config.Instance.Route.Waypoints.Count != 1;
+            var nextPosition = config.Route.GetNextPosition(fface.Player.Position);
+            var shouldKeepRunningToNextWaypoint = config.Route.Waypoints.Count != 1;
 
             fface.Navigator.GotoWaypoint(
-                nextPosition, 
-                Config.Instance.IsObjectAvoidanceEnabled, 
+                nextPosition,
+                config.IsObjectAvoidanceEnabled,
                 shouldKeepRunningToNextWaypoint);
         }
 

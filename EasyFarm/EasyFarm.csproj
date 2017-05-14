@@ -201,6 +201,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Classes\ConfigFactory.cs" />
+    <Compile Include="Classes\IConfigFactory.cs" />
     <Compile Include="States\PlayerMovementTracker.cs" />
     <Compile Include="States\Route.cs" />
     <Compile Include="States\SummonTrustsState.cs" />
