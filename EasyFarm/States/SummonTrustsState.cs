@@ -110,10 +110,16 @@ namespace EasyFarm.States {
             if (new RestState(fface).Check()) return false;
             if (!fface.Player.Status.Equals(Status.Standing)) return false;
 
-            var trusts = Config.Instance.BattleLists["Trusts"].Actions.Where(t => t.IsEnabled);
+            var trusts = Config.Instance.BattleLists["Trusts"].Actions
+                .Where(t => t.IsEnabled)
+                .Where(t => ActionFilters.BuffingFilter(fface, t))
+                .ToList();
+
+            var maxTrustPartySize = Config.Instance.TrustPartySize;
+
             foreach (var trust in trusts)
             {
-                if (TrustNeedsDismissal(trust) || (!TrustInParty(trust) && PartyHasSpace())) 
+                if (TrustNeedsDismissal(trust) || (!TrustInParty(trust) && PartyHasSpace() && !MaxTrustsReached(maxTrustPartySize))) 
                 {
                     return true;
                 }
@@ -122,12 +128,19 @@ namespace EasyFarm.States {
             return false;
         }
 
+        private bool MaxTrustsReached(int maxTrustPartySize)
+        {
+            return fface.PartyMember.Values
+                .Where(x => x.UnitPresent)
+                .Count(x => x.NpcType == NpcType.NPC) >= maxTrustPartySize;
+        }
+
         public override void Run() {
             if (fface.Player.Status.Equals(Status.Fighting)) return;
             var trusts = Config.Instance.BattleLists["Trusts"].Actions.Where(t => t.IsEnabled);
             foreach(var trust in trusts) {
                 if (TrustNeedsSummoning(trust) && AbilityUtils.IsRecastable(fface, trust.Ability)) {
-                    Executor.UseBuffingActions(new[] { trust });
+                    Executor.UseActions(new[] { trust });
                 }
             }
         }

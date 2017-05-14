@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="281.856"
              d:DesignWidth="400">
@@ -28,6 +29,22 @@
                       IsChecked="{Binding HomePointOnDeath}"
                       Margin="5, 5" />
                 </UniformGrid>
+            </Expander>
+            <Expander Header="Trust Settings" Margin="0, 5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label 
+                        Margin="5"
+                        Content="Trust Party Size" />
+                    <controls:NumericUpDown 
+                        Grid.Column="1"
+                        Margin="5"
+                        ToolTip="Sets the maximum allowable number of trusts in the party."
+                        Value="{Binding TrustPartySize}"  />
+                </Grid>
             </Expander>
             <Expander Header="Misc Settings" Margin="0,2">
                 <Grid>

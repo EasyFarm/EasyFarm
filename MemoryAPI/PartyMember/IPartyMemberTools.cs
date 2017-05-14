@@ -23,5 +23,7 @@ namespace MemoryAPI
         Job Job { get; }
 
         Job SubJob { get; }
+
+        NpcType NpcType { get; }
     }
 }

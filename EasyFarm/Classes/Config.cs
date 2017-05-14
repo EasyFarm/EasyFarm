@@ -174,6 +174,14 @@ namespace EasyFarm.Classes
         /// </summary>
         public bool StraightRoute => Route.StraightRoute;
 
+        /// <summary>
+        /// Number of trusts allowable in the party.
+        /// </summary>
+        public int TrustPartySize = Constants.TrustPartySize;
+
+        /// <summary>
+        /// Whether the player should warp home on death or not.
+        /// </summary>
         public bool HomePointOnDeath = false;
 
         /// <summary>

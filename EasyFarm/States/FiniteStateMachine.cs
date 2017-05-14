@@ -114,6 +114,7 @@ namespace EasyFarm.States
                     {
                         Logger.Log(new LogEntry(LoggingEventType.Error, "FSM error", ex));
                         LogViewModel.Write("An error has occurred: please check easyfarm.log for more information");
+                        AppServices.InformUser("An error occurred!");
                     }
                     finally
                     {
@@ -163,7 +164,7 @@ namespace EasyFarm.States
                     }
                 }
 
-                TimeWaiter.Pause(100);
+                TimeWaiter.Pause(250);
             }
             // ReSharper disable once FunctionNeverReturns
         }

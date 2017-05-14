@@ -41,6 +41,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,6 +57,7 @@
     <Compile Include="IMemoryAPI.cs" />
     <Compile Include="Memory\EliteMMOWrapper.cs" />
     <Compile Include="Memory\MemoryWrapper.cs" />
+    <Compile Include="Memory\RuntimeCache.cs" />
     <Compile Include="Navigation\Position.cs" />
     <Compile Include="Navigation\INavigatorTools.cs" />
     <Compile Include="NPC\INPCTools.cs" />
