@@ -20,15 +20,15 @@ You should have received a copy of the GNU General Public License
 // Site: FFEVO.net
 // All credit to him!
 
+using EasyFarm.Classes;
+using EasyFarm.Logging;
+using EasyFarm.ViewModels;
+using MemoryAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EasyFarm.Classes;
-using EasyFarm.Logging;
-using EasyFarm.ViewModels;
-using MemoryAPI;
 
 namespace EasyFarm.States
 {
@@ -92,23 +92,46 @@ namespace EasyFarm.States
 
             Task.Factory.StartNew(() =>
             {
-                try
+                using (_cancellation.Token.Register(StopThreadQuickly(Thread.CurrentThread)))
                 {
-                    RunStateMachine();
-                }
-                catch (OperationCanceledException)
-                {
-                }
-                catch (Exception ex)
-                {
-                    Logger.Log(new LogEntry(LoggingEventType.Error, "FSM error", ex));
-                    LogViewModel.Write("An error has occurred: please check easyfarm.log for more information");
-                }
-                finally
-                {
-                    _fface.Navigator.Reset();
+                    try
+                    {
+                        RunStateMachine();
+                    }
+                    catch (ThreadInterruptedException ex)
+                    {
+                        Logger.Log(new LogEntry(LoggingEventType.Information, "FSM thread interrupted", ex));
+                    }
+                    catch (ThreadAbortException ex)
+                    {
+                        Logger.Log(new LogEntry(LoggingEventType.Information, "FSM thread aborted", ex));
+                    }
+                    catch (OperationCanceledException ex)
+                    {
+                        Logger.Log(new LogEntry(LoggingEventType.Information, "FSM thread cancelled", ex));
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Log(new LogEntry(LoggingEventType.Error, "FSM error", ex));
+                        LogViewModel.Write("An error has occurred: please check easyfarm.log for more information");
+                    }
+                    finally
+                    {
+                        _fface.Navigator.Reset();
+                    }
                 }
             }, _cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        }
+
+        private Action StopThreadQuickly(Thread backgroundThread)
+        {
+            return () =>
+            {
+                if (!backgroundThread.Join(500))
+                {
+                    backgroundThread.Interrupt();
+                }
+            };
         }
 
         private void RunStateMachine()
