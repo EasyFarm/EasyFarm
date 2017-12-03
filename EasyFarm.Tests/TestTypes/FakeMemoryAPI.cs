@@ -1,4 +1,5 @@
 using MemoryAPI;
+using MemoryAPI.Chat;
 using MemoryAPI.Windower;
 
 namespace EasyFarm.Tests.TestTypes
@@ -12,5 +13,6 @@ namespace EasyFarm.Tests.TestTypes
         public ITargetTools Target { get; set; }
         public ITimerTools Timer { get; set; }
         public IWindowerTools Windower { get; set; }
+        public IChatTools Chat { get; set; }
     }
 }

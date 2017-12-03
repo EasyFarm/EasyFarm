@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Caching;
 using System.Threading;
+using MemoryAPI.Chat;
 using MemoryAPI.Memory;
 using MemoryAPI.Navigation;
 using MemoryAPI.Windower;
@@ -30,6 +30,7 @@ namespace MemoryAPI
             Target = new TargetTools(EliteAPI);
             Timer = new TimerTools(EliteAPI);
             Windower = new WindowerTools(EliteAPI);
+            Chat = new ChatTools(EliteAPI);
 
             //EliteAPI.Player.GetPlayerInfo().StatsModifiers.
 
@@ -107,7 +108,7 @@ namespace MemoryAPI
                     api.ThirdParty.KeyDown(Keys.NUMPAD8);
                     if (useObjectAvoidance) AvoidObstacles();
                     Thread.Sleep(100);
-                }                
+                }
             }
 
             private void KeepRunningWithKeyboard()
@@ -267,7 +268,7 @@ namespace MemoryAPI
             {
                 var entity = api.Entity.GetEntity(id);
                 return Helpers.GetNpcType(entity);
-            }                        
+            }
 
             public float PosX(int id) { return api.Entity.GetEntity(id).X; }
 
@@ -294,7 +295,7 @@ namespace MemoryAPI
                     var member = api.Party.GetPartyMember(index);
                     return member;
                 }
-            }            
+            }
 
             public PartyMemberTools(EliteAPI api, int index)
             {
@@ -350,7 +351,7 @@ namespace MemoryAPI
             public Job SubJob
             {
                 get { return (Job)unit.SubJob; }
-            }            
+            }
 
             public NpcType NpcType
             {
@@ -559,6 +560,29 @@ namespace MemoryAPI
             public void SendKeyPress(Keys keys)
             {
                 api.ThirdParty.KeyPress(keys);
+            }
+        }
+
+        public class ChatTools : IChatTools
+        {
+            private readonly EliteAPI _api;
+            private PollingProcessor _timer;
+            public Queue<EliteAPI.ChatEntry> ChatEntries { get; set; } = new Queue<EliteAPI.ChatEntry>();
+
+            public ChatTools(EliteAPI api)
+            {
+                _api = api;
+                _timer = new PollingProcessor(QueueChatEntries);
+                _timer.Start();
+            }
+
+            private void QueueChatEntries()
+            {
+                EliteAPI.ChatEntry chatEntry;
+                while ((chatEntry =  _api.Chat.GetNextChatLine()) != null)
+                {
+                    ChatEntries.Enqueue(chatEntry);
+                }
             }
         }
     }
