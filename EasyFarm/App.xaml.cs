@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System.Windows;
+using EasyFarm.Classes;
 using EasyFarm.Logging;
 using EasyFarm.Properties;
 using EasyFarm.Parsing;
@@ -35,8 +36,6 @@ namespace EasyFarm
         /// </summary>
         public static AbilityService AbilityService;
 
-        private Container _container = new Container();
-
         public App()
         {
             Application.Current.DispatcherUnhandledException += (sender, e) =>
@@ -54,6 +53,9 @@ namespace EasyFarm
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            var updater = new LibraryUpdater();
+            updater.Update();
+
             LogViewModel.Write("Resources loaded");
             AbilityService = new AbilityService("resources");
             LogViewModel.Write("Application starting");
