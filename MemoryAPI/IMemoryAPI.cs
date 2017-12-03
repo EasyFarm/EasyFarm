@@ -1,9 +1,10 @@
-﻿using MemoryAPI.Windower;
+﻿using MemoryAPI.Chat;
+using MemoryAPI.Windower;
 
 namespace MemoryAPI
 {
     public interface IMemoryAPI
-    {        
+    {
         INavigatorTools Navigator { get; set; }
         INPCTools NPC { get; set; }
         System.Collections.Generic.Dictionary<byte, IPartyMemberTools> PartyMember { get; set; }
@@ -11,5 +12,6 @@ namespace MemoryAPI
         ITargetTools Target { get; set; }
         ITimerTools Timer { get; set; }
         IWindowerTools Windower { get; set; }
+        IChatTools Chat { get; set; }
     }
 }

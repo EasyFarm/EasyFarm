@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chat\IChatTools.cs" />
     <Compile Include="Enums\enums.cs" />
     <Compile Include="Enums\NPCType.cs" />
     <Compile Include="Enums\Structures.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="IMemoryAPI.cs" />
     <Compile Include="Memory\EliteMMOWrapper.cs" />
     <Compile Include="Memory\MemoryWrapper.cs" />
+    <Compile Include="Memory\PollingProcessor.cs" />
     <Compile Include="Memory\RuntimeCache.cs" />
     <Compile Include="Navigation\Position.cs" />
     <Compile Include="Navigation\INavigatorTools.cs" />

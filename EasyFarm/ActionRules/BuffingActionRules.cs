@@ -22,6 +22,7 @@ namespace EasyFarm.ActionRules
             rules.Add(new SpellBlockedActionRule());
             rules.Add(new StatusEffectActionRule());
             rules.Add(new UsageLimitActionRule());
+            rules.Add(new TrustMagicWithAggro());
         }
 
         public bool IsValid(ActionContext context)

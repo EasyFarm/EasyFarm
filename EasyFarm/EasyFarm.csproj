@@ -180,6 +180,7 @@
     <Compile Include="ActionRules\ReserveTpActionRule.cs" />
     <Compile Include="ActionRules\SpellBlockedActionRule.cs" />
     <Compile Include="ActionRules\StatusEffectActionRule.cs" />
+    <Compile Include="ActionRules\TrustMagicWithAggro.cs" />
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\AppServices.cs" />
