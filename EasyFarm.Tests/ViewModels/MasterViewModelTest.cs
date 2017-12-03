@@ -22,7 +22,7 @@ namespace EasyFarm.Tests.ViewModels
                 Assert.Equal("EasyFarm", sut.MainWindowTitle);
 
                 // Teardown
-            }            
+            }
 
             [Fact]
             public void StatusBarTextIsBlank()

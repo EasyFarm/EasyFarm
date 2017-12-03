@@ -103,6 +103,10 @@
       <HintPath>Dependencies\EliteMMO.API.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.6.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.6.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.2.4.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -188,6 +192,7 @@
     <Compile Include="Classes\Range.cs" />
     <Compile Include="Classes\Serialization.cs" />
     <Compile Include="Classes\TimeWaiter.cs" />
+    <Compile Include="Classes\LibraryUpdater.cs" />
     <Compile Include="Classes\XmlPersister.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
     <Compile Include="Logging\ILogger.cs" />
