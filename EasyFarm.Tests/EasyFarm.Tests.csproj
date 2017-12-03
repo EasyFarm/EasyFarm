@@ -89,6 +89,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomAssert.cs" />
+    <Compile Include="Classes\MenuTests.cs" />
     <Compile Include="ModuleInitializer.cs" />
     <Compile Include="States\TravelStateTests.cs" />
     <Compile Include="TestTypes\AbstractTestFixture.cs" />

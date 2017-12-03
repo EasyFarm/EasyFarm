@@ -184,6 +184,7 @@
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\AppServices.cs" />
     <Compile Include="Classes\IUnit.cs" />
+    <Compile Include="Classes\MenuCommand.cs" />
     <Compile Include="Classes\Persister.cs" />
     <Compile Include="Classes\JsonPersister.cs" />
     <Compile Include="Classes\PlayerMonitor.cs" />
@@ -208,6 +209,7 @@
     </Compile>
     <Compile Include="Classes\ConfigFactory.cs" />
     <Compile Include="Classes\IConfigFactory.cs" />
+    <Compile Include="States\MenuState.cs" />
     <Compile Include="States\PlayerMovementTracker.cs" />
     <Compile Include="States\Route.cs" />
     <Compile Include="States\SummonTrustsState.cs" />
@@ -277,6 +279,7 @@
     <Compile Include="States\PullState.cs" />
     <Compile Include="States\WeaponskillState.cs" />
     <Compile Include="Classes\SystemTray.cs" />
+    <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\TargetingViewModel.cs" />
     <Compile Include="Views\AbilityView.xaml.cs">
       <DependentUpon>AbilityView.xaml</DependentUpon>
@@ -316,6 +319,9 @@
     </Compile>
     <Compile Include="Views\RestingView.xaml.cs">
       <DependentUpon>RestingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuView.xaml.cs">
+      <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RoutesView.xaml.cs">
       <DependentUpon>RoutesView.xaml</DependentUpon>
@@ -414,6 +420,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\MenuView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\RoutesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

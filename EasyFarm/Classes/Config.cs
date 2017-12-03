@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 ///////////////////////////////////////////////////////////////////
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 using EasyFarm.States;
@@ -173,6 +175,8 @@ namespace EasyFarm.Classes
         /// Bot runs a straight route.
         /// </summary>
         public bool StraightRoute => Route.StraightRoute;
+
+        public string MenuCommands { get; set; }
 
         /// <summary>
         /// Number of trusts allowable in the party.

@@ -14,6 +14,9 @@
     <DataTemplate DataType="{x:Type viewModels:RoutesViewModel}">
         <views:RoutesView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:MenuViewModel}">
+        <views:MenuView />
+    </DataTemplate>
     <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
         <views:SettingsView />
     </DataTemplate>

@@ -42,11 +42,12 @@ namespace EasyFarm.ViewModels
             ViewModels = new ObservableCollection<IViewModel>(
                 new List<IViewModel>
                 {
-                    new BattlesViewModel(),                    
+                    new BattlesViewModel(),
                     new TargetingViewModel(),
                     new RestingViewModel(),
                     new RoutesViewModel(),
                     new FollowViewModel(),
+                    new MenuViewModel(),
                     new LogViewModel(),
                     new SettingsViewModel()
                 });
