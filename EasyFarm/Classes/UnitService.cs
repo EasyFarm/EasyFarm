@@ -26,7 +26,7 @@ namespace EasyFarm.Classes
     /// <summary>
     /// Retrieves the zone's unit data.
     /// </summary>
-    public class UnitService
+    public class UnitService : IUnitService
     {
         private static bool _isInitialized;
 
@@ -42,7 +42,7 @@ namespace EasyFarm.Classes
                 .Cast<IUnit>().ToList();
 
             _isInitialized = true;
-        }        
+        }
 
         /// <summary>
         /// The zone's unit array.

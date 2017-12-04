@@ -219,3 +219,4 @@ Build/coverage
 Build/result.xml
 Build/duplication.xml
 !Build
+*.config

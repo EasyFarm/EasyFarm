@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using MemoryAPI;
 using EasyFarm.Classes;
@@ -94,7 +96,7 @@ namespace EasyFarm.Tests.Classes
             public void ActionNotUsableWhenUsageLimitIsReached()
             {
                 _battleAbility.UsageLimit = 1;
-                _battleAbility.Usages = 1;
+                _battleAbility.Usages = 2;
                 VerifyActionNotUsable();
             }
 
@@ -160,8 +162,11 @@ namespace EasyFarm.Tests.Classes
             public void VerifyActionNotUsable()
             {
                 var memoryAPI = FindMemoryApi();
-                var result = ActionFilters.BuffingFilter(memoryAPI, _battleAbility);
-                Assert.False(result);
+                var result = ActionFilters.ValidateBuffingAction(memoryAPI, _battleAbility, new List<IUnit>
+                {
+                    new FakeUnit()
+                }).ToList();
+                Assert.NotEmpty(result);
             }
         }
 
