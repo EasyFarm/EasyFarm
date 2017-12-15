@@ -1,6 +1,8 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using DryIoc;
+using EasyFarm.Logging;
 using MediatR;
 
 namespace EasyFarm.Infrastructure
@@ -18,9 +20,16 @@ namespace EasyFarm.Infrastructure
 
         public Task Handle(NavigateViewRequest message, CancellationToken cancellationToken)
         {
-            if (_app.MainWindow != null)
+            try
             {
-                _app.MainWindow.DataContext = _container.Resolve(message.Type);
+                if (_app.MainWindow != null)
+                {
+                    _app.MainWindow.DataContext = _container.Resolve(message.Type);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(new LogEntry(LoggingEventType.Fatal, "Failed to create window", ex));
             }
 
             return Task.FromResult(true);

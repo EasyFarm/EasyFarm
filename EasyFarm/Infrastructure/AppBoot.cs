@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using DryIoc;
+using EasyFarm.Classes;
+using EasyFarm.ViewModels;
 using EasyFarm.Views;
 using MediatR;
 
@@ -17,6 +19,11 @@ namespace EasyFarm.Infrastructure
             _container = CreateContainer();
             _mediatr = _container.Resolve<IMediator>();
             _app.MainWindow = new MasterView();
+        }
+
+        public void Initialize()
+        {
+            SystemTray.ConfigureTray(_app.MainWindow);
         }
 
         public object ViewModel => _app.MainWindow?.DataContext;
@@ -38,6 +45,11 @@ namespace EasyFarm.Infrastructure
         private void RegisterApp(Container container)
         {
             container.RegisterInstance(_app);
+            container.RegisterMany(new []{ typeof(App).GetAssembly() },
+                type =>
+                    type.Name.EndsWith("ViewModel") &&
+                    type.GetInterface(typeof(IViewModel).Name, false) != null);
+            container.Register<IRequestHandler<NavigateViewRequest>, NavigateViewRequestHandler>();
         }
 
         private void RegisterMediatr(Container container)

@@ -174,6 +174,11 @@ namespace EasyFarm.UserSettings
         public bool StraightRoute => Route.StraightRoute;
 
         /// <summary>
+        /// Whether program should minimize to system tray.
+        /// </summary>
+        public bool MinimizeToTray { get; set; }
+
+        /// <summary>
         /// Number of trusts allowable in the party.
         /// </summary>
         public int TrustPartySize = Constants.TrustPartySize;

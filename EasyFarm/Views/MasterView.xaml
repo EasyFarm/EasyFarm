@@ -79,7 +79,8 @@
             </MenuItem>
         </Menu>
 
-        <views:MainView Grid.Row="1"
+        <ContentControl Content="{Binding ViewModel}"
+                        Grid.Row="1"
                         Grid.ColumnSpan="2" 
                         Grid.Column="0" />
 

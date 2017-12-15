@@ -55,6 +55,7 @@ namespace EasyFarm
             Logger.Log(new LogEntry(LoggingEventType.Information, "EasyFarm Started ..."));
 
             var appBoot = new AppBoot(app);
+            appBoot.Initialize();
             appBoot.Navigate<MasterViewModel>();
             appBoot.Show();
         }

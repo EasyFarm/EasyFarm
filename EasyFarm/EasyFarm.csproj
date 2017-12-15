@@ -199,8 +199,8 @@
     <Compile Include="Infrastructure\AppBoot.cs" />
     <Compile Include="Infrastructure\DatabaseFactory.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
-    <Compile Include="Infrastructure\NavigateViewRequest.cs" />
-    <Compile Include="Infrastructure\NavigateViewRequestHandler.cs" />
+    <Compile Include="Handlers\NavigateViewRequest.cs" />
+    <Compile Include="Handlers\NavigateViewRequestHandler.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\NLogTextFileLogger.cs" />
@@ -281,9 +281,6 @@
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="Views\ContentWindow.xaml.cs">
-      <DependentUpon>ContentWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\FollowView.xaml.cs">
       <DependentUpon>FollowView.xaml</DependentUpon>
     </Compile>
@@ -367,10 +364,6 @@
     <Page Include="Views\AbilityView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ContentWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FollowView.xaml">
       <SubType>Designer</SubType>

@@ -15,14 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System;
 
 namespace EasyFarm.Classes
 {
     public interface ISystemTray
     {
-        void ConfigureSystemTray(Action minimizingAction, Action unminimizingAction);
-        void Minimize(string title, string text);        
-        void Unminimize();        
+        void ConfigureTray();
+        void Minimize(string title, string text);
+        void Unminimize();
     }
 }

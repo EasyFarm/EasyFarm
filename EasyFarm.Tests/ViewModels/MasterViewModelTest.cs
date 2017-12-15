@@ -57,8 +57,8 @@ namespace EasyFarm.Tests.ViewModels
 
             private static MasterViewModel CreateSut()
             {
-                return new MasterViewModel(Mock.Of<ISystemTray>());
+                return new MasterViewModel();
             }
-        }        
+        }
     }
 }

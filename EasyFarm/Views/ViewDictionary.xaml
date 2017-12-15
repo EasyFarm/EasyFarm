@@ -32,4 +32,7 @@
     <DataTemplate DataType="{x:Type viewModels:TargetingViewModel}">
         <views:TargetingView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:MainViewModel}">
+        <views:MainView />
+    </DataTemplate>
 </ResourceDictionary>

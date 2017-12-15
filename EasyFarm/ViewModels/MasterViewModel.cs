@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System;
 using System.Windows.Input;
 using EasyFarm.Classes;
@@ -34,8 +35,6 @@ namespace EasyFarm.ViewModels
     /// </summary>
     public class MasterViewModel : ViewModelBase
     {
-        private readonly ISystemTray _systemTray;
-
         /// <summary>
         ///     Saves and loads settings from file.
         /// </summary>
@@ -46,12 +45,9 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private string _startStopHeader = "St_art";
 
-        public MasterViewModel(ISystemTray systemTray)
+        public MasterViewModel()
         {
-            _systemTray = systemTray;
             _settingsManager = new SettingsManager("eup", "EasyFarm User Preference");
-
-            _systemTray.ConfigureSystemTray(SendToSystemTray, SendToTaskBar);
 
             AppServices.RegisterEvent<Events.StatusBarEvent>(e => StatusBarText = e.Message);
             AppServices.RegisterEvent<Events.PauseEvent>(x => StopEngine());
@@ -65,6 +61,8 @@ namespace EasyFarm.ViewModels
 
             OnLoad();
         }
+
+        public IViewModel ViewModel { get; set; } = new MainViewModel();
 
         private string _mainWindowTitle;
 
@@ -100,12 +98,15 @@ namespace EasyFarm.ViewModels
             set { SetProperty(ref _startStopHeader, value); }
         }
 
-        private bool _minimizedToTray;
-
         public bool MinimizeToTray
         {
-            get { return _minimizedToTray; }
-            set { SetProperty(ref _minimizedToTray, value); }
+            get { return Config.Instance.MinimizeToTray; }
+            set
+            {
+                bool instanceMinimizeToTray = false;
+                SetProperty(ref instanceMinimizeToTray, value);
+                Config.Instance.MinimizeToTray = instanceMinimizeToTray;
+            }
         }
 
         /// <summary>
@@ -268,19 +269,6 @@ namespace EasyFarm.ViewModels
         private void Exit()
         {
             Application.Current.Shutdown();
-        }
-
-        public void SendToSystemTray()
-        {
-            if (MinimizeToTray)
-            {
-                _systemTray.Minimize(MainWindowTitle, @"EasyFarm has been minimized.");
-            }
-        }
-
-        public void SendToTaskBar()
-        {
-            _systemTray.Unminimize();
         }
 
         public void OnLoad()

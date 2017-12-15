@@ -15,44 +15,40 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System;
+
 using System.Windows;
 using System.Windows.Forms;
 using EasyFarm.Properties;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.Classes
 {
-    public class SystemTray : ISystemTray
+    public class SystemTray
     {
-        private readonly Window _window;
-        private readonly NotifyIcon _trayIcon;
+        private static Window _window;
+        private static readonly NotifyIcon TrayIcon = new NotifyIcon { Icon = Resources.trayicon };
 
-        public SystemTray(Window window, NotifyIcon trayIcon)
+        public static void ConfigureTray(Window window)
         {
             _window = window;
-            _trayIcon = trayIcon;
-            _trayIcon.Icon = Resources.trayicon;
+            _window.StateChanged += (s, e) => Minimize(_window.Title, @"EasyFarm has been minimized.");
+            TrayIcon.Click += (s, e) => Unminimize();
+            TrayIcon.BalloonTipClicked += (s, e) => Unminimize();
         }
 
-        public void Minimize(string title, string text)
+        public static void Minimize(string title, string text)
         {
-            if (_window.WindowState != WindowState.Minimized) return;
-            _window.Visibility = Visibility.Hidden;
-            _window.ShowInTaskbar = false;
-            _trayIcon.Visible = true;
-            _trayIcon.ShowBalloonTip(5, title, text, ToolTipIcon.Info);
+            if (Config.Instance.MinimizeToTray)
+            {
+                if (_window.WindowState != WindowState.Minimized) return;
+                _window.Visibility = Visibility.Hidden;
+                _window.ShowInTaskbar = false;
+                TrayIcon.Visible = true;
+                TrayIcon.ShowBalloonTip(5, title, text, ToolTipIcon.Info);
+            }
         }
 
-        public void ConfigureSystemTray(
-            Action minimizeAction,
-            Action unminimizeAction)
-        {
-            _window.StateChanged += (s, e) => minimizeAction();
-            _trayIcon.Click += (s, e) => unminimizeAction();
-            _trayIcon.BalloonTipClicked += (s, e) => unminimizeAction();
-        }
-
-        public void Unminimize()
+        public static void Unminimize()
         {
             _window.Show();
             _window.WindowState = WindowState.Normal;
@@ -60,7 +56,7 @@ namespace EasyFarm.Classes
             _window.Topmost = true;
             _window.Topmost = false;
             _window.Focus();
-            _trayIcon.Visible = false;
+            TrayIcon.Visible = false;
             _window.ShowInTaskbar = true;
         }
     }
