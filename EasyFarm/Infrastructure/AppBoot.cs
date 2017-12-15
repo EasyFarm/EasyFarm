@@ -1,7 +1,9 @@
-﻿using System.Reflection;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reflection;
 using DryIoc;
 using EasyFarm.Classes;
-using EasyFarm.ViewModels;
+using EasyFarm.Handlers;
 using EasyFarm.Views;
 using MediatR;
 
@@ -46,9 +48,8 @@ namespace EasyFarm.Infrastructure
         {
             container.RegisterInstance(_app);
             container.RegisterMany(new []{ typeof(App).GetAssembly() },
-                type =>
-                    type.Name.EndsWith("ViewModel") &&
-                    type.GetInterface(typeof(IViewModel).Name, false) != null);
+                type => type.Name.EndsWith("ViewModel"));
+            container.Register<TabViewModels>();
             container.Register<IRequestHandler<NavigateViewRequest>, NavigateViewRequestHandler>();
         }
 

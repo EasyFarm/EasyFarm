@@ -2,10 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DryIoc;
+using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
 using MediatR;
 
-namespace EasyFarm.Infrastructure
+namespace EasyFarm.Handlers
 {
     public class NavigateViewRequestHandler : IRequestHandler<NavigateViewRequest>
     {

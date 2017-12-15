@@ -186,6 +186,7 @@
     <Compile Include="Classes\AppServices.cs" />
     <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\IUnitService.cs" />
+    <Compile Include="Infrastructure\TabViewModels.cs" />
     <Compile Include="Persistence\Persister.cs" />
     <Compile Include="Persistence\JsonPersister.cs" />
     <Compile Include="Classes\PlayerMonitor.cs" />

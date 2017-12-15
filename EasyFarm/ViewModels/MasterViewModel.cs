@@ -45,8 +45,15 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private string _startStopHeader = "St_art";
 
-        public MasterViewModel()
+        /// <summary>
+        /// The view's main body content.
+        /// </summary>
+        public IViewModel ViewModel { get; set; }
+
+        public MasterViewModel(MainViewModel mainViewModel)
         {
+            ViewModel = mainViewModel;
+
             _settingsManager = new SettingsManager("eup", "EasyFarm User Preference");
 
             AppServices.RegisterEvent<Events.StatusBarEvent>(e => StatusBarText = e.Message);
@@ -61,8 +68,6 @@ namespace EasyFarm.ViewModels
 
             OnLoad();
         }
-
-        public IViewModel ViewModel { get; set; } = new MainViewModel();
 
         private string _mainWindowTitle;
 

@@ -15,9 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System.Collections.Generic;
+
 using System.Collections.ObjectModel;
-using System.Linq;
 using EasyFarm.Infrastructure;
 
 namespace EasyFarm.ViewModels
@@ -35,20 +34,10 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private ObservableCollection<IViewModel> _viewModels;
 
-        public MainViewModel()
+        public MainViewModel(TabViewModels tableViewModel)
         {
-            // Get all enabled view models. 
-            ViewModels = new ObservableCollection<IViewModel>(
-                new List<IViewModel>
-                {
-                    new BattlesViewModel(),                    
-                    new TargetingViewModel(),
-                    new RestingViewModel(),
-                    new RoutesViewModel(),
-                    new FollowViewModel(),
-                    new LogViewModel(),
-                    new SettingsViewModel()
-                });
+            // Get all enabled view models.
+            ViewModels = new ObservableCollection<IViewModel>(tableViewModel.ViewModels);
         }
 
         /// <summary>
