@@ -21,6 +21,7 @@ using EasyFarm.Classes;
 using EasyFarm.Parsing;
 using EasyFarm.States;
 using EasyFarm.Tests.TestTypes;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 using Xunit;
 

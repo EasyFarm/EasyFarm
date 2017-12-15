@@ -19,6 +19,7 @@ using MemoryAPI;
 using System.Linq;
 using EasyFarm.Classes;
 using System.Collections.Generic;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.States {
     public class SummonTrustsState : CombatState {

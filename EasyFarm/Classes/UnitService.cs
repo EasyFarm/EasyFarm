@@ -19,6 +19,7 @@ using MemoryAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.Classes
 {

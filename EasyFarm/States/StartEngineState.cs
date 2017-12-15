@@ -17,6 +17,7 @@
 // ///////////////////////////////////////////////////////////////////
 using System;
 using EasyFarm.Classes;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 
 namespace EasyFarm.States

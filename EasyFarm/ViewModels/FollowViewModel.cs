@@ -18,6 +18,7 @@
 using EasyFarm.Classes;
 using Prism.Mvvm;
 using EasyFarm.Infrastructure;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.ViewModels
 {

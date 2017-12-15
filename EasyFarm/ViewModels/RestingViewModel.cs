@@ -17,6 +17,7 @@
 // ///////////////////////////////////////////////////////////////////
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.ViewModels
 {

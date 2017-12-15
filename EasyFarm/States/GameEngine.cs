@@ -16,6 +16,7 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 using EasyFarm.Classes;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 
 namespace EasyFarm.States

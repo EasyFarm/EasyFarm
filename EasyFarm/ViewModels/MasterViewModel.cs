@@ -20,6 +20,8 @@ using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
+using EasyFarm.Persistence;
+using EasyFarm.UserSettings;
 using EasyFarm.Views;
 using Prism.Commands;
 using Application = System.Windows.Application;

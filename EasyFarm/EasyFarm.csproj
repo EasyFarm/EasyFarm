@@ -111,8 +111,16 @@
       <HintPath>..\packages\HtmlAgilityPack.1.6.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="LiteDB, Version=4.0.0.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.4.0.0\lib\net40\LiteDB.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.2.4.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MediatR, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediatR.4.0.1\lib\net45\MediatR.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -154,10 +162,6 @@
       <HintPath>$(SolutionDir)packages\Prism.Wpf.6.1.0\lib\net45\Prism.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SimpleInjector, Version=3.3.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleInjector.3.3.2\lib\net45\SimpleInjector.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Drawing" />
@@ -182,17 +186,21 @@
     <Compile Include="Classes\AppServices.cs" />
     <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\IUnitService.cs" />
-    <Compile Include="Classes\Persister.cs" />
-    <Compile Include="Classes\JsonPersister.cs" />
+    <Compile Include="Persistence\Persister.cs" />
+    <Compile Include="Persistence\JsonPersister.cs" />
     <Compile Include="Classes\PlayerMonitor.cs" />
     <Compile Include="Classes\PathRecorder.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Range.cs" />
-    <Compile Include="Classes\Serialization.cs" />
+    <Compile Include="Persistence\Serialization.cs" />
     <Compile Include="Classes\TimeWaiter.cs" />
     <Compile Include="Classes\LibraryUpdater.cs" />
-    <Compile Include="Classes\XmlPersister.cs" />
+    <Compile Include="Persistence\XmlPersister.cs" />
+    <Compile Include="Infrastructure\AppBoot.cs" />
+    <Compile Include="Infrastructure\DatabaseFactory.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
+    <Compile Include="Infrastructure\NavigateViewRequest.cs" />
+    <Compile Include="Infrastructure\NavigateViewRequestHandler.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\NLogTextFileLogger.cs" />
@@ -204,8 +212,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Classes\ConfigFactory.cs" />
-    <Compile Include="Classes\IConfigFactory.cs" />
+    <Compile Include="UserSettings\ConfigFactory.cs" />
+    <Compile Include="UserSettings\IConfigFactory.cs" />
     <Compile Include="States\PlayerMovementTracker.cs" />
     <Compile Include="States\Route.cs" />
     <Compile Include="States\SummonTrustsState.cs" />
@@ -249,14 +257,14 @@
     <Compile Include="Classes\Extensions.cs" />
     <Compile Include="Classes\AbilityUtils.cs" />
     <Compile Include="Classes\ProhibitEffects.cs" />
-    <Compile Include="Classes\SettingsManager.cs" />
+    <Compile Include="Persistence\SettingsManager.cs" />
     <Compile Include="Classes\ActionFilters.cs" />
     <Compile Include="Classes\UnitFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="States\FiniteStateMachine.cs" />
     <Compile Include="States\HealingState.cs" />
     <Compile Include="States\EndState.cs" />
-    <Compile Include="Classes\Config.cs" />
+    <Compile Include="UserSettings\Config.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -273,6 +281,9 @@
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\ContentWindow.xaml.cs">
+      <DependentUpon>ContentWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FollowView.xaml.cs">
       <DependentUpon>FollowView.xaml</DependentUpon>
     </Compile>
@@ -318,8 +329,8 @@
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Constants.cs" />
-    <Compile Include="Classes\IPersister.cs" />
+    <Compile Include="UserSettings\Constants.cs" />
+    <Compile Include="Persistence\IPersister.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\UnitService.cs" />
   </ItemGroup>
@@ -356,6 +367,10 @@
     <Page Include="Views\AbilityView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ContentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FollowView.xaml">
       <SubType>Designer</SubType>
@@ -436,6 +451,10 @@
     <None Include="trayicon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DryIoc\DryIoc.csproj">
+      <Project>{b2b49d09-ce1f-427d-9bae-e56c98b7dcfc}</Project>
+      <Name>DryIoc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MemoryAPI\MemoryAPI.csproj">
       <Project>{cc6cc9be-32f0-4b8a-a1ad-6c7c744e2fad}</Project>
       <Name>MemoryAPI</Name>

@@ -17,6 +17,7 @@
 // ///////////////////////////////////////////////////////////////////
 using EasyFarm.Classes;
 using EasyFarm.States;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 using MemoryAPI.Navigation;
 using Moq;

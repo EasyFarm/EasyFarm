@@ -18,6 +18,7 @@
 using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
+using EasyFarm.UserSettings;
 using Prism.Commands;
 
 namespace EasyFarm.ViewModels

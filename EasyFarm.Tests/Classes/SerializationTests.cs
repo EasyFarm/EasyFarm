@@ -19,6 +19,8 @@ using System;
 using System.IO;
 using System.Linq;
 using EasyFarm.Classes;
+using EasyFarm.Persistence;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 using Ploeh.AutoFixture;
 using Xunit;

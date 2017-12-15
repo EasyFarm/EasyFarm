@@ -15,43 +15,37 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
+using System;
 using System.Windows;
 using EasyFarm.Classes;
+using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
 using EasyFarm.Properties;
 using EasyFarm.Parsing;
 using EasyFarm.ViewModels;
-using SimpleInjector;
 
 namespace EasyFarm
 {
-    /// <summary>
-    ///     Interaction logic for App.xaml
-    /// </summary>
     public partial class App
     {
-        /// <summary>
-        ///     XML parser for looking up ability, spell and weaponskill data.
-        /// </summary>
         public static AbilityService AbilityService;
 
-        public App()
+        public static Action<App> DefaultInitializer { get; set; } = InitializeApp;
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            DefaultInitializer.Invoke(this);
+        }
+
+        private static void InitializeApp(App app)
         {
             Application.Current.DispatcherUnhandledException += (sender, e) =>
             {
                 Logger.Log(new LogEntry(LoggingEventType.Fatal, "Unhandled Exception", e.Exception));
                 MessageBox.Show(e.Exception.Message, "An exception has occurred. ", MessageBoxButton.OK, MessageBoxImage.Error);
             };
-        }
 
-        /// <summary>
-        ///     Gets the user's selected fface Session and
-        ///     starts up the program.
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
             var updater = new LibraryUpdater();
             updater.Update();
 
@@ -59,6 +53,10 @@ namespace EasyFarm
             AbilityService = new AbilityService("resources");
             LogViewModel.Write("Application starting");
             Logger.Log(new LogEntry(LoggingEventType.Information, "EasyFarm Started ..."));
+
+            var appBoot = new AppBoot(app);
+            appBoot.Navigate<MasterViewModel>();
+            appBoot.Show();
         }
 
         /// <summary>

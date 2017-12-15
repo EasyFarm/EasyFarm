@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using EasyFarm.Parsing;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 using StatusEffect = MemoryAPI.StatusEffect;
 

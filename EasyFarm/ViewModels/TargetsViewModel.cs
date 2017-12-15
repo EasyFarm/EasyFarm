@@ -17,6 +17,7 @@
 // ///////////////////////////////////////////////////////////////////
 using System.Collections.ObjectModel;
 using EasyFarm.Classes;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.ViewModels
 {

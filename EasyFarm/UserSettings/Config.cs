@@ -15,15 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
+using EasyFarm.Classes;
 using EasyFarm.States;
 using Prism.Mvvm;
-using MemoryAPI;
-using MemoryAPI.Navigation;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.UserSettings
 {
     /// <summary>
     ///     A configuration file for the user to edit through his GUI.

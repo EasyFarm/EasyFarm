@@ -24,6 +24,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml.Serialization;
 using EasyFarm.Parsing;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.Classes
 {

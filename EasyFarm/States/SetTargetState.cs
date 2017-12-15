@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.Logging;
+using EasyFarm.UserSettings;
 using EasyFarm.ViewModels;
 using MemoryAPI;
 

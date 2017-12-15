@@ -19,6 +19,7 @@ using System;
 using System.Diagnostics;
 using MemoryAPI;
 using System.Threading;
+using EasyFarm.UserSettings;
 using EliteMMO.API;
 
 namespace EasyFarm.Classes
