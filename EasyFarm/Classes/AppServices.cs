@@ -43,6 +43,12 @@ namespace EasyFarm.Classes
             PublishEvent(statusBarEvent);
         }
 
+        public static void UpdateTitle(string message, params object[] values)
+        {
+            var statusBarEvent = new Events.TitleEvent { Message = string.Format(message, values) };
+            PublishEvent(statusBarEvent);
+        }
+
         public static void SendPauseEvent()
         {
             PublishEvent<Events.PauseEvent>();

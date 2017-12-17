@@ -4,6 +4,7 @@ using System.Reflection;
 using DryIoc;
 using EasyFarm.Classes;
 using EasyFarm.Handlers;
+using EasyFarm.ViewModels;
 using EasyFarm.Views;
 using MediatR;
 
@@ -51,6 +52,7 @@ namespace EasyFarm.Infrastructure
                 type => type.Name.EndsWith("ViewModel"));
             container.Register<TabViewModels>();
             container.Register<IRequestHandler<NavigateViewRequest>, NavigateViewRequestHandler>();
+            container.Register<IRequestHandler<SelectProcessRequest>, SelectProcessRequestHandler>();
         }
 
         private void RegisterMediatr(Container container)

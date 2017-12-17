@@ -15,9 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using EasyFarm.Classes;
 using EasyFarm.ViewModels;
-using Moq;
 using Xunit;
 
 namespace EasyFarm.Tests.ViewModels
@@ -57,7 +55,7 @@ namespace EasyFarm.Tests.ViewModels
 
             private static MasterViewModel CreateSut()
             {
-                return new MasterViewModel();
+                return new MasterViewModel(null);
             }
         }
     }

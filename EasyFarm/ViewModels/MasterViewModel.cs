@@ -23,10 +23,9 @@ using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
 using EasyFarm.Persistence;
 using EasyFarm.UserSettings;
-using EasyFarm.Views;
+using MediatR;
 using Prism.Commands;
 using Application = System.Windows.Application;
-using MemoryAPI.Memory;
 
 namespace EasyFarm.ViewModels
 {
@@ -35,6 +34,8 @@ namespace EasyFarm.ViewModels
     /// </summary>
     public class MasterViewModel : ViewModelBase
     {
+        private readonly IMediator _mediator;
+
         /// <summary>
         ///     Saves and loads settings from file.
         /// </summary>
@@ -50,12 +51,14 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public IViewModel ViewModel { get; set; }
 
-        public MasterViewModel(MainViewModel mainViewModel)
+        public MasterViewModel(MainViewModel mainViewModel, IMediator mediator)
         {
+            _mediator = mediator;
             ViewModel = mainViewModel;
 
             _settingsManager = new SettingsManager("eup", "EasyFarm User Preference");
 
+            AppServices.RegisterEvent<Events.TitleEvent>(e => MainWindowTitle = e.Message);
             AppServices.RegisterEvent<Events.StatusBarEvent>(e => StatusBarText = e.Message);
             AppServices.RegisterEvent<Events.PauseEvent>(x => StopEngine());
             AppServices.RegisterEvent<Events.ResumeEvent>(x => StartEngine());
@@ -164,7 +167,7 @@ namespace EasyFarm.ViewModels
         private void StartEngine()
         {
             LogViewModel.Write("Bot now running");
-            AppServices.InformUser("Program running.");            
+            AppServices.InformUser("Program running.");
             var isStarted = GameEngine.Start();
             if (!isStarted) return;
             StartPauseHeader = "P_ause";
@@ -190,7 +193,7 @@ namespace EasyFarm.ViewModels
                 LogViewModel.Write("Settings saved");
             }
             catch (InvalidOperationException ex)
-            {                
+            {
                 AppServices.InformUser("Failed to save settings.");
                 Logger.Log(new LogEntry(LoggingEventType.Error, $"{GetType()}.{nameof(Save)} : Failure on save settings", ex));
             }
@@ -230,42 +233,9 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private void SelectProcess()
         {
-            // Let user select ffxi process
-            var selectionView = new ProcessSelectionView();
-            selectionView.ShowDialog();
-
-            // Grab the view model with the game sessions.
-            var viewModel = selectionView.DataContext as ProcessSelectionViewModel;
-
-            // If the view has a process selection view model binded to it.
-            if (viewModel != null)
-            {
-                // Get the selected process.
-                var process = viewModel.SelectedProcess;
-
-                // User never selected a process.
-                if (process == null || !viewModel.IsProcessSelected)
-                {
-                    LogViewModel.Write("Process not found");
-                    AppServices.InformUser("No valid process was selected.");
-                    return;
-                }
-
-                // Log that a process selected.
-                LogViewModel.Write("Process found");
-
-                // Get memory reader set in config file.
-                var fface = MemoryWrapper.Create(process.Id);
-
-                // Set the fface Session.
-                SetSession(fface);
-
-                // Tell the user the program has loaded the player's data
-                AppServices.InformUser("Bot Loaded: " + fface.Player.Name);
-
-                // Set the main window's title to the player's name.
-                MainWindowTitle = "EasyFarm - " + fface.Player.Name;
-            }
+            _mediator.Send(new SelectProcessRequest())
+                .GetAwaiter()
+                .GetResult();
         }
 
         /// <summary>

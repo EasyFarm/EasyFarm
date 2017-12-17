@@ -29,5 +29,10 @@ namespace EasyFarm.Infrastructure
         public class PauseEvent { }
 
         public class ResumeEvent { }
-    }    
+
+        public class TitleEvent
+        {
+            public string Message { get; set; }
+        }
+    }
 }

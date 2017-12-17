@@ -48,7 +48,7 @@ namespace EasyFarm.Infrastructure
         /// Set up session from given fface session.
         /// </summary>
         /// <param name="fface"></param>
-        protected static void SetSession(IMemoryAPI fface)
+        public static void SetSession(IMemoryAPI fface)
         {
             if (fface == null) return;
 

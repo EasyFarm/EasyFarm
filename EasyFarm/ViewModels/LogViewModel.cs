@@ -18,7 +18,6 @@
 using System.Collections.ObjectModel;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
-using EasyFarm.Logging;
 
 namespace EasyFarm.ViewModels
 {
@@ -43,7 +42,7 @@ namespace EasyFarm.ViewModels
             lock (LockObject)
             {
                 LogEntries.Write(message);
-            }            
+            }
         }
     }
 }

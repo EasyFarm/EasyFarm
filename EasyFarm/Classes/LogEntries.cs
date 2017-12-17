@@ -61,7 +61,7 @@ namespace EasyFarm.Classes
         {
             LoggedItems.Add(message);
 
-            // Limit list to only 1000 items: prevent system out of memory exception. 
+            // Limit list to only 1000 items: prevent system out of memory exception.
             if (LoggedItems.Count > 1000)
             {
                 LoggedItems.Remove(LoggedItems.Last());
