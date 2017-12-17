@@ -55,7 +55,7 @@ namespace EasyFarm.Tests.ViewModels
 
             private static MasterViewModel CreateSut()
             {
-                return new MasterViewModel(null);
+                return new MasterViewModel(null, null);
             }
         }
     }
