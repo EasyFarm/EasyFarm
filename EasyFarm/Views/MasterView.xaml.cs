@@ -15,9 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System.Windows.Forms;
-using EasyFarm.Classes;
-using EasyFarm.ViewModels;
 
 namespace EasyFarm.Views
 {
@@ -27,7 +24,6 @@ namespace EasyFarm.Views
         public MasterView()
         {
             InitializeComponent();
-            DataContext = new MasterViewModel(new SystemTray(this, new NotifyIcon()));
         }
     }
 }

@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System;
 using System.Collections.Generic;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.Persistence
 {
     public class Persister : IPersister
     {

@@ -1,0 +1,96 @@
+﻿<dialogs:CustomDialog x:Class="EasyFarm.Views.SelectProcessDialog"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d" Margin="20">
+    <dialogs:CustomDialog.Style>
+        <Style TargetType="{x:Type dialogs:BaseMetroDialog}"
+        BasedOn="{StaticResource {x:Type dialogs:BaseMetroDialog}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type dialogs:BaseMetroDialog}">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="DialogShownStoryboard">
+                                <DoubleAnimation AccelerationRatio=".9"
+                                            BeginTime="0:0:0"
+                                            Duration="0:0:0.2"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1" />
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+                        <Grid Background="{TemplateBinding Background}">
+                            <Border FocusVisualStyle="{x:Null}"
+                            Focusable="False">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <ContentPresenter Grid.Row="0"
+                                                Content="{TemplateBinding DialogTop}" />
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="5*" />
+                                            <ColumnDefinition Width="90*" />
+                                            <ColumnDefinition Width="5*" />
+                                        </Grid.ColumnDefinitions>
+                                        <!--  Content area  -->
+                                        <Grid Grid.Column="1"
+                                        Margin="0 10 0 0">
+                                            <ContentPresenter 
+                                                Grid.Row="1"
+                                                Content="{TemplateBinding Content}" />
+                                        </Grid>
+                                    </Grid>
+                                    <ContentPresenter Grid.Row="2"
+                                                Content="{TemplateBinding DialogBottom}" />
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard Storyboard="{StaticResource DialogShownStoryboard}" />
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </dialogs:CustomDialog.Style>
+    <dialogs:CustomDialog.DialogBottom>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <!-- Shuts down the process selection view. -->
+            <Button Content="Set Character"
+                    Command="{Binding SelectCommand}" />
+            <Button Grid.Column="1"
+                    Content="Refresh"
+                    Command="{Binding RefreshCommand}"/>
+        </Grid>
+    </dialogs:CustomDialog.DialogBottom>
+
+    <dialogs:CustomDialog.Content>
+        <!-- A view for currently running game sessions. -->
+        <ListView Name="LsvGameSessons"
+                  ItemsSource="{Binding Processes}"
+                  SelectedItem="{Binding SelectedProcess}">
+            <ListView.View>
+                <!-- The headers for session information. -->
+                <GridView>
+                    <GridViewColumn Header="Process ID"
+                                    DisplayMemberBinding="{Binding Path=Id}" />
+                    <GridViewColumn Header="Character Name"
+                                    DisplayMemberBinding="{Binding Path=MainWindowTitle}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </dialogs:CustomDialog.Content>
+</dialogs:CustomDialog>

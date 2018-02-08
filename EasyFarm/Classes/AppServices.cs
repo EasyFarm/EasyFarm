@@ -17,7 +17,7 @@
 // ///////////////////////////////////////////////////////////////////
 using System;
 using EasyFarm.Infrastructure;
-using Prism.Events;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace EasyFarm.Classes
 {
@@ -30,7 +30,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Sends messages mostly to the status bar.
         /// </summary>
-        public static IEventAggregator EventAggregator { get; set; } = new EventAggregator();
+        public static IMessenger EventAggregator { get; set; } = Messenger.Default;
 
         /// <summary>
         ///     Update the user on what's happening.
@@ -40,6 +40,12 @@ namespace EasyFarm.Classes
         public static void InformUser(string message, params object[] values)
         {
             var statusBarEvent = new Events.StatusBarEvent {Message = string.Format(message, values)};
+            PublishEvent(statusBarEvent);
+        }
+
+        public static void UpdateTitle(string message, params object[] values)
+        {
+            var statusBarEvent = new Events.TitleEvent { Message = string.Format(message, values) };
             PublishEvent(statusBarEvent);
         }
 
@@ -55,12 +61,12 @@ namespace EasyFarm.Classes
 
         private static void PublishEvent<T>(T value = default(T)) where T : class
         {
-            EventAggregator.GetEvent<PubSubEvent<T>>().Publish(value);
+            EventAggregator.Send(value);
         }
 
-        public static void RegisterEvent<T>(Action<T> action)
+        public static void RegisterEvent<T>(object receipent, Action<T> action)
         {
-            EventAggregator.GetEvent<PubSubEvent<T>>().Subscribe(action);
+            EventAggregator.Register<T>(receipent, action);
         }
     }
 }

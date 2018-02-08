@@ -15,21 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
+using EasyFarm.Classes;
+using EasyFarm.Infrastructure;
 using EasyFarm.States;
-using Prism.Mvvm;
-using MemoryAPI;
-using MemoryAPI.Navigation;
 
-namespace EasyFarm.Classes
+
+namespace EasyFarm.UserSettings
 {
     /// <summary>
     ///     A configuration file for the user to edit through his GUI.
     ///     Gives the bot access to all of his decisions.
     /// </summary>
-    public class Config : BindableBase
+    public class Config : ViewModelBase
     {
         [XmlIgnore] private static Lazy<Config> _lazy = new Lazy<Config>(() => new Config());
 
@@ -172,6 +173,11 @@ namespace EasyFarm.Classes
         /// Bot runs a straight route.
         /// </summary>
         public bool StraightRoute => Route.StraightRoute;
+
+        /// <summary>
+        /// Whether program should minimize to system tray.
+        /// </summary>
+        public bool MinimizeToTray { get; set; }
 
         /// <summary>
         /// Number of trusts allowable in the party.

@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using Prism.Commands;
+
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using EasyFarm.Infrastructure;
+using GalaSoft.MvvmLight.Command;
 
 namespace EasyFarm.ViewModels
 {
@@ -40,9 +41,9 @@ namespace EasyFarm.ViewModels
 
         public ListViewModel()
         {
-            AddCommand = new DelegateCommand(Add);
-            DeleteCommand = new DelegateCommand(Delete);
-            ClearCommand = new DelegateCommand(Clear);
+            AddCommand = new RelayCommand(Add);
+            DeleteCommand = new RelayCommand(Delete);
+            ClearCommand = new RelayCommand(Clear);
         }
 
         /// <summary>

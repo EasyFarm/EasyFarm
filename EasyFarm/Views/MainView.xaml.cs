@@ -27,7 +27,6 @@ namespace EasyFarm.Views
         public MainView()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
         }
     }
 }

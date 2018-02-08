@@ -15,20 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-namespace EasyFarm.Classes
+using EasyFarm.ViewModels;
+using MahApps.Metro.Controls.Dialogs;
+
+namespace EasyFarm.Views
 {
-    public static class Serialization
+    /// <summary>
+    ///     Interaction logic for ProcessSelectionView.xaml
+    /// </summary>
+    public partial class SelectProcessDialog : CustomDialog
     {
-        public static IPersister Instance { get; set; } = new Persister();
-
-        public static void Serialize<T>(string fileName, T value)
+        public SelectProcessDialog()
         {
-            Instance.Serialize(fileName, value);
-        }
-
-        public static T Deserialize<T>(string fileName)
-        {
-            return Instance.Deserialize<T>(fileName);
+            InitializeComponent();
         }
     }
 }

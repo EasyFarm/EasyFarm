@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-namespace EasyFarm.Classes
+namespace EasyFarm.UserSettings
 {
     public class Constants
     {

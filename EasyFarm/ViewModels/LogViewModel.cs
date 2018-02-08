@@ -18,7 +18,6 @@
 using System.Collections.ObjectModel;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
-using EasyFarm.Logging;
 
 namespace EasyFarm.ViewModels
 {
@@ -35,7 +34,7 @@ namespace EasyFarm.ViewModels
         public ObservableCollection<string> LoggedItems
         {
             get { return LogEntries.LoggedItems; }
-            set { SetProperty(ref LogEntries.LoggedItems, value); }
+            set { Set(ref LogEntries.LoggedItems, value); }
         }
 
         public static void Write(string message)
@@ -43,7 +42,7 @@ namespace EasyFarm.ViewModels
             lock (LockObject)
             {
                 LogEntries.Write(message);
-            }            
+            }
         }
     }
 }

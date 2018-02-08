@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using Prism.Events;
 
 namespace EasyFarm.Infrastructure
 {
@@ -29,5 +28,10 @@ namespace EasyFarm.Infrastructure
         public class PauseEvent { }
 
         public class ResumeEvent { }
-    }    
+
+        public class TitleEvent
+        {
+            public string Message { get; set; }
+        }
+    }
 }

@@ -20,7 +20,8 @@ using System.Linq;
 using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
-using Prism.Commands;
+using EasyFarm.UserSettings;
+using GalaSoft.MvvmLight.Command;
 
 namespace EasyFarm.ViewModels
 {
@@ -28,9 +29,9 @@ namespace EasyFarm.ViewModels
     {
         public BattlesViewModel()
         {
-            AddActionCommand = new DelegateCommand(AddAction);
-            DeleteActionCommand = new DelegateCommand(DeleteAction);
-            ClearActionsCommand = new DelegateCommand(ClearActions);
+            AddActionCommand = new RelayCommand(AddAction);
+            DeleteActionCommand = new RelayCommand(DeleteAction);
+            ClearActionsCommand = new RelayCommand(ClearActions);
             ViewName = "Battles";
         }
 
@@ -40,7 +41,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 var lists = (ObservableCollection<BattleList>) Config.Instance.BattleLists;
-                SetProperty(ref lists, value);
+                Set(ref lists, value);
             }
         }
 

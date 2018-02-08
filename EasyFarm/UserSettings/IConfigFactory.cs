@@ -15,19 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using EasyFarm.ViewModels;
-
-namespace EasyFarm.Views
+namespace EasyFarm.UserSettings
 {
-    /// <summary>
-    ///     Interaction logic for ProcessSelectionView.xaml
-    /// </summary>
-    public partial class ProcessSelectionView
+    public interface IConfigFactory
     {
-        public ProcessSelectionView()
-        {
-            InitializeComponent();
-            DataContext = new ProcessSelectionViewModel(this);
-        }
+        Config GetConfig();
     }
 }

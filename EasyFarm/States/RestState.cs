@@ -18,6 +18,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EasyFarm.Classes;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 
 namespace EasyFarm.States

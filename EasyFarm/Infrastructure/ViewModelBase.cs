@@ -18,11 +18,10 @@
 using EasyFarm.Classes;
 using EasyFarm.States;
 using MemoryAPI;
-using Prism.Mvvm;
 
 namespace EasyFarm.Infrastructure
 {
-    public class ViewModelBase : BindableBase, IViewModel
+    public class ViewModelBase : GalaSoft.MvvmLight.ViewModelBase, IViewModel
     {
         /// <summary>
         ///     Global game engine controlling the player.
@@ -48,7 +47,7 @@ namespace EasyFarm.Infrastructure
         /// Set up session from given fface session.
         /// </summary>
         /// <param name="fface"></param>
-        protected static void SetSession(IMemoryAPI fface)
+        public static void SetSession(IMemoryAPI fface)
         {
             if (fface == null) return;
 

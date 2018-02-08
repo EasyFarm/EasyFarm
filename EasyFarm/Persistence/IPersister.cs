@@ -1,4 +1,4 @@
-﻿// ///////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 // This file is a part of EasyFarm for Final Fantasy XI
 // Copyright (C) 2013-2017 Mykezero
 // 
@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-namespace EasyFarm.Classes
+namespace EasyFarm.Persistence
 {
-    public interface IConfigFactory
+    public interface IPersister
     {
-        Config GetConfig();
+        void Serialize<T>(string fileName, T value);
+        T Deserialize<T>(string fileName);
     }
 }

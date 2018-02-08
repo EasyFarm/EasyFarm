@@ -15,9 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using EasyFarm.Classes;
 using EasyFarm.ViewModels;
-using Moq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace EasyFarm.Tests.ViewModels
@@ -27,13 +26,13 @@ namespace EasyFarm.Tests.ViewModels
         public class OnLoad
         {
             [Fact]
-            public void TitleBarContainsText()
+            public async Task TitleBarContainsText()
             {
                 // Fixture setup
                 var sut = CreateSut();
 
                 // Exercise system
-                sut.OnLoad();
+                await sut.OnLoad();
 
                 // Verify outcome
                 Assert.Equal("EasyFarm", sut.MainWindowTitle);
@@ -42,13 +41,13 @@ namespace EasyFarm.Tests.ViewModels
             }
 
             [Fact]
-            public void StatusBarTextIsBlank()
+            public async Task StatusBarTextIsBlank()
             {
                 // Fixture setup
                 var sut = CreateSut();
 
                 // Exercise system
-                sut.OnLoad();
+                await sut.OnLoad();
 
                 // Verify outcome
                 Assert.Equal("", sut.StatusBarText);
@@ -57,8 +56,8 @@ namespace EasyFarm.Tests.ViewModels
 
             private static MasterViewModel CreateSut()
             {
-                return new MasterViewModel(Mock.Of<ISystemTray>());
+                return new MasterViewModel(null, null, null, null);
             }
-        }        
+        }
     }
 }

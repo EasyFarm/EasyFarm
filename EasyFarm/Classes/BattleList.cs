@@ -15,12 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+using EasyFarm.Infrastructure;
+using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
-using Prism.Mvvm;
+
 
 namespace EasyFarm.Classes
 {
-    public class BattleList : BindableBase
+    public class BattleList : ObservableObject
     {
         private string _name;
         private ObservableCollection<BattleAbility> _value;
@@ -38,7 +40,7 @@ namespace EasyFarm.Classes
         public string Name
         {
             get { return _name; }
-            set { SetProperty(ref _name, value); }
+            set { Set(ref _name, value); }
         }
 
         public ObservableCollection<BattleAbility> Actions
@@ -46,7 +48,7 @@ namespace EasyFarm.Classes
             get {
                 return _value;
             }
-            set { SetProperty(ref _value, value); }
+            set { Set(ref _value, value); }
         }
     }
 }

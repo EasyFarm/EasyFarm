@@ -1,4 +1,4 @@
-// ///////////////////////////////////////////////////////////////////
+﻿// ///////////////////////////////////////////////////////////////////
 // This file is a part of EasyFarm for Final Fantasy XI
 // Copyright (C) 2013-2017 Mykezero
 // 
@@ -15,11 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-namespace EasyFarm.Classes
+namespace EasyFarm.Persistence
 {
-    public interface IPersister
+    public static class Serialization
     {
-        void Serialize<T>(string fileName, T value);
-        T Deserialize<T>(string fileName);
+        public static IPersister Instance { get; set; } = new Persister();
+
+        public static void Serialize<T>(string fileName, T value)
+        {
+            Instance.Serialize(fileName, value);
+        }
+
+        public static T Deserialize<T>(string fileName)
+        {
+            return Instance.Deserialize<T>(fileName);
+        }
     }
 }

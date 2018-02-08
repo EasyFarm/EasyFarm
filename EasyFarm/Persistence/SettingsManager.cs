@@ -15,12 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System;
 using System.IO;
 using EasyFarm.Logging;
 using Microsoft.Win32;
 
-namespace EasyFarm.Classes
+namespace EasyFarm.Persistence
 {
     /// <summary>
     ///     Manages the saving and loading of game data to
