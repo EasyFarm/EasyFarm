@@ -31,13 +31,13 @@ namespace EasyFarm.ViewModels
         public override string Value
         {
             get { return Config.Instance.IgnoredName; }
-            set { SetProperty(ref Config.Instance.IgnoredName, value); }
+            set { Set(ref Config.Instance.IgnoredName, value); }
         }
 
         public override ObservableCollection<string> Values
         {
             get { return Config.Instance.IgnoredMobs; }
-            set { SetProperty(ref Config.Instance.IgnoredMobs, value); }
+            set { Set(ref Config.Instance.IgnoredMobs, value); }
         }
 
         protected override void Add()

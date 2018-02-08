@@ -21,16 +21,9 @@ namespace EasyFarm.Handlers
 
         public Task Handle(NavigateViewRequest message, CancellationToken cancellationToken)
         {
-            try
+            if (_app.MainWindow != null)
             {
-                if (_app.MainWindow != null)
-                {
-                    _app.MainWindow.DataContext = _container.Resolve(message.Type);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(new LogEntry(LoggingEventType.Fatal, "Failed to create window", ex));
+                _app.MainWindow.DataContext = _container.Resolve(message.Type);
             }
 
             return Task.FromResult(true);

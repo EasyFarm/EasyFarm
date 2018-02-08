@@ -46,7 +46,7 @@ namespace EasyFarm.ViewModels
         public ObservableCollection<IViewModel> ViewModels
         {
             get { return _viewModels; }
-            set { SetProperty(ref _viewModels, value); }
+            set { Set(ref _viewModels, value); }
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace EasyFarm.ViewModels
         public int SelectedIndex
         {
             get { return _selectedIndex; }
-            set { SetProperty(ref _selectedIndex, value); }
+            set { Set(ref _selectedIndex, value); }
         }
     }
 }

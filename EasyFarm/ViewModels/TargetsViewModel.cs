@@ -31,37 +31,37 @@ namespace EasyFarm.ViewModels
         public override string Value
         {
             get { return Config.Instance.TargetName; }
-            set { SetProperty(ref Config.Instance.TargetName, value); }
+            set { Set(ref Config.Instance.TargetName, value); }
         }
 
         public override ObservableCollection<string> Values
         {
             get { return Config.Instance.TargetedMobs; }
-            set { SetProperty(ref Config.Instance.TargetedMobs, value); }
+            set { Set(ref Config.Instance.TargetedMobs, value); }
         }
 
         public bool Aggro
         {
             get { return Config.Instance.AggroFilter; }
-            set { SetProperty(ref Config.Instance.AggroFilter, value); }
+            set { Set(ref Config.Instance.AggroFilter, value); }
         }
 
         public bool Unclaimed
         {
             get { return Config.Instance.UnclaimedFilter; }
-            set { SetProperty(ref Config.Instance.UnclaimedFilter, value); }
+            set { Set(ref Config.Instance.UnclaimedFilter, value); }
         }
 
         public bool PartyClaimed
         {
             get { return Config.Instance.PartyFilter; }
-            set { SetProperty(ref Config.Instance.PartyFilter, value); }
+            set { Set(ref Config.Instance.PartyFilter, value); }
         }
 
         public bool Claimed
         {
             get { return Config.Instance.ClaimedFilter; }
-            set { SetProperty(ref Config.Instance.ClaimedFilter, value); }
+            set { Set(ref Config.Instance.ClaimedFilter, value); }
         }
 
         protected override void Add()

@@ -22,6 +22,7 @@ using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
+using MahApps.Metro.Controls.Dialogs;
 using NLog;
 
 namespace EasyFarm.Classes
@@ -33,17 +34,25 @@ namespace EasyFarm.Classes
         private const string LibraryPath = "http://ext.elitemmonetwork.com/downloads/eliteapi/EliteAPI.dll";
         private const string LibraryPage = "http://ext.elitemmonetwork.com/downloads/eliteapi/";
 
+        public bool HasUpdate()
+        {
+            var filePath = Path.Combine(Environment.CurrentDirectory, "EliteAPI.dll");
+            FileVersionInfo fileInfo = GetFileInfo(filePath);
+
+            string latestVersion = GetLatestVersion();
+            if (string.IsNullOrEmpty(latestVersion)) return false;
+
+            return fileInfo == null || latestVersion != fileInfo.FileVersion;
+        }
+
         public void Update()
         {
             try
             {
                 var filePath = Path.Combine(Environment.CurrentDirectory, "EliteAPI.dll");
-                FileVersionInfo fileInfo = GetFileInfo(filePath);
+                FileVersionInfo fileInfo = GetFileInfo(filePath);               
 
-                string latestVersion = GetLatestVersion();
-                if (string.IsNullOrEmpty(latestVersion)) return;
-
-                if (fileInfo == null || latestVersion != fileInfo.FileVersion)
+                if (HasUpdate())
                 {
                     BackupLibrary(fileInfo);
                     DownloadLibrary(filePath);

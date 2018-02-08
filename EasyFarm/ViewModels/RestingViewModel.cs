@@ -33,7 +33,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.LowHealth; }
             set
             {
-                SetProperty(ref Config.Instance.LowHealth, value);
+                Set(ref Config.Instance.LowHealth, value);
                 AppServices.InformUser("Low hp set to " + LowHp);
             }
         }
@@ -43,7 +43,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.HighHealth; }
             set
             {
-                SetProperty(ref Config.Instance.HighHealth, value);
+                Set(ref Config.Instance.HighHealth, value);
                 AppServices.InformUser("High hp set to " + HighHp);
             }
         }
@@ -53,7 +53,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.LowMagic; }
             set
             {
-                SetProperty(ref Config.Instance.LowMagic, value);
+                Set(ref Config.Instance.LowMagic, value);
                 AppServices.InformUser("Low mp set to " + LowMp);
             }
         }
@@ -63,7 +63,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.HighMagic; }
             set
             {
-                SetProperty(ref Config.Instance.HighMagic, value);
+                Set(ref Config.Instance.HighMagic, value);
                 AppServices.InformUser("High mp set to " + HighMp);
             }
         }
@@ -71,13 +71,13 @@ namespace EasyFarm.ViewModels
         public bool HpEnabled
         {
             get { return Config.Instance.IsHealthEnabled; }
-            set { SetProperty(ref Config.Instance.IsHealthEnabled, value); }
+            set { Set(ref Config.Instance.IsHealthEnabled, value); }
         }
 
         public bool MpEnabled
         {
             get { return Config.Instance.IsMagicEnabled; }
-            set { SetProperty(ref Config.Instance.IsMagicEnabled, value); }
+            set { Set(ref Config.Instance.IsMagicEnabled, value); }
         }
     }
 }

@@ -18,7 +18,6 @@
 
 using System;
 using System.Windows;
-using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
 using EasyFarm.Properties;
@@ -44,10 +43,7 @@ namespace EasyFarm
             {
                 Logger.Log(new LogEntry(LoggingEventType.Fatal, "Unhandled Exception", e.Exception));
                 MessageBox.Show(e.Exception.Message, "An exception has occurred. ", MessageBoxButton.OK, MessageBoxImage.Error);
-            };
-
-            var updater = new LibraryUpdater();
-            updater.Update();
+            };            
 
             LogViewModel.Write("Resources loaded");
             AbilityService = new AbilityService("resources");

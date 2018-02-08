@@ -3,10 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:EasyFarm.Views"
-             xmlns:prism="http://prismlibrary.com/"
-             mc:Ignorable="d" d:DesignWidth="330.12" d:DesignHeight="85.835" 
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             mc:Ignorable="d" d:DesignWidth="330.12" d:DesignHeight="85.835" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

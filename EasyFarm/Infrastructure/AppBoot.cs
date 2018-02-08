@@ -6,6 +6,7 @@ using EasyFarm.Classes;
 using EasyFarm.Handlers;
 using EasyFarm.ViewModels;
 using EasyFarm.Views;
+using MahApps.Metro.Controls.Dialogs;
 using MediatR;
 
 namespace EasyFarm.Infrastructure
@@ -53,6 +54,8 @@ namespace EasyFarm.Infrastructure
             container.Register<TabViewModels>();
             container.Register<IRequestHandler<NavigateViewRequest>, NavigateViewRequestHandler>();
             container.Register<IRequestHandler<SelectProcessRequest>, SelectProcessRequestHandler>();
+            container.Register<LibraryUpdater>();
+            container.Register<IDialogCoordinator, DialogCoordinator>();
         }
 
         private void RegisterMediatr(Container container)

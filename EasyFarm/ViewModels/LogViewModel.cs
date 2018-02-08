@@ -34,7 +34,7 @@ namespace EasyFarm.ViewModels
         public ObservableCollection<string> LoggedItems
         {
             get { return LogEntries.LoggedItems; }
-            set { SetProperty(ref LogEntries.LoggedItems, value); }
+            set { Set(ref LogEntries.LoggedItems, value); }
         }
 
         public static void Write(string message)

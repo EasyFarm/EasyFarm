@@ -20,8 +20,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 using EasyFarm.Classes;
+using EasyFarm.Infrastructure;
 using EasyFarm.States;
-using Prism.Mvvm;
+
 
 namespace EasyFarm.UserSettings
 {
@@ -29,7 +30,7 @@ namespace EasyFarm.UserSettings
     ///     A configuration file for the user to edit through his GUI.
     ///     Gives the bot access to all of his decisions.
     /// </summary>
-    public class Config : BindableBase
+    public class Config : ViewModelBase
     {
         [XmlIgnore] private static Lazy<Config> _lazy = new Lazy<Config>(() => new Config());
 

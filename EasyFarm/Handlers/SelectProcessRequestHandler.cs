@@ -1,8 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
 using EasyFarm.Views;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using MediatR;
 using MemoryAPI.Memory;
 
@@ -10,21 +13,23 @@ namespace EasyFarm.ViewModels
 {
     public class SelectProcessRequestHandler : IRequestHandler<SelectProcessRequest>
     {
+        private readonly MetroWindow window;
+
         public SelectProcessRequestHandler(App app)
         {
+            this.window = (app.MainWindow as MetroWindow);
         }
 
-        public Task Handle(SelectProcessRequest message, CancellationToken cancellationToken)
+        public async Task Handle(SelectProcessRequest message, CancellationToken cancellationToken)
         {
             // Let user select ffxi process
-            var selectionView = new ProcessSelectionView();
-            selectionView.ShowDialog();
+            var selectionView = new SelectProcessDialog();
+            var viewModel = new SelectProcessViewModel(selectionView);
+            selectionView.DataContext = viewModel;
 
-            // Grab the view model with the game sessions.
-            var viewModel = selectionView.DataContext as ProcessSelectionViewModel;
-
-            // If the view has a process selection view model binded to it.
-            if (viewModel == null) return Task.FromResult(false);
+            // Show window and do not continue until user closes it. 
+            await window.ShowMetroDialogAsync(selectionView);
+            await selectionView.WaitUntilUnloadedAsync();
 
             // Get the selected process.
             var process = viewModel.SelectedProcess;
@@ -34,7 +39,7 @@ namespace EasyFarm.ViewModels
             {
                 LogViewModel.Write("Process not found");
                 AppServices.InformUser("No valid process was selected.");
-                return Task.FromResult(false);
+                return;
             }
 
             // Log that a process selected.
@@ -51,8 +56,6 @@ namespace EasyFarm.ViewModels
 
             // Set the main window's title to the player's name.
             AppServices.UpdateTitle("EasyFarm - " + fface.Player.Name);
-
-            return Task.FromResult(true);
         }
     }
 }

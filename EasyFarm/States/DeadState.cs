@@ -18,6 +18,7 @@
 using EasyFarm.Classes;
 using EasyFarm.UserSettings;
 using EliteMMO.API;
+using GalaSoft.MvvmLight.Messaging;
 using MemoryAPI;
 
 namespace EasyFarm.States

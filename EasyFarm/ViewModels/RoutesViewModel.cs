@@ -23,7 +23,7 @@ using EasyFarm.Infrastructure;
 using EasyFarm.Persistence;
 using EasyFarm.States;
 using EasyFarm.UserSettings;
-using Prism.Commands;
+using GalaSoft.MvvmLight.Command;
 using MemoryAPI;
 using MemoryAPI.Navigation;
 
@@ -39,11 +39,11 @@ namespace EasyFarm.ViewModels
         {            
             _settings = new SettingsManager("ewl", "EasyFarm Waypoint List");            
 
-            ClearCommand = new DelegateCommand(ClearRoute);
-            RecordCommand = new DelegateCommand(Record);
-            SaveCommand = new DelegateCommand(Save);
-            LoadCommand = new DelegateCommand(Load);
-            ResetNavigatorCommand = new DelegateCommand(ResetNavigator);
+            ClearCommand = new RelayCommand(ClearRoute);
+            RecordCommand = new RelayCommand(Record);
+            SaveCommand = new RelayCommand(Save);
+            LoadCommand = new RelayCommand(Load);
+            ResetNavigatorCommand = new RelayCommand(ResetNavigator);
 
             RecordHeader = "Record";
             ViewName = "Routes";
@@ -57,7 +57,7 @@ namespace EasyFarm.ViewModels
         public string RecordHeader
         {
             get { return _recordHeader; }
-            set { SetProperty(ref _recordHeader, value); }
+            set { Set(ref _recordHeader, value); }
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace EasyFarm.ViewModels
         public ObservableCollection<Position> Route
         {
             get { return Config.Instance.Route.Waypoints; }
-            set { SetProperty(ref Config.Instance.Route.Waypoints, value); }
+            set { Set(ref Config.Instance.Route.Waypoints, value); }
         }
 
         /// <summary>

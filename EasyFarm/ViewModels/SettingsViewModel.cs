@@ -19,7 +19,7 @@ using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
 using EasyFarm.UserSettings;
-using Prism.Commands;
+using GalaSoft.MvvmLight.Command;
 
 namespace EasyFarm.ViewModels
 {
@@ -27,7 +27,7 @@ namespace EasyFarm.ViewModels
     {
         public SettingsViewModel()
         {
-            RestoreDefaultsCommand = new DelegateCommand(RestoreDefaults);
+            RestoreDefaultsCommand = new RelayCommand(RestoreDefaults);
             ViewName = "Settings";
         }
 
@@ -36,13 +36,13 @@ namespace EasyFarm.ViewModels
         public bool ShouldEngage
         {
             get { return Config.Instance.IsEngageEnabled; }
-            set { SetProperty(ref Config.Instance.IsEngageEnabled, value); }
+            set { Set(ref Config.Instance.IsEngageEnabled, value); }
         }
 
         public bool ShouldApproach
         {
             get { return Config.Instance.IsApproachEnabled; }
-            set { SetProperty(ref Config.Instance.IsApproachEnabled, value); }
+            set { Set(ref Config.Instance.IsApproachEnabled, value); }
         }
 
         public double DetectionDistance
@@ -50,7 +50,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.DetectionDistance; }
             set
             {
-                SetProperty(ref Config.Instance.DetectionDistance, (int) value);
+                Set(ref Config.Instance.DetectionDistance, (int) value);
                 AppServices.InformUser("Detection Distance Set: {0}.", (int) value);
             }
         }
@@ -60,7 +60,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.HeightThreshold; }
             set
             {
-                SetProperty(ref Config.Instance.HeightThreshold, value);
+                Set(ref Config.Instance.HeightThreshold, value);
                 AppServices.InformUser("Height Threshold Set: {0:F1}.", value);
             }
         }
@@ -70,7 +70,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.MeleeDistance; }
             set
             {
-                SetProperty(ref Config.Instance.MeleeDistance, value);
+                Set(ref Config.Instance.MeleeDistance, value);
                 AppServices.InformUser("Melee Distance Set: {0:F1}.", value);
             }
         }
@@ -80,7 +80,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.WanderDistance; }
             set
             {
-                SetProperty(ref Config.Instance.WanderDistance, (int) value);
+                Set(ref Config.Instance.WanderDistance, (int) value);
                 AppServices.InformUser("Wander Distance Set: {0}.", (int) value);
             }
         }
@@ -90,7 +90,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.GlobalCooldown; }
             set
             {
-                SetProperty(ref Config.Instance.GlobalCooldown, value);
+                Set(ref Config.Instance.GlobalCooldown, value);
                 AppServices.InformUser("Global Cooldown Set: {0}.", value);
             }
         }
@@ -100,7 +100,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.IsObjectAvoidanceEnabled; }
             set
             {
-                SetProperty(ref Config.Instance.IsObjectAvoidanceEnabled, value);
+                Set(ref Config.Instance.IsObjectAvoidanceEnabled, value);
             }
         }
 
@@ -109,7 +109,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.EnableTabTargeting; }
             set
             {
-                SetProperty(ref Config.Instance.EnableTabTargeting, value);
+                Set(ref Config.Instance.EnableTabTargeting, value);
             }
         }
 
@@ -118,7 +118,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.HomePointOnDeath; }
             set
             {
-                SetProperty(ref Config.Instance.HomePointOnDeath, value);
+                Set(ref Config.Instance.HomePointOnDeath, value);
             }
         }
 
@@ -127,7 +127,7 @@ namespace EasyFarm.ViewModels
             get { return Config.Instance.TrustPartySize; }
             set
             {
-                SetProperty(ref Config.Instance.TrustPartySize, value);
+                Set(ref Config.Instance.TrustPartySize, value);
             }
         }
 

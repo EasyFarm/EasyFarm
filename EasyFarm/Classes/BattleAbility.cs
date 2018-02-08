@@ -16,8 +16,6 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 using EasyFarm.Views;
-using Prism.Commands;
-using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +23,8 @@ using System.Linq;
 using System.Xml.Serialization;
 using EasyFarm.Parsing;
 using EasyFarm.UserSettings;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight;
 
 namespace EasyFarm.Classes
 {
@@ -33,7 +33,7 @@ namespace EasyFarm.Classes
     ///     targeted and buffing abilities allowing the player to choose
     ///     to cast abilities when a buff has worn.
     /// </summary>
-    public class BattleAbility : BindableBase
+    public class BattleAbility : ObservableObject
     {
         /// <summary>
         ///     Maps ability type objects to their commands.
@@ -198,7 +198,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public BattleAbility() : this(new Ability())
         {
-            AutoFillCommand = new DelegateCommand(AutoFill);
+            AutoFillCommand = new RelayCommand(AutoFill);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace EasyFarm.Classes
         public Ability Ability
         {
             get { return _ability; }
-            set { SetProperty(ref _ability, value); }
+            set { Set(ref _ability, value); }
         }
 
         public AbilityType AbilityType
@@ -235,7 +235,7 @@ namespace EasyFarm.Classes
             get { return Ability.AbilityType; }
             set
             {
-                SetProperty(ref _abilityType, value);
+                Set(ref _abilityType, value);
                 Ability.AbilityType = value;
 
                 var prefix = CommandMapper.ContainsKey(value)
@@ -252,14 +252,14 @@ namespace EasyFarm.Classes
         /// </summary>
         // Delegate Commands cannot be serialized.
         [XmlIgnore]
-        public DelegateCommand AutoFillCommand { get; set; }
+        public RelayCommand AutoFillCommand { get; set; }
 
         public double Distance
         {
             get { return _distance; }
             set
             {
-                SetProperty(ref _distance, (int)value);
+                Set(ref _distance, (int)value);
                 AppServices.InformUser("Distance set to {0}.", _distance);
             }
         }
@@ -267,7 +267,7 @@ namespace EasyFarm.Classes
         public bool IsEnabled
         {
             get { return _isEnabled; }
-            set { SetProperty(ref _isEnabled, value); }
+            set { Set(ref _isEnabled, value); }
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace EasyFarm.Classes
             get { return _name; }
             set
             {
-                SetProperty(ref _name, value);
+                Set(ref _name, value);
                 Ability.English = _name;
             }
         }
@@ -289,7 +289,7 @@ namespace EasyFarm.Classes
             get { return _playerLowerHealth; }
             set
             {
-                SetProperty(ref _playerLowerHealth, value);
+                Set(ref _playerLowerHealth, value);
                 AppServices.InformUser("Lower health set to {0}.", _playerLowerHealth);
             }
         }
@@ -299,7 +299,7 @@ namespace EasyFarm.Classes
             get { return _playerUpperHealth; }
             set
             {
-                SetProperty(ref _playerUpperHealth, value);
+                Set(ref _playerUpperHealth, value);
                 AppServices.InformUser("Upper health set to {0}.", _playerUpperHealth);
             }
         }
@@ -310,12 +310,12 @@ namespace EasyFarm.Classes
         public int Recast
         {
             get { return _recast; }
-            set { SetProperty(ref _recast, value); }
+            set { Set(ref _recast, value); }
         }
         public string StatusEffect
         {
             get { return _statusEffect; }
-            set { SetProperty(ref _statusEffect, value); }
+            set { Set(ref _statusEffect, value); }
         }
 
         public int TargetLowerHealth
@@ -323,7 +323,7 @@ namespace EasyFarm.Classes
             get { return _targetLowerHealth; }
             set
             {
-                SetProperty(ref _targetLowerHealth, value);
+                Set(ref _targetLowerHealth, value);
                 AppServices.InformUser("Lower health set to {0}.", _targetLowerHealth);
             }
         }
@@ -331,7 +331,7 @@ namespace EasyFarm.Classes
         public string TargetName
         {
             get { return _targetName; }
-            set { SetProperty(ref _targetName, value); }
+            set { Set(ref _targetName, value); }
         }
 
         public int TargetUpperHealth
@@ -339,7 +339,7 @@ namespace EasyFarm.Classes
             get { return _targetUpperHealth; }
             set
             {
-                SetProperty(ref _targetUpperHealth, value);
+                Set(ref _targetUpperHealth, value);
                 AppServices.InformUser("Upper health set to {0}.", _targetUpperHealth);
             }
         }
@@ -349,7 +349,7 @@ namespace EasyFarm.Classes
             get { return _mpReserveLow; }
             set
             {
-                SetProperty(ref _mpReserveLow, value);
+                Set(ref _mpReserveLow, value);
                 AppServices.InformUser($"MP range set {_mpReserveLow} TO {_mpReserveHigh}.");
             }
         }
@@ -359,7 +359,7 @@ namespace EasyFarm.Classes
             get { return _mpReserveHigh; }
             set
             {
-                SetProperty(ref _mpReserveHigh, value);
+                Set(ref _mpReserveHigh, value);
                 AppServices.InformUser($"MP range set {_mpReserveLow} TO {_mpReserveHigh}.");
             }
         }
@@ -369,7 +369,7 @@ namespace EasyFarm.Classes
             get { return _tpReserveLow; }
             set
             {
-                SetProperty(ref _tpReserveLow, value);
+                Set(ref _tpReserveLow, value);
                 AppServices.InformUser($"TP range set {_tpReserveLow} TO {_tpReserveHigh}.");
             }
         }
@@ -379,7 +379,7 @@ namespace EasyFarm.Classes
             get { return _tpReserveHigh; }
             set
             {
-                SetProperty(ref _tpReserveHigh, value);
+                Set(ref _tpReserveHigh, value);
                 AppServices.InformUser($"TP range set {_tpReserveLow} TO {_tpReserveHigh}.");
             }
         }
@@ -389,7 +389,7 @@ namespace EasyFarm.Classes
             get { return _resummonIfHpLow; }
             set
             {
-                SetProperty(ref _resummonIfHpLow, value);
+                Set(ref _resummonIfHpLow, value);
                 if (value)
                 {
                     AppServices.InformUser($"Resummon if HP is low turned on.");
@@ -406,7 +406,7 @@ namespace EasyFarm.Classes
             get { return _resummonIfMpLow; }
             set
             {
-                SetProperty(ref _resummonIfMpLow, value);
+                Set(ref _resummonIfMpLow, value);
                 if (value)
                 {
                     AppServices.InformUser($"Resummon if MP is low turned on.");
@@ -424,7 +424,7 @@ namespace EasyFarm.Classes
             get { return _resummonHpLow; }
             set
             {
-                SetProperty(ref _resummonHpLow, value);
+                Set(ref _resummonHpLow, value);
                 AppServices.InformUser($"Resummon HP Range set {_resummonHpLow} TO {_resummonHpHigh}.");
             }
         }
@@ -434,7 +434,7 @@ namespace EasyFarm.Classes
             get { return _resummonHpHigh; }
             set
             {
-                SetProperty(ref _resummonHpHigh, value);
+                Set(ref _resummonHpHigh, value);
                 AppServices.InformUser($"Resummon HP Range set {_resummonHpLow} TO {_resummonHpHigh}.");
             }
         }
@@ -444,7 +444,7 @@ namespace EasyFarm.Classes
             get { return _resummonMpLow; }
             set
             {
-                SetProperty(ref _resummonMpLow, value);
+                Set(ref _resummonMpLow, value);
                 AppServices.InformUser($"Resummon MP Range set {_resummonMpLow} TO {_resummonMpHigh}.");
             }
         }
@@ -454,7 +454,7 @@ namespace EasyFarm.Classes
             get { return _resummonMpHigh; }
             set
             {
-                SetProperty(ref _resummonMpHigh, value);
+                Set(ref _resummonMpHigh, value);
                 AppServices.InformUser($"Resummon MP Range set {_resummonMpLow} TO {_resummonMpHigh}.");
             }
         }
@@ -462,7 +462,7 @@ namespace EasyFarm.Classes
         public bool TriggerOnEffectPresent
         {
             get { return _triggerOnEffectPresent; }
-            set { SetProperty(ref _triggerOnEffectPresent, value); }
+            set { Set(ref _triggerOnEffectPresent, value); }
         }
         /// <summary>
         ///     The maximum limit of times this move can be used in battle.
@@ -470,7 +470,7 @@ namespace EasyFarm.Classes
         public int UsageLimit
         {
             get { return _usageLimit; }
-            set { SetProperty(ref _usageLimit, value); }
+            set { Set(ref _usageLimit, value); }
         }
         /// <summary>
         ///     The number of times this move has been used.
@@ -478,7 +478,7 @@ namespace EasyFarm.Classes
         public int Usages
         {
             get { return _usages; }
-            set { SetProperty(ref _usages, value); }
+            set { Set(ref _usages, value); }
         }
 
         public string Command
@@ -525,8 +525,8 @@ namespace EasyFarm.Classes
                 }
 
                 // Manually signal AbilityType that a change has occured.
-                OnPropertyChanged("AbilityType");
-                OnPropertyChanged("TpCost");
+                RaisePropertyChanged("AbilityType");
+                RaisePropertyChanged("TpCost");
             }
         }
 

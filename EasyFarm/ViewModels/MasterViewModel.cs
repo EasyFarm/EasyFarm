@@ -17,14 +17,16 @@
 // ///////////////////////////////////////////////////////////////////
 
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
 using EasyFarm.Persistence;
 using EasyFarm.UserSettings;
+using GalaSoft.MvvmLight.Command;
+using MahApps.Metro.Controls.Dialogs;
 using MediatR;
-using Prism.Commands;
 using Application = System.Windows.Application;
 
 namespace EasyFarm.ViewModels
@@ -35,6 +37,8 @@ namespace EasyFarm.ViewModels
     public class MasterViewModel : ViewModelBase
     {
         private readonly IMediator _mediator;
+        private readonly LibraryUpdater _updater;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
         /// <summary>
         ///     Saves and loads settings from file.
@@ -51,25 +55,30 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public IViewModel ViewModel { get; set; }
 
-        public MasterViewModel(MainViewModel mainViewModel, IMediator mediator)
+        public MasterViewModel(
+            MainViewModel mainViewModel, 
+            IMediator mediator, 
+            LibraryUpdater updater,
+            IDialogCoordinator dialogCoordinator)
         {
             _mediator = mediator;
+            _updater = updater;
+            _dialogCoordinator = dialogCoordinator;
             ViewModel = mainViewModel;
 
             _settingsManager = new SettingsManager("eup", "EasyFarm User Preference");
 
-            AppServices.RegisterEvent<Events.TitleEvent>(e => MainWindowTitle = e.Message);
-            AppServices.RegisterEvent<Events.StatusBarEvent>(e => StatusBarText = e.Message);
-            AppServices.RegisterEvent<Events.PauseEvent>(x => StopEngine());
-            AppServices.RegisterEvent<Events.ResumeEvent>(x => StartEngine());
+            AppServices.RegisterEvent<Events.TitleEvent>(this, e => MainWindowTitle = e.Message);
+            AppServices.RegisterEvent<Events.StatusBarEvent>(this, e => StatusBarText = e.Message);
+            AppServices.RegisterEvent<Events.PauseEvent>(this, x => StopEngine());
+            AppServices.RegisterEvent<Events.ResumeEvent>(this, x => StartEngine());
 
-            StartCommand = new DelegateCommand(Start);
-            ExitCommand = new DelegateCommand(Exit);
-            SaveCommand = new DelegateCommand(Save);
-            LoadCommand = new DelegateCommand(Load);
-            SelectProcessCommand = new DelegateCommand(SelectProcess);
-
-            OnLoad();
+            StartCommand = new RelayCommand(Start);
+            ExitCommand = new RelayCommand(Exit);
+            SaveCommand = new RelayCommand(Save);
+            LoadCommand = new RelayCommand(Load);
+            SelectProcessCommand = new RelayCommand(async () => await SelectProcess());
+            LoadedCommand = new RelayCommand(async () => await OnLoad());
         }
 
         private string _mainWindowTitle;
@@ -77,7 +86,7 @@ namespace EasyFarm.ViewModels
         public string MainWindowTitle
         {
             get { return _mainWindowTitle; }
-            set { SetProperty(ref _mainWindowTitle, value); }
+            set { Set(ref _mainWindowTitle, value); }
         }
 
         private string _statusBarText;
@@ -85,7 +94,7 @@ namespace EasyFarm.ViewModels
         public string StatusBarText
         {
             get { return _statusBarText; }
-            set { SetProperty(ref _statusBarText, value); }
+            set { Set(ref _statusBarText, value); }
         }
 
         /// <summary>
@@ -94,7 +103,7 @@ namespace EasyFarm.ViewModels
         public bool IsWorking
         {
             get { return GameEngine.IsWorking; }
-            set { SetProperty(ref GameEngine.IsWorking, value); }
+            set { Set(ref GameEngine.IsWorking, value); }
         }
 
         /// <summary>
@@ -103,7 +112,7 @@ namespace EasyFarm.ViewModels
         public string StartPauseHeader
         {
             get { return _startStopHeader; }
-            set { SetProperty(ref _startStopHeader, value); }
+            set { Set(ref _startStopHeader, value); }
         }
 
         public bool MinimizeToTray
@@ -112,7 +121,7 @@ namespace EasyFarm.ViewModels
             set
             {
                 bool instanceMinimizeToTray = false;
-                SetProperty(ref instanceMinimizeToTray, value);
+                Set(ref instanceMinimizeToTray, value);
                 Config.Instance.MinimizeToTray = instanceMinimizeToTray;
             }
         }
@@ -130,17 +139,22 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Command to save the user's settings.
         /// </summary>
-        public DelegateCommand SaveCommand { get; set; }
+        public RelayCommand SaveCommand { get; set; }
 
         /// <summary>
         ///     Command to load the user's settings.
         /// </summary>
-        public DelegateCommand LoadCommand { get; set; }
+        public RelayCommand LoadCommand { get; set; }
 
         /// <summary>
         ///     Binding for selecting a PlayOnline process.
         /// </summary>
-        public DelegateCommand SelectProcessCommand { get; set; }
+        public RelayCommand SelectProcessCommand { get; set; }
+
+        /// <summary>
+        /// Invoked when the view is loaded.
+        /// </summary>
+        public RelayCommand LoadedCommand { get; }
 
         /// <summary>
         ///     Tells the program to start farming.
@@ -231,11 +245,9 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Selects a process to user for this application.
         /// </summary>
-        private void SelectProcess()
+        private async Task SelectProcess()
         {
-            _mediator.Send(new SelectProcessRequest())
-                .GetAwaiter()
-                .GetResult();
+            await _mediator.Send(new SelectProcessRequest());
         }
 
         /// <summary>
@@ -246,10 +258,22 @@ namespace EasyFarm.ViewModels
             Application.Current.Shutdown();
         }
 
-        public void OnLoad()
+        public async Task OnLoad()
         {
             MainWindowTitle = "EasyFarm";
             StatusBarText = "";
+
+            if (_updater.HasUpdate())
+            {
+                var showDialogResult = await _dialogCoordinator.ShowMessageAsync(
+                    Application.Current.MainWindow.DataContext,
+                    "Update EliteAPI",
+                    "Would you like to update EliteAPI to its newest version?",
+                    MessageDialogStyle.AffirmativeAndNegative);
+
+                if (showDialogResult == MessageDialogResult.Affirmative)
+                    _updater.Update();
+            }
         }
     }
 }

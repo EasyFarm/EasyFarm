@@ -16,18 +16,18 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 using EasyFarm.ViewModels;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace EasyFarm.Views
 {
     /// <summary>
     ///     Interaction logic for ProcessSelectionView.xaml
     /// </summary>
-    public partial class ProcessSelectionView
+    public partial class SelectProcessDialog : CustomDialog
     {
-        public ProcessSelectionView()
+        public SelectProcessDialog()
         {
             InitializeComponent();
-            DataContext = new ProcessSelectionViewModel(this);
         }
     }
 }
