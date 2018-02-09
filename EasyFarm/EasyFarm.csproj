@@ -184,7 +184,6 @@
     <Compile Include="Persistence\Serialization.cs" />
     <Compile Include="Classes\TimeWaiter.cs" />
     <Compile Include="Classes\LibraryUpdater.cs" />
-    <Compile Include="Persistence\XmlPersister.cs" />
     <Compile Include="Infrastructure\AppBoot.cs" />
     <Compile Include="Infrastructure\DatabaseFactory.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />

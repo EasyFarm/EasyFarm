@@ -80,27 +80,7 @@ namespace EasyFarm.Tests.Classes
 
             // Teardown
             File.Delete(path);
-        }
-
-        [Fact]
-        public void SerializationIsBackwardsCompatibleWithXml()
-        {
-            // Fixture setup
-            var config = new Config();
-
-            var path = FindFilePath();
-            var xmlPersister = new XmlPersister();
-            xmlPersister.Serialize(path, config);
-
-            // Exercise system            
-            var result = Record.Exception(() => Serialization.Deserialize<Config>(path));
-
-            // Verify outcome
-            Assert.IsNotType<AggregateException>(result);
-
-            // Teardown
-            File.Delete(path);
-        }
+        }       
 
         [Fact]
         public void SerializationWhenDeserializationFailsThrowsException()
