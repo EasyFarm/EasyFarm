@@ -15,72 +15,69 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using EliteMMO.API;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using EliteMMO.API;
 using MemoryAPI.Chat;
-using MemoryAPI.Memory;
 using MemoryAPI.Navigation;
 using MemoryAPI.Windower;
 
-namespace MemoryAPI
+namespace MemoryAPI.Memory
 {
-    public class EliteMMOWrapper : MemoryWrapper
+    public class EliteMmoWrapper : MemoryWrapper
     {
-        public enum ViewMode : int
+        public enum ViewMode
         {
             ThirdPerson = 0,
             FirstPerson
         }
 
-        private readonly EliteAPI EliteAPI;
-
-        public EliteMMOWrapper(int pid)
+        public EliteMmoWrapper(int pid)
         {
-            EliteAPI = new EliteAPI(pid);
-            Navigator = new NavigationTools(EliteAPI);
-            NPC = new NPCTools(EliteAPI);
-            PartyMember = new Dictionary<byte, IPartyMemberTools>();
-            Player = new PlayerTools(EliteAPI);
-            Target = new TargetTools(EliteAPI);
-            Timer = new TimerTools(EliteAPI);
-            Windower = new WindowerTools(EliteAPI);
-            Chat = new ChatTools(EliteAPI);
+            var eliteApi = new EliteAPI(pid);
 
-            //EliteAPI.Player.GetPlayerInfo().StatsModifiers.
+            Navigator = new NavigationTools(eliteApi);
+            NPC = new NpcTools(eliteApi);
+            PartyMember = new Dictionary<byte, IPartyMemberTools>();
+            Player = new PlayerTools(eliteApi);
+            Target = new TargetTools(eliteApi);
+            Timer = new TimerTools(eliteApi);
+            Windower = new WindowerTools(eliteApi);
+            Chat = new ChatTools(eliteApi);
 
             for (byte i = 0; i < 16; i++)
             {
-                PartyMember.Add(i, new PartyMemberTools(EliteAPI, i));
+                PartyMember.Add(i, new PartyMemberTools(eliteApi, i));
             }
         }
 
         public class NavigationTools : INavigatorTools
         {
             private const double TooCloseDistance = 1.5;
-            private readonly EliteAPI api;
+            private readonly EliteAPI _api;
 
             public double DistanceTolerance { get; set; } = 3;
 
             public NavigationTools(EliteAPI api)
             {
-                this.api = api;
+                _api = api;
             }
 
             public void FaceHeading(Position position)
             {
-                var player = api.Entity.GetLocalPlayer();
+                var player = _api.Entity.GetLocalPlayer();
                 var angle = (byte)(Math.Atan((position.Z - player.Z) / (position.X - player.X)) * -(128.0f / Math.PI));
                 if (player.X > position.X) angle += 128;
                 var radian = (float)angle / 255 * 2 * Math.PI;
-                api.Entity.SetEntityHPosition(api.Entity.LocalPlayerIndex, (float)radian);
+                _api.Entity.SetEntityHPosition(_api.Entity.LocalPlayerIndex, (float)radian);
             }
 
             private double DistanceTo(Position position)
             {
-                var player = api.Entity.GetLocalPlayer();
+                var player = _api.Entity.GetLocalPlayer();
 
                 return Math.Sqrt(
                     Math.Pow(position.X - player.X, 2) +
@@ -95,20 +92,20 @@ namespace MemoryAPI
                 if (!keepRunning) Reset();
             }
 
-            public void GotoNPC(int ID, bool useObjectAvoidance)
+            public void GotoNPC(int id, bool useObjectAvoidance)
             {
-                MoveForwardTowardsPosition(() => GetEntityPosition(ID), useObjectAvoidance);
-                KeepOneYalmBack(GetEntityPosition(ID));
-                FaceHeading(GetEntityPosition(ID));
+                MoveForwardTowardsPosition(() => GetEntityPosition(id), useObjectAvoidance);
+                KeepOneYalmBack(GetEntityPosition(id));
+                FaceHeading(GetEntityPosition(id));
                 Reset();
             }
 
-            private Position GetEntityPosition(int ID)
+            private Position GetEntityPosition(int id)
             {
-                var entity = api.Entity.GetEntity(ID);
+                var entity = _api.GetCachedEntity(id);
                 var position = Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H);
                 return position;
-            }
+            }            
 
             private void MoveForwardTowardsPosition(
                 Func<Position> targetPosition,
@@ -122,7 +119,7 @@ namespace MemoryAPI
                 {
                     SetViewMode(ViewMode.FirstPerson);
                     FaceHeading(targetPosition());
-                    api.ThirdParty.KeyDown(Keys.NUMPAD8);
+                    _api.ThirdParty.KeyDown(Keys.NUMPAD8);
                     if (useObjectAvoidance) AvoidObstacles();
                     Thread.Sleep(100);
                 }
@@ -130,7 +127,7 @@ namespace MemoryAPI
 
             private void KeepRunningWithKeyboard()
             {
-                api.ThirdParty.KeyDown(Keys.NUMPAD8);
+                _api.ThirdParty.KeyDown(Keys.NUMPAD8);
             }
 
             private void KeepOneYalmBack(Position position)
@@ -138,7 +135,7 @@ namespace MemoryAPI
                 if (DistanceTo(position) > TooCloseDistance) return;
 
                 DateTime duration = DateTime.Now.AddSeconds(5);
-                api.ThirdParty.KeyDown(Keys.NUMPAD2);
+                _api.ThirdParty.KeyDown(Keys.NUMPAD2);
 
                 while (DistanceTo(position) <= TooCloseDistance && DateTime.Now < duration)
                 {
@@ -147,14 +144,14 @@ namespace MemoryAPI
                     Thread.Sleep(30);
                 }
 
-                api.ThirdParty.KeyUp(Keys.NUMPAD2);
+                _api.ThirdParty.KeyUp(Keys.NUMPAD2);
             }
 
             private void SetViewMode(ViewMode viewMode)
             {
-                if ((ViewMode)api.Player.ViewMode != viewMode)
+                if ((ViewMode)_api.Player.ViewMode != viewMode)
                 {
-                    api.Player.ViewMode = (int)viewMode;
+                    _api.Player.ViewMode = (int)viewMode;
                 }
             }
 
@@ -180,10 +177,10 @@ namespace MemoryAPI
             /// </remarks>
             private bool IsStuck()
             {
-                var firstX = api.Player.X;
-                var firstZ = api.Player.Z;
+                var firstX = _api.Player.X;
+                var firstZ = _api.Player.Z;
                 Thread.Sleep(TimeSpan.FromSeconds(0.5));
-                var dchange = Math.Pow(firstX - api.Player.X, 2) + Math.Pow(firstZ - api.Player.Z, 2);
+                var dchange = Math.Pow(firstX - _api.Player.X, 2) + Math.Pow(firstZ - _api.Player.Z, 2);
                 return Math.Abs(dchange) < 1;
             }
 
@@ -193,7 +190,7 @@ namespace MemoryAPI
             /// <returns></returns>
             private bool IsEngaged()
             {
-                return api.Player.Status == (ulong)Status.Fighting;
+                return _api.Player.Status == (ulong)Status.Fighting;
             }
 
             /// <summary>
@@ -201,7 +198,7 @@ namespace MemoryAPI
             /// </summary>
             private void Disengage()
             {
-                api.ThirdParty.SendString("/attack off");
+                _api.ThirdParty.SendString("/attack off");
                 Thread.Sleep(30);
             }
 
@@ -219,10 +216,10 @@ namespace MemoryAPI
                 float dir = -45;
                 while (IsStuck() && attempts-- > 0)
                 {
-                    api.Entity.GetLocalPlayer().H = api.Player.H + (float)(Math.PI / 180 * dir);
-                    api.ThirdParty.KeyDown(Keys.NUMPAD8);
+                    _api.Entity.GetLocalPlayer().H = _api.Player.H + (float)(Math.PI / 180 * dir);
+                    _api.ThirdParty.KeyDown(Keys.NUMPAD8);
                     Thread.Sleep(TimeSpan.FromSeconds(2));
-                    api.ThirdParty.KeyUp(Keys.NUMPAD8);
+                    _api.ThirdParty.KeyUp(Keys.NUMPAD8);
                     count++;
                     if (count == 4)
                     {
@@ -230,42 +227,42 @@ namespace MemoryAPI
                         count = 0;
                     }
                 }
-                api.ThirdParty.KeyUp(Keys.NUMPAD8);
+                _api.ThirdParty.KeyUp(Keys.NUMPAD8);
             }
 
             public void Reset()
             {
-                api.ThirdParty.KeyUp(Keys.NUMPAD8);
-                api.ThirdParty.KeyUp(Keys.NUMPAD2);
+                _api.ThirdParty.KeyUp(Keys.NUMPAD8);
+                _api.ThirdParty.KeyUp(Keys.NUMPAD2);
             }
         }
 
-        public class NPCTools : INPCTools
+        public class NpcTools : INPCTools
         {
-            private readonly EliteAPI api;
+            private readonly EliteAPI _api;
 
-            public NPCTools(EliteAPI api)
+            public NpcTools(EliteAPI api)
             {
-                this.api = api;
+                _api = api;
             }
 
-            public int ClaimedID(int id) { return (int)api.Entity.GetEntity(id).ClaimID; }
+            public int ClaimedID(int id) { return (int)_api.GetCachedEntity(id).ClaimID; }
 
-            public double Distance(int id) { return api.Entity.GetEntity(id).Distance; }
+            public double Distance(int id) { return _api.GetCachedEntity(id).Distance; }
 
             public Position GetPosition(int id)
             {
-                var entity = api.Entity.GetEntity(id);
+                var entity = _api.GetCachedEntity(id);
                 return Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H);
             }
 
-            public short HPPCurrent(int id) { return api.Entity.GetEntity(id).HealthPercent; }
+            public short HPPCurrent(int id) { return _api.GetCachedEntity(id).HealthPercent; }
 
             public bool IsActive(int id) { return true; }
 
-            public bool IsClaimed(int id) { return api.Entity.GetEntity(id).ClaimID != 0; }
+            public bool IsClaimed(int id) { return _api.GetCachedEntity(id).ClaimID != 0; }
 
-            public int PetID(int id) => api.Entity.GetEntity(id).PetIndex;
+            public int PetID(int id) => _api.GetCachedEntity(id).PetIndex;
 
             /// <summary>
             /// Checks to see if the object is rendered.
@@ -276,105 +273,75 @@ namespace MemoryAPI
             /// https://github.com/SG1234567
             public bool IsRendered(int id)
             {
-                return (api.Entity.GetEntity(id).Render0000 & 0x200) == 0x200;
+                return (_api.GetCachedEntity(id).Render0000 & 0x200) == 0x200;
             }
 
-            public string Name(int id) { return api.Entity.GetEntity(id).Name; }
+            public string Name(int id) { return _api.GetCachedEntity(id).Name; }
 
             public NpcType NPCType(int id)
             {
-                var entity = api.Entity.GetEntity(id);
+                var entity = _api.GetCachedEntity(id);
                 return Helpers.GetNpcType(entity);
             }
 
-            public float PosX(int id) { return api.Entity.GetEntity(id).X; }
+            public float PosX(int id) { return _api.GetCachedEntity(id).X; }
 
-            public float PosY(int id) { return api.Entity.GetEntity(id).Y; }
+            public float PosY(int id) { return _api.GetCachedEntity(id).Y; }
 
-            public float PosZ(int id) { return api.Entity.GetEntity(id).Z; }
+            public float PosZ(int id) { return _api.GetCachedEntity(id).Z; }
 
             public Status Status(int id)
             {
-                var status = (EntityStatus)api.Entity.GetEntity(id).Status;
+                var status = (EntityStatus)_api.GetCachedEntity(id).Status;
                 return Helpers.ToStatus(status);
             }
         }
 
         public class PartyMemberTools : IPartyMemberTools
         {
-            private readonly EliteAPI api;
-            private readonly int index;
+            private readonly EliteAPI _api;
+            private readonly int _index;
 
-            private EliteAPI.PartyMember unit
+            private EliteAPI.PartyMember Unit
             {
                 get
                 {
-                    var member = api.Party.GetPartyMember(index);
+                    var member = _api.Party.GetPartyMember(_index);
                     return member;
                 }
             }
 
             public PartyMemberTools(EliteAPI api, int index)
             {
-                this.api = api;
-                this.index = index;
+                _api = api;
+                _index = index;
             }
 
-            public bool UnitPresent
-            {
-                get { return Convert.ToBoolean(unit.Active); }
-            }
+            public bool UnitPresent => Convert.ToBoolean(Unit.Active);
 
-            public int ServerID
-            {
-                get { return (int)unit.ID; }
-            }
+            public int ServerID => (int)Unit.ID;
 
-            public string Name
-            {
-                get { return unit.Name; }
-            }
+            public string Name => Unit.Name;
 
-            public int HPCurrent
-            {
-                get { return (int)unit.CurrentHP; }
-            }
+            public int HPCurrent => (int)Unit.CurrentHP;
 
-            public int HPPCurrent
-            {
-                get { return (int)unit.CurrentHPP; }
-            }
+            public int HPPCurrent => Unit.CurrentHPP;
 
-            public int MPCurrent
-            {
-                get { return (int)unit.CurrentMP; }
-            }
+            public int MPCurrent => (int)Unit.CurrentMP;
 
-            public int MPPCurrent
-            {
-                get { return (int)unit.CurrentMPP; }
-            }
+            public int MPPCurrent => Unit.CurrentMPP;
 
-            public int TPCurrent
-            {
-                get { return (int)unit.CurrentTP; }
-            }
+            public int TPCurrent => (int)Unit.CurrentTP;
 
-            public Job Job
-            {
-                get { return (Job)unit.MainJob; }
-            }
+            public Job Job => (Job)Unit.MainJob;
 
-            public Job SubJob
-            {
-                get { return (Job)unit.SubJob; }
-            }
+            public Job SubJob => (Job)Unit.SubJob;
 
             public NpcType NpcType
             {
                 get
                 {
-                    var key = $"PartyMember.NpcType.{index}";
+                    var key = $"PartyMember.NpcType.{_index}";
                     var result = RuntimeCache.Get<NpcType?>(key);
 
                     if (result == null)
@@ -389,86 +356,59 @@ namespace MemoryAPI
                 }
             }
 
-            private EliteAPI.XiEntity FindEntityByServerId(int serverId)
+            private EliteAPI.EntityEntry FindEntityByServerId(int serverId)
             {
                 return Enumerable.Range(0, 4096)
-                    .Select(api.Entity.GetEntity)
+                    .Select(_api.GetCachedEntity)
                     .FirstOrDefault(x => x.ServerID == serverId);
             }
         }
 
         public class PlayerTools : IPlayerTools
         {
-            private readonly EliteAPI api;
+            private readonly EliteAPI _api;
 
             public PlayerTools(EliteAPI api)
             {
-                this.api = api;
+                _api = api;
             }
 
-            public float CastPercentEx
-            {
-                get { return (api.CastBar.Percent * 100); }
-            }
+            public float CastPercentEx => (_api.CastBar.Percent * 100);
 
-            public int HPPCurrent
-            {
-                get { return (int)api.Player.HPP; }
-            }
+            public int HPPCurrent => (int)_api.Player.HPP;
 
-            public int ID
-            {
-                get { return api.Player.ServerId; }
-            }
+            public int ID => _api.Player.ServerId;
 
-            public int MPCurrent
-            {
-                get { return (int)api.Player.MP; }
-            }
+            public int MPCurrent => (int)_api.Player.MP;
 
-            public int MPPCurrent
-            {
-                get { return (int)api.Player.MPP; }
-            }
+            public int MPPCurrent => (int)_api.Player.MPP;
 
-            public string Name
-            {
-                get { return api.Player.Name; }
-            }
+            public string Name => _api.Player.Name;
 
             public Position Position
             {
                 get
                 {
-                    var x = api.Player.X;
-                    var y = api.Player.Y;
-                    var z = api.Player.Z;
-                    var h = api.Player.H;
+                    var x = _api.Player.X;
+                    var y = _api.Player.Y;
+                    var z = _api.Player.Z;
+                    var h = _api.Player.H;
 
                     return Helpers.ToPosition(x, y, z, h);
                 }
             }
 
-            public float PosX
-            {
-                get { return Position.X; }
-            }
+            public float PosX => Position.X;
 
-            public float PosY
-            {
-                get { return Position.Y; }
-            }
+            public float PosY => Position.Y;
 
-            public float PosZ
-            {
-                get { return Position.Z; }
-            }
+            public float PosZ => Position.Z;
 
             public Structures.PlayerStats Stats
             {
                 get
                 {
-                    var stats = api.Player.Stats;
+                    var stats = _api.Player.Stats;
 
                     return new Structures.PlayerStats()
                     {
@@ -483,114 +423,95 @@ namespace MemoryAPI
                 }
             }
 
-            public Status Status
-            {
-                get { return Helpers.ToStatus((EntityStatus)api.Player.Status); }
-            }
+            public Status Status => Helpers.ToStatus((EntityStatus)_api.Player.Status);
 
-            public MemoryAPI.StatusEffect[] StatusEffects
+            public StatusEffect[] StatusEffects
             {
                 get
                 {
-                    return api.Player.Buffs.Select(x => (MemoryAPI.StatusEffect)x).ToArray();
+                    return _api.Player.Buffs.Select(x => (StatusEffect)x).ToArray();
                 }
             }
 
-            public int TPCurrent
-            {
-                get { return (int)api.Player.TP; }
-            }
+            public int TPCurrent => (int)_api.Player.TP;
 
-            public Zone Zone
-            {
-                get { return (MemoryAPI.Zone)api.Player.ZoneId; }
-            }
+            public Zone Zone => (Zone)_api.Player.ZoneId;
 
-            public Job Job
-            {
-                get { return (Job)api.Player.MainJob; }
-            }
+            public Job Job => (Job)_api.Player.MainJob;
 
-            public Job SubJob
-            {
-                get { return (Job)api.Player.SubJob; }
-            }
+            public Job SubJob => (Job)_api.Player.SubJob;
         }
 
         public class TargetTools : ITargetTools
         {
-            private readonly EliteAPI api;
+            private readonly EliteAPI _api;
 
             public TargetTools(EliteAPI api)
             {
-                this.api = api;
+                _api = api;
             }
 
-            public int ID
-            {
-                get { return (int)api.Target.GetTargetInfo().TargetIndex; }
-            }
+            public int ID => (int)_api.Target.GetTargetInfo().TargetIndex;
 
             public bool SetNPCTarget(int index)
             {
-                return api.Target.SetTarget(index);
+                return _api.Target.SetTarget(index);
             }
         }
 
         public class TimerTools : ITimerTools
         {
-            private readonly EliteAPI api;
+            private readonly EliteAPI _api;
 
             public TimerTools(EliteAPI api)
             {
-                this.api = api;
+                _api = api;
             }
 
             public int GetAbilityRecast(int index)
             {
-                var ids = api.Recast.GetAbilityIds();
-                var ability = api.Resources.GetAbility((uint)index);
+                var ids = _api.Recast.GetAbilityIds();
+                var ability = _api.Resources.GetAbility((uint)index);
                 var idx = ids.IndexOf(ability.TimerID);
-                return api.Recast.GetAbilityRecast(idx);
+                return _api.Recast.GetAbilityRecast(idx);
             }
 
             public int GetSpellRecast(int index)
             {
-                return api.Recast.GetSpellRecast(index);
+                return _api.Recast.GetSpellRecast(index);
             }
         }
 
         public class WindowerTools : IWindowerTools
         {
-            private readonly EliteAPI api;
+            private readonly EliteAPI _api;
 
             public WindowerTools(EliteAPI api)
             {
-                this.api = api;
+                _api = api;
             }
 
             public void SendString(string stringToSend)
             {
-                api.ThirdParty.SendString(stringToSend);
+                _api.ThirdParty.SendString(stringToSend);
             }
 
             public void SendKeyPress(Keys keys)
             {
-                api.ThirdParty.KeyPress(keys);
+                _api.ThirdParty.KeyPress(keys);
             }
         }
 
         public class ChatTools : IChatTools
         {
             private readonly EliteAPI _api;
-            private PollingProcessor _timer;
             public Queue<EliteAPI.ChatEntry> ChatEntries { get; set; } = new Queue<EliteAPI.ChatEntry>();
 
             public ChatTools(EliteAPI api)
             {
                 _api = api;
-                _timer = new PollingProcessor(QueueChatEntries);
-                _timer.Start();
+                var timer = new PollingProcessor(QueueChatEntries);
+                timer.Start();
             }
 
             private void QueueChatEntries()

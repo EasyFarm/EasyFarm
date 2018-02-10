@@ -25,7 +25,7 @@ namespace MemoryAPI.Memory
     {
         public static MemoryWrapper Create(int pid)
         {
-            return new EliteMMOWrapper(pid);
+            return new EliteMmoWrapper(pid);
         }
 
         public INavigatorTools Navigator { get; set; }
