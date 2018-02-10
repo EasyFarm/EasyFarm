@@ -15,12 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System;
 using System.Runtime.Caching;
 
-namespace MemoryAPI
+namespace MemoryAPI.Memory
 {
-    internal static class RuntimeCache
+    public static class RuntimeCache
     {
         public static T Get<T>(string key)
         {

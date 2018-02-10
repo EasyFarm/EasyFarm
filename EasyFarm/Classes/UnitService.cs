@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EasyFarm.UserSettings;
+using MemoryAPI.Memory;
 
 namespace EasyFarm.Classes
 {
@@ -72,19 +73,6 @@ namespace EasyFarm.Classes
         /// </summary>
         private const short UnitArrayMax = Constants.UnitArrayMax;
 
-        // We are caching values for HasAggro, since the program will call it constantly which will
-        // result in a performance jump.
-
-        /// <summary>
-        /// The last time an aggro check was performed.
-        /// </summary>
-        private DateTime LastAggroCheck = DateTime.Now;
-
-        /// <summary>
-        /// The last value read from HasAggro
-        /// </summary>
-        private bool LastAggroStatus;
-
         /// <summary>
         /// The player's environmental data.
         /// </summary>
@@ -97,19 +85,14 @@ namespace EasyFarm.Classes
         {
             get
             {
-                // Return the cached value if we're checking too often.
-                if (LastAggroCheck.AddSeconds(
-                    Constants.UnitArrayCheckRate) >
-                    DateTime.Now)
-                {
-                    return LastAggroStatus;
-                }
+                var key = "HasAggro";
+                var result = RuntimeCache.Get<bool?>(key);
 
-                // Update the last checked time.
-                LastAggroCheck = DateTime.Now;
+                if (result.HasValue) return result.Value;
+                var hasAggro = MobArray.Any(x => x.HasAggroed);
 
-                // Otherwise return the current environment value.
-                return LastAggroStatus = MobArray.Any(x => x.HasAggroed);
+                RuntimeCache.Set(key, hasAggro, DateTimeOffset.Now.AddSeconds(Constants.UnitArrayCheckRate));
+                return hasAggro;
             }
         }
 
