@@ -15,33 +15,38 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using EasyFarm.Classes;
 using MemoryAPI;
 
 namespace EasyFarm.States
 {
-    /// <summary>
-    ///     A class for defeating monsters.
-    /// </summary>
-    public class CombatState : BaseState
+    public class StateMemory
     {
-        static CombatState()
+        public StateMemory(IMemoryAPI eliteApi)
         {
-           IsFighting = false;
+            EliteApi = eliteApi;
+            Executor = new Executor(eliteApi);
+            UnitService = new UnitService(eliteApi);
         }
 
-        public CombatState(IMemoryAPI fface) : base(fface)
-        {
-        }
+        /// <summary>
+        ///     The game session.
+        /// </summary>
+        public IMemoryAPI EliteApi { get; set; }
 
         /// <summary>
         ///     Whether the fight has started or not.
         /// </summary>
-        public static bool IsFighting { get; set; }
+        public bool IsFighting { get; set; }
 
         /// <summary>
         ///     Who we are trying to kill currently
         /// </summary>
-        public static IUnit Target { get; set; }        
+        public IUnit Target { get; set; }
+
+        public Executor Executor { get; set; }
+
+        public IUnitService UnitService { get; set; }
     }
 }

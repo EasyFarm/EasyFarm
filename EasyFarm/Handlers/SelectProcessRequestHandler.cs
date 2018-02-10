@@ -48,7 +48,7 @@ namespace EasyFarm.ViewModels
             // Get memory reader set in config file.
             var fface = MemoryWrapper.Create(process.Id);
 
-            // Set the fface Session.
+            // Set the EliteApi Session.
             ViewModelBase.SetSession(fface);
 
             // Tell the user the program has loaded the player's data

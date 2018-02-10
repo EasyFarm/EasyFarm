@@ -15,21 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.UserSettings;
-using MemoryAPI;
 
 namespace EasyFarm.States
 {
-    public class PullState : CombatState
+    public class PullState : AgentState
     {
-        public PullState(IMemoryAPI fface) : base(fface)
+        public PullState(StateMemory memory) : base(memory)
         {
-            Executor = new Executor(fface);
         }
-
-        public Executor Executor { get; set; }
 
         /// <summary>
         ///     Allow component to run when moves need to be triggered or
@@ -39,15 +36,15 @@ namespace EasyFarm.States
         public override bool Check()
         {
             if (IsFighting) return false;
-            if (new RestState(fface).Check()) return false;
-            if (new SummonTrustsState(fface).Check()) return false;
-            if (!UnitFilters.MobFilter(fface, Target)) return false;
+            if (new RestState(Memory).Check()) return false;
+            if (new SummonTrustsState(Memory).Check()) return false;
+            if (!UnitFilters.MobFilter(EliteApi, Target)) return false;
             return Config.Instance.BattleLists["Pull"].Actions.Any(x => x.IsEnabled);
         }
 
         public override void Enter()
         {
-            fface.Navigator.Reset();
+            EliteApi.Navigator.Reset();
         }
 
         /// <summary>
@@ -57,7 +54,7 @@ namespace EasyFarm.States
         public override void Run()
         {
             var actions = Config.Instance.BattleLists["Pull"].Actions.ToList();
-            var usable = actions.Where(x => ActionFilters.TargetedFilter(fface, x, Target)).ToList();
+            var usable = actions.Where(x => ActionFilters.TargetedFilter(EliteApi, x, Target)).ToList();
             Executor.UseTargetedActions(usable, Target);
         }
 

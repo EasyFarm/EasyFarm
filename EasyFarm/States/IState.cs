@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 namespace EasyFarm.States
 {
     public interface IState
@@ -22,11 +23,11 @@ namespace EasyFarm.States
         bool Enabled { get; set; }
         int Priority { get; set; }
 
-        bool Check();        
+        bool Check();
         void Enter();
-        void Exit();        
+        void Exit();
         void Run();
 
-        int CompareTo(object other);        
+        int CompareTo(object other);
     }
 }

@@ -200,6 +200,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="States\AgentState.cs" />
     <Compile Include="UserSettings\ConfigFactory.cs" />
     <Compile Include="UserSettings\IConfigFactory.cs" />
     <Compile Include="States\PlayerMovementTracker.cs" />
@@ -238,7 +239,7 @@
     <Compile Include="ViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\MasterViewModel.cs" />
     <Compile Include="States\ApproachState.cs" />
-    <Compile Include="States\CombatState.cs" />
+    <Compile Include="States\StateMemory.cs" />
     <Compile Include="Classes\BattleAbility.cs" />
     <Compile Include="Classes\Executor.cs" />
     <Compile Include="Classes\Extensions.cs" />

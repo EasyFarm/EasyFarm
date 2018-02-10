@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.UserSettings;
@@ -25,26 +26,28 @@ namespace EasyFarm.States
     /// <summary>
     ///     Moves to target enemies.
     /// </summary>
-    public class ApproachState : CombatState
+    public class ApproachState : AgentState
     {
-        public ApproachState(IMemoryAPI fface) : base(fface) { }
+        public ApproachState(StateMemory memory) : base(memory)
+        {
+        }
 
         public override bool Check()
         {
-            if (new RestState(fface).Check()) return false;
+            if (new RestState(Memory).Check()) return false;
 
             // Make sure we don't need trusts
-            if (new SummonTrustsState(fface).Check()) return false;
+            if (new SummonTrustsState(Memory).Check()) return false;
 
             // Target dead or null.
-            if (!UnitFilters.MobFilter(fface, Target)) return false;
+            if (!UnitFilters.MobFilter(EliteApi, Target)) return false;
 
             // We should approach mobs that have aggroed or have been pulled. 
             if (Target.Status.Equals(Status.Fighting)) return true;
 
             // Get usable abilities. 
             var usable = Config.Instance.BattleLists["Pull"].Actions
-                .Where(x => ActionFilters.BuffingFilter(fface, x));
+                .Where(x => ActionFilters.BuffingFilter(EliteApi, x));
 
             // Approach when there are no pulling moves available. 
             if (!usable.Any()) return true;
@@ -59,26 +62,20 @@ namespace EasyFarm.States
             if (Config.Instance.IsApproachEnabled)
             {
                 // Move to target if out of melee range. 
-                fface.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
-                fface.Navigator.GotoNPC(Target.Id, Config.Instance.IsObjectAvoidanceEnabled);
+                EliteApi.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
+                EliteApi.Navigator.GotoNPC(Target.Id, Config.Instance.IsObjectAvoidanceEnabled);
             }
 
             // Face mob. 
-            fface.Navigator.FaceHeading(Target.Position);
+            EliteApi.Navigator.FaceHeading(Target.Position);
 
             // Target mob if not currently targeted. 
-            Player.SetTarget(fface, Target);
+            Player.SetTarget(EliteApi, Target);
 
             // Has the user decided we should engage in battle. 
             if (Config.Instance.IsEngageEnabled)
-            {
-                // Not engaged and in range. 
-                if (!fface.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
-                {
-                    // Engage the target. 
-                    fface.Windower.SendString(Constants.AttackTarget);
-                }
-            }
+                if (!EliteApi.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
+                    EliteApi.Windower.SendString(Constants.AttackTarget);
         }
     }
 }

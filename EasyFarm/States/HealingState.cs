@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.UserSettings;
@@ -22,48 +23,40 @@ using MemoryAPI;
 
 namespace EasyFarm.States
 {
-    public class HealingState : BaseState
+    public class HealingState : AgentState
     {
-        private readonly Executor _executor;
-
-        public HealingState(IMemoryAPI fface) : base(fface)
+        public HealingState(StateMemory fface) : base(fface)
         {
-            _executor = new Executor(fface);
         }
 
         public override bool Check()
         {
-            if (new RestState(fface).Check()) return false;
+            if (new RestState(Memory).Check()) return false;
 
-            if (!Config.Instance.BattleLists["Healing"].Actions
-                .Any(x => ActionFilters.BuffingFilter(fface, x)))
-                return false;
-
-            return true;
+            return Config.Instance.BattleLists["Healing"].Actions
+                .Any(x => ActionFilters.BuffingFilter(EliteApi, x));
         }
 
         public override void Enter()
         {
             // Stop resting. 
-            if (fface.Player.Status.Equals(Status.Healing))
-            {
-                Player.Stand(fface);
-            }
+            if (EliteApi.Player.Status.Equals(Status.Healing))
+                Player.Stand(EliteApi);
 
             // Stop moving. 
-            fface.Navigator.Reset();
+            EliteApi.Navigator.Reset();
         }
 
         public override void Run()
         {
             // Get the list of healing abilities that can be used.
             var healingMoves = Config.Instance.BattleLists["Healing"].Actions
-                .Where(x => ActionFilters.BuffingFilter(fface, x))
+                .Where(x => ActionFilters.BuffingFilter(EliteApi, x))
                 .ToList();
 
             if (healingMoves.Count <= 0) return;
             var healingMove = healingMoves.First();
-            _executor.UseBuffingActions(new[] { healingMove });
+            Executor.UseBuffingActions(new[] {healingMove});
         }
     }
 }

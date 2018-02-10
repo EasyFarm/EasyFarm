@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.UserSettings;
@@ -25,21 +26,18 @@ namespace EasyFarm.States
     /// <summary>
     ///     Buffs the player.
     /// </summary>
-    public class StartState : CombatState
+    public class StartState : AgentState
     {
-        public StartState(IMemoryAPI fface) : base(fface)
+        public StartState(StateMemory memory) : base(memory)
         {
-            Executor = new Executor(fface);
         }
-
-        public Executor Executor { get; set; }
 
         public override bool Check()
         {
-            if (new RestState(fface).Check()) return false;
+            if (new RestState(Memory).Check()) return false;
 
             // target dead or null. 
-            if (!UnitFilters.MobFilter(fface, Target)) return false;
+            if (!UnitFilters.MobFilter(EliteApi, Target)) return false;
 
             // Return true if fight has not started. 
             return !Target.Status.Equals(Status.Fighting);
@@ -47,13 +45,13 @@ namespace EasyFarm.States
 
         public override void Enter()
         {
-            fface.Navigator.Reset();
+            EliteApi.Navigator.Reset();
         }
 
         public override void Run()
         {
             var usable = Config.Instance.BattleLists["Start"]
-                .Actions.Where(x => ActionFilters.BuffingFilter(fface, x));
+                .Actions.Where(x => ActionFilters.BuffingFilter(EliteApi, x));
 
             // Execute moves at target. 
             Executor.UseBuffingActions(usable);

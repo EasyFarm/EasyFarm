@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.UserSettings;
@@ -22,25 +23,19 @@ using MemoryAPI;
 
 namespace EasyFarm.States
 {
-    public class SetFightingState : CombatState
+    public class SetFightingState : AgentState
     {
-        public SetFightingState(IMemoryAPI fface) : base(fface) { }
+        public SetFightingState(StateMemory memory) : base(memory)
+        {
+        }
 
         public override bool Check()
         {
-            if (UnitFilters.MobFilter(fface, Target))
-            {
-                // No moves in pull list, set FightStarted to true to let
-                // other components who depend on it trigger. 
+            if (UnitFilters.MobFilter(EliteApi, Target))
                 if (!Config.Instance.BattleLists["Pull"].Actions.Any(x => x.IsEnabled))
-                {
                     return IsFighting = true;
-                }
                 else
-                {
                     return IsFighting = Target.Status.Equals(Status.Fighting);
-                }
-            }
 
             return IsFighting = false;
         }

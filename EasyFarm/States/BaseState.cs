@@ -15,39 +15,37 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System;
-using MemoryAPI;
 
 namespace EasyFarm.States
 {
     public abstract class BaseState : IState, IComparable
     {
-        /// <summary>
-        ///     The game session.
-        /// </summary>
-        protected IMemoryAPI fface { get; set; }
-
-        protected BaseState(IMemoryAPI fface)
-        {
-            this.fface = fface;
-        }
-
         public virtual bool Enabled { get; set; }
 
         public virtual int Priority { get; set; }
 
-        public virtual bool Check() { return false; }
+        public virtual bool Check()
+        {
+            return false;
+        }
 
-        public virtual void Enter() { }
+        public virtual void Enter()
+        {
+        }
 
-        public virtual void Exit() { }
+        public virtual void Exit()
+        {
+        }
 
-        public virtual void Run() { }
+        public virtual void Run()
+        {
+        }
 
         public virtual int CompareTo(object obj)
         {
-            var other = obj as IState;
-            if (other == null) return 1;
+            if (!(obj is IState other)) return 1;
             return -Priority.CompareTo(other.Priority);
         }
     }

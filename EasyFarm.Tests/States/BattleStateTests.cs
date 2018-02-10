@@ -34,17 +34,21 @@ namespace EasyFarm.Tests.States
             [Fact]
             public void WhenEngagedSetAndEngagedShouldBattle()
             {
-                // Fixture setup
-                CombatState.Target = FindUnit();
-                CombatState.IsFighting = true;
-                Config.Instance.IsEngageEnabled = true;
+                // Fixture setup                
+                Config.Instance.IsEngageEnabled = true;                
 
                 var memory = new FakeMemoryAPI();
                 var player = FindPlayer();
                 player.Status = Status.Fighting;
                 memory.Player = player;
 
-                var sut = new BattleState(memory);
+                var stateMemory = new StateMemory(memory)
+                {
+                    Target = FindUnit(),
+                    IsFighting = true
+                };
+
+                var sut = new BattleState(stateMemory);
 
                 // Exercise system
                 var result = sut.Check();
@@ -58,9 +62,7 @@ namespace EasyFarm.Tests.States
             [Fact]
             public void WhenEngagedNotSetShouldBattle()
             {
-                // Fixture setup
-                CombatState.Target = FindUnit();
-                CombatState.IsFighting = true;
+                // Fixture setup                
                 Config.Instance.IsEngageEnabled = false;
 
                 var memory = new FakeMemoryAPI();
@@ -68,7 +70,13 @@ namespace EasyFarm.Tests.States
                 player.Status = Status.Standing;
                 memory.Player = player;
 
-                var sut = new BattleState(memory);
+                var stateMemory = new StateMemory(memory)
+                {
+                    Target = FindUnit(),
+                    IsFighting = true
+                };
+
+                var sut = new BattleState(stateMemory);
 
                 // Exercise system
                 var result = sut.Check();
@@ -83,12 +91,17 @@ namespace EasyFarm.Tests.States
             public void WithNonValidUnitShouldNotBattle()
             {
                 // Fixture setup
-                CombatState.Target = FindNonValidUnit();
-                CombatState.IsFighting = true;
                 Config.Instance.IsEngageEnabled = false;
 
                 var memory = new FakeMemoryAPI { Player = FindPlayer() };
-                var sut = new BattleState(memory);
+
+                var stateMemory = new StateMemory(memory)
+                {
+                    Target = FindNonValidUnit(),
+                    IsFighting = true
+                };
+
+                var sut = new BattleState(stateMemory);
 
                 // Exercise system
                 var result = sut.Check();
@@ -103,11 +116,16 @@ namespace EasyFarm.Tests.States
             public void WhenNotFightingShouldntBattle()
             {
                 // Fixture setup
-                CombatState.IsFighting = false;
-                CombatState.Target = FindUnit();
                 Config.Instance.IsEngageEnabled = false;
                 var memory = new FakeMemoryAPI { Player = FindPlayer() };
-                var sut = new BattleState(memory);
+
+                var stateMemory = new StateMemory(memory)
+                {
+                    Target = FindUnit(),
+                    IsFighting = false
+                };
+
+                var sut = new BattleState(stateMemory);
 
                 // Exercise system
                 var result = sut.Check();
@@ -129,12 +147,17 @@ namespace EasyFarm.Tests.States
                 Config.Instance.IsHealthEnabled = true;
                 player.Status = Status.Standing;
 
-                CombatState.IsFighting = true;
                 Config.Instance.IsEngageEnabled = false;
-                CombatState.Target = FindUnit();
 
                 var memory = new FakeMemoryAPI { Player = player };
-                var sut = new BattleState(memory);
+
+                var stateMemory = new StateMemory(memory)
+                {
+                    Target = FindUnit(),
+                    IsFighting = false
+                };
+
+                var sut = new BattleState(stateMemory);
 
                 UnitService.Units = new List<IUnit>();
 
@@ -153,18 +176,22 @@ namespace EasyFarm.Tests.States
                 // Fixture setup
                 var player = FindPlayer();
                 player.Status = Status.Standing;
-
-                CombatState.IsFighting = true;
                 Config.Instance.IsEngageEnabled = false;
-                CombatState.Target = FindNonValidUnit();
 
                 var memory = new FakeMemoryAPI { Player = player };
-                var sut = new BattleState(memory);
+
+                var stateMemory = new StateMemory(memory)
+                {
+                    Target = FindNonValidUnit(),
+                    IsFighting = true
+                };
+
+                var sut = new BattleState(stateMemory);
 
                 UnitService.Units = new List<IUnit>();
 
                 // Exercise system
-                var result = sut.Check();
+                var result = sut.Check();                
 
                 // Verify outcome
                 Assert.False(result);
@@ -175,6 +202,11 @@ namespace EasyFarm.Tests.States
 
         public class Run
         {
+            public Run()
+            {
+                GlobalFactory.BuildUnitService = fface => new TestUnitService();
+            }
+
             [Theory]
             [InlineData(AbilityType.Jobability, TargetType.Self, "test", "/jobability test <me>")]
             [InlineData(AbilityType.Range, TargetType.Enemy, "Ranged", "/range <t>")]
@@ -249,16 +281,19 @@ namespace EasyFarm.Tests.States
                 var target = FindTarget();
                 var timer = FindTimer();
 
-                var sut = new BattleState(new FakeMemoryAPI()
+                var memory = new FakeMemoryAPI()
                 {
                     Player = player,
                     Windower = windower,
                     Navigator = navigator,
                     Target = target,
                     Timer = timer
-                });
+                };
 
-                CombatState.Target = FindUnit();
+                var sut = new BattleState(new StateMemory(memory)
+                {
+                    Target = FindUnit()
+                });
 
                 return sut;
             }
@@ -310,24 +345,27 @@ namespace EasyFarm.Tests.States
 
             private BattleState CreateSut(FakeNavigator navigator)
             {
-                return new BattleState(new FakeMemoryAPI()
+                var memory = new FakeMemoryAPI()
                 {
                     Navigator = navigator,
                     Player = FindPlayer()
-                });
+                };
+
+                return new BattleState(new StateMemory(memory));
             }
 
             private static BattleState CreateSut(FakeWindower windower, FakePlayer player)
             {
                 var navigator = FindNavigator();
 
-                var sut = new BattleState(new FakeMemoryAPI()
+                var memory = new FakeMemoryAPI()
                 {
                     Windower = windower,
                     Player = player,
                     Navigator = navigator
-                });
-                return sut;
+                };
+
+                return new BattleState(new StateMemory(memory));
             }
         }
     }

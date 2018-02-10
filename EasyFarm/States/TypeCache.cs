@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System;
 using System.Collections.Generic;
 
@@ -30,10 +31,7 @@ namespace EasyFarm.States
             {
                 if (@object == null) return default(T);
 
-                if (_cache.ContainsKey(@object.GetType()))
-                {
-                    return _cache[@object.GetType()];
-                }
+                if (_cache.ContainsKey(@object.GetType())) return _cache[@object.GetType()];
 
                 return default(T);
             }
@@ -42,13 +40,9 @@ namespace EasyFarm.States
                 if (@object == null) return;
 
                 if (_cache.ContainsKey(@object.GetType()))
-                {
                     _cache[@object.GetType()] = value;
-                }
                 else
-                {
                     _cache.Add(@object.GetType(), value);
-                }
             }
         }
     }
