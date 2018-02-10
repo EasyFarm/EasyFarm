@@ -3,7 +3,9 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                       xmlns:views="clr-namespace:EasyFarm.Views"
+                       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                       xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                       Dialog:DialogParticipation.Register="{Binding}"
                        mc:Ignorable="d"
                        x:Name="MainForm"
                        x:Class="EasyFarm.Views.MasterView"
@@ -18,6 +20,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </controls:MetroWindow.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
@@ -79,7 +86,8 @@
             </MenuItem>
         </Menu>
 
-        <views:MainView Grid.Row="1"
+        <ContentControl Content="{Binding ViewModel}"
+                        Grid.Row="1"
                         Grid.ColumnSpan="2" 
                         Grid.Column="0" />
 

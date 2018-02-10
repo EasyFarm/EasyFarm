@@ -1,24 +1,22 @@
-﻿/*///////////////////////////////////////////////////////////////////
-<EasyFarm, general farming utility for FFXI.>
-Copyright (C) <2013>  <Zerolimits>
+﻿// ///////////////////////////////////////////////////////////////////
+// This file is a part of EasyFarm for Final Fantasy XI
+// Copyright (C) 2013-2017 Mykezero
+// 
+// EasyFarm is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// EasyFarm is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// If not, see <http://www.gnu.org/licenses/>.
+// ///////////////////////////////////////////////////////////////////
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-*/
-///////////////////////////////////////////////////////////////////
-
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using EasyFarm.Infrastructure;
 
 namespace EasyFarm.ViewModels
@@ -36,20 +34,10 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private ObservableCollection<IViewModel> _viewModels;
 
-        public MainViewModel()
+        public MainViewModel(TabViewModels tableViewModel)
         {
-            // Get all enabled view models. 
-            ViewModels = new ObservableCollection<IViewModel>(
-                new List<IViewModel>
-                {
-                    new BattlesViewModel(),                    
-                    new TargetingViewModel(),
-                    new RestingViewModel(),
-                    new RoutesViewModel(),
-                    new FollowViewModel(),
-                    new LogViewModel(),
-                    new SettingsViewModel()
-                });
+            // Get all enabled view models.
+            ViewModels = new ObservableCollection<IViewModel>(tableViewModel.ViewModels);
         }
 
         /// <summary>
@@ -58,7 +46,7 @@ namespace EasyFarm.ViewModels
         public ObservableCollection<IViewModel> ViewModels
         {
             get { return _viewModels; }
-            set { SetProperty(ref _viewModels, value); }
+            set { Set(ref _viewModels, value); }
         }
 
         /// <summary>
@@ -67,7 +55,7 @@ namespace EasyFarm.ViewModels
         public int SelectedIndex
         {
             get { return _selectedIndex; }
-            set { SetProperty(ref _selectedIndex, value); }
+            set { Set(ref _selectedIndex, value); }
         }
     }
 }

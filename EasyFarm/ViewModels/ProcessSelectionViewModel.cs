@@ -1,33 +1,50 @@
-﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+﻿// ///////////////////////////////////////////////////////////////////
+// This file is a part of EasyFarm for Final Fantasy XI
+// Copyright (C) 2013-2017 Mykezero
+// 
+// EasyFarm is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// EasyFarm is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// If not, see <http://www.gnu.org/licenses/>.
+// ///////////////////////////////////////////////////////////////////
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using EasyFarm.Views;
-using Prism.Commands;
-using Prism.Mvvm;
+using System.Threading.Tasks;
+using EasyFarm.Infrastructure;
+using GalaSoft.MvvmLight.Command;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace EasyFarm.ViewModels
 {
-    public class ProcessSelectionViewModel : BindableBase
+    public class SelectProcessViewModel : ViewModelBase
     {
         /// <summary>
         ///     The name of the Processes to search for.
         /// </summary>
         private const string ProcessName = "pol";
 
-        private readonly ProcessSelectionView _view;
-
-        public ProcessSelectionViewModel(ProcessSelectionView view)
+        public SelectProcessViewModel(BaseMetroDialog dialog)
         {
             // When window is closed through X button. 
-            _view = view;
             Processes = new ObservableCollection<Process>();
 
             // Close window on when "Set character" is pressed. 
-            SelectCommand = new DelegateCommand(OnSelect);
-            RefreshCommand = new DelegateCommand(OnRefresh);
+            SelectCommand = new RelayCommand(async () => await OnSelect());
+            RefreshCommand = new RelayCommand(OnRefresh);
 
             OnRefresh();
+            Dialog = dialog;
         }
 
         /// <summary>
@@ -39,7 +56,7 @@ namespace EasyFarm.ViewModels
         ///     Toggles whether the program show only pol.exe processes or
         ///     all processes (in case they are targeting a private server).
         /// </summary>
-        public DelegateCommand RefreshCommand { get; set; }
+        public RelayCommand RefreshCommand { get; set; }
 
         /// <summary>
         ///     The currently selected game session.
@@ -49,9 +66,11 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Makes the binded window exit.
         /// </summary>
-        public DelegateCommand SelectCommand { get; set; }
+        public RelayCommand SelectCommand { get; set; }
 
         public ObservableCollection<Process> Processes { get; set; }
+
+        public BaseMetroDialog Dialog { get; }
 
         /// <summary>
         /// Refresh the processes. 
@@ -74,13 +93,24 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Cleans up Processes watcher resources.
         /// </summary>
-        private void OnSelect()
+        private async Task OnSelect()
         {
-            // Close the character selection screen. 
-            _view.Close();
-
             // User made a choice to close this dialog. 
             IsProcessSelected = true;
+            await DialogCoordinator.Instance.HideMetroDialogAsync(App.Current.MainWindow.DataContext, Dialog);
+        }
+    }
+
+    public static class LinqExtensions
+    {
+        public static ICollection<T> AddRange<T>(this ICollection<T> source, IEnumerable<T> addSource)
+        {
+            foreach (T item in addSource)
+            {
+                source.Add(item);
+            }
+
+            return source;
         }
     }
 }

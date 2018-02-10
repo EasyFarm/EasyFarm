@@ -1,4 +1,21 @@
-﻿using EasyFarm.States;
+﻿// ///////////////////////////////////////////////////////////////////
+// This file is a part of EasyFarm for Final Fantasy XI
+// Copyright (C) 2013-2017 Mykezero
+// 
+// EasyFarm is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// EasyFarm is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// If not, see <http://www.gnu.org/licenses/>.
+// ///////////////////////////////////////////////////////////////////
+using EasyFarm.States;
 using EasyFarm.Tests.TestTypes;
 using MemoryAPI;
 using Moq;
@@ -15,7 +32,7 @@ namespace EasyFarm.Tests.States
             var api = new FakeMemoryAPI();
             var player = new FakePlayer { Zone = Zone.Konschtat_Highlands};
             api.Player = player;
-            var sut = new ZoneState(api);
+            var sut = new ZoneState(new StateMemory(api));
             player.Zone = Zone.Valkurm_Dunes;
             player.Stats = new Structures.PlayerStats { Str = 100 };
 
@@ -39,7 +56,7 @@ namespace EasyFarm.Tests.States
                 Stats = new Structures.PlayerStats {Str = 0}
             };
             api.Player = player;            
-            var sut = new ZoneState(api);;            
+            var sut = new ZoneState(new StateMemory(api));
 
             // Exercise system
             var result = sut.Check();
@@ -61,7 +78,7 @@ namespace EasyFarm.Tests.States
                 Stats = new Structures.PlayerStats { Str = 100 }
             };
             api.Player = player;
-            var sut = new ZoneState(api); ;
+            var sut = new ZoneState(new StateMemory(api));
 
             // Exercise system
             var result = sut.Check();
@@ -86,7 +103,7 @@ namespace EasyFarm.Tests.States
             var navigation = new Mock<INavigatorTools>();
             api.Player = player;
             api.Navigator = navigation.Object;
-            var sut = new ZoneState(api);
+            var sut = new ZoneState(new StateMemory(api));
 
             player.Zone = Zone.Valkurm_Dunes;
 
@@ -114,7 +131,7 @@ namespace EasyFarm.Tests.States
             navigation.Setup(x => x.Reset());
             api.Player = player;
             api.Navigator = navigation.Object;
-            var sut = new ZoneState(api);
+            var sut = new ZoneState(new StateMemory(api));
 
             player.Zone = Zone.Valkurm_Dunes;
 
@@ -142,7 +159,7 @@ namespace EasyFarm.Tests.States
             navigation.Setup(x => x.Reset());
             api.Player = player;
             api.Navigator = navigation.Object;
-            var sut = new ZoneState(api)
+            var sut = new ZoneState(new StateMemory(api))
             {
                 ZoningAction = () =>
                 {

@@ -40,6 +40,7 @@ local.properties
 *.suo
 *.user
 *.sln.docstates
+.vs/
 
 # Build results
 
@@ -219,3 +220,4 @@ Build/coverage
 Build/result.xml
 Build/duplication.xml
 !Build
+*.config

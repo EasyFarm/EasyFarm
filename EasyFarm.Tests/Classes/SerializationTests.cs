@@ -1,7 +1,26 @@
-﻿using System;
+﻿// ///////////////////////////////////////////////////////////////////
+// This file is a part of EasyFarm for Final Fantasy XI
+// Copyright (C) 2013-2017 Mykezero
+// 
+// EasyFarm is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// EasyFarm is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// If not, see <http://www.gnu.org/licenses/>.
+// ///////////////////////////////////////////////////////////////////
+using System;
 using System.IO;
 using System.Linq;
 using EasyFarm.Classes;
+using EasyFarm.Persistence;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 using Ploeh.AutoFixture;
 using Xunit;
@@ -61,27 +80,7 @@ namespace EasyFarm.Tests.Classes
 
             // Teardown
             File.Delete(path);
-        }
-
-        [Fact]
-        public void SerializationIsBackwardsCompatibleWithXml()
-        {
-            // Fixture setup
-            var config = new Config();
-
-            var path = FindFilePath();
-            var xmlPersister = new XmlPersister();
-            xmlPersister.Serialize(path, config);
-
-            // Exercise system            
-            var result = Record.Exception(() => Serialization.Deserialize<Config>(path));
-
-            // Verify outcome
-            Assert.IsNotType<AggregateException>(result);
-
-            // Teardown
-            File.Delete(path);
-        }
+        }       
 
         [Fact]
         public void SerializationWhenDeserializationFailsThrowsException()

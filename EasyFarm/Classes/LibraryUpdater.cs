@@ -1,10 +1,28 @@
-﻿using System;
+﻿// ///////////////////////////////////////////////////////////////////
+// This file is a part of EasyFarm for Final Fantasy XI
+// Copyright (C) 2013-2017 Mykezero
+// 
+// EasyFarm is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// EasyFarm is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// If not, see <http://www.gnu.org/licenses/>.
+// ///////////////////////////////////////////////////////////////////
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
+using MahApps.Metro.Controls.Dialogs;
 using NLog;
 
 namespace EasyFarm.Classes
@@ -16,17 +34,25 @@ namespace EasyFarm.Classes
         private const string LibraryPath = "http://ext.elitemmonetwork.com/downloads/eliteapi/EliteAPI.dll";
         private const string LibraryPage = "http://ext.elitemmonetwork.com/downloads/eliteapi/";
 
+        public bool HasUpdate()
+        {
+            var filePath = Path.Combine(Environment.CurrentDirectory, "EliteAPI.dll");
+            FileVersionInfo fileInfo = GetFileInfo(filePath);
+
+            string latestVersion = GetLatestVersion();
+            if (string.IsNullOrEmpty(latestVersion)) return false;
+
+            return fileInfo == null || latestVersion != fileInfo.FileVersion;
+        }
+
         public void Update()
         {
             try
             {
                 var filePath = Path.Combine(Environment.CurrentDirectory, "EliteAPI.dll");
-                FileVersionInfo fileInfo = GetFileInfo(filePath);
+                FileVersionInfo fileInfo = GetFileInfo(filePath);               
 
-                string latestVersion = GetLatestVersion();
-                if (string.IsNullOrEmpty(latestVersion)) return;
-
-                if (fileInfo == null || latestVersion != fileInfo.FileVersion)
+                if (HasUpdate())
                 {
                     BackupLibrary(fileInfo);
                     DownloadLibrary(filePath);

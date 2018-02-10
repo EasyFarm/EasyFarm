@@ -1,28 +1,29 @@
-/*///////////////////////////////////////////////////////////////////
-<EasyFarm, general farming utility for FFXI.>
-Copyright (C) <2013>  <Zerolimits>
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-*/
-///////////////////////////////////////////////////////////////////
-
+// ///////////////////////////////////////////////////////////////////
+// This file is a part of EasyFarm for Final Fantasy XI
+// Copyright (C) 2013-2017 Mykezero
+// 
+// EasyFarm is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// EasyFarm is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// If not, see <http://www.gnu.org/licenses/>.
+// ///////////////////////////////////////////////////////////////////
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
+using EasyFarm.Persistence;
 using EasyFarm.States;
-using Prism.Commands;
+using EasyFarm.UserSettings;
+using GalaSoft.MvvmLight.Command;
 using MemoryAPI;
 using MemoryAPI.Navigation;
 
@@ -38,11 +39,11 @@ namespace EasyFarm.ViewModels
         {            
             _settings = new SettingsManager("ewl", "EasyFarm Waypoint List");            
 
-            ClearCommand = new DelegateCommand(ClearRoute);
-            RecordCommand = new DelegateCommand(Record);
-            SaveCommand = new DelegateCommand(Save);
-            LoadCommand = new DelegateCommand(Load);
-            ResetNavigatorCommand = new DelegateCommand(ResetNavigator);
+            ClearCommand = new RelayCommand(ClearRoute);
+            RecordCommand = new RelayCommand(Record);
+            SaveCommand = new RelayCommand(Save);
+            LoadCommand = new RelayCommand(Load);
+            ResetNavigatorCommand = new RelayCommand(ResetNavigator);
 
             RecordHeader = "Record";
             ViewName = "Routes";
@@ -56,7 +57,7 @@ namespace EasyFarm.ViewModels
         public string RecordHeader
         {
             get { return _recordHeader; }
-            set { SetProperty(ref _recordHeader, value); }
+            set { Set(ref _recordHeader, value); }
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace EasyFarm.ViewModels
         public ObservableCollection<Position> Route
         {
             get { return Config.Instance.Route.Waypoints; }
-            set { SetProperty(ref Config.Instance.Route.Waypoints, value); }
+            set { Set(ref Config.Instance.Route.Waypoints, value); }
         }
 
         /// <summary>

@@ -1,29 +1,27 @@
-﻿/*///////////////////////////////////////////////////////////////////
-<EasyFarm, general farming utility for FFXI.>
-Copyright (C) <2013>  <Zerolimits>
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-*/
-///////////////////////////////////////////////////////////////////
-
+﻿// ///////////////////////////////////////////////////////////////////
+// This file is a part of EasyFarm for Final Fantasy XI
+// Copyright (C) 2013-2017 Mykezero
+// 
+// EasyFarm is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// EasyFarm is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// If not, see <http://www.gnu.org/licenses/>.
+// ///////////////////////////////////////////////////////////////////
 using EasyFarm.Classes;
 using EasyFarm.States;
 using MemoryAPI;
-using Prism.Mvvm;
 
 namespace EasyFarm.Infrastructure
 {
-    public class ViewModelBase : BindableBase, IViewModel
+    public class ViewModelBase : GalaSoft.MvvmLight.ViewModelBase, IViewModel
     {
         /// <summary>
         ///     Global game engine controlling the player.
@@ -31,7 +29,7 @@ namespace EasyFarm.Infrastructure
         protected static GameEngine GameEngine { get; set; }
 
         /// <summary>
-        ///     Solo fface instance for current player.
+        ///     Solo EliteApi instance for current player.
         /// </summary>
         protected static IMemoryAPI FFACE { get; set; }
 
@@ -46,14 +44,14 @@ namespace EasyFarm.Infrastructure
         protected static PathRecorder PathRecorder { get; set; }
 
         /// <summary>
-        /// Set up session from given fface session.
+        /// Set up session from given EliteApi session.
         /// </summary>
         /// <param name="fface"></param>
-        protected static void SetSession(IMemoryAPI fface)
+        public static void SetSession(IMemoryAPI fface)
         {
             if (fface == null) return;
 
-            // Save fface Write
+            // Save EliteApi Write
             FFACE = fface;
 
             // Create a new game engine to control our character. 

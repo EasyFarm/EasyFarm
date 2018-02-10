@@ -1,35 +1,32 @@
-﻿/*///////////////////////////////////////////////////////////////////
-<EasyFarm, general farming utility for FFXI.>
-Copyright (C) <2013>  <Zerolimits>
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-*/
-///////////////////////////////////////////////////////////////////
+﻿// ///////////////////////////////////////////////////////////////////
+// This file is a part of EasyFarm for Final Fantasy XI
+// Copyright (C) 2013-2017 Mykezero
+// 
+// EasyFarm is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// EasyFarm is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// If not, see <http://www.gnu.org/licenses/>.
+// ///////////////////////////////////////////////////////////////////
 
 using System.Linq;
 using EasyFarm.Classes;
-using MemoryAPI;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.States
 {
-    public class PullState : CombatState
+    public class PullState : AgentState
     {
-        public PullState(IMemoryAPI fface) : base(fface)
+        public PullState(StateMemory memory) : base(memory)
         {
-            Executor = new Executor(fface);
         }
-
-        public Executor Executor { get; set; }
 
         /// <summary>
         ///     Allow component to run when moves need to be triggered or
@@ -39,15 +36,15 @@ namespace EasyFarm.States
         public override bool Check()
         {
             if (IsFighting) return false;
-            if (new RestState(fface).Check()) return false;
-            if (new SummonTrustsState(fface).Check()) return false;
-            if (!UnitFilters.MobFilter(fface, Target)) return false;
+            if (new RestState(Memory).Check()) return false;
+            if (new SummonTrustsState(Memory).Check()) return false;
+            if (!UnitFilters.MobFilter(EliteApi, Target)) return false;
             return Config.Instance.BattleLists["Pull"].Actions.Any(x => x.IsEnabled);
         }
 
         public override void Enter()
         {
-            fface.Navigator.Reset();
+            EliteApi.Navigator.Reset();
         }
 
         /// <summary>
@@ -57,7 +54,7 @@ namespace EasyFarm.States
         public override void Run()
         {
             var actions = Config.Instance.BattleLists["Pull"].Actions.ToList();
-            var usable = actions.Where(x => ActionFilters.TargetedFilter(fface, x, Target)).ToList();
+            var usable = actions.Where(x => ActionFilters.TargetedFilter(EliteApi, x, Target)).ToList();
             Executor.UseTargetedActions(usable, Target);
         }
 
