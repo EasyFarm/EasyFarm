@@ -30,5 +30,12 @@ namespace EasyFarm.Classes
         /// Retrieves the list of MOBs.
         /// </summary>
         ICollection<IUnit> MobArray { get; }
+
+        /// <summary>
+        /// Retrieves a unit from the unit array by name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        IUnit GetUnitByName(string name);
     }
 }

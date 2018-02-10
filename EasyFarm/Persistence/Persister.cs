@@ -31,7 +31,6 @@ namespace EasyFarm.Persistence
 
         public T Deserialize<T>(string fileName)
         {
-            var xmlPersister = new XmlPersister();
             var jsonPersister = new JsonPersister();
 
             var exceptions = new Queue<Exception>();
@@ -39,15 +38,6 @@ namespace EasyFarm.Persistence
             try
             {
                 return jsonPersister.Deserialize<T>(fileName);
-            }
-            catch (Exception ex)
-            {
-                exceptions.Enqueue(ex);
-            }
-
-            try
-            {
-                return xmlPersister.Deserialize<T>(fileName);
             }
             catch (Exception ex)
             {

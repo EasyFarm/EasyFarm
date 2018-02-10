@@ -15,18 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using EasyFarm.Classes;
-using MemoryAPI;
+
 using System.Linq;
+using EasyFarm.Classes;
 using EasyFarm.UserSettings;
 
 namespace EasyFarm.States
 {
-    public class TravelState : BaseState
+    public class TravelState : AgentState
     {
         private readonly IConfigFactory _configFactory;
 
-        public TravelState(IMemoryAPI fface, IConfigFactory configFactory) : base(fface)
+        public TravelState(StateMemory memory, IConfigFactory configFactory) : base(memory)
         {
             _configFactory = configFactory;
         }
@@ -39,24 +39,24 @@ namespace EasyFarm.States
             if (!config.Route.IsPathSet) return false;
 
             // Route belongs to a different zone.
-            if (config.Route.Zone != fface.Player.Zone) return false;
+            if (config.Route.Zone != EliteApi.Player.Zone) return false;
 
             // Has valid target to fight.
-            if (UnitFilters.MobFilter(fface, CombatState.Target)) return false;
+            if (UnitFilters.MobFilter(EliteApi, Target)) return false;
 
             // We don't have to rest.
-            if (new RestState(fface).Check()) return false;
+            if (new RestState(Memory).Check()) return false;
 
             // We don't have to heal.
-            if (new HealingState(fface).Check()) return false;
+            if (new HealingState(Memory).Check()) return false;
 
             // We don't need to summon trusts
-            if (new SummonTrustsState(fface).Check()) return false;
+            if (new SummonTrustsState(Memory).Check()) return false;
 
             // We are not bound or struck by an other movement
             // disabling condition.
             if (ProhibitEffects.ProhibitEffectsMovement
-                .Intersect(fface.Player.StatusEffects).Any())
+                .Intersect(EliteApi.Player.StatusEffects).Any())
                 return false;
 
             return true;
@@ -66,12 +66,12 @@ namespace EasyFarm.States
         {
             var config = _configFactory.GetConfig();
 
-            fface.Navigator.DistanceTolerance = 1;
+            EliteApi.Navigator.DistanceTolerance = 1;
 
-            var nextPosition = config.Route.GetNextPosition(fface.Player.Position);
+            var nextPosition = config.Route.GetNextPosition(EliteApi.Player.Position);
             var shouldKeepRunningToNextWaypoint = config.Route.Waypoints.Count != 1;
 
-            fface.Navigator.GotoWaypoint(
+            EliteApi.Navigator.GotoWaypoint(
                 nextPosition,
                 config.IsObjectAvoidanceEnabled,
                 shouldKeepRunningToNextWaypoint);
@@ -79,7 +79,7 @@ namespace EasyFarm.States
 
         public override void Exit()
         {
-            fface.Navigator.Reset();
+            EliteApi.Navigator.Reset();
         }
     }
 }

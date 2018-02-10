@@ -15,27 +15,29 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System;
-using System.Threading;
 using EasyFarm.Classes;
 using MemoryAPI;
 
 namespace EasyFarm.States
 {
-    public class ZoneState : BaseState
+    public class ZoneState : AgentState
     {
         public Zone Zone;
 
+        public ZoneState(StateMemory stateMemory) : base(stateMemory)
+        {
+            Zone = EliteApi.Player.Zone;
+        }
+
         public Action ZoningAction { get; set; } = () => TimeWaiter.Pause(500);
 
-        public ZoneState(IMemoryAPI fface) : base(fface)
-        {
-            Zone = fface.Player.Zone;
-        }
+        private bool IsZoning => EliteApi.Player.Stats.Str == 0;
 
         public override bool Check()
         {
-            var zone = fface.Player.Zone;
+            var zone = EliteApi.Player.Zone;
             return ZoneChanged(zone) || IsZoning;
         }
 
@@ -44,21 +46,16 @@ namespace EasyFarm.States
             return Zone != zone;
         }
 
-        private bool IsZoning => fface.Player.Stats.Str == 0;
-
         public override void Run()
         {
             // Set new zone.
-            Zone = fface.Player.Zone;
+            Zone = EliteApi.Player.Zone;
 
             // Stop program from running to next waypoint.
-            fface.Navigator.Reset();
+            EliteApi.Navigator.Reset();
 
             // Wait until we are done zoning.
-            while (IsZoning)
-            {
-                ZoningAction();
-            }
+            while (IsZoning) ZoningAction();
         }
     }
 }

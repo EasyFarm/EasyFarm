@@ -15,46 +15,49 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using EasyFarm.Classes;
-using EasyFarm.Logging;
-using EasyFarm.ViewModels;
-using MemoryAPI;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EasyFarm.Classes;
+using EasyFarm.Logging;
 using EasyFarm.UserSettings;
+using EasyFarm.ViewModels;
+using MemoryAPI;
 
 namespace EasyFarm.States
 {
     public class FiniteStateMachine
     {
-        private readonly IMemoryAPI _fface;
         private readonly TypeCache<bool> _cache = new TypeCache<bool>();
-        private CancellationTokenSource _cancellation = new CancellationTokenSource();
+        private readonly IMemoryAPI _fface;
         private readonly List<IState> _states = new List<IState>();
+        private CancellationTokenSource _cancellation = new CancellationTokenSource();
 
         public FiniteStateMachine(IMemoryAPI fface)
         {
             _fface = fface;
+            var stateMemory = new StateMemory(fface);
+
             //Create the states
-            AddState(new DeadState(fface) { Priority = 7 });
-            AddState(new ZoneState(fface) { Priority = 7 });
-            AddState(new SetTargetState(fface) { Priority = 7 });
-            AddState(new SetFightingState(fface) { Priority = 7 });
-            AddState(new FollowState(fface) { Priority = 5 });
-            AddState(new RestState(fface) { Priority = 2 });
-            AddState(new SummonTrustsState(fface) { Priority = 6 });
-            AddState(new ApproachState(fface) { Priority = 0 });
-            AddState(new BattleState(fface) { Priority = 3 });
-            AddState(new WeaponskillState(fface) { Priority = 2 });
-            AddState(new PullState(fface) { Priority = 4 });
-            AddState(new StartState(fface) { Priority = 5 });
-            AddState(new TravelState(fface, new ConfigFactory()) { Priority = 1 });
-            AddState(new HealingState(fface) { Priority = 2 });
-            AddState(new EndState(fface) { Priority = 3 });
-            AddState(new StartEngineState(fface) { Priority = Constants.MaxPriority });
+            AddState(new DeadState(stateMemory) {Priority = 7});
+            AddState(new ZoneState(stateMemory) {Priority = 7});
+            AddState(new SetTargetState(stateMemory) {Priority = 7});
+            AddState(new SetFightingState(stateMemory) {Priority = 7});
+            AddState(new FollowState(stateMemory) {Priority = 5});
+            AddState(new RestState(stateMemory) {Priority = 2});
+            AddState(new SummonTrustsState(stateMemory) {Priority = 6});
+            AddState(new ApproachState(stateMemory) {Priority = 0});
+            AddState(new BattleState(stateMemory) {Priority = 3});
+            AddState(new WeaponskillState(stateMemory) {Priority = 2});
+            AddState(new PullState(stateMemory) {Priority = 4});
+            AddState(new StartState(stateMemory) {Priority = 5});
+            AddState(new TravelState(stateMemory, new ConfigFactory()) {Priority = 1});
+            AddState(new HealingState(stateMemory) {Priority = 2});
+            AddState(new EndState(stateMemory) {Priority = 3});
+            AddState(new StartEngineState(stateMemory) {Priority = Constants.MaxPriority});
 
             _states.ForEach(x => x.Enabled = true);
         }
@@ -73,7 +76,7 @@ namespace EasyFarm.States
 
         private void ReEnableStartState()
         {
-            IState startEngineState = _states.FirstOrDefault(x => x.GetType() == typeof(StartEngineState));
+            var startEngineState = _states.FirstOrDefault(x => x.GetType() == typeof(StartEngineState));
             if (startEngineState != null) startEngineState.Enabled = true;
         }
 
@@ -124,10 +127,7 @@ namespace EasyFarm.States
         {
             return () =>
             {
-                if (!backgroundThread.Join(500))
-                {
-                    backgroundThread.Interrupt();
-                }
+                if (!backgroundThread.Join(500)) backgroundThread.Interrupt();
             };
         }
 
@@ -143,7 +143,7 @@ namespace EasyFarm.States
                 {
                     _cancellation.Token.ThrowIfCancellationRequested();
 
-                    bool isRunnable = mc.Check();
+                    var isRunnable = mc.Check();
 
                     // Run last state's exits method.
                     if (_cache[mc] != isRunnable)
@@ -153,15 +153,12 @@ namespace EasyFarm.States
                         _cache[mc] = isRunnable;
                     }
 
-                    if (isRunnable)
-                    {
-                        // Run current state's run method.
-                        mc.Run();
-                    }
+                    if (isRunnable) mc.Run();
                 }
 
                 TimeWaiter.Pause(250);
             }
+
             // ReSharper disable once FunctionNeverReturns
         }
     }

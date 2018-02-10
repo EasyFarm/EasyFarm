@@ -165,7 +165,7 @@ namespace EasyFarm.Classes
 
         public bool MyClaim
         {
-            // Using fface.PartyMember[0].ServerID until fface.Player.PlayerServerID is fixed. 
+            // Using EliteApi.PartyMember[0].ServerID until EliteApi.Player.PlayerServerID is fixed. 
             get { return ClaimedId == _fface.PartyMember[0].ServerID; }
         }
 

@@ -56,6 +56,7 @@
     <Compile Include="Enums\Structures.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="IMemoryAPI.cs" />
+    <Compile Include="Memory\EliteApiExtensions.cs" />
     <Compile Include="Memory\EliteMMOWrapper.cs" />
     <Compile Include="Memory\MemoryWrapper.cs" />
     <Compile Include="Memory\PollingProcessor.cs" />

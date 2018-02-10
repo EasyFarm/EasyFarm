@@ -200,8 +200,9 @@ namespace EasyFarm.Tests.Classes
 
             public void VerifyActionUsable()
             {
-                var memoryAPI = FindMemoryApi();
-                var result = ActionFilters.BuffingFilter(memoryAPI, _battleAbility);
+                GlobalFactory.BuildUnitService = x => new TestUnitService();
+                var memory = FindMemoryApi();
+                var result = ActionFilters.BuffingFilter(memory, _battleAbility);
                 Assert.True(result);
             }
         }        

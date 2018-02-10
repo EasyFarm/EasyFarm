@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,12 +27,12 @@ namespace EasyFarm.States
 {
     public class Route
     {
-        public Zone Zone { get; set; }
-        public ObservableCollection<Position> Waypoints = new ObservableCollection<Position>();
         private int _position;
-        public bool StraightRoute = true;
 
         private List<Position> _positions = new List<Position>();
+        public bool StraightRoute = true;
+        public ObservableCollection<Position> Waypoints = new ObservableCollection<Position>();
+        public Zone Zone { get; set; }
 
         public bool IsPathSet => Waypoints.Any();
 
@@ -46,6 +47,7 @@ namespace EasyFarm.States
                     Waypoints = new ObservableCollection<Position>(Waypoints.Reverse());
                     _positions.Reverse();
                 }
+
                 _position = 0;
             }
 

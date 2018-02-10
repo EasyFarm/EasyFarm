@@ -76,7 +76,7 @@ namespace EasyFarm.Tests.States
 
         private static void AssertDoesNotKeepRunningToPosition(Mock<INavigatorTools> navigator, Position position)
         {
-            navigator.Verify(x => x.GotoWaypoint(position, false, false), Times.Once);
+            navigator.Verify(x => x.GotoWaypoint(position, true, false), Times.Once);
         }
     }
 }

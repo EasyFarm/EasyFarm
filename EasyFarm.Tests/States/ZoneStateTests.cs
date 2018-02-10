@@ -32,7 +32,7 @@ namespace EasyFarm.Tests.States
             var api = new FakeMemoryAPI();
             var player = new FakePlayer { Zone = Zone.Konschtat_Highlands};
             api.Player = player;
-            var sut = new ZoneState(api);
+            var sut = new ZoneState(new StateMemory(api));
             player.Zone = Zone.Valkurm_Dunes;
             player.Stats = new Structures.PlayerStats { Str = 100 };
 
@@ -56,7 +56,7 @@ namespace EasyFarm.Tests.States
                 Stats = new Structures.PlayerStats {Str = 0}
             };
             api.Player = player;            
-            var sut = new ZoneState(api);;            
+            var sut = new ZoneState(new StateMemory(api));
 
             // Exercise system
             var result = sut.Check();
@@ -78,7 +78,7 @@ namespace EasyFarm.Tests.States
                 Stats = new Structures.PlayerStats { Str = 100 }
             };
             api.Player = player;
-            var sut = new ZoneState(api); ;
+            var sut = new ZoneState(new StateMemory(api));
 
             // Exercise system
             var result = sut.Check();
@@ -103,7 +103,7 @@ namespace EasyFarm.Tests.States
             var navigation = new Mock<INavigatorTools>();
             api.Player = player;
             api.Navigator = navigation.Object;
-            var sut = new ZoneState(api);
+            var sut = new ZoneState(new StateMemory(api));
 
             player.Zone = Zone.Valkurm_Dunes;
 
@@ -131,7 +131,7 @@ namespace EasyFarm.Tests.States
             navigation.Setup(x => x.Reset());
             api.Player = player;
             api.Navigator = navigation.Object;
-            var sut = new ZoneState(api);
+            var sut = new ZoneState(new StateMemory(api));
 
             player.Zone = Zone.Valkurm_Dunes;
 
@@ -159,7 +159,7 @@ namespace EasyFarm.Tests.States
             navigation.Setup(x => x.Reset());
             api.Player = player;
             api.Navigator = navigation.Object;
-            var sut = new ZoneState(api)
+            var sut = new ZoneState(new StateMemory(api))
             {
                 ZoningAction = () =>
                 {

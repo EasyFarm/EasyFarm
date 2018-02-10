@@ -16,7 +16,6 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 using EliteMMO.API;
-using MemoryAPI;
 using MemoryAPI.Navigation;
 
 namespace MemoryAPI
@@ -41,23 +40,23 @@ namespace MemoryAPI
             switch (status)
             {
                 case EntityStatus.Idle:
-                    return MemoryAPI.Status.Standing;
+                    return Status.Standing;
                 case EntityStatus.Engaged:
-                    return MemoryAPI.Status.Fighting;
+                    return Status.Fighting;
                 case EntityStatus.Dead:
-                    return MemoryAPI.Status.Dead1;
+                    return Status.Dead1;
                 case EntityStatus.DeadEngaged:
-                    return MemoryAPI.Status.Dead2;
+                    return Status.Dead2;
                 case EntityStatus.Event:
-                    return MemoryAPI.Status.Event;
+                    return Status.Event;
                 case EntityStatus.Healing:
-                    return MemoryAPI.Status.Healing;
+                    return Status.Healing;
                 default:
-                    return MemoryAPI.Status.Unknown;
+                    return Status.Unknown;
             }
         }
 
-        public static NpcType GetNpcType(EliteAPI.XiEntity entity)
+        public static NpcType GetNpcType(EliteAPI.EntityEntry entity)
         {
             if (entity.WarpPointer == 0) return NpcType.InanimateObject;
             if (IsOfType(entity.SpawnFlags, (int)NpcType.Mob)) return NpcType.Mob;

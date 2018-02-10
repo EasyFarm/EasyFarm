@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.UserSettings;
@@ -25,14 +26,12 @@ namespace EasyFarm.States
     /// <summary>
     ///     A class for defeating monsters.
     /// </summary>
-    public class BattleState : CombatState
+    public class BattleState : AgentState
     {
-        private readonly Executor _executor;
-        private RestState _restState;
+        private readonly RestState _restState;
 
-        public BattleState(IMemoryAPI fface) : base(fface)
+        public BattleState(StateMemory fface) : base(fface)
         {
-            _executor = new Executor(fface);
             _restState = new RestState(fface);
         }
 
@@ -41,19 +40,16 @@ namespace EasyFarm.States
             if (_restState.Check()) return false;
 
             // Make sure we don't need trusts
-            if (new SummonTrustsState(fface).Check()) return false;
+            if (new SummonTrustsState(Memory).Check()) return false;
 
             // Mobs has not been pulled if pulling moves are available. 
             if (!IsFighting) return false;
 
             // target null or dead. 
-            if (!UnitFilters.MobFilter(fface, Target)) return false;            
+            if (!UnitFilters.MobFilter(EliteApi, Target)) return false;
 
             // Engage is enabled and we are not engaged. We cannot proceed. 
-            if (Config.Instance.IsEngageEnabled)
-            {
-                return fface.Player.Status.Equals(Status.Fighting);
-            }
+            if (Config.Instance.IsEngageEnabled) return EliteApi.Player.Status.Equals(Status.Fighting);
 
             // Engage is not checked, so just proceed to battle. 
             return true;
@@ -61,17 +57,17 @@ namespace EasyFarm.States
 
         public override void Enter()
         {
-            Player.Stand(fface);
-            fface.Navigator.Reset();
+            Player.Stand(EliteApi);
+            EliteApi.Navigator.Reset();
         }
 
         public override void Run()
         {
             // Cast only one action to prevent blocking curing. 
             var action = Config.Instance.BattleLists["Battle"].Actions
-                .FirstOrDefault(x => ActionFilters.TargetedFilter(fface, x, Target));        
+                .FirstOrDefault(x => ActionFilters.TargetedFilter(EliteApi, x, Target));
             if (action == null) return;
-            _executor.UseTargetedActions(new[] { action }, Target);
+            Executor.UseTargetedActions(new[] {action}, Target);
         }
     }
 }

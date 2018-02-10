@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.UserSettings;
@@ -28,23 +29,20 @@ namespace EasyFarm.States
     ///     lists can fire and replaces targets that are dead, null,
     ///     empty or invalid.
     /// </summary>
-    public class EndState : CombatState
+    public class EndState : AgentState
     {
-        private readonly Executor _executor;
-
-        public EndState(IMemoryAPI fface) : base(fface)
+        public EndState(StateMemory memory) : base(memory)
         {
-            _executor = new Executor(fface);
         }
 
         public override bool Check()
         {
             // Prevent making the player stand up from resting.
-            if (new RestState(fface).Check()) return false;
+            if (new RestState(Memory).Check()) return false;
 
             // Creature is unkillable and does not meets the
             // user's criteria for valid mobs defined in MobFilters.
-            return !UnitFilters.MobFilter(fface, Target);
+            return !UnitFilters.MobFilter(EliteApi, Target);
         }
 
         /// <summary>
@@ -52,27 +50,21 @@ namespace EasyFarm.States
         /// </summary>
         public override void Enter()
         {
-            fface.Navigator.Reset();
+            EliteApi.Navigator.Reset();
 
-            while (fface.Player.Status == Status.Fighting)
-            {
-                Player.Disengage(fface);
-            }
+            while (EliteApi.Player.Status == Status.Fighting) Player.Disengage(EliteApi);
         }
 
         public override void Run()
         {
             // Execute moves.
             var usable = Config.Instance.BattleLists["End"].Actions
-                .Where(x => ActionFilters.BuffingFilter(fface, x));
+                .Where(x => ActionFilters.BuffingFilter(EliteApi, x));
 
-            _executor.UseBuffingActions(usable);
+            Executor.UseBuffingActions(usable);
 
             // Reset all usage data to begin a new battle.
-            foreach (var action in Config.Instance.BattleLists.Actions)
-            {
-                action.Usages = 0;
-            }
+            foreach (var action in Config.Instance.BattleLists.Actions) action.Usages = 0;
         }
     }
 }

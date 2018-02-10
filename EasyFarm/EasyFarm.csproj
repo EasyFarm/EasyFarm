@@ -133,9 +133,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -155,7 +152,8 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.XML" />
@@ -184,7 +182,6 @@
     <Compile Include="Persistence\Serialization.cs" />
     <Compile Include="Classes\TimeWaiter.cs" />
     <Compile Include="Classes\LibraryUpdater.cs" />
-    <Compile Include="Persistence\XmlPersister.cs" />
     <Compile Include="Infrastructure\AppBoot.cs" />
     <Compile Include="Infrastructure\DatabaseFactory.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
@@ -201,6 +198,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="States\AgentState.cs" />
     <Compile Include="UserSettings\ConfigFactory.cs" />
     <Compile Include="UserSettings\IConfigFactory.cs" />
     <Compile Include="States\PlayerMovementTracker.cs" />
@@ -239,7 +237,7 @@
     <Compile Include="ViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\MasterViewModel.cs" />
     <Compile Include="States\ApproachState.cs" />
-    <Compile Include="States\CombatState.cs" />
+    <Compile Include="States\StateMemory.cs" />
     <Compile Include="Classes\BattleAbility.cs" />
     <Compile Include="Classes\Executor.cs" />
     <Compile Include="Classes\Extensions.cs" />

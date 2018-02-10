@@ -29,7 +29,7 @@ namespace EasyFarm.Infrastructure
         protected static GameEngine GameEngine { get; set; }
 
         /// <summary>
-        ///     Solo fface instance for current player.
+        ///     Solo EliteApi instance for current player.
         /// </summary>
         protected static IMemoryAPI FFACE { get; set; }
 
@@ -44,14 +44,14 @@ namespace EasyFarm.Infrastructure
         protected static PathRecorder PathRecorder { get; set; }
 
         /// <summary>
-        /// Set up session from given fface session.
+        /// Set up session from given EliteApi session.
         /// </summary>
         /// <param name="fface"></param>
         public static void SetSession(IMemoryAPI fface)
         {
             if (fface == null) return;
 
-            // Save fface Write
+            // Save EliteApi Write
             FFACE = fface;
 
             // Create a new game engine to control our character. 
