@@ -15,47 +15,33 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System.IO;
+
+using System;
 using NLog;
-using NLog.Config;
-using NLog.Targets;
 
 namespace EasyFarm.Logging
 {
     public class NLogTextFileLogger : ILogger
     {
-        private readonly NLog.Logger _logger = LogManager.GetLogger("LogSink");
-        private bool _isInitialized;
-
-        private void InitializeLoggerOnFirstCall()
-        {
-            if (_isInitialized) return;
-            _isInitialized = true;
-
-            LogManager.ThrowExceptions = true;
-            var config = new LoggingConfiguration();
-            var target = new FileTarget()
-            {
-                CreateDirs = true,
-                FileName = Path.Combine("logs", "easyfarm.log"),
-                ArchiveOldFileOnStartup = true,
-                MaxArchiveFiles = 5
-            };
-            config.AddTarget("LogSink", target);
-            config.LoggingRules.Add(new LoggingRule("*", LogLevel.Info, target));
-            LogManager.Configuration = config;            
-        }
+        private readonly NLog.Logger _logger = LogManager.GetCurrentClassLogger();
 
         public void Log(LogEntry logEntry)
         {
-            InitializeLoggerOnFirstCall();
-
             var formattedLogEntry = logEntry.IncludeExceptionInMessage();
             var message = formattedLogEntry.Message;
             var exception = formattedLogEntry.Exception;
 
             switch (logEntry.Severity)
             {
+                case LoggingEventType.Debug:
+                    _logger.Debug(exception, message);
+                    break;
+                case LoggingEventType.Information:
+                    _logger.Info(exception, message);
+                    break;
+                case LoggingEventType.Warning:
+                    _logger.Warn(exception, message);
+                    break;
                 case LoggingEventType.Error:
                     _logger.Error(exception, message);
                     break;
