@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using DryIoc;
-using EasyFarm.Infrastructure;
-using EasyFarm.Logging;
-using MediatR;
 
 namespace EasyFarm.Handlers
 {
-    public class NavigateViewRequestHandler : IRequestHandler<NavigateViewRequest>
+    public class NavigateViewRequestHandler
     {
         private readonly App _app;
         private readonly Container _container;
@@ -19,11 +15,11 @@ namespace EasyFarm.Handlers
             _container = container;
         }
 
-        public Task Handle(NavigateViewRequest message, CancellationToken cancellationToken)
+        public Task Handle(Type requestedType)
         {
             if (_app.MainWindow != null)
             {
-                _app.MainWindow.DataContext = _container.Resolve(message.Type);
+                _app.MainWindow.DataContext = _container.Resolve(requestedType);
             }
 
             return Task.FromResult(true);

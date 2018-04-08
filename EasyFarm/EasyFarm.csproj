@@ -128,10 +128,6 @@
       <HintPath>$(SolutionDir)packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MediatR, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MediatR.4.0.1\lib\net45\MediatR.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -170,8 +166,8 @@
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\IUnitService.cs" />
-    <Compile Include="Handlers\SelectProcessRequest.cs" />
-    <Compile Include="Handlers\SelectProcessRequestHandler.cs" />
+    <Compile Include="Handlers\SelectCharacterRequestHandler.cs" />
+    <Compile Include="Handlers\SelectCharacterResult.cs" />
     <Compile Include="Infrastructure\TabViewModels.cs" />
     <Compile Include="Persistence\Persister.cs" />
     <Compile Include="Persistence\JsonPersister.cs" />
@@ -185,7 +181,6 @@
     <Compile Include="Infrastructure\AppBoot.cs" />
     <Compile Include="Infrastructure\DatabaseFactory.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
-    <Compile Include="Handlers\NavigateViewRequest.cs" />
     <Compile Include="Handlers\NavigateViewRequestHandler.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />

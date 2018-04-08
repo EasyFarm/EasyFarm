@@ -1,41 +1,53 @@
-﻿using System.Threading;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Windows;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
+using EasyFarm.ViewModels;
 using EasyFarm.Views;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using MediatR;
 using MemoryAPI.Memory;
 
-namespace EasyFarm.ViewModels
+namespace EasyFarm.Handlers
 {
-    public class SelectProcessRequestHandler : IRequestHandler<SelectProcessRequest>
+    public partial class SelectCharacterRequestHandler
     {
-        private readonly MetroWindow window;
+        private readonly MetroWindow _window;
 
-        public SelectProcessRequestHandler(App app)
+        public SelectCharacterRequestHandler(MetroWindow window)
         {
-            this.window = (app.MainWindow as MetroWindow);
+            _window = window;
         }
 
-        public async Task Handle(SelectProcessRequest message, CancellationToken cancellationToken)
+        public async Task Handle()
         {
             // Let user select ffxi process
-            var selectionView = new SelectProcessDialog();
-            var viewModel = new SelectProcessViewModel(selectionView);
+            SelectProcessDialog selectionView = new SelectProcessDialog();
+            SelectProcessViewModel viewModel = new SelectProcessViewModel(selectionView);
             selectionView.DataContext = viewModel;
 
-            // Show window and do not continue until user closes it. 
-            await window.ShowMetroDialogAsync(selectionView);
+            // Show window and do not continue until user closes it.
+            await _window.ShowMetroDialogAsync(selectionView);
             await selectionView.WaitUntilUnloadedAsync();
 
             // Get the selected process.
-            var process = viewModel.SelectedProcess;
+            Process process = viewModel.SelectedProcess;
+
+            ChangeCharacter(new SelectCharacterResult
+            {
+                Process = process,
+                IsSelected = viewModel.IsProcessSelected
+            });
+        }
+
+        private void ChangeCharacter(SelectCharacterResult result)
+        {
+            Process process = result.Process;
+            Boolean isProcessSelected = result.IsSelected;
 
             // User never selected a process.
-            if (process == null || !viewModel.IsProcessSelected)
+            if (result.Process == null || !isProcessSelected)
             {
                 LogViewModel.Write("Process not found");
                 AppServices.InformUser("No valid process was selected.");
@@ -46,7 +58,7 @@ namespace EasyFarm.ViewModels
             LogViewModel.Write("Process found");
 
             // Get memory reader set in config file.
-            var fface = MemoryWrapper.Create(process.Id);
+            MemoryWrapper fface = MemoryWrapper.Create(process.Id);
 
             // Set the EliteApi Session.
             ViewModelBase.SetSession(fface);

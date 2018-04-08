@@ -1,24 +1,21 @@
 ﻿// ///////////////////////////////////////////////////////////////////
 // This file is a part of EasyFarm for Final Fantasy XI
 // Copyright (C) 2013-2017 Mykezero
-// 
+//
 // EasyFarm is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // EasyFarm is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 
-using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
@@ -26,7 +23,12 @@ using EasyFarm.Persistence;
 using EasyFarm.UserSettings;
 using GalaSoft.MvvmLight.Command;
 using MahApps.Metro.Controls.Dialogs;
-using MediatR;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using EasyFarm.Handlers;
+using MahApps.Metro.Controls;
 using Application = System.Windows.Application;
 
 namespace EasyFarm.ViewModels
@@ -36,7 +38,6 @@ namespace EasyFarm.ViewModels
     /// </summary>
     public class MasterViewModel : ViewModelBase
     {
-        private readonly IMediator _mediator;
         private readonly LibraryUpdater _updater;
         private readonly IDialogCoordinator _dialogCoordinator;
 
@@ -56,12 +57,10 @@ namespace EasyFarm.ViewModels
         public IViewModel ViewModel { get; set; }
 
         public MasterViewModel(
-            MainViewModel mainViewModel, 
-            IMediator mediator, 
+            MainViewModel mainViewModel,
             LibraryUpdater updater,
             IDialogCoordinator dialogCoordinator)
         {
-            _mediator = mediator;
             _updater = updater;
             _dialogCoordinator = dialogCoordinator;
             ViewModel = mainViewModel;
@@ -247,7 +246,9 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private async Task SelectProcess()
         {
-            await _mediator.Send(new SelectProcessRequest());
+            MetroWindow window = (MetroWindow)Application.Current.MainWindow;
+            SelectCharacterRequestHandler handler = new SelectCharacterRequestHandler(window);
+            await handler.Handle();
         }
 
         /// <summary>
