@@ -221,3 +221,6 @@ Build/result.xml
 Build/duplication.xml
 !Build
 *.config
+
+# NLog
+!Nlog.config
