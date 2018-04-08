@@ -41,6 +41,7 @@ namespace EasyFarm.Views
             model.SelectedList = e.NewValue as BattleList;
 
             Details.DataContext = (e.NewValue as BattleAbility);
-        }        
+            Details.IsEnabled = model.SelectedAbility != null;
+        }
     }
 }

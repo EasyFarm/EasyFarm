@@ -87,6 +87,7 @@
                           Grid.Column="2"
                           Margin="5">
                 <ContentControl Name="Details"
+                                IsEnabled="False"
                                 Template="{StaticResource DetailsTemplate}"
                                 Content="{Binding ElementName=Master, Path=SelectedItem}">
                 </ContentControl>
