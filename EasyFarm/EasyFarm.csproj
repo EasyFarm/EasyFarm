@@ -234,6 +234,7 @@
     <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="ViewModels\FollowViewModel.cs" />
     <Compile Include="Classes\ISystemTray.cs" />
+    <Compile Include="Classes\LinqExtensions.cs" />
     <Compile Include="ViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\MasterViewModel.cs" />
     <Compile Include="States\ApproachState.cs" />

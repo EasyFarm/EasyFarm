@@ -1,29 +1,28 @@
 ﻿// ///////////////////////////////////////////////////////////////////
 // This file is a part of EasyFarm for Final Fantasy XI
 // Copyright (C) 2013-2017 Mykezero
-// 
+//
 // EasyFarm is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // EasyFarm is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System.Collections.Generic;
+using EasyFarm.Infrastructure;
+using GalaSoft.MvvmLight.Command;
+using MahApps.Metro.Controls.Dialogs;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using EasyFarm.Infrastructure;
-using GalaSoft.MvvmLight.Command;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
+using EasyFarm.Classes;
 
 namespace EasyFarm.ViewModels
 {
@@ -36,12 +35,13 @@ namespace EasyFarm.ViewModels
 
         public SelectProcessViewModel(BaseMetroDialog dialog)
         {
-            // When window is closed through X button. 
+            // When window is closed through X button.
             Processes = new ObservableCollection<Process>();
 
-            // Close window on when "Set character" is pressed. 
+            // Close window on when "Set character" is pressed.
             SelectCommand = new RelayCommand(async () => await OnSelect());
             RefreshCommand = new RelayCommand(OnRefresh);
+            CancelCommand = new RelayCommand(async () => await OnCancel());
 
             OnRefresh();
             Dialog = dialog;
@@ -59,21 +59,26 @@ namespace EasyFarm.ViewModels
         public RelayCommand RefreshCommand { get; set; }
 
         /// <summary>
-        ///     The currently selected game session.
-        /// </summary>
-        public Process SelectedProcess { get; set; }
-
-        /// <summary>
         ///     Makes the binded window exit.
         /// </summary>
         public RelayCommand SelectCommand { get; set; }
+
+        /// <summary>
+        /// Exists the selection screen without selecting a character.
+        /// </summary>
+        public RelayCommand CancelCommand { get; set; }
+
+        /// <summary>
+        ///     The currently selected game session.
+        /// </summary>
+        public Process SelectedProcess { get; set; }
 
         public ObservableCollection<Process> Processes { get; set; }
 
         public BaseMetroDialog Dialog { get; }
 
         /// <summary>
-        /// Refresh the processes. 
+        /// Refresh the processes.
         /// </summary>
         private void OnRefresh()
         {
@@ -83,7 +88,7 @@ namespace EasyFarm.ViewModels
                 .Where(x => string.IsNullOrWhiteSpace((x.MainWindowTitle)))
                 .ToList());
 
-            if(Processes.Count > 0) return;
+            if (Processes.Count > 0) return;
 
             Processes.AddRange(Process.GetProcesses()
                 .Where(x => !string.IsNullOrWhiteSpace(x.MainWindowTitle))
@@ -95,22 +100,21 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private async Task OnSelect()
         {
-            // User made a choice to close this dialog. 
+            // User made a choice to close this dialog.
             IsProcessSelected = true;
-            await DialogCoordinator.Instance.HideMetroDialogAsync(App.Current.MainWindow.DataContext, Dialog);
+            await CloseDialog();
         }
-    }
 
-    public static class LinqExtensions
-    {
-        public static ICollection<T> AddRange<T>(this ICollection<T> source, IEnumerable<T> addSource)
+        private async Task OnCancel()
         {
-            foreach (T item in addSource)
-            {
-                source.Add(item);
-            }
+            IsProcessSelected = false;
+            SelectedProcess = null;
+            await CloseDialog();
+        }
 
-            return source;
+        private async Task CloseDialog()
+        {
+            await DialogCoordinator.Instance.HideMetroDialogAsync(App.Current.MainWindow.DataContext, Dialog);
         }
     }
 }

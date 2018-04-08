@@ -67,6 +67,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <!-- Shuts down the process selection view. -->
             <Button Content="Set Character"
@@ -74,6 +75,9 @@
             <Button Grid.Column="1"
                     Content="Refresh"
                     Command="{Binding RefreshCommand}"/>
+            <Button Grid.Column="2"
+                    Content="Cancel"
+                    Command="{Binding CancelCommand}"/>
         </Grid>
     </dialogs:CustomDialog.DialogBottom>
 
