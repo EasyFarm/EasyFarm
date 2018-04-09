@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DryIoc;
+using Ninject;
 
 namespace EasyFarm.Handlers
 {
     public class NavigateViewRequestHandler
     {
         private readonly App _app;
-        private readonly Container _container;
+        private readonly IKernel _container;
 
-        public NavigateViewRequestHandler(App app, Container container)
+        public NavigateViewRequestHandler(App app, IKernel container)
         {
             _app = app;
             _container = container;
@@ -17,11 +17,8 @@ namespace EasyFarm.Handlers
 
         public Task Handle(Type requestedType)
         {
-            if (_app.MainWindow != null)
-            {
-                _app.MainWindow.DataContext = _container.Resolve(requestedType);
-            }
-
+            if (_app.MainWindow == null) return Task.FromResult(true);
+            _app.MainWindow.DataContext = _container.Get(requestedType);
             return Task.FromResult(true);
         }
     }
