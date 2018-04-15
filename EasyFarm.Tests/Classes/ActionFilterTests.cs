@@ -52,7 +52,7 @@ namespace EasyFarm.Tests.Classes
             [Fact]
             public void WithTooLittleMp()
             {
-                _battleAbility.Ability.MpCost = 1;
+                _battleAbility.MpCost = 1;
                 _player.MPCurrent = 0;
                 VerifyActionNotUsable();
             }
@@ -60,7 +60,7 @@ namespace EasyFarm.Tests.Classes
             [Fact]
             public void WithTooLittleTp()
             {
-                _battleAbility.Ability.TpCost = 1;
+                _battleAbility.TpCost = 1;
                 _player.TPCurrent = 0;
                 VerifyActionNotUsable();
             }
@@ -124,7 +124,7 @@ namespace EasyFarm.Tests.Classes
                 AbilityType abilityType,
                 StatusEffect statusEffect)
             {
-                _battleAbility.Ability.AbilityType = abilityType;
+                _battleAbility.AbilityType = abilityType;
                 _player.StatusEffects = new StatusEffect[] {statusEffect};
                 VerifyActionNotUsable();
             }
@@ -134,7 +134,7 @@ namespace EasyFarm.Tests.Classes
             [InlineData(AbilityType.Jobability)]
             public void WhenOnRecast(AbilityType abilityType)
             {
-                _battleAbility.Ability.AbilityType = abilityType;
+                _battleAbility.AbilityType = abilityType;
                 _timer.ActionRecast = 1;
                 VerifyActionNotUsable();
             }

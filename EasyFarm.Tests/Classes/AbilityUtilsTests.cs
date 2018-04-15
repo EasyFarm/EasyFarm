@@ -25,7 +25,7 @@ namespace EasyFarm.Tests.Classes
 {
     public class AbilityUtilsTests
     {
-        private readonly Ability ability = new Ability();
+        private readonly BattleAbility _ability = new BattleAbility();
 
         [Theory]
         [InlineData(AbilityType.Magic)]
@@ -33,10 +33,10 @@ namespace EasyFarm.Tests.Classes
         [InlineData(AbilityType.Weaponskill)]
         public void IsRecastableWhenNotOnRecast(AbilityType abilityType)
         {
-            ability.AbilityType = abilityType;
+            _ability.AbilityType = abilityType;
             var memoryApi = new FakeMemoryAPI();
             memoryApi.Timer = new FakeTimer();
-            var result = AbilityUtils.IsRecastable(memoryApi, ability);
+            var result = AbilityUtils.IsRecastable(memoryApi, _ability);
             Assert.True(result);
         }
 
@@ -45,10 +45,10 @@ namespace EasyFarm.Tests.Classes
         [InlineData(AbilityType.Jobability)]
         public void NotRecastableWhenOnRecast(AbilityType abilityType)
         {
-            ability.AbilityType = abilityType;
+            _ability.AbilityType = abilityType;
             var memoryApi = new FakeMemoryAPI();
             memoryApi.Timer = new FakeTimer() { ActionRecast = 1 };
-            var result = AbilityUtils.IsRecastable(memoryApi, ability);
+            var result = AbilityUtils.IsRecastable(memoryApi, _ability);
             Assert.False(result);
         }
     }

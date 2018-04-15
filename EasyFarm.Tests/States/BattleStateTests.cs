@@ -261,7 +261,7 @@ namespace EasyFarm.Tests.States
                 var battleAbility = FindAbility();
                 battleAbility.Name = actionName;
                 battleAbility.AbilityType = abilityType;
-                battleAbility.Ability.TargetType = targetType;
+                battleAbility.TargetType = targetType;
                 return battleAbility;
             }
 
@@ -270,7 +270,7 @@ namespace EasyFarm.Tests.States
                 var battleAbility = FindAbility();
                 battleAbility.Name = actionName;
                 battleAbility.AbilityType = AbilityType.Jobability;
-                battleAbility.Ability.TargetType = TargetType.Self;
+                battleAbility.TargetType = TargetType.Self;
                 return battleAbility;
             }
 
