@@ -30,7 +30,7 @@ namespace EasyFarm.Classes
         /// <param name="fface"></param>
         /// <param name="ability"></param>
         /// <returns></returns>
-        public static bool IsRecastable(IMemoryAPI fface, Ability ability)
+        public static bool IsRecastable(IMemoryAPI fface, BattleAbility ability)
         {
             var recast = 0;
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DryIoc;
 using EasyFarm.ViewModels;
+using Ninject;
 
 namespace EasyFarm.Infrastructure
 {
@@ -10,11 +10,11 @@ namespace EasyFarm.Infrastructure
     {
         public IList<IViewModel> ViewModels = new List<IViewModel>();
 
-        public TabViewModels(Container container)
+        public TabViewModels(IKernel container)
         {
             foreach (KeyValuePair<Type, int> availableTab in AvailableTabs)
             {
-                ViewModels.Add((IViewModel)container.Resolve(availableTab.Key));
+                ViewModels.Add((IViewModel)container.Get(availableTab.Key));
             }
 
             ViewModels = ViewModels

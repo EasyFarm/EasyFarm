@@ -1,4 +1,5 @@
-﻿// ///////////////////////////////////////////////////////////////////
+﻿
+// ///////////////////////////////////////////////////////////////////
 // This file is a part of EasyFarm for Final Fantasy XI
 // Copyright (C) 2013-2017 Mykezero
 // 
@@ -33,6 +34,7 @@ namespace EasyFarm.Parsing
         Jobability,
         Pet,
         Monsterskill, 
-        Item
+        Item,
+        Trust
     }
 }

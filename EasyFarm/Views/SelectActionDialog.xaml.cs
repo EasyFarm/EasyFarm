@@ -15,32 +15,33 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System.Linq;
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
-using EasyFarm.Classes;
 using EasyFarm.Parsing;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace EasyFarm.Views
 {
     /// <summary>
-    ///     Interaction logic for AbilitySelectionBox.xaml
+    ///     Interaction logic for SelectActionDialog.xaml
     /// </summary>
-    public partial class AbilitySelectionBox
+    public partial class SelectActionDialog
     {
-        public AbilitySelectionBox(string name)
+        public SelectActionDialog(IList<Ability> abilities)
         {
             InitializeComponent();
-            CompleteSelectionButton.Click += CompleteSelectionButton_Click;
-            AbilityListBox.ItemsSource = App.AbilityService.GetAbilitiesWithName(name).Select(x => new BattleAbility(x));
-            ShowDialog();
+            CompleteSelectionButton.Click += async (s, e) => await CompleteSelectionButton_Click(s, e);
+            AbilityListBox.ItemsSource = abilities;
         }
 
         public Ability SelectedAbility { get; set; }
 
-        private void CompleteSelectionButton_Click(object sender, RoutedEventArgs e)
+        private async Task CompleteSelectionButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectedAbility = ((BattleAbility)AbilityListBox.SelectedValue).Ability;
-            Close();
+            SelectedAbility = (Ability)AbilityListBox.SelectedValue;
+            await DialogCoordinator.Instance.HideMetroDialogAsync(Application.Current.MainWindow.DataContext, this);
         }
     }
 }

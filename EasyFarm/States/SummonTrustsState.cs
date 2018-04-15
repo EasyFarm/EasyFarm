@@ -133,7 +133,7 @@ namespace EasyFarm.States
             if (EliteApi.Player.Status.Equals(Status.Fighting)) return;
             var trusts = Config.Instance.BattleLists["Trusts"].Actions.Where(t => t.IsEnabled);
             foreach (var trust in trusts)
-                if (TrustNeedsSummoning(trust) && AbilityUtils.IsRecastable(EliteApi, trust.Ability))
+                if (TrustNeedsSummoning(trust) && AbilityUtils.IsRecastable(EliteApi, trust))
                     Executor.UseActions(new[] {trust});
         }
     }

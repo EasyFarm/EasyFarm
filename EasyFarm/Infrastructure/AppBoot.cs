@@ -1,27 +1,22 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection;
-using DryIoc;
+﻿using System;
 using EasyFarm.Classes;
 using EasyFarm.Handlers;
-using EasyFarm.ViewModels;
 using EasyFarm.Views;
 using MahApps.Metro.Controls.Dialogs;
-using MediatR;
+using Ninject;
+using Ninject.Extensions.Conventions;
 
 namespace EasyFarm.Infrastructure
 {
     public class AppBoot
     {
-        private readonly Container _container;
+        private readonly IKernel _container;
         private readonly App _app;
-        private readonly IMediator _mediatr;
 
         public AppBoot(App app)
         {
             _app = app;
             _container = CreateContainer();
-            _mediatr = _container.Resolve<IMediator>();
             _app.MainWindow = new MasterView();
         }
 
@@ -30,46 +25,35 @@ namespace EasyFarm.Infrastructure
             SystemTray.ConfigureTray(_app.MainWindow);
         }
 
-        public object ViewModel => _app.MainWindow?.DataContext;
+        public Object ViewModel => _app.MainWindow?.DataContext;
 
-        private Container CreateContainer()
+        private IKernel CreateContainer()
         {
-            var container = new Container();
-            RegisterMediatr(container);
+            StandardKernel container = new StandardKernel();
             RegisterApp(container);
             RegisterContainer(container);
             return container;
         }
 
-        private void RegisterContainer(Container container)
+        private void RegisterContainer(IKernel container)
         {
-            container.RegisterInstance(container);
         }
 
-        private void RegisterApp(Container container)
+        private void RegisterApp(IKernel container)
         {
-            container.RegisterInstance(_app);
-            container.RegisterMany(new []{ typeof(App).GetAssembly() },
-                type => type.Name.EndsWith("ViewModel"));
-            container.Register<TabViewModels>();
-            container.Register<IRequestHandler<NavigateViewRequest>, NavigateViewRequestHandler>();
-            container.Register<IRequestHandler<SelectProcessRequest>, SelectProcessRequestHandler>();
-            container.Register<LibraryUpdater>();
-            container.Register<IDialogCoordinator, DialogCoordinator>();
-        }
-
-        private void RegisterMediatr(Container container)
-        {
-            container.RegisterDelegate<SingleInstanceFactory>(r => r.Resolve);
-            container.RegisterDelegate<MultiInstanceFactory>(r => serviceType => r.ResolveMany(serviceType));
-            container.RegisterMany(
-                new[] {typeof(IMediator).GetAssembly()},
-                type => type.GetTypeInfo().IsInterface);
+            container.Bind<App>().ToMethod(x => _app);
+            container.Bind(x => x.FromThisAssembly().SelectAllClasses().EndingWith("ViewModel").BindToSelf());
+            container.Bind<TabViewModels>().ToSelf();
+            container.Bind<LibraryUpdater>().ToSelf();
+            container.Bind<IDialogCoordinator>().To<DialogCoordinator>();
+            container.Bind<SelectCharacterRequestHandler>().ToSelf();
+            container.Bind<SelectAbilityRequestHandler>().ToSelf();
         }
 
         public void Navigate<TViewModel>()
         {
-            _mediatr.Send(NavigateViewRequest.Create<TViewModel>()).GetAwaiter();
+            NavigateViewRequestHandler handler = new NavigateViewRequestHandler(_app, _container);
+            handler.Handle(typeof(TViewModel)).GetAwaiter();
         }
 
         public void Show()

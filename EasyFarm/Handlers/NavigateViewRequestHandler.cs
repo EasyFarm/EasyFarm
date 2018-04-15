@@ -1,31 +1,24 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
-using DryIoc;
-using EasyFarm.Infrastructure;
-using EasyFarm.Logging;
-using MediatR;
+using Ninject;
 
 namespace EasyFarm.Handlers
 {
-    public class NavigateViewRequestHandler : IRequestHandler<NavigateViewRequest>
+    public class NavigateViewRequestHandler
     {
         private readonly App _app;
-        private readonly Container _container;
+        private readonly IKernel _container;
 
-        public NavigateViewRequestHandler(App app, Container container)
+        public NavigateViewRequestHandler(App app, IKernel container)
         {
             _app = app;
             _container = container;
         }
 
-        public Task Handle(NavigateViewRequest message, CancellationToken cancellationToken)
+        public Task Handle(Type requestedType)
         {
-            if (_app.MainWindow != null)
-            {
-                _app.MainWindow.DataContext = _container.Resolve(message.Type);
-            }
-
+            if (_app.MainWindow == null) return Task.FromResult(true);
+            _app.MainWindow.DataContext = _container.Get(requestedType);
             return Task.FromResult(true);
         }
     }

@@ -15,16 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using EasyFarm.Views;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Serialization;
+using EasyFarm.Handlers;
 using EasyFarm.Parsing;
 using EasyFarm.UserSettings;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight;
+using MahApps.Metro.Controls;
 
 namespace EasyFarm.Classes
 {
@@ -41,11 +44,6 @@ namespace EasyFarm.Classes
         private static readonly Dictionary<AbilityType, string> CommandMapper
             = new Dictionary<AbilityType, string>();
 
-        /// <summary>
-        ///     Resource information about the move.
-        /// </summary>
-        private Ability _ability = new Ability();
-
         private AbilityType _abilityType = AbilityType.Unknown;
 
         /// <summary>
@@ -61,7 +59,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     The move's name.
         /// </summary>
-        private string _name = string.Empty;
+        private string _name;
 
         /// <summary>
         ///     The upper limit of the player's health.
@@ -150,6 +148,13 @@ namespace EasyFarm.Classes
         /// </summary>
         private int _resummonMpHigh;
 
+        private int _index;
+        private int _id;
+        private int _mpCost;
+        private int _tpCost;
+        private string _command;
+        private TargetType _targetType;
+
 
         static BattleAbility()
         {
@@ -196,19 +201,9 @@ namespace EasyFarm.Classes
         ///     Create our command binds and initialize our user's
         ///     move usage conditions.
         /// </summary>
-        public BattleAbility() : this(new Ability())
+        public BattleAbility()
         {
-            AutoFillCommand = new RelayCommand(AutoFill);
-        }
-
-        /// <summary>
-        ///     Create a storing a reference to the given ability.
-        /// </summary>
-        /// <param name="ability"></param>
-        public BattleAbility(Ability ability)
-        {
-            Ability = ability;
-            Name = ability.English;
+            AutoFillCommand = new RelayCommand(async () => await AutoFill());
         }
 
         /// <summary>
@@ -221,29 +216,10 @@ namespace EasyFarm.Classes
         /// </summary>
         public static ReadOnlyObservableCollection<TargetType> CommandTargets { get; set; }
 
-        /// <summary>
-        ///     Holds the resource file information for the move.
-        /// </summary>
-        public Ability Ability
-        {
-            get { return _ability; }
-            set { Set(ref _ability, value); }
-        }
-
         public AbilityType AbilityType
         {
-            get { return Ability.AbilityType; }
-            set
-            {
-                Set(ref _abilityType, value);
-                Ability.AbilityType = value;
-
-                var prefix = CommandMapper.ContainsKey(value)
-                    ? CommandMapper[value]
-                    : string.Empty;
-
-                Ability.Prefix = prefix;                
-            }
+            get { return _abilityType; }
+            set { Set(ref _abilityType, value); }
         }
 
         /// <summary>
@@ -278,11 +254,7 @@ namespace EasyFarm.Classes
         public string Name
         {
             get { return _name; }
-            set
-            {
-                Set(ref _name, value);
-                Ability.English = _name;
-            }
+            set { Set(ref _name, value); }
         }
         public int PlayerLowerHealth
         {
@@ -481,32 +453,52 @@ namespace EasyFarm.Classes
             set { Set(ref _usages, value); }
         }
 
+        public int Index
+        {
+            get { return _index; }
+            set { Set(ref _index, value); }
+        }
+
+        public int Id
+        {
+            get { return _id; }
+            set { Set(ref _id, value); }
+        }
+
+        public int MpCost
+        {
+            get { return _mpCost; }
+            set { Set(ref _mpCost, value); }
+        }
+
+        public int TpCost
+        {
+            get { return _tpCost; }
+            set { Set(ref _tpCost, value); }
+        }
+
         public string Command
         {
-            get
-            {                
-                if (AbilityType == AbilityType.Range)
-                {
-                    return Ability.Prefix + " " + Ability.Postfix;
-                }
+            get { return _command; }
+            set { Set(ref _command, value); }
+        }
 
-                if (Name == null) return "";
-
-                var commandName = Name.Contains(" ") ? $"\"{Name}\"" : Name;
-                return $@"{Ability.Prefix} {commandName} {Ability.Postfix}";
-            }
+        public TargetType TargetType
+        {
+            get { return _targetType; }
+            set { Set(ref _targetType, value); }
         }
 
         /// <summary>
         ///     Sets the ability field.
         /// </summary>
-        public void AutoFill()
+        public async Task AutoFill()
         {
             // Return if string null or empty.
             if (string.IsNullOrWhiteSpace(Name)) return;
 
             // Get the ability by name.
-            var ability = FindAbility(Name);
+            Ability ability = await new SelectAbilityRequestHandler(Application.Current.MainWindow as MetroWindow).Handle(Name);
 
             // Attempt to set the ability and inform the
             // user of its sucess.
@@ -516,40 +508,20 @@ namespace EasyFarm.Classes
             }
             else
             {
-                Ability = ability;
                 AppServices.InformUser("Auto-Filling for {0} complete. ", Name);
 
-                if (Ability.AbilityType == AbilityType.Weaponskill)
-                {
-                    Ability.TpCost = 1000;
-                }
+                Command = ability.Command;
+                Index = ability.Index;
+                Id = ability.Id;
+                MpCost = ability.MpCost;
+                TpCost = ability.TpCost;
+                Command = ability.Command;
+                AbilityType = ability.AbilityType;
+                Name = ability.English;
+                TargetType = ability.TargetType;
 
-                // Manually signal AbilityType that a change has occured.
-                RaisePropertyChanged("AbilityType");
-                RaisePropertyChanged("TpCost");
+                if (AbilityType == AbilityType.Weaponskill) { TpCost = 1000; }
             }
-        }
-
-        /// <summary>
-        ///     Locates an ability by name and prompting the user if
-        ///     more than one ability has been found.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public Ability FindAbility(string name)
-        {
-            // Retriever all moves with the specified name.
-            var moves = App.AbilityService.GetAbilitiesWithName(name).ToArray();
-
-            // Prompt user to select a move if more
-            // than one are found with the same name.
-            // Otherwise, return the first occurence or null.
-            if (moves.Length > 1)
-            {
-                return new AbilitySelectionBox(name).SelectedAbility;
-            }
-
-            return moves.FirstOrDefault();
         }
 
         public override string ToString()
