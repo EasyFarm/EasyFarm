@@ -35,7 +35,7 @@ namespace EasyFarm.Tests.States
             public void WhenEngagedSetAndEngagedShouldBattle()
             {
                 // Fixture setup                
-                Config.Instance.IsEngageEnabled = true;                
+                Config.Instance.IsEngageEnabled = true;
 
                 var memory = new FakeMemoryAPI();
                 var player = FindPlayer();
@@ -191,7 +191,7 @@ namespace EasyFarm.Tests.States
                 UnitService.Units = new List<IUnit>();
 
                 // Exercise system
-                var result = sut.Check();                
+                var result = sut.Check();
 
                 // Verify outcome
                 Assert.False(result);
@@ -207,29 +207,75 @@ namespace EasyFarm.Tests.States
                 GlobalFactory.BuildUnitService = fface => new TestUnitService();
             }
 
-            [Theory]
-            [InlineData(AbilityType.Jobability, TargetType.Self, "test", "/jobability test <me>")]
-            [InlineData(AbilityType.Range, TargetType.Enemy, "Ranged", "/range <t>")]
-            [InlineData(AbilityType.Magic, TargetType.Self, "ケアルIII", "/magic ケアルIII <me>")]
-            [InlineData(AbilityType.Magic, TargetType.Self, "Cure III", "/magic \"Cure III\" <me>")]
-            public void WithValidActionWillSendCommand(
-                AbilityType abilityType, 
-                TargetType targetType,
-                string actionName,
-                string expectedCommand)
+            [Fact]
+            public void JapanseCommandsDoNotHaveSpaces()
             {
+                var sut = new Ability()
+                {
+                    Prefix = "/magic",
+                    English = "ケアルIII",
+                    TargetType = TargetType.Self
+                };
+
+                Assert.Equal("/magic ケアルIII <me>", sut.Command);
+            }
+
+            [Fact]
+            public void RangeCommandReturnsCorrectResults()
+            {
+                var sut = new Ability()
+                {
+                    Prefix = "/range",
+                    AbilityType = AbilityType.Range,
+                    TargetType = TargetType.Enemy
+                };
+
+                Assert.Equal("/range <t>", sut.Command);
+            }
+
+            [Fact]
+            public void JobAbilityCommandReturnsCorrectResults()
+            {
+                var sut = new Ability()
+                {
+                    Prefix = "/jobability",
+                    English = "Boost",
+                    TargetType = TargetType.Self
+                };
+
+                Assert.Equal("/jobability Boost <me>", sut.Command);
+            }
+
+            [Fact]
+            public void CommandWithSpaceIsSurroundByQuotes()
+            {
+                var sut = new Ability()
+                {
+                    Prefix = "/magic",
+                    English = "Cure III",
+                    TargetType = TargetType.Self
+                };
+
+                Assert.Equal("/magic \"Cure III\" <me>", sut.Command);
+            }
+
+            [Fact]
+            public void WithValidActionWillSendCommand()
+            {
+                // Fixture setup
                 var windower = FindWindower();
                 var sut = CreateSut(windower);
                 var actions = FindBattleActions();
 
-                var ability = FindAction(abilityType, targetType, actionName);
+                var ability = FindJobAbility("test");
+                ability.Command = "/jobability test <me>";
                 actions.Add(ability);
 
                 // Exercise system
                 sut.Run();
 
                 // Verify outcome
-                Assert.Equal(expectedCommand, windower.LastCommand);
+                Assert.Equal("/jobability test <me>", windower.LastCommand);
 
                 // Teardown
             }
@@ -251,18 +297,6 @@ namespace EasyFarm.Tests.States
 
                 // Verify outcome
                 Assert.Null(windower.LastCommand);
-            }
-
-            private static BattleAbility FindAction(
-                AbilityType abilityType, 
-                TargetType targetType, 
-                string actionName)
-            {
-                var battleAbility = FindAbility();
-                battleAbility.Name = actionName;
-                battleAbility.AbilityType = abilityType;
-                battleAbility.TargetType = targetType;
-                return battleAbility;
             }
 
             private static BattleAbility FindJobAbility(string actionName)
@@ -316,8 +350,8 @@ namespace EasyFarm.Tests.States
                 var player = FindPlayer();
                 var sut = CreateSut(windower, player);
 
-                player.Status = Status.Healing;                
-                
+                player.Status = Status.Healing;
+
                 // Exercise system
                 sut.Enter();
 
