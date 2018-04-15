@@ -17,30 +17,31 @@
 // ///////////////////////////////////////////////////////////////////
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using EasyFarm.Parsing;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace EasyFarm.Views
 {
     /// <summary>
-    ///     Interaction logic for AbilitySelectionBox.xaml
+    ///     Interaction logic for SelectActionDialog.xaml
     /// </summary>
-    public partial class AbilitySelectionBox
+    public partial class SelectActionDialog
     {
-        public AbilitySelectionBox(IList<Ability> abilities)
+        public SelectActionDialog(IList<Ability> abilities)
         {
             InitializeComponent();
-            CompleteSelectionButton.Click += CompleteSelectionButton_Click;
+            CompleteSelectionButton.Click += async (s, e) => await CompleteSelectionButton_Click(s, e);
             AbilityListBox.ItemsSource = abilities;
-            ShowDialog();
         }
 
         public Ability SelectedAbility { get; set; }
 
-        private void CompleteSelectionButton_Click(object sender, RoutedEventArgs e)
+        private async Task CompleteSelectionButton_Click(object sender, RoutedEventArgs e)
         {
             SelectedAbility = (Ability)AbilityListBox.SelectedValue;
-            Close();
+            await DialogCoordinator.Instance.HideMetroDialogAsync(Application.Current.MainWindow.DataContext, this);
         }
     }
 }

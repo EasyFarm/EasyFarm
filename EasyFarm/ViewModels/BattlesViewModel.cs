@@ -87,13 +87,13 @@ namespace EasyFarm.ViewModels
         private void AddAction()
         {
             // Check to see if an ability is selected. If so, find the list with which to add the 
-            // new ability under. 
+            // new ability under.
             if (SelectedAbility != null)
             {
                 SelectedList = FindListContainingAbility(SelectedAbility);
             }
 
-            // Now, if the user has either selected an ability or a list, 
+            // Now, if the user has either selected an ability or a list,
             // add the new ability. 
             if (SelectedList != null)
             {

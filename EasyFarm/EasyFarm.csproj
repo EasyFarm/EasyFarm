@@ -178,6 +178,7 @@
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\IUnitService.cs" />
+    <Compile Include="Handlers\SelectAbilityRequestHandler.cs" />
     <Compile Include="Handlers\SelectCharacterRequestHandler.cs" />
     <Compile Include="Handlers\SelectCharacterResult.cs" />
     <Compile Include="Infrastructure\TabViewModels.cs" />
@@ -291,8 +292,8 @@
     <Compile Include="ViewModels\TargetsViewModel.cs" />
     <Compile Include="Infrastructure\ViewModelAttribute.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />
-    <Compile Include="Views\AbilitySelectionBox.xaml.cs">
-      <DependentUpon>AbilitySelectionBox.xaml</DependentUpon>
+    <Compile Include="Views\SelectActionDialog.xaml.cs">
+      <DependentUpon>SelectActionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BattlesView.xaml.cs">
       <DependentUpon>BattlesView.xaml</DependentUpon>
@@ -372,7 +373,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AbilitySelectionBox.xaml">
+    <Page Include="Views\SelectActionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -429,6 +430,10 @@
     <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewDictionary.xaml">
       <SubType>Designer</SubType>

@@ -15,16 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using EasyFarm.Views;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Serialization;
+using EasyFarm.Handlers;
 using EasyFarm.Parsing;
 using EasyFarm.UserSettings;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight;
+using MahApps.Metro.Controls;
 
 namespace EasyFarm.Classes
 {
@@ -56,7 +59,7 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     The move's name.
         /// </summary>
-        private string _name = string.Empty;
+        private string _name;
 
         /// <summary>
         ///     The upper limit of the player's health.
@@ -200,7 +203,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public BattleAbility()
         {
-            AutoFillCommand = new RelayCommand(AutoFill);
+            AutoFillCommand = new RelayCommand(async () => await AutoFill());
         }
 
         /// <summary>
@@ -489,13 +492,13 @@ namespace EasyFarm.Classes
         /// <summary>
         ///     Sets the ability field.
         /// </summary>
-        public void AutoFill()
+        public async Task AutoFill()
         {
             // Return if string null or empty.
             if (string.IsNullOrWhiteSpace(Name)) return;
 
             // Get the ability by name.
-            var ability = FindAbility(Name);
+            Ability ability = await new SelectAbilityRequestHandler(Application.Current.MainWindow as MetroWindow).Handle(Name);
 
             // Attempt to set the ability and inform the
             // user of its sucess.
@@ -519,28 +522,6 @@ namespace EasyFarm.Classes
 
                 if (AbilityType == AbilityType.Weaponskill) { TpCost = 1000; }
             }
-        }
-
-        /// <summary>
-        ///     Locates an ability by name and prompting the user if
-        ///     more than one ability has been found.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public Ability FindAbility(string name)
-        {
-            // Retriever all moves with the specified name.
-            var moves = App.AbilityService.GetAbilitiesWithName(name).ToArray();
-
-            // Prompt user to select a move if more
-            // than one are found with the same name.
-            // Otherwise, return the first occurence or null.
-            if (moves.Length > 1)
-            {
-                return new AbilitySelectionBox(moves).SelectedAbility;
-            }
-
-            return moves.FirstOrDefault();
         }
 
         public override string ToString()

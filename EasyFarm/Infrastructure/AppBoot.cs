@@ -46,6 +46,8 @@ namespace EasyFarm.Infrastructure
             container.Bind<TabViewModels>().ToSelf();
             container.Bind<LibraryUpdater>().ToSelf();
             container.Bind<IDialogCoordinator>().To<DialogCoordinator>();
+            container.Bind<SelectCharacterRequestHandler>().ToSelf();
+            container.Bind<SelectAbilityRequestHandler>().ToSelf();
         }
 
         public void Navigate<TViewModel>()
