@@ -60,6 +60,7 @@ namespace EasyFarm.Tests.Classes
             var battleAbility = FindAbility();
             battleAbility.Name = "test";
             battleAbility.AbilityType = AbilityType.Magic;
+            battleAbility.Command = "/magic test <t>";
 
             var windower = FindWindower();
             var player = FindPlayer();
