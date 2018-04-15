@@ -31,7 +31,7 @@
                             Margin="5"
                             IsReadOnly="True"
                             ItemsSource="{Binding CommandTargets}"
-                            SelectedItem="{Binding Ability.TargetType}" />
+                            SelectedItem="{Binding TargetType}" />
                 </UniformGrid>
 
                 <!-- AutoFill -->
@@ -124,7 +124,7 @@
                         Grid.Column="1"
                         Margin="5"
                         ToolTip="MP Cost for the move."
-                        Value="{Binding Ability.MpCost}" />
+                        Value="{Binding MpCost}" />
 
                 <!-- MP Range-->
                 <Label
@@ -168,7 +168,7 @@
                         Grid.Column="1"
                         Margin="5"
                         ToolTip="TP Cost for the move. "
-                        Value="{Binding Ability.TpCost}" />
+                        Value="{Binding TpCost}" />
 
                 <!-- TP Range-->
                 <Label
@@ -369,7 +369,7 @@
                         Grid.Column="1"
                         Margin="5"
                         ToolTip="Index of the move use for determining its recast time. "
-                        Value="{Binding Ability.Index}" />
+                        Value="{Binding Index}" />
 
             </Grid>
         </TabItem>

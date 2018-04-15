@@ -158,5 +158,24 @@ namespace EasyFarm.Parsing
         ///     String representation of the target type.
         /// </summary>
         public string Targets { get; set; }
+
+        public string Command
+        {
+            get
+            {
+                if (AbilityType == AbilityType.Range)
+                    return Prefix + " " + Postfix;
+
+                if (English == null) return "";
+
+                var commandName = English.Contains(" ") ? $"\"{English}\"" : English;
+                return $@"{Prefix} {commandName} {Postfix}";
+            }
+        }
+
+        public override string ToString()
+        {
+            return Command;
+        }
     }
 }

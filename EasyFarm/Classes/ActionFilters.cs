@@ -59,11 +59,11 @@ namespace EasyFarm.Classes
                 yield return Result.Fail("Must have name");
 
             // MP Check
-            if (action.Ability.MpCost > fface.Player.MPCurrent)
+            if (action.MpCost > fface.Player.MPCurrent)
                 yield return Result.Fail("Not enough mp");
 
             // TP Check
-            if (action.Ability.TpCost > fface.Player.TPCurrent)
+            if (action.TpCost > fface.Player.TPCurrent)
                 yield return Result.Fail("Not enough tp");
 
             // MP Range
@@ -84,11 +84,11 @@ namespace EasyFarm.Classes
             }
 
             // Recast Check
-            if (!AbilityUtils.IsRecastable(fface, action.Ability))
+            if (!AbilityUtils.IsRecastable(fface, action))
                 yield return Result.Fail("Not recastable");
 
             // Limiting Status Effect Check for Spells. 
-            if (ResourceHelper.IsSpell(action.Ability.AbilityType))
+            if (ResourceHelper.IsSpell(action.AbilityType))
             {
                 if (ProhibitEffects.ProhibitEffectsSpell.Intersect(fface.Player.StatusEffects).Any())
                 {
@@ -97,7 +97,7 @@ namespace EasyFarm.Classes
             }
 
             // Limiting Status Effect Check for Abilities. 
-            if (ResourceHelper.IsAbility(action.Ability.AbilityType))
+            if (ResourceHelper.IsAbility(action.AbilityType))
             {
                 if (ProhibitEffects.ProhibitEffectsAbility.Intersect(fface.Player.StatusEffects).Any())
                 {
@@ -142,7 +142,7 @@ namespace EasyFarm.Classes
             }
 
             // Do not cast trust magic with aggro.
-            var isTrustMagic = action.Ability.Type == "Trust";
+            var isTrustMagic = action.AbilityType == AbilityType.Trust;
             var hasAggro = units.Any(x => x.HasAggroed);
             if (isTrustMagic && hasAggro)
                 yield return Result.Fail("Cannot use trust magic with aggro");

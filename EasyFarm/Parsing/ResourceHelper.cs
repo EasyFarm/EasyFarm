@@ -43,6 +43,8 @@ namespace EasyFarm.Parsing
                     return AbilityType.Trigger;
                 case "/weaponskill":
                     return AbilityType.Weaponskill;
+                case "/trust":
+                    return AbilityType.Trust;
                 default:
                     return AbilityType.Unknown;
             }

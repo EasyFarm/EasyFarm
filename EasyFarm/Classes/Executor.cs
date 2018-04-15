@@ -96,14 +96,14 @@ namespace EasyFarm.Classes
                 _fface.Navigator.Reset();
                 TimeWaiter.Pause(100);
 
-                if (ResourceHelper.IsSpell(action.Ability.AbilityType))
+                if (ResourceHelper.IsSpell(action.AbilityType))
                 {
                     CastSpell(action);
                 }
                 else
-                {                    
+                {
                     CastAbility(action);
-                }                
+                }
 
                 action.Usages++;
                 action.LastCast = DateTime.Now.AddSeconds(action.Recast);
