@@ -45,7 +45,8 @@ namespace EasyFarm.States
 
         public virtual int CompareTo(object obj)
         {
-            if (!(obj is IState other)) return 1;
+            var other = obj as IState;
+            if (other == null) return 1;
             return -Priority.CompareTo(other.Priority);
         }
     }
