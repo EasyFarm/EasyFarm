@@ -180,6 +180,7 @@
     <Compile Include="Handlers\SelectAbilityRequestHandler.cs" />
     <Compile Include="Handlers\SelectCharacterRequestHandler.cs" />
     <Compile Include="Handlers\SelectCharacterResult.cs" />
+    <Compile Include="Infrastructure\ApplicationBindingsModule.cs" />
     <Compile Include="Infrastructure\TabViewModels.cs" />
     <Compile Include="Persistence\Persister.cs" />
     <Compile Include="Persistence\JsonPersister.cs" />
@@ -332,7 +333,9 @@
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
     </None>

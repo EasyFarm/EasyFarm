@@ -1,10 +1,7 @@
-﻿using System;
-using EasyFarm.Classes;
+﻿using EasyFarm.Classes;
 using EasyFarm.Handlers;
 using EasyFarm.Views;
-using MahApps.Metro.Controls.Dialogs;
 using Ninject;
-using Ninject.Extensions.Conventions;
 
 namespace EasyFarm.Infrastructure
 {
@@ -25,29 +22,13 @@ namespace EasyFarm.Infrastructure
             SystemTray.ConfigureTray(_app.MainWindow);
         }
 
-        public Object ViewModel => _app.MainWindow?.DataContext;
+        public object ViewModel => _app.MainWindow?.DataContext;
 
         private IKernel CreateContainer()
         {
-            StandardKernel container = new StandardKernel();
-            RegisterApp(container);
-            RegisterContainer(container);
+            StandardKernel container = new StandardKernel(
+                new ApplicationBindingsModule());
             return container;
-        }
-
-        private void RegisterContainer(IKernel container)
-        {
-        }
-
-        private void RegisterApp(IKernel container)
-        {
-            container.Bind<App>().ToMethod(x => _app);
-            container.Bind(x => x.FromThisAssembly().SelectAllClasses().EndingWith("ViewModel").BindToSelf());
-            container.Bind<TabViewModels>().ToSelf();
-            container.Bind<LibraryUpdater>().ToSelf();
-            container.Bind<IDialogCoordinator>().To<DialogCoordinator>();
-            container.Bind<SelectCharacterRequestHandler>().ToSelf();
-            container.Bind<SelectAbilityRequestHandler>().ToSelf();
         }
 
         public void Navigate<TViewModel>()
