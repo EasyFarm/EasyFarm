@@ -15,392 +15,219 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System.Collections.Generic;
+
 using System.Collections.ObjectModel;
 using EasyFarm.Classes;
 using EasyFarm.Parsing;
 using EasyFarm.States;
 using EasyFarm.Tests.TestTypes;
-using EasyFarm.UserSettings;
+using EasyFarm.Tests.TestTypes.Mocks;
 using MemoryAPI;
+using MemoryAPI.Memory;
 using Xunit;
 
 namespace EasyFarm.Tests.States
 {
-    public class BattleStateTests : AbstractTestFixture
+    public class Check : AbstractTestBase
     {
-        public class Check
+        private StateMemory CreateStateMemory()
         {
-            [Fact]
-            public void WhenEngagedSetAndEngagedShouldBattle()
-            {
-                // Fixture setup                
-                Config.Instance.IsEngageEnabled = true;
-
-                var memory = new FakeMemoryAPI();
-                var player = FindPlayer();
-                player.Status = Status.Fighting;
-                memory.Player = player;
-
-                var stateMemory = new StateMemory(memory)
-                {
-                    Target = FindUnit(),
-                    IsFighting = true
-                };
-
-                var sut = new BattleState(stateMemory);
-
-                // Exercise system
-                var result = sut.Check();
-
-                // Verify outcome
-                Assert.True(result);
-
-                // Teardown
-            }
-
-            [Fact]
-            public void WhenEngagedNotSetShouldBattle()
-            {
-                // Fixture setup                
-                Config.Instance.IsEngageEnabled = false;
-
-                var memory = new FakeMemoryAPI();
-                var player = FindPlayer();
-                player.Status = Status.Standing;
-                memory.Player = player;
-
-                var stateMemory = new StateMemory(memory)
-                {
-                    Target = FindUnit(),
-                    IsFighting = true
-                };
-
-                var sut = new BattleState(stateMemory);
-
-                // Exercise system
-                var result = sut.Check();
-
-                // Verify outcome
-                Assert.True(result);
-
-                // Teardown
-            }
-
-            [Fact]
-            public void WithNonValidUnitShouldNotBattle()
-            {
-                // Fixture setup
-                Config.Instance.IsEngageEnabled = false;
-
-                var memory = new FakeMemoryAPI { Player = FindPlayer() };
-
-                var stateMemory = new StateMemory(memory)
-                {
-                    Target = FindNonValidUnit(),
-                    IsFighting = true
-                };
-
-                var sut = new BattleState(stateMemory);
-
-                // Exercise system
-                var result = sut.Check();
-
-                // Verify outcome
-                Assert.False(result);
-
-                // Teardown
-            }
-
-            [Fact]
-            public void WhenNotFightingShouldntBattle()
-            {
-                // Fixture setup
-                Config.Instance.IsEngageEnabled = false;
-                var memory = new FakeMemoryAPI { Player = FindPlayer() };
-
-                var stateMemory = new StateMemory(memory)
-                {
-                    Target = FindUnit(),
-                    IsFighting = false
-                };
-
-                var sut = new BattleState(stateMemory);
-
-                // Exercise system
-                var result = sut.Check();
-
-                // Verify outcome
-                Assert.False(result);
-
-                // Teardown
-            }
-
-            [Fact]
-            public void WhenInjuredShouldntBattle()
-            {
-                // Fixture setup
-                var player = FindPlayer();
-                player.HPPCurrent = 25;
-                Config.Instance.LowHealth = 50;
-                Config.Instance.HighHealth = 100;
-                Config.Instance.IsHealthEnabled = true;
-                player.Status = Status.Standing;
-
-                Config.Instance.IsEngageEnabled = false;
-
-                var memory = new FakeMemoryAPI { Player = player };
-
-                var stateMemory = new StateMemory(memory)
-                {
-                    Target = FindUnit(),
-                    IsFighting = false
-                };
-
-                var sut = new BattleState(stateMemory);
-
-                UnitService.Units = new List<IUnit>();
-
-                // Exercise system
-                var result = sut.Check();
-
-                // Verify outcome
-                Assert.False(result);
-
-                // Teardown
-            }
-
-            [Fact]
-            public void WithInvalidTargetShouldntBattle()
-            {
-                // Fixture setup
-                var player = FindPlayer();
-                player.Status = Status.Standing;
-                Config.Instance.IsEngageEnabled = false;
-
-                var memory = new FakeMemoryAPI { Player = player };
-
-                var stateMemory = new StateMemory(memory)
-                {
-                    Target = FindNonValidUnit(),
-                    IsFighting = true
-                };
-
-                var sut = new BattleState(stateMemory);
-
-                UnitService.Units = new List<IUnit>();
-
-                // Exercise system
-                var result = sut.Check();
-
-                // Verify outcome
-                Assert.False(result);
-
-                // Teardown
-            }
+            StateMemory memory = new StateMemory(new MockEliteAPIAdapter(MockEliteAPI));
+            return memory;
         }
 
-        public class Run
+        [Fact]
+        public void WhenEngagedSetAndEngagedShouldBattle()
         {
-            public Run()
-            {
-                GlobalFactory.BuildUnitService = fface => new TestUnitService();
-            }
-
-            [Fact]
-            public void JapanseCommandsDoNotHaveSpaces()
-            {
-                var sut = new Ability()
-                {
-                    Prefix = "/magic",
-                    English = "ケアルIII",
-                    TargetType = TargetType.Self
-                };
-
-                Assert.Equal("/magic ケアルIII <me>", sut.Command);
-            }
-
-            [Fact]
-            public void RangeCommandReturnsCorrectResults()
-            {
-                var sut = new Ability()
-                {
-                    Prefix = "/range",
-                    AbilityType = AbilityType.Range,
-                    TargetType = TargetType.Enemy
-                };
-
-                Assert.Equal("/range <t>", sut.Command);
-            }
-
-            [Fact]
-            public void JobAbilityCommandReturnsCorrectResults()
-            {
-                var sut = new Ability()
-                {
-                    Prefix = "/jobability",
-                    English = "Boost",
-                    TargetType = TargetType.Self
-                };
-
-                Assert.Equal("/jobability Boost <me>", sut.Command);
-            }
-
-            [Fact]
-            public void CommandWithSpaceIsSurroundByQuotes()
-            {
-                var sut = new Ability()
-                {
-                    Prefix = "/magic",
-                    English = "Cure III",
-                    TargetType = TargetType.Self
-                };
-
-                Assert.Equal("/magic \"Cure III\" <me>", sut.Command);
-            }
-
-            [Fact]
-            public void WithValidActionWillSendCommand()
-            {
-                // Fixture setup
-                var windower = FindWindower();
-                var sut = CreateSut(windower);
-                var actions = FindBattleActions();
-
-                var ability = FindJobAbility("test");
-                ability.Command = "/jobability test <me>";
-                actions.Add(ability);
-
-                // Exercise system
-                sut.Run();
-
-                // Verify outcome
-                Assert.Equal("/jobability test <me>", windower.LastCommand);
-
-                // Teardown
-            }
-
-            [Fact]
-            public void WithInvalidActionWillNotSendCommand()
-            {
-                // Fixture setup
-                var windower = FindWindower();
-                var sut = CreateSut(windower);
-                var actions = FindBattleActions();
-
-                var ability = FindJobAbility("test");
-                ability.IsEnabled = false;
-                actions.Add(ability);
-
-                // Exercise system
-                sut.Run();
-
-                // Verify outcome
-                Assert.Null(windower.LastCommand);
-            }
-
-            private static BattleAbility FindJobAbility(string actionName)
-            {
-                var battleAbility = FindAbility();
-                battleAbility.Name = actionName;
-                battleAbility.AbilityType = AbilityType.Jobability;
-                battleAbility.TargetType = TargetType.Self;
-                return battleAbility;
-            }
-
-            private static BattleState CreateSut(FakeWindower windower)
-            {
-                var player = FindPlayer();
-                var navigator = FindNavigator();
-                var target = FindTarget();
-                var timer = FindTimer();
-
-                var memory = new FakeMemoryAPI()
-                {
-                    Player = player,
-                    Windower = windower,
-                    Navigator = navigator,
-                    Target = target,
-                    Timer = timer
-                };
-
-                var sut = new BattleState(new StateMemory(memory)
-                {
-                    Target = FindUnit()
-                });
-
-                return sut;
-            }
-
-            private static ObservableCollection<BattleAbility> FindBattleActions()
-            {
-                var moves = Config.Instance.BattleLists["Battle"].Actions;
-                moves.Clear();
-                return moves;
-            }
+            // Fixture setup
+            Config.IsEngageEnabled = true;
+            MockEliteAPI.Player.Status = Status.Fighting;
+            StateMemory memory = CreateStateMemory();
+            memory.Target = FindUnit();
+            memory.IsFighting = true;
+            BattleState sut = new BattleState(memory);
+            // Exercise system
+            bool result = sut.Check();
+            // Verify outcome
+            Assert.True(result);
+            // Teardown
         }
 
-        public class Enter
+        [Fact]
+        public void WhenEngagedNotSetShouldBattle()
         {
-            [Fact]
-            public void WithHealingPlayerWillStandUp()
-            {
-                // Fixture setup
-                var windower = FindWindower();
-                var player = FindPlayer();
-                var sut = CreateSut(windower, player);
+            // Fixture setup
+            Config.IsEngageEnabled = false;
+            StateMemory memory = CreateStateMemory();
+            memory.Target = FindUnit();
+            memory.IsFighting = true;
+            BattleState sut = new BattleState(memory);
+            // Exercise system
+            bool result = sut.Check();
+            // Verify outcome
+            Assert.True(result);
+            // Teardown
+        }
 
-                player.Status = Status.Healing;
+        [Fact]
+        public void WithNonValidUnitShouldNotBattle()
+        {
+            // Fixture setup
+            Config.IsEngageEnabled = false;
+            StateMemory memory = CreateStateMemory();
+            memory.Target = FindNonValidUnit();
+            memory.IsFighting = true;
+            BattleState sut = new BattleState(memory);
+            // Exercise system
+            bool result = sut.Check();
+            // Verify outcome
+            Assert.False(result);
+            // Teardown
+        }
 
-                // Exercise system
-                sut.Enter();
+        [Fact]
+        public void WhenNotFightingShouldntBattle()
+        {
+            // Fixture setup
+            Config.IsEngageEnabled = false;
+            StateMemory memory = CreateStateMemory();
+            memory.Target = FindUnit();
+            memory.IsFighting = false;
+            BattleState sut = new BattleState(memory);
+            // Exercise system
+            bool result = sut.Check();
+            // Verify outcome
+            Assert.False(result);
+            // Teardown
+        }
 
-                // Verify outcome
-                Assert.Equal(Constants.RestingOff, windower.LastCommand);
+        [Fact]
+        public void WhenInjuredShouldntBattle()
+        {
+            // Fixture setup
+            StateMemory memory = CreateStateMemory();
+            memory.Target = FindUnit();
+            memory.IsFighting = false;
+            MockEliteAPI.Player.HPPCurrent = 25;
+            MockEliteAPI.Player.Status = Status.Standing;
+            Config.LowHealth = 50;
+            Config.HighHealth = 100;
+            Config.IsHealthEnabled = true;
+            Config.IsEngageEnabled = false;
+            BattleState sut = new BattleState(memory);
+            // Exercise system
+            bool result = sut.Check();
+            // Verify outcome
+            Assert.False(result);
+            // Teardown
+        }
 
-                // Teardown
-            }
+        [Fact]
+        public void WithInvalidTargetShouldntBattle()
+        {
+            // Fixture setup
+            StateMemory memory = CreateStateMemory();
+            memory.Target = FindNonValidUnit();
+            memory.IsFighting = true;
+            MockEliteAPI.Player.Status = Status.Standing;
+            Config.IsEngageEnabled = false;
+            BattleState sut = new BattleState(memory);
+            // Exercise system
+            bool result = sut.Check();
+            // Verify outcome
+            Assert.False(result);
+            // Teardown
+        }
+    }
 
-            [Fact]
-            public void WillStopPlayerFromMoving()
-            {
-                // Fixture setup
-                var navigator = FindNavigator();
-                var sut = CreateSut(navigator);
+    public class Run : AbstractTestBase
+    {
+        private BattleState CreateSut()
+        {
+            var memory = new StateMemory(new MockEliteAPIAdapter(MockEliteAPI)) {Target = FindUnit()};
+            BattleState sut = new BattleState(memory);
+            return sut;
+        }
 
-                // Exercise system
-                sut.Enter();
+        [Fact]
+        public void WithValidActionWillSendCommand()
+        {
+            // Fixture setup
+            BattleState sut = CreateSut();
+            ObservableCollection<BattleAbility> actions = FindBattleActions();
+            BattleAbility ability = FindJobAbility("test");
+            ability.Command = "/jobability test <me>";
+            actions.Add(ability);
+            // Exercise system
+            sut.Run();
+            // Verify outcome
+            Assert.Equal("/jobability test <me>", MockEliteAPI.Windower.LastCommand);
+            // Teardown
+        }
 
-                // Verify outcome
-                Assert.True(navigator.ResetWasCalled);
+        [Fact]
+        public void WithInvalidActionWillNotSendCommand()
+        {
+            // Fixture setup
+            BattleState sut = CreateSut();
+            ObservableCollection<BattleAbility> actions = FindBattleActions();
+            BattleAbility ability = FindJobAbility("test");
+            ability.IsEnabled = false;
+            actions.Add(ability);
+            // Exercise system
+            sut.Run();
+            // Verify outcome
+            Assert.Null(MockEliteAPI.Windower.LastCommand);
+        }
 
-                // Teardown
-            }
+        private static BattleAbility FindJobAbility(string actionName)
+        {
+            BattleAbility battleAbility = FindAbility();
+            battleAbility.Name = actionName;
+            battleAbility.AbilityType = AbilityType.Jobability;
+            battleAbility.TargetType = TargetType.Self;
+            return battleAbility;
+        }
 
-            private BattleState CreateSut(FakeNavigator navigator)
-            {
-                var memory = new FakeMemoryAPI()
-                {
-                    Navigator = navigator,
-                    Player = FindPlayer()
-                };
+        private ObservableCollection<BattleAbility> FindBattleActions()
+        {
+            ObservableCollection<BattleAbility> moves = Config.BattleLists["Battle"].Actions;
+            moves.Clear();
+            return moves;
+        }
+    }
 
-                return new BattleState(new StateMemory(memory));
-            }
+    public class Enter : AbstractTestBase
+    {
+        [Fact]
+        public void WithHealingPlayerWillStandUp()
+        {
+            // Fixture setup
+            BattleState sut = CreateSut();
+            MockEliteAPI.Player.Status = Status.Healing;
+            // Exercise system
+            sut.Enter();
+            // Verify outcome
+            Assert.Equal(Status.Standing, MockEliteAPI.Player.Status);
+            // Teardown
+        }
 
-            private static BattleState CreateSut(FakeWindower windower, FakePlayer player)
-            {
-                var navigator = FindNavigator();
+        [Fact]
+        public void WillStopPlayerFromMoving()
+        {
+            // Fixture setup
+            MockEliteAPI.Navigator.IsRunning = true;
+            BattleState sut = CreateSut();
+            // Exercise system
+            sut.Enter();
+            // Verify outcome
+            Assert.False(MockEliteAPI.Navigator.IsRunning);
+            // Teardown
+        }
 
-                var memory = new FakeMemoryAPI()
-                {
-                    Windower = windower,
-                    Player = player,
-                    Navigator = navigator
-                };
-
-                return new BattleState(new StateMemory(memory));
-            }
+        private BattleState CreateSut()
+        {
+            return new BattleState(new StateMemory(new MockEliteAPIAdapter(MockEliteAPI)));
         }
     }
 }

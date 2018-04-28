@@ -32,8 +32,6 @@ namespace EasyFarm.UserSettings
     /// </summary>
     public class Config : ViewModelBase
     {
-        [XmlIgnore] private static Lazy<Config> _lazy = new Lazy<Config>(() => new Config());
-
         /// <summary>
         ///     Used to filter out aggroed mobs.
         /// </summary>
@@ -148,23 +146,28 @@ namespace EasyFarm.UserSettings
 
         static Config()
         {
+            Instance.Initialize();
+        }
+
+        public void Initialize()
+        {
             // Add battle moves at the start only once since deserialization
             // can cause duplicate entries when the default constructor is
             // called.
-            Instance.BattleLists.Add(new BattleList("Start"));
-            Instance.BattleLists.Add(new BattleList("Trusts"));
-            Instance.BattleLists.Add(new BattleList("Pull"));
-            Instance.BattleLists.Add(new BattleList("Battle"));
-            Instance.BattleLists.Add(new BattleList("End"));
-            Instance.BattleLists.Add(new BattleList("Healing"));
-            Instance.BattleLists.Add(new BattleList("Weaponskill"));
+            BattleLists.Add(new BattleList("Start"));
+            BattleLists.Add(new BattleList("Trusts"));
+            BattleLists.Add(new BattleList("Pull"));
+            BattleLists.Add(new BattleList("Battle"));
+            BattleLists.Add(new BattleList("End"));
+            BattleLists.Add(new BattleList("Healing"));
+            BattleLists.Add(new BattleList("Weaponskill"));
         }
 
         [XmlIgnore]
         public static Config Instance
         {
-            get { return _lazy.Value; }
-            set { _lazy = new Lazy<Config>(() => value); }
+            get { return GlobalFactory.ConfigFactory.Config; }
+            set { GlobalFactory.ConfigFactory.Config = value; }
         }
 
         public Route Route = new Route();
@@ -209,5 +212,5 @@ namespace EasyFarm.UserSettings
         /// The current player to follow.
         /// </summary>
         public string FollowedPlayer = string.Empty;
-    }  
+    }
 }

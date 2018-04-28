@@ -25,24 +25,6 @@ using MemoryAPI.Memory;
 namespace EasyFarm.Classes
 {
     /// <summary>
-    /// Makes services available globally by providing build / create methods. 
-    /// </summary>
-    /// <remarks>
-    /// Using this class to move the construction of services out of static methods.
-    /// Classes here will eventually be moved somewhere else. 
-    /// </remarks>
-    public class GlobalFactory
-    {
-        public static Func<IMemoryAPI, IUnitService> BuildUnitService { get; set; }
-            = eliteApi => new UnitService(eliteApi);
-
-        public static IUnitService CreateUnitService(IMemoryAPI eliteApi)
-        {
-            return BuildUnitService.Invoke(eliteApi);
-        }
-    }
-
-    /// <summary>
     /// Retrieves the zone's unit data.
     /// </summary>
     public class UnitService : IUnitService

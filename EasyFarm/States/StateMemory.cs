@@ -17,6 +17,7 @@
 // ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 
 namespace EasyFarm.States
@@ -28,7 +29,13 @@ namespace EasyFarm.States
             EliteApi = eliteApi;
             Executor = new Executor(eliteApi);
             UnitService = new UnitService(eliteApi);
+            ConfigFactory = GlobalFactory.ConfigFactory;
         }
+
+        /// <summary>
+        ///     Locates the users settings.
+        /// </summary>
+        public IConfigFactory ConfigFactory { get; set; }
 
         /// <summary>
         ///     The game session.

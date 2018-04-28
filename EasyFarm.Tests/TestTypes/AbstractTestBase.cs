@@ -15,13 +15,42 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using EasyFarm.Classes;
+using EasyFarm.Tests.TestTypes.Mocks;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 
 namespace EasyFarm.Tests.TestTypes
 {
-    public class AbstractTestFixture
+    public class TestConfigFactory : IConfigFactory
     {
+        public Config Config { get; set; } = new Config();
+    }
+
+    public class AbstractTestBase
+    {
+        public Config Config;
+
+        public readonly MockEliteAPI MockEliteAPI = MockEliteAPI.Create();
+
+        public AbstractTestBase()
+        {
+            AlwayUseFreshConfig();
+            Config.Initialize();
+        }
+
+        /// <summary>
+        /// Use a new config per test run.
+        /// </summary>
+        /// <remarks>This will prevent interacting tests</remarks>
+        private void AlwayUseFreshConfig()
+        {
+            IConfigFactory factory = new TestConfigFactory();
+            GlobalFactory.ConfigFactory = factory;
+            Config = factory.Config;
+        }
+
         public static BattleAbility FindAbility()
         {
             var battleAbility = new BattleAbility();
@@ -32,12 +61,12 @@ namespace EasyFarm.Tests.TestTypes
 
         public static IUnit FindNonValidUnit()
         {
-            return new FakeUnit();
+            return new MockUnit();
         }
 
         public static IUnit FindUnit()
         {
-            var unit = new FakeUnit
+            var unit = new MockUnit
             {
                 Name = "Mandragora",
                 ClaimedId = 0,
@@ -56,41 +85,8 @@ namespace EasyFarm.Tests.TestTypes
                 Status = Status.Standing,
                 YDifference = 2.0
             };
+
             return unit;
-        }
-
-        public static FakePlayer FindPlayer()
-        {
-            var player = new FakePlayer();
-            player.HPPCurrent = 100;
-            player.MPCurrent = 10000;
-            player.MPPCurrent = 100;
-            player.Name = "Mykezero";
-            player.Status = Status.Standing;
-            player.TPCurrent = 1000;
-            player.StatusEffects = new StatusEffect[] { };
-            return player;
-        }
-
-        public static FakeTimer FindTimer()
-        {
-            var timer = new FakeTimer();
-            return timer;
-        }
-
-        public static FakeWindower FindWindower()
-        {
-            return new FakeWindower();
-        }
-
-        public static FakeNavigator FindNavigator()
-        {
-            return new FakeNavigator();
-        }
-
-        public static FakeTarget FindTarget()
-        {
-            return new FakeTarget();
         }
     }
 }

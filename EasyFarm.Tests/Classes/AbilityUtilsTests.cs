@@ -15,15 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using MemoryAPI;
+
 using EasyFarm.Classes;
 using EasyFarm.Parsing;
 using EasyFarm.Tests.TestTypes;
+using EasyFarm.Tests.TestTypes.Mocks;
 using Xunit;
 
 namespace EasyFarm.Tests.Classes
 {
-    public class AbilityUtilsTests
+    public class AbilityUtilsTests : AbstractTestBase
     {
         private readonly BattleAbility _ability = new BattleAbility();
 
@@ -34,9 +35,7 @@ namespace EasyFarm.Tests.Classes
         public void IsRecastableWhenNotOnRecast(AbilityType abilityType)
         {
             _ability.AbilityType = abilityType;
-            var memoryApi = new FakeMemoryAPI();
-            memoryApi.Timer = new FakeTimer();
-            var result = AbilityUtils.IsRecastable(memoryApi, _ability);
+            var result = VerifySut();
             Assert.True(result);
         }
 
@@ -46,10 +45,14 @@ namespace EasyFarm.Tests.Classes
         public void NotRecastableWhenOnRecast(AbilityType abilityType)
         {
             _ability.AbilityType = abilityType;
-            var memoryApi = new FakeMemoryAPI();
-            memoryApi.Timer = new FakeTimer() { ActionRecast = 1 };
-            var result = AbilityUtils.IsRecastable(memoryApi, _ability);
+            var result = VerifySut(recastTime: 1);
             Assert.False(result);
+        }
+
+        private bool VerifySut(int recastTime = 0)
+        {
+            MockEliteAPI.Timer.RecastTime = recastTime;
+            return AbilityUtils.IsRecastable(new MockEliteAPIAdapter(MockEliteAPI), _ability);
         }
     }
 }

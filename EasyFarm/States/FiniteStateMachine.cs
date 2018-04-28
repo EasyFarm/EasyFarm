@@ -54,7 +54,7 @@ namespace EasyFarm.States
             AddState(new WeaponskillState(stateMemory) {Priority = 2});
             AddState(new PullState(stateMemory) {Priority = 4});
             AddState(new StartState(stateMemory) {Priority = 5});
-            AddState(new TravelState(stateMemory, new ConfigFactory()) {Priority = 1});
+            AddState(new TravelState(stateMemory) {Priority = 1});
             AddState(new HealingState(stateMemory) {Priority = 2});
             AddState(new EndState(stateMemory) {Priority = 3});
             AddState(new StartEngineState(stateMemory) {Priority = Constants.MaxPriority});

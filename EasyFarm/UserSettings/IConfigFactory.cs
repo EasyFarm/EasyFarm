@@ -19,6 +19,6 @@ namespace EasyFarm.UserSettings
 {
     public interface IConfigFactory
     {
-        Config GetConfig();
+        Config Config { get; set; }
     }
 }
