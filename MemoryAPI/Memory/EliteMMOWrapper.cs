@@ -496,9 +496,9 @@ namespace MemoryAPI.Memory
                 _api.ThirdParty.SendString(stringToSend);
             }
 
-            public void SendKeyPress(Keys keys)
+            public void SendKeyPress(Keys key)
             {
-                _api.ThirdParty.KeyPress(keys);
+                _api.ThirdParty.KeyPress(key);
             }
         }
 

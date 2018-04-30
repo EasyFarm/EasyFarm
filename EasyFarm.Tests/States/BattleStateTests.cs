@@ -23,211 +23,213 @@ using EasyFarm.States;
 using EasyFarm.Tests.TestTypes;
 using EasyFarm.Tests.TestTypes.Mocks;
 using MemoryAPI;
-using MemoryAPI.Memory;
 using Xunit;
 
 namespace EasyFarm.Tests.States
 {
-    public class Check : AbstractTestBase
+    public class BattleStateTests
     {
-        private StateMemory CreateStateMemory()
+        public class CheckTests : AbstractTestBase
         {
-            StateMemory memory = new StateMemory(new MockEliteAPIAdapter(MockEliteAPI));
-            return memory;
+            private StateMemory CreateStateMemory()
+            {
+                StateMemory memory = new StateMemory(new MockEliteAPIAdapter(MockEliteAPI));
+                return memory;
+            }
+
+            [Fact]
+            public void WhenEngagedSetAndEngagedShouldBattle()
+            {
+                // Fixture setup
+                Config.IsEngageEnabled = true;
+                MockEliteAPI.Player.Status = Status.Fighting;
+                StateMemory memory = CreateStateMemory();
+                memory.Target = FindUnit();
+                memory.IsFighting = true;
+                BattleState sut = new BattleState(memory);
+                // Exercise system
+                bool result = sut.Check();
+                // Verify outcome
+                Assert.True(result);
+                // Teardown
+            }
+
+            [Fact]
+            public void WhenEngagedNotSetShouldBattle()
+            {
+                // Fixture setup
+                Config.IsEngageEnabled = false;
+                StateMemory memory = CreateStateMemory();
+                memory.Target = FindUnit();
+                memory.IsFighting = true;
+                BattleState sut = new BattleState(memory);
+                // Exercise system
+                bool result = sut.Check();
+                // Verify outcome
+                Assert.True(result);
+                // Teardown
+            }
+
+            [Fact]
+            public void WithNonValidUnitShouldNotBattle()
+            {
+                // Fixture setup
+                Config.IsEngageEnabled = false;
+                StateMemory memory = CreateStateMemory();
+                memory.Target = FindNonValidUnit();
+                memory.IsFighting = true;
+                BattleState sut = new BattleState(memory);
+                // Exercise system
+                bool result = sut.Check();
+                // Verify outcome
+                Assert.False(result);
+                // Teardown
+            }
+
+            [Fact]
+            public void WhenNotFightingShouldntBattle()
+            {
+                // Fixture setup
+                Config.IsEngageEnabled = false;
+                StateMemory memory = CreateStateMemory();
+                memory.Target = FindUnit();
+                memory.IsFighting = false;
+                BattleState sut = new BattleState(memory);
+                // Exercise system
+                bool result = sut.Check();
+                // Verify outcome
+                Assert.False(result);
+                // Teardown
+            }
+
+            [Fact]
+            public void WhenInjuredShouldntBattle()
+            {
+                // Fixture setup
+                StateMemory memory = CreateStateMemory();
+                memory.Target = FindUnit();
+                memory.IsFighting = false;
+                MockEliteAPI.Player.HPPCurrent = 25;
+                MockEliteAPI.Player.Status = Status.Standing;
+                Config.LowHealth = 50;
+                Config.HighHealth = 100;
+                Config.IsHealthEnabled = true;
+                Config.IsEngageEnabled = false;
+                BattleState sut = new BattleState(memory);
+                // Exercise system
+                bool result = sut.Check();
+                // Verify outcome
+                Assert.False(result);
+                // Teardown
+            }
+
+            [Fact]
+            public void WithInvalidTargetShouldntBattle()
+            {
+                // Fixture setup
+                StateMemory memory = CreateStateMemory();
+                memory.Target = FindNonValidUnit();
+                memory.IsFighting = true;
+                MockEliteAPI.Player.Status = Status.Standing;
+                Config.IsEngageEnabled = false;
+                BattleState sut = new BattleState(memory);
+                // Exercise system
+                bool result = sut.Check();
+                // Verify outcome
+                Assert.False(result);
+                // Teardown
+            }
         }
 
-        [Fact]
-        public void WhenEngagedSetAndEngagedShouldBattle()
+        public class RunTests : AbstractTestBase
         {
-            // Fixture setup
-            Config.IsEngageEnabled = true;
-            MockEliteAPI.Player.Status = Status.Fighting;
-            StateMemory memory = CreateStateMemory();
-            memory.Target = FindUnit();
-            memory.IsFighting = true;
-            BattleState sut = new BattleState(memory);
-            // Exercise system
-            bool result = sut.Check();
-            // Verify outcome
-            Assert.True(result);
-            // Teardown
+            private BattleState CreateSut()
+            {
+                var memory = new StateMemory(new MockEliteAPIAdapter(MockEliteAPI)) { Target = FindUnit() };
+                BattleState sut = new BattleState(memory);
+                return sut;
+            }
+
+            [Fact]
+            public void WithValidActionWillSendCommand()
+            {
+                // Fixture setup
+                BattleState sut = CreateSut();
+                ObservableCollection<BattleAbility> actions = FindBattleActions();
+                BattleAbility ability = FindJobAbility("test");
+                ability.Command = "/jobability test <me>";
+                actions.Add(ability);
+                // Exercise system
+                sut.Run();
+                // Verify outcome
+                Assert.Equal("/jobability test <me>", MockEliteAPI.Windower.LastCommand);
+                // Teardown
+            }
+
+            [Fact]
+            public void WithInvalidActionWillNotSendCommand()
+            {
+                // Fixture setup
+                BattleState sut = CreateSut();
+                ObservableCollection<BattleAbility> actions = FindBattleActions();
+                BattleAbility ability = FindJobAbility("test");
+                ability.IsEnabled = false;
+                actions.Add(ability);
+                // Exercise system
+                sut.Run();
+                // Verify outcome
+                Assert.Null(MockEliteAPI.Windower.LastCommand);
+            }
+
+            private static BattleAbility FindJobAbility(string actionName)
+            {
+                BattleAbility battleAbility = FindAbility();
+                battleAbility.Name = actionName;
+                battleAbility.AbilityType = AbilityType.Jobability;
+                battleAbility.TargetType = TargetType.Self;
+                return battleAbility;
+            }
+
+            private ObservableCollection<BattleAbility> FindBattleActions()
+            {
+                ObservableCollection<BattleAbility> moves = Config.BattleLists["Battle"].Actions;
+                moves.Clear();
+                return moves;
+            }
         }
 
-        [Fact]
-        public void WhenEngagedNotSetShouldBattle()
+        public class EnterTests : AbstractTestBase
         {
-            // Fixture setup
-            Config.IsEngageEnabled = false;
-            StateMemory memory = CreateStateMemory();
-            memory.Target = FindUnit();
-            memory.IsFighting = true;
-            BattleState sut = new BattleState(memory);
-            // Exercise system
-            bool result = sut.Check();
-            // Verify outcome
-            Assert.True(result);
-            // Teardown
-        }
+            [Fact]
+            public void WithHealingPlayerWillStandUp()
+            {
+                // Fixture setup
+                BattleState sut = CreateSut();
+                MockEliteAPI.Player.Status = Status.Healing;
+                // Exercise system
+                sut.Enter();
+                // Verify outcome
+                Assert.Equal(Status.Standing, MockEliteAPI.Player.Status);
+                // Teardown
+            }
 
-        [Fact]
-        public void WithNonValidUnitShouldNotBattle()
-        {
-            // Fixture setup
-            Config.IsEngageEnabled = false;
-            StateMemory memory = CreateStateMemory();
-            memory.Target = FindNonValidUnit();
-            memory.IsFighting = true;
-            BattleState sut = new BattleState(memory);
-            // Exercise system
-            bool result = sut.Check();
-            // Verify outcome
-            Assert.False(result);
-            // Teardown
-        }
+            [Fact]
+            public void WillStopPlayerFromMoving()
+            {
+                // Fixture setup
+                MockEliteAPI.Navigator.IsRunning = true;
+                BattleState sut = CreateSut();
+                // Exercise system
+                sut.Enter();
+                // Verify outcome
+                Assert.False(MockEliteAPI.Navigator.IsRunning);
+                // Teardown
+            }
 
-        [Fact]
-        public void WhenNotFightingShouldntBattle()
-        {
-            // Fixture setup
-            Config.IsEngageEnabled = false;
-            StateMemory memory = CreateStateMemory();
-            memory.Target = FindUnit();
-            memory.IsFighting = false;
-            BattleState sut = new BattleState(memory);
-            // Exercise system
-            bool result = sut.Check();
-            // Verify outcome
-            Assert.False(result);
-            // Teardown
-        }
-
-        [Fact]
-        public void WhenInjuredShouldntBattle()
-        {
-            // Fixture setup
-            StateMemory memory = CreateStateMemory();
-            memory.Target = FindUnit();
-            memory.IsFighting = false;
-            MockEliteAPI.Player.HPPCurrent = 25;
-            MockEliteAPI.Player.Status = Status.Standing;
-            Config.LowHealth = 50;
-            Config.HighHealth = 100;
-            Config.IsHealthEnabled = true;
-            Config.IsEngageEnabled = false;
-            BattleState sut = new BattleState(memory);
-            // Exercise system
-            bool result = sut.Check();
-            // Verify outcome
-            Assert.False(result);
-            // Teardown
-        }
-
-        [Fact]
-        public void WithInvalidTargetShouldntBattle()
-        {
-            // Fixture setup
-            StateMemory memory = CreateStateMemory();
-            memory.Target = FindNonValidUnit();
-            memory.IsFighting = true;
-            MockEliteAPI.Player.Status = Status.Standing;
-            Config.IsEngageEnabled = false;
-            BattleState sut = new BattleState(memory);
-            // Exercise system
-            bool result = sut.Check();
-            // Verify outcome
-            Assert.False(result);
-            // Teardown
-        }
-    }
-
-    public class Run : AbstractTestBase
-    {
-        private BattleState CreateSut()
-        {
-            var memory = new StateMemory(new MockEliteAPIAdapter(MockEliteAPI)) {Target = FindUnit()};
-            BattleState sut = new BattleState(memory);
-            return sut;
-        }
-
-        [Fact]
-        public void WithValidActionWillSendCommand()
-        {
-            // Fixture setup
-            BattleState sut = CreateSut();
-            ObservableCollection<BattleAbility> actions = FindBattleActions();
-            BattleAbility ability = FindJobAbility("test");
-            ability.Command = "/jobability test <me>";
-            actions.Add(ability);
-            // Exercise system
-            sut.Run();
-            // Verify outcome
-            Assert.Equal("/jobability test <me>", MockEliteAPI.Windower.LastCommand);
-            // Teardown
-        }
-
-        [Fact]
-        public void WithInvalidActionWillNotSendCommand()
-        {
-            // Fixture setup
-            BattleState sut = CreateSut();
-            ObservableCollection<BattleAbility> actions = FindBattleActions();
-            BattleAbility ability = FindJobAbility("test");
-            ability.IsEnabled = false;
-            actions.Add(ability);
-            // Exercise system
-            sut.Run();
-            // Verify outcome
-            Assert.Null(MockEliteAPI.Windower.LastCommand);
-        }
-
-        private static BattleAbility FindJobAbility(string actionName)
-        {
-            BattleAbility battleAbility = FindAbility();
-            battleAbility.Name = actionName;
-            battleAbility.AbilityType = AbilityType.Jobability;
-            battleAbility.TargetType = TargetType.Self;
-            return battleAbility;
-        }
-
-        private ObservableCollection<BattleAbility> FindBattleActions()
-        {
-            ObservableCollection<BattleAbility> moves = Config.BattleLists["Battle"].Actions;
-            moves.Clear();
-            return moves;
-        }
-    }
-
-    public class Enter : AbstractTestBase
-    {
-        [Fact]
-        public void WithHealingPlayerWillStandUp()
-        {
-            // Fixture setup
-            BattleState sut = CreateSut();
-            MockEliteAPI.Player.Status = Status.Healing;
-            // Exercise system
-            sut.Enter();
-            // Verify outcome
-            Assert.Equal(Status.Standing, MockEliteAPI.Player.Status);
-            // Teardown
-        }
-
-        [Fact]
-        public void WillStopPlayerFromMoving()
-        {
-            // Fixture setup
-            MockEliteAPI.Navigator.IsRunning = true;
-            BattleState sut = CreateSut();
-            // Exercise system
-            sut.Enter();
-            // Verify outcome
-            Assert.False(MockEliteAPI.Navigator.IsRunning);
-            // Teardown
-        }
-
-        private BattleState CreateSut()
-        {
-            return new BattleState(new StateMemory(new MockEliteAPIAdapter(MockEliteAPI)));
+            private BattleState CreateSut()
+            {
+                return new BattleState(new StateMemory(new MockEliteAPIAdapter(MockEliteAPI)));
+            }
         }
     }
 }

@@ -114,6 +114,7 @@
   <ItemGroup>
     <Compile Include="ModuleInitializer.cs" />
     <Compile Include="Parsing\AbilityTests.cs" />
+    <Compile Include="States\DeadStateTests.cs" />
     <Compile Include="States\RestStateTests.cs" />
     <Compile Include="States\TravelStateTests.cs" />
     <Compile Include="TestTypes\AbstractTestBase.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="States\ZoneStateTests.cs" />
     <Compile Include="TestTypes\Mocks\MockEliteAPI.cs" />
     <Compile Include="TestTypes\Mocks\MockEliteAPIAdapter.cs" />
+    <Compile Include="TestTypes\Mocks\MockEliteAPITests.cs" />
     <Compile Include="TestTypes\Mocks\MockUnit.cs" />
     <Compile Include="ViewModels\IgnoredViewModelTests.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

@@ -16,7 +16,10 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 
+using System;
+using System.Collections.Generic;
 using EasyFarm.Classes;
+using EasyFarm.Infrastructure;
 using EasyFarm.Tests.TestTypes.Mocks;
 using EasyFarm.UserSettings;
 using MemoryAPI;
@@ -34,10 +37,21 @@ namespace EasyFarm.Tests.TestTypes
 
         public readonly MockEliteAPI MockEliteAPI = MockEliteAPI.Create();
 
+        public HashSet<Type> Events { get; set; } = new HashSet<Type>();
+
         public AbstractTestBase()
         {
             AlwayUseFreshConfig();
             Config.Initialize();
+            StartRecordingEvents();
+        }
+
+        private void StartRecordingEvents()
+        {
+            AppServices.RegisterEvent<Events.PauseEvent>(this, x =>
+            {
+                Events.Add(typeof(Events.PauseEvent));
+            });
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using EasyFarm.UserSettings;
 using EliteMMO.API;
@@ -240,6 +241,8 @@ namespace EasyFarm.Tests.TestTypes.Mocks
         private readonly MockEliteAPI _eliteAPI;
 
         public string LastCommand { get; set; }
+        public IList<Keys> KeyPresses { get; set; } = new List<Keys>();
+        public Keys LastKeyPress { get; set; }
 
         public MockWindowerTools(MockEliteAPI eliteAPI)
         {
@@ -266,9 +269,10 @@ namespace EasyFarm.Tests.TestTypes.Mocks
             }
         }
 
-        public void SendKeyPress(Keys keys)
+        public void SendKeyPress(Keys key)
         {
-            throw new System.NotImplementedException();
+            LastKeyPress = key;
+            KeyPresses.Add(key);
         }
     }
 }
