@@ -39,7 +39,7 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public virtual ObservableCollection<T> Values { get; set; }
 
-        public ListViewModel()
+        protected ListViewModel()
         {
             AddCommand = new RelayCommand(Add);
             DeleteCommand = new RelayCommand(Delete);

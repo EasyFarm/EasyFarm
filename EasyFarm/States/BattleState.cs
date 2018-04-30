@@ -49,7 +49,7 @@ namespace EasyFarm.States
             if (!UnitFilters.MobFilter(EliteApi, Target)) return false;
 
             // Engage is enabled and we are not engaged. We cannot proceed. 
-            if (Config.Instance.IsEngageEnabled) return EliteApi.Player.Status.Equals(Status.Fighting);
+            if (Config.IsEngageEnabled) return EliteApi.Player.Status.Equals(Status.Fighting);
 
             // Engage is not checked, so just proceed to battle. 
             return true;
@@ -64,7 +64,7 @@ namespace EasyFarm.States
         public override void Run()
         {
             // Cast only one action to prevent blocking curing. 
-            var action = Config.Instance.BattleLists["Battle"].Actions
+            var action = Config.BattleLists["Battle"].Actions
                 .FirstOrDefault(x => ActionFilters.TargetedFilter(EliteApi, x, Target));
             if (action == null) return;
             Executor.UseTargetedActions(new[] {action}, Target);

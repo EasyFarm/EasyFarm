@@ -24,22 +24,17 @@ namespace EasyFarm.States
 {
     public class TravelState : AgentState
     {
-        private readonly IConfigFactory _configFactory;
-
-        public TravelState(StateMemory memory, IConfigFactory configFactory) : base(memory)
+        public TravelState(StateMemory stateMemory) : base(stateMemory)
         {
-            _configFactory = configFactory;
         }
 
         public override bool Check()
         {
-            var config = _configFactory.GetConfig();
-
             // Waypoint list is empty.
-            if (!config.Route.IsPathSet) return false;
+            if (!Config.Route.IsPathSet) return false;
 
             // Route belongs to a different zone.
-            if (config.Route.Zone != EliteApi.Player.Zone) return false;
+            if (Config.Route.Zone != EliteApi.Player.Zone) return false;
 
             // Has valid target to fight.
             if (UnitFilters.MobFilter(EliteApi, Target)) return false;
@@ -64,16 +59,14 @@ namespace EasyFarm.States
 
         public override void Run()
         {
-            var config = _configFactory.GetConfig();
-
             EliteApi.Navigator.DistanceTolerance = 1;
 
-            var nextPosition = config.Route.GetNextPosition(EliteApi.Player.Position);
-            var shouldKeepRunningToNextWaypoint = config.Route.Waypoints.Count != 1;
+            var nextPosition = Config.Route.GetNextPosition(EliteApi.Player.Position);
+            var shouldKeepRunningToNextWaypoint = Config.Route.Waypoints.Count != 1;
 
             EliteApi.Navigator.GotoWaypoint(
                 nextPosition,
-                config.IsObjectAvoidanceEnabled,
+                Config.IsObjectAvoidanceEnabled,
                 shouldKeepRunningToNextWaypoint);
         }
 

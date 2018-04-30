@@ -15,13 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
 using EasyFarm.Classes;
 using MemoryAPI;
 using MemoryAPI.Navigation;
 
-namespace EasyFarm.Tests.TestTypes
+namespace EasyFarm.Tests.TestTypes.Mocks
 {
-    public class FakeUnit : IUnit
+    public class MockUnit : IUnit
     {
         public int Id { get; set; }
         public int ClaimedId { get; set; }

@@ -15,13 +15,29 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
+using System;
+
 namespace EasyFarm.UserSettings
 {
     public class ConfigFactory : IConfigFactory
     {
-        public Config GetConfig()
+        private static Lazy<Config> _lazy = new Lazy<Config>(() => new Config());
+
+        public ConfigFactory()
         {
-            return Config.Instance;
+            Getter = () => _lazy.Value; ;
+            Setter = c => _lazy = new Lazy<Config>(() => c);
+        }
+
+        public Func<Config> Getter { get; set; }
+
+        public Action<Config> Setter { get; set; }
+
+        public Config Config
+        {
+            get { return Getter.Invoke(); }
+            set { Setter.Invoke(value);}
         }
     }
 }

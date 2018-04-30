@@ -175,6 +175,7 @@
     <Compile Include="Classes\AppServices.cs" />
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
+    <Compile Include="Classes\GlobalFactory.cs" />
     <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\IUnitService.cs" />
     <Compile Include="Handlers\SelectAbilityRequestHandler.cs" />

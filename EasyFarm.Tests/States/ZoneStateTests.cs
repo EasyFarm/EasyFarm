@@ -15,33 +15,33 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
+using System;
 using EasyFarm.States;
 using EasyFarm.Tests.TestTypes;
+using EasyFarm.Tests.TestTypes.Mocks;
 using MemoryAPI;
-using Moq;
 using Xunit;
 
 namespace EasyFarm.Tests.States
 {
-    public class ZoneStateTests
+    public class ZoneStateTests : AbstractTestBase
     {
+        private static readonly Zone StartingZone = Zone.Konschtat_Highlands;
+        private static readonly Zone NewZone = Zone.Valkurm_Dunes;
+
         [Fact]
         public void CheckIsTrueWhenZoneChanges()
         {
             // Fixture setup
-            var api = new FakeMemoryAPI();
-            var player = new FakePlayer { Zone = Zone.Konschtat_Highlands};
-            api.Player = player;
-            var sut = new ZoneState(new StateMemory(api));
-            player.Zone = Zone.Valkurm_Dunes;
-            player.Stats = new Structures.PlayerStats { Str = 100 };
-
+            MockEliteAPI.Player.Zone = StartingZone;
+            var sut = CreateSut();
+            MockEliteAPI.Player.Zone = NewZone;
+            MockEliteAPI.Player.Stats = new Structures.PlayerStats { Str = 100 };
             // Exercise system
             var result = sut.Check();
-
             // Verify outcome
             Assert.True(result);
-
             // Teardown
         }
 
@@ -49,21 +49,12 @@ namespace EasyFarm.Tests.States
         public void CheckIsTrueWhenPlayersStatsAreZero()
         {
             // Fixture setup
-            var api = new FakeMemoryAPI();
-            var player = new FakePlayer
-            {
-                Zone = Zone.Konschtat_Highlands,
-                Stats = new Structures.PlayerStats {Str = 0}
-            };
-            api.Player = player;            
-            var sut = new ZoneState(new StateMemory(api));
-
+            MockEliteAPI.Player.Stats = new Structures.PlayerStats() {Str = 0};
+            var sut = CreateSut();
             // Exercise system
             var result = sut.Check();
-
             // Verify outcome
             Assert.True(result);
-
             // Teardown
         }
 
@@ -71,21 +62,13 @@ namespace EasyFarm.Tests.States
         public void CheckIsFalseWhenNotZoning()
         {
             // Fixture setup
-            var api = new FakeMemoryAPI();
-            var player = new FakePlayer
-            {
-                Zone = Zone.Konschtat_Highlands,
-                Stats = new Structures.PlayerStats { Str = 100 }
-            };
-            api.Player = player;
-            var sut = new ZoneState(new StateMemory(api));
-
+            MockEliteAPI.Player.Zone = StartingZone;
+            MockEliteAPI.Player.Stats = new Structures.PlayerStats() {Str = 100};
+            var sut = CreateSut();
             // Exercise system
             var result = sut.Check();
-
             // Verify outcome
             Assert.False(result);
-
             // Teardown
         }
 
@@ -93,26 +76,14 @@ namespace EasyFarm.Tests.States
         public void RunOnZoningSetsZoneToNewZone()
         {
             // Fixture setup
-            var api = new FakeMemoryAPI();
-            var player = new FakePlayer
-            {
-                Zone = Zone.Konschtat_Highlands,
-                Stats = new Structures.PlayerStats { Str = 100 }
-            };
-
-            var navigation = new Mock<INavigatorTools>();
-            api.Player = player;
-            api.Navigator = navigation.Object;
-            var sut = new ZoneState(new StateMemory(api));
-
-            player.Zone = Zone.Valkurm_Dunes;
-
+            MockEliteAPI.Player.Zone = StartingZone;
+            MockEliteAPI.Player.Stats = new Structures.PlayerStats() {Str = 100};
+            var sut = CreateSut();
+            MockEliteAPI.Player.Zone = NewZone;
             // Exercise system
             sut.Run();
-
             // Verify outcome
-            Assert.Equal(Zone.Valkurm_Dunes, sut.Zone);
-
+            Assert.Equal(NewZone, sut.Zone);
             // Teardown
         }
 
@@ -120,27 +91,12 @@ namespace EasyFarm.Tests.States
         public void RunOnZoningStopsPlayerFromRunning()
         {
             // Fixture setup
-            var api = new FakeMemoryAPI();
-            var player = new FakePlayer
-            {
-                Zone = Zone.Konschtat_Highlands,
-                Stats = new Structures.PlayerStats { Str = 100 }
-            };
-
-            var navigation = new Mock<INavigatorTools>();
-            navigation.Setup(x => x.Reset());
-            api.Player = player;
-            api.Navigator = navigation.Object;
-            var sut = new ZoneState(new StateMemory(api));
-
-            player.Zone = Zone.Valkurm_Dunes;
-
+            var sut = CreateSut(ForceMoveToNextZone);
+            MockEliteAPI.Player.Zone = NewZone;
             // Exercise system
             sut.Run();
-
             // Verify outcome
-            navigation.Verify(x => x.Reset(), Times.Once());
-
+            Assert.False(MockEliteAPI.Navigator.IsRunning);
             // Teardown
         }
 
@@ -148,37 +104,27 @@ namespace EasyFarm.Tests.States
         public void RunWhileZoningWaits()
         {
             // Fixture setup
-            var api = new FakeMemoryAPI();
-            var player = new FakePlayer
-            {
-                Zone = Zone.Konschtat_Highlands,
-                Stats = new Structures.PlayerStats { Str = 0 }
-            };
-
-            var navigation = new Mock<INavigatorTools>();
-            navigation.Setup(x => x.Reset());
-            api.Player = player;
-            api.Navigator = navigation.Object;
-            var sut = new ZoneState(new StateMemory(api))
-            {
-                ZoningAction = () =>
-                {
-                    player.Stats = new Structures.PlayerStats
-                    {
-                        Str = 100
-                    };
-                }
-            };
-
-            player.Zone = Zone.Valkurm_Dunes;
-
+            MockEliteAPI.Player.Zone = StartingZone;
+            MockEliteAPI.Player.Stats = new Structures.PlayerStats() {Str = 0};
+            var sut = CreateSut(zoningAction: ForceMoveToNextZone);
+            MockEliteAPI.Player.Zone = NewZone;
             // Exercise system
             sut.Run();
-
             // Verify outcome
-            Assert.Equal(100, player.Stats.Str);
-
+            Assert.Equal(100, MockEliteAPI.Player.Stats.Str);
             // Teardown
+        }
+
+        private ZoneState CreateSut(Action zoningAction = null)
+        {
+            var sut = new ZoneState(new StateMemory(new MockEliteAPIAdapter(MockEliteAPI)));
+            sut.ZoningAction = zoningAction ?? sut.ZoningAction;
+            return sut;
+        }
+
+        private void ForceMoveToNextZone()
+        {
+            MockEliteAPI.Player.Stats = new Structures.PlayerStats {Str = 100};
         }
     }
 }

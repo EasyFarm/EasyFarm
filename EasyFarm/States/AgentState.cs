@@ -1,4 +1,5 @@
 using EasyFarm.Classes;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 
 namespace EasyFarm.States
@@ -8,6 +9,12 @@ namespace EasyFarm.States
         protected AgentState(StateMemory stateMemory)
         {
             Memory = stateMemory;
+        }
+
+        public Config Config
+        {
+            get { return Memory.ConfigFactory.Config;}
+            set { Memory.ConfigFactory.Config = value; }
         }
 
         /// <summary>
