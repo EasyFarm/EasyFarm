@@ -32,11 +32,11 @@ namespace EasyFarm.Classes
     {
         public static bool BuffingFilter(IMemoryAPI fface, BattleAbility action)
         {
-            var units = CreateUnitService(fface);
+            var units = new UnitService(fface);
             var results = ValidateBuffingAction(fface, action, units.MobArray).ToList();
             var usable = !results.Any(x => x.IsFailure);
             return usable;
-        }        
+        }
 
         /// <summary>
         ///     Filters out unusable buffing abilities.
@@ -178,11 +178,6 @@ namespace EasyFarm.Classes
             }
 
             return true;
-        }
-
-        private static IUnitService CreateUnitService(IMemoryAPI fface)
-        {
-            return GlobalFactory.CreateUnitService(fface);
         }
     }
 }

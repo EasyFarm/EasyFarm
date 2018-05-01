@@ -13,14 +13,6 @@ namespace EasyFarm.Classes
     /// </remarks>
     public class GlobalFactory
     {
-        public static Func<IMemoryAPI, IUnitService> BuildUnitService { get; set; }
-            = eliteApi => new UnitService(eliteApi);
-
-        public static IUnitService CreateUnitService(IMemoryAPI eliteApi)
-        {
-            return BuildUnitService.Invoke(eliteApi);
-        }
-
         public static IConfigFactory ConfigFactory { get; set; } = new ConfigFactory();
     }
 }
