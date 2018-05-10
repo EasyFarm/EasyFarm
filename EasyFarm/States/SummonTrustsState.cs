@@ -106,12 +106,12 @@ namespace EasyFarm.States
             if (new RestState(Memory).Check()) return false;
             if (!EliteApi.Player.Status.Equals(Status.Standing)) return false;
 
-            var trusts = Config.Instance.BattleLists["Trusts"].Actions
+            var trusts = Config.BattleLists["Trusts"].Actions
                 .Where(t => t.IsEnabled)
                 .Where(t => ActionFilters.BuffingFilter(EliteApi, t))
                 .ToList();
 
-            var maxTrustPartySize = Config.Instance.TrustPartySize;
+            var maxTrustPartySize = Config.TrustPartySize;
 
             foreach (var trust in trusts)
                 if (TrustNeedsDismissal(trust) ||
@@ -131,7 +131,7 @@ namespace EasyFarm.States
         public override void Run()
         {
             if (EliteApi.Player.Status.Equals(Status.Fighting)) return;
-            var trusts = Config.Instance.BattleLists["Trusts"].Actions.Where(t => t.IsEnabled);
+            var trusts = Config.BattleLists["Trusts"].Actions.Where(t => t.IsEnabled);
             foreach (var trust in trusts)
                 if (TrustNeedsSummoning(trust) && AbilityUtils.IsRecastable(EliteApi, trust))
                     Executor.UseActions(new[] {trust});

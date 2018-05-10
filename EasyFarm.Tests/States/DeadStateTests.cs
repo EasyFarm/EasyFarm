@@ -25,12 +25,17 @@ namespace EasyFarm.Tests.States
             {
                 // Setup fixture
                 MockEliteAPI.Player.Status = status;
-                var sut = CreateSut(MockEliteAPI);
+                var sut = CreateSut();
                 // Exercise system
                 var result = sut.Check();
                 // Verify outcome
                 Assert.Equal(expected, result);
                 // Teardown
+            }
+
+            private DeadState CreateSut()
+            {
+                return new DeadState(CreateStateMemory());
             }
         }
 
@@ -41,7 +46,7 @@ namespace EasyFarm.Tests.States
             {
                 // Setup fixture
                 MockEliteAPI.Navigator.IsRunning = true;
-                var sut = CreateSut(MockEliteAPI);
+                var sut = CreateSut();
                 // Exercise system
                 sut.Run();
                 // Verify outcome
@@ -53,7 +58,7 @@ namespace EasyFarm.Tests.States
             public void RunDoesNotHomePointIfConfigNotSet()
             {
                 // Setup fixture
-                var sut = CreateSut(MockEliteAPI);
+                var sut = CreateSut();
                 // Exercise system
                 sut.Run();
                 // Verify outcome
@@ -65,7 +70,7 @@ namespace EasyFarm.Tests.States
             public void RunSendsPauseCommand()
             {
                 // Setup fixture
-                var sut = CreateSut(MockEliteAPI);
+                var sut = CreateSut();
                 // Exercise system
                 sut.Run();
                 // Verify outcome
@@ -77,8 +82,8 @@ namespace EasyFarm.Tests.States
             public void RunAttemptsToHomepointAfterDeath()
             {
                 // Setup fixture
-                var sut = CreateSut(MockEliteAPI);
-                Config.HomePointOnDeath = true;
+                var sut = CreateSut();
+                MockConfig.HomePointOnDeath = true;
                 var expected = new List<Keys> {Keys.NUMPADENTER, Keys.LEFT, Keys.NUMPADENTER};
                 // Exercise system
                 sut.Run();
@@ -86,11 +91,11 @@ namespace EasyFarm.Tests.States
                 Assert.Equal(expected, MockEliteAPI.Windower.KeyPresses);
                 // Teardown
             }
-        }
 
-        private static DeadState CreateSut(MockEliteAPI mockEliteAPI)
-        {
-            return new DeadState(new StateMemory(new MockEliteAPIAdapter(mockEliteAPI)));
+            private DeadState CreateSut()
+            {
+                return new DeadState(CreateStateMemory());
+            }
         }
     }
 }

@@ -31,17 +31,11 @@ namespace EasyFarm.Tests.States
     {
         public class CheckTests : AbstractTestBase
         {
-            private StateMemory CreateStateMemory()
-            {
-                StateMemory memory = new StateMemory(new MockEliteAPIAdapter(MockEliteAPI));
-                return memory;
-            }
-
             [Fact]
             public void WhenEngagedSetAndEngagedShouldBattle()
             {
                 // Fixture setup
-                Config.IsEngageEnabled = true;
+                MockConfig.IsEngageEnabled = true;
                 MockEliteAPI.Player.Status = Status.Fighting;
                 StateMemory memory = CreateStateMemory();
                 memory.Target = FindUnit();
@@ -58,7 +52,7 @@ namespace EasyFarm.Tests.States
             public void WhenEngagedNotSetShouldBattle()
             {
                 // Fixture setup
-                Config.IsEngageEnabled = false;
+                MockConfig.IsEngageEnabled = false;
                 StateMemory memory = CreateStateMemory();
                 memory.Target = FindUnit();
                 memory.IsFighting = true;
@@ -74,7 +68,7 @@ namespace EasyFarm.Tests.States
             public void WithNonValidUnitShouldNotBattle()
             {
                 // Fixture setup
-                Config.IsEngageEnabled = false;
+                MockConfig.IsEngageEnabled = false;
                 StateMemory memory = CreateStateMemory();
                 memory.Target = FindNonValidUnit();
                 memory.IsFighting = true;
@@ -90,7 +84,7 @@ namespace EasyFarm.Tests.States
             public void WhenNotFightingShouldntBattle()
             {
                 // Fixture setup
-                Config.IsEngageEnabled = false;
+                MockConfig.IsEngageEnabled = false;
                 StateMemory memory = CreateStateMemory();
                 memory.Target = FindUnit();
                 memory.IsFighting = false;
@@ -111,10 +105,10 @@ namespace EasyFarm.Tests.States
                 memory.IsFighting = false;
                 MockEliteAPI.Player.HPPCurrent = 25;
                 MockEliteAPI.Player.Status = Status.Standing;
-                Config.LowHealth = 50;
-                Config.HighHealth = 100;
-                Config.IsHealthEnabled = true;
-                Config.IsEngageEnabled = false;
+                MockConfig.LowHealth = 50;
+                MockConfig.HighHealth = 100;
+                MockConfig.IsHealthEnabled = true;
+                MockConfig.IsEngageEnabled = false;
                 BattleState sut = new BattleState(memory);
                 // Exercise system
                 bool result = sut.Check();
@@ -131,7 +125,7 @@ namespace EasyFarm.Tests.States
                 memory.Target = FindNonValidUnit();
                 memory.IsFighting = true;
                 MockEliteAPI.Player.Status = Status.Standing;
-                Config.IsEngageEnabled = false;
+                MockConfig.IsEngageEnabled = false;
                 BattleState sut = new BattleState(memory);
                 // Exercise system
                 bool result = sut.Check();
@@ -145,7 +139,8 @@ namespace EasyFarm.Tests.States
         {
             private BattleState CreateSut()
             {
-                var memory = new StateMemory(new MockEliteAPIAdapter(MockEliteAPI)) { Target = FindUnit() };
+                var memory = CreateStateMemory();
+                memory.Target = FindUnit();
                 BattleState sut = new BattleState(memory);
                 return sut;
             }
@@ -192,7 +187,7 @@ namespace EasyFarm.Tests.States
 
             private ObservableCollection<BattleAbility> FindBattleActions()
             {
-                ObservableCollection<BattleAbility> moves = Config.BattleLists["Battle"].Actions;
+                ObservableCollection<BattleAbility> moves = MockConfig.BattleLists["Battle"].Actions;
                 moves.Clear();
                 return moves;
             }
@@ -228,7 +223,7 @@ namespace EasyFarm.Tests.States
 
             private BattleState CreateSut()
             {
-                return new BattleState(new StateMemory(new MockEliteAPIAdapter(MockEliteAPI)));
+                return new BattleState(CreateStateMemory());
             }
         }
     }

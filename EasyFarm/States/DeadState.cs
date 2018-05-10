@@ -40,7 +40,7 @@ namespace EasyFarm.States
             // Stop program from running to next waypoint.
             EliteApi.Navigator.Reset();
 
-            if (Config.Instance.HomePointOnDeath) HomePointOnDeath();
+            if (Config.HomePointOnDeath) HomePointOnDeath();
 
             // Stop the engine from running.
             AppServices.SendPauseEvent();

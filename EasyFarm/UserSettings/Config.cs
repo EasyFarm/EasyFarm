@@ -32,6 +32,8 @@ namespace EasyFarm.UserSettings
     /// </summary>
     public class Config : ViewModelBase
     {
+        private static Lazy<Config> _lazy = new Lazy<Config>(() => new Config());
+
         /// <summary>
         ///     Used to filter out aggroed mobs.
         /// </summary>
@@ -166,15 +168,12 @@ namespace EasyFarm.UserSettings
         [XmlIgnore]
         public static Config Instance
         {
-            get { return GlobalFactory.ConfigFactory.Config; }
-            set { GlobalFactory.ConfigFactory.Config = value; }
+            get { return _lazy.Value; }
+            set { _lazy = new Lazy<Config>(() => value); }
         }
 
         public Route Route = new Route();
 
-        /// <summary>
-        /// Bot runs a straight route.
-        /// </summary>
         public bool StraightRoute => Route.StraightRoute;
 
         /// <summary>

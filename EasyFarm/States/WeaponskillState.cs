@@ -49,7 +49,7 @@ namespace EasyFarm.States
             // these moves instead. Fixes the bot not attacking things 
             // from move than 30 yalms problem. 
             if (!EliteApi.Player.Status.Equals(Status.Fighting)) return;
-            var weaponskill = Config.Instance.BattleLists["Weaponskill"].Actions
+            var weaponskill = Config.BattleLists["Weaponskill"].Actions
                 .FirstOrDefault(x => ActionFilters.TargetedFilter(EliteApi, x, Target));
             if (weaponskill == null) return;
             Executor.UseTargetedActions(new[] {weaponskill}, Target);

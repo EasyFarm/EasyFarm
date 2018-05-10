@@ -37,7 +37,7 @@ namespace EasyFarm.Tests.States
             {
                 // Fixture setup
                 MockEliteAPI.Player.Zone = StartingZone;
-                var sut = CreateSut(MockEliteAPI);
+                var sut = CreateSut(CreateStateMemory());
                 MockEliteAPI.Player.Zone = NewZone;
                 MockEliteAPI.Player.Stats = new Structures.PlayerStats { Str = 100 };
                 // Exercise system
@@ -52,7 +52,7 @@ namespace EasyFarm.Tests.States
             {
                 // Fixture setup
                 MockEliteAPI.Player.Stats = new Structures.PlayerStats() { Str = 0 };
-                var sut = CreateSut(MockEliteAPI);
+                var sut = CreateSut(CreateStateMemory());
                 // Exercise system
                 var result = sut.Check();
                 // Verify outcome
@@ -66,7 +66,7 @@ namespace EasyFarm.Tests.States
                 // Fixture setup
                 MockEliteAPI.Player.Zone = StartingZone;
                 MockEliteAPI.Player.Stats = new Structures.PlayerStats() { Str = 100 };
-                var sut = CreateSut(MockEliteAPI);
+                var sut = CreateSut(CreateStateMemory());
                 // Exercise system
                 var result = sut.Check();
                 // Verify outcome
@@ -83,7 +83,7 @@ namespace EasyFarm.Tests.States
                 // Fixture setup
                 MockEliteAPI.Player.Zone = StartingZone;
                 MockEliteAPI.Player.Stats = new Structures.PlayerStats() { Str = 100 };
-                var sut = CreateSut(MockEliteAPI);
+                var sut = CreateSut(CreateStateMemory());
                 MockEliteAPI.Player.Zone = NewZone;
                 // Exercise system
                 sut.Run();
@@ -96,7 +96,7 @@ namespace EasyFarm.Tests.States
             public void RunOnZoningStopsPlayerFromRunning()
             {
                 // Fixture setup
-                var sut = CreateSut(MockEliteAPI, zoningAction: ForceMoveToNextZone);
+                var sut = CreateSut(CreateStateMemory(), zoningAction: ForceMoveToNextZone);
                 MockEliteAPI.Player.Zone = NewZone;
                 // Exercise system
                 sut.Run();
@@ -111,7 +111,7 @@ namespace EasyFarm.Tests.States
                 // Fixture setup
                 MockEliteAPI.Player.Zone = StartingZone;
                 MockEliteAPI.Player.Stats = new Structures.PlayerStats() { Str = 0 };
-                var sut = CreateSut(MockEliteAPI, zoningAction: ForceMoveToNextZone);
+                var sut = CreateSut(CreateStateMemory(), zoningAction: ForceMoveToNextZone);
                 MockEliteAPI.Player.Zone = NewZone;
                 // Exercise system
                 sut.Run();
@@ -126,9 +126,9 @@ namespace EasyFarm.Tests.States
             }
         }
 
-        private static ZoneState CreateSut(MockEliteAPI eliteAPI, Action zoningAction = null)
+        private static ZoneState CreateSut(StateMemory stateMemory, Action zoningAction = null)
         {
-            var sut = new ZoneState(new StateMemory(new MockEliteAPIAdapter(eliteAPI)));
+            var sut = new ZoneState(stateMemory);
             sut.ZoningAction = zoningAction ?? sut.ZoningAction;
             return sut;
         }

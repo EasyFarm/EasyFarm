@@ -50,7 +50,7 @@ namespace EasyFarm.States
 
         public override void Run()
         {
-            var usable = Config.Instance.BattleLists["Start"]
+            var usable = Config.BattleLists["Start"]
                 .Actions.Where(x => ActionFilters.BuffingFilter(EliteApi, x));
 
             // Execute moves at target. 

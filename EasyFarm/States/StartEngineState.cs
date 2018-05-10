@@ -37,7 +37,7 @@ namespace EasyFarm.States
         public override bool Check()
         {
             // Reset all action's last cast times on FSM start. 
-            foreach (var action in Config.Instance.BattleLists.Actions) action.LastCast = DateTime.Now;
+            foreach (var action in Config.BattleLists.Actions) action.LastCast = DateTime.Now;
 
             // Only run once at the FSM start. 
             Enabled = false;

@@ -20,30 +20,38 @@ using System;
 using System.Collections.Generic;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
+using EasyFarm.States;
 using EasyFarm.Tests.TestTypes.Mocks;
 using EasyFarm.UserSettings;
 using MemoryAPI;
 
 namespace EasyFarm.Tests.TestTypes
 {
-    public class TestConfigFactory : IConfigFactory
-    {
-        public Config Config { get; set; } = new Config();
-    }
-
     public class AbstractTestBase
     {
-        public Config Config;
+        public IConfig MockConfig;
 
-        public readonly MockEliteAPI MockEliteAPI = MockEliteAPI.Create();
+        public readonly MockEliteAPI MockEliteAPI;
 
         public HashSet<Type> Events { get; set; } = new HashSet<Type>();
 
         public AbstractTestBase()
         {
-            AlwayUseFreshConfig();
-            Config.Initialize();
+            MockConfig = new MockConfig {BattleLists = new BattleLists(Config.Instance.BattleLists)};
+            MockEliteAPI = MockEliteAPI.Create();
             StartRecordingEvents();
+        }
+
+        /// <summary>
+        /// Create new state memory with <see cref="MockEliteAPI"/> and <see cref="MockConfig"/>.
+        /// </summary>
+        /// <returns></returns>
+        public StateMemory CreateStateMemory()
+        {
+            return new StateMemory(new MockEliteAPIAdapter(MockEliteAPI))
+            {
+                Config = MockConfig
+            };
         }
 
         private void StartRecordingEvents()
@@ -52,17 +60,6 @@ namespace EasyFarm.Tests.TestTypes
             {
                 Events.Add(typeof(Events.PauseEvent));
             });
-        }
-
-        /// <summary>
-        /// Use a new config per test run.
-        /// </summary>
-        /// <remarks>This will prevent interacting tests</remarks>
-        private void AlwayUseFreshConfig()
-        {
-            IConfigFactory factory = new TestConfigFactory();
-            GlobalFactory.ConfigFactory = factory;
-            Config = factory.Config;
         }
 
         public static BattleAbility FindAbility()

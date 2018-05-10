@@ -39,7 +39,7 @@ namespace EasyFarm.States
             if (new RestState(Memory).Check()) return false;
             if (new SummonTrustsState(Memory).Check()) return false;
             if (!UnitFilters.MobFilter(EliteApi, Target)) return false;
-            return Config.Instance.BattleLists["Pull"].Actions.Any(x => x.IsEnabled);
+            return Config.BattleLists["Pull"].Actions.Any(x => x.IsEnabled);
         }
 
         public override void Enter()
@@ -53,7 +53,7 @@ namespace EasyFarm.States
         /// </summary>
         public override void Run()
         {
-            var actions = Config.Instance.BattleLists["Pull"].Actions.ToList();
+            var actions = Config.BattleLists["Pull"].Actions.ToList();
             var usable = actions.Where(x => ActionFilters.TargetedFilter(EliteApi, x, Target)).ToList();
             Executor.UseTargetedActions(usable, Target);
         }

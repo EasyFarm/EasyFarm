@@ -11,10 +11,10 @@ namespace EasyFarm.States
             Memory = stateMemory;
         }
 
-        public Config Config
+        public IConfig Config
         {
-            get { return Memory.ConfigFactory.Config;}
-            set { Memory.ConfigFactory.Config = value; }
+            get { return Memory.Config;}
+            set { Memory.Config = value; }
         }
 
         /// <summary>

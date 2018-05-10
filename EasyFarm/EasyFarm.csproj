@@ -175,7 +175,6 @@
     <Compile Include="Classes\AppServices.cs" />
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
-    <Compile Include="Classes\GlobalFactory.cs" />
     <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\IUnitService.cs" />
     <Compile Include="Handlers\SelectAbilityRequestHandler.cs" />
@@ -208,8 +207,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="States\AgentState.cs" />
-    <Compile Include="UserSettings\ConfigFactory.cs" />
-    <Compile Include="UserSettings\IConfigFactory.cs" />
+    <Compile Include="UserSettings\IConfig.cs" />
     <Compile Include="States\PlayerMovementTracker.cs" />
     <Compile Include="States\Route.cs" />
     <Compile Include="States\SummonTrustsState.cs" />
@@ -240,6 +238,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="UserSettings\ProxyConfig.cs" />
     <Compile Include="ViewModels\BattlesViewModel.cs" />
     <Compile Include="ViewModels\FollowViewModel.cs" />
     <Compile Include="Classes\ISystemTray.cs" />

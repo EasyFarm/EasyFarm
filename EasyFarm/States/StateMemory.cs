@@ -29,13 +29,10 @@ namespace EasyFarm.States
             EliteApi = eliteApi;
             Executor = new Executor(eliteApi);
             UnitService = new UnitService(eliteApi);
-            ConfigFactory = GlobalFactory.ConfigFactory;
+            Config = new ProxyConfig();
         }
 
-        /// <summary>
-        ///     Locates the users settings.
-        /// </summary>
-        public IConfigFactory ConfigFactory { get; set; }
+        public IConfig Config { get; set; }
 
         /// <summary>
         ///     The game session.

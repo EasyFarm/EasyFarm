@@ -9,13 +9,6 @@ namespace EasyFarm.Tests.States
 {
     public class RestStateTests
     {
-
-        public static RestState CreateSut(MockEliteAPI mockEliteAPI)
-        {
-            var memory = new StateMemory(new MockEliteAPIAdapter(mockEliteAPI));
-            return new RestState(memory);
-        }
-
         public class CheckTests : AbstractTestBase
         {
             [Theory]
@@ -25,10 +18,10 @@ namespace EasyFarm.Tests.States
             public void ShouldHealWithLowMP(int currentMPP, int lowMPP, bool expected)
             {
                 // Setup fixture
-                var sut = CreateSut(MockEliteAPI);
+                var sut = CreateSut();
                 MockEliteAPI.Player.MPPCurrent = currentMPP;
-                Config.IsMagicEnabled = true;
-                Config.LowMagic = lowMPP;
+                MockConfig.IsMagicEnabled = true;
+                MockConfig.LowMagic = lowMPP;
                 // Exercise system
                 var result = sut.Check();
                 // Verify outcome
@@ -43,15 +36,20 @@ namespace EasyFarm.Tests.States
             public void ShouldHealWithLowHP(int currentHPP, int lowHPP, bool expected)
             {
                 // Setup fixture
-                RestState sut = CreateSut(MockEliteAPI);
+                RestState sut = CreateSut();
                 MockEliteAPI.Player.HPPCurrent = currentHPP;
-                Config.IsHealthEnabled = true;
-                Config.LowHealth = lowHPP;
+                MockConfig.IsHealthEnabled = true;
+                MockConfig.LowHealth = lowHPP;
                 // Exercise system
                 var result = sut.Check();
                 // Verify outcome
                 Assert.Equal(expected, result);
                 // Teardown
+            }
+
+            private RestState CreateSut()
+            {
+                return new RestState(CreateStateMemory());
             }
         }
 
@@ -61,13 +59,18 @@ namespace EasyFarm.Tests.States
             public void PlayerSwitchesFromStandingToHealing()
             {
                 // Setup fixture
-                var sut = CreateSut(MockEliteAPI);
+                var sut = CreateSut();
                 MockEliteAPI.Player.Status = Status.Standing;
                 // Exercise system
                 sut.Run();
                 // Verify outcome
                 Assert.Equal(Status.Healing, MockEliteAPI.Player.Status);
                 // Teardown
+            }
+
+            private RestState CreateSut()
+            {
+                return new RestState(CreateStateMemory());
             }
         }
 
@@ -77,13 +80,18 @@ namespace EasyFarm.Tests.States
             public void PlayerSwitchesFromHealingToStanding()
             {
                 // Setup fixture
-                var sut = CreateSut(MockEliteAPI);
+                var sut = CreateSut();
                 MockEliteAPI.Player.Status = Status.Healing;
                 // Exercise system
                 sut.Exit();
                 // Verify outcome
                 Assert.Equal(Status.Standing, MockEliteAPI.Player.Status);
                 // Teardown
+            }
+
+            private RestState CreateSut()
+            {
+                return new RestState(CreateStateMemory());
             }
         }
     }

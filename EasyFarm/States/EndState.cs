@@ -58,13 +58,13 @@ namespace EasyFarm.States
         public override void Run()
         {
             // Execute moves.
-            var usable = Config.Instance.BattleLists["End"].Actions
+            var usable = Config.BattleLists["End"].Actions
                 .Where(x => ActionFilters.BuffingFilter(EliteApi, x));
 
             Executor.UseBuffingActions(usable);
 
             // Reset all usage data to begin a new battle.
-            foreach (var action in Config.Instance.BattleLists.Actions) action.Usages = 0;
+            foreach (var action in Config.BattleLists.Actions) action.Usages = 0;
         }
     }
 }
