@@ -19,7 +19,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System;
 using System.Collections.Generic;
-using CSharpFunctionalExtensions;
 using EasyFarm.Parsing;
 using MemoryAPI;
 
