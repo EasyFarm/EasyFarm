@@ -101,10 +101,6 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.2.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="CSharpFunctionalExtensions, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CSharpFunctionalExtensions.1.8.1\lib\net45\CSharpFunctionalExtensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="EliteMMO.API, Version=1.0.0.21, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\EliteMMO.API.dll</HintPath>
@@ -178,6 +174,7 @@
     <Compile Include="Classes\HotKeyManager.cs" />
     <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\IUnitService.cs" />
+    <Compile Include="Classes\Result.cs" />
     <Compile Include="Handlers\SelectAbilityRequestHandler.cs" />
     <Compile Include="Handlers\SelectCharacterRequestHandler.cs" />
     <Compile Include="Handlers\SelectCharacterResult.cs" />
