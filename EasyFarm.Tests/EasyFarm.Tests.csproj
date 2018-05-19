@@ -91,6 +91,7 @@
     <Compile Include="States\DeadStateTests.cs" />
     <Compile Include="States\RestStateTests.cs" />
     <Compile Include="TestTypes\AbstractTestBase.cs" />
+    <Compile Include="Parsing\ResourcesTests.cs" />
     <Compile Include="States\BattleStateTests.cs" />
     <Compile Include="TestTypes\CustomAssert.cs" />
     <Compile Include="Classes\RangeTests.cs" />

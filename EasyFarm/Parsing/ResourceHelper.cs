@@ -15,6 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
+using System;
+
 namespace EasyFarm.Parsing
 {
     public class ResourceHelper
@@ -45,6 +48,8 @@ namespace EasyFarm.Parsing
                     return AbilityType.Weaponskill;
                 case "/trust":
                     return AbilityType.Trust;
+                case "/item":
+                    return AbilityType.Item;
                 default:
                     return AbilityType.Unknown;
             }
@@ -185,24 +190,20 @@ namespace EasyFarm.Parsing
 
         public static TargetType ToTargetTypeFlags(string targetType)
         {
-            TargetType value = TargetType.Unknown;
+            if (targetType == null) return TargetType.Unknown;
 
-            var targets = targetType.Split(',');
+            int rawTargetType;
+            if (!int.TryParse(targetType, out rawTargetType))
+                return TargetType.Unknown;
 
-            foreach (var target in targets)
-            {
-                value |= ToTargetType(target);
-            }
-
+            var value = (TargetType)rawTargetType;
             return value;
         }
 
         public static TargetType ToTargetType(string targetType)
-        {           
+        {
             switch (targetType)
             {
-                case "Corpse":
-                    return TargetType.Corpse;
                 case "Enemy":
                     return TargetType.Enemy;
                 case "NPC":
@@ -254,6 +255,19 @@ namespace EasyFarm.Parsing
                 default:
                     return false;
             }
+        }
+
+        public static string ToPrefix(Resource resource)
+        {
+            switch (resource.ResourceType)
+            {
+                case Parsing.Resources.ResourceType.Items:
+                    return "/item";
+                case Parsing.Resources.ResourceType.MonsterAbilities:
+                    return "/monsterskill";
+            }
+
+            return resource.Prefix;
         }
     }
 }
