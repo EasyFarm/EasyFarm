@@ -25,7 +25,7 @@ Task("analyze")
 Task("build-it").Does(() => {
 	MSBuild("../EasyFarm.sln", settings => settings
 		.SetConfiguration(configuration)
-		.UseToolVersion(MSBuildToolVersion.VS2015)
+		.UseToolVersion(MSBuildToolVersion.VS2017)
 		.SetMSBuildPlatform(MSBuildPlatform.x86)
 		.SetPlatformTarget(PlatformTarget.MSIL)
 	);
