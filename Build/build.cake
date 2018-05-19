@@ -5,6 +5,7 @@
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
+var xunitToolPath = ".\\tools\\xunit.runner.console.2.3.1\\tools\\net452\\xunit.console.x86.exe";
 
 Task("Default")
 	.IsDependentOn("test");
@@ -24,7 +25,7 @@ Task("analyze")
 Task("build-it").Does(() => {
 	MSBuild("../EasyFarm.sln", settings => settings
 		.SetConfiguration(configuration)
-		.UseToolVersion(MSBuildToolVersion.VS2015)
+		.UseToolVersion(MSBuildToolVersion.VS2017)
 		.SetMSBuildPlatform(MSBuildPlatform.x86)
 		.SetPlatformTarget(PlatformTarget.MSIL)
 	);
@@ -32,7 +33,7 @@ Task("build-it").Does(() => {
 
 Task("test-it").Does(() => {
 	XUnit2("../**/bin/" + configuration + "/*.Tests.dll", new XUnit2Settings() {
-		ToolPath = "./tools/xunit.runner.console/tools/xunit.console.x86.exe",
+		ToolPath = xunitToolPath,
 		ShadowCopy = false
 	});
 });
@@ -40,7 +41,7 @@ Task("test-it").Does(() => {
 Task("cover-it").Does(() => {
 	OpenCover(tool => {
 		tool.XUnit2("../**/bin/" + configuration + "/*.Tests.dll", new XUnit2Settings() {
-			ToolPath = "./tools/xunit.runner.console/tools/xunit.console.x86.exe",
+			ToolPath = xunitToolPath,
 			ShadowCopy = false
 		});
 	},

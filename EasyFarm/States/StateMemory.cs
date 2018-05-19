@@ -17,6 +17,7 @@
 // ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 
 namespace EasyFarm.States
@@ -28,7 +29,10 @@ namespace EasyFarm.States
             EliteApi = eliteApi;
             Executor = new Executor(eliteApi);
             UnitService = new UnitService(eliteApi);
+            Config = new ProxyConfig();
         }
+
+        public IConfig Config { get; set; }
 
         /// <summary>
         ///     The game session.

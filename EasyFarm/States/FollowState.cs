@@ -49,26 +49,26 @@ namespace EasyFarm.States
             if (new RestState(Memory).Check()) return false;
 
             // Avoid following empty units. 
-            if (string.IsNullOrWhiteSpace(Config.Instance.FollowedPlayer)) return false;
+            if (string.IsNullOrWhiteSpace(Config.FollowedPlayer)) return false;
 
             // Get the player specified in user settings. 
-            var player = UnitService.GetUnitByName(Config.Instance.FollowedPlayer);
+            var player = UnitService.GetUnitByName(Config.FollowedPlayer);
 
             // If no player is nearby, return. 
             if (player == null) return false;
 
             // If we're already close, no action needed. 
-            return player.Distance > Config.Instance.FollowDistance;
+            return player.Distance > Config.FollowDistance;
         }
 
         public override void Run()
         {
             // Get the player specified in user settings. 
-            var player = UnitService.GetUnitByName(Config.Instance.FollowedPlayer);
+            var player = UnitService.GetUnitByName(Config.FollowedPlayer);
 
             // Follow the player. 
-            EliteApi.Navigator.DistanceTolerance = Config.Instance.FollowDistance;
-            EliteApi.Navigator.GotoNPC(player.Id, Config.Instance.IsObjectAvoidanceEnabled);
+            EliteApi.Navigator.DistanceTolerance = Config.FollowDistance;
+            EliteApi.Navigator.GotoNPC(player.Id, Config.IsObjectAvoidanceEnabled);
         }
     }
 }

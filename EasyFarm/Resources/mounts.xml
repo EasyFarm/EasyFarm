@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mounts>
+  <o id="0" en="Chocobo" icon_id="86" ja="マイチョコボ" endesc="Calls forth your personal chocobo." jadesc="マイチョコボを呼び出す。" prefix="/mount" />
+  <o id="1" en="Raptor" icon_id="87" ja="ラプトル" endesc="Calls forth a raptor." jadesc="ラプトルを呼び出す。" prefix="/mount" />
+  <o id="2" en="Tiger" icon_id="87" ja="剣虎" endesc="Calls forth a tiger." jadesc="剣虎を呼び出す。" prefix="/mount" />
+  <o id="3" en="Crab" icon_id="87" ja="クラブ" endesc="Calls forth a crab." jadesc="クラブを呼び出す。" prefix="/mount" />
+  <o id="4" en="Red Crab" icon_id="87" ja="赤クラブ" endesc="Calls forth a red crab." jadesc="赤クラブを呼び出す。" prefix="/mount" />
+  <o id="5" en="Bomb" icon_id="87" ja="ボム" endesc="Calls forth a bomb." jadesc="ボムを呼び出す。" prefix="/mount" />
+  <o id="6" en="Ram" icon_id="87" ja="大羊" endesc="Calls forth a ram." jadesc="大羊を呼び出す。" prefix="/mount" />
+  <o id="7" en="Morbol" icon_id="87" ja="モルボル" endesc="Calls forth a morbol." jadesc="モルボルを呼び出す。" prefix="/mount" />
+  <o id="8" en="Crawler" icon_id="87" ja="クロウラー" endesc="Calls forth a crawler." jadesc="クロウラーを呼び出す。" prefix="/mount" />
+  <o id="9" en="Fenrir" icon_id="87" ja="フェンリル" endesc="Calls forth Fenrir." jadesc="フェンリルを呼び出す。" prefix="/mount" />
+  <o id="10" en="Beetle" icon_id="87" ja="甲虫" endesc="Calls forth a beetle." jadesc="甲虫を呼び出す。" prefix="/mount" />
+  <o id="11" en="Moogle" icon_id="87" ja="モーグリ" endesc="Calls forth a moogle." jadesc="モーグリを呼び出す。" prefix="/mount" />
+  <o id="12" en="Magic Pot" icon_id="87" ja="マジックポット" endesc="Calls forth a magic pot." jadesc="マジックポットを呼び出す。" prefix="/mount" />
+  <o id="13" en="Tulfaire" icon_id="87" ja="トゥルフェイア" endesc="Calls forth a tulfaire." jadesc="トゥルフェイアを呼び出す。" prefix="/mount" />
+  <o id="14" en="Warmachine" icon_id="87" ja="ウォーマシン" endesc="Calls forth a warmachine." jadesc="ウォーマシンを呼び出す。" prefix="/mount" />
+  <o id="15" en="Xzomit" icon_id="87" ja="ゾミト" endesc="Calls forth a xzomit." jadesc="ゾミトを呼び出す。" prefix="/mount" />
+  <o id="16" en="Hippogryph" icon_id="87" ja="ヒポグリフ" endesc="Calls forth a hippogryph." jadesc="ヒポグリフを呼び出す。" prefix="/mount" />
+  <o id="17" en="Spectral Chair" icon_id="87" ja="悪霊の椅子" endesc="Calls forth a spectral chair." jadesc="悪霊の椅子を呼び出す。" prefix="/mount" />
+  <o id="18" en="Spheroid" icon_id="87" ja="スフィアロイド" endesc="Calls forth a spheroid." jadesc="スフィアロイドを呼び出す。" prefix="/mount" />
+  <o id="19" en="Omega" icon_id="87" ja="オメガ" endesc="Calls forth Omega." jadesc="オメガを呼び出す。" prefix="/mount" />
+</mounts>

@@ -122,7 +122,7 @@ namespace EasyFarm.States
         /// <returns></returns>
         public bool ShouldRestForMagic(int magic, Status status)
         {
-            return Config.Instance.IsMagicEnabled &&
+            return Config.IsMagicEnabled &&
                    (IsMagicLow(magic) || !IsMagicHigh(magic) && status == Status.Healing);
         }
 
@@ -133,7 +133,7 @@ namespace EasyFarm.States
         /// <returns></returns>
         public bool IsMagicLow(int magic)
         {
-            return magic <= Config.Instance.LowMagic;
+            return magic <= Config.LowMagic;
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace EasyFarm.States
         /// <returns></returns>
         public bool IsMagicHigh(int magic)
         {
-            return magic >= Config.Instance.HighMagic;
+            return magic >= Config.HighMagic;
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace EasyFarm.States
         public bool ShouldRestForHealth(int health, Status status)
         {
             // Rest while low and while not high
-            return Config.Instance.IsHealthEnabled &&
+            return Config.IsHealthEnabled &&
                    (IsHealthLow(health) || !IsHealthHigh(health) && status == Status.Healing);
         }
 
@@ -166,7 +166,7 @@ namespace EasyFarm.States
         /// <returns></returns>
         public bool IsHealthLow(int health)
         {
-            return health <= Config.Instance.LowHealth;
+            return health <= Config.LowHealth;
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace EasyFarm.States
         /// <returns></returns>
         public bool IsHealthHigh(int health)
         {
-            return health >= Config.Instance.HighHealth;
+            return health >= Config.HighHealth;
         }
     }
 }

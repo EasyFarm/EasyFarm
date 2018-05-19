@@ -33,7 +33,7 @@ namespace EasyFarm.States
         {
             if (new RestState(Memory).Check()) return false;
 
-            return Config.Instance.BattleLists["Healing"].Actions
+            return Config.BattleLists["Healing"].Actions
                 .Any(x => ActionFilters.BuffingFilter(EliteApi, x));
         }
 
@@ -50,7 +50,7 @@ namespace EasyFarm.States
         public override void Run()
         {
             // Get the list of healing abilities that can be used.
-            var healingMoves = Config.Instance.BattleLists["Healing"].Actions
+            var healingMoves = Config.BattleLists["Healing"].Actions
                 .Where(x => ActionFilters.BuffingFilter(EliteApi, x))
                 .ToList();
 

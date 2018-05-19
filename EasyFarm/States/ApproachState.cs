@@ -46,7 +46,7 @@ namespace EasyFarm.States
             if (Target.Status.Equals(Status.Fighting)) return true;
 
             // Get usable abilities. 
-            var usable = Config.Instance.BattleLists["Pull"].Actions
+            var usable = Config.BattleLists["Pull"].Actions
                 .Where(x => ActionFilters.BuffingFilter(EliteApi, x));
 
             // Approach when there are no pulling moves available. 
@@ -59,11 +59,11 @@ namespace EasyFarm.States
         public override void Run()
         {
             // Has the user decided that we should approach targets?
-            if (Config.Instance.IsApproachEnabled)
+            if (Config.IsApproachEnabled)
             {
                 // Move to target if out of melee range. 
-                EliteApi.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
-                EliteApi.Navigator.GotoNPC(Target.Id, Config.Instance.IsObjectAvoidanceEnabled);
+                EliteApi.Navigator.DistanceTolerance = Config.MeleeDistance;
+                EliteApi.Navigator.GotoNPC(Target.Id, Config.IsObjectAvoidanceEnabled);
             }
 
             // Face mob. 
@@ -73,7 +73,7 @@ namespace EasyFarm.States
             Player.SetTarget(EliteApi, Target);
 
             // Has the user decided we should engage in battle. 
-            if (Config.Instance.IsEngageEnabled)
+            if (Config.IsEngageEnabled)
                 if (!EliteApi.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
                     EliteApi.Windower.SendString(Constants.AttackTarget);
         }

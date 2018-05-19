@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<weapon_skills>
+  <o id="1" skillchain_a="Impaction" element="6" icon_id="590" skill="1" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Combo" ja="コンボ" />
+  <o id="2" skillchain_a="Impaction" element="4" icon_id="591" skill="1" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Shoulder Tackle" ja="タックル" />
+  <o id="3" skillchain_a="Compression" element="6" icon_id="590" skill="1" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="One Inch Punch" ja="短勁" />
+  <o id="4" skillchain_a="Detonation" element="6" icon_id="590" skill="1" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Backhand Blow" ja="バックハンドブロー" />
+  <o id="5" skillchain_a="Impaction" element="6" icon_id="590" skill="1" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Raging Fists" ja="乱撃" />
+  <o id="6" skillchain_a="Liquefaction" element="6" icon_id="590" skill="1" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Spinning Attack" ja="スピンアタック" />
+  <o id="7" skillchain_a="Transfixion" element="6" icon_id="590" skill="1" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Howling Fist" ja="空鳴拳" />
+  <o id="8" skillchain_a="Fragmentation" element="6" icon_id="590" skill="1" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Dragon Kick" ja="双竜脚" />
+  <o id="9" skillchain_a="Gravitation" element="6" icon_id="590" skill="1" skillchain_c="" targets="32" skillchain_b="Liquefaction" range="2" prefix="/weaponskill" en="Asuran Fists" ja="夢想阿修羅拳" />
+  <o id="10" skillchain_a="Light" element="6" icon_id="590" skill="1" skillchain_c="" targets="32" skillchain_b="Fusion" range="2" prefix="/weaponskill" en="Final Heaven" ja="ファイナルヘヴン" />
+  <o id="11" skillchain_a="Fusion" element="6" icon_id="590" skill="1" skillchain_c="" targets="32" skillchain_b="Transfixion" range="2" prefix="/weaponskill" en="Ascetic's Fury" ja="アスケーテンツォルン" />
+  <o id="12" skillchain_a="Gravitation" element="6" icon_id="590" skill="1" skillchain_c="" targets="32" skillchain_b="Liquefaction" range="2" prefix="/weaponskill" en="Stringing Pummel" ja="連環六合圏" />
+  <o id="13" skillchain_a="Induration" element="6" icon_id="590" skill="1" skillchain_c="Detonation" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Tornado Kick" ja="闘魂旋風脚" />
+  <o id="14" skillchain_a="Light" element="6" icon_id="590" skill="1" skillchain_c="" targets="32" skillchain_b="Fragmentation" range="2" prefix="/weaponskill" en="Victory Smite" ja="ビクトリースマイト" />
+  <o id="15" skillchain_a="Fusion" element="0" icon_id="592" skill="1" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Shijin Spiral" ja="四神円舞" />
+  <o id="16" skillchain_a="Scission" element="5" icon_id="593" skill="2" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Wasp Sting" ja="ワスプスティング" />
+  <o id="17" skillchain_a="Scission" element="5" icon_id="593" skill="2" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Viper Bite" ja="バイパーバイト" />
+  <o id="18" skillchain_a="Reverberation" element="1" icon_id="594" skill="2" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Shadowstitch" ja="シャドーステッチ" />
+  <o id="19" skillchain_a="Detonation" element="2" icon_id="595" skill="2" skillchain_c="" targets="32" skillchain_b="" range="10" prefix="/weaponskill" en="Gust Slash" ja="ガストスラッシュ" />
+  <o id="20" skillchain_a="Detonation" element="2" icon_id="595" skill="2" skillchain_c="" targets="32" skillchain_b="Impaction" range="10" prefix="/weaponskill" en="Cyclone" ja="サイクロン" />
+  <o id="21" skillchain_a="" element="7" icon_id="596" skill="2" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Energy Steal" ja="エナジースティール" />
+  <o id="22" skillchain_a="" element="7" icon_id="596" skill="2" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Energy Drain" ja="エナジードレイン" />
+  <o id="23" skillchain_a="Scission" element="6" icon_id="597" skill="2" skillchain_c="" targets="32" skillchain_b="Detonation" range="2" prefix="/weaponskill" en="Dancing Edge" ja="ダンシングエッジ" />
+  <o id="24" skillchain_a="Fragmentation" element="6" icon_id="597" skill="2" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Shark Bite" ja="シャークバイト" />
+  <o id="25" skillchain_a="Gravitation" element="6" icon_id="597" skill="2" skillchain_c="" targets="32" skillchain_b="Transfixion" range="2" prefix="/weaponskill" en="Evisceration" ja="エヴィサレーション" />
+  <o id="26" skillchain_a="Darkness" element="6" icon_id="597" skill="2" skillchain_c="" targets="32" skillchain_b="Gravitation" range="2" prefix="/weaponskill" en="Mercy Stroke" ja="マーシーストローク" />
+  <o id="27" skillchain_a="Fusion" element="6" icon_id="597" skill="2" skillchain_c="" targets="32" skillchain_b="Compression" range="2" prefix="/weaponskill" en="Mandalic Stab" ja="マンダリクスタッブ" />
+  <o id="28" skillchain_a="Fragmentation" element="2" icon_id="595" skill="2" skillchain_c="" targets="32" skillchain_b="Distortion" range="2" prefix="/weaponskill" en="Mordant Rime" ja="モーダントライム" />
+  <o id="29" skillchain_a="Distortion" element="1" icon_id="594" skill="2" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Pyrrhic Kleos" ja="ピリッククレオス" />
+  <o id="30" skillchain_a="Impaction" element="2" icon_id="595" skill="2" skillchain_c="Detonation" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Aeolian Edge" ja="イオリアンエッジ" />
+  <o id="31" skillchain_a="Darkness" element="2" icon_id="595" skill="2" skillchain_c="" targets="32" skillchain_b="Distortion" range="2" prefix="/weaponskill" en="Rudra's Storm" ja="ルドラストーム" />
+  <o id="32" skillchain_a="Scission" element="6" icon_id="598" skill="3" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Fast Blade" ja="ファストブレード" />
+  <o id="33" skillchain_a="Liquefaction" element="0" icon_id="599" skill="3" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Burning Blade" ja="バーニングブレード" />
+  <o id="34" skillchain_a="Liquefaction" element="0" icon_id="599" skill="3" skillchain_c="" targets="32" skillchain_b="Detonation" range="2" prefix="/weaponskill" en="Red Lotus Blade" ja="レッドロータス" />
+  <o id="35" skillchain_a="Impaction" element="4" icon_id="600" skill="3" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Flat Blade" ja="フラットブレード" />
+  <o id="36" skillchain_a="Scission" element="6" icon_id="598" skill="3" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Shining Blade" ja="シャインブレード" />
+  <o id="37" skillchain_a="Scission" element="6" icon_id="598" skill="3" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Seraph Blade" ja="セラフブレード" />
+  <o id="38" skillchain_a="Reverberation" element="6" icon_id="598" skill="3" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Circle Blade" ja="サークルブレード" />
+  <o id="39" skillchain_a="" element="15" icon_id="598" skill="3" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Spirits Within" ja="スピリッツウィズイン" />
+  <o id="40" skillchain_a="Scission" element="6" icon_id="598" skill="3" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Vorpal Blade" ja="ボーパルブレード" />
+  <o id="41" skillchain_a="Gravitation" element="6" icon_id="598" skill="3" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Swift Blade" ja="スウィフトブレード" />
+  <o id="42" skillchain_a="Fragmentation" element="6" icon_id="598" skill="3" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Savage Blade" ja="サベッジブレード" />
+  <o id="43" skillchain_a="Light" element="6" icon_id="598" skill="3" skillchain_c="" targets="32" skillchain_b="Fusion" range="2" prefix="/weaponskill" en="Knights of Round" ja="ナイツオブラウンド" />
+  <o id="44" skillchain_a="Fragmentation" element="4" icon_id="600" skill="3" skillchain_c="" targets="32" skillchain_b="Distortion" range="2" prefix="/weaponskill" en="Death Blossom" ja="ロズレーファタール" />
+  <o id="45" skillchain_a="Fusion" element="15" icon_id="598" skill="3" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Atonement" ja="ロイエ" />
+  <o id="46" skillchain_a="Distortion" element="6" icon_id="598" skill="3" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Expiacion" ja="エクスピアシオン" />
+  <o id="47" skillchain_a="" element="7" icon_id="601" skill="3" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Sanguine Blade" ja="サンギンブレード" />
+  <o id="48" skillchain_a="Scission" element="6" icon_id="602" skill="4" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Hard Slash" ja="ハードスラッシュ" />
+  <o id="49" skillchain_a="Transfixion" element="6" icon_id="602" skill="4" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Power Slash" ja="パワースラッシュ" />
+  <o id="50" skillchain_a="Induration" element="1" icon_id="603" skill="4" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Frostbite" ja="フロストバイト" />
+  <o id="51" skillchain_a="Induration" element="1" icon_id="603" skill="4" skillchain_c="" targets="32" skillchain_b="Detonation" range="2" prefix="/weaponskill" en="Freezebite" ja="フリーズバイト" />
+  <o id="52" skillchain_a="Reverberation" element="7" icon_id="604" skill="4" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Shockwave" ja="ショックウェーブ" />
+  <o id="53" skillchain_a="Scission" element="6" icon_id="602" skill="4" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Crescent Moon" ja="クレセントムーン" />
+  <o id="54" skillchain_a="Scission" element="6" icon_id="602" skill="4" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Sickle Moon" ja="シックルムーン" />
+  <o id="55" skillchain_a="Fragmentation" element="6" icon_id="602" skill="4" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Spinning Slash" ja="スピンスラッシュ" />
+  <o id="56" skillchain_a="Fragmentation" element="6" icon_id="602" skill="4" skillchain_c="" targets="32" skillchain_b="Distortion" range="2" prefix="/weaponskill" en="Ground Strike" ja="グラウンドストライク" />
+  <o id="57" skillchain_a="Light" element="6" icon_id="602" skill="4" skillchain_c="" targets="32" skillchain_b="Fusion" range="2" prefix="/weaponskill" en="Scourge" ja="スカージ" />
+  <o id="58" skillchain_a="Induration" element="1" icon_id="603" skill="4" skillchain_c="Detonation" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Herculean Slash" ja="ヘラクレススラッシュ" />
+  <o id="59" skillchain_a="Light" element="6" icon_id="602" skill="4" skillchain_c="" targets="32" skillchain_b="Distortion" range="2" prefix="/weaponskill" en="Torcleaver" ja="トアクリーバー" />
+  <o id="60" skillchain_a="Fragmentation" element="6" icon_id="602" skill="4" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Resolution" ja="レゾルーション" />
+  <o id="61" skillchain_a="Light" element="6" icon_id="602" skill="4" skillchain_c="" targets="32" skillchain_b="Fragmentation" range="2" prefix="/weaponskill" en="Dimidiation" ja="デミディエーション" />
+  <o id="64" skillchain_a="Detonation" element="6" icon_id="605" skill="5" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Raging Axe" ja="レイジングアクス" />
+  <o id="65" skillchain_a="Impaction" element="4" icon_id="606" skill="5" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Smash Axe" ja="スマッシュ" />
+  <o id="66" skillchain_a="Detonation" element="2" icon_id="607" skill="5" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Gale Axe" ja="ラファールアクス" />
+  <o id="67" skillchain_a="Scission" element="6" icon_id="605" skill="5" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Avalanche Axe" ja="アバランチアクス" />
+  <o id="68" skillchain_a="Liquefaction" element="6" icon_id="605" skill="5" skillchain_c="Impaction" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Spinning Axe" ja="スピニングアクス" />
+  <o id="69" skillchain_a="Scission" element="6" icon_id="605" skill="5" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Rampage" ja="ランページ" />
+  <o id="70" skillchain_a="Scission" element="6" icon_id="605" skill="5" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Calamity" ja="カラミティ" />
+  <o id="71" skillchain_a="Fusion" element="6" icon_id="605" skill="5" skillchain_c="" targets="32" skillchain_b="" range="10" prefix="/weaponskill" en="Mistral Axe" ja="ミストラルアクス" />
+  <o id="72" skillchain_a="Fusion" element="6" icon_id="605" skill="5" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Decimation" ja="デシメーション" />
+  <o id="73" skillchain_a="Darkness" element="6" icon_id="605" skill="5" skillchain_c="" targets="32" skillchain_b="Gravitation" range="2" prefix="/weaponskill" en="Onslaught" ja="オンスロート" />
+  <o id="74" skillchain_a="Gravitation" element="6" icon_id="605" skill="5" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Primal Rend" ja="プライマルレンド" />
+  <o id="75" skillchain_a="Scission" element="1" icon_id="608" skill="5" skillchain_c="" targets="32" skillchain_b="Detonation" range="10" prefix="/weaponskill" en="Bora Axe" ja="ボーラアクス" />
+  <o id="76" skillchain_a="Darkness" element="4" icon_id="606" skill="5" skillchain_c="" targets="32" skillchain_b="Fragmentation" range="2" prefix="/weaponskill" en="Cloudsplitter" ja="クラウドスプリッタ" />
+  <o id="77" skillchain_a="Distortion" element="6" icon_id="605" skill="5" skillchain_c="" targets="32" skillchain_b="Detonation" range="2" prefix="/weaponskill" en="Ruinator" ja="ルイネーター" />
+  <o id="80" skillchain_a="Impaction" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Shield Break" ja="シールドブレイク" />
+  <o id="81" skillchain_a="Scission" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Iron Tempest" ja="アイアンテンペスト" />
+  <o id="82" skillchain_a="Reverberation" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Sturmwind" ja="シュトルムヴィント" />
+  <o id="83" skillchain_a="Impaction" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Armor Break" ja="アーマーブレイク" />
+  <o id="84" skillchain_a="Compression" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Keen Edge" ja="キーンエッジ" />
+  <o id="85" skillchain_a="Impaction" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Weapon Break" ja="ウェポンブレイク" />
+  <o id="86" skillchain_a="Induration" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Raging Rush" ja="レイジングラッシュ" />
+  <o id="87" skillchain_a="Distortion" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Full Break" ja="フルブレイク" />
+  <o id="88" skillchain_a="Distortion" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="Detonation" range="2" prefix="/weaponskill" en="Steel Cyclone" ja="スチールサイクロン" />
+  <o id="89" skillchain_a="Light" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="Fusion" range="2" prefix="/weaponskill" en="Metatron Torment" ja="メタトロントーメント" />
+  <o id="90" skillchain_a="Fragmentation" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="King's Justice" ja="キングズジャスティス" />
+  <o id="91" skillchain_a="Scission" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="Detonation" range="2" prefix="/weaponskill" en="Fell Cleave" ja="フェルクリーヴ" />
+  <o id="92" skillchain_a="Light" element="3" icon_id="610" skill="6" skillchain_c="" targets="32" skillchain_b="Fragmentation" range="2" prefix="/weaponskill" en="Ukko's Fury" ja="ウッコフューリー" />
+  <o id="93" skillchain_a="Fusion" element="6" icon_id="609" skill="6" skillchain_c="" targets="32" skillchain_b="Compression" range="2" prefix="/weaponskill" en="Upheaval" ja="アップヒーバル" />
+  <o id="96" skillchain_a="Scission" element="6" icon_id="611" skill="7" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Slice" ja="スライス" />
+  <o id="97" skillchain_a="Reverberation" element="7" icon_id="612" skill="7" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Dark Harvest" ja="ダークハーベスト" />
+  <o id="98" skillchain_a="Induration" element="7" icon_id="612" skill="7" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Shadow of Death" ja="シャドーオブデス" />
+  <o id="99" skillchain_a="Compression" element="7" icon_id="612" skill="7" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Nightmare Scythe" ja="ナイトメアサイス" />
+  <o id="100" skillchain_a="Reverberation" element="6" icon_id="611" skill="7" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Spinning Scythe" ja="スピニングサイス" />
+  <o id="101" skillchain_a="Transfixion" element="6" icon_id="611" skill="7" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Vorpal Scythe" ja="ボーパルサイス" />
+  <o id="102" skillchain_a="Induration" element="2" icon_id="613" skill="7" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Guillotine" ja="ギロティン" />
+  <o id="103" skillchain_a="Distortion" element="6" icon_id="611" skill="7" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Cross Reaper" ja="クロスリーパー" />
+  <o id="104" skillchain_a="Distortion" element="6" icon_id="611" skill="7" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Spiral Hell" ja="スパイラルヘル" />
+  <o id="105" skillchain_a="Darkness" element="6" icon_id="611" skill="7" skillchain_c="" targets="32" skillchain_b="Gravitation" range="2" prefix="/weaponskill" en="Catastrophe" ja="カタストロフィ" />
+  <o id="106" skillchain_a="Fusion" element="6" icon_id="611" skill="7" skillchain_c="" targets="32" skillchain_b="Compression" range="2" prefix="/weaponskill" en="Insurgency" ja="インサージェンシー" />
+  <o id="107" skillchain_a="Compression" element="7" icon_id="612" skill="7" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Infernal Scythe" ja="インファナルサイズ" />
+  <o id="108" skillchain_a="Darkness" element="7" icon_id="612" skill="7" skillchain_c="" targets="32" skillchain_b="Distortion" range="2" prefix="/weaponskill" en="Quietus" ja="クワイタス" />
+  <o id="109" skillchain_a="Gravitation" element="7" icon_id="612" skill="7" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Entropy" ja="エントロピー" />
+  <o id="112" skillchain_a="Transfixion" element="6" icon_id="614" skill="8" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Double Thrust" ja="ダブルスラスト" />
+  <o id="113" skillchain_a="Transfixion" element="4" icon_id="615" skill="8" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Thunder Thrust" ja="サンダースラスト" />
+  <o id="114" skillchain_a="Transfixion" element="4" icon_id="615" skill="8" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Raiden Thrust" ja="ライデンスラスト" />
+  <o id="115" skillchain_a="Impaction" element="4" icon_id="615" skill="8" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Leg Sweep" ja="足払い" />
+  <o id="116" skillchain_a="Compression" element="6" icon_id="614" skill="8" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Penta Thrust" ja="ペンタスラスト" />
+  <o id="117" skillchain_a="Reverberation" element="6" icon_id="614" skill="8" skillchain_c="" targets="32" skillchain_b="Transfixion" range="2" prefix="/weaponskill" en="Vorpal Thrust" ja="ボーパルスラスト" />
+  <o id="118" skillchain_a="Transfixion" element="6" icon_id="614" skill="8" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Skewer" ja="スキュアー" />
+  <o id="119" skillchain_a="Fusion" element="6" icon_id="614" skill="8" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Wheeling Thrust" ja="大車輪" />
+  <o id="120" skillchain_a="Gravitation" element="6" icon_id="614" skill="8" skillchain_c="" targets="32" skillchain_b="Induration" range="2" prefix="/weaponskill" en="Impulse Drive" ja="インパルスドライヴ" />
+  <o id="121" skillchain_a="Light" element="6" icon_id="614" skill="8" skillchain_c="" targets="32" skillchain_b="Distortion" range="2" prefix="/weaponskill" en="Geirskogul" ja="ゲイルスコグル" />
+  <o id="122" skillchain_a="Fusion" element="6" icon_id="614" skill="8" skillchain_c="" targets="32" skillchain_b="Transfixion" range="2" prefix="/weaponskill" en="Drakesbane" ja="雲蒸竜変" />
+  <o id="123" skillchain_a="Transfixion" element="6" icon_id="614" skill="8" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Sonic Thrust" ja="ソニックスラスト" />
+  <o id="124" skillchain_a="Light" element="6" icon_id="614" skill="8" skillchain_c="" targets="32" skillchain_b="Fragmentation" range="2" prefix="/weaponskill" en="Camlann's Torment" ja="カムラン" />
+  <o id="125" skillchain_a="Gravitation" element="3" icon_id="616" skill="8" skillchain_c="" targets="32" skillchain_b="Transfixion" range="2" prefix="/weaponskill" en="Stardiver" ja="スターダイバー" />
+  <o id="128" skillchain_a="Transfixion" element="6" icon_id="617" skill="9" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Blade: Rin" ja="臨" />
+  <o id="129" skillchain_a="Scission" element="1" icon_id="618" skill="9" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Blade: Retsu" ja="烈" />
+  <o id="130" skillchain_a="Reverberation" element="5" icon_id="619" skill="9" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Blade: Teki" ja="滴" />
+  <o id="131" skillchain_a="Induration" element="1" icon_id="618" skill="9" skillchain_c="" targets="32" skillchain_b="Detonation" range="2" prefix="/weaponskill" en="Blade: To" ja="凍" />
+  <o id="132" skillchain_a="Impaction" element="3" icon_id="620" skill="9" skillchain_c="" targets="32" skillchain_b="Transfixion" range="2" prefix="/weaponskill" en="Blade: Chi" ja="地" />
+  <o id="133" skillchain_a="Compression" element="7" icon_id="621" skill="9" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Blade: Ei" ja="影" />
+  <o id="134" skillchain_a="Impaction" element="6" icon_id="617" skill="9" skillchain_c="" targets="32" skillchain_b="Detonation" range="2" prefix="/weaponskill" en="Blade: Jin" ja="迅" />
+  <o id="135" skillchain_a="Gravitation" element="6" icon_id="617" skill="9" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Blade: Ten" ja="天" />
+  <o id="136" skillchain_a="Gravitation" element="6" icon_id="617" skill="9" skillchain_c="" targets="32" skillchain_b="Transfixion" range="2" prefix="/weaponskill" en="Blade: Ku" ja="空" />
+  <o id="137" skillchain_a="Darkness" element="6" icon_id="617" skill="9" skillchain_c="" targets="32" skillchain_b="Fragmentation" range="2" prefix="/weaponskill" en="Blade: Metsu" ja="生者必滅" />
+  <o id="138" skillchain_a="Fragmentation" element="3" icon_id="620" skill="9" skillchain_c="" targets="32" skillchain_b="Compression" range="2" prefix="/weaponskill" en="Blade: Kamu" ja="カムハブリ" />
+  <o id="139" skillchain_a="Reverberation" element="5" icon_id="619" skill="9" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Blade: Yu" ja="湧" />
+  <o id="140" skillchain_a="Darkness" element="6" icon_id="617" skill="9" skillchain_c="" targets="32" skillchain_b="Gravitation" range="2" prefix="/weaponskill" en="Blade: Hi" ja="秘" />
+  <o id="141" skillchain_a="Fusion" element="6" icon_id="617" skill="9" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Blade: Shun" ja="瞬" />
+  <o id="144" skillchain_a="Transfixion" element="6" icon_id="622" skill="10" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Tachi: Enpi" ja="壱之太刀・燕飛" />
+  <o id="145" skillchain_a="Induration" element="4" icon_id="623" skill="10" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Tachi: Hobaku" ja="弐之太刀・鋒縛" />
+  <o id="146" skillchain_a="Transfixion" element="4" icon_id="623" skill="10" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Tachi: Goten" ja="参之太刀・轟天" />
+  <o id="147" skillchain_a="Liquefaction" element="0" icon_id="624" skill="10" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Tachi: Kagero" ja="四之太刀・陽炎" />
+  <o id="148" skillchain_a="Scission" element="2" icon_id="625" skill="10" skillchain_c="" targets="32" skillchain_b="Detonation" range="2" prefix="/weaponskill" en="Tachi: Jinpu" ja="五之太刀・陣風" />
+  <o id="149" skillchain_a="Reverberation" element="6" icon_id="622" skill="10" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Tachi: Koki" ja="六之太刀・光輝" />
+  <o id="150" skillchain_a="Induration" element="7" icon_id="626" skill="10" skillchain_c="" targets="32" skillchain_b="Detonation" range="2" prefix="/weaponskill" en="Tachi: Yukikaze" ja="七之太刀・雪風" />
+  <o id="151" skillchain_a="Distortion" element="2" icon_id="625" skill="10" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Tachi: Gekko" ja="八之太刀・月光" />
+  <o id="152" skillchain_a="Fusion" element="1" icon_id="627" skill="10" skillchain_c="" targets="32" skillchain_b="Compression" range="2" prefix="/weaponskill" en="Tachi: Kasha" ja="九之太刀・花車" />
+  <o id="153" skillchain_a="Light" element="6" icon_id="622" skill="10" skillchain_c="" targets="32" skillchain_b="Fragmentation" range="2" prefix="/weaponskill" en="Tachi: Kaiten" ja="零之太刀・回天" />
+  <o id="154" skillchain_a="Gravitation" element="6" icon_id="622" skill="10" skillchain_c="" targets="32" skillchain_b="Induration" range="2" prefix="/weaponskill" en="Tachi: Rana" ja="十之太刀・乱鴉" />
+  <o id="155" skillchain_a="Compression" element="2" icon_id="625" skill="10" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Tachi: Ageha" ja="十一之太刀・鳳蝶" />
+  <o id="156" skillchain_a="Light" element="6" icon_id="622" skill="10" skillchain_c="" targets="32" skillchain_b="Distortion" range="2" prefix="/weaponskill" en="Tachi: Fudo" ja="祖之太刀・不動" />
+  <o id="157" skillchain_a="Fragmentation" element="6" icon_id="622" skill="10" skillchain_c="" targets="32" skillchain_b="Compression" range="2" prefix="/weaponskill" en="Tachi: Shoha" ja="十二之太刀・照破" />
+  <o id="160" skillchain_a="Impaction" element="6" icon_id="628" skill="11" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Shining Strike" ja="シャインストライク" />
+  <o id="161" skillchain_a="Impaction" element="6" icon_id="628" skill="11" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Seraph Strike" ja="セラフストライク" />
+  <o id="162" skillchain_a="Reverberation" element="4" icon_id="629" skill="11" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Brainshaker" ja="ブレインシェイカー" />
+  <o id="163" skillchain_a="" element="6" icon_id="628" skill="11" skillchain_c="" targets="1" skillchain_b="" range="2" prefix="/weaponskill" en="Starlight" ja="スターライト" />
+  <o id="164" skillchain_a="" element="6" icon_id="628" skill="11" skillchain_c="" targets="1" skillchain_b="" range="2" prefix="/weaponskill" en="Moonlight" ja="ムーンライト" />
+  <o id="165" skillchain_a="Induration" element="0" icon_id="630" skill="11" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Skullbreaker" ja="スカルブレイカー" />
+  <o id="166" skillchain_a="Detonation" element="6" icon_id="628" skill="11" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="True Strike" ja="トゥルーストライク" />
+  <o id="167" skillchain_a="Impaction" element="6" icon_id="628" skill="11" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Judgment" ja="ジャッジメント" />
+  <o id="168" skillchain_a="Fusion" element="6" icon_id="628" skill="11" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Hexa Strike" ja="ヘキサストライク" />
+  <o id="169" skillchain_a="Fragmentation" element="6" icon_id="628" skill="11" skillchain_c="" targets="32" skillchain_b="Compression" range="2" prefix="/weaponskill" en="Black Halo" ja="ブラックヘイロー" />
+  <o id="170" skillchain_a="Light" element="6" icon_id="628" skill="11" skillchain_c="" targets="32" skillchain_b="Fragmentation" range="2" prefix="/weaponskill" en="Randgrith" ja="ランドグリース" />
+  <o id="171" skillchain_a="" element="6" icon_id="628" skill="11" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Mystic Boon" ja="ミスティックブーン" />
+  <o id="172" skillchain_a="Induration" element="6" icon_id="628" skill="11" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Flash Nova" ja="フラッシュノヴァ" />
+  <o id="173" skillchain_a="" element="6" icon_id="628" skill="11" skillchain_c="" targets="1" skillchain_b="" range="2" prefix="/weaponskill" en="Dagan" ja="ダガン" />
+  <o id="174" skillchain_a="Fusion" element="6" icon_id="628" skill="11" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Realmrazer" ja="レルムレイザー" />
+  <o id="175" skillchain_a="Darkness" element="6" icon_id="628" skill="11" skillchain_c="" targets="32" skillchain_b="Fragmentation" range="2" prefix="/weaponskill" en="Exudation" ja="エクズデーション" />
+  <o id="176" skillchain_a="Impaction" element="6" icon_id="631" skill="12" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Heavy Swing" ja="ヘヴィスイング" />
+  <o id="177" skillchain_a="Impaction" element="3" icon_id="632" skill="12" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Rock Crusher" ja="ロッククラッシャー" />
+  <o id="178" skillchain_a="Detonation" element="3" icon_id="632" skill="12" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Earth Crusher" ja="アースクラッシャー" />
+  <o id="179" skillchain_a="Compression" element="6" icon_id="631" skill="12" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Starburst" ja="スターバースト" />
+  <o id="180" skillchain_a="Compression" element="6" icon_id="631" skill="12" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Sunburst" ja="サンバースト" />
+  <o id="181" skillchain_a="Detonation" element="6" icon_id="631" skill="12" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Shell Crusher" ja="シェルクラッシャー" />
+  <o id="182" skillchain_a="Liquefaction" element="6" icon_id="631" skill="12" skillchain_c="" targets="32" skillchain_b="Impaction" range="2" prefix="/weaponskill" en="Full Swing" ja="フルスイング" />
+  <o id="183" skillchain_a="" element="6" icon_id="631" skill="12" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Spirit Taker" ja="スピリットテーカー" />
+  <o id="184" skillchain_a="Gravitation" element="6" icon_id="631" skill="12" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Retribution" ja="レトリビューション" />
+  <o id="185" skillchain_a="Darkness" element="6" icon_id="631" skill="12" skillchain_c="" targets="32" skillchain_b="Distortion" range="2" prefix="/weaponskill" en="Gate of Tartarus" ja="タルタロスゲート" />
+  <o id="186" skillchain_a="Fragmentation" element="7" icon_id="633" skill="12" skillchain_c="" targets="32" skillchain_b="Distortion" range="2" prefix="/weaponskill" en="Vidohunir" ja="ヴィゾフニル" />
+  <o id="187" skillchain_a="Fusion" element="6" icon_id="631" skill="12" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Garland of Bliss" ja="ガーランドオブブリス" />
+  <o id="188" skillchain_a="Gravitation" element="7" icon_id="633" skill="12" skillchain_c="" targets="32" skillchain_b="Transfixion" range="2" prefix="/weaponskill" en="Omniscience" ja="オムニシエンス" />
+  <o id="189" skillchain_a="Compression" element="7" icon_id="633" skill="12" skillchain_c="" targets="32" skillchain_b="Reverberation" range="2" prefix="/weaponskill" en="Cataclysm" ja="カタクリスム" />
+  <o id="190" skillchain_a="" element="7" icon_id="633" skill="12" skillchain_c="" targets="1" skillchain_b="" range="2" prefix="/weaponskill" en="Myrkr" ja="ミルキル" />
+  <o id="191" skillchain_a="Gravitation" element="4" icon_id="634" skill="12" skillchain_c="" targets="32" skillchain_b="Induration" range="2" prefix="/weaponskill" en="Shattersoul" ja="シャッターソウル" />
+  <o id="192" skillchain_a="Liquefaction" element="0" icon_id="635" skill="25" skillchain_c="" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Flaming Arrow" ja="フレイミングアロー" />
+  <o id="193" skillchain_a="Reverberation" element="2" icon_id="636" skill="25" skillchain_c="" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Piercing Arrow" ja="ピアシングアロー" />
+  <o id="194" skillchain_a="Liquefaction" element="0" icon_id="635" skill="25" skillchain_c="" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Dulling Arrow" ja="ダリングアロー" />
+  <o id="196" skillchain_a="Reverberation" element="6" icon_id="637" skill="25" skillchain_c="Detonation" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Sidewinder" ja="サイドワインダー" />
+  <o id="197" skillchain_a="Induration" element="6" icon_id="637" skill="25" skillchain_c="" targets="32" skillchain_b="Transfixion" range="4" prefix="/weaponskill" en="Blast Arrow" ja="ブラストアロー" />
+  <o id="198" skillchain_a="Fusion" element="6" icon_id="637" skill="25" skillchain_c="" targets="32" skillchain_b="" range="12" prefix="/weaponskill" en="Arching Arrow" ja="アーチングアロー" />
+  <o id="199" skillchain_a="Fusion" element="6" icon_id="637" skill="25" skillchain_c="" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Empyreal Arrow" ja="エンピリアルアロー" />
+  <o id="200" skillchain_a="Light" element="6" icon_id="637" skill="25" skillchain_c="" targets="32" skillchain_b="Distortion" range="12" prefix="/weaponskill" en="Namas Arrow" ja="南無八幡" />
+  <o id="201" skillchain_a="Reverberation" element="6" icon_id="637" skill="25" skillchain_c="" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Refulgent Arrow" ja="リフルジェントアロー" />
+  <o id="202" skillchain_a="Light" element="6" icon_id="637" skill="25" skillchain_c="" targets="32" skillchain_b="Fusion" range="12" prefix="/weaponskill" en="Jishnu's Radiance" ja="ジシュヌの光輝" />
+  <o id="203" skillchain_a="Fragmentation" element="6" icon_id="637" skill="25" skillchain_c="" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Apex Arrow" ja="エイペクスアロー" />
+  <o id="208" skillchain_a="Reverberation" element="0" icon_id="638" skill="26" skillchain_c="" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Hot Shot" ja="ホットショット" />
+  <o id="209" skillchain_a="Reverberation" element="2" icon_id="639" skill="26" skillchain_c="" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Split Shot" ja="スプリットショット" />
+  <o id="210" skillchain_a="Liquefaction" element="0" icon_id="638" skill="26" skillchain_c="" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Sniper Shot" ja="スナイパーショット" />
+  <o id="212" skillchain_a="Reverberation" element="6" icon_id="640" skill="26" skillchain_c="Detonation" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Slug Shot" ja="スラッグショット" />
+  <o id="213" skillchain_a="Induration" element="6" icon_id="640" skill="26" skillchain_c="" targets="32" skillchain_b="Transfixion" range="4" prefix="/weaponskill" en="Blast Shot" ja="ブラストショット" />
+  <o id="214" skillchain_a="Fusion" element="6" icon_id="640" skill="26" skillchain_c="" targets="32" skillchain_b="" range="12" prefix="/weaponskill" en="Heavy Shot" ja="ヘヴィショット" />
+  <o id="215" skillchain_a="Fusion" element="6" icon_id="640" skill="26" skillchain_c="" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Detonator" ja="デトネーター" />
+  <o id="216" skillchain_a="Darkness" element="6" icon_id="640" skill="26" skillchain_c="" targets="32" skillchain_b="Fragmentation" range="12" prefix="/weaponskill" en="Coronach" ja="カラナック" />
+  <o id="217" skillchain_a="Fragmentation" element="6" icon_id="640" skill="26" skillchain_c="" targets="32" skillchain_b="Scission" range="12" prefix="/weaponskill" en="Trueflight" ja="トゥルーフライト" />
+  <o id="218" skillchain_a="Gravitation" element="7" icon_id="641" skill="26" skillchain_c="" targets="32" skillchain_b="Transfixion" range="12" prefix="/weaponskill" en="Leaden Salute" ja="レデンサリュート" />
+  <o id="219" skillchain_a="Induration" element="1" icon_id="642" skill="26" skillchain_c="Detonation" targets="32" skillchain_b="Impaction" range="4" prefix="/weaponskill" en="Numbing Shot" ja="ナビングショット" />
+  <o id="220" skillchain_a="Darkness" element="0" icon_id="638" skill="26" skillchain_c="" targets="32" skillchain_b="Gravitation" range="12" prefix="/weaponskill" en="Wildfire" ja="ワイルドファイア" />
+  <o id="221" skillchain_a="Fusion" element="6" icon_id="640" skill="26" skillchain_c="" targets="32" skillchain_b="Reverberation" range="12" prefix="/weaponskill" en="Last Stand" ja="ラストスタンド" />
+  <o id="224" skillchain_a="Fragmentation" element="3" icon_id="643" skill="2" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Exenterator" ja="エクゼンテレター" />
+  <o id="225" skillchain_a="Light" element="6" icon_id="644" skill="3" skillchain_c="" targets="32" skillchain_b="Distortion" range="2" prefix="/weaponskill" en="Chant du Cygne" ja="シャンデュシニュ" />
+  <o id="226" skillchain_a="Gravitation" element="6" icon_id="644" skill="3" skillchain_c="" targets="32" skillchain_b="Scission" range="2" prefix="/weaponskill" en="Requiescat" ja="レクイエスカット" />
+  <o id="227" element="6" icon_id="598" targets="32" range="2" prefix="/weaponskill" en="Knights of Rotund" ja="ナイスオブラウンド" />
+  <o id="238" skillchain_a="" element="6" icon_id="645" skill="2" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Uriel Blade" ja="ウリエルブレード" />
+  <o id="239" skillchain_a="" element="4" icon_id="646" skill="2" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Glory Slash" ja="グローリースラッシュ" />
+  <o id="240" skillchain_a="" element="7" icon_id="647" skill="12" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Tartarus Torpor" ja="タルタロストーパー" />
+  <o id="241" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="7" prefix="/weaponskill" en="Netherspikes" ja="剣山獄" />
+  <o id="242" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="7" prefix="/weaponskill" en="Carnal Nightmare" ja="白昼夢" />
+  <o id="243" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="7" prefix="/weaponskill" en="Aegis Schism" ja="破鎧陣" />
+  <o id="244" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="7" prefix="/weaponskill" en="Dancing Chains" ja="舞空鎖" />
+  <o id="245" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="11" prefix="/weaponskill" en="Barbed Crescent" ja="偃月刃" />
+  <o id="246" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Shackled Fists" ja="連環拳" />
+  <o id="247" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Foxfire" ja="跳狐斬" />
+  <o id="248" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Grim Halo" ja="輪天殺" />
+  <o id="249" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="7" prefix="/weaponskill" en="Netherspikes" ja="剣山獄" />
+  <o id="250" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="7" prefix="/weaponskill" en="Carnal Nightmare" ja="白昼夢" />
+  <o id="251" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="7" prefix="/weaponskill" en="Aegis Schism" ja="破鎧陣" />
+  <o id="252" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="7" prefix="/weaponskill" en="Dancing Chains" ja="舞空鎖" />
+  <o id="253" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="11" prefix="/weaponskill" en="Barbed Crescent" ja="偃月刃" />
+  <o id="254" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="12" prefix="/weaponskill" en="Vulcan Shot" ja="バルカンショット" />
+  <o id="255" skillchain_a="" element="6" icon_id="46" skillchain_c="" targets="32" skillchain_b="" range="2" prefix="/weaponskill" en="Dimensional Death" ja="次元殺" />
+</weapon_skills>

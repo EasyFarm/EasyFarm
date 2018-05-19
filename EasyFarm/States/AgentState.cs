@@ -1,4 +1,5 @@
 using EasyFarm.Classes;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 
 namespace EasyFarm.States
@@ -10,39 +11,45 @@ namespace EasyFarm.States
             Memory = stateMemory;
         }
 
+        public IConfig Config
+        {
+            get { return Memory.Config;}
+            set { Memory.Config = value; }
+        }
+
         /// <summary>
         ///     Retrieves aggroing creature.
         /// </summary>
         protected IUnitService UnitService
         {
-            get => Memory.UnitService;
-            set => Memory.UnitService = value;
+            get { return Memory.UnitService; }
+            set { Memory.UnitService = value; }
         }
 
         public StateMemory Memory { get; }
 
         public IMemoryAPI EliteApi
         {
-            get => Memory.EliteApi;
-            set => Memory.EliteApi = value;
+            get { return Memory.EliteApi; }
+            set { Memory.EliteApi = value; }
         }
 
         public bool IsFighting
         {
-            get => Memory.IsFighting;
-            set => Memory.IsFighting = value;
+            get { return Memory.IsFighting; }
+            set { Memory.IsFighting = value; }
         }
 
         public IUnit Target
         {
-            get => Memory.Target;
-            set => Memory.Target = value;
+            get { return Memory.Target; }
+            set { Memory.Target = value; }
         }
 
         public Executor Executor
         {
-            get => Memory.Executor;
-            set => Memory.Executor = value;
+            get { return Memory.Executor; }
+            set { Memory.Executor = value; }
         }
     }
 }

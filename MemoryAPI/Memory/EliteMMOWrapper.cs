@@ -471,9 +471,9 @@ namespace MemoryAPI.Memory
             public int GetAbilityRecast(int index)
             {
                 var ids = _api.Recast.GetAbilityIds();
-                var ability = _api.Resources.GetAbility((uint)index);
-                var idx = ids.IndexOf(ability.TimerID);
-                return _api.Recast.GetAbilityRecast(idx);
+                var idx = ids.IndexOf(index);
+                var reuslt = _api.Recast.GetAbilityRecast(idx);
+                return reuslt;
             }
 
             public int GetSpellRecast(int index)
@@ -496,9 +496,9 @@ namespace MemoryAPI.Memory
                 _api.ThirdParty.SendString(stringToSend);
             }
 
-            public void SendKeyPress(Keys keys)
+            public void SendKeyPress(Keys key)
             {
-                _api.ThirdParty.KeyPress(keys);
+                _api.ThirdParty.KeyPress(key);
             }
         }
 

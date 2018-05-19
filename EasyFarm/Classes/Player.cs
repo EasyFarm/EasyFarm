@@ -32,7 +32,7 @@ namespace EasyFarm.Classes
 
         public static Player Instance
         {
-            get { return _instance = _instance ?? new Player(); ; }
+            get { return _instance = _instance ?? new Player(); }
             private set { _instance = value; }
         }
 
