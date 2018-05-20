@@ -27,6 +27,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Forms;
 using EasyFarm.Handlers;
 using MahApps.Metro.Controls;
 using Application = System.Windows.Application;
@@ -264,6 +265,9 @@ namespace EasyFarm.ViewModels
             MainWindowTitle = "EasyFarm";
             StatusBarText = "";
 
+            HotKeyManager.RegisterHotKey(Keys.End, KeyModifiers.Control);
+            HotKeyManager.HotKeyPressed += new EventHandler<HotKeyEventArgs>(HotKeyManager_HotKeyPressed);
+
             if (_updater.HasUpdate())
             {
                 var showDialogResult = await _dialogCoordinator.ShowMessageAsync(
@@ -275,6 +279,11 @@ namespace EasyFarm.ViewModels
                 if (showDialogResult == MessageDialogResult.Affirmative)
                     _updater.Update();
             }
+        }
+
+        private void HotKeyManager_HotKeyPressed(object sender, HotKeyEventArgs e)
+        {
+            Start();
         }
     }
 }
