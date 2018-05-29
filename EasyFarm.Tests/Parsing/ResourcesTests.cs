@@ -76,6 +76,18 @@ namespace EasyFarm.Tests.Parsing
             // Teardown
         }
 
+        [Fact]
+        public void GetAbilitiesWithName_ShouldNotBeCaseSensitive()
+        {
+            // Setup fixture
+            var sut = CreateSut();
+            // Exercise system
+            var result = sut.GetAbilitiesWithName("fast blade");
+            // Verify outcome
+            Assert.NotEmpty(result);
+            // Teardown
+        }
+
         private static AbilityService CreateSut()
         {
             return AbilityService;

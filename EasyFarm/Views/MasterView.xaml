@@ -27,7 +27,7 @@
     </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
@@ -53,6 +53,10 @@
                Background="Black" />
         <Menu Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0"
               VerticalAlignment="Center">
+            <Button
+                Margin="5"
+                Content="{Binding StartPauseHeader}"
+                Command="{Binding StartCommand}" />
             <MenuItem Header="_File"
                       Foreground="White"
                       Background="Black"
@@ -75,7 +79,8 @@
             </MenuItem>
             <MenuItem Header="_Window"
                       Foreground="White"
-                      Background="Black">
+                      Background="Black"
+                      VerticalAlignment="Center">
                 <MenuItem x:Name="MnuAlwaysOnTop"
                           Header="_Always on top"
                           IsCheckable="True" />
