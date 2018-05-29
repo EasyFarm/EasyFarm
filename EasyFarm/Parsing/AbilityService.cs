@@ -193,9 +193,9 @@ namespace EasyFarm.Parsing
                 Parsing.Resources.ResourceType.Items,
             };
 
-            IList<Resource> resources = Find(resource => 
+            IList<Resource> resources = Find(resource =>
                     resourceTypes.Contains(resource.ResourceType) &&
-                    resource.En == abilityName || resource.Ja == abilityName)
+                    WithName(abilityName, resource))
                 .ToList();
 
             IList<Ability> abilities = resources.Select(resource =>
@@ -235,6 +235,12 @@ namespace EasyFarm.Parsing
             }).ToList();
 
             return abilities;
+        }
+
+        private Boolean WithName(String abilityName, Resource resource)
+        {
+            return String.Equals(resource.En, abilityName, StringComparison.InvariantCultureIgnoreCase) || 
+                   String.Equals(resource.Ja, abilityName, StringComparison.InvariantCultureIgnoreCase);
         }
 
         private T ToValue<T>(string value)
