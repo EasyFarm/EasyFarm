@@ -185,6 +185,11 @@ namespace EasyFarm.Parsing
 
         public IEnumerable<Ability> GetAbilitiesWithName(string abilityName)
         {
+            if (IsRangedCommand(abilityName))
+            {
+                return RangedCommand();
+            }
+
             HashSet<Resources.ResourceType> resourceTypes = new HashSet<Resources.ResourceType>()
             {
                 Parsing.Resources.ResourceType.Spells,
@@ -200,23 +205,22 @@ namespace EasyFarm.Parsing
 
             IList<Ability> abilities = resources.Select(resource =>
             {
-                var ability = new Ability();
-
-                ability.Element = resource.Element;
-                ability.English = resource.En;
-                ability.Japanese = resource.Ja;
-                ability.Prefix = resource.Prefix;
-                ability.Skill = resource.Skill;
-                ability.Targets = resource.Targets;
-                ability.Type = resource.Type;
-
-                ability.CastTime = ToValue<double>(resource.CastTime);
-                ability.Recast = ToValue<double>(resource.Recast);
-
-                ability.Id = ToValue<int>(resource.Id);
-                ability.Index = ToValue<int>(resource.RecastId);
-                ability.MpCost = ToValue<int>(resource.MpCost);
-                ability.TpCost = ToValue<int>(resource.TpCost);
+                var ability = new Ability
+                {
+                    Element = resource.Element,
+                    English = resource.En,
+                    Japanese = resource.Ja,
+                    Prefix = resource.Prefix,
+                    Skill = resource.Skill,
+                    Targets = resource.Targets,
+                    Type = resource.Type,
+                    CastTime = ToValue<double>(resource.CastTime),
+                    Recast = ToValue<double>(resource.Recast),
+                    Id = ToValue<int>(resource.Id),
+                    Index = ToValue<int>(resource.RecastId),
+                    MpCost = ToValue<int>(resource.MpCost),
+                    TpCost = ToValue<int>(resource.TpCost)
+                };
 
                 ability.Prefix = ResourceHelper.ToPrefix(resource);
                 ability.AbilityType = ResourceHelper.ToAbilityType(ability.Prefix);
@@ -235,6 +239,25 @@ namespace EasyFarm.Parsing
             }).ToList();
 
             return abilities;
+        }
+
+        private static IEnumerable<Ability> RangedCommand()
+        {
+            return new[]
+            {
+                new Ability()
+                {
+                    AbilityType = AbilityType.Range,
+                    TargetType = TargetType.Enemy,
+                    Prefix = "/range",
+                    English = "Ranged"
+                }
+            };
+        }
+
+        private static bool IsRangedCommand(string abilityName)
+        {
+            return string.Equals(abilityName, "Ranged", StringComparison.InvariantCultureIgnoreCase);
         }
 
         private Boolean WithName(String abilityName, Resource resource)
