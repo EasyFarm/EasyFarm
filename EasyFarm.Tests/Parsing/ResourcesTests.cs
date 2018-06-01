@@ -88,6 +88,22 @@ namespace EasyFarm.Tests.Parsing
             // Teardown
         }
 
+        [Fact]
+        public void Ranged_ShouldReturnRangedAttack()
+        {
+            // Fixture setup
+            var sut = CreateSut();
+            // Excercise system   
+            var result = sut.GetAbilitiesWithName("Ranged").FirstOrDefault();
+            // Verify outcome
+            Assert.NotNull(result);
+            Assert.Equal(AbilityType.Range, result.AbilityType);
+            Assert.Equal(TargetType.Enemy, result.TargetType);
+            Assert.Equal("Ranged", result.English);
+            Assert.Equal("/range <t>", result.Command);
+            // Teardown	
+        }
+
         private static AbilityService CreateSut()
         {
             return AbilityService;
