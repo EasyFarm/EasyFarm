@@ -40,7 +40,7 @@ namespace EasyFarm.States
             if (new SummonTrustsState(Memory).Check()) return false;
 
             // Target dead or null.
-            if (!UnitFilters.MobFilter(EliteApi, Target)) return false;
+            if (!UnitFilters.MobFilter(EliteApi, Target, Config)) return false;
 
             // We should approach mobs that have aggroed or have been pulled. 
             if (Target.Status.Equals(Status.Fighting)) return true;

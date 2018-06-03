@@ -37,7 +37,7 @@ namespace EasyFarm.States
             if (new RestState(Memory).Check()) return false;
 
             // target dead or null. 
-            if (!UnitFilters.MobFilter(EliteApi, Target)) return false;
+            if (!UnitFilters.MobFilter(EliteApi, Target, Config)) return false;
 
             // Return true if fight has not started. 
             return !Target.Status.Equals(Status.Fighting);

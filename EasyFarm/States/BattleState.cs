@@ -18,7 +18,6 @@
 
 using System.Linq;
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
 using MemoryAPI;
 
 namespace EasyFarm.States
@@ -46,7 +45,7 @@ namespace EasyFarm.States
             if (!IsFighting) return false;
 
             // target null or dead. 
-            if (!UnitFilters.MobFilter(EliteApi, Target)) return false;
+            if (!UnitFilters.MobFilter(EliteApi, Target, Config)) return false;
 
             // Engage is enabled and we are not engaged. We cannot proceed. 
             if (Config.IsEngageEnabled) return EliteApi.Player.Status.Equals(Status.Fighting);

@@ -31,7 +31,7 @@ namespace EasyFarm.States
 
         public override bool Check()
         {
-            if (UnitFilters.MobFilter(EliteApi, Target))
+            if (UnitFilters.MobFilter(EliteApi, Target, Config))
                 if (!Config.BattleLists["Pull"].Actions.Any(x => x.IsEnabled))
                     return IsFighting = true;
                 else

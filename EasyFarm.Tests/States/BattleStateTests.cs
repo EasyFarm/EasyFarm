@@ -69,7 +69,7 @@ namespace EasyFarm.Tests.States
             {
                 // Fixture setup
                 MockConfig.IsEngageEnabled = false;
-                StateMemory memory = CreateStateMemory();
+                StateMemory memory = CreateStateMemory(targetValid: false);
                 memory.Target = FindNonValidUnit();
                 memory.IsFighting = true;
                 BattleState sut = new BattleState(memory);
@@ -121,7 +121,7 @@ namespace EasyFarm.Tests.States
             public void WithInvalidTargetShouldntBattle()
             {
                 // Fixture setup
-                StateMemory memory = CreateStateMemory();
+                StateMemory memory = CreateStateMemory(targetValid: false);
                 memory.Target = FindNonValidUnit();
                 memory.IsFighting = true;
                 MockEliteAPI.Player.Status = Status.Standing;

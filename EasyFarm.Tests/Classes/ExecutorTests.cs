@@ -21,19 +21,11 @@ using Xunit;
 using EasyFarm.Classes;
 using EasyFarm.Parsing;
 using EasyFarm.Tests.TestTypes;
-using EasyFarm.Tests.TestTypes.Mocks;
 
 namespace EasyFarm.Tests.Classes
 {
     public class ExecutorTests : AbstractTestBase
     {
-        private readonly MockEliteAPIAdapter _memoryApi;
-
-        public ExecutorTests()
-        {
-            _memoryApi = new MockEliteAPIAdapter(MockEliteAPI);
-        }
-
         /// <summary>
         /// Ignoring test since it will always hang right now. 
         /// 
@@ -45,7 +37,7 @@ namespace EasyFarm.Tests.Classes
             BattleAbility battleAbility = FindAbility();
             battleAbility.Name = "test";
             battleAbility.AbilityType = AbilityType.Magic;
-            Executor sut = new Executor(_memoryApi);
+            Executor sut = new Executor(MockEliteAPI.AsMemoryApi());
             // Exercise system
             sut.UseBuffingActions(new List<BattleAbility> { battleAbility });
             // Verify outcome
@@ -62,7 +54,7 @@ namespace EasyFarm.Tests.Classes
             battleAbility.AbilityType = AbilityType.Magic;
             battleAbility.Command = "/magic test <t>";
             IUnit unit = FindUnit();
-            Executor sut = new Executor(_memoryApi);
+            Executor sut = new Executor(MockEliteAPI.AsMemoryApi());
             // Exercise system
             sut.UseTargetedActions(new List<BattleAbility> { battleAbility }, unit);
             // Verify outcome
@@ -73,7 +65,7 @@ namespace EasyFarm.Tests.Classes
         [Fact]
         public void UseBuffingActionsWithNullActionListThrows()
         {
-            Executor sut = new Executor(_memoryApi);
+            Executor sut = new Executor(MockEliteAPI.AsMemoryApi());
             Exception result = Record.Exception(() => sut.UseBuffingActions(null));
             Assert.IsType<ArgumentNullException>(result);
         }

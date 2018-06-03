@@ -26,6 +26,12 @@ namespace EasyFarm.States
             set { Memory.UnitService = value; }
         }
 
+        public IUnitFilters UnitFilters
+        {
+            get { return Memory.UnitFilters; }
+            set { Memory.UnitFilters = value; }
+        }
+
         public StateMemory Memory { get; }
 
         public IMemoryAPI EliteApi
