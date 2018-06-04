@@ -518,9 +518,7 @@ namespace EasyFarm.Classes
                 Command = ability.Command;
                 AbilityType = ability.AbilityType;
                 Name = ability.English;
-                TargetType = ability.TargetType;
-
-                if (AbilityType == AbilityType.Weaponskill) { TpCost = 1000; }
+                TargetType = ability.TargetType.HasFlag(TargetType.Self) ? TargetType.Self : TargetType.Enemy;
             }
         }
 

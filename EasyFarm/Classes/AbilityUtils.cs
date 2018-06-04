@@ -49,7 +49,7 @@ namespace EasyFarm.Classes
             // if ability get ability recast. 
             if (ResourceHelper.IsAbility(ability.AbilityType))
             {
-                recast = fface.Timer.GetAbilityRecast(ability.Id);
+                recast = fface.Timer.GetAbilityRecast(ability.Index);
             }
 
             return recast <= 0;

@@ -22,13 +22,12 @@ namespace EasyFarm.Parsing
     [Flags]
     public enum TargetType
     {
-        Unknown = 0x0000,
-        Self = 0x0001,
-        Player = 0x0002,
-        Party = 0x0004,
-        Ally = 0x0008,
-        Npc = 0x0016,
-        Enemy = 0x0032,
-        Corpse = 0x0064
+        Unknown = 0,
+        Self = 1,
+        Player = 2,
+        Party = 4,
+        Ally = 8,
+        Npc = 16,
+        Enemy = 32
     }
 }
