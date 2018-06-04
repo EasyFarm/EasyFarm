@@ -54,9 +54,13 @@
         <Menu Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0"
               VerticalAlignment="Center">
             <Button
-                Margin="5"
+                Margin="0,5"
                 Content="{Binding StartPauseHeader}"
-                Command="{Binding StartCommand}" />
+                Command="{Binding StartCommand}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Button
+                Margin="0,5"
+                Content="Select Character ..."
+                Command="{Binding SelectProcessCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" Background="#FFF7F7F7" />
             <MenuItem Header="_File"
                       Foreground="White"
                       Background="Black"
