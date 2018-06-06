@@ -10,7 +10,7 @@
                        x:Name="MainForm"
                        x:Class="EasyFarm.Views.MasterView"
                        Title="{Binding MainWindowTitle}"
-                       Width="600"
+                       Width="650"
                        Height="400"
                        Topmost="{Binding IsChecked, ElementName=MnuAlwaysOnTop, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
     <controls:MetroWindow.Resources>
@@ -59,40 +59,20 @@
                 Command="{Binding StartCommand}" VerticalAlignment="Center" HorizontalAlignment="Center" />
             <Button
                 Margin="0,5"
-                Content="Select Character ..."
-                Command="{Binding SelectProcessCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" Background="#FFF7F7F7" />
-            <MenuItem Header="_File"
-                      Foreground="White"
-                      Background="Black"
-                      VerticalAlignment="Center">
-                <MenuItem Header="Select Character ..."
-                          Command="{Binding SelectProcessCommand}" />
-                <MenuItem Header="{Binding StartPauseHeader}"
-                          Command="{Binding StartCommand}" />
-                <MenuItem Header="E_xit"
-                          Command="{Binding ExitCommand}" />
-            </MenuItem>
-            <MenuItem Header="_Settings"
-                      Foreground="White"
-                      Background="Black"
-                      VerticalAlignment="Center">
-                <MenuItem Header="_Load"
-                          Command="{Binding LoadCommand}" />
-                <MenuItem Header="_Save"
-                          Command="{Binding SaveCommand}" />
-            </MenuItem>
-            <MenuItem Header="_Window"
-                      Foreground="White"
-                      Background="Black"
-                      VerticalAlignment="Center">
-                <MenuItem x:Name="MnuAlwaysOnTop"
-                          Header="_Always on top"
-                          IsCheckable="True" />
-                <MenuItem x:Name="MnuMinimizeToTray"
-                          Header="_Minimize to system tray"
-                          IsCheckable="True"
-                          IsChecked="{Binding MinimizeToTray}" />
-            </MenuItem>
+                Content="Select Character"
+                Command="{Binding SelectProcessCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFF7F7F7" />
+            <Separator Margin="0"/>
+            <Button
+                Margin="0,5"
+                Content="Load Settings"
+                Command="{Binding LoadCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="9" Background="#FFF7F7F7" />
+            <Button
+                Margin="0,5"
+                Content="Save Settings"
+                Command="{Binding SaveCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="9" Background="#FFF7F7F7" />
+            <Separator Margin="0"/>
+            <CheckBox x:Name="MnuAlwaysOnTop" Content="Always on top" VerticalAlignment="Center" Padding="3,0,0,0" HorizontalContentAlignment="Center" Foreground="White" />
+            <CheckBox Content="Minimize to tray" VerticalAlignment="Center" Padding="3,0,0,0" HorizontalContentAlignment="Center" Foreground="White" IsChecked="{Binding MinimizeToTray}" />
         </Menu>
 
         <ContentControl Content="{Binding ViewModel}"
