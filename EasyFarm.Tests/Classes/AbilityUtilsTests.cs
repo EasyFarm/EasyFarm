@@ -52,7 +52,7 @@ namespace EasyFarm.Tests.Classes
         private bool VerifySut(int recastTime = 0)
         {
             MockEliteAPI.Timer.RecastTime = recastTime;
-            return AbilityUtils.IsRecastable(new MockEliteAPIAdapter(MockEliteAPI), _ability);
+            return AbilityUtils.IsRecastable(MockEliteAPI.AsMemoryApi(), _ability);
         }
     }
 }

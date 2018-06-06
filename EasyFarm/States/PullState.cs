@@ -38,7 +38,7 @@ namespace EasyFarm.States
             if (IsFighting) return false;
             if (new RestState(Memory).Check()) return false;
             if (new SummonTrustsState(Memory).Check()) return false;
-            if (!UnitFilters.MobFilter(EliteApi, Target)) return false;
+            if (!UnitFilters.MobFilter(EliteApi, Target, Config)) return false;
             return Config.BattleLists["Pull"].Actions.Any(x => x.IsEnabled);
         }
 

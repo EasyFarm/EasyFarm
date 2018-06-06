@@ -37,7 +37,7 @@ namespace EasyFarm.States
             if (Config.Route.Zone != EliteApi.Player.Zone) return false;
 
             // Has valid target to fight.
-            if (UnitFilters.MobFilter(EliteApi, Target)) return false;
+            if (UnitFilters.MobFilter(EliteApi, Target, Config)) return false;
 
             // We don't have to rest.
             if (new RestState(Memory).Check()) return false;

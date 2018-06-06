@@ -25,10 +25,23 @@ using MemoryAPI.Navigation;
 
 namespace EasyFarm.Classes
 {
+    public interface IUnitFilters
+    {
+        /// <summary>
+        /// Returns true if a mob is attackable by the player based on the various settings in the
+        /// Config class.
+        /// </summary>
+        /// <param name="fface"></param>
+        /// <param name="mob"></param>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        bool MobFilter(IMemoryAPI fface, IUnit mob, IConfig config);
+    }
+
     /// <summary>
     /// Helper functions for filtering units.
     /// </summary>
-    public class UnitFilters
+    public class UnitFilters : IUnitFilters
     {
         #region MOBFilter
 
@@ -38,8 +51,9 @@ namespace EasyFarm.Classes
         /// </summary>
         /// <param name="fface"></param>
         /// <param name="mob"></param>
+        /// <param name="config"></param>
         /// <returns></returns>
-        public static bool MobFilter(IMemoryAPI fface, IUnit mob)
+        public bool MobFilter(IMemoryAPI fface, IUnit mob, IConfig config)
         {
             // Function to use to filter surrounding mobs by. General Mob Filtering Criteria
             if (fface == null) return false;
@@ -58,49 +72,49 @@ namespace EasyFarm.Classes
             if (!mob.NpcType.Equals(NpcType.Mob)) return false;
 
             // Mob is out of range
-            if (!(mob.Distance < Config.Instance.DetectionDistance)) return false;
+            if (!(mob.Distance < config.DetectionDistance)) return false;
 
             if (mob.IsPet) return false;
 
             // If any unit is within the wander distance then the
-            if (Config.Instance.Route.Waypoints.Any())
+            if (config.Route.Waypoints.Any())
             {
-                if (!(Config.Instance.Route.Waypoints.Any(waypoint => Distance(mob, waypoint) <= Config.Instance.WanderDistance))) return false;
+                if (!(config.Route.Waypoints.Any(waypoint => Distance(mob, waypoint) <= config.WanderDistance))) return false;
             }
 
             // Mob too high out of reach.
-            if (mob.YDifference > Config.Instance.HeightThreshold) return false;
+            if (mob.YDifference > config.HeightThreshold) return false;
 
             // User Specific Filtering
 
             // Performs a case insensitve match on the mob's name. If any part of the mob's name is
             // in the ignored list, we will not attack it.
-            if (MatchAny(mob.Name, Config.Instance.IgnoredMobs,
+            if (MatchAny(mob.Name, config.IgnoredMobs,
                 RegexOptions.IgnoreCase)) return false;
 
             // Kill aggro if aggro's checked regardless of target's list but follows the ignored list.
-            if (mob.HasAggroed && Config.Instance.AggroFilter) return true;
+            if (mob.HasAggroed && config.AggroFilter) return true;
 
             // There is a target's list but the mob is not on it.
-            if (!MatchAny(mob.Name, Config.Instance.TargetedMobs, RegexOptions.IgnoreCase) &&
-                Config.Instance.TargetedMobs.Any())
+            if (!MatchAny(mob.Name, config.TargetedMobs, RegexOptions.IgnoreCase) &&
+                config.TargetedMobs.Any())
                 return false;
 
             // Mob on our targets list or not on our ignore list.
 
             // Kill the creature if it has aggroed and aggro is checked.
-            if (mob.HasAggroed && Config.Instance.AggroFilter) return true;
+            if (mob.HasAggroed && config.AggroFilter) return true;
 
             // Kill the creature if it is claimed by party and party is checked.
-            if (mob.PartyClaim && Config.Instance.PartyFilter) return true;
+            if (mob.PartyClaim && config.PartyFilter) return true;
 
             // Kill the creature if it's not claimed and unclaimed is checked.
-            if (!mob.IsClaimed && Config.Instance.UnclaimedFilter) return true;
+            if (!mob.IsClaimed && config.UnclaimedFilter) return true;
 
             // Kill the creature if it's claimed and we we don't have claim but
             // claim is checked.
             //FIX: Temporary fix until player.serverid is fixed.
-            if (mob.IsClaimed && Config.Instance.ClaimedFilter) return true;
+            if (mob.IsClaimed && config.ClaimedFilter) return true;
 
             // Kill only mobs that we have claim on. 
             return mob.ClaimedId == fface.PartyMember[0].ServerID;
@@ -112,7 +126,7 @@ namespace EasyFarm.Classes
         /// <param name="mob"></param>
         /// <param name="waypoint"></param>
         /// <returns></returns>
-        private static double Distance(IUnit mob, Position waypoint)
+        private double Distance(IUnit mob, Position waypoint)
         {
             return Math.Sqrt(Math.Pow(waypoint.X - mob.PosX, 2) + Math.Pow(waypoint.Z - mob.PosZ, 2));
         }
@@ -124,7 +138,7 @@ namespace EasyFarm.Classes
         /// <param name="patterns"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static bool MatchAny(string input, IList<string> patterns, RegexOptions options)
+        private bool MatchAny(string input, IList<string> patterns, RegexOptions options)
         {
             return patterns
                 .Select(pattern => new Regex(pattern, options))

@@ -49,7 +49,11 @@ namespace EasyFarm.Tests.States
 
             private RestState CreateSut()
             {
-                return new RestState(CreateStateMemory());
+                return new RestState(new StateMemory(MockEliteAPI.AsMemoryApi())
+                {
+                    Config = MockConfig,
+                    UnitFilters = new MockUnitFilters()
+                });
             }
         }
 
@@ -70,7 +74,11 @@ namespace EasyFarm.Tests.States
 
             private RestState CreateSut()
             {
-                return new RestState(CreateStateMemory());
+                return new RestState(new StateMemory(MockEliteAPI.AsMemoryApi())
+                {
+                    Config = MockConfig,
+                    UnitFilters = new MockUnitFilters()
+                });
             }
         }
 
@@ -91,7 +99,11 @@ namespace EasyFarm.Tests.States
 
             private RestState CreateSut()
             {
-                return new RestState(CreateStateMemory());
+                return new RestState(new StateMemory(MockEliteAPI.AsMemoryApi())
+                {
+                    Config = MockConfig,
+                    UnitFilters = new MockUnitFilters()
+                });
             }
         }
     }

@@ -35,7 +35,11 @@ namespace EasyFarm.Tests.States
 
             private DeadState CreateSut()
             {
-                return new DeadState(CreateStateMemory());
+                return new DeadState(new StateMemory(MockEliteAPI.AsMemoryApi())
+                {
+                    Config = MockConfig,
+                    UnitFilters = new MockUnitFilters()
+                });
             }
         }
 
@@ -94,7 +98,11 @@ namespace EasyFarm.Tests.States
 
             private DeadState CreateSut()
             {
-                return new DeadState(CreateStateMemory());
+                return new DeadState(new StateMemory(MockEliteAPI.AsMemoryApi())
+                {
+                    Config = MockConfig,
+                    UnitFilters = new MockUnitFilters()
+                });
             }
         }
     }

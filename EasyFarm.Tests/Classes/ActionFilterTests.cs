@@ -205,7 +205,7 @@ namespace EasyFarm.Tests.Classes
 
         public IMemoryAPI FindMemoryApi()
         {
-            return new MockEliteAPIAdapter(MockEliteAPI);
+            return MockEliteAPI.AsMemoryApi();
         }
     }
 }

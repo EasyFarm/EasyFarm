@@ -86,6 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\UnitFilterTests.cs" />
     <Compile Include="ModuleInitializer.cs" />
     <Compile Include="Parsing\AbilityTests.cs" />
     <Compile Include="States\DeadStateTests.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="TestTypes\Mocks\MockEliteAPIAdapter.cs" />
     <Compile Include="TestTypes\Mocks\MockEliteAPITests.cs" />
     <Compile Include="TestTypes\Mocks\MockUnit.cs" />
+    <Compile Include="TestTypes\MockUnitFilters.cs" />
     <Compile Include="ViewModels\IgnoredViewModelTests.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

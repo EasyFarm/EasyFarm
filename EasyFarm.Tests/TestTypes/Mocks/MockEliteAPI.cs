@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using EasyFarm.UserSettings;
 using EliteMMO.API;
@@ -36,11 +35,15 @@ namespace EasyFarm.Tests.TestTypes.Mocks
             Navigator = new MockNavigatorTools();
             Timer = new MockTimerTools();
             Target = new MockTargetTools();
+            PartyMember = new Dictionary<byte, MockPartyMemberTools>()
+            {
+                {0, new MockPartyMemberTools()}
+            };
         }
 
         public MockNavigatorTools Navigator { get; set; }
         public MockNPCTools NPC { get; set; }
-        public Dictionary<byte, IPartyMemberTools> PartyMember { get; set; }
+        public Dictionary<byte, MockPartyMemberTools> PartyMember { get; set; }
         public MockPlayerTools Player { get; set; }
         public ITargetTools Target { get; set; }
         public MockTimerTools Timer { get; set; }
@@ -51,11 +54,16 @@ namespace EasyFarm.Tests.TestTypes.Mocks
         {
             return new MockEliteAPI();
         }
+
+        public IMemoryAPI AsMemoryApi()
+        {
+            return new MockEliteAPIAdapter(this);
+        }
     }
 
     public class MockTargetTools : ITargetTools
     {
-        public int ID { get; }
+        public int ID { get; set; }
         public bool SetNPCTarget(int index)
         {
             return true;
@@ -274,5 +282,48 @@ namespace EasyFarm.Tests.TestTypes.Mocks
             LastKeyPress = key;
             KeyPresses.Add(key);
         }
+    }
+
+    public class MockPartyMemberTools : IPartyMemberTools
+    {
+        public bool UnitPresent { get; set; }
+        public int ServerID { get; set; }
+        public string Name { get; set; }
+        public int HPCurrent { get; set; }
+        public int HPPCurrent { get; set; }
+        public int MPCurrent { get; set; }
+        public int MPPCurrent { get; set; }
+        public int TPCurrent { get; set; }
+        public Job Job { get; set; }
+        public Job SubJob { get; set; }
+        public NpcType NpcType { get; set; }
+    }
+
+    /// <summary>
+    /// Allow <see cref="MockEliteAPI"/> to have more flexibility in using the mock version of the
+    /// IMemoryAPI properties.
+    /// </summary>
+    public class MockEliteAPIAdapter : IMemoryAPI
+    {
+        public MockEliteAPIAdapter(MockEliteAPI mockEliteAPI)
+        {
+            Player = mockEliteAPI.Player;
+            Windower = mockEliteAPI.Windower;
+            Chat = mockEliteAPI.Chat;
+            NPC = mockEliteAPI.NPC;
+            Navigator = mockEliteAPI.Navigator;
+            PartyMember = mockEliteAPI.PartyMember.ToDictionary(x => x.Key, x => (IPartyMemberTools) x.Value);
+            Target = mockEliteAPI.Target;
+            Timer = mockEliteAPI.Timer;
+        }
+
+        public INavigatorTools Navigator { get; set; }
+        public INPCTools NPC { get; set; }
+        public Dictionary<byte, IPartyMemberTools> PartyMember { get; set; }
+        public IPlayerTools Player { get; set; }
+        public ITargetTools Target { get; set; }
+        public ITimerTools Timer { get; set; }
+        public IWindowerTools Windower { get; set; }
+        public IChatTools Chat { get; set; }
     }
 }

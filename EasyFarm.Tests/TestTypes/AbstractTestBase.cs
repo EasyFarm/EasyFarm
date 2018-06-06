@@ -46,11 +46,15 @@ namespace EasyFarm.Tests.TestTypes
         /// Create new state memory with <see cref="MockEliteAPI"/> and <see cref="MockConfig"/>.
         /// </summary>
         /// <returns></returns>
-        public StateMemory CreateStateMemory()
+        public StateMemory CreateStateMemory(bool targetValid = true)
         {
-            return new StateMemory(new MockEliteAPIAdapter(MockEliteAPI))
+            return new StateMemory(MockEliteAPI.AsMemoryApi())
             {
-                Config = MockConfig
+                Config = MockConfig,
+                UnitFilters = new MockUnitFilters()
+                {
+                    Result = targetValid
+                }
             };
         }
 

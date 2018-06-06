@@ -37,13 +37,13 @@ namespace EasyFarm.States
         public override bool Check()
         {
             // Currently fighting, do not change target. 
-            if (!UnitFilters.MobFilter(EliteApi, Target))
+            if (!UnitFilters.MobFilter(EliteApi, Target, Config))
             {
                 // Still not time to update for new target. 
                 if (DateTime.Now < _lastTargetCheck.AddSeconds(Constants.UnitArrayCheckRate)) return false;
 
                 // First get the first mob by distance.
-                var mobs = _units.MobArray.Where(x => UnitFilters.MobFilter(EliteApi, x))
+                var mobs = _units.MobArray.Where(x => UnitFilters.MobFilter(EliteApi, x, Config))
                     .OrderByDescending(x => x.PartyClaim)
                     .ThenByDescending(x => x.HasAggroed)
                     .ThenBy(x => x.Distance)

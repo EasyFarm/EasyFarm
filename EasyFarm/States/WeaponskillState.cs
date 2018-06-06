@@ -36,7 +36,7 @@ namespace EasyFarm.States
         {
             if (new RestState(Memory).Check()) return false;
 
-            if (!UnitFilters.MobFilter(EliteApi, Target)) return false;
+            if (!UnitFilters.MobFilter(EliteApi, Target, Config)) return false;
 
             // Use skill if we are engaged. 
             return EliteApi.Player.Status.Equals(Status.Fighting);

@@ -29,6 +29,7 @@ namespace EasyFarm.States
             EliteApi = eliteApi;
             Executor = new Executor(eliteApi);
             UnitService = new UnitService(eliteApi);
+            UnitFilters = new UnitFilters();
             Config = new ProxyConfig();
         }
 
@@ -52,5 +53,7 @@ namespace EasyFarm.States
         public Executor Executor { get; set; }
 
         public IUnitService UnitService { get; set; }
+
+        public IUnitFilters UnitFilters { get; set; }
     }
 }
