@@ -16,6 +16,8 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 
+using System;
+
 namespace EasyFarm.Parsing
 {
     /// <summary>
@@ -173,6 +175,8 @@ namespace EasyFarm.Parsing
                 return $@"{Prefix} {commandName} {Postfix}";
             }
         }
+
+        public Int32 TimerID { get; set; }
 
         public override string ToString()
         {

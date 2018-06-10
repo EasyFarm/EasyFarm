@@ -5,6 +5,7 @@ using EliteMMO.API;
 using MemoryAPI;
 using MemoryAPI.Chat;
 using MemoryAPI.Navigation;
+using MemoryAPI.Resources;
 using MemoryAPI.Windower;
 using StatusEffect = MemoryAPI.StatusEffect;
 
@@ -325,5 +326,6 @@ namespace EasyFarm.Tests.TestTypes.Mocks
         public ITimerTools Timer { get; set; }
         public IWindowerTools Windower { get; set; }
         public IChatTools Chat { get; set; }
+        public IResourcesTools Resource { get; set; }
     }
 }

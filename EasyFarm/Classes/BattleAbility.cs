@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Serialization;
@@ -254,7 +255,11 @@ namespace EasyFarm.Classes
         public string Name
         {
             get { return _name; }
-            set { Set(ref _name, value); }
+            set
+            {
+                Set(ref _name, value);
+                RaisePropertyChanged(nameof(AvailableAbilities));
+            }
         }
         public int PlayerLowerHealth
         {
@@ -487,6 +492,21 @@ namespace EasyFarm.Classes
         {
             get { return _targetType; }
             set { Set(ref _targetType, value); }
+        }
+
+        public ObservableCollection<Ability> AvailableAbilities
+        {
+            get
+            {
+                ObservableCollection<Ability> availableAbilities = new ObservableCollection<Ability>(
+                    Infrastructure.ViewModelBase.AbilityService?.Resources
+                        .Where(x => x.English.ToLower().Contains(Name?.ToLower() ?? ""))
+                        .Where(x => !string.IsNullOrWhiteSpace(x.English))
+                        .Take(3)?
+                        .ToList() ?? new List<Ability>());
+
+                return availableAbilities;
+            }
         }
 
         /// <summary>

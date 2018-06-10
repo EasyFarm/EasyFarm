@@ -23,6 +23,7 @@ using System.Threading;
 using EliteMMO.API;
 using MemoryAPI.Chat;
 using MemoryAPI.Navigation;
+using MemoryAPI.Resources;
 using MemoryAPI.Windower;
 
 namespace MemoryAPI.Memory
@@ -47,6 +48,7 @@ namespace MemoryAPI.Memory
             Timer = new TimerTools(eliteApi);
             Windower = new WindowerTools(eliteApi);
             Chat = new ChatTools(eliteApi);
+            Resource = new ResourcesTools(eliteApi);
 
             for (byte i = 0; i < 16; i++)
             {

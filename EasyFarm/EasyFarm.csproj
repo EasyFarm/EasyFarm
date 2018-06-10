@@ -179,8 +179,11 @@
     <Compile Include="Handlers\SelectCharacterResult.cs" />
     <Compile Include="Infrastructure\ApplicationBindingsModule.cs" />
     <Compile Include="Infrastructure\TabViewModels.cs" />
+    <Compile Include="Parsing\AbilityMapper.cs" />
+    <Compile Include="Parsing\ItemMapper.cs" />
     <Compile Include="Parsing\Resource.cs" />
     <Compile Include="Parsing\ResourceMapper.cs" />
+    <Compile Include="Parsing\SpellMapper.cs" />
     <Compile Include="Persistence\Persister.cs" />
     <Compile Include="Persistence\JsonPersister.cs" />
     <Compile Include="Classes\PlayerMonitor.cs" />
