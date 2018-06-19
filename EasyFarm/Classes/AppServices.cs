@@ -68,5 +68,10 @@ namespace EasyFarm.Classes
         {
             EventAggregator.Register<T>(receipent, action);
         }
+
+        public static void SendConfigLoaded()
+        {
+            PublishEvent<Events.ConfigLoadedEvent>();
+        }
     }
 }

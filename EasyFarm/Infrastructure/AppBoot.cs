@@ -7,13 +7,13 @@ namespace EasyFarm.Infrastructure
 {
     public class AppBoot
     {
-        private readonly IKernel _container;
+        public IKernel Container { get; set; }
         private readonly App _app;
 
         public AppBoot(App app)
         {
             _app = app;
-            _container = CreateContainer();
+            Container = CreateContainer();
             _app.MainWindow = new MasterView();
         }
 
@@ -33,7 +33,7 @@ namespace EasyFarm.Infrastructure
 
         public void Navigate<TViewModel>()
         {
-            NavigateViewRequestHandler handler = new NavigateViewRequestHandler(_app, _container);
+            NavigateViewRequestHandler handler = new NavigateViewRequestHandler(_app, Container);
             handler.Handle(typeof(TViewModel)).GetAwaiter();
         }
 

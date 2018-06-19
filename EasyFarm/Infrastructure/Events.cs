@@ -33,5 +33,9 @@ namespace EasyFarm.Infrastructure
         {
             public string Message { get; set; }
         }
+
+        public class ConfigLoadedEvent
+        {
+        }
     }
 }

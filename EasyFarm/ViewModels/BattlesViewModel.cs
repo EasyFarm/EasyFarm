@@ -33,6 +33,14 @@ namespace EasyFarm.ViewModels
             DeleteActionCommand = new RelayCommand(DeleteAction);
             ClearActionsCommand = new RelayCommand(ClearActions);
             ViewName = "Battles";
+            AppServices.RegisterEvent<Events.ConfigLoadedEvent>(this, x => RefreshViewModel());
+        }
+
+        private void RefreshViewModel()
+        {
+            RaisePropertyChanged(nameof(BattleLists));
+            RaisePropertyChanged(nameof(SelectedAbility));
+            RaisePropertyChanged(nameof(SelectedList));
         }
 
         public ObservableCollection<BattleList> BattleLists
