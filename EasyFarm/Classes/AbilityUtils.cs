@@ -38,7 +38,7 @@ namespace EasyFarm.Classes
             if (ability.AbilityType == AbilityType.Weaponskill) return true;
 
             // No recast for ranged attacks. 
-            if (AbilityType.Range.HasFlag(ability.AbilityType)) return true;
+            if (AbilityType.Range == ability.AbilityType) return true;
 
             // If a spell get spell recast
             if (ResourceHelper.IsSpell(ability.AbilityType))
