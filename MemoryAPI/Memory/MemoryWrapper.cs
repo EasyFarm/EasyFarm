@@ -17,6 +17,7 @@
 // ///////////////////////////////////////////////////////////////////
 using System.Collections.Generic;
 using MemoryAPI.Chat;
+using MemoryAPI.Resources;
 using MemoryAPI.Windower;
 
 namespace MemoryAPI.Memory
@@ -41,6 +42,9 @@ namespace MemoryAPI.Memory
         public ITimerTools Timer { get; set; }
 
         public IWindowerTools Windower { get; set; }
+
         public IChatTools Chat { get; set; }
+
+        public IResourcesTools Resource { get; set; }
     }
 }

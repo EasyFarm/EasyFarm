@@ -21,15 +21,12 @@ using System.Windows;
 using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
 using EasyFarm.Properties;
-using EasyFarm.Parsing;
 using EasyFarm.ViewModels;
 
 namespace EasyFarm
 {
     public partial class App
     {
-        public static AbilityService AbilityService;
-
         public static Action<App> DefaultInitializer { get; set; } = InitializeApp;
 
         protected override void OnStartup(StartupEventArgs e)
@@ -46,7 +43,6 @@ namespace EasyFarm
             };            
 
             LogViewModel.Write("Resources loaded");
-            AbilityService = new AbilityService("resources");
             LogViewModel.Write("Application starting");
             Logger.Log(new LogEntry(LoggingEventType.Information, "EasyFarm Started ..."));
 

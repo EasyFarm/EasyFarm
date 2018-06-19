@@ -89,6 +89,10 @@
     <Compile Include="Classes\UnitFilterTests.cs" />
     <Compile Include="ModuleInitializer.cs" />
     <Compile Include="Parsing\AbilityTests.cs" />
+    <Compile Include="Parsing\AbilityMapperTests.cs" />
+    <Compile Include="Parsing\ItemMapperTests.cs" />
+    <Compile Include="Parsing\SpellMapperTests.cs" />
+    <Compile Include="Spikes\ResourcesSpike.cs" />
     <Compile Include="States\DeadStateTests.cs" />
     <Compile Include="States\RestStateTests.cs" />
     <Compile Include="TestTypes\AbstractTestBase.cs" />

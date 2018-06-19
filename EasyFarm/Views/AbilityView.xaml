@@ -1,12 +1,13 @@
-﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             x:Class="EasyFarm.Views.AbilityView"
-             d:DesignHeight="520.875"
-             d:DesignWidth="522">
+﻿<UserControl
+    x:Class="EasyFarm.Views.AbilityView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="520.875"
+    d:DesignWidth="522"
+    mc:Ignorable="d">
     <TabControl Margin="5">
         <TabControl.ItemContainerStyle>
             <Style TargetType="{x:Type TabItem}" />
@@ -16,30 +17,34 @@
             <StackPanel>
                 <UniformGrid Columns="3">
                     <ComboBox
-                            Margin="5"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding CommandPrefixes}"
-                            SelectedItem="{Binding AbilityType}" />
-
-                    <TextBox
-                            Margin="5"
-                            Width="Auto"
-                            ToolTip="Name of the move. "
-                            Text="{Binding Name}" />
+                        Margin="5"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding CommandPrefixes}"
+                        SelectedItem="{Binding AbilityType}" />
 
                     <ComboBox
-                            Margin="5"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding CommandTargets}"
-                            SelectedItem="{Binding TargetType}" />
+                        Width="Auto"
+                        Margin="5"
+                        DisplayMemberPath="English"
+                        IsDropDownOpen="False"
+                        IsEditable="True"
+                        ItemsSource="{Binding AvailableAbilities}"
+                        Text="{Binding Name}"
+                        ToolTip="Name of the move. " />
+
+                    <ComboBox
+                        Margin="5"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding CommandTargets}"
+                        SelectedItem="{Binding TargetType}" />
                 </UniformGrid>
 
-                <!-- AutoFill -->
+                <!--  AutoFill  -->
                 <Button
-                        Margin="5"
-                        Content="Auto-Fill"
-                        ToolTip="Auto-fill fields with information from Windower's resource files. "
-                        Command="{Binding AutoFillCommand}" />
+                    Margin="5"
+                    Command="{Binding AutoFillCommand}"
+                    Content="Auto-Fill"
+                    ToolTip="Auto-fill fields with information from Windower's resource files. " />
             </StackPanel>
         </TabItem>
 
@@ -50,54 +55,54 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!-- Distance -->
+                <!--  Distance  -->
                 <Label
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        Margin="5"
-                        Content="Distance" />
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5"
+                    Content="Distance" />
 
                 <Slider
-                        Grid.Column="1"
-                        Grid.Row="0"
-                        Minimum="0"
-                        Maximum="50"
-                        Margin="5"
-                        ToolTip="Max distance for the move. "
-                        Value="{Binding Distance}" />
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5"
+                    Maximum="50"
+                    Minimum="0"
+                    ToolTip="Max distance for the move. "
+                    Value="{Binding Distance}" />
 
-                <!-- Limit Use Per Battle -->
+                <!--  Limit Use Per Battle  -->
                 <Label
-                        Grid.Column="0"
-                        Grid.Row="1"
-                        Margin="5"
-                        Content="Max Use" />
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="5"
+                    Content="Max Use" />
 
                 <controls:NumericUpDown
-                        Grid.Column="1"
-                        Grid.Row="1"
-                        Margin="5"
-                        ToolTip="Limits the maximum number of uses per battle"
-                        Value="{Binding UsageLimit}" />
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5"
+                    ToolTip="Limits the maximum number of uses per battle"
+                    Value="{Binding UsageLimit}" />
 
-                <!-- Recast per seconds -->
+                <!--  Recast per seconds  -->
                 <Label
-                        Grid.Column="0"
-                        Grid.Row="2"
-                        Margin="5"
-                        Content="Recast" />
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="5"
+                    Content="Recast" />
 
                 <controls:NumericUpDown
-                        Grid.Column="1"
-                        Grid.Row="2"
-                        Margin="5"
-                        ToolTip="Limits action recast in seconds. "
-                        Value="{Binding Recast}" />
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="5"
+                    ToolTip="Limits action recast in seconds. "
+                    Value="{Binding Recast}" />
             </Grid>
         </TabItem>
 
@@ -108,40 +113,40 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!-- MP Cost -->
+                <!--  MP Cost  -->
                 <Label
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="5"
-                        Content="MP Cost" />
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5"
+                    Content="MP Cost" />
 
                 <controls:NumericUpDown
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5"
-                        ToolTip="MP Cost for the move."
-                        Value="{Binding MpCost}" />
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5"
+                    ToolTip="MP Cost for the move."
+                    Value="{Binding MpCost}" />
 
-                <!-- MP Range-->
+                <!--  MP Range  -->
                 <Label
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Margin="5"
-                        Content="MP Range" />
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="5"
+                    Content="MP Range" />
 
                 <controls:RangeSlider
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="5"
-                        Maximum="100"
-                        Minimum="0"
-                        LowerValue="{Binding MPReserveLow}"
-                        UpperValue="{Binding MPReserveHigh}"
-                        ToolTip="Use action only when MP is within range." />
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5"
+                    LowerValue="{Binding MPReserveLow}"
+                    Maximum="100"
+                    Minimum="0"
+                    ToolTip="Use action only when MP is within range."
+                    UpperValue="{Binding MPReserveHigh}" />
             </Grid>
         </TabItem>
 
@@ -152,42 +157,42 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!-- TP Cost -->
+                <!--  TP Cost  -->
                 <Label
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="5"
-                        Content="TP Cost" />
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5"
+                    Content="TP Cost" />
 
                 <controls:NumericUpDown
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5"
-                        ToolTip="TP Cost for the move. "
-                        Value="{Binding TpCost}" />
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5"
+                    ToolTip="TP Cost for the move. "
+                    Value="{Binding TpCost}" />
 
-                <!-- TP Range-->
+                <!--  TP Range  -->
                 <Label
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Margin="5"
-                        Content="TP Range" />
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="5"
+                    Content="TP Range" />
 
                 <controls:RangeSlider
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="5"
-                        Maximum="3000"
-                        Minimum="0"
-                        TickFrequency="100"
-                        IsSnapToTickEnabled="True"
-                        LowerValue="{Binding TPReserveLow}"
-                        UpperValue="{Binding TPReserveHigh}"
-                        ToolTip="Use action only when TP is within range." />
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5"
+                    IsSnapToTickEnabled="True"
+                    LowerValue="{Binding TPReserveLow}"
+                    Maximum="3000"
+                    Minimum="0"
+                    TickFrequency="100"
+                    ToolTip="Use action only when TP is within range."
+                    UpperValue="{Binding TPReserveHigh}" />
             </Grid>
         </TabItem>
 
@@ -198,24 +203,24 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!-- Recasting -->
+                <!--  Recasting  -->
                 <CheckBox
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="5,9,5,1"
-                        IsChecked="{Binding TriggerOnEffectPresent}"
-                        ToolTip="Toggles type of status effect check. Check to trigger moves on status effect present. Uncheck to trigger on status effect missing. "
-                        Content="On Status" />
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5,9,5,1"
+                    Content="On Status"
+                    IsChecked="{Binding TriggerOnEffectPresent}"
+                    ToolTip="Toggles type of status effect check. Check to trigger moves on status effect present. Uncheck to trigger on status effect missing. " />
 
                 <TextBox
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5"
-                        ToolTip="Regular expression that checks the player's status effects. "
-                        Text="{Binding StatusEffect}" />
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5"
+                    Text="{Binding StatusEffect}"
+                    ToolTip="Regular expression that checks the player's status effects. " />
             </Grid>
         </TabItem>
 
@@ -226,25 +231,25 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!-- Player Health -->
+                <!--  Player Health  -->
                 <Label
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Content="Player HPP"
-                        Margin="5" />
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5"
+                    Content="Player HPP" />
 
                 <controls:RangeSlider
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5"
-                        Minimum="0"
-                        Maximum="100"
-                        LowerValue="{Binding PlayerLowerHealth}"
-                        UpperValue="{Binding PlayerUpperHealth}"
-                        ToolTip="Use move when the player's health in range." />
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5"
+                    LowerValue="{Binding PlayerLowerHealth}"
+                    Maximum="100"
+                    Minimum="0"
+                    ToolTip="Use move when the player's health in range."
+                    UpperValue="{Binding PlayerUpperHealth}" />
             </Grid>
         </TabItem>
 
@@ -255,42 +260,42 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!-- Mob Name -->
+                <!--  Mob Name  -->
                 <Label
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="5,5,5,4"
-                        Content="Mob Name"
-                        RenderTransformOrigin="0.73,-0.63" />
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5,5,5,4"
+                    Content="Mob Name"
+                    RenderTransformOrigin="0.73,-0.63" />
 
                 <TextBox
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5,5,5,4"
-                        Text="{Binding TargetName}"
-                        ToolTip="Use move on mobs matching the given name. " />
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5,5,5,4"
+                    Text="{Binding TargetName}"
+                    ToolTip="Use move on mobs matching the given name. " />
 
-                <!-- Mob Health -->
+                <!--  Mob Health  -->
                 <Label
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Content="Mob HPP"
-                        Margin="5,5,5,4" />
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="5,5,5,4"
+                    Content="Mob HPP" />
 
                 <controls:RangeSlider
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="5,5,5,14"
-                        Maximum="100"
-                        Minimum="0"
-                        LowerValue="{Binding TargetLowerHealth}"
-                        UpperValue="{Binding TargetUpperHealth}"
-                        ToolTip="Uses a move when the target's health falls in this range. "
-                        RenderTransformOrigin="0.478,0.471" />
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5,5,5,14"
+                    LowerValue="{Binding TargetLowerHealth}"
+                    Maximum="100"
+                    Minimum="0"
+                    RenderTransformOrigin="0.478,0.471"
+                    ToolTip="Uses a move when the target's health falls in this range. "
+                    UpperValue="{Binding TargetUpperHealth}" />
             </Grid>
         </TabItem>
 
@@ -301,49 +306,49 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!-- Resummon On Low HP -->
+                <!--  Resummon On Low HP  -->
                 <CheckBox
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="5,5,5,5"
-                        IsChecked="{Binding ResummonOnLowHP}"
-                        ToolTip="Toggles whether or not the trust will be resummoned if their HP is low."
-                        Content="Re-summon based on HP" />
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5,5,5,5"
+                    Content="Re-summon based on HP"
+                    IsChecked="{Binding ResummonOnLowHP}"
+                    ToolTip="Toggles whether or not the trust will be resummoned if their HP is low." />
 
                 <controls:RangeSlider
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5,5,5,5"
-                        Maximum="100"
-                        Minimum="0"
-                        LowerValue="{Binding ResummonHPLow}"
-                        UpperValue="{Binding ResummonHPHigh}"
-                        ToolTip="Releases on resummons trust if HP is in the given range."
-                        RenderTransformOrigin="0.478,0.471" />
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5,5,5,5"
+                    LowerValue="{Binding ResummonHPLow}"
+                    Maximum="100"
+                    Minimum="0"
+                    RenderTransformOrigin="0.478,0.471"
+                    ToolTip="Releases on resummons trust if HP is in the given range."
+                    UpperValue="{Binding ResummonHPHigh}" />
 
-                <!-- Resummon On Low MP -->
+                <!--  Resummon On Low MP  -->
                 <CheckBox
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Margin="5,5,5,5"
-                        IsChecked="{Binding ResummonOnLowMP}"
-                        ToolTip="Toggles whether or not the trust will be resummoned if their MP is low."
-                        Content="Re-summon based on MP" />
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="5,5,5,5"
+                    Content="Re-summon based on MP"
+                    IsChecked="{Binding ResummonOnLowMP}"
+                    ToolTip="Toggles whether or not the trust will be resummoned if their MP is low." />
 
                 <controls:RangeSlider
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="5,5,5,5"
-                        Maximum="100"
-                        Minimum="0"
-                        LowerValue="{Binding ResummonMPLow}"
-                        UpperValue="{Binding ResummonMPHigh}"
-                        ToolTip="Releases on resummons trust if MP is in range."
-                        RenderTransformOrigin="0.478,0.471" />
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5,5,5,5"
+                    LowerValue="{Binding ResummonMPLow}"
+                    Maximum="100"
+                    Minimum="0"
+                    RenderTransformOrigin="0.478,0.471"
+                    ToolTip="Releases on resummons trust if MP is in range."
+                    UpperValue="{Binding ResummonMPHigh}" />
             </Grid>
         </TabItem>
 
@@ -354,22 +359,22 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!-- Index -->
-                <Label 
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="5"
-                        Content="Index" />
+                <!--  Index  -->
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5"
+                    Content="Index" />
 
-                <controls:NumericUpDown 
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5"
-                        ToolTip="Index of the move use for determining its recast time. "
-                        Value="{Binding Index}" />
+                <controls:NumericUpDown
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5"
+                    ToolTip="Index of the move use for determining its recast time. "
+                    Value="{Binding Index}" />
 
             </Grid>
         </TabItem>

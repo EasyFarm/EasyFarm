@@ -67,6 +67,8 @@
     <Compile Include="PartyMember\IPartyMemberTools.cs" />
     <Compile Include="Player\IPlayerTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\IResourcesTools.cs" />
+    <Compile Include="Resources\ResourcesTools.cs" />
     <Compile Include="Target\ITargetTools.cs" />
     <Compile Include="Timer\ITimerTools.cs" />
     <Compile Include="Windower\IWindowerTools.cs" />

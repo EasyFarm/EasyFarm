@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyFarm.Infrastructure;
 using EasyFarm.Parsing;
 using EasyFarm.Views;
 using MahApps.Metro.Controls;
@@ -20,7 +21,7 @@ namespace EasyFarm.Handlers
         public async Task<Ability> Handle(string abilityName)
         {
             // Retriever all moves with the specified name.
-            List<Ability> moves = App.AbilityService.GetAbilitiesWithName(abilityName).ToList();
+            List<Ability> moves = ViewModelBase.AbilityService.GetAbilitiesWithName(abilityName).ToList();
 
             // Return Ability if there's only one.
             if (moves.Count <= 1) return moves.FirstOrDefault();
