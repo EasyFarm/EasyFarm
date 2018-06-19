@@ -164,6 +164,7 @@ namespace EasyFarm.Classes
                 AbilityType.Unknown,
                 AbilityType.Jobability,
                 AbilityType.Magic,
+                AbilityType.Trust,
                 AbilityType.Monsterskill,
                 AbilityType.Ninjutsu,
                 AbilityType.Pet,
@@ -196,6 +197,7 @@ namespace EasyFarm.Classes
             CommandMapper.Add(AbilityType.Song, "/song");
             CommandMapper.Add(AbilityType.Weaponskill, "/weaponskill");
             CommandMapper.Add(AbilityType.Item, "/item");
+            CommandMapper.Add(AbilityType.Trust, "/magic");
         }
 
         /// <summary>

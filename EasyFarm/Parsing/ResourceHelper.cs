@@ -28,8 +28,6 @@ namespace EasyFarm.Parsing
             {
                 case "/jobability":
                     return AbilityType.Jobability;
-                case "/echo":
-                    return AbilityType.Echo;
                 case "/magic":
                     return AbilityType.Magic;
                 case "/monsterskill":
@@ -42,8 +40,6 @@ namespace EasyFarm.Parsing
                     return AbilityType.Range;
                 case "/song":
                     return AbilityType.Song;
-                case "/trigger":
-                    return AbilityType.Trigger;
                 case "/weaponskill":
                     return AbilityType.Weaponskill;
                 case "/trust":
@@ -232,6 +228,7 @@ namespace EasyFarm.Parsing
                 case AbilityType.Ninjutsu:
                 case AbilityType.Song:
                 case AbilityType.Item:
+                case AbilityType.Trust:
                     return true;
                 default:
                     return false;
