@@ -231,6 +231,7 @@ namespace EasyFarm.ViewModels
 
                 // Inform the user of our success.
                 Config.Instance = settings;
+                AppServices.SendConfigLoaded();
                 AppServices.InformUser("Settings have been loaded.");
                 LogViewModel.Write("Settings loaded");
             }

@@ -15,9 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
+using System;
+using System.IO;
 using EasyFarm.Classes;
 using EasyFarm.Parsing;
+using EasyFarm.Persistence;
 using EasyFarm.States;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 
 namespace EasyFarm.Infrastructure
@@ -32,7 +37,7 @@ namespace EasyFarm.Infrastructure
         /// <summary>
         ///     Solo EliteApi instance for current player.
         /// </summary>
-        protected static IMemoryAPI FFACE { get; set; }
+        public static IMemoryAPI FFACE { get; set; }
 
         /// <summary>
         ///     View Model name for header in tab control item.
@@ -64,6 +69,20 @@ namespace EasyFarm.Infrastructure
             PathRecorder = new PathRecorder(FFACE);
 
             AbilityService = new AbilityService(FFACE);
+
+            AutoLoadSettings();
+        }
+
+        private static void AutoLoadSettings()
+        {
+            var persister = new Persister();
+            var characterName = FFACE?.Player?.Name;
+            var fileName = $"{characterName}.eup";
+            if (String.IsNullOrWhiteSpace(fileName)) return;
+            if (!File.Exists(fileName)) return;
+            var config = persister.Deserialize<Config>(fileName);
+            Config.Instance = config;
+            AppServices.SendConfigLoaded();
         }
     }
 }
