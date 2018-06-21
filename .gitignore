@@ -223,3 +223,7 @@ Build/duplication.xml
 
 # NLog
 !Nlog.config
+
+# Test Reports
+coverage/
+results.xml
