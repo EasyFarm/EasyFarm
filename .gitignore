@@ -215,7 +215,6 @@ pip-log.txt
 .mr.developer.cfg
 
 # Project Specific
-Build/tools
 Build/coverage
 Build/result.xml
 Build/duplication.xml
