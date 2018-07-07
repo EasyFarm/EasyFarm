@@ -152,7 +152,7 @@ namespace EasyFarm.Classes
             if (!string.IsNullOrEmpty(action.ChatEvent))
             {
                 List<EliteAPI.ChatEntry> matches = fface.Chat.ChatEntries
-                    .Where(x => x.Text.Contains(action.ChatEvent)).ToList();
+                    .Where(x => x.Text.ToLower().Contains(action.ChatEvent.ToLower())).ToList();
 
                 if (!matches.Any())
                     yield return Result.Fail("Chat message has not been received");
