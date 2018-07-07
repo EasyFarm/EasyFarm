@@ -519,10 +519,10 @@ namespace EasyFarm.Classes
             set { Set(ref _chatEvent, value); }
         }
 
-        public TimeSpan ChatEventPeriod
+        public TimeSpan? ChatEventPeriod
         {
             get { return _chatEventPeriod; }
-            set { Set(ref _chatEventPeriod, value); }
+            set { Set(ref _chatEventPeriod, value ?? default(TimeSpan)); }
         }
 
         /// <summary>

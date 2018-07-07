@@ -157,7 +157,7 @@ namespace EasyFarm.Classes
                 if (!matches.Any())
                     yield return Result.Fail("Chat message has not been received");
 
-                if (action.ChatEventPeriod != default(TimeSpan) && !matches.Any(x => DateTime.Now <= x.Timestamp.Add(action.ChatEventPeriod)))
+                if (action.ChatEventPeriod.HasValue && !matches.Any(x => DateTime.Now <= x.Timestamp.Add(action.ChatEventPeriod.Value)))
                     yield return Result.Fail("No chat messages valid for the given time range");
             }
         }
