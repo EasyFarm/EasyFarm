@@ -20,7 +20,9 @@ using System.Text.RegularExpressions;
 using System;
 using System.Collections.Generic;
 using EasyFarm.Parsing;
+using EliteMMO.API;
 using MemoryAPI;
+using AbilityType = EasyFarm.Parsing.AbilityType;
 
 namespace EasyFarm.Classes
 {
@@ -145,6 +147,19 @@ namespace EasyFarm.Classes
             var hasAggro = units.Any(x => x.HasAggroed);
             if (isTrustMagic && hasAggro)
                 yield return Result.Fail("Cannot use trust magic with aggro");
+
+            // Do not cast action not matching chat text.
+            if (!string.IsNullOrEmpty(action.ChatEvent))
+            {
+                List<EliteAPI.ChatEntry> matches = fface.Chat.ChatEntries
+                    .Where(x => x.Text.Contains(action.ChatEvent)).ToList();
+
+                if (!matches.Any())
+                    yield return Result.Fail("Chat message has not been received");
+
+                if (action.ChatEventPeriod != default(TimeSpan) && !matches.Any(x => DateTime.Now <= x.Timestamp.Add(action.ChatEventPeriod)))
+                    yield return Result.Fail("No chat messages valid for the given time range");
+            }
         }
 
         /// <summary>

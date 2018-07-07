@@ -155,6 +155,8 @@ namespace EasyFarm.Classes
         private int _tpCost;
         private string _command;
         private TargetType _targetType;
+        private string _chatEvent;
+        private TimeSpan _chatEventPeriod;
 
 
         static BattleAbility()
@@ -509,6 +511,18 @@ namespace EasyFarm.Classes
 
                 return availableAbilities;
             }
+        }
+
+        public string ChatEvent
+        {
+            get { return _chatEvent; }
+            set { Set(ref _chatEvent, value); }
+        }
+
+        public TimeSpan ChatEventPeriod
+        {
+            get { return _chatEventPeriod; }
+            set { Set(ref _chatEventPeriod, value); }
         }
 
         /// <summary>
