@@ -151,7 +151,9 @@ namespace EasyFarm.Classes
             // Do not cast action not matching chat text.
             if (!string.IsNullOrEmpty(action.ChatEvent))
             {
-                List<EliteAPI.ChatEntry> matches = fface.Chat.ChatEntries
+                var chatEntries = fface.Chat.ChatEntries.ToList();
+
+                List<EliteAPI.ChatEntry> matches = chatEntries
                     .Where(x => x.Text.ToLower().Contains(action.ChatEvent.ToLower())).ToList();
 
                 if (!matches.Any())
