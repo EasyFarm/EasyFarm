@@ -52,6 +52,8 @@ namespace EasyFarm.States
                     comp = comp.Replace(" II", "");
                 }
 
+                comp = comp.Replace(" ", "");
+
                 if (p.UnitPresent && p.Name == comp) return p;
             }
 
@@ -96,6 +98,8 @@ namespace EasyFarm.States
                 comp = comp.Replace(" (UC)", "");
                 comp = comp.Replace(" II", "");
             }
+
+            comp = comp.Replace(" ", "");
 
             var command = string.Format("/refa {0}", comp);
             EliteApi.Windower.SendString(command);

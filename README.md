@@ -64,11 +64,7 @@ If you choose to use Atom (which I occasionally do to get away from Visual Studi
 
 For building and running the tests, you can run this command: 
 
-`./build.ps1`
-
-If you want the code coverage information, then the -cover target can be added to the end of the command: 
-
-`./build.ps1 -target cover`
+`./Run-All.ps1`
 
 This should generate a coverage folder containing a index.htm file containing the code coverage report. You can open that up in chrome to see the coverage metrics. 
 

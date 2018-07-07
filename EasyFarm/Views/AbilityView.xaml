@@ -5,6 +5,7 @@
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     d:DesignHeight="520.875"
     d:DesignWidth="522"
     mc:Ignorable="d">
@@ -349,6 +350,38 @@
                     RenderTransformOrigin="0.478,0.471"
                     ToolTip="Releases on resummons trust if MP is in range."
                     UpperValue="{Binding ResummonMPHigh}" />
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Chat">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label 
+                    Grid.Row="0" 
+                    Grid.Column="0"
+                    Content="Chat Message"/>
+                <TextBox
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5,5,5,5"
+                    Text="{Binding ChatEvent}"
+                    ToolTip="Triggers action when the specific chat message is received." />
+                <Label Content="Duration (H:M:S)" 
+                       Grid.Row="1" 
+                       Grid.Column="0" />
+                <xctk:TimeSpanUpDown
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5,5,5,5"
+                    Value="{Binding ChatEventPeriod}"
+                    ToolTip="How long the given chat message is valid" />
             </Grid>
         </TabItem>
 

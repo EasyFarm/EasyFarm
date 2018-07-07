@@ -40,6 +40,7 @@ namespace EasyFarm.Tests.TestTypes.Mocks
             {
                 {0, new MockPartyMemberTools()}
             };
+            Chat = new MockChatTools();
         }
 
         public MockNavigatorTools Navigator { get; set; }
@@ -60,6 +61,11 @@ namespace EasyFarm.Tests.TestTypes.Mocks
         {
             return new MockEliteAPIAdapter(this);
         }
+    }
+
+    public class MockChatTools : IChatTools
+    {
+        public Queue<EliteAPI.ChatEntry> ChatEntries { get; set; } = new Queue<EliteAPI.ChatEntry>();
     }
 
     public class MockTargetTools : ITargetTools
