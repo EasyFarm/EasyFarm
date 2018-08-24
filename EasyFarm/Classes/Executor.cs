@@ -19,8 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using EasyFarm.Logging;
-using EasyFarm.ViewModels;
 using EasyFarm.Parsing;
 using EasyFarm.UserSettings;
 using MemoryAPI;
@@ -86,8 +84,6 @@ namespace EasyFarm.Classes
 
         public void UseTargetedActions(IEnumerable<BattleAbility> actions, IUnit target)
         {
-            ShouldRecycleBattleStateCheck();
-
             if (actions == null) throw new ArgumentNullException(nameof(actions));
             if (target == null) throw new ArgumentNullException(nameof(target));
 
@@ -113,20 +109,6 @@ namespace EasyFarm.Classes
                 action.LastCast = DateTime.Now.AddSeconds(action.Recast);
 
                 TimeWaiter.Pause(Config.Instance.GlobalCooldown);
-            }
-        }
-
-        private void ShouldRecycleBattleStateCheck()
-        {
-            var chatEntries = _fface.Chat.ChatEntries.ToList();
-
-            List<EliteMMO.API.EliteAPI.ChatEntry> matches = chatEntries
-                .Where(x => x.Text.ToLower().Contains("unable to see the")).ToList();
-
-            if (matches.Any(x => x.Timestamp >= DateTime.Now.AddSeconds(-2)))
-            {
-                _fface.Windower.SendString(Constants.AttackOff);
-                LogViewModel.Write("Recycled battle stance to properly engage the target.");
             }
         }
 
