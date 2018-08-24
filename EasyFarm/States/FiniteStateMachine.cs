@@ -93,9 +93,24 @@ namespace EasyFarm.States
             {
                 using (_cancellation.Token.Register(StopThreadQuickly(Thread.CurrentThread)))
                 {
+                    RunStateMachineLabel:
                     try
                     {
                         RunStateMachine();
+                    }
+                    catch (System.InvalidOperationException ex)
+                    {
+                        // Ignore race conditions while rapidly parsing the chat log.
+                        if (ex.Message == "Collection was modified after the enumerator was instantiated.")
+                        {
+                            TimeWaiter.Pause(250);
+                            goto RunStateMachineLabel;
+                        } else
+                        {
+                            Logger.Log(new LogEntry(LoggingEventType.Error, "FSM error", ex));
+                            LogViewModel.Write("An error has occurred: please check easyfarm.log for more information");
+                            AppServices.InformUser("An error occurred!");
+                        }
                     }
                     catch (ThreadInterruptedException ex)
                     {

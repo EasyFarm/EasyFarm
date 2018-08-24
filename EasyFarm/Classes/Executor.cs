@@ -86,16 +86,7 @@ namespace EasyFarm.Classes
 
         public void UseTargetedActions(IEnumerable<BattleAbility> actions, IUnit target)
         {
-            var chatEntries = _fface.Chat.ChatEntries.ToList();
-
-            List<EliteMMO.API.EliteAPI.ChatEntry> matches = chatEntries
-                    .Where(x => x.Text.ToLower().Contains("unable to see the")).ToList();
-
-            if (matches.Any(x => x.Timestamp >= DateTime.Now.AddSeconds(-3)))
-            {
-                _fface.Windower.SendString(Constants.AttackOff);
-                LogViewModel.Write("Forced to disengage due to targeting bug.");
-            }
+            ShouldRecycleBattleStateCheck();
 
             if (actions == null) throw new ArgumentNullException(nameof(actions));
             if (target == null) throw new ArgumentNullException(nameof(target));
@@ -122,6 +113,20 @@ namespace EasyFarm.Classes
                 action.LastCast = DateTime.Now.AddSeconds(action.Recast);
 
                 TimeWaiter.Pause(Config.Instance.GlobalCooldown);
+            }
+        }
+
+        private void ShouldRecycleBattleStateCheck()
+        {
+            var chatEntries = _fface.Chat.ChatEntries.ToList();
+
+            List<EliteMMO.API.EliteAPI.ChatEntry> matches = chatEntries
+                .Where(x => x.Text.ToLower().Contains("unable to see the")).ToList();
+
+            if (matches.Any(x => x.Timestamp >= DateTime.Now.AddSeconds(-2)))
+            {
+                _fface.Windower.SendString(Constants.AttackOff);
+                LogViewModel.Write("Recycled battle stance to properly engage the target.");
             }
         }
 
