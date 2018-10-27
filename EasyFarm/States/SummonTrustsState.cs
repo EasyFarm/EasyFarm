@@ -46,10 +46,11 @@ namespace EasyFarm.States
             {
                 var p = EliteApi.PartyMember[(byte) i];
                 var comp = trust.Name;
-                if (comp.Contains("(UC)") || comp.Contains("II"))
+                if (comp.Contains("(UC)") || comp.Contains("II") || comp.Contains("AA"))
                 {
                     comp = comp.Replace(" (UC)", "");
                     comp = comp.Replace(" II", "");
+                    comp = comp.Replace("AA", "Ark");
                 }
 
                 comp = comp.Replace(" ", "");
@@ -93,10 +94,11 @@ namespace EasyFarm.States
         private void ReleaseTrust(BattleAbility trust)
         {
             var comp = trust.Name;
-            if (comp.Contains("(UC)") || comp.Contains("II"))
+            if (comp.Contains("(UC)") || comp.Contains("II") || comp.Contains("AA"))
             {
                 comp = comp.Replace(" (UC)", "");
                 comp = comp.Replace(" II", "");
+                comp = comp.Replace("AA", "Ark");
             }
 
             comp = comp.Replace(" ", "");

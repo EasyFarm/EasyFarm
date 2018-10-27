@@ -1,13 +1,7 @@
-###############################################################################
-## Configuration
-###############################################################################
 Param([string]$configuration="Release")
-$FindParent = "./Find-Parent.ps1"
-$RunTests = "./Run-Tests.ps1"
-$RunBuild = "./Run-Build.ps1"
-$Workspace = (&$FindParent "EasyFarm")
 
-###############################################################################
+. ./Config.ps1
+
 $watcher = New-Object System.IO.FileSystemWatcher
 $watcher.Path = $Workspace
 $watcher.IncludeSubdirectories = $true
@@ -28,5 +22,3 @@ while($true){
 	Write-Host "### Complete! ###" -BackgroundColor Green
 	""
 }
-
-###############################################################################
