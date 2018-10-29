@@ -25,19 +25,6 @@ using MemoryAPI.Navigation;
 
 namespace EasyFarm.Classes
 {
-    public interface IUnitFilters
-    {
-        /// <summary>
-        /// Returns true if a mob is attackable by the player based on the various settings in the
-        /// Config class.
-        /// </summary>
-        /// <param name="fface"></param>
-        /// <param name="mob"></param>
-        /// <param name="config"></param>
-        /// <returns></returns>
-        bool MobFilter(IMemoryAPI fface, IUnit mob, IConfig config);
-    }
-
     /// <summary>
     /// Helper functions for filtering units.
     /// </summary>

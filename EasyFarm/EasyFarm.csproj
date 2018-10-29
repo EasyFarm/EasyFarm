@@ -61,7 +61,7 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -74,7 +74,7 @@
     <Optimize>false</Optimize>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
@@ -190,6 +190,7 @@
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
     <Compile Include="Classes\IUnit.cs" />
+    <Compile Include="Classes\IUnitFilters.cs" />
     <Compile Include="Classes\IUnitService.cs" />
     <Compile Include="Classes\Result.cs" />
     <Compile Include="Handlers\SelectAbilityRequestHandler.cs" />
@@ -212,7 +213,6 @@
     <Compile Include="Classes\TimeWaiter.cs" />
     <Compile Include="Classes\LibraryUpdater.cs" />
     <Compile Include="Infrastructure\AppBoot.cs" />
-    <Compile Include="Infrastructure\DatabaseFactory.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
     <Compile Include="Handlers\NavigateViewRequestHandler.cs" />
     <Compile Include="Logging\ILogger.cs" />
@@ -269,7 +269,6 @@
     <Compile Include="States\StateMemory.cs" />
     <Compile Include="Classes\BattleAbility.cs" />
     <Compile Include="Classes\Executor.cs" />
-    <Compile Include="Classes\Extensions.cs" />
     <Compile Include="Classes\AbilityUtils.cs" />
     <Compile Include="Classes\ProhibitEffects.cs" />
     <Compile Include="Persistence\SettingsManager.cs" />
@@ -310,7 +309,6 @@
     <Compile Include="ViewModels\RestingViewModel.cs" />
     <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="ViewModels\TargetsViewModel.cs" />
-    <Compile Include="Infrastructure\ViewModelAttribute.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />
     <Compile Include="Views\SelectActionDialog.xaml.cs">
       <DependentUpon>SelectActionDialog.xaml</DependentUpon>
@@ -470,12 +468,6 @@
     <None Include="trayicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MemoryAPI\MemoryAPI.csproj">
-      <Project>{cc6cc9be-32f0-4b8a-a1ad-6c7c744e2fad}</Project>
-      <Name>MemoryAPI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -485,7 +477,12 @@
     <Content Include="Dependencies\EliteAPI.dll" />
     <Content Include="Dependencies\EliteMMO.API.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MemoryAPI\MemoryAPI.csproj">
+      <Project>{cc6cc9be-32f0-4b8a-a1ad-6c7c744e2fad}</Project>
+      <Name>MemoryAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)\Dependencies\*.*" "$(TargetDir)"</PostBuildEvent>

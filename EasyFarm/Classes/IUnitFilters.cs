@@ -15,18 +15,21 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System.Collections.Generic;
-using System.Linq;
+using MemoryAPI;
+using EasyFarm.UserSettings;
 
 namespace EasyFarm.Classes
 {
-    public static class Extensions
+    public interface IUnitFilters
     {
-        public static IEnumerable<T> RepeatsN<T>(this IEnumerable<T> values, int count)
-        {
-            return values.GroupBy(x => x)
-                .Where(x => x.Count() >= count)
-                .SelectMany(x => Enumerable.Repeat(x.Key, x.Count()));
-        }
+        /// <summary>
+        /// Returns true if a mob is attackable by the player based on the various settings in the
+        /// Config class.
+        /// </summary>
+        /// <param name="fface"></param>
+        /// <param name="mob"></param>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        bool MobFilter(IMemoryAPI fface, IUnit mob, IConfig config);
     }
 }
