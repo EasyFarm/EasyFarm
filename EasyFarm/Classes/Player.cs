@@ -122,7 +122,7 @@ namespace EasyFarm.Classes
             if (target.Id != fface.Target.ID)
             {
                 fface.Target.SetNPCTarget(target.Id);
-                fface.Windower.SendString("/ta <t>");
+                fface.Windower.SendString(Constants.SetTargetCursor);
             }
         }
     }

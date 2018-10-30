@@ -31,7 +31,7 @@ namespace EasyFarm.Tests.TestTypes.Mocks
         public MockNPCTools NPC { get; set; }
         public Dictionary<byte, MockPartyMemberTools> PartyMember { get; set; }
         public MockPlayerTools Player { get; set; }
-        public ITargetTools Target { get; set; }
+        public MockTargetTools Target { get; set; }
         public MockTimerTools Timer { get; set; }
         public MockWindowerTools Windower { get; set; }
         public IChatTools Chat { get; set; }
@@ -54,9 +54,13 @@ namespace EasyFarm.Tests.TestTypes.Mocks
 
     public class MockTargetTools : ITargetTools
     {
+        public int LastTargetID { get; set; }
+
         public int ID { get; set; }
+
         public bool SetNPCTarget(int index)
         {
+            LastTargetID = index;
             return true;
         }
     }

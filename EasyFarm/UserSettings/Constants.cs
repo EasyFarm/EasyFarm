@@ -15,6 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
+using System;
+
 namespace EasyFarm.UserSettings
 {
     public class Constants
@@ -72,11 +75,13 @@ namespace EasyFarm.UserSettings
         /// <summary>
         /// The maximum priority for states in the FSM. 
         /// </summary>
-        public const int MaxPriority = int.MaxValue;
+        public const int MaxPriority = Int32.MaxValue;
 
         /// <summary>
         /// The maximum number of trusts allowed in the party.
         /// </summary>
         public static int TrustPartySize = 5;
+
+        public const string SetTargetCursor = "/ta <t>";
     }
 }
