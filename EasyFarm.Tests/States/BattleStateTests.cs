@@ -36,7 +36,7 @@ namespace EasyFarm.Tests.States
             {
                 // Fixture setup
                 MockConfig.IsEngageEnabled = true;
-                MockEliteAPI.Player.Status = Status.Fighting;
+                MockGameAPI.Mock.Player.Status = Status.Fighting;
                 StateMemory memory = CreateStateMemory();
                 memory.Target = FindUnit();
                 memory.IsFighting = true;
@@ -103,8 +103,8 @@ namespace EasyFarm.Tests.States
                 StateMemory memory = CreateStateMemory();
                 memory.Target = FindUnit();
                 memory.IsFighting = false;
-                MockEliteAPI.Player.HPPCurrent = 25;
-                MockEliteAPI.Player.Status = Status.Standing;
+                MockGameAPI.Mock.Player.HPPCurrent = 25;
+                MockGameAPI.Mock.Player.Status = Status.Standing;
                 MockConfig.LowHealth = 50;
                 MockConfig.HighHealth = 100;
                 MockConfig.IsHealthEnabled = true;
@@ -124,7 +124,7 @@ namespace EasyFarm.Tests.States
                 StateMemory memory = CreateStateMemory(targetValid: false);
                 memory.Target = FindNonValidUnit();
                 memory.IsFighting = true;
-                MockEliteAPI.Player.Status = Status.Standing;
+                MockGameAPI.Mock.Player.Status = Status.Standing;
                 MockConfig.IsEngageEnabled = false;
                 BattleState sut = new BattleState(memory);
                 // Exercise system
@@ -157,7 +157,7 @@ namespace EasyFarm.Tests.States
                 // Exercise system
                 sut.Run();
                 // Verify outcome
-                Assert.Equal("/jobability test <me>", MockEliteAPI.Windower.LastCommand);
+                Assert.Equal("/jobability test <me>", MockGameAPI.Mock.Windower.LastCommand);
                 // Teardown
             }
 
@@ -173,7 +173,7 @@ namespace EasyFarm.Tests.States
                 // Exercise system
                 sut.Run();
                 // Verify outcome
-                Assert.Null(MockEliteAPI.Windower.LastCommand);
+                Assert.Null(MockGameAPI.Mock.Windower.LastCommand);
             }
 
             private static BattleAbility FindJobAbility(string actionName)
@@ -200,11 +200,11 @@ namespace EasyFarm.Tests.States
             {
                 // Fixture setup
                 BattleState sut = CreateSut();
-                MockEliteAPI.Player.Status = Status.Healing;
+                MockGameAPI.Mock.Player.Status = Status.Healing;
                 // Exercise system
                 sut.Enter();
                 // Verify outcome
-                Assert.Equal(Status.Standing, MockEliteAPI.Player.Status);
+                Assert.Equal(Status.Standing, MockGameAPI.Mock.Player.Status);
                 // Teardown
             }
 
@@ -212,12 +212,12 @@ namespace EasyFarm.Tests.States
             public void WillStopPlayerFromMoving()
             {
                 // Fixture setup
-                MockEliteAPI.Navigator.IsRunning = true;
+                MockGameAPI.Mock.Navigator.IsRunning = true;
                 BattleState sut = CreateSut();
                 // Exercise system
                 sut.Enter();
                 // Verify outcome
-                Assert.False(MockEliteAPI.Navigator.IsRunning);
+                Assert.False(MockGameAPI.Mock.Navigator.IsRunning);
                 // Teardown
             }
 

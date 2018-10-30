@@ -37,11 +37,11 @@ namespace EasyFarm.Tests.Classes
             BattleAbility battleAbility = FindAbility();
             battleAbility.Name = "test";
             battleAbility.AbilityType = AbilityType.Magic;
-            Executor sut = new Executor(MockEliteAPI.AsMemoryApi());
+            Executor sut = new Executor(MockGameAPI);
             // Exercise system
             sut.UseBuffingActions(new List<BattleAbility> { battleAbility });
             // Verify outcome
-            Assert.Equal("/magic test <t>", MockEliteAPI.Windower.LastCommand);
+            Assert.Equal("/magic test <t>", MockGameAPI.Mock.Windower.LastCommand);
             // Teardown
         }
 
@@ -54,18 +54,18 @@ namespace EasyFarm.Tests.Classes
             battleAbility.AbilityType = AbilityType.Magic;
             battleAbility.Command = "/magic test <t>";
             IUnit unit = FindUnit();
-            Executor sut = new Executor(MockEliteAPI.AsMemoryApi());
+            Executor sut = new Executor(MockGameAPI);
             // Exercise system
             sut.UseTargetedActions(new List<BattleAbility> { battleAbility }, unit);
             // Verify outcome
-            Assert.Equal("/magic test <t>", MockEliteAPI.Windower.LastCommand);
+            Assert.Equal("/magic test <t>", MockGameAPI.Mock.Windower.LastCommand);
             // Teardown
         }
 
         [Fact]
         public void UseBuffingActionsWithNullActionListThrows()
         {
-            Executor sut = new Executor(MockEliteAPI.AsMemoryApi());
+            Executor sut = new Executor(MockGameAPI);
             Exception result = Record.Exception(() => sut.UseBuffingActions(null));
             Assert.IsType<ArgumentNullException>(result);
         }

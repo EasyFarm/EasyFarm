@@ -10,18 +10,16 @@ namespace EasyFarm.Tests.Classes
     public class UnitFilterTests
     {
         private MockUnit mob;
-        private IMemoryAPI api;
-        private MockEliteAPI mockApi;
         private IUnitFilters sut;
         private IConfig config;
+        private MockGameAPI api;
 
         public UnitFilterTests()
         {
             mob = FindBasicMob();
-            mockApi = new MockEliteAPI();
-            api = mockApi.AsMemoryApi();
             sut = new UnitFilters();
             config = FindConfig();
+            api = new MockGameAPI();
         }
 
         private static MockConfig FindConfig()
@@ -159,7 +157,7 @@ namespace EasyFarm.Tests.Classes
         public void Filter_ClaimID_OurClaim()
         {
             mob.ClaimedId = 5000;
-            mockApi.PartyMember[0].ServerID = 10000;
+            api.Mock.PartyMember[0].ServerID = 10000;
             Assert.False(sut.MobFilter(api, mob, config));
         }
 
@@ -181,11 +179,6 @@ namespace EasyFarm.Tests.Classes
                 IsPet = false,
             };
             return mob;
-        }
-
-        private static IMemoryAPI FindMemoryApi()
-        {
-            return new MockEliteAPI().AsMemoryApi();
         }
     }
 }

@@ -29,26 +29,26 @@ namespace EasyFarm.Tests.TestTypes
 {
     public class AbstractTestBase
     {
-        public IConfig MockConfig;
+        protected readonly IConfig MockConfig;
 
-        public readonly MockEliteAPI MockEliteAPI;
+        protected readonly MockGameAPI MockGameAPI;
 
-        public HashSet<Type> Events { get; set; } = new HashSet<Type>();
+        protected HashSet<Type> Events { get; set; } = new HashSet<Type>();
 
-        public AbstractTestBase()
+        protected AbstractTestBase()
         {
+            MockGameAPI = new MockGameAPI();
             MockConfig = new MockConfig {BattleLists = new BattleLists(Config.Instance.BattleLists)};
-            MockEliteAPI = MockEliteAPI.Create();
             StartRecordingEvents();
         }
 
         /// <summary>
-        /// Create new state memory with <see cref="MockEliteAPI"/> and <see cref="MockConfig"/>.
+        /// Create new state memory with <see cref="MockGameAPI"/> and <see cref="MockConfig"/>.
         /// </summary>
         /// <returns></returns>
-        public StateMemory CreateStateMemory(bool targetValid = true)
+        protected StateMemory CreateStateMemory(bool targetValid = true)
         {
-            return new StateMemory(MockEliteAPI.AsMemoryApi())
+            return new StateMemory(MockGameAPI)
             {
                 Config = MockConfig,
                 UnitFilters = new MockUnitFilters()
@@ -66,7 +66,7 @@ namespace EasyFarm.Tests.TestTypes
             });
         }
 
-        public static BattleAbility FindAbility()
+        protected static BattleAbility FindAbility()
         {
             var battleAbility = new BattleAbility();
             battleAbility.IsEnabled = true;
@@ -74,12 +74,12 @@ namespace EasyFarm.Tests.TestTypes
             return battleAbility;
         }
 
-        public static IUnit FindNonValidUnit()
+        protected static IUnit FindNonValidUnit()
         {
             return new MockUnit();
         }
 
-        public static IUnit FindUnit()
+        protected static IUnit FindUnit()
         {
             var unit = new MockUnit
             {

@@ -53,7 +53,7 @@ namespace EasyFarm.Tests.Classes
             public void WithTooLittleMp()
             {
                 _battleAbility.MpCost = 1;
-                MockEliteAPI.Player.MPCurrent = 0;
+                MockGameAPI.Mock.Player.MPCurrent = 0;
                 VerifyActionNotUsable();
             }
 
@@ -61,7 +61,7 @@ namespace EasyFarm.Tests.Classes
             public void WithTooLittleTp()
             {
                 _battleAbility.TpCost = 1;
-                MockEliteAPI.Player.TPCurrent = 0;
+                MockGameAPI.Mock.Player.TPCurrent = 0;
                 VerifyActionNotUsable();
             }
 
@@ -70,7 +70,7 @@ namespace EasyFarm.Tests.Classes
             {
                 _battleAbility.MPReserveLow = 0;
                 _battleAbility.MPReserveHigh = 25;
-                MockEliteAPI.Player.MPPCurrent = 100;
+                MockGameAPI.Mock.Player.MPPCurrent = 100;
                 VerifyActionNotUsable();
             }
 
@@ -79,7 +79,7 @@ namespace EasyFarm.Tests.Classes
             {
                 _battleAbility.TPReserveLow = 1000;
                 _battleAbility.TPReserveHigh = 1000;
-                MockEliteAPI.Player.TPCurrent = 1;
+                MockGameAPI.Mock.Player.TPCurrent = 1;
                 VerifyActionNotUsable();
             }
 
@@ -89,7 +89,7 @@ namespace EasyFarm.Tests.Classes
                 // Fixture setup
                 _battleAbility.TPReserveLow = 0;
                 _battleAbility.TPReserveHigh = 0;
-                MockEliteAPI.Player.TPCurrent = -1;
+                MockGameAPI.Mock.Player.TPCurrent = -1;
                 VerifyActionNotUsable();
             }
 
@@ -104,8 +104,8 @@ namespace EasyFarm.Tests.Classes
                 _battleAbility.MPReserveHigh = 1;
                 _battleAbility.TPReserveLow = 1000;
                 _battleAbility.TPReserveHigh = 1000;
-                MockEliteAPI.Player.MPPCurrent = 1;
-                MockEliteAPI.Player.TPCurrent = 1;
+                MockGameAPI.Mock.Player.MPPCurrent = 1;
+                MockGameAPI.Mock.Player.TPCurrent = 1;
                 VerifyActionNotUsable();
             }
 
@@ -125,7 +125,7 @@ namespace EasyFarm.Tests.Classes
                 StatusEffect statusEffect)
             {
                 _battleAbility.AbilityType = abilityType;
-                MockEliteAPI.Player.StatusEffects = new StatusEffect[] { statusEffect };
+                MockGameAPI.Mock.Player.StatusEffects = new StatusEffect[] { statusEffect };
                 VerifyActionNotUsable();
             }
 
@@ -135,7 +135,7 @@ namespace EasyFarm.Tests.Classes
             public void WhenOnRecast(AbilityType abilityType)
             {
                 _battleAbility.AbilityType = abilityType;
-                MockEliteAPI.Timer.RecastTime = 1;
+                MockGameAPI.Mock.Timer.RecastTime = 1;
                 VerifyActionNotUsable();
             }
 
@@ -146,7 +146,7 @@ namespace EasyFarm.Tests.Classes
             {
                 _battleAbility.PlayerLowerHealth = 25;
                 _battleAbility.PlayerUpperHealth = 50;
-                MockEliteAPI.Player.HPPCurrent = hppCurrent;
+                MockGameAPI.Mock.Player.HPPCurrent = hppCurrent;
                 VerifyActionNotUsable();
             }
 
@@ -155,7 +155,7 @@ namespace EasyFarm.Tests.Classes
             {
                 _battleAbility.StatusEffect = "Magic Acc Down";
                 _battleAbility.TriggerOnEffectPresent = false;
-                MockEliteAPI.Player.StatusEffects = new[] { StatusEffect.Magic_Acc_Down };
+                MockGameAPI.Mock.Player.StatusEffects = new[] { StatusEffect.Magic_Acc_Down };
                 VerifyActionNotUsable();
             }
 
@@ -164,7 +164,7 @@ namespace EasyFarm.Tests.Classes
             {
                 _battleAbility.StatusEffect = "Dia";
                 _battleAbility.TriggerOnEffectPresent = true;
-                MockEliteAPI.Player.StatusEffects = new StatusEffect[] { };
+                MockGameAPI.Mock.Player.StatusEffects = new StatusEffect[] { };
                 VerifyActionNotUsable();
             }
 
@@ -189,7 +189,7 @@ namespace EasyFarm.Tests.Classes
                 // Fixture setup
                 _battleAbility.ChatEvent = "test";
                 _battleAbility.ChatEventPeriod = TimeSpan.FromSeconds(1);
-                MockEliteAPI.Chat.ChatEntries.Enqueue(new EliteAPI.ChatEntry()
+                MockGameAPI.Mock.Chat.ChatEntries.Enqueue(new EliteAPI.ChatEntry()
                 {
                     Text = "test",
                     Timestamp = DateTime.Now.AddMinutes(-1)
@@ -215,7 +215,7 @@ namespace EasyFarm.Tests.Classes
             {
                 _battleAbility.TPReserveHigh = 1;
                 _battleAbility.TPReserveLow = 1;
-                MockEliteAPI.Player.TPCurrent = 1;
+                MockGameAPI.Mock.Player.TPCurrent = 1;
                 VerifyActionUsable();
             }
 
@@ -225,7 +225,7 @@ namespace EasyFarm.Tests.Classes
                 // Fixture setup
                 _battleAbility.ChatEventPeriod = TimeSpan.FromSeconds(1);
                 _battleAbility.ChatEvent = "test";
-                MockEliteAPI.Chat.ChatEntries.Enqueue(new EliteAPI.ChatEntry()
+                MockGameAPI.Mock.Chat.ChatEntries.Enqueue(new EliteAPI.ChatEntry()
                 {
                     Timestamp = DateTime.Now,
                     Text = "test"
@@ -236,16 +236,16 @@ namespace EasyFarm.Tests.Classes
                 // Teardown	
             }
 
-            public void VerifyActionUsable()
+            private void VerifyActionUsable()
             {
                 var result = ActionFilters.BuffingFilter(FindMemoryApi(), _battleAbility);
                 Assert.True(result);
             }
         }
 
-        public IMemoryAPI FindMemoryApi()
+        private IMemoryAPI FindMemoryApi()
         {
-            return MockEliteAPI.AsMemoryApi();
+            return MockGameAPI;
         }
     }
 }

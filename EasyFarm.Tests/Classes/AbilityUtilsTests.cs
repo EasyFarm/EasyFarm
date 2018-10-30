@@ -19,7 +19,6 @@
 using EasyFarm.Classes;
 using EasyFarm.Parsing;
 using EasyFarm.Tests.TestTypes;
-using EasyFarm.Tests.TestTypes.Mocks;
 using Xunit;
 
 namespace EasyFarm.Tests.Classes
@@ -51,8 +50,8 @@ namespace EasyFarm.Tests.Classes
 
         private bool VerifySut(int recastTime = 0)
         {
-            MockEliteAPI.Timer.RecastTime = recastTime;
-            return AbilityUtils.IsRecastable(MockEliteAPI.AsMemoryApi(), _ability);
+            MockGameAPI.Mock.Timer.RecastTime = recastTime;
+            return AbilityUtils.IsRecastable(MockGameAPI, _ability);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace EasyFarm.Tests.States
             public void CheckTrueWhenPlayersDead(Status status, bool expected)
             {
                 // Setup fixture
-                MockEliteAPI.Player.Status = status;
+                MockGameAPI.Mock.Player.Status = status;
                 var sut = CreateSut();
                 // Exercise system
                 var result = sut.Check();
@@ -35,7 +35,7 @@ namespace EasyFarm.Tests.States
 
             private DeadState CreateSut()
             {
-                return new DeadState(new StateMemory(MockEliteAPI.AsMemoryApi())
+                return new DeadState(new StateMemory(MockGameAPI)
                 {
                     Config = MockConfig,
                     UnitFilters = new MockUnitFilters()
@@ -49,12 +49,12 @@ namespace EasyFarm.Tests.States
             public void RunResetIsCalledToStopPlayerFromRunning()
             {
                 // Setup fixture
-                MockEliteAPI.Navigator.IsRunning = true;
+                MockGameAPI.Mock.Navigator.IsRunning = true;
                 var sut = CreateSut();
                 // Exercise system
                 sut.Run();
                 // Verify outcome
-                Assert.False(MockEliteAPI.Navigator.IsRunning);
+                Assert.False(MockGameAPI.Mock.Navigator.IsRunning);
                 // Teardown
             }
 
@@ -66,7 +66,7 @@ namespace EasyFarm.Tests.States
                 // Exercise system
                 sut.Run();
                 // Verify outcome
-                Assert.Empty(MockEliteAPI.Windower.KeyPresses);
+                Assert.Empty(MockGameAPI.Mock.Windower.KeyPresses);
                 // Teardown
             }
 
@@ -92,13 +92,13 @@ namespace EasyFarm.Tests.States
                 // Exercise system
                 sut.Run();
                 // Verify outcome
-                Assert.Equal(expected, MockEliteAPI.Windower.KeyPresses);
+                Assert.Equal(expected, MockGameAPI.Mock.Windower.KeyPresses);
                 // Teardown
             }
 
             private DeadState CreateSut()
             {
-                return new DeadState(new StateMemory(MockEliteAPI.AsMemoryApi())
+                return new DeadState(new StateMemory(MockGameAPI)
                 {
                     Config = MockConfig,
                     UnitFilters = new MockUnitFilters()

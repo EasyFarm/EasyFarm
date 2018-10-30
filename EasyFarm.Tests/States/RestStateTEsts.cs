@@ -19,7 +19,7 @@ namespace EasyFarm.Tests.States
             {
                 // Setup fixture
                 var sut = CreateSut();
-                MockEliteAPI.Player.MPPCurrent = currentMPP;
+                MockGameAPI.Mock.Player.MPPCurrent = currentMPP;
                 MockConfig.IsMagicEnabled = true;
                 MockConfig.LowMagic = lowMPP;
                 // Exercise system
@@ -37,7 +37,7 @@ namespace EasyFarm.Tests.States
             {
                 // Setup fixture
                 RestState sut = CreateSut();
-                MockEliteAPI.Player.HPPCurrent = currentHPP;
+                MockGameAPI.Mock.Player.HPPCurrent = currentHPP;
                 MockConfig.IsHealthEnabled = true;
                 MockConfig.LowHealth = lowHPP;
                 // Exercise system
@@ -49,7 +49,7 @@ namespace EasyFarm.Tests.States
 
             private RestState CreateSut()
             {
-                return new RestState(new StateMemory(MockEliteAPI.AsMemoryApi())
+                return new RestState(new StateMemory(MockGameAPI)
                 {
                     Config = MockConfig,
                     UnitFilters = new MockUnitFilters()
@@ -64,17 +64,17 @@ namespace EasyFarm.Tests.States
             {
                 // Setup fixture
                 var sut = CreateSut();
-                MockEliteAPI.Player.Status = Status.Standing;
+                MockGameAPI.Mock.Player.Status = Status.Standing;
                 // Exercise system
                 sut.Run();
                 // Verify outcome
-                Assert.Equal(Status.Healing, MockEliteAPI.Player.Status);
+                Assert.Equal(Status.Healing, MockGameAPI.Mock.Player.Status);
                 // Teardown
             }
 
             private RestState CreateSut()
             {
-                return new RestState(new StateMemory(MockEliteAPI.AsMemoryApi())
+                return new RestState(new StateMemory(MockGameAPI)
                 {
                     Config = MockConfig,
                     UnitFilters = new MockUnitFilters()
@@ -89,17 +89,17 @@ namespace EasyFarm.Tests.States
             {
                 // Setup fixture
                 var sut = CreateSut();
-                MockEliteAPI.Player.Status = Status.Healing;
+                MockGameAPI.Mock.Player.Status = Status.Healing;
                 // Exercise system
                 sut.Exit();
                 // Verify outcome
-                Assert.Equal(Status.Standing, MockEliteAPI.Player.Status);
+                Assert.Equal(Status.Standing, MockGameAPI.Mock.Player.Status);
                 // Teardown
             }
 
             private RestState CreateSut()
             {
-                return new RestState(new StateMemory(MockEliteAPI.AsMemoryApi())
+                return new RestState(new StateMemory(MockGameAPI)
                 {
                     Config = MockConfig,
                     UnitFilters = new MockUnitFilters()
