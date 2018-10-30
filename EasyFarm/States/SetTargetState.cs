@@ -26,12 +26,10 @@ namespace EasyFarm.States
 {
     public class SetTargetState : AgentState
     {
-        private readonly UnitService _units;
-        private DateTime _lastTargetCheck = DateTime.Now;
+        private DateTime? _lastTargetCheck;
 
         public SetTargetState(StateMemory memory) : base(memory)
         {
-            _units = new UnitService(EliteApi);
         }
 
         public override bool Check()
@@ -40,10 +38,10 @@ namespace EasyFarm.States
             if (!UnitFilters.MobFilter(EliteApi, Target, Config))
             {
                 // Still not time to update for new target. 
-                if (DateTime.Now < _lastTargetCheck.AddSeconds(Constants.UnitArrayCheckRate)) return false;
+                if (!ShouldCheckTarget()) return false;
 
                 // First get the first mob by distance.
-                var mobs = _units.MobArray.Where(x => UnitFilters.MobFilter(EliteApi, x, Config))
+                var mobs = UnitService.MobArray.Where(x => UnitFilters.MobFilter(EliteApi, x, Config))
                     .OrderByDescending(x => x.PartyClaim)
                     .ThenByDescending(x => x.HasAggroed)
                     .ThenBy(x => x.Distance)
@@ -59,6 +57,12 @@ namespace EasyFarm.States
             }
 
             return false;
+        }
+
+        private bool ShouldCheckTarget()
+        {
+            if (_lastTargetCheck == null) return true;
+            return DateTime.Now >= _lastTargetCheck.Value.AddSeconds(Constants.UnitArrayCheckRate);
         }
     }
 }
