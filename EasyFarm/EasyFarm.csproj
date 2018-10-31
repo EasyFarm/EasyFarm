@@ -227,6 +227,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="States\AgentState.cs" />
+    <Compile Include="Classes\TargetPriority.cs" />
     <Compile Include="UserSettings\IConfig.cs" />
     <Compile Include="States\PlayerMovementTracker.cs" />
     <Compile Include="States\Route.cs" />
