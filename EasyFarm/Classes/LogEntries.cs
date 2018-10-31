@@ -26,7 +26,7 @@ namespace EasyFarm.Classes
     public class LogEntries
     {
         public ObservableCollection<string> LoggedItems = new ObservableCollection<string>();
-        public Func<Dispatcher> DispatcherFactory { get; set; } = () => Application.Current?.Dispatcher;
+        public Func<Dispatcher> DispatcherFactory { get; set; } = () => Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
 
         public void Write(string message)
         {
@@ -54,8 +54,7 @@ namespace EasyFarm.Classes
         private void RecordLogItemOnUiThread(string message)
         {
             var dispatcher = DispatcherFactory();
-            if (dispatcher == null) RecordLogItem(message);
-            else dispatcher.Invoke(delegate { RecordLogItem(message); });
+            dispatcher.Invoke(delegate { RecordLogItem(message); });
         }
 
         private void RecordLogItem(string message)
