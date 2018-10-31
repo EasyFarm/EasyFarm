@@ -26,7 +26,7 @@ namespace EasyFarm.States
 {
     public class SetTargetState : AgentState
     {
-        private DateTime? _lastTargetCheck;
+        private DateTime? lastTargetCheck;
 
         public SetTargetState(StateMemory memory) : base(memory)
         {
@@ -41,17 +41,14 @@ namespace EasyFarm.States
                 if (!ShouldCheckTarget()) return false;
 
                 // First get the first mob by distance.
-                var mobs = UnitService.MobArray.Where(x => UnitFilters.MobFilter(EliteApi, x, Config))
-                    .OrderByDescending(x => x.PartyClaim)
-                    .ThenByDescending(x => x.HasAggroed)
-                    .ThenBy(x => x.Distance)
-                    .ToList();
+                var mobs = UnitService.MobArray.Where(x => UnitFilters.MobFilter(EliteApi, x, Config)).ToList();
+                mobs = TargetPriority.Prioritize(mobs).ToList();
 
                 // Set our new target at the end so that we don't accidentaly cast on a new target.
                 Target = mobs.FirstOrDefault();
 
                 // Update last time target was updated. 
-                _lastTargetCheck = DateTime.Now;
+                lastTargetCheck = DateTime.Now;
 
                 if (Target != null) LogViewModel.Write("Now targeting " + Target.Name + " : " + Target.Id);
             }
@@ -61,8 +58,8 @@ namespace EasyFarm.States
 
         private bool ShouldCheckTarget()
         {
-            if (_lastTargetCheck == null) return true;
-            return DateTime.Now >= _lastTargetCheck.Value.AddSeconds(Constants.UnitArrayCheckRate);
+            if (lastTargetCheck == null) return true;
+            return DateTime.Now >= lastTargetCheck.Value.AddSeconds(Constants.UnitArrayCheckRate);
         }
     }
 }

@@ -6,17 +6,19 @@ using Xunit;
 
 namespace EasyFarm.Tests.States
 {
-    public class SetTargetStateTests
+    public class ValidMobTests
     {
-        private static readonly MockGameAPI MockGameAPI = new MockGameAPI();
-
         [Fact]
-        public void SetTargetSetsCurrentTargetWithValidMob()
+        public void WillTargetValidMob()
         {
             // Fixture setup
-            MockGameAPI.Mock.NPC.Entities[0] = FindUnclaimedMob();
-            var sut = CreateSut();
-            sut.Config = SetupConfigToKillUnclaimedMobs();
+            var api = new MockGameAPI();
+            var sut = new SetTargetState(new StateMemory(api));
+            sut.Config = KillUnclaimedMobsConfig();
+            sut.Memory.UnitService = new MockUnitService()
+            {
+                MobArray = {FindUnclaimedMob()}
+            };
             // Excercise system
             sut.Check();
             // Verify outcome
@@ -24,7 +26,7 @@ namespace EasyFarm.Tests.States
             // Teardown	
         }
 
-        private static MockConfig SetupConfigToKillUnclaimedMobs()
+        private static MockConfig KillUnclaimedMobsConfig()
         {
             return new MockConfig
             {
@@ -34,20 +36,17 @@ namespace EasyFarm.Tests.States
             };
         }
 
-        private static MockNPC FindUnclaimedMob()
+        private static MockUnit FindUnclaimedMob()
         {
-            return new MockNPC()
+            return new MockUnit()
             {
                 Name = "Mandragora",
                 Status = Status.Standing,
-                ClaimID = 0,
                 Distance = 5,
-                HealthPercent = 100,
                 IsActive = true,
                 IsClaimed = false,
                 IsRendered = true,
-                NPCType = NpcType.Mob,
-                PetID = 0,
+                NpcType = NpcType.Mob,
                 PosX = 1,
                 PosY = 1,
                 PosZ = 1,
@@ -55,15 +54,10 @@ namespace EasyFarm.Tests.States
                 {
                     X = 1,
                     H = 1,
-                    Y = 1, 
+                    Y = 1,
                     Z = 1
                 }
             };
-        }
-
-        private static SetTargetState CreateSut()
-        {
-            return new SetTargetState(new StateMemory(MockGameAPI));
         }
     }
 }
