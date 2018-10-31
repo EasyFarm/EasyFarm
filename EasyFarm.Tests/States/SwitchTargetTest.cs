@@ -6,37 +6,43 @@ using Xunit;
 
 namespace EasyFarm.Tests.States
 {
-    public class ValidMobTests
+    public class SwitchTargetTest
     {
         [Fact]
-        public void WillTargetValidMob()
+        public void UserCanSwitchTargetToAnotherValidMob()
         {
             // Fixture setup
             var api = new MockGameAPI();
             var sut = new SetTargetState(new StateMemory(api));
-            sut.Config = KillUnclaimedMobsConfig();
-            sut.Memory.UnitService = new MockUnitService()
+            sut.Config = new MockConfig()
             {
-                MobArray = {FindUnclaimedMob()}
+                UnclaimedFilter = true,
+                DetectionDistance = 10,
+                HeightThreshold = 10,
             };
+            var units = new MockUnitService();
+            sut.Memory.UnitService = units;
+
+            // Current Target
+            var currentTarget = ValidMob();
+            currentTarget.Id = 10;
+            units.MobArray.Add(currentTarget);
+            sut.Target = currentTarget;
+
+            // New Target
+            var newTarget = ValidMob();
+            newTarget.Id = 20;
+            api.Mock.Target.ID = 20;                     
+            units.MobArray.Add(newTarget);            
+
             // Excercise system
             sut.Check();
             // Verify outcome
-            Assert.NotNull(sut.Target);
+            Assert.Equal(newTarget, sut.Target);
             // Teardown	
         }
 
-        private static MockConfig KillUnclaimedMobsConfig()
-        {
-            return new MockConfig
-            {
-                DetectionDistance = 10,
-                HeightThreshold = 10,
-                UnclaimedFilter = true
-            };
-        }
-
-        private static MockUnit FindUnclaimedMob()
+        private static MockUnit ValidMob()
         {
             return new MockUnit()
             {

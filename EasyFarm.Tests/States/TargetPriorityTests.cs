@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using EasyFarm.Classes;
-using EasyFarm.States;
 using EasyFarm.Tests.TestTypes.Mocks;
 using MemoryAPI;
 using MemoryAPI.Navigation;
@@ -38,7 +36,7 @@ namespace EasyFarm.Tests.States
 
         private static IUnit[] InitializeUnits(int numberUnits)
         {
-            return Enumerable.Range(0, 3).Select(x => new MockUnit()).Cast<IUnit>().ToArray();
+            return Enumerable.Range(0, numberUnits).Select(x => new MockUnit()).Cast<IUnit>().ToArray();
         }
 
         private MockUnit FindPartyClaimedMob(string name)

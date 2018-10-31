@@ -33,7 +33,7 @@ namespace EasyFarm.States
         }
 
         public override bool Check()
-        {
+        {           
             // Currently fighting, do not change target. 
             if (!UnitFilters.MobFilter(EliteApi, Target, Config))
             {
@@ -51,6 +51,15 @@ namespace EasyFarm.States
                 lastTargetCheck = DateTime.Now;
 
                 if (Target != null) LogViewModel.Write("Now targeting " + Target.Name + " : " + Target.Id);
+            }
+            else
+            {
+                if (Target.Id == EliteApi.Target.ID) return false;
+                IUnit newTarget = UnitService.MobArray.FirstOrDefault(x => x.Id == EliteApi.Target.ID);
+                if (UnitFilters.MobFilter(EliteApi, newTarget, Config))
+                {
+                    Target = newTarget;
+                }
             }
 
             return false;
