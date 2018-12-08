@@ -88,10 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="States\SwitchTargetTest.cs" />
-    <Compile Include="TestTypes\Mocks\MockUnitService.cs" />
-    <Compile Include="States\ValidMobTests.cs" />
-    <Compile Include="States\TargetPriorityTests.cs" />
+    <Compile Include="States\SetTargetStateTests.cs" />
     <Compile Include="TestTypes\Mocks\MockGameAPI.cs" />
     <Compile Include="Classes\PlayerTests.cs" />
     <Compile Include="Classes\UnitFilterTests.cs" />
