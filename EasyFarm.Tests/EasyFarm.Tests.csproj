@@ -88,7 +88,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="States\SetTargetStateTests.cs" />
+    <Compile Include="States\TargetPriorityTests.cs" />
+    <Compile Include="States\ValidMobTests.cs" />
     <Compile Include="TestTypes\Mocks\MockGameAPI.cs" />
     <Compile Include="Classes\PlayerTests.cs" />
     <Compile Include="Classes\UnitFilterTests.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="TestTypes\Mocks\MockEliteAPI.cs" />
     <Compile Include="TestTypes\Mocks\MockEliteAPIAdapter.cs" />
     <Compile Include="TestTypes\Mocks\MockUnit.cs" />
+    <Compile Include="TestTypes\Mocks\MockUnitService.cs" />
     <Compile Include="TestTypes\MockUnitFilters.cs" />
     <Compile Include="ViewModels\IgnoredViewModelTests.cs" />
   </ItemGroup>

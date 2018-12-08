@@ -193,6 +193,7 @@
     <Compile Include="Classes\IUnitFilters.cs" />
     <Compile Include="Classes\IUnitService.cs" />
     <Compile Include="Classes\Result.cs" />
+    <Compile Include="Classes\TargetPriority.cs" />
     <Compile Include="Handlers\SelectAbilityRequestHandler.cs" />
     <Compile Include="Handlers\SelectCharacterRequestHandler.cs" />
     <Compile Include="Handlers\SelectCharacterResult.cs" />
