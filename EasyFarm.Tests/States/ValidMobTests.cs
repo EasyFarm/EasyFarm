@@ -31,8 +31,8 @@ namespace EasyFarm.Tests.States
             return new MockConfig
             {
                 DetectionDistance = 10,
+                UnclaimedFilter = true,
                 HeightThreshold = 10,
-                UnclaimedFilter = true
             };
         }
 
