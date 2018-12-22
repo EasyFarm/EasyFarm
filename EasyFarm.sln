@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryAPI", "MemoryAPI\Memo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarm.Tests", "EasyFarm.Tests\EasyFarm.Tests.csproj", "{43285FC5-222E-4828-B8F2-396FF628553D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitnesse.Tests", "Fitnesse.Tests\Fitnesse.Tests.csproj", "{FB397B9D-E563-463F-B3E9-B28E77CBD8D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{43285FC5-222E-4828-B8F2-396FF628553D}.Debug|Any CPU.Build.0 = Debug|x86
 		{43285FC5-222E-4828-B8F2-396FF628553D}.Release|Any CPU.ActiveCfg = Debug|x86
 		{43285FC5-222E-4828-B8F2-396FF628553D}.Release|Any CPU.Build.0 = Debug|x86
+		{FB397B9D-E563-463F-B3E9-B28E77CBD8D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB397B9D-E563-463F-B3E9-B28E77CBD8D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB397B9D-E563-463F-B3E9-B28E77CBD8D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB397B9D-E563-463F-B3E9-B28E77CBD8D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
