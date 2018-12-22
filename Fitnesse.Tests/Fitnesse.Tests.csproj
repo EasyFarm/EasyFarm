@@ -7,8 +7,8 @@
     <ProjectGuid>{FB397B9D-E563-463F-B3E9-B28E77CBD8D1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EasyFarm.AcceptanceTests</RootNamespace>
-    <AssemblyName>EasyFarm.AcceptanceTests</AssemblyName>
+    <RootNamespace>Fitnesse.Tests</RootNamespace>
+    <AssemblyName>Fitnesse.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ShouldIBuyMilk.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
