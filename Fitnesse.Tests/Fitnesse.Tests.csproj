@@ -48,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\Samples\ShouldIBuyMilk.cs" />
+    <Compile Include="Fixtures\UtilityAI\GameObjectProximityScorer.cs" />
+    <Compile Include="Fixtures\UtilityAI\IsGrenadierHoldingGrenade.cs" />
     <Compile Include="Fixtures\UtilityAI\TargetSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

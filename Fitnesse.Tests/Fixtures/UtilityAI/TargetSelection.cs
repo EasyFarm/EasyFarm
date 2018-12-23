@@ -5,16 +5,18 @@ namespace Fitnesse.Tests.Fixtures.UtilityAI
 {
     public class TargetSelection : ColumnFixture
     {
-        private decimal _grenadierScore;        
+        private decimal _grenadierScore;
 
-        public void Execute()
+        private void ComputeScores()
         {
             var world = new GameWorld()
             {
-                IsHoldingGrenade = IsHoldingGrenade
+                IsHoldingGrenade = IsHoldingGrenade,
+                GrenadierDistance = GrenadierDistance
             };
-            var scorer = new IsGrenadierHoldingGrenade(world);
-            _grenadierScore = scorer.Score();
+            var hasGrenadeScorer = new IsGrenadierHoldingGrenade(world);
+            var proximityScorer = new GameObjectProximityScorer(world);
+            _grenadierScore = hasGrenadeScorer.Score() + proximityScorer.Score();
         }
 
         public bool IsHoldingGrenade { get; set; }
@@ -26,7 +28,7 @@ namespace Fitnesse.Tests.Fixtures.UtilityAI
 
         public decimal Grenadier()
         {
-            Execute();
+            ComputeScores();
             return _grenadierScore;
         }
 
@@ -46,25 +48,9 @@ namespace Fitnesse.Tests.Fixtures.UtilityAI
         }
     }
 
-    public class IsGrenadierHoldingGrenade
-    {
-        private readonly GameWorld _world;
-
-        private decimal _score = 50;
-
-        public IsGrenadierHoldingGrenade(GameWorld world)
-        {
-            _world = world;
-        }
-
-        public decimal Score()
-        {
-            return _world.IsHoldingGrenade ? _score : 0;
-        }
-    }
-
     public class GameWorld
     {
         public bool IsHoldingGrenade { get; set; }
+        public decimal GrenadierDistance { get; set; }
     }
 }
