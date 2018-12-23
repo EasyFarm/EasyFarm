@@ -10,20 +10,33 @@ namespace Fitnesse.Tests.Fixtures.UtilityAI
 
         private void ComputeScores()
         {
-            var world = SetupWorld();
-            CalculateGrenadierScore(world);
-            CalculateSniperScore(world);
+            var sniperWorld = SetupWorld();
+            var grenadierWorld = SetupWorld();
+            var sniper = new Sniper()
+            {
+                Angle = sniperWorld.SniperAngle,
+                Distance = sniperWorld.SniperDistance
+            };
+            var grenadier = new Grenadier()
+            {
+                IsHoldingGrenade = grenadierWorld.IsHoldingGrenade,
+                Distance = grenadierWorld.GrenadierDistance
+            };
+            CalculateGrenadierScore(grenadierWorld, grenadier);
+            CalculateSniperScore(sniperWorld, sniper);
         }
 
-        private void CalculateSniperScore(GameWorld world)
+        private void CalculateSniperScore(GameWorld world, Sniper sniper)
         {
+            world.GrenadierDistance = sniper.Distance;
             decimal angleScore = new IsSniperPointingTowardsUs(world).Score();
             decimal proximityScore = new GameObjectProximityScorer(world).Score();
             _sniperScore = angleScore + proximityScore;
         }
 
-        private void CalculateGrenadierScore(GameWorld world)
+        private void CalculateGrenadierScore(GameWorld world, Grenadier grenadier)
         {
+            world.GrenadierDistance = grenadier.Distance;
             var hasGrenadeScorer = new IsGrenadierHoldingGrenade(world);
             var proximityScorer = new GameObjectProximityScorer(world);
             _grenadierScore = hasGrenadeScorer.Score() + proximityScorer.Score();
