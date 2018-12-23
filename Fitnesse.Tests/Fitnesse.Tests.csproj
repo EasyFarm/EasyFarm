@@ -51,6 +51,7 @@
     <Compile Include="Fixtures\UtilityAI\GameObjectProximityScorer.cs" />
     <Compile Include="Fixtures\UtilityAI\GameWorld.cs" />
     <Compile Include="Fixtures\UtilityAI\IsGrenadierHoldingGrenade.cs" />
+    <Compile Include="Fixtures\UtilityAI\IsSniperPointingTowardsUs.cs" />
     <Compile Include="Fixtures\UtilityAI\TargetSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
