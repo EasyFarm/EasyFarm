@@ -9,14 +9,25 @@ namespace Fitnesse.Tests.Fixtures.UtilityAI
 
         private void ComputeScores()
         {
+            var world = SetupWorld();
+            CalculateGrenadierScore(world);
+        }
+
+        private void CalculateGrenadierScore(GameWorld world)
+        {
+            var hasGrenadeScorer = new IsGrenadierHoldingGrenade(world);
+            var proximityScorer = new GameObjectProximityScorer(world);
+            _grenadierScore = hasGrenadeScorer.Score() + proximityScorer.Score();
+        }
+
+        private GameWorld SetupWorld()
+        {
             var world = new GameWorld()
             {
                 IsHoldingGrenade = IsHoldingGrenade,
                 GrenadierDistance = GrenadierDistance
             };
-            var hasGrenadeScorer = new IsGrenadierHoldingGrenade(world);
-            var proximityScorer = new GameObjectProximityScorer(world);
-            _grenadierScore = hasGrenadeScorer.Score() + proximityScorer.Score();
+            return world;
         }
 
         public bool IsHoldingGrenade { get; set; }
@@ -46,11 +57,5 @@ namespace Fitnesse.Tests.Fixtures.UtilityAI
         {
             return "None";
         }
-    }
-
-    public class GameWorld
-    {
-        public bool IsHoldingGrenade { get; set; }
-        public decimal GrenadierDistance { get; set; }
     }
 }
