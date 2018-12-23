@@ -1,11 +1,7 @@
 ---
 Test
 ---
-<test page>
-
-!define COMMAND_PATTERN {%m -r fitnesse.fitserver.FitServer,fitsharp\fit.dll %p}
-!define TEST_RUNNER {fitsharp\Runner.exe}
-!path Fixtures\Fitnesse.Tests.dll
+!include .BasePage
 
 !|Fitnesse.Tests.ShouldIBuyMilk |
 | cash in wallet   | credit card | pints of milk remaining | go to store?  |
