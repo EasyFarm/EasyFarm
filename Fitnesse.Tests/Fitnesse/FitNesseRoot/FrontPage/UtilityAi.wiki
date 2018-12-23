@@ -8,17 +8,17 @@ http://apexgametools.com/learn/apex-utility-ai-documentation/apex-utility-ai-tar
 
 !|Fitnesse.Tests.Fixtures.UtilityAI.TargetSelection|
 |Is Holding Grenade|Sniper Angle|Gunner Distance|Grenadier Distance|Sniper Distance|Grenadier?|Sniper?|Gunner?|Result?|
-|0|89|8|12|1|18|52|29|Gunner|
-|1|21|17|2|19|78|13|51|Grenadier|
-|1|2|19|10|14|70|11|56|Grenadier|
-|0|90|3|14|9|16|27|21|Gunner|
-|0|89|9|6|4|24|51|26|Gunner|
-|1|10|18|12|2|68|12|68|Grenadier or Sniper|
-|0|84|27|26|21|9|3|4|Grenadier|
-|1|82|16|28|20|52|14|10|Grenadier|
-|0|85|18|20|11|10|12|19|Sniper|
-|1|68|27|13|15|67|3|15|Grenadier|
-|1|66|14|26|10|54|46|20|Grenadier|
+|0|89|8|12|1|18|29|52|Gunner|
+|1|21|17|2|19|78|51|13|Grenadier|
+|1|2|19|10|14|70|56|11|Grenadier|
+|0|90|3|14|9|16|21|27|Gunner|
+|0|89|9|6|4|24|26|51|Gunner|
+|1|10|18|12|2|68|68|12|Grenadier or Sniper|
+|0|84|27|26|21|9|4|3|Grenadier|
+|1|82|16|28|20|52|10|14|Grenadier|
+|0|85|18|20|11|10|19|12|Sniper|
+|1|68|27|13|15|67|15|3|Grenadier|
+|1|66|14|26|10|54|20|46|Grenadier|
 
 These are the example code snippets which drive this behavior. 
 
