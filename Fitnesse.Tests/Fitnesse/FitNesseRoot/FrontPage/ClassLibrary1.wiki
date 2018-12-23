@@ -1,7 +1,7 @@
 ---
 Test
 ---
-!include .BasePage
+!include PageBase
 
 !|Fitnesse.Tests.ShouldIBuyMilk |
 | cash in wallet   | credit card | pints of milk remaining | go to store?  |

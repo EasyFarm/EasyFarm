@@ -1,7 +1,7 @@
 ---
 Test
 ---
-!include .basepage
+!include PageBase
 
 Review the following link and recreate their utility ai for the target selection behavior. 
 http://apexgametools.com/learn/apex-utility-ai-documentation/apex-utility-ai-target-selection/
