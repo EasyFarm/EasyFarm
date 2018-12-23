@@ -4,5 +4,7 @@
     {
         public bool IsHoldingGrenade { get; set; }
         public decimal GrenadierDistance { get; set; }
+        public decimal SniperAngle { get; set; }
+        public decimal SniperDistance { get; set; }
     }
 }

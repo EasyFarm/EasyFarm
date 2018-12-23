@@ -6,11 +6,20 @@ namespace Fitnesse.Tests.Fixtures.UtilityAI
     public class TargetSelection : ColumnFixture
     {
         private decimal _grenadierScore;
+        private decimal _sniperScore;
 
         private void ComputeScores()
         {
             var world = SetupWorld();
             CalculateGrenadierScore(world);
+            CalculateSniperScore(world);
+        }
+
+        private void CalculateSniperScore(GameWorld world)
+        {
+            decimal angleScore = new IsSniperPointingTowardsUs(world).Score();
+            decimal proximityScore = new GameObjectProximityScorer(world).Score();
+            _sniperScore = angleScore + proximityScore;
         }
 
         private void CalculateGrenadierScore(GameWorld world)
@@ -25,7 +34,9 @@ namespace Fitnesse.Tests.Fixtures.UtilityAI
             var world = new GameWorld()
             {
                 IsHoldingGrenade = IsHoldingGrenade,
-                GrenadierDistance = GrenadierDistance
+                GrenadierDistance = GrenadierDistance,
+                SniperAngle = SniperAngle,
+                SniperDistance = SniperDistance
             };
             return world;
         }
@@ -45,7 +56,8 @@ namespace Fitnesse.Tests.Fixtures.UtilityAI
 
         public decimal Sniper()
         {
-            return 0;
+            ComputeScores();
+            return _sniperScore;
         }
 
         public decimal Gunner()
