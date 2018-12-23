@@ -6,7 +6,8 @@ Test
 Review the following link and recreate their utility ai for the target selection behavior. 
 http://apexgametools.com/learn/apex-utility-ai-documentation/apex-utility-ai-target-selection/
 
-|Is Holding Grenade|Sniper Angle|Gunner Distance|Grenadier Distance|Sniper Distance|Grenadier|Sniper|Gunner|Result|
+!|Fitnesse.Tests.Fixtures.UtilityAI.TargetSelection|
+|Is Holding Grenade|Sniper Angle|Gunner Distance|Grenadier Distance|Sniper Distance|Grenadier?|Sniper?|Gunner?|Result?|
 |0|89|8|12|1|18|52|29|Gunner|
 |1|21|17|2|19|78|13|51|Grenadier|
 |1|2|19|10|14|70|11|56|Grenadier|
