@@ -47,15 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fixtures\Samples\ShouldIBuyMilk.cs" />
-    <Compile Include="Fixtures\UtilityAI\GameObjectProximityScorer.cs" />
-    <Compile Include="Fixtures\UtilityAI\GameWorld.cs" />
-    <Compile Include="Fixtures\UtilityAI\Grenadier.cs" />
-    <Compile Include="Fixtures\UtilityAI\Gunner.cs" />
-    <Compile Include="Fixtures\UtilityAI\IsGrenadierHoldingGrenade.cs" />
-    <Compile Include="Fixtures\UtilityAI\IsSniperPointingTowardsUs.cs" />
-    <Compile Include="Fixtures\UtilityAI\Sniper.cs" />
-    <Compile Include="Fixtures\UtilityAI\TargetSelection.cs" />
+    <Compile Include="Fixtures\RecoveryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

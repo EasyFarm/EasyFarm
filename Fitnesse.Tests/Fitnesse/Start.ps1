@@ -1,1 +1,1 @@
-java -jar fitnesse-standalone.jar
+java -jar fitnesse-standalone.jar -e 0

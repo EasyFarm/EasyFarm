@@ -1,0 +1,19 @@
+---
+Test
+---
+!include PageBase
+
+Agent should rest when the user has enabled resting and the player is missing magic or health points.
+
+|Fitnesse.Tests.Fixtures.RecoveryTests                                                                                                                    |
+|has aggro|is fighting|status effect|hpp current|mpp current|is magic enabled|is health enabled|high health|low health|high magic|low magic|resting score?|
+|false    |false      |none         |50         |50         |true            |true             |100        |0         |100       |0        |40            |
+
+Agent should heal when user cannot rest and has a healing move available. 
+
+|Fitnesse.Tests.Fixtures.RecoveryTests|
+|can rest  |has healing move  |score? |
+|false     |false             |0      |
+|true      |false             |0      |
+|true      |true              |40     |
+|false     |true              |0      |
