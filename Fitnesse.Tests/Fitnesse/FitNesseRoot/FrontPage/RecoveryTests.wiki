@@ -17,3 +17,16 @@ Agent should heal when user cannot rest and has a healing move available.
 |true      |false             |0      |
 |true      |true              |40     |
 |false     |true              |0      |
+
+Agent with given state cannot transition to following states.
+
+|State Transitions                                                                   |
+|Rest  |Summon, Follow, Approach, Battle, End, Heal, Pull, Start, Travel, Weaponskill|
+|Summon|Approach, Pull, Travel                                                       |
+|Heal  |Travel                                                                       |
+
+How does the agent decide which actions to execute next?
+1. Sort states by priority. 
+2. Filter out states blocked by transitions
+3. Check if state is applicable. 
+4. Run states which are runnable. 
