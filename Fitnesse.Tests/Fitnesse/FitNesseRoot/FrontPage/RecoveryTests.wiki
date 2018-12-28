@@ -25,8 +25,43 @@ Agent with given state cannot transition to following states.
 |Summon|Approach, Pull, Travel                                                       |
 |Heal  |Travel                                                                       |
 
-How does the agent decide which actions to execute next?
-1. Sort states by priority. 
-2. Filter out states blocked by transitions
-3. Check if state is applicable. 
-4. Run states which are runnable. 
+|How does the agent decide which actions to execute next?|
+|1       |Sort states by priority.                       |
+|2       |Filter out states blocked by transitions.      |
+|3       |Check if state is applicable.                  |
+|4       |Run states which are runnable.                 |
+
+|States By Priority      |
+|State       |Priority   |
+|Dead        |7          |
+|Zone        |7          |
+|SetTarget   |7          |
+|SetFighting |7          |
+|Follow      |5          |
+|Rest        |2          |
+|SummonTrusts|6          |
+|Approach    |0          |
+|Battle      |3          |
+|Weaponskill |2          |
+|Pull        |4          |
+|Start       |5          |
+|Travel      |1          |
+|Healing     |2          |
+|End         |3          |
+|StartEngine |MaxPriority|
+
+|State Transitions                                                                             |
+|Current State|Prevents Execution Of                                                           |
+|Rest         |Summon, Follow, Approach, Battle, End, Healing, Pull, Start, Travel, Weaponskill|
+|Summon       |Approach, Pull, Travel                                                          |
+|Healing      |Travel                                                                          |
+
+|Which States Execute Before Others                                               |
+|Execution Order|Condition        |Applicable States                              |
+|1              |if on startup    |StartEngine                                    |
+|2              |if dead          |Dead                                           |
+|3              |if zoning        |Zone                                           |
+|4              |always           |SetTarget, SetFighting                         |
+|5              |If injured either|Rest, Healing                                  |
+|6              |If target        |Start, Pull, Battle, End, Weaponskill, Approach|
+|7              |If no target     |Travel                                         |
