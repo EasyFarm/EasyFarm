@@ -88,7 +88,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\MockPlayer.cs" />
     <Compile Include="States\TargetPriorityTests.cs" />
+    <Compile Include="Context\TestContext.cs" />
     <Compile Include="States\ValidMobTests.cs" />
     <Compile Include="TestTypes\Mocks\MockGameAPI.cs" />
     <Compile Include="Classes\PlayerTests.cs" />

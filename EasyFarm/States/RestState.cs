@@ -19,80 +19,53 @@
 using System.Collections.Generic;
 using System.Linq;
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
+using EasyFarm.Context;
 using MemoryAPI;
+using Player = EasyFarm.Classes.Player;
 
 namespace EasyFarm.States
 {
     /// <summary>
     ///     Behavior for resting our character.
     /// </summary>
-    public class RestState : AgentState
+    public class RestState : BaseState
     {
-        public RestState(StateMemory memory) : base(memory)
-        {
-        }
-
-        /// <summary>
-        ///     Does our player have a status effect that prevents him
-        /// </summary>
-        /// <returns></returns>
-        public bool IsRestingBlocked
-        {
-            get
-            {
-                var restBlockingDebuffs = new List<StatusEffect>
-                {
-                    StatusEffect.Poison,
-                    StatusEffect.Bio,
-                    StatusEffect.Sleep,
-                    StatusEffect.Sleep2,
-                    StatusEffect.Poison,
-                    StatusEffect.Petrification,
-                    StatusEffect.Stun,
-                    StatusEffect.Charm1,
-                    StatusEffect.Charm2,
-                    StatusEffect.Terror,
-                    StatusEffect.Frost,
-                    StatusEffect.Burn,
-                    StatusEffect.Choke,
-                    StatusEffect.Rasp,
-                    StatusEffect.Shock,
-                    StatusEffect.Drown,
-                    StatusEffect.Dia,
-                    StatusEffect.Requiem,
-                    StatusEffect.Lullaby
-                };
-
-                return restBlockingDebuffs.Intersect(EliteApi.Player.StatusEffects).Count() != 0;
-            }
-        }
-
         /// <summary>
         ///     Determines if we should rest up our health or magic.
         /// </summary>
         /// <returns></returns>
-        public override bool Check()
+        public override bool Check(IGameContext context)
         {
             // Check for effects taht stop resting. 
             if (ProhibitEffects.ProhibitEffectsDots
-                .Intersect(EliteApi.Player.StatusEffects).Any()) return false;
+                .Intersect(context.API.Player.StatusEffects).Any()) 
+                return false;
 
             // Do not rest if we are being attacked. 
-            if (UnitService.HasAggro) return false;
+            if (context.Player.HasAggro) 
+                return false;
 
             // Check if we are fighting. 
-            if (EliteApi.Player.Status == Status.Fighting) return false;
+            if (context.Player.Status == Status.Fighting) 
+                return false;
 
             // Check if we should rest for health.
             if (ShouldRestForHealth(
-                EliteApi.Player.HPPCurrent,
-                EliteApi.Player.Status)) return true;
+                context.Player.HppCurrent,
+                context.Player.Status,
+                context.Config.IsHealthEnabled,
+                context.Config.LowHealth,
+                context.Config.HighHealth)) 
+                return true;
 
             // Check if we should rest for magic. 
             if (ShouldRestForMagic(
-                EliteApi.Player.MPPCurrent,
-                EliteApi.Player.Status)) return true;
+                context.Player.MppCurrent,
+                context.Player.Status,
+                context.Config.IsMagicEnabled,
+                context.Config.LowMagic,
+                context.Config.HighHealth)) 
+                return true;
 
             // We do not meet the conditions for resting. 
             return false;
@@ -101,17 +74,17 @@ namespace EasyFarm.States
         /// <summary>
         ///     Begin resting our health and magic.
         /// </summary>
-        public override void Run()
+        public override void Run(IGameContext context)
         {
-            Player.Rest(EliteApi);
+            Player.Rest(context.API);
         }
 
         /// <summary>
         ///     Force the player to stand up before attempting anything else.
         /// </summary>
-        public override void Exit()
+        public override void Exit(IGameContext context)
         {
-            while (EliteApi.Player.Status == Status.Healing) Player.Stand(EliteApi);
+            while (context.API.Player.Status == Status.Healing) Player.Stand(context.API);
         }
 
         /// <summary>
@@ -120,10 +93,10 @@ namespace EasyFarm.States
         /// <param name="magic"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public bool ShouldRestForMagic(int magic, Status status)
+        public bool ShouldRestForMagic(int magic, Status status, bool enabled, int lowMagic, int highMagic)
         {
-            return Config.IsMagicEnabled &&
-                   (IsMagicLow(magic) || !IsMagicHigh(magic) && status == Status.Healing);
+            return enabled &&
+                   (IsMagicLow(magic, lowMagic) || !IsMagicHigh(magic, highMagic) && status == Status.Healing);
         }
 
         /// <summary>
@@ -131,9 +104,9 @@ namespace EasyFarm.States
         /// </summary>
         /// <param name="magic"></param>
         /// <returns></returns>
-        public bool IsMagicLow(int magic)
+        public bool IsMagicLow(int magic, int lowMagic)
         {
-            return magic <= Config.LowMagic;
+            return magic <= lowMagic;
         }
 
         /// <summary>
@@ -141,9 +114,9 @@ namespace EasyFarm.States
         /// </summary>
         /// <param name="magic"></param>
         /// <returns></returns>
-        public bool IsMagicHigh(int magic)
+        public bool IsMagicHigh(int magic, int highMagic)
         {
-            return magic >= Config.HighMagic;
+            return magic >= highMagic;
         }
 
         /// <summary>
@@ -152,11 +125,10 @@ namespace EasyFarm.States
         /// <param name="health"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public bool ShouldRestForHealth(int health, Status status)
+        public bool ShouldRestForHealth(int health, Status status, bool enabled, int lowHealth, int highHealth)
         {
             // Rest while low and while not high
-            return Config.IsHealthEnabled &&
-                   (IsHealthLow(health) || !IsHealthHigh(health) && status == Status.Healing);
+            return enabled && (IsHealthLow(health, lowHealth) || !IsHealthHigh(health, highHealth) && status == Status.Healing);
         }
 
         /// <summary>
@@ -164,9 +136,9 @@ namespace EasyFarm.States
         /// </summary>
         /// <param name="health"></param>
         /// <returns></returns>
-        public bool IsHealthLow(int health)
+        public bool IsHealthLow(int health, int lowHealth)
         {
-            return health <= Config.LowHealth;
+            return health <= lowHealth;
         }
 
         /// <summary>
@@ -174,9 +146,9 @@ namespace EasyFarm.States
         /// </summary>
         /// <param name="health"></param>
         /// <returns></returns>
-        public bool IsHealthHigh(int health)
+        public bool IsHealthHigh(int health, int highHealth)
         {
-            return health >= Config.HighHealth;
+            return health >= highHealth;
         }
     }
 }

@@ -18,8 +18,10 @@
 
 using System.Linq;
 using EasyFarm.Classes;
+using EasyFarm.Context;
 using EasyFarm.UserSettings;
 using MemoryAPI;
+using Player = EasyFarm.Classes.Player;
 
 namespace EasyFarm.States
 {
@@ -29,42 +31,38 @@ namespace EasyFarm.States
     ///     lists can fire and replaces targets that are dead, null,
     ///     empty or invalid.
     /// </summary>
-    public class EndState : AgentState
+    public class EndState : BaseState
     {
-        public EndState(StateMemory memory) : base(memory)
-        {
-        }
-
-        public override bool Check()
+        public override bool Check(IGameContext context)
         {
             // Prevent making the player stand up from resting.
-            if (new RestState(Memory).Check()) return false;
+            if (new RestState().Check(context)) return false;
 
             // Creature is unkillable and does not meets the
             // user's criteria for valid mobs defined in MobFilters.
-            return !UnitFilters.MobFilter(EliteApi, Target, Config);
+            return !context.Memory.UnitFilters.MobFilter(context.Memory.EliteApi, context.Target, context.Config);
         }
 
         /// <summary>
         ///     Force player when changing targets.
         /// </summary>
-        public override void Enter()
+        public override void Enter(IGameContext context)
         {
-            EliteApi.Navigator.Reset();
+            context.API.Navigator.Reset();
 
-            while (EliteApi.Player.Status == Status.Fighting) Player.Disengage(EliteApi);
+            while (context.API.Player.Status == Status.Fighting) Player.Disengage(context.API);
         }
 
-        public override void Run()
+        public override void Run(IGameContext context)
         {
             // Execute moves.
-            var usable = Config.BattleLists["End"].Actions
-                .Where(x => ActionFilters.BuffingFilter(EliteApi, x));
+            var usable = context.Config.BattleLists["End"].Actions
+                .Where(x => ActionFilters.BuffingFilter(context.API, x));
 
-            Executor.UseBuffingActions(usable);
+            context.Memory.Executor.UseBuffingActions(usable);
 
             // Reset all usage data to begin a new battle.
-            foreach (var action in Config.BattleLists.Actions) action.Usages = 0;
+            foreach (var action in context.Config.BattleLists.Actions) action.Usages = 0;
         }
     }
 }

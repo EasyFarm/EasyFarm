@@ -18,64 +18,62 @@
 
 using System.Linq;
 using EasyFarm.Classes;
+using EasyFarm.Context;
 using EasyFarm.UserSettings;
 using MemoryAPI;
+using Player = EasyFarm.Classes.Player;
 
 namespace EasyFarm.States
 {
     /// <summary>
     ///     Moves to target enemies.
     /// </summary>
-    public class ApproachState : AgentState
+    public class ApproachState : BaseState
     {
-        public ApproachState(StateMemory memory) : base(memory)
+        public override bool Check(IGameContext context)
         {
-        }
-
-        public override bool Check()
-        {
-            if (new RestState(Memory).Check()) return false;
+            if (new RestState().Check(context)) return false;
 
             // Make sure we don't need trusts
-            if (new SummonTrustsState(Memory).Check()) return false;
+            if (new SummonTrustsState().Check(context)) return false;
 
             // Target dead or null.
-            if (!UnitFilters.MobFilter(EliteApi, Target, Config)) return false;
+            if (!context.Memory.UnitFilters.MobFilter(context.API, context.Target, context.Config)) return false;
 
             // We should approach mobs that have aggroed or have been pulled. 
-            if (Target.Status.Equals(Status.Fighting)) return true;
+            if (context.Target.Status.Equals(Status.Fighting)) return true;
 
             // Get usable abilities. 
-            var usable = Config.BattleLists["Pull"].Actions
-                .Where(x => ActionFilters.BuffingFilter(EliteApi, x));
+            var usable = context.Config.BattleLists["Pull"].Actions
+                .Where(x => ActionFilters.BuffingFilter(context.API, x));
 
             // Approach when there are no pulling moves available. 
             if (!usable.Any()) return true;
 
             // Approach mobs if their distance is close. 
-            return Target.Distance < 8;
+            return context.Target.Distance < 8;
         }
 
-        public override void Run()
+        public override void Run(IGameContext context)
         {
             // Has the user decided that we should approach targets?
-            if (Config.IsApproachEnabled)
+            if (context.Config.IsApproachEnabled)
             {
                 // Move to target if out of melee range. 
-                EliteApi.Navigator.DistanceTolerance = Config.MeleeDistance;
-                EliteApi.Navigator.GotoNPC(Target.Id, Config.IsObjectAvoidanceEnabled);
+                context.API.Navigator.DistanceTolerance = context.Config.MeleeDistance;
+                context.API.Navigator.GotoNPC(context.Target.Id, context.Config.IsObjectAvoidanceEnabled);
             }
 
             // Face mob. 
-            EliteApi.Navigator.FaceHeading(Target.Position);
+            context.API.Navigator.FaceHeading(context.Target.Position);
 
             // Target mob if not currently targeted. 
-            Player.SetTarget(EliteApi, Target);
+            Player.SetTarget(context.API, context.Target);
 
             // Has the user decided we should engage in battle. 
-            if (Config.IsEngageEnabled)
-                if (!EliteApi.Player.Status.Equals(Status.Fighting) && Target.Distance < 25)
-                    EliteApi.Windower.SendString(Constants.AttackTarget);
+            if (context.Config.IsEngageEnabled)
+                if (!context.API.Player.Status.Equals(Status.Fighting) && context.Target.Distance < 25)
+                    context.API.Windower.SendString(Constants.AttackTarget);
         }
     }
 }

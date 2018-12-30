@@ -18,45 +18,42 @@
 
 using System.Linq;
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
+using EasyFarm.Context;
 using MemoryAPI;
+using Player = EasyFarm.Classes.Player;
 
 namespace EasyFarm.States
 {
-    public class HealingState : AgentState
+    public class HealingState : BaseState
     {
-        public HealingState(StateMemory fface) : base(fface)
+        public override bool Check(IGameContext context)
         {
+            if (new RestState().Check(context)) return false;
+
+            return context.Config.BattleLists["Healing"].Actions
+                .Any(x => ActionFilters.BuffingFilter(context.API, x));
         }
 
-        public override bool Check()
-        {
-            if (new RestState(Memory).Check()) return false;
-
-            return Config.BattleLists["Healing"].Actions
-                .Any(x => ActionFilters.BuffingFilter(EliteApi, x));
-        }
-
-        public override void Enter()
+        public override void Enter(IGameContext context)
         {
             // Stop resting. 
-            if (EliteApi.Player.Status.Equals(Status.Healing))
-                Player.Stand(EliteApi);
+            if (context.Player.Status.Equals(Status.Healing))
+                Player.Stand(context.API);
 
             // Stop moving. 
-            EliteApi.Navigator.Reset();
+            context.API.Navigator.Reset();
         }
 
-        public override void Run()
+        public override void Run(IGameContext context)
         {
             // Get the list of healing abilities that can be used.
-            var healingMoves = Config.BattleLists["Healing"].Actions
-                .Where(x => ActionFilters.BuffingFilter(EliteApi, x))
+            var healingMoves = context.Config.BattleLists["Healing"].Actions
+                .Where(x => ActionFilters.BuffingFilter(context.API, x))
                 .ToList();
 
             if (healingMoves.Count <= 0) return;
             var healingMove = healingMoves.First();
-            Executor.UseBuffingActions(new[] {healingMove});
+            context.Memory.Executor.UseBuffingActions(new[] {healingMove});
         }
     }
 }

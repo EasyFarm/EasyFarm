@@ -23,62 +23,62 @@ using System;
 using EasyFarm.ViewModels;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using EasyFarm.Context;
 using EasyFarm.UserSettings;
+using Player = EasyFarm.Classes.Player;
 
 namespace EasyFarm.States
 {
     /// <summary>
     ///     A class for defeating monsters.
     /// </summary>
-    public class BattleState : AgentState
+    public class BattleState : BaseState
     {
-        private readonly RestState _restState;
-
-        public BattleState(StateMemory fface) : base(fface)
+        public override bool Check(IGameContext context)
         {
-            _restState = new RestState(fface);
-        }
-
-        public override bool Check()
-        {
-            if (_restState.Check()) return false;
+            if (new RestState().Check(context)) 
+                return false;
 
             // Make sure we don't need trusts
-            if (new SummonTrustsState(Memory).Check()) return false;
+            if (new SummonTrustsState().Check(context)) 
+                return false;
 
             // Mobs has not been pulled if pulling moves are available. 
-            if (!IsFighting) return false;
+            if (!context.IsFighting) 
+                return false;
 
             // target null or dead. 
-            if (!UnitFilters.MobFilter(EliteApi, Target, Config)) return false;
+            if (!context.Target.IsValid) 
+                return false;
 
             // Engage is enabled and we are not engaged. We cannot proceed. 
-            if (Config.IsEngageEnabled) return EliteApi.Player.Status.Equals(Status.Fighting);
+            if (context.Config.IsEngageEnabled) 
+                return context.Player.Status.Equals(Status.Fighting);
 
             // Engage is not checked, so just proceed to battle. 
             return true;
         }
 
-        public override void Enter()
+        public override void Enter(IGameContext context)
         {
-            Player.Stand(EliteApi);
-            EliteApi.Navigator.Reset();
+            Player.Stand(context.API);
+            context.API.Navigator.Reset();
         }
 
-        public override void Run()
+        public override void Run(IGameContext context)
         {
-            ShouldRecycleBattleStateCheck();
+            ShouldRecycleBattleStateCheck(context);
             
             // Cast only one action to prevent blocking curing. 
-            var action = Config.BattleLists["Battle"].Actions
-                .FirstOrDefault(x => ActionFilters.TargetedFilter(EliteApi, x, Target));
+            var action = context.Config.BattleLists["Battle"].Actions
+                .FirstOrDefault(x => ActionFilters.TargetedFilter(context.API, x, context.Target));
             if (action == null) return;
-            Executor.UseTargetedActions(new[] {action}, Target);
+            context.Memory.Executor.UseTargetedActions(new[] {action}, context.Target);
         }
 
-        private void ShouldRecycleBattleStateCheck()
+        private void ShouldRecycleBattleStateCheck(IGameContext context)
         {
-            var chatEntries = EliteApi.Chat.ChatEntries.ToList();
+            var chatEntries = context.API.Chat.ChatEntries.ToList();
             var invalidTargetPattern = new Regex("Unable to see");
 
             List<EliteMMO.API.EliteAPI.ChatEntry> matches = chatEntries
@@ -86,7 +86,7 @@ namespace EasyFarm.States
 
             foreach (EliteMMO.API.EliteAPI.ChatEntry m in matches.Where(x => x.Timestamp.ToString() == DateTime.Now.ToString()))
             {
-                EliteApi.Windower.SendString(Constants.AttackOff);
+                context.API.Windower.SendString(Constants.AttackOff);
                 LogViewModel.Write("Recycled battle stance to properly engage the target.");
             }
         }

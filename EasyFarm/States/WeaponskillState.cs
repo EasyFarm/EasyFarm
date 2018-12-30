@@ -18,7 +18,7 @@
 
 using System.Linq;
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
+using EasyFarm.Context;
 using MemoryAPI;
 
 namespace EasyFarm.States
@@ -26,33 +26,29 @@ namespace EasyFarm.States
     /// <summary>
     ///     Performs weaponskills on targets.
     /// </summary>
-    public class WeaponskillState : AgentState
+    public class WeaponskillState : BaseState
     {
-        public WeaponskillState(StateMemory memory) : base(memory)
+        public override bool Check(IGameContext context)
         {
-        }
+            if (new RestState().Check(context)) return false;
 
-        public override bool Check()
-        {
-            if (new RestState(Memory).Check()) return false;
-
-            if (!UnitFilters.MobFilter(EliteApi, Target, Config)) return false;
+            if (!context.Memory.UnitFilters.MobFilter(context.API, context.Target, context.Config)) return false;
 
             // Use skill if we are engaged. 
-            return EliteApi.Player.Status.Equals(Status.Fighting);
+            return context.API.Player.Status.Equals(Status.Fighting);
         }
 
-        public override void Run()
+        public override void Run(IGameContext context)
         {
             // Check engaged
             // FIXED: no longer return on not engage but don't execute 
             // these moves instead. Fixes the bot not attacking things 
             // from move than 30 yalms problem. 
-            if (!EliteApi.Player.Status.Equals(Status.Fighting)) return;
-            var weaponskill = Config.BattleLists["Weaponskill"].Actions
-                .FirstOrDefault(x => ActionFilters.TargetedFilter(EliteApi, x, Target));
+            if (!context.API.Player.Status.Equals(Status.Fighting)) return;
+            var weaponskill = context.Config.BattleLists["Weaponskill"].Actions
+                .FirstOrDefault(x => ActionFilters.TargetedFilter(context.API, x, context.Target));
             if (weaponskill == null) return;
-            Executor.UseTargetedActions(new[] {weaponskill}, Target);
+            context.Memory.Executor.UseTargetedActions(new[] {weaponskill}, context.Target);
         }
     }
 }

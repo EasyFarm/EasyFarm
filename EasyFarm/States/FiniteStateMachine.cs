@@ -22,6 +22,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EasyFarm.Classes;
+using EasyFarm.Context;
 using EasyFarm.Logging;
 using EasyFarm.UserSettings;
 using EasyFarm.ViewModels;
@@ -35,29 +36,30 @@ namespace EasyFarm.States
         private readonly IMemoryAPI _fface;
         private readonly List<IState> _states = new List<IState>();
         private CancellationTokenSource _cancellation = new CancellationTokenSource();
+        private readonly GameContext _context;
 
         public FiniteStateMachine(IMemoryAPI fface)
         {
             _fface = fface;
-            var stateMemory = new StateMemory(fface);
+            _context = new GameContext(fface);
 
             //Create the states
-            AddState(new DeadState(stateMemory) {Priority = 7});
-            AddState(new ZoneState(stateMemory) {Priority = 7});
-            AddState(new SetTargetState(stateMemory) {Priority = 7});
-            AddState(new SetFightingState(stateMemory) {Priority = 7});
-            AddState(new FollowState(stateMemory) {Priority = 5});
-            AddState(new RestState(stateMemory) {Priority = 2});
-            AddState(new SummonTrustsState(stateMemory) {Priority = 6});
-            AddState(new ApproachState(stateMemory) {Priority = 0});
-            AddState(new BattleState(stateMemory) {Priority = 3});
-            AddState(new WeaponskillState(stateMemory) {Priority = 2});
-            AddState(new PullState(stateMemory) {Priority = 4});
-            AddState(new StartState(stateMemory) {Priority = 5});
-            AddState(new TravelState(stateMemory) {Priority = 1});
-            AddState(new HealingState(stateMemory) {Priority = 2});
-            AddState(new EndState(stateMemory) {Priority = 3});
-            AddState(new StartEngineState(stateMemory) {Priority = Constants.MaxPriority});
+            AddState(new DeadState() {Priority = 7});
+            AddState(new ZoneState() {Priority = 7});
+            AddState(new SetTargetState() {Priority = 7});
+            AddState(new SetFightingState() {Priority = 7});
+            AddState(new FollowState() {Priority = 5});
+            AddState(new RestState() {Priority = 2});
+            AddState(new SummonTrustsState() {Priority = 6});
+            AddState(new ApproachState() {Priority = 0});
+            AddState(new BattleState() {Priority = 3});
+            AddState(new WeaponskillState() {Priority = 2});
+            AddState(new PullState() {Priority = 4});
+            AddState(new StartState() {Priority = 5});
+            AddState(new TravelState() {Priority = 1});
+            AddState(new HealingState() {Priority = 2});
+            AddState(new EndState() {Priority = 3});
+            AddState(new StartEngineState() {Priority = Constants.MaxPriority});
 
             _states.ForEach(x => x.Enabled = true);
         }
@@ -93,24 +95,9 @@ namespace EasyFarm.States
             {
                 using (_cancellation.Token.Register(StopThreadQuickly(Thread.CurrentThread)))
                 {
-                    RunStateMachineLabel:
                     try
                     {
                         RunStateMachine();
-                    }
-                    catch (System.InvalidOperationException ex)
-                    {
-                        // Ignore race conditions while rapidly parsing the chat log.
-                        if (ex.Message == "Collection was modified after the enumerator was instantiated.")
-                        {
-                            TimeWaiter.Pause(250);
-                            goto RunStateMachineLabel;
-                        } else
-                        {
-                            Logger.Log(new LogEntry(LoggingEventType.Error, "FSM error", ex));
-                            LogViewModel.Write("An error has occurred: please check easyfarm.log for more information");
-                            AppServices.InformUser("An error occurred!");
-                        }
                     }
                     catch (ThreadInterruptedException ex)
                     {
@@ -158,17 +145,17 @@ namespace EasyFarm.States
                 {
                     _cancellation.Token.ThrowIfCancellationRequested();
 
-                    var isRunnable = mc.Check();
+                    var isRunnable = mc.Check(_context);
 
                     // Run last state's exits method.
                     if (_cache[mc] != isRunnable)
                     {
-                        if (isRunnable) mc.Enter();
-                        else mc.Exit();
+                        if (isRunnable) mc.Enter(_context);
+                        else mc.Exit(_context);
                         _cache[mc] = isRunnable;
                     }
 
-                    if (isRunnable) mc.Run();
+                    if (isRunnable) mc.Run(_context);
                 }
 
                 TimeWaiter.Pause(250);

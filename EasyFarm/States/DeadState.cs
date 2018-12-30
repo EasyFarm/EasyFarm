@@ -17,43 +17,39 @@
 // ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
+using EasyFarm.Context;
 using EliteMMO.API;
 using MemoryAPI;
 
 namespace EasyFarm.States
 {
-    public class DeadState : AgentState
+    public class DeadState : BaseState
     {
-        public DeadState(StateMemory stateMemory) : base(stateMemory)
+        public override bool Check(IGameContext context)
         {
-        }
-
-        public override bool Check()
-        {
-            var status = EliteApi.Player.Status;
+            var status = context.Player.Status;
             return status == Status.Dead1 || status == Status.Dead2;
         }
 
-        public override void Run()
+        public override void Run(IGameContext context)
         {
             // Stop program from running to next waypoint.
-            EliteApi.Navigator.Reset();
+            context.API.Navigator.Reset();
 
-            if (Config.HomePointOnDeath) HomePointOnDeath();
+            if (context.Config.HomePointOnDeath) HomePointOnDeath(context);
 
             // Stop the engine from running.
             AppServices.SendPauseEvent();
         }
 
-        private void HomePointOnDeath()
+        private void HomePointOnDeath(IGameContext context)
         {
             TimeWaiter.Pause(2000);
-            EliteApi.Windower.SendKeyPress(Keys.NUMPADENTER);
+            context.API.Windower.SendKeyPress(Keys.NUMPADENTER);
             TimeWaiter.Pause(1000);
-            EliteApi.Windower.SendKeyPress(Keys.LEFT);
+            context.API.Windower.SendKeyPress(Keys.LEFT);
             TimeWaiter.Pause(1000);
-            EliteApi.Windower.SendKeyPress(Keys.NUMPADENTER);
+            context.API.Windower.SendKeyPress(Keys.NUMPADENTER);
         }
     }
 }

@@ -18,44 +18,46 @@
 
 using System;
 using EasyFarm.Classes;
+using EasyFarm.Context;
 using MemoryAPI;
 
 namespace EasyFarm.States
 {
-    public class ZoneState : AgentState
+    public class ZoneState : BaseState
     {
-        public Zone Zone;
-
-        public ZoneState(StateMemory stateMemory) : base(stateMemory)
-        {
-            Zone = EliteApi.Player.Zone;
-        }
-
         public Action ZoningAction { get; set; } = () => TimeWaiter.Pause(500);
 
-        private bool IsZoning => EliteApi.Player.Stats.Str == 0;
+        private bool IsZoning(IGameContext context) => context.Player.Str == 0;
 
-        public override bool Check()
+        public override void Enter(IGameContext context)
         {
-            var zone = EliteApi.Player.Zone;
-            return ZoneChanged(zone) || IsZoning;
+            if (context.Zone == Zone.Unknown)
+            {
+                context.Zone = context.Player.Zone;
+            }
         }
 
-        private bool ZoneChanged(Zone zone)
+        public override bool Check(IGameContext context)
         {
-            return Zone != zone;
+            var zone = context.Player.Zone;
+            return ZoneChanged(zone, context.Zone) || IsZoning(context);
         }
 
-        public override void Run()
+        private bool ZoneChanged(Zone currentZone, Zone lastZone)
         {
-            // Set new zone.
-            Zone = EliteApi.Player.Zone;
+            return lastZone != currentZone;
+        }
+
+        public override void Run(IGameContext context)
+        {
+            // Set new currentZone.
+            context.Zone = context.Player.Zone;
 
             // Stop program from running to next waypoint.
-            EliteApi.Navigator.Reset();
+            context.API.Navigator.Reset();
 
             // Wait until we are done zoning.
-            while (IsZoning) ZoningAction();
+            while (IsZoning(context)) ZoningAction();
         }
     }
 }

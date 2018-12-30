@@ -17,6 +17,7 @@
 // ///////////////////////////////////////////////////////////////////
 
 using EasyFarm.Classes;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 using MemoryAPI.Navigation;
 
@@ -44,5 +45,6 @@ namespace EasyFarm.Tests.TestTypes.Mocks
         public bool PartyClaim { get; set; }
         public double YDifference { get; set; }
         public bool IsPet { get; set; }
+        public bool IsValid { get; set; }
     }
 }

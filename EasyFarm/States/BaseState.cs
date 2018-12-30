@@ -17,6 +17,7 @@
 // ///////////////////////////////////////////////////////////////////
 
 using System;
+using EasyFarm.Context;
 
 namespace EasyFarm.States
 {
@@ -26,20 +27,20 @@ namespace EasyFarm.States
 
         public virtual int Priority { get; set; }
 
-        public virtual bool Check()
+        public virtual bool Check(IGameContext context)
         {
             return false;
         }
 
-        public virtual void Enter()
+        public virtual void Enter(IGameContext context)
         {
         }
 
-        public virtual void Exit()
+        public virtual void Exit(IGameContext context)
         {
         }
 
-        public virtual void Run()
+        public virtual void Run(IGameContext context)
         {
         }
 

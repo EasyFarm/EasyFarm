@@ -38,5 +38,10 @@ namespace EasyFarm.Tests.TestTypes.Mocks
         public double FollowDistance { get; set; }
         public string FollowedPlayer { get; set; }
         public Route Route { get; set; } = new Route();
+
+        public MockConfig()
+        {
+            BattleLists = new BattleLists(Config.Instance.BattleLists);
+        }
     }
 }

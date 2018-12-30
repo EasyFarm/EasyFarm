@@ -194,6 +194,10 @@
     <Compile Include="Classes\IUnitService.cs" />
     <Compile Include="Classes\Result.cs" />
     <Compile Include="Classes\TargetPriority.cs" />
+    <Compile Include="Context\GameContext.cs" />
+    <Compile Include="Context\IGameContext.cs" />
+    <Compile Include="Context\IPlayer.cs" />
+    <Compile Include="Context\Player.cs" />
     <Compile Include="Handlers\SelectAbilityRequestHandler.cs" />
     <Compile Include="Handlers\SelectCharacterRequestHandler.cs" />
     <Compile Include="Handlers\SelectCharacterResult.cs" />
@@ -227,7 +231,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="States\AgentState.cs" />
     <Compile Include="UserSettings\IConfig.cs" />
     <Compile Include="States\PlayerMovementTracker.cs" />
     <Compile Include="States\Route.cs" />

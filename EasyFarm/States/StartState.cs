@@ -18,6 +18,7 @@
 
 using System.Linq;
 using EasyFarm.Classes;
+using EasyFarm.Context;
 using EasyFarm.UserSettings;
 using MemoryAPI;
 
@@ -26,35 +27,31 @@ namespace EasyFarm.States
     /// <summary>
     ///     Buffs the player.
     /// </summary>
-    public class StartState : AgentState
+    public class StartState : BaseState
     {
-        public StartState(StateMemory memory) : base(memory)
+        public override bool Check(IGameContext context)
         {
-        }
-
-        public override bool Check()
-        {
-            if (new RestState(Memory).Check()) return false;
+            if (new RestState().Check(context)) return false;
 
             // target dead or null. 
-            if (!UnitFilters.MobFilter(EliteApi, Target, Config)) return false;
+            if (!context.Memory.UnitFilters.MobFilter(context.API, context.Target, context.Config)) return false;
 
             // Return true if fight has not started. 
-            return !Target.Status.Equals(Status.Fighting);
+            return !context.Target.Status.Equals(Status.Fighting);
         }
 
-        public override void Enter()
+        public override void Enter(IGameContext context)
         {
-            EliteApi.Navigator.Reset();
+            context.API.Navigator.Reset();
         }
 
-        public override void Run()
+        public override void Run(IGameContext context)
         {
-            var usable = Config.BattleLists["Start"]
-                .Actions.Where(x => ActionFilters.BuffingFilter(EliteApi, x));
+            var usable = context.Config.BattleLists["Start"]
+                .Actions.Where(x => ActionFilters.BuffingFilter(context.API, x));
 
             // Execute moves at target. 
-            Executor.UseBuffingActions(usable);
+            context.Memory.Executor.UseBuffingActions(usable);
         }
     }
 }

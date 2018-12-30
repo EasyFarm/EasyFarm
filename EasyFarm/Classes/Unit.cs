@@ -18,12 +18,33 @@
 using MemoryAPI;
 using System;
 using System.Linq;
+using EasyFarm.UserSettings;
 using MemoryAPI.Navigation;
 
 namespace EasyFarm.Classes
 {
     public class Unit : IUnit
     {
+        /// <summary>
+        ///     Holds all the game's data.
+        /// </summary>
+        private readonly IMemoryAPI _fface;
+
+        /// <summary>
+        ///     Holds the data about units.
+        /// </summary>
+        private readonly INPCTools _npc;
+
+        /// <summary>
+        ///     Determines whether unit is valid.
+        /// </summary>
+        private readonly UnitFilters _unitFilters = new UnitFilters();
+
+        /// <summary>
+        ///     Users settings which control whether this unit is valid.
+        /// </summary>
+        private readonly IConfig _config = new ProxyConfig();
+
         public Unit(IMemoryAPI fface, int id)
         {
             // Set this unit's session data. 
@@ -34,17 +55,7 @@ namespace EasyFarm.Classes
 
             // Set the NPC information.
             _npc = _fface.NPC;
-        }
-
-        /// <summary>
-        ///     Holds all the game's data.
-        /// </summary>
-        private readonly IMemoryAPI _fface;
-
-        /// <summary>
-        ///     Holds the data about units.
-        /// </summary>
-        private readonly INPCTools _npc;
+        }        
 
         /// <summary>
         ///     The unit's id.
@@ -221,6 +232,12 @@ namespace EasyFarm.Classes
 
                 return playerIds.Any(x => _npc.PetID(x) == Id);
             }
+        }
+
+        public bool IsValid
+        {
+            get => _unitFilters.MobFilter(_fface, this, _config);
+            set => throw new NotImplementedException();
         }
     }
 }

@@ -18,61 +18,57 @@
 
 using System.Linq;
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
+using EasyFarm.Context;
 
 namespace EasyFarm.States
 {
-    public class TravelState : AgentState
+    public class TravelState : BaseState
     {
-        public TravelState(StateMemory stateMemory) : base(stateMemory)
-        {
-        }
-
-        public override bool Check()
+        public override bool Check(IGameContext context)
         {
             // Waypoint list is empty.
-            if (!Config.Route.IsPathSet) return false;
+            if (!context.Config.Route.IsPathSet) return false;
 
             // Route belongs to a different zone.
-            if (Config.Route.Zone != EliteApi.Player.Zone) return false;
+            if (context.Config.Route.Zone != context.API.Player.Zone) return false;
 
             // Has valid target to fight.
-            if (UnitFilters.MobFilter(EliteApi, Target, Config)) return false;
+            if (context.Memory.UnitFilters.MobFilter(context.API, context.Target, context.Config)) return false;
 
             // We don't have to rest.
-            if (new RestState(Memory).Check()) return false;
+            if (new RestState().Check(context)) return false;
 
             // We don't have to heal.
-            if (new HealingState(Memory).Check()) return false;
+            if (new HealingState().Check(context)) return false;
 
             // We don't need to summon trusts
-            if (new SummonTrustsState(Memory).Check()) return false;
+            if (new SummonTrustsState().Check(context)) return false;
 
             // We are not bound or struck by an other movement
             // disabling condition.
             if (ProhibitEffects.ProhibitEffectsMovement
-                .Intersect(EliteApi.Player.StatusEffects).Any())
+                .Intersect(context.API.Player.StatusEffects).Any())
                 return false;
 
             return true;
         }
 
-        public override void Run()
+        public override void Run(IGameContext context)
         {
-            EliteApi.Navigator.DistanceTolerance = 1;
+            context.API.Navigator.DistanceTolerance = 1;
 
-            var nextPosition = Config.Route.GetNextPosition(EliteApi.Player.Position);
-            var shouldKeepRunningToNextWaypoint = Config.Route.Waypoints.Count != 1;
+            var nextPosition = context.Config.Route.GetNextPosition(context.API.Player.Position);
+            var shouldKeepRunningToNextWaypoint = context.Config.Route.Waypoints.Count != 1;
 
-            EliteApi.Navigator.GotoWaypoint(
+            context.API.Navigator.GotoWaypoint(
                 nextPosition,
-                Config.IsObjectAvoidanceEnabled,
+                context.Config.IsObjectAvoidanceEnabled,
                 shouldKeepRunningToNextWaypoint);
         }
 
-        public override void Exit()
+        public override void Exit(IGameContext context)
         {
-            EliteApi.Navigator.Reset();
+            context.API.Navigator.Reset();
         }
     }
 }

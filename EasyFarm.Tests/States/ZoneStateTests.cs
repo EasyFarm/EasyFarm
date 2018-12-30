@@ -17,9 +17,9 @@
 // ///////////////////////////////////////////////////////////////////
 
 using System;
+using EasyFarm.Context;
 using EasyFarm.States;
-using EasyFarm.Tests.TestTypes;
-using EasyFarm.Tests.TestTypes.Mocks;
+using EasyFarm.Tests.Context;
 using MemoryAPI;
 using Xunit;
 
@@ -30,22 +30,19 @@ namespace EasyFarm.Tests.States
         private static readonly Zone StartingZone = Zone.Konschtat_Highlands;
         private static readonly Zone NewZone = Zone.Valkurm_Dunes;
 
-        public class CheckTests : AbstractTestBase
+        public class CheckTests
         {
             [Fact]
             public void CheckIsTrueWhenZoneChanges()
             {
                 // Fixture setup
-                MockGameAPI.Mock.Player.Zone = StartingZone;
-                var sut = CreateSut(new StateMemory(MockGameAPI)
-                {
-                    Config = MockConfig,
-                    UnitFilters = new MockUnitFilters()
-                });
-                MockGameAPI.Mock.Player.Zone = NewZone;
-                MockGameAPI.Mock.Player.Stats = new Structures.PlayerStats { Str = 100 };
+                var context = new TestContext();
+                context.Player.Zone = StartingZone;
+                context.Zone = NewZone;
+                context.Player.Str = 100;
+                var sut = CreateSut();
                 // Exercise system
-                var result = sut.Check();
+                var result = sut.Check(context);
                 // Verify outcome
                 Assert.True(result);
                 // Teardown
@@ -55,14 +52,11 @@ namespace EasyFarm.Tests.States
             public void CheckIsTrueWhenPlayersStatsAreZero()
             {
                 // Fixture setup
-                MockGameAPI.Mock.Player.Stats = new Structures.PlayerStats() { Str = 0 };
-                var sut = CreateSut(new StateMemory(MockGameAPI)
-                {
-                    Config = MockConfig,
-                    UnitFilters = new MockUnitFilters()
-                });
+                var context = new TestContext();
+                context.Player.Str = 0;
+                var sut = CreateSut();
                 // Exercise system
-                var result = sut.Check();
+                var result = sut.Check(context);
                 // Verify outcome
                 Assert.True(result);
                 // Teardown
@@ -72,39 +66,33 @@ namespace EasyFarm.Tests.States
             public void CheckIsFalseWhenNotZoning()
             {
                 // Fixture setup
-                MockGameAPI.Mock.Player.Zone = StartingZone;
-                MockGameAPI.Mock.Player.Stats = new Structures.PlayerStats() { Str = 100 };
-                var sut = CreateSut(new StateMemory(MockGameAPI)
-                {
-                    Config = MockConfig,
-                    UnitFilters = new MockUnitFilters()
-                });
+                var context = new TestContext();
+                context.Player.Zone = StartingZone;
+                context.Player.Str = 100;
+                context.Zone = StartingZone;
+                var sut = CreateSut();
                 // Exercise system
-                var result = sut.Check();
+                var result = sut.Check(context);
                 // Verify outcome
                 Assert.False(result);
                 // Teardown
             }
         }
 
-        public class RunTests : AbstractTestBase
+        public class RunTests
         {
             [Fact]
             public void RunOnZoningSetsZoneToNewZone()
             {
                 // Fixture setup
-                MockGameAPI.Mock.Player.Zone = StartingZone;
-                MockGameAPI.Mock.Player.Stats = new Structures.PlayerStats() { Str = 100 };
-                var sut = CreateSut(new StateMemory(MockGameAPI)
-                {
-                    Config = MockConfig,
-                    UnitFilters = new MockUnitFilters()
-                });
-                MockGameAPI.Mock.Player.Zone = NewZone;
+                var context = new TestContext();
+                context.Player.Zone = NewZone;
+                context.Player.Str = 100;
+                var sut = CreateSut();
                 // Exercise system
-                sut.Run();
+                sut.Run(context);
                 // Verify outcome
-                Assert.Equal(NewZone, sut.Zone);
+                Assert.Equal(NewZone, context.Zone);
                 // Teardown
             }
 
@@ -112,16 +100,13 @@ namespace EasyFarm.Tests.States
             public void RunOnZoningStopsPlayerFromRunning()
             {
                 // Fixture setup
-                var sut = CreateSut(new StateMemory(MockGameAPI)
-                {
-                    Config = MockConfig,
-                    UnitFilters = new MockUnitFilters()
-                }, zoningAction: ForceMoveToNextZone);
-                MockGameAPI.Mock.Player.Zone = NewZone;
+                var context = new TestContext();
+                context.Player.Zone = NewZone;
+                var sut = CreateSut(zoningAction: () => ForceMoveToNextZone(context));
                 // Exercise system
-                sut.Run();
+                sut.Run(context);
                 // Verify outcome
-                Assert.False(MockGameAPI.Mock.Navigator.IsRunning);
+                Assert.False(context.MockAPI.Navigator.IsRunning);
                 // Teardown
             }
 
@@ -129,30 +114,27 @@ namespace EasyFarm.Tests.States
             public void RunWhileZoningWaits()
             {
                 // Fixture setup
-                MockGameAPI.Mock.Player.Zone = StartingZone;
-                MockGameAPI.Mock.Player.Stats = new Structures.PlayerStats() { Str = 0 };
-                var sut = CreateSut(new StateMemory(MockGameAPI)
-                {
-                    Config = MockConfig,
-                    UnitFilters = new MockUnitFilters()
-                }, zoningAction: ForceMoveToNextZone);
-                MockGameAPI.Mock.Player.Zone = NewZone;
+                var context = new TestContext();
+                context.Zone = StartingZone;
+                context.Player.Str = 0;
+                context.Player.Zone = NewZone;
+                var sut = CreateSut(() => ForceMoveToNextZone(context));
                 // Exercise system
-                sut.Run();
+                sut.Run(context);
                 // Verify outcome
-                Assert.Equal(100, MockGameAPI.Mock.Player.Stats.Str);
+                Assert.Equal(100, context.Player.Str);
                 // Teardown
             }
 
-            private void ForceMoveToNextZone()
+            private void ForceMoveToNextZone(IGameContext context)
             {
-                MockGameAPI.Mock.Player.Stats = new Structures.PlayerStats { Str = 100 };
+                context.Player.Str = 100;
             }
         }
 
-        private static ZoneState CreateSut(StateMemory stateMemory, Action zoningAction = null)
+        private static ZoneState CreateSut(Action zoningAction = null)
         {
-            var sut = new ZoneState(stateMemory);
+            var sut = new ZoneState();
             sut.ZoningAction = zoningAction ?? sut.ZoningAction;
             return sut;
         }

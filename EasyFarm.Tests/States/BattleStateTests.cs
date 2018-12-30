@@ -16,12 +16,11 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 
-using System.Collections.ObjectModel;
 using EasyFarm.Classes;
 using EasyFarm.Parsing;
 using EasyFarm.States;
+using EasyFarm.Tests.Context;
 using EasyFarm.Tests.TestTypes;
-using EasyFarm.Tests.TestTypes.Mocks;
 using MemoryAPI;
 using Xunit;
 
@@ -34,15 +33,15 @@ namespace EasyFarm.Tests.States
             [Fact]
             public void WhenEngagedSetAndEngagedShouldBattle()
             {
+                var context = new TestContext();
+                context.Config.IsEngageEnabled = true;
+                context.Player.Status = Status.Fighting;
+                context.IsFighting = true;
+                context.Target = FindUnit();
                 // Fixture setup
-                MockConfig.IsEngageEnabled = true;
-                MockGameAPI.Mock.Player.Status = Status.Fighting;
-                StateMemory memory = CreateStateMemory();
-                memory.Target = FindUnit();
-                memory.IsFighting = true;
-                BattleState sut = new BattleState(memory);
+                BattleState sut = new BattleState();
                 // Exercise system
-                bool result = sut.Check();
+                bool result = sut.Check(context);
                 // Verify outcome
                 Assert.True(result);
                 // Teardown
@@ -52,13 +51,13 @@ namespace EasyFarm.Tests.States
             public void WhenEngagedNotSetShouldBattle()
             {
                 // Fixture setup
-                MockConfig.IsEngageEnabled = false;
-                StateMemory memory = CreateStateMemory();
-                memory.Target = FindUnit();
-                memory.IsFighting = true;
-                BattleState sut = new BattleState(memory);
+                var context = new TestContext();
+                context.Config.IsEngageEnabled = false;
+                context.Target = FindUnit();
+                context.IsFighting = true;
+                BattleState sut = new BattleState();
                 // Exercise system
-                bool result = sut.Check();
+                bool result = sut.Check(context);
                 // Verify outcome
                 Assert.True(result);
                 // Teardown
@@ -68,13 +67,13 @@ namespace EasyFarm.Tests.States
             public void WithNonValidUnitShouldNotBattle()
             {
                 // Fixture setup
-                MockConfig.IsEngageEnabled = false;
-                StateMemory memory = CreateStateMemory(targetValid: false);
-                memory.Target = FindNonValidUnit();
-                memory.IsFighting = true;
-                BattleState sut = new BattleState(memory);
+                var context = new TestContext();
+                context.IsFighting = true;
+                context.Config.IsEngageEnabled = false;
+                context.Target.IsValid = false;
+                BattleState sut = new BattleState();
                 // Exercise system
-                bool result = sut.Check();
+                bool result = sut.Check(context);
                 // Verify outcome
                 Assert.False(result);
                 // Teardown
@@ -84,13 +83,11 @@ namespace EasyFarm.Tests.States
             public void WhenNotFightingShouldntBattle()
             {
                 // Fixture setup
-                MockConfig.IsEngageEnabled = false;
-                StateMemory memory = CreateStateMemory();
-                memory.Target = FindUnit();
-                memory.IsFighting = false;
-                BattleState sut = new BattleState(memory);
+                var context = new TestContext();
+                context.IsFighting = false;
+                BattleState sut = new BattleState();
                 // Exercise system
-                bool result = sut.Check();
+                bool result = sut.Check(context);
                 // Verify outcome
                 Assert.False(result);
                 // Teardown
@@ -100,35 +97,15 @@ namespace EasyFarm.Tests.States
             public void WhenInjuredShouldntBattle()
             {
                 // Fixture setup
-                StateMemory memory = CreateStateMemory();
-                memory.Target = FindUnit();
-                memory.IsFighting = false;
-                MockGameAPI.Mock.Player.HPPCurrent = 25;
-                MockGameAPI.Mock.Player.Status = Status.Standing;
-                MockConfig.LowHealth = 50;
-                MockConfig.HighHealth = 100;
-                MockConfig.IsHealthEnabled = true;
-                MockConfig.IsEngageEnabled = false;
-                BattleState sut = new BattleState(memory);
+                var context = new TestContext();
+                context.Player.HppCurrent = 25;
+                context.Player.Status = Status.Standing;
+                context.Config.LowHealth = 50;
+                context.Config.HighHealth = 100;
+                context.Config.IsHealthEnabled = true;
+                BattleState sut = new BattleState();
                 // Exercise system
-                bool result = sut.Check();
-                // Verify outcome
-                Assert.False(result);
-                // Teardown
-            }
-
-            [Fact]
-            public void WithInvalidTargetShouldntBattle()
-            {
-                // Fixture setup
-                StateMemory memory = CreateStateMemory(targetValid: false);
-                memory.Target = FindNonValidUnit();
-                memory.IsFighting = true;
-                MockGameAPI.Mock.Player.Status = Status.Standing;
-                MockConfig.IsEngageEnabled = false;
-                BattleState sut = new BattleState(memory);
-                // Exercise system
-                bool result = sut.Check();
+                bool result = sut.Check(context);
                 // Verify outcome
                 Assert.False(result);
                 // Teardown
@@ -139,25 +116,22 @@ namespace EasyFarm.Tests.States
         {
             private BattleState CreateSut()
             {
-                var memory = CreateStateMemory();
-                memory.Target = FindUnit();
-                BattleState sut = new BattleState(memory);
-                return sut;
+                return new BattleState();
             }
 
             [Fact]
             public void WithValidActionWillSendCommand()
             {
                 // Fixture setup
-                BattleState sut = CreateSut();
-                ObservableCollection<BattleAbility> actions = FindBattleActions();
+                var context = new TestContext();
                 BattleAbility ability = FindJobAbility("test");
                 ability.Command = "/jobability test <me>";
-                actions.Add(ability);
+                context.Config.BattleLists["Battle"].Actions.Add(ability);
+                BattleState sut = CreateSut();
                 // Exercise system
-                sut.Run();
+                sut.Run(context);
                 // Verify outcome
-                Assert.Equal("/jobability test <me>", MockGameAPI.Mock.Windower.LastCommand);
+                Assert.Equal("/jobability test <me>", context.MockAPI.Windower.LastCommand);
                 // Teardown
             }
 
@@ -165,15 +139,15 @@ namespace EasyFarm.Tests.States
             public void WithInvalidActionWillNotSendCommand()
             {
                 // Fixture setup
-                BattleState sut = CreateSut();
-                ObservableCollection<BattleAbility> actions = FindBattleActions();
+                var context = new TestContext();                
                 BattleAbility ability = FindJobAbility("test");
                 ability.IsEnabled = false;
-                actions.Add(ability);
+                context.Config.BattleLists["Battle"].Actions.Add(ability);
+                BattleState sut = CreateSut();
                 // Exercise system
-                sut.Run();
+                sut.Run(context);
                 // Verify outcome
-                Assert.Null(MockGameAPI.Mock.Windower.LastCommand);
+                Assert.Null(context.MockAPI.Windower.LastCommand);
             }
 
             private static BattleAbility FindJobAbility(string actionName)
@@ -184,27 +158,21 @@ namespace EasyFarm.Tests.States
                 battleAbility.TargetType = TargetType.Self;
                 return battleAbility;
             }
-
-            private ObservableCollection<BattleAbility> FindBattleActions()
-            {
-                ObservableCollection<BattleAbility> moves = MockConfig.BattleLists["Battle"].Actions;
-                moves.Clear();
-                return moves;
-            }
         }
 
-        public class EnterTests : AbstractTestBase
+        public class EnterTests
         {
             [Fact]
             public void WithHealingPlayerWillStandUp()
             {
                 // Fixture setup
+                var context = new TestContext();
+                context.MockAPI.Player.Status = Status.Healing;
                 BattleState sut = CreateSut();
-                MockGameAPI.Mock.Player.Status = Status.Healing;
                 // Exercise system
-                sut.Enter();
+                sut.Enter(context);
                 // Verify outcome
-                Assert.Equal(Status.Standing, MockGameAPI.Mock.Player.Status);
+                Assert.Equal(Status.Standing, context.MockAPI.Player.Status);
                 // Teardown
             }
 
@@ -212,18 +180,19 @@ namespace EasyFarm.Tests.States
             public void WillStopPlayerFromMoving()
             {
                 // Fixture setup
-                MockGameAPI.Mock.Navigator.IsRunning = true;
+                var context = new TestContext();
+                context.MockAPI.Navigator.IsRunning = true;
                 BattleState sut = CreateSut();
                 // Exercise system
-                sut.Enter();
+                sut.Enter(context);
                 // Verify outcome
-                Assert.False(MockGameAPI.Mock.Navigator.IsRunning);
+                Assert.False(context.MockAPI.Navigator.IsRunning);
                 // Teardown
             }
 
             private BattleState CreateSut()
             {
-                return new BattleState(CreateStateMemory());
+                return new BattleState();
             }
         }
     }

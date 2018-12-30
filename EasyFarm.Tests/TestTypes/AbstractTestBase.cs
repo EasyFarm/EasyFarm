@@ -46,7 +46,7 @@ namespace EasyFarm.Tests.TestTypes
         /// Create new state memory with <see cref="MockGameAPI"/> and <see cref="MockConfig"/>.
         /// </summary>
         /// <returns></returns>
-        protected StateMemory CreateStateMemory(bool targetValid = true)
+        protected StateMemory CreateGameContext(bool targetValid = true)
         {
             return new StateMemory(MockGameAPI)
             {
@@ -98,7 +98,8 @@ namespace EasyFarm.Tests.TestTypes
                 NpcType = NpcType.Mob,
                 PartyClaim = false,
                 Status = Status.Standing,
-                YDifference = 2.0
+                YDifference = 2.0,
+                IsValid = true
             };
 
             return unit;

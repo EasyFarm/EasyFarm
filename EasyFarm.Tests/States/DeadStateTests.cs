@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Documents;
-using System.Windows.Input;
 using EasyFarm.Infrastructure;
 using EasyFarm.States;
+using EasyFarm.Tests.Context;
 using EasyFarm.Tests.TestTypes;
-using EasyFarm.Tests.TestTypes.Mocks;
-using EasyFarm.UserSettings;
 using EliteMMO.API;
 using MemoryAPI;
 using Xunit;
@@ -14,7 +11,7 @@ namespace EasyFarm.Tests.States
 {
     public class DeadStateTests
     {
-        public class CheckTests : AbstractTestBase
+        public class CheckTests
         {
             [Theory]
             [InlineData(Status.Dead1, true)]
@@ -24,10 +21,11 @@ namespace EasyFarm.Tests.States
             public void CheckTrueWhenPlayersDead(Status status, bool expected)
             {
                 // Setup fixture
-                MockGameAPI.Mock.Player.Status = status;
+                var context = new TestContext();
+                context.Player.Status = status;
                 var sut = CreateSut();
                 // Exercise system
-                var result = sut.Check();
+                var result = sut.Check(context);
                 // Verify outcome
                 Assert.Equal(expected, result);
                 // Teardown
@@ -35,11 +33,7 @@ namespace EasyFarm.Tests.States
 
             private DeadState CreateSut()
             {
-                return new DeadState(new StateMemory(MockGameAPI)
-                {
-                    Config = MockConfig,
-                    UnitFilters = new MockUnitFilters()
-                });
+                return new DeadState();
             }
         }
 
@@ -49,12 +43,13 @@ namespace EasyFarm.Tests.States
             public void RunResetIsCalledToStopPlayerFromRunning()
             {
                 // Setup fixture
-                MockGameAPI.Mock.Navigator.IsRunning = true;
+                var context = new TestContext();
+                context.MockAPI.Navigator.IsRunning = true;
                 var sut = CreateSut();
                 // Exercise system
-                sut.Run();
+                sut.Run(context);
                 // Verify outcome
-                Assert.False(MockGameAPI.Mock.Navigator.IsRunning);
+                Assert.False(context.MockAPI.Navigator.IsRunning);
                 // Teardown
             }
 
@@ -62,11 +57,12 @@ namespace EasyFarm.Tests.States
             public void RunDoesNotHomePointIfConfigNotSet()
             {
                 // Setup fixture
+                var context = new TestContext();
                 var sut = CreateSut();
                 // Exercise system
-                sut.Run();
+                sut.Run(context);
                 // Verify outcome
-                Assert.Empty(MockGameAPI.Mock.Windower.KeyPresses);
+                Assert.Empty(context.MockAPI.Windower.KeyPresses);
                 // Teardown
             }
 
@@ -74,9 +70,10 @@ namespace EasyFarm.Tests.States
             public void RunSendsPauseCommand()
             {
                 // Setup fixture
+                var context = new TestContext();
                 var sut = CreateSut();
                 // Exercise system
-                sut.Run();
+                sut.Run(context);
                 // Verify outcome
                 Assert.Contains(typeof(Events.PauseEvent), Events);
                 // Teardown
@@ -86,23 +83,20 @@ namespace EasyFarm.Tests.States
             public void RunAttemptsToHomepointAfterDeath()
             {
                 // Setup fixture
+                var context = new TestContext();
+                context.Config.HomePointOnDeath = true;
                 var sut = CreateSut();
-                MockConfig.HomePointOnDeath = true;
                 var expected = new List<Keys> {Keys.NUMPADENTER, Keys.LEFT, Keys.NUMPADENTER};
                 // Exercise system
-                sut.Run();
+                sut.Run(context);
                 // Verify outcome
-                Assert.Equal(expected, MockGameAPI.Mock.Windower.KeyPresses);
+                Assert.Equal(expected, context.MockAPI.Windower.KeyPresses);
                 // Teardown
             }
 
             private DeadState CreateSut()
             {
-                return new DeadState(new StateMemory(MockGameAPI)
-                {
-                    Config = MockConfig,
-                    UnitFilters = new MockUnitFilters()
-                });
+                return new DeadState();
             }
         }
     }

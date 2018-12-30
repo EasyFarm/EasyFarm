@@ -18,51 +18,47 @@
 
 using System.Linq;
 using EasyFarm.Classes;
-using EasyFarm.UserSettings;
+using EasyFarm.Context;
 
 namespace EasyFarm.States
 {
-    public class PullState : AgentState
+    public class PullState : BaseState
     {
-        public PullState(StateMemory memory) : base(memory)
-        {
-        }
-
         /// <summary>
         ///     Allow component to run when moves need to be triggered or
         ///     FightStarted state needs updating.
         /// </summary>
         /// <returns></returns>
-        public override bool Check()
+        public override bool Check(IGameContext context)
         {
-            if (IsFighting) return false;
-            if (new RestState(Memory).Check()) return false;
-            if (new SummonTrustsState(Memory).Check()) return false;
-            if (!UnitFilters.MobFilter(EliteApi, Target, Config)) return false;
-            return Config.BattleLists["Pull"].Actions.Any(x => x.IsEnabled);
+            if (context.IsFighting) return false;
+            if (new RestState().Check(context)) return false;
+            if (new SummonTrustsState().Check(context)) return false;
+            if (!context.Memory.UnitFilters.MobFilter(context.API, context.Target, context.Config)) return false;
+            return context.Config.BattleLists["Pull"].Actions.Any(x => x.IsEnabled);
         }
 
-        public override void Enter()
+        public override void Enter(IGameContext context)
         {
-            EliteApi.Navigator.Reset();
+            context.API.Navigator.Reset();
         }
 
         /// <summary>
         ///     Use pulling moves if applicable to make the target
         ///     mob aggressive to us.
         /// </summary>
-        public override void Run()
+        public override void Run(IGameContext context)
         {
-            var actions = Config.BattleLists["Pull"].Actions.ToList();
-            var usable = actions.Where(x => ActionFilters.TargetedFilter(EliteApi, x, Target)).ToList();
-            Executor.UseTargetedActions(usable, Target);
+            var actions = context.Config.BattleLists["Pull"].Actions.ToList();
+            var usable = actions.Where(x => ActionFilters.TargetedFilter(context.API, x, context.Target)).ToList();
+            context.Memory.Executor.UseTargetedActions(usable, context.Target);
         }
 
         /// <summary>
         ///     Handle all cases of setting fight started to proper values
         ///     so other components can fire.
         /// </summary>
-        public override void Exit()
+        public override void Exit(IGameContext context)
         {
         }
     }

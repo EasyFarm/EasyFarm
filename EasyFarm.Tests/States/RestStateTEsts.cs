@@ -1,7 +1,5 @@
 ﻿using EasyFarm.States;
-using EasyFarm.Tests.TestTypes;
-using EasyFarm.Tests.TestTypes.Mocks;
-using EasyFarm.UserSettings;
+using EasyFarm.Tests.Context;
 using MemoryAPI;
 using Xunit;
 
@@ -9,7 +7,7 @@ namespace EasyFarm.Tests.States
 {
     public class RestStateTests
     {
-        public class CheckTests : AbstractTestBase
+        public class CheckTests
         {
             [Theory]
             [InlineData(50, 50, true)]
@@ -18,12 +16,13 @@ namespace EasyFarm.Tests.States
             public void ShouldHealWithLowMP(int currentMPP, int lowMPP, bool expected)
             {
                 // Setup fixture
+                var context = new TestContext();
+                context.Player.MppCurrent = currentMPP;
+                context.Config.IsMagicEnabled = true;
+                context.Config.LowMagic = lowMPP;
                 var sut = CreateSut();
-                MockGameAPI.Mock.Player.MPPCurrent = currentMPP;
-                MockConfig.IsMagicEnabled = true;
-                MockConfig.LowMagic = lowMPP;
                 // Exercise system
-                var result = sut.Check();
+                var result = sut.Check(context);
                 // Verify outcome
                 Assert.Equal(expected, result);
                 // Teardown
@@ -36,74 +35,79 @@ namespace EasyFarm.Tests.States
             public void ShouldHealWithLowHP(int currentHPP, int lowHPP, bool expected)
             {
                 // Setup fixture
+                var context = new TestContext();
+                context.Player.HppCurrent = currentHPP;
+                context.Config.IsHealthEnabled = true;
+                context.Config.LowHealth = lowHPP;
                 RestState sut = CreateSut();
-                MockGameAPI.Mock.Player.HPPCurrent = currentHPP;
-                MockConfig.IsHealthEnabled = true;
-                MockConfig.LowHealth = lowHPP;
                 // Exercise system
-                var result = sut.Check();
+                var result = sut.Check(context);
                 // Verify outcome
                 Assert.Equal(expected, result);
                 // Teardown
             }
 
+            [Fact]
+            public void HasAggro_NoResting()
+            {
+                // Fixture setup
+                var context = new TestContext();
+                context.Player.HasAggro = true;
+                var sut = CreateSut();
+                // Exercise system
+                var result = sut.Check(context);
+                // Verify outcome
+                Assert.False(result);
+                // Teardown	
+            }
+
             private RestState CreateSut()
             {
-                return new RestState(new StateMemory(MockGameAPI)
-                {
-                    Config = MockConfig,
-                    UnitFilters = new MockUnitFilters()
-                });
+                return new RestState();
             }
         }
 
-        public class RunTests : AbstractTestBase
+        public class RunTests
         {
             [Fact]
             public void PlayerSwitchesFromStandingToHealing()
             {
                 // Setup fixture
+                var context = new TestContext();
+                context.MockAPI.Player.Status = Status.Standing;
                 var sut = CreateSut();
-                MockGameAPI.Mock.Player.Status = Status.Standing;
                 // Exercise system
-                sut.Run();
+                sut.Run(context);
                 // Verify outcome
-                Assert.Equal(Status.Healing, MockGameAPI.Mock.Player.Status);
+                Assert.Equal(Status.Healing, context.MockAPI.Player.Status);
                 // Teardown
             }
 
             private RestState CreateSut()
             {
-                return new RestState(new StateMemory(MockGameAPI)
-                {
-                    Config = MockConfig,
-                    UnitFilters = new MockUnitFilters()
-                });
+                return new RestState();
             }
         }
 
-        public class ExitTests : AbstractTestBase
+        public class ExitTests
         {
             [Fact]
             public void PlayerSwitchesFromHealingToStanding()
             {
                 // Setup fixture
+                var context = new TestContext();
+                context.MockAPI.Player.Status = Status.Healing;
                 var sut = CreateSut();
-                MockGameAPI.Mock.Player.Status = Status.Healing;
                 // Exercise system
-                sut.Exit();
+                sut.Exit(context);
                 // Verify outcome
-                Assert.Equal(Status.Standing, MockGameAPI.Mock.Player.Status);
+                Assert.Equal(Status.Standing, context.MockAPI.Player.Status);
                 // Teardown
             }
 
             private RestState CreateSut()
             {
-                return new RestState(new StateMemory(MockGameAPI)
-                {
-                    Config = MockConfig,
-                    UnitFilters = new MockUnitFilters()
-                });
+                return new RestState();
             }
         }
     }

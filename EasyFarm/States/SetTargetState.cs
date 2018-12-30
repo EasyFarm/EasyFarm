@@ -19,38 +19,35 @@
 using System;
 using System.Linq;
 using EasyFarm.Classes;
+using EasyFarm.Context;
 using EasyFarm.UserSettings;
 using EasyFarm.ViewModels;
 
 namespace EasyFarm.States
 {
-    public class SetTargetState : AgentState
+    public class SetTargetState : BaseState
     {
         private DateTime? lastTargetCheck;
 
-        public SetTargetState(StateMemory memory) : base(memory)
-        {
-        }
-
-        public override bool Check()
+        public override bool Check(IGameContext context)
         {
             // Currently fighting, do not change target. 
-            if (!UnitFilters.MobFilter(EliteApi, Target, Config))
+            if (!context.Memory.UnitFilters.MobFilter(context.API, context.Target, context.Config))
             {
                 // Still not time to update for new target. 
                 if (!ShouldCheckTarget()) return false;
 
                 // First get the first mob by distance.
-                var mobs = UnitService.MobArray.Where(x => UnitFilters.MobFilter(EliteApi, x, Config)).ToList();
+                var mobs = context.Memory.UnitService.MobArray.Where(x => context.Memory.UnitFilters.MobFilter(context.API, x, context.Config)).ToList();
                 mobs = TargetPriority.Prioritize(mobs).ToList();
 
                 // Set our new target at the end so that we don't accidentaly cast on a new target.
-                Target = mobs.FirstOrDefault();
+                context.Target = mobs.FirstOrDefault();
 
                 // Update last time target was updated. 
                 lastTargetCheck = DateTime.Now;
 
-                if (Target != null) LogViewModel.Write("Now targeting " + Target.Name + " : " + Target.Id);
+                if (context.Target != null) LogViewModel.Write("Now targeting " + context.Target.Name + " : " + context.Target.Id);
             }
 
             return false;

@@ -1,4 +1,5 @@
 ﻿using EasyFarm.States;
+using EasyFarm.Tests.Context;
 using EasyFarm.Tests.TestTypes.Mocks;
 using MemoryAPI;
 using MemoryAPI.Navigation;
@@ -13,16 +14,18 @@ namespace EasyFarm.Tests.States
         {
             // Fixture setup
             var api = new MockGameAPI();
-            var sut = new SetTargetState(new StateMemory(api));
-            sut.Config = KillUnclaimedMobsConfig();
-            sut.Memory.UnitService = new MockUnitService()
+            var sut = new SetTargetState();
+            var context = new TestContext();
+            //var context = new StateMemory(api);
+            context.Config = KillUnclaimedMobsConfig();
+            context.Memory.UnitService = new MockUnitService()
             {
                 MobArray = {FindUnclaimedMob()}
             };
             // Excercise system
-            sut.Check();
+            sut.Check(context);
             // Verify outcome
-            Assert.NotNull(sut.Target);
+            Assert.NotNull(context.Target);
             // Teardown	
         }
 
