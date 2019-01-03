@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using EasyFarm.Classes;
-using EasyFarm.States;
 using EasyFarm.Tests.TestTypes.Mocks;
 using MemoryAPI;
 using MemoryAPI.Navigation;

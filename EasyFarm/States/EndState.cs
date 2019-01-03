@@ -40,7 +40,7 @@ namespace EasyFarm.States
 
             // Creature is unkillable and does not meets the
             // user's criteria for valid mobs defined in MobFilters.
-            return !context.Memory.UnitFilters.MobFilter(context.Memory.EliteApi, context.Target, context.Config);
+            return !context.Target.IsValid;
         }
 
         /// <summary>

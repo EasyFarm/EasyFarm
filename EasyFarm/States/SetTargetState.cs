@@ -27,25 +27,25 @@ namespace EasyFarm.States
 {
     public class SetTargetState : BaseState
     {
-        private DateTime? lastTargetCheck;
+        private DateTime? _lastTargetCheck;
 
         public override bool Check(IGameContext context)
         {
             // Currently fighting, do not change target. 
-            if (!context.Memory.UnitFilters.MobFilter(context.API, context.Target, context.Config))
+            if (!context.Target.IsValid)
             {
                 // Still not time to update for new target. 
                 if (!ShouldCheckTarget()) return false;
 
                 // First get the first mob by distance.
-                var mobs = context.Memory.UnitService.MobArray.Where(x => context.Memory.UnitFilters.MobFilter(context.API, x, context.Config)).ToList();
+                var mobs = context.Units.Where(x => x.IsValid).ToList();
                 mobs = TargetPriority.Prioritize(mobs).ToList();
 
-                // Set our new target at the end so that we don't accidentaly cast on a new target.
+                // Set our new target at the end so that we don't accidentally cast on a new target.
                 context.Target = mobs.FirstOrDefault();
 
                 // Update last time target was updated. 
-                lastTargetCheck = DateTime.Now;
+                _lastTargetCheck = DateTime.Now;
 
                 if (context.Target != null) LogViewModel.Write("Now targeting " + context.Target.Name + " : " + context.Target.Id);
             }
@@ -55,8 +55,8 @@ namespace EasyFarm.States
 
         private bool ShouldCheckTarget()
         {
-            if (lastTargetCheck == null) return true;
-            return DateTime.Now >= lastTargetCheck.Value.AddSeconds(Constants.UnitArrayCheckRate);
+            if (_lastTargetCheck == null) return true;
+            return DateTime.Now >= _lastTargetCheck.Value.AddSeconds(Constants.UnitArrayCheckRate);
         }
     }
 }

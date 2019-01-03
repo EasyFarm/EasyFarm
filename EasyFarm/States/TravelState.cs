@@ -33,7 +33,7 @@ namespace EasyFarm.States
             if (context.Config.Route.Zone != context.API.Player.Zone) return false;
 
             // Has valid target to fight.
-            if (context.Memory.UnitFilters.MobFilter(context.API, context.Target, context.Config)) return false;
+            if (context.Target.IsValid) return false;
 
             // We don't have to rest.
             if (new RestState().Check(context)) return false;

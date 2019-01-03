@@ -28,7 +28,7 @@ namespace EasyFarm.States
     {
         public override bool Check(IGameContext context)
         {
-            if (context.Memory.UnitFilters.MobFilter(context.API, context.Target, context.Config))
+            if (context.Target.IsValid)
                 if (!context.Config.BattleLists["Pull"].Actions.Any(x => x.IsEnabled))
                     return context.IsFighting = true;
                 else

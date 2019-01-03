@@ -32,7 +32,7 @@ namespace EasyFarm.States
         {
             if (new RestState().Check(context)) return false;
 
-            if (!context.Memory.UnitFilters.MobFilter(context.API, context.Target, context.Config)) return false;
+            if (!context.Target.IsValid) return false;
 
             // Use skill if we are engaged. 
             return context.API.Player.Status.Equals(Status.Fighting);
