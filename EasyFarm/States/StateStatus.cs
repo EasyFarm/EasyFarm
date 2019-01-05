@@ -16,20 +16,14 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 
-using EasyFarm.Context;
-
 namespace EasyFarm.States
 {
-    public interface IState
+    public enum StateStatus
     {
-        bool Enabled { get; set; }
-        int Priority { get; set; }
-
-        bool Check(IGameContext context);
-        void Enter(IGameContext context);
-        void Exit(IGameContext context);
-        void Run(IGameContext context);
-
-        int CompareTo(object other);
+        Unknown,
+        Check,
+        Enter, 
+        Run,
+        Exit
     }
 }

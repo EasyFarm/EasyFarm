@@ -17,7 +17,6 @@
 // ///////////////////////////////////////////////////////////////////
 using System;
 using EasyFarm.Context;
-using EasyFarm.UserSettings;
 
 namespace EasyFarm.States
 {
