@@ -1,4 +1,20 @@
-﻿using System;
+﻿// ///////////////////////////////////////////////////////////////////
+// This file is a part of EasyFarm for Final Fantasy XI
+// Copyright (C) 2013 Mykezero
+//  
+// EasyFarm is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//  
+// EasyFarm is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// If not, see <http://www.gnu.org/licenses/>.
+// ///////////////////////////////////////////////////////////////////
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -20,39 +36,26 @@ namespace EasyFarm.Tests.States
             StartEngineState state = new StartEngineState() {Enabled = true};
             sut.AddState(state);
             // Exercise system
-            var result = sut.Run(context, new CancellationTokenSource());
+            StateHistory result = sut.Run(context, new CancellationTokenSource());
             // Verify outcome
-            Assert.Equal(StateStatus.Check, result.First().Status);
+            Assert.True(result.HasCheck(state));
             // Teardown	
         }
-    }
-
-    public class StateLog
-    {
-        public StateLog(IState state, StateStatus status)
-        {
-            State = state;
-            Status = status;
-        }
-
-        public StateStatus Status { get; }
-        public IState State { get; }
-    }
+    }    
 
     public class NewFiniteStateMachine
     {
         private readonly List<IState> _states = new List<IState>();
         private readonly TypeCache<bool> _cache = new TypeCache<bool>();
+        private readonly StateHistory _history = new StateHistory();
 
         public void AddState(IState state)
         {
             _states.Add(state);
         }
 
-        public List<StateLog> Run(IGameContext context, CancellationTokenSource cancellation)
+        public StateHistory Run(IGameContext context, CancellationTokenSource cancellation)
         {
-            IList<StateLog> history = new List<StateLog>();
-
             // Sort the List, States may have updated Priorities.
             _states.Sort();
 
@@ -62,7 +65,7 @@ namespace EasyFarm.Tests.States
                 cancellation.Token.ThrowIfCancellationRequested();
 
                 bool isRunnable = mc.Check(context);
-                history.Add(new StateLog(mc, StateStatus.Check));
+                _history.AddCheck(mc);
 
                 // Run last state's exits method.
                 if (_cache[mc] != isRunnable)
@@ -70,12 +73,12 @@ namespace EasyFarm.Tests.States
                     if (isRunnable)
                     {
                         mc.Enter(context);
-                        history.Add(new StateLog(mc, StateStatus.Enter));
+                        _history.AddEnter(mc);
                     }
                     else
                     {
                         mc.Exit(context);
-                        history.Add(new StateLog(mc, StateStatus.Exit));
+                        _history.AddExit(mc);
                     } 
                     _cache[mc] = isRunnable;
                 }
@@ -83,11 +86,11 @@ namespace EasyFarm.Tests.States
                 if (isRunnable)
                 {
                     mc.Run(context);
-                    history.Add(new StateLog(mc, StateStatus.Run));
+                    _history.AddRun(mc);
                 }
             }
 
-            return history.ToList();
-        }
+            return _history;
+        }        
     }
 }

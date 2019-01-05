@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\MockPlayer.cs" />
+    <Compile Include="States\FiniteStateMachineTests.cs" />
     <Compile Include="States\TargetPriorityTests.cs" />
     <Compile Include="Context\TestContext.cs" />
     <Compile Include="States\SetTargetStateTests.cs" />
