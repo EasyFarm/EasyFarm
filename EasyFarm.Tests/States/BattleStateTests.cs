@@ -25,174 +25,131 @@ using Xunit;
 
 namespace EasyFarm.Tests.States
 {
-    public class BattleStateTests
+    public class BattleStateTests : AbstractTestBase
     {
-        public class CheckTests : AbstractTestBase
+        private static readonly TestContext context = new TestContext();
+        private static readonly BattleState sut = new BattleState();
+
+        [Fact]
+        public void WhenEngagedSetAndEngagedShouldBattle()
         {
-            [Fact]
-            public void WhenEngagedSetAndEngagedShouldBattle()
-            {
-                var context = new TestContext();
-                context.Config.IsEngageEnabled = true;
-                context.Player.Status = Status.Fighting;
-                context.IsFighting = true;
-                context.Target = FindUnit();
-                // Fixture setup
-                BattleState sut = new BattleState();
-                // Exercise system
-                bool result = sut.Check(context);
-                // Verify outcome
-                Assert.True(result);
-                // Teardown
-            }
-
-            [Fact]
-            public void WhenEngagedNotSetShouldBattle()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.Config.IsEngageEnabled = false;
-                context.Target = FindUnit();
-                context.IsFighting = true;
-                BattleState sut = new BattleState();
-                // Exercise system
-                bool result = sut.Check(context);
-                // Verify outcome
-                Assert.True(result);
-                // Teardown
-            }
-
-            [Fact]
-            public void WithNonValidUnitShouldNotBattle()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.IsFighting = true;
-                context.Config.IsEngageEnabled = false;
-                context.Target.IsValid = false;
-                BattleState sut = new BattleState();
-                // Exercise system
-                bool result = sut.Check(context);
-                // Verify outcome
-                Assert.False(result);
-                // Teardown
-            }
-
-            [Fact]
-            public void WhenNotFightingShouldntBattle()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.IsFighting = false;
-                BattleState sut = new BattleState();
-                // Exercise system
-                bool result = sut.Check(context);
-                // Verify outcome
-                Assert.False(result);
-                // Teardown
-            }
-
-            [Fact]
-            public void WhenInjuredShouldntBattle()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.Player.HppCurrent = 25;
-                context.Player.Status = Status.Standing;
-                context.Config.LowHealth = 50;
-                context.Config.HighHealth = 100;
-                context.Config.IsHealthEnabled = true;
-                BattleState sut = new BattleState();
-                // Exercise system
-                bool result = sut.Check(context);
-                // Verify outcome
-                Assert.False(result);
-                // Teardown
-            }
+            // Fixture setup
+            context.Config.IsEngageEnabled = true;
+            context.Player.Status = Status.Fighting;
+            context.IsFighting = true;
+            context.Target = FindUnit();
+            // Exercise system
+            bool result = sut.Check(context);
+            // Verify outcome
+            Assert.True(result);
+            // Teardown
         }
 
-        public class RunTests : AbstractTestBase
+        [Fact]
+        public void WhenEngagedNotSetShouldBattle()
         {
-            private BattleState CreateSut()
-            {
-                return new BattleState();
-            }
-
-            [Fact]
-            public void WithValidActionWillSendCommand()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                BattleAbility ability = FindJobAbility("test");
-                ability.Command = "/jobability test <me>";
-                context.Config.BattleLists["Battle"].Actions.Add(ability);
-                BattleState sut = CreateSut();
-                // Exercise system
-                sut.Run(context);
-                // Verify outcome
-                Assert.Equal("/jobability test <me>", context.MockAPI.Windower.LastCommand);
-                // Teardown
-            }
-
-            [Fact]
-            public void WithInvalidActionWillNotSendCommand()
-            {
-                // Fixture setup
-                var context = new TestContext();                
-                BattleAbility ability = FindJobAbility("test");
-                ability.IsEnabled = false;
-                context.Config.BattleLists["Battle"].Actions.Add(ability);
-                BattleState sut = CreateSut();
-                // Exercise system
-                sut.Run(context);
-                // Verify outcome
-                Assert.Null(context.MockAPI.Windower.LastCommand);
-            }
-
-            private static BattleAbility FindJobAbility(string actionName)
-            {
-                BattleAbility battleAbility = FindAbility();
-                battleAbility.Name = actionName;
-                battleAbility.AbilityType = AbilityType.Jobability;
-                battleAbility.TargetType = TargetType.Self;
-                return battleAbility;
-            }
+            // Fixture setup
+            context.Config.IsEngageEnabled = false;
+            context.Target = FindUnit();
+            context.IsFighting = true;
+            // Exercise system
+            bool result = sut.Check(context);
+            // Verify outcome
+            Assert.True(result);
+            // Teardown
         }
 
-        public class EnterTests
+        [Fact]
+        public void WithNonValidUnitShouldNotBattle()
         {
-            [Fact]
-            public void WithHealingPlayerWillStandUp()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.MockAPI.Player.Status = Status.Healing;
-                BattleState sut = CreateSut();
-                // Exercise system
-                sut.Enter(context);
-                // Verify outcome
-                Assert.Equal(Status.Standing, context.MockAPI.Player.Status);
-                // Teardown
-            }
+            // Fixture setup
+            context.IsFighting = true;
+            context.Config.IsEngageEnabled = false;
+            context.Target.IsValid = false;
+            // Exercise system
+            bool result = sut.Check(context);
+            // Verify outcome
+            Assert.False(result);
+            // Teardown
+        }
 
-            [Fact]
-            public void WillStopPlayerFromMoving()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.MockAPI.Navigator.IsRunning = true;
-                BattleState sut = CreateSut();
-                // Exercise system
-                sut.Enter(context);
-                // Verify outcome
-                Assert.False(context.MockAPI.Navigator.IsRunning);
-                // Teardown
-            }
+        [Fact]
+        public void WhenNotFightingShouldntBattle()
+        {
+            // Fixture setup
+            context.IsFighting = false;
+            // Exercise system
+            bool result = sut.Check(context);
+            // Verify outcome
+            Assert.False(result);
+            // Teardown
+        }
 
-            private BattleState CreateSut()
-            {
-                return new BattleState();
-            }
+        [Fact]
+        public void WhenInjuredShouldntBattle()
+        {
+            // Fixture setup
+            context.Player.HppCurrent = 25;
+            context.Player.Status = Status.Standing;
+            context.Config.LowHealth = 50;
+            context.Config.HighHealth = 100;
+            context.Config.IsHealthEnabled = true;
+            // Exercise system
+            bool result = sut.Check(context);
+            // Verify outcome
+            Assert.False(result);
+            // Teardown
+        }
+
+        [Fact]
+        public void WithValidActionWillSendCommand()
+        {
+            // Fixture setup
+            BattleAbility ability = FindAbility();
+            ability.Command = "/jobability test <me>";
+            context.Config.BattleLists["Battle"].Actions.Add(ability);
+            // Exercise system
+            sut.Run(context);
+            // Verify outcome
+            Assert.Equal("/jobability test <me>", context.MockAPI.Windower.LastCommand);
+            // Teardown
+        }
+
+        [Fact]
+        public void WithInvalidActionWillNotSendCommand()
+        {
+            // Fixture setup
+            BattleAbility ability = FindAbility();
+            ability.IsEnabled = false;
+            context.Config.BattleLists["Battle"].Actions.Add(ability);
+            // Exercise system
+            sut.Run(context);
+            // Verify outcome
+            Assert.Null(context.MockAPI.Windower.LastCommand);
+        }
+
+        [Fact]
+        public void WithHealingPlayerWillStandUp()
+        {
+            // Fixture setup
+            context.MockAPI.Player.Status = Status.Healing;
+            // Exercise system
+            sut.Enter(context);
+            // Verify outcome
+            Assert.Equal(Status.Standing, context.MockAPI.Player.Status);
+            // Teardown
+        }
+
+        [Fact]
+        public void WillStopPlayerFromMoving()
+        {
+            // Fixture setup
+            context.MockAPI.Navigator.IsRunning = true;
+            // Exercise system
+            sut.Enter(context);
+            // Verify outcome
+            Assert.False(context.MockAPI.Navigator.IsRunning);
+            // Teardown
         }
     }
 }
