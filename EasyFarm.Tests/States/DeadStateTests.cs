@@ -39,7 +39,7 @@ namespace EasyFarm.Tests.States
         public void CheckTrueWhenPlayersDead(Status status, bool expected)
         {
             // Setup fixture
-            context.Player.Status = status;
+            context.Player.Status = status;1
             // Exercise system
             bool result = sut.Check(context);
             // Verify outcome

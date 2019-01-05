@@ -24,108 +24,78 @@ namespace EasyFarm.Tests.States
 {
     public class RestStateTests
     {
-        public class CheckTests
+        private static readonly TestContext context = new TestContext();
+        private static readonly RestState sut = new RestState();
+
+        [Theory]
+        [InlineData(50, 50, true)]
+        [InlineData(50, 51, true)]
+        [InlineData(50, 49, false)]
+        public void ShouldHealWithLowMP(int currentMPP, int lowMPP, bool expected)
         {
-            [Theory]
-            [InlineData(50, 50, true)]
-            [InlineData(50, 51, true)]
-            [InlineData(50, 49, false)]
-            public void ShouldHealWithLowMP(int currentMPP, int lowMPP, bool expected)
-            {
-                // Setup fixture
-                var context = new TestContext();
-                context.Player.MppCurrent = currentMPP;
-                context.Config.IsMagicEnabled = true;
-                context.Config.LowMagic = lowMPP;
-                var sut = CreateSut();
-                // Exercise system
-                var result = sut.Check(context);
-                // Verify outcome
-                Assert.Equal(expected, result);
-                // Teardown
-            }
-
-            [Theory]
-            [InlineData(50, 50, true)]
-            [InlineData(50, 51, true)]
-            [InlineData(50, 49, false)]
-            public void ShouldHealWithLowHP(int currentHPP, int lowHPP, bool expected)
-            {
-                // Setup fixture
-                var context = new TestContext();
-                context.Player.HppCurrent = currentHPP;
-                context.Config.IsHealthEnabled = true;
-                context.Config.LowHealth = lowHPP;
-                RestState sut = CreateSut();
-                // Exercise system
-                var result = sut.Check(context);
-                // Verify outcome
-                Assert.Equal(expected, result);
-                // Teardown
-            }
-
-            [Fact]
-            public void HasAggro_NoResting()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.Player.HasAggro = true;
-                var sut = CreateSut();
-                // Exercise system
-                var result = sut.Check(context);
-                // Verify outcome
-                Assert.False(result);
-                // Teardown	
-            }
-
-            private RestState CreateSut()
-            {
-                return new RestState();
-            }
+            // Setup fixture
+            context.Player.MppCurrent = currentMPP;
+            context.Config.IsMagicEnabled = true;
+            context.Config.LowMagic = lowMPP;
+            // Exercise system
+            var result = sut.Check(context);
+            // Verify outcome
+            Assert.Equal(expected, result);
+            // Teardown
         }
 
-        public class RunTests
+        [Theory]
+        [InlineData(50, 50, true)]
+        [InlineData(50, 51, true)]
+        [InlineData(50, 49, false)]
+        public void ShouldHealWithLowHP(int currentHPP, int lowHPP, bool expected)
         {
-            [Fact]
-            public void PlayerSwitchesFromStandingToHealing()
-            {
-                // Setup fixture
-                var context = new TestContext();
-                context.MockAPI.Player.Status = Status.Standing;
-                var sut = CreateSut();
-                // Exercise system
-                sut.Run(context);
-                // Verify outcome
-                Assert.Equal(Status.Healing, context.MockAPI.Player.Status);
-                // Teardown
-            }
-
-            private RestState CreateSut()
-            {
-                return new RestState();
-            }
+            // Setup fixture
+            context.Player.HppCurrent = currentHPP;
+            context.Config.IsHealthEnabled = true;
+            context.Config.LowHealth = lowHPP;
+            // Exercise system
+            var result = sut.Check(context);
+            // Verify outcome
+            Assert.Equal(expected, result);
+            // Teardown
         }
 
-        public class ExitTests
+        [Fact]
+        public void HasAggro_NoResting()
         {
-            [Fact]
-            public void PlayerSwitchesFromHealingToStanding()
-            {
-                // Setup fixture
-                var context = new TestContext();
-                context.MockAPI.Player.Status = Status.Healing;
-                var sut = CreateSut();
-                // Exercise system
-                sut.Exit(context);
-                // Verify outcome
-                Assert.Equal(Status.Standing, context.MockAPI.Player.Status);
-                // Teardown
-            }
+            // Fixture setup
+            context.Player.HasAggro = true;
+            // Exercise system
+            var result = sut.Check(context);
+            // Verify outcome
+            Assert.False(result);
+            // Teardown	
+        }
 
-            private RestState CreateSut()
-            {
-                return new RestState();
-            }
+        [Fact]
+        public void PlayerSwitchesFromStandingToHealing()
+        {
+            // Setup fixture
+            context.MockAPI.Player.Status = Status.Standing;
+            // Exercise system
+            sut.Run(context);
+            // Verify outcome
+            Assert.Equal(Status.Healing, context.MockAPI.Player.Status);
+            // Teardown
+        }
+
+
+        [Fact]
+        public void PlayerSwitchesFromHealingToStanding()
+        {
+            // Setup fixture
+            context.MockAPI.Player.Status = Status.Healing;
+            // Exercise system
+            sut.Exit(context);
+            // Verify outcome
+            Assert.Equal(Status.Standing, context.MockAPI.Player.Status);
+            // Teardown
         }
     }
 }
