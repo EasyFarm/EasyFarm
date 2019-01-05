@@ -231,6 +231,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Classes\NullUnit.cs" />
     <Compile Include="States\StateHistory.cs" />
     <Compile Include="States\StateLog.cs" />
     <Compile Include="States\StateStatus.cs" />

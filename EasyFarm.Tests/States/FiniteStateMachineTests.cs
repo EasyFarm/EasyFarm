@@ -15,82 +15,57 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Threading;
-using EasyFarm.Context;
 using EasyFarm.States;
 using EasyFarm.Tests.Context;
+using EasyFarm.UserSettings;
 using Xunit;
 
 namespace EasyFarm.Tests.States
 {
     public class FiniteStateMachineTests
     {
+        private readonly TestContext _context = new TestContext();
+        private readonly NewFiniteStateMachine _sut = CreateSut();
+
         [Fact]
         public void OnFirstRun_StartStateWillRun()
         {
             // Fixture setup
-            TestContext context = new TestContext();
-            NewFiniteStateMachine sut = new NewFiniteStateMachine();
-            StartEngineState state = new StartEngineState() {Enabled = true};
-            sut.AddState(state);
             // Exercise system
-            StateHistory result = sut.Run(context, new CancellationTokenSource());
+            StateHistory result = _sut.Run(_context, new CancellationTokenSource());
             // Verify outcome
-            Assert.True(result.HasCheck(state));
+            bool checkRan = result.HasCheck(typeof(StartEngineState));
+            Assert.True(checkRan);
             // Teardown	
         }
-    }    
 
-    public class NewFiniteStateMachine
-    {
-        private readonly List<IState> _states = new List<IState>();
-        private readonly TypeCache<bool> _cache = new TypeCache<bool>();
-        private readonly StateHistory _history = new StateHistory();
-
-        public void AddState(IState state)
+        private static NewFiniteStateMachine CreateSut()
         {
-            _states.Add(state);
+            NewFiniteStateMachine sut = new NewFiniteStateMachine();
+
+            //Create the states
+            sut.AddState(new DeadState() {Priority = 7});
+            sut.AddState(new ZoneState() {Priority = 7});
+            sut.AddState(new SetTargetState() {Priority = 7});
+            sut.AddState(new SetFightingState() {Priority = 7});
+            sut.AddState(new FollowState() {Priority = 5});
+            sut.AddState(new RestState() {Priority = 2});
+            sut.AddState(new SummonTrustsState() {Priority = 6});
+            sut.AddState(new ApproachState() {Priority = 0});
+            sut.AddState(new BattleState() {Priority = 3});
+            sut.AddState(new WeaponskillState() {Priority = 2});
+            sut.AddState(new PullState() {Priority = 4});
+            sut.AddState(new StartState() {Priority = 5});
+            sut.AddState(new TravelState() {Priority = 1});
+            sut.AddState(new HealingState() {Priority = 2});
+            sut.AddState(new EndState() {Priority = 3});
+            sut.AddState(new StartEngineState() {Priority = Constants.MaxPriority});
+
+            sut.IsDryRun = true;
+
+            return sut;
         }
-
-        public StateHistory Run(IGameContext context, CancellationTokenSource cancellation)
-        {
-            // Sort the List, States may have updated Priorities.
-            _states.Sort();
-
-            // Find a State that says it needs to run.
-            foreach (var mc in _states.Where(x => x.Enabled).ToList())
-            {
-                cancellation.Token.ThrowIfCancellationRequested();
-
-                bool isRunnable = mc.Check(context);
-                _history.AddCheck(mc);
-
-                // Run last state's exits method.
-                if (_cache[mc] != isRunnable)
-                {
-                    if (isRunnable)
-                    {
-                        mc.Enter(context);
-                        _history.AddEnter(mc);
-                    }
-                    else
-                    {
-                        mc.Exit(context);
-                        _history.AddExit(mc);
-                    } 
-                    _cache[mc] = isRunnable;
-                }
-
-                if (isRunnable)
-                {
-                    mc.Run(context);
-                    _history.AddRun(mc);
-                }
-            }
-
-            return _history;
-        }        
     }
 }

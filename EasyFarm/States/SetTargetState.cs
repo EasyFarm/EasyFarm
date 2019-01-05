@@ -41,7 +41,7 @@ namespace EasyFarm.States
                 mobs = TargetPriority.Prioritize(mobs).ToList();
 
                 // Set our new target at the end so that we don't accidentally cast on a new target.
-                context.Target = mobs.FirstOrDefault();
+                context.Target = mobs.FirstOrDefault() ?? new NullUnit();
 
                 // Update last time target was updated. 
                 _lastTargetCheck = DateTime.Now;

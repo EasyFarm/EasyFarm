@@ -43,7 +43,7 @@ namespace EasyFarm.Tests.Context
             Units = new List<IUnit> { new MockUnit() };
             Config = new MockConfig();
             Player = new MockPlayer();
-            Target = new MockUnit();
+            Target = new NullUnit();
             MockAPI = new MockEliteAPI();
             API = new MockEliteAPIAdapter(MockAPI);
             Memory = new StateMemory(API);

@@ -33,6 +33,7 @@ namespace EasyFarm.Context
             Player = new Player(api);
             Config = new ProxyConfig();
             Memory = new StateMemory(api);
+            Target = new NullUnit();
         }
 
         public IConfig Config { get; set; }
