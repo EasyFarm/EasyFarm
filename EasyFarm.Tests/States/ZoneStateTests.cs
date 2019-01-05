@@ -26,116 +26,96 @@ namespace EasyFarm.Tests.States
 {
     public class ZoneStateTests
     {
-        private static readonly Zone StartingZone = Zone.Konschtat_Highlands;
-        private static readonly Zone NewZone = Zone.Valkurm_Dunes;
+        private readonly Zone StartingZone = Zone.Konschtat_Highlands;
+        private readonly Zone NewZone = Zone.Valkurm_Dunes;
 
-        public class CheckTests
+        private readonly ZoneState sut = new ZoneState();
+        private readonly TestContext context = new TestContext();
+
+        [Fact]
+        public void CheckIsTrueWhenZoneChanges()
         {
-            [Fact]
-            public void CheckIsTrueWhenZoneChanges()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.Player.Zone = StartingZone;
-                context.Zone = NewZone;
-                context.Player.Str = 100;
-                var sut = CreateSut();
-                // Exercise system
-                var result = sut.Check(context);
-                // Verify outcome
-                Assert.True(result);
-                // Teardown
-            }
-
-            [Fact]
-            public void CheckIsTrueWhenPlayersStatsAreZero()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.Player.Str = 0;
-                var sut = CreateSut();
-                // Exercise system
-                var result = sut.Check(context);
-                // Verify outcome
-                Assert.True(result);
-                // Teardown
-            }
-
-            [Fact]
-            public void CheckIsFalseWhenNotZoning()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.Player.Zone = StartingZone;
-                context.Player.Str = 100;
-                context.Zone = StartingZone;
-                var sut = CreateSut();
-                // Exercise system
-                var result = sut.Check(context);
-                // Verify outcome
-                Assert.False(result);
-                // Teardown
-            }
+            // Fixture setup
+            context.Player.Zone = StartingZone;
+            context.Zone = NewZone;
+            context.Player.Str = 100;
+            // Exercise system
+            bool result = sut.Check(context);
+            // Verify outcome
+            Assert.True(result);
+            // Teardown
         }
 
-        public class RunTests
+        [Fact]
+        public void CheckIsTrueWhenPlayersStatsAreZero()
         {
-            [Fact]
-            public void RunOnZoningSetsZoneToNewZone()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.Player.Zone = NewZone;
-                context.Player.Str = 100;
-                var sut = CreateSut();
-                // Exercise system
-                sut.Run(context);
-                // Verify outcome
-                Assert.Equal(NewZone, context.Zone);
-                // Teardown
-            }
-
-            [Fact]
-            public void RunOnZoningStopsPlayerFromRunning()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.Player.Zone = NewZone;
-                var sut = CreateSut(zoningAction: () => ForceMoveToNextZone(context));
-                // Exercise system
-                sut.Run(context);
-                // Verify outcome
-                Assert.False(context.MockAPI.Navigator.IsRunning);
-                // Teardown
-            }
-
-            [Fact]
-            public void RunWhileZoningWaits()
-            {
-                // Fixture setup
-                var context = new TestContext();
-                context.Zone = StartingZone;
-                context.Player.Str = 0;
-                context.Player.Zone = NewZone;
-                var sut = CreateSut(() => ForceMoveToNextZone(context));
-                // Exercise system
-                sut.Run(context);
-                // Verify outcome
-                Assert.Equal(100, context.Player.Str);
-                // Teardown
-            }
-
-            private void ForceMoveToNextZone(IGameContext context)
-            {
-                context.Player.Str = 100;
-            }
+            // Fixture setup
+            context.Player.Str = 0;
+            // Exercise system
+            bool result = sut.Check(context);
+            // Verify outcome
+            Assert.True(result);
+            // Teardown
         }
 
-        private static ZoneState CreateSut(Action zoningAction = null)
+        [Fact]
+        public void CheckIsFalseWhenNotZoning()
         {
-            var sut = new ZoneState();
-            sut.ZoningAction = zoningAction ?? sut.ZoningAction;
-            return sut;
+            // Fixture setup
+            context.Player.Zone = StartingZone;
+            context.Player.Str = 100;
+            context.Zone = StartingZone;
+            // Exercise system
+            bool result = sut.Check(context);
+            // Verify outcome
+            Assert.False(result);
+            // Teardown
+        }
+
+        [Fact]
+        public void RunOnZoningSetsZoneToNewZone()
+        {
+            // Fixture setup
+            context.Player.Zone = NewZone;
+            context.Player.Str = 100;
+            // Exercise system
+            sut.Run(context);
+            // Verify outcome
+            Assert.Equal(NewZone, context.Zone);
+            // Teardown
+        }
+
+        [Fact]
+        public void RunOnZoningStopsPlayerFromRunning()
+        {
+            // Fixture setup
+            sut.ZoningAction = ForceMoveToNextZone(context);
+            context.Player.Zone = NewZone;
+            // Exercise system
+            sut.Run(context);
+            // Verify outcome
+            Assert.False(context.MockAPI.Navigator.IsRunning);
+            // Teardown
+        }
+
+        [Fact]
+        public void RunWhileZoningWaits()
+        {
+            // Fixture setup
+            context.Zone = StartingZone;
+            context.Player.Str = 0;
+            context.Player.Zone = NewZone;
+            sut.ZoningAction = ForceMoveToNextZone(context);
+            // Exercise system
+            sut.Run(context);
+            // Verify outcome
+            Assert.Equal(100, context.Player.Str);
+            // Teardown
+        }
+
+        private Action ForceMoveToNextZone(IGameContext context)
+        {
+            return () => context.Player.Str = 100;
         }
     }
 }

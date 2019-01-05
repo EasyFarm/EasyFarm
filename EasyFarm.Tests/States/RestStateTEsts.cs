@@ -24,8 +24,8 @@ namespace EasyFarm.Tests.States
 {
     public class RestStateTests
     {
-        private static readonly TestContext context = new TestContext();
-        private static readonly RestState sut = new RestState();
+        private readonly TestContext context = new TestContext();
+        private readonly RestState sut = new RestState();
 
         [Theory]
         [InlineData(50, 50, true)]
@@ -38,7 +38,7 @@ namespace EasyFarm.Tests.States
             context.Config.IsMagicEnabled = true;
             context.Config.LowMagic = lowMPP;
             // Exercise system
-            var result = sut.Check(context);
+            bool result = sut.Check(context);
             // Verify outcome
             Assert.Equal(expected, result);
             // Teardown
@@ -55,7 +55,7 @@ namespace EasyFarm.Tests.States
             context.Config.IsHealthEnabled = true;
             context.Config.LowHealth = lowHPP;
             // Exercise system
-            var result = sut.Check(context);
+            bool result = sut.Check(context);
             // Verify outcome
             Assert.Equal(expected, result);
             // Teardown
@@ -67,7 +67,7 @@ namespace EasyFarm.Tests.States
             // Fixture setup
             context.Player.HasAggro = true;
             // Exercise system
-            var result = sut.Check(context);
+            bool result = sut.Check(context);
             // Verify outcome
             Assert.False(result);
             // Teardown	
