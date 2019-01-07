@@ -15,8 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
+using System.Linq;
 using EasyFarm.States;
 using EasyFarm.Tests.Context;
+using EasyFarm.ViewModels;
 using Xunit;
 
 namespace EasyFarm.Tests.States
@@ -35,6 +38,19 @@ namespace EasyFarm.Tests.States
             sut.Check(context);
             // Verify outcome
             Assert.NotNull(context.Target);
+            // Teardown	
+        }
+
+        [Fact]
+        public void OnlyUpdateUserAboutTargetSwitchWithValidTarget()
+        {
+            // Fixture setup
+            LogViewModel viewModel = new LogViewModel();
+            context.Units[0].IsValid = true;
+            // Exercise system
+            sut.Check(context);
+            // Verify outcome
+            Assert.True(viewModel.LoggedItems.Any());
             // Teardown	
         }
     }
