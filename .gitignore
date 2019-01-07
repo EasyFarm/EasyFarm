@@ -218,6 +218,8 @@ pip-log.txt
 Build/coverage
 Build/result.xml
 Build/duplication.xml
+Build/tools/*
+!Build/tools/packages.config
 !Build
 
 # NLog
