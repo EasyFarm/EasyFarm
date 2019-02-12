@@ -87,6 +87,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\EventsTests.cs" />
+    <Compile Include="TestTypes\OtherTestEvent.cs" />
+    <Compile Include="TestTypes\TestEvent.cs" />
     <Compile Include="Context\MockPlayer.cs" />
     <Compile Include="States\FiniteStateMachineTests.cs" />
     <Compile Include="States\NewFiniteStateMachine.cs" />

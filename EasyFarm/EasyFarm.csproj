@@ -192,6 +192,7 @@
     <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\IUnitFilters.cs" />
     <Compile Include="Classes\IUnitService.cs" />
+    <Compile Include="Classes\EventMessenger.cs" />
     <Compile Include="Classes\Result.cs" />
     <Compile Include="Classes\TargetPriority.cs" />
     <Compile Include="Context\GameContext.cs" />
