@@ -28,34 +28,13 @@ using MemoryAPI.Memory;
 
 namespace EasyFarm.Handlers
 {
-    public partial class SelectCharacterRequestHandler
+    public class SelectCharacter : EventHandlerBase<SelectCharacterEvent>
     {
         private readonly MetroWindow _window;
 
-        public SelectCharacterRequestHandler(MetroWindow window)
+        public SelectCharacter(EventMessenger events, MetroWindow window) : base(events)
         {
             _window = window;
-        }
-
-        public async Task Handle()
-        {
-            // Let user select ffxi process
-            SelectProcessDialog selectionView = new SelectProcessDialog();
-            SelectProcessViewModel viewModel = new SelectProcessViewModel(selectionView);
-            selectionView.DataContext = viewModel;
-
-            // Show window and do not continue until user closes it.
-            await _window.ShowMetroDialogAsync(selectionView);
-            await selectionView.WaitUntilUnloadedAsync();
-
-            // Get the selected process.
-            Process process = viewModel.SelectedProcess;
-
-            ChangeCharacter(new SelectCharacterResult
-            {
-                Process = process,
-                IsSelected = viewModel.IsProcessSelected
-            });
         }
 
         private void ChangeCharacter(SelectCharacterResult result)
@@ -85,6 +64,27 @@ namespace EasyFarm.Handlers
 
             // Set the main window's title to the player's name.
             AppServices.UpdateTitle("EasyFarm - " + fface.Player.Name);
+        }
+
+        protected override async Task Execute()
+        {
+            // Let user select ffxi process
+            SelectProcessDialog selectionView = new SelectProcessDialog();
+            SelectProcessViewModel viewModel = new SelectProcessViewModel(selectionView);
+            selectionView.DataContext = viewModel;
+
+            // Show window and do not continue until user closes it.
+            await _window.ShowMetroDialogAsync(selectionView);
+            await selectionView.WaitUntilUnloadedAsync();
+
+            // Get the selected process.
+            Process process = viewModel.SelectedProcess;
+
+            ChangeCharacter(new SelectCharacterResult
+            {
+                Process = process,
+                IsSelected = viewModel.IsProcessSelected
+            });
         }
     }
 }

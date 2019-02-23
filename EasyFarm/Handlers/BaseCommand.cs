@@ -15,29 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System.Windows;
+
+using System.Threading.Tasks;
 using EasyFarm.Classes;
-using EasyFarm.Handlers;
-using EasyFarm.Persistence;
-using MahApps.Metro.Controls.Dialogs;
-using Ninject.Modules;
-using Ninject.Extensions.Conventions;
 
-namespace EasyFarm.Infrastructure
+namespace EasyFarm.Handlers
 {
-    public class ApplicationBindingsModule : NinjectModule
+    public abstract class EventHandlerBase<TEvent>
     {
-        public override void Load()
-        {
-            Bind<App>().ToMethod(x => Application.Current as App);
-            Bind<TabViewModels>().ToSelf();
-            Bind<LibraryUpdater>().ToSelf();
-            Bind<SelectCharacterRequestHandler>().ToSelf();
-            Bind<SelectAbilityRequestHandler>().ToSelf();
-            Bind<IDialogCoordinator>().To<DialogCoordinator>();
-            Bind<IPersister>().To<Persister>();
+        private readonly EventMessenger _messenger;
 
-            this.Bind(x => x.FromThisAssembly().SelectAllClasses().EndingWith("ViewModel").BindToSelf());
+        protected EventHandlerBase(EventMessenger messenger)
+        {
+            _messenger = messenger;
+            Bind();
         }
+
+        private void Bind()
+        {
+            _messenger.Bind<TEvent>(e => Execute());
+        }
+
+        protected abstract Task Execute();
     }
 }

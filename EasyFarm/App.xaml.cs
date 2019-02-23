@@ -19,35 +19,23 @@ using System;
 using System.Windows;
 using EasyFarm.Infrastructure;
 using EasyFarm.Logging;
-using EasyFarm.Persistence;
-using EasyFarm.UserSettings;
 using EasyFarm.ViewModels;
-using Ninject;
 
 namespace EasyFarm
 {
     public partial class App
     {
         private static AppBoot _appBoot;
-        public static Action<App> DefaultInitializer { get; set; } = InitializeApp;
+        private static Action<App> DefaultInitializer { get; set; } = InitializeApp;
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            Current.DispatcherUnhandledException += (sender, ev) => { UnhandledException(ev.Exception); };
             DefaultInitializer.Invoke(this);
         }
 
         private static void InitializeApp(App app)
         {
-            Application.Current.DispatcherUnhandledException += (sender, e) =>
-            {
-                Logger.Log(new LogEntry(LoggingEventType.Fatal, "Unhandled Exception", e.Exception));
-                MessageBox.Show(e.Exception.Message, "An exception has occurred. ", MessageBoxButton.OK, MessageBoxImage.Error);
-            };            
-
-            LogViewModel.Write("Resources loaded");
-            LogViewModel.Write("Application starting");
-            Logger.Log(new LogEntry(LoggingEventType.Information, "EasyFarm Started ..."));
-
             _appBoot = new AppBoot(app);
             _appBoot.Initialize();
             _appBoot.Navigate<MasterViewModel>();
@@ -60,16 +48,13 @@ namespace EasyFarm
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
-            var persister = _appBoot.Container.Get<IPersister>();
-            var characterName = ViewModelBase.FFACE?.Player?.Name;
-            var fileName = $"{characterName}.eup";
+            _appBoot.Exit();
+        }
 
-            if (!String.IsNullOrWhiteSpace(fileName))
-            {
-                persister.Serialize(fileName, Config.Instance);
-            }
-
-            LogViewModel.Write("Application exiting");
+        private static void UnhandledException(Exception e)
+        {
+            Logger.Log(new LogEntry(LoggingEventType.Fatal, "Unhandled Exception", e));
+            MessageBox.Show(e.Message, "An exception has occurred. ", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

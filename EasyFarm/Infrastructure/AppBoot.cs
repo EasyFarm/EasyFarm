@@ -15,48 +15,59 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+
+using System;
 using EasyFarm.Classes;
-using EasyFarm.Handlers;
+using EasyFarm.Logging;
+using EasyFarm.Persistence;
+using EasyFarm.UserSettings;
+using EasyFarm.ViewModels;
 using EasyFarm.Views;
-using Ninject;
 
 namespace EasyFarm.Infrastructure
 {
     public class AppBoot
     {
-        public IKernel Container { get; set; }
+        private readonly CompositeRoot _container;
         private readonly App _app;
 
         public AppBoot(App app)
         {
             _app = app;
-            Container = CreateContainer();
+            _container = new CompositeRoot();
             _app.MainWindow = new MasterView();
         }
 
         public void Initialize()
         {
             SystemTray.ConfigureTray(_app.MainWindow);
-        }
-
-        public object ViewModel => _app.MainWindow?.DataContext;
-
-        private IKernel CreateContainer()
-        {
-            StandardKernel container = new StandardKernel(
-                new ApplicationBindingsModule());
-            return container;
+            LogViewModel.Write("Resources loaded");
+            LogViewModel.Write("Application starting");
+            Logger.Log(new LogEntry(LoggingEventType.Information, "EasyFarm Started ..."));
         }
 
         public void Navigate<TViewModel>()
         {
-            NavigateViewRequestHandler handler = new NavigateViewRequestHandler(_app, Container);
-            handler.Handle(typeof(TViewModel)).GetAwaiter();
+            _app.MainWindow.DataContext = _container.Get(typeof(TViewModel));
         }
 
         public void Show()
         {
             _app.MainWindow?.Show();
+        }
+
+        public void Exit()
+        {
+            IPersister persister = _container.Get<IPersister>();
+            string characterName = ViewModelBase.FFACE?.Player?.Name;
+            string fileName = $"{characterName}.eup";
+
+            if (!String.IsNullOrWhiteSpace(fileName))
+            {
+                persister.Serialize(fileName, Config.Instance);
+            }
+
+            LogViewModel.Write("Application exiting");
         }
     }
 }

@@ -19,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EasyFarm.ViewModels;
-using Ninject;
 
 namespace EasyFarm.Infrastructure
 {
@@ -27,13 +26,9 @@ namespace EasyFarm.Infrastructure
     {
         public IList<IViewModel> ViewModels = new List<IViewModel>();
 
-        public TabViewModels(IKernel container)
+        public TabViewModels(IList<IViewModel> viewModels)
         {
-            foreach (KeyValuePair<Type, int> availableTab in AvailableTabs)
-            {
-                ViewModels.Add((IViewModel)container.Get(availableTab.Key));
-            }
-
+            ViewModels = viewModels;
             ViewModels = ViewModels
                 .Where(x => AvailableTabs.ContainsKey(x.GetType()))
                 .OrderBy(x => AvailableTabs[x.GetType()])

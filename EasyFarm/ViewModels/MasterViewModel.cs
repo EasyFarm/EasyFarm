@@ -21,13 +21,10 @@ using EasyFarm.Logging;
 using EasyFarm.Persistence;
 using EasyFarm.UserSettings;
 using GalaSoft.MvvmLight.Command;
-using MahApps.Metro.Controls.Dialogs;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using EasyFarm.Handlers;
-using MahApps.Metro.Controls;
 using Application = System.Windows.Application;
 
 namespace EasyFarm.ViewModels
@@ -37,8 +34,7 @@ namespace EasyFarm.ViewModels
     /// </summary>
     public class MasterViewModel : ViewModelBase
     {
-        private readonly LibraryUpdater _updater;
-        private readonly IDialogCoordinator _dialogCoordinator;
+        private readonly EventMessenger _events;
 
         /// <summary>
         ///     Saves and loads settings from file.
@@ -55,13 +51,9 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public IViewModel ViewModel { get; set; }
 
-        public MasterViewModel(
-            MainViewModel mainViewModel,
-            LibraryUpdater updater,
-            IDialogCoordinator dialogCoordinator)
+        public MasterViewModel(MainViewModel mainViewModel, EventMessenger events)
         {
-            _updater = updater;
-            _dialogCoordinator = dialogCoordinator;
+            _events = events;
             ViewModel = mainViewModel;
 
             _settingsManager = new SettingsManager("eup", "EasyFarm User Preference");
@@ -76,7 +68,7 @@ namespace EasyFarm.ViewModels
             SaveCommand = new RelayCommand(Save);
             LoadCommand = new RelayCommand(Load);
             SelectProcessCommand = new RelayCommand(async () => await SelectProcess());
-            LoadedCommand = new RelayCommand(async () => await OnLoad());
+            LoadedCommand = new RelayCommand(OnLoad);
         }
 
         private string _mainWindowTitle;
@@ -246,9 +238,7 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private async Task SelectProcess()
         {
-            MetroWindow window = (MetroWindow)Application.Current.MainWindow;
-            SelectCharacterRequestHandler handler = new SelectCharacterRequestHandler(window);
-            await handler.Handle();
+            _events.Fire(new SelectCharacterEvent());
         }
 
         /// <summary>
@@ -259,22 +249,11 @@ namespace EasyFarm.ViewModels
             Application.Current.Shutdown();
         }
 
-        public async Task OnLoad()
+        public void OnLoad()
         {
             MainWindowTitle = "EasyFarm";
             StatusBarText = "";
-
-            if (_updater.HasUpdate())
-            {
-                var showDialogResult = await _dialogCoordinator.ShowMessageAsync(
-                    Application.Current.MainWindow.DataContext,
-                    "Update EliteAPI",
-                    "Would you like to update EliteAPI to its newest version?",
-                    MessageDialogStyle.AffirmativeAndNegative);
-
-                if (showDialogResult == MessageDialogResult.Affirmative)
-                    _updater.Update();
-            }
+            _events.Fire(new LoadedEvent());
         }
     }
 }

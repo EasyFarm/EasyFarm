@@ -127,6 +127,7 @@
     <Compile Include="TestTypes\Mocks\MockUnitService.cs" />
     <Compile Include="TestTypes\MockUnitFilters.cs" />
     <Compile Include="ViewModels\IgnoredViewModelTests.cs" />
+    <Compile Include="ViewModels\MasterViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

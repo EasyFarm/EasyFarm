@@ -27,5 +27,10 @@ namespace EasyFarm.Classes
                 };
             };
         }
+
+        public void Clear()
+        {
+            _handlers.Clear();
+        }
     }
 }

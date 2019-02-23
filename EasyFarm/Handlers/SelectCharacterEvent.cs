@@ -15,14 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System;
-using System.Diagnostics;
 
 namespace EasyFarm.Handlers
 {
-    public class SelectCharacterResult
+    public class SelectCharacterEvent
     {
-        public Process Process { get; set; }
-        public Boolean IsSelected { get; set; }
     }
 }

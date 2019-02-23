@@ -119,10 +119,6 @@
       <HintPath>..\packages\HtmlAgilityPack.1.6.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LiteDB, Version=4.0.0.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiteDB.4.0.0\lib\net40\LiteDB.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -133,15 +129,6 @@
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject.Extensions.Conventions, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.Extensions.Conventions.3.3.0\lib\net45\Ninject.Extensions.Conventions.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject.Extensions.Factory, Version=3.3.2.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.Extensions.Factory.3.3.2\lib\net45\Ninject.Extensions.Factory.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
@@ -200,10 +187,13 @@
     <Compile Include="Context\IPlayer.cs" />
     <Compile Include="Context\Player.cs" />
     <Compile Include="Handlers\SelectAbilityRequestHandler.cs" />
-    <Compile Include="Handlers\SelectCharacterRequestHandler.cs" />
+    <Compile Include="Handlers\SelectCharacter.cs" />
     <Compile Include="Handlers\SelectCharacterResult.cs" />
-    <Compile Include="Infrastructure\ApplicationBindingsModule.cs" />
+    <Compile Include="Handlers\BaseCommand.cs" />
+    <Compile Include="Infrastructure\CompositeRoot.cs" />
+    <Compile Include="Handlers\LoadedEvent.cs" />
     <Compile Include="Infrastructure\TabViewModels.cs" />
+    <Compile Include="Handlers\UpdateAPI.cs" />
     <Compile Include="Parsing\AbilityMapper.cs" />
     <Compile Include="Parsing\ItemMapper.cs" />
     <Compile Include="Parsing\Resource.cs" />
@@ -220,7 +210,6 @@
     <Compile Include="Classes\LibraryUpdater.cs" />
     <Compile Include="Infrastructure\AppBoot.cs" />
     <Compile Include="Infrastructure\InverseBooleanConverter.cs" />
-    <Compile Include="Handlers\NavigateViewRequestHandler.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\NLogTextFileLogger.cs" />
@@ -297,7 +286,8 @@
     <Compile Include="States\PullState.cs" />
     <Compile Include="States\WeaponskillState.cs" />
     <Compile Include="Classes\SystemTray.cs" />
-    <Compile Include="ViewModels\ProcessSelectionViewModel.cs" />
+    <Compile Include="Handlers\SelectCharacterEvent.cs" />
+    <Compile Include="ViewModels\SelectProcessViewModel.cs" />
     <Compile Include="ViewModels\TargetingViewModel.cs" />
     <Compile Include="Views\AbilityView.xaml.cs">
       <DependentUpon>AbilityView.xaml</DependentUpon>
