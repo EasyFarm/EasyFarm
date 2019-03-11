@@ -66,7 +66,7 @@ namespace EasyFarm.Infrastructure
             TabViewModels tabViewModels = new TabViewModels(new List<IViewModel>()
             {
                 battlesViewModel,
-                followViewModel,
+                targetingViewModel,
                 restingViewModel,
                 routesViewModel,
                 followViewModel,
