@@ -1,14 +1,13 @@
 ﻿using EasyFarm.States;
 using EasyFarm.Tests.Context;
-using MemoryAPI;
 using Xunit;
 
 namespace EasyFarm.Tests.States
 {
     public class WeaponSkillStateTests
     {
-        private WeaponskillState _sut = new WeaponskillState();
-        private TestContext _context = new TestContext();
+        private readonly WeaponskillState _sut = new WeaponskillState();
+        private readonly TestContext _context = new TestContext();
 
         [Fact]
         public void Check_DoNotRunWhenPlayerInjured()
@@ -21,8 +20,21 @@ namespace EasyFarm.Tests.States
         public void Check_DoNotRunWithInvalidTarget()
         {
             _context.SetPlayerHealthy();
-            _context.SetInvalidTarget();
+            _context.SetTargetInvalid();
             Assert.False(_sut.Check(_context));
+            // Teardown
+        }
+
+        [Fact]
+        public void Check_RunWhenPlayerIsHealthy_TargetsIsValid_And_PlayerIsFighting()
+        {
+            // Setup fixture
+            _context.SetPlayerHealthy();
+            _context.SetTargetValid();
+            _context.SetPlayerFighting();
+            // Exercise system
+            // Verify outcome
+            Assert.True(_sut.Check(_context));
             // Teardown
         }
     }

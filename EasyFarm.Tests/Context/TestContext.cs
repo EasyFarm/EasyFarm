@@ -57,7 +57,7 @@ namespace EasyFarm.Tests.Context
             MockAPI.Player.HPPCurrent = 25;
         }
 
-        public void SetInvalidTarget()
+        public void SetTargetInvalid()
         {
             Target.IsValid = false;
         }
@@ -68,6 +68,16 @@ namespace EasyFarm.Tests.Context
             Config.HighHealth = 50;
             Config.LowHealth = 0;
             MockAPI.Player.HPPCurrent = 75;
+        }
+
+        public void SetTargetValid()
+        {
+            Target.IsValid = true;
+        }
+
+        public void SetPlayerFighting()
+        {
+            MockAPI.Player.Status = Status.Fighting;
         }
     }
 }
