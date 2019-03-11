@@ -48,5 +48,26 @@ namespace EasyFarm.Tests.Context
             API = new MockEliteAPIAdapter(MockAPI);
             Memory = new StateMemory(API);
         }
+
+        public void SetPlayerInjured()
+        {
+            Config.IsHealthEnabled = true;
+            Config.HighHealth = 50;
+            Config.LowHealth = 0;
+            MockAPI.Player.HPPCurrent = 25;
+        }
+
+        public void SetInvalidTarget()
+        {
+            Target.IsValid = false;
+        }
+
+        public void SetPlayerHealthy()
+        {
+            Config.IsHealthEnabled = false;
+            Config.HighHealth = 50;
+            Config.LowHealth = 0;
+            MockAPI.Player.HPPCurrent = 75;
+        }
     }
 }
