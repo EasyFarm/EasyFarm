@@ -15,14 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System;
+
 using EasyFarm.Classes;
 using EasyFarm.UserSettings;
 using MemoryAPI;
 
 namespace EasyFarm.States
 {
-    [Obsolete("Please consider using GameContext instead.")]
     public class StateMemory
     {
         public StateMemory(IMemoryAPI eliteApi)
@@ -35,13 +34,9 @@ namespace EasyFarm.States
         }
 
         public IConfig Config { get; set; }
-        public IMemoryAPI EliteApi { get; set; }        
+        public IMemoryAPI EliteApi { get; set; }
         public Executor Executor { get; set; }
-        public IUnitService UnitService { get; set; }    
+        public IUnitService UnitService { get; set; }
         public IUnitFilters UnitFilters { get; set; }
-
-        public bool IsFighting { get; set; }
-        public IUnit Target { get; set; }
-        public Zone Zone { get; set; }
     }
 }

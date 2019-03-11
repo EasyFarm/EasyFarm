@@ -52,10 +52,7 @@ namespace EasyFarm.Context
              Allow code using old API to continue using it until we move things over. 
              We'll need to figure out how we can make services like Executor.UseActions testable.
         */
-
-        [Obsolete("Please consider using GameContext instead.")]
         public IMemoryAPI API { get; set; }
-        [Obsolete("Please consider using GameContext instead.")]
         public StateMemory Memory { get; set; }
     }
 }

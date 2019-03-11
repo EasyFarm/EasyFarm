@@ -19,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using EasyFarm.Classes;
 using EasyFarm.Infrastructure;
-using EasyFarm.States;
 using EasyFarm.Tests.TestTypes.Mocks;
 using EasyFarm.UserSettings;
 using MemoryAPI;
@@ -41,22 +40,6 @@ namespace EasyFarm.Tests.TestTypes
             StartRecordingEvents();
         }
 
-        /// <summary>
-        /// Create new state memory with <see cref="MockGameAPI"/> and <see cref="MockConfig"/>.
-        /// </summary>
-        /// <returns></returns>
-        protected StateMemory CreateGameContext(bool targetValid = true)
-        {
-            return new StateMemory(MockGameAPI)
-            {
-                Config = MockConfig,
-                UnitFilters = new MockUnitFilters()
-                {
-                    Result = targetValid
-                }
-            };
-        }
-
         private void StartRecordingEvents()
         {
             AppServices.RegisterEvent<Events.PauseEvent>(this, x =>
@@ -71,11 +54,6 @@ namespace EasyFarm.Tests.TestTypes
             battleAbility.IsEnabled = true;
             battleAbility.Name = "valid";
             return battleAbility;
-        }
-
-        protected static IUnit FindNonValidUnit()
-        {
-            return new MockUnit();
         }
 
         protected static IUnit FindUnit()

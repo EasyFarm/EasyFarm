@@ -67,7 +67,7 @@ namespace EasyFarm.ViewModels
             ExitCommand = new RelayCommand(Exit);
             SaveCommand = new RelayCommand(Save);
             LoadCommand = new RelayCommand(Load);
-            SelectProcessCommand = new RelayCommand(async () => await SelectProcess());
+            SelectProcessCommand = new RelayCommand(SelectProcess);
             LoadedCommand = new RelayCommand(OnLoad);
         }
 
@@ -236,7 +236,7 @@ namespace EasyFarm.ViewModels
         /// <summary>
         ///     Selects a process to user for this application.
         /// </summary>
-        private async Task SelectProcess()
+        private void SelectProcess()
         {
             _events.Fire(new SelectCharacterEvent());
         }
