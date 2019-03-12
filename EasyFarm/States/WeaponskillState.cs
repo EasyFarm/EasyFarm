@@ -47,7 +47,8 @@ namespace EasyFarm.States
             if (!context.API.Player.Status.Equals(Status.Fighting)) return;
             var weaponskill = context.Config.BattleLists["Weaponskill"].Actions
                 .FirstOrDefault(x => ActionFilters.TargetedFilter(context.API, x, context.Target));
-            if (weaponskill == null) return;
+            if (weaponskill == null)
+                return;
             context.Memory.Executor.UseTargetedActions(new[] {weaponskill}, context.Target);
         }
     }
