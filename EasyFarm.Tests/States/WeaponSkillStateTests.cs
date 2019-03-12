@@ -1,5 +1,7 @@
-﻿using EasyFarm.States;
+﻿using EasyFarm.Classes;
+using EasyFarm.States;
 using EasyFarm.Tests.Context;
+using EasyFarm.Tests.TestTypes;
 using Xunit;
 
 namespace EasyFarm.Tests.States
@@ -35,6 +37,22 @@ namespace EasyFarm.Tests.States
             // Exercise system
             // Verify outcome
             Assert.True(_sut.Check(_context));
+            // Teardown
+        }
+
+        [Fact]
+        public void Run_UsesWeaponSkill()
+        {
+            // Setup fixture
+            BattleAbility battleAbility = AbstractTestBase.FindAbility();
+            battleAbility.Command = "/test";
+            _context.Config.BattleLists["Weaponskill"].Actions.Add(battleAbility);
+            _context.SetTargetValid();
+            _context.SetPlayerFighting();
+            // Exercise system
+            // Verify outcome
+            _sut.Run(_context);
+            Assert.Equal("/test", _context.Memory.Executor.LastCommand);
             // Teardown
         }
     }

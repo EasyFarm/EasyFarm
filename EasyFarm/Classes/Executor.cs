@@ -29,6 +29,7 @@ namespace EasyFarm.Classes
     public class Executor
     {
         private readonly IMemoryAPI _fface;
+        public String LastCommand { get; set; }
 
         public Executor(IMemoryAPI fface)
         {
@@ -146,7 +147,7 @@ namespace EasyFarm.Classes
                 }                             
 
                 if (Math.Abs(previous - _fface.Player.CastPercentEx) > .5) return true;
-                _fface.Windower.SendString(command);
+                SendCommand(command);
                 TimeWaiter.Pause(500);
             }
 
@@ -180,9 +181,15 @@ namespace EasyFarm.Classes
 
         private bool CastAbility(BattleAbility ability)
         {
-            _fface.Windower.SendString(ability.Command);
+            SendCommand(ability.Command);
             TimeWaiter.Pause(100);
             return true;
+        }
+
+        private void SendCommand(String command)
+        {
+            LastCommand = command;
+            _fface.Windower.SendString(command);
         }
 
         private bool CastSpell(BattleAbility ability)

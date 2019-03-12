@@ -27,8 +27,6 @@ namespace EasyFarm.Tests.TestTypes
 {
     public class AbstractTestBase
     {
-        protected readonly IConfig MockConfig;
-
         protected readonly MockGameAPI MockGameAPI;
 
         protected HashSet<Type> Events { get; set; } = new HashSet<Type>();
@@ -36,7 +34,6 @@ namespace EasyFarm.Tests.TestTypes
         protected AbstractTestBase()
         {
             MockGameAPI = new MockGameAPI();
-            MockConfig = new MockConfig {BattleLists = new BattleLists(Config.Instance.BattleLists)};
             StartRecordingEvents();
         }
 
@@ -48,7 +45,7 @@ namespace EasyFarm.Tests.TestTypes
             });
         }
 
-        protected static BattleAbility FindAbility()
+        public static BattleAbility FindAbility()
         {
             var battleAbility = new BattleAbility();
             battleAbility.IsEnabled = true;
