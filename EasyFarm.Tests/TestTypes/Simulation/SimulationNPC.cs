@@ -15,72 +15,72 @@ namespace EasyFarm.Tests.TestTypes.Simulation
 
         public int ClaimedID(int id)
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public double Distance(int id)
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public Position GetPosition(int id)
         {
-            throw new NotImplementedException();
+            return new Position();
         }
 
         public short HPPCurrent(int id)
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public bool IsActive(int id)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool IsClaimed(int id)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool IsRendered(int id)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public string Name(int id)
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public NpcType NPCType(int id)
         {
-            throw new NotImplementedException();
+            return NpcType.InanimateObject;
         }
 
         public float PosX(int id)
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public float PosY(int id)
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public float PosZ(int id)
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public Status Status(int id)
         {
-            throw new NotImplementedException();
+            return MemoryAPI.Status.Unknown;
         }
 
         public int PetID(int id)
         {
-            throw new NotImplementedException();
+            return 0;
         }
     }
 }

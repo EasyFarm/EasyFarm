@@ -9,6 +9,7 @@ namespace EasyFarm.Tests.TestTypes.Simulation
         public void FactMethodName()
         {
             Simulation simulation = new Simulation();
+            simulation.Run();
             SimulationAPI api = new SimulationAPI(simulation);
             FiniteStateMachine finiteStateMachine = new FiniteStateMachine(api);
             finiteStateMachine.Run();

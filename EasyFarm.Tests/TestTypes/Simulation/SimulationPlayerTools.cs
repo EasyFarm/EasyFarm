@@ -22,9 +22,13 @@ namespace EasyFarm.Tests.TestTypes.Simulation
         public float PosX { get; }
         public float PosY { get; }
         public float PosZ { get; }
-        public Structures.PlayerStats Stats { get; }
+
+        public Structures.PlayerStats Stats => new Structures.PlayerStats()
+        {
+            Str = _simulation.GetState<short>("Player.Stats.Str")
+        };
         public Status Status { get; }
-        public StatusEffect[] StatusEffects { get; }
+        public StatusEffect[] StatusEffects { get; } = new StatusEffect[0];
         public int TPCurrent { get; }
         public Zone Zone { get; }
         public Job Job { get; }
