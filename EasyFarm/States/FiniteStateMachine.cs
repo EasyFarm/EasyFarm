@@ -136,31 +136,36 @@ namespace EasyFarm.States
         {
             while (true)
             {
-                // Sort the List, States may have updated Priorities.
-                _states.Sort();
-
-                // Find a State that says it needs to run.
-                foreach (var mc in _states.Where(x => x.Enabled).ToList())
-                {
-                    _cancellation.Token.ThrowIfCancellationRequested();
-
-                    var isRunnable = mc.Check(_context);
-
-                    // Run last state's exits method.
-                    if (_cache[mc] != isRunnable)
-                    {
-                        if (isRunnable) mc.Enter(_context);
-                        else mc.Exit(_context);
-                        _cache[mc] = isRunnable;
-                    }
-
-                    if (isRunnable) mc.Run(_context);
-                }
-
-                TimeWaiter.Pause(250);
+                Run();
             }
 
             // ReSharper disable once FunctionNeverReturns
+        }
+
+        public void Run()
+        {
+            // Sort the List, States may have updated Priorities.
+            _states.Sort();
+
+            // Find a State that says it needs to run.
+            foreach (var mc in _states.Where(x => x.Enabled).ToList())
+            {
+                _cancellation.Token.ThrowIfCancellationRequested();
+
+                var isRunnable = mc.Check(_context);
+
+                // Run last state's exits method.
+                if (_cache[mc] != isRunnable)
+                {
+                    if (isRunnable) mc.Enter(_context);
+                    else mc.Exit(_context);
+                    _cache[mc] = isRunnable;
+                }
+
+                if (isRunnable) mc.Run(_context);
+            }
+
+            TimeWaiter.Pause(250);
         }
     }
 }

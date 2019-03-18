@@ -88,8 +88,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\EventsTests.cs" />
+    <Compile Include="TestTypes\Simulation\ISimulation.cs" />
+    <Compile Include="TestTypes\Simulation\Simulation.cs" />
+    <Compile Include="TestTypes\Simulation\SimulationAPI.cs" />
+    <Compile Include="TestTypes\Simulation\SimulationChatTools.cs" />
+    <Compile Include="TestTypes\Simulation\SimulationNavigator.cs" />
+    <Compile Include="TestTypes\Simulation\SimulationNPC.cs" />
+    <Compile Include="TestTypes\Simulation\SimulationPartyMemberTools.cs" />
+    <Compile Include="TestTypes\Simulation\SimulationPlayerTools.cs" />
+    <Compile Include="TestTypes\Simulation\SimulationTargetTools.cs" />
+    <Compile Include="TestTypes\Simulation\SimulationTests.cs" />
     <Compile Include="States\WeaponSkillStateTests.cs" />
     <Compile Include="TestTypes\OtherTestEvent.cs" />
+    <Compile Include="TestTypes\Simulation\SimulationTimerTools.cs" />
+    <Compile Include="TestTypes\Simulation\SimulationWindowerTools.cs" />
     <Compile Include="TestTypes\TestEvent.cs" />
     <Compile Include="Context\MockPlayer.cs" />
     <Compile Include="States\TargetPriorityTests.cs" />
