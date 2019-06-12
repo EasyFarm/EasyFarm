@@ -68,6 +68,16 @@ For building and running the tests, you can run this command:
 
 This should generate a coverage folder containing a index.htm file containing the code coverage report. You can open that up in chrome to see the coverage metrics. 
 
+#### Running Unit tests
+
+To run the unit tests in the Visual Studio Test Explorer you will need to have the xunit test runner nuget package installed. If that isn't already installed, you can install it to your EasyFarm.Tests project by managing the nuget packages via:
+
+Tools > Nuget Package Manager > Manage Nuget Packages for this solution...
+
+in the browse tab search for "xunit.runner.visualstudio" and install the test runner to the EasyFarm.Tests project.
+
+You should now be able to Run All tests in the test explorer.
+
 #### Special Thanks!
 
 * The FFEVO Team for producing the previous memory reading api this program could not operate without.
