@@ -40,20 +40,24 @@ namespace EasyFarm.States
             for (var i = 1; i < 6; i++)
             {
                 var p = context.API.PartyMember[(byte) i];
-                var comp = trust.Name;
-                if (comp.Contains("(UC)") || comp.Contains("II") || comp.Contains("AA"))
-                {
-                    comp = comp.Replace(" (UC)", "");
-                    comp = comp.Replace(" II", "");
-                    comp = comp.Replace("AA", "Ark");
-                }
-
-                comp = comp.Replace(" ", "");
-
+                var comp = NormalizeSpecialTrustNames(trust.Name);
                 if (p.UnitPresent && p.Name == comp) return p;
             }
 
             return null;
+        }
+
+        private static string NormalizeSpecialTrustNames(string comp)
+        {
+            if (comp.Contains("(UC)") || comp.Contains("II") || comp.Contains("AA"))
+            {
+                comp = comp.Replace(" (UC)", "");
+                comp = comp.Replace(" II", "");
+                comp = comp.Replace("AA", "Ark");
+            }
+
+            comp = comp.Replace(" ", "");
+            return comp;
         }
 
         private bool TrustInParty(IGameContext context, BattleAbility trust)
@@ -88,16 +92,7 @@ namespace EasyFarm.States
 
         private void ReleaseTrust(IGameContext context, BattleAbility trust)
         {
-            var comp = trust.Name;
-            if (comp.Contains("(UC)") || comp.Contains("II") || comp.Contains("AA"))
-            {
-                comp = comp.Replace(" (UC)", "");
-                comp = comp.Replace(" II", "");
-                comp = comp.Replace("AA", "Ark");
-            }
-
-            comp = comp.Replace(" ", "");
-
+            var comp = NormalizeSpecialTrustNames(trust.Name);
             var command = string.Format("/refa {0}", comp);
             context.API.Windower.SendString(command);
         }
