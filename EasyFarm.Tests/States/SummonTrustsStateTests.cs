@@ -1,6 +1,8 @@
 ﻿using EasyFarm.Classes;
+using EasyFarm.Parsing;
 using EasyFarm.States;
 using EasyFarm.Tests.Context;
+using EasyFarm.Tests.TestTypes.Mocks;
 using Xunit;
 
 namespace EasyFarm.Tests.States
@@ -21,6 +23,26 @@ namespace EasyFarm.Tests.States
             bool result = sut.Check(context);
             // Verify outcome
             Assert.True(result);
+            // Teardown
+        }
+
+        [Fact]
+        public void SummonsTrust()
+        {
+            // Setup fixture
+            context.SetPlayerHealthy();
+            context.Config.TrustPartySize = 1;
+            context.Config.BattleLists["Trusts"].Actions.Add(new BattleAbility()
+            {
+                IsEnabled = true, 
+                AbilityType = AbilityType.Trust,
+                Name = "Trust",
+                Command = "Command"
+            });
+            // Exercise system
+            sut.Run(context);
+            // Verify outcome
+            Assert.Equal("Command", context.MockAPI.Windower.LastCommand);
             // Teardown
         }
 
