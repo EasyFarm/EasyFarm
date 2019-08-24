@@ -24,12 +24,16 @@ namespace EasyFarm.Tests.States
             // Teardown
         }
 
-        [Fact]
-        public void DismissesTrustWithLowMp()
+        [Theory()]
+        [InlineData(50)]
+        [InlineData(25)]
+        [InlineData(0)]
+        public void DismissesTrustWithLowMp(int trustMp)
         {
             // Setup fixture
             context.SetPlayerHealthy();
             context.AddTrustToParty("Trust");
+            context.MockAPI.PartyMember[1].MPPCurrent = trustMp;
             
             context.Config.TrustPartySize = 1;
             context.Config.BattleLists["Trusts"].Actions.Add(new BattleAbility()
