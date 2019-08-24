@@ -17,6 +17,7 @@
 // ///////////////////////////////////////////////////////////////////
 using EasyFarm.States;
 using EasyFarm.Tests.Context;
+using EasyFarm.Tests.TestTypes.Mocks;
 using MemoryAPI;
 using Xunit;
 
@@ -31,7 +32,7 @@ namespace EasyFarm.Tests.States
         [InlineData(50, 50, true)]
         [InlineData(50, 51, true)]
         [InlineData(50, 49, false)]
-        public void ShouldHealWithLowMP(int currentMPP, int lowMPP, bool expected)
+        public void RestWhenMpLow(int currentMPP, int lowMPP, bool expected)
         {
             // Setup fixture
             context.Player.MppCurrent = currentMPP;
@@ -48,7 +49,7 @@ namespace EasyFarm.Tests.States
         [InlineData(50, 50, true)]
         [InlineData(50, 51, true)]
         [InlineData(50, 49, false)]
-        public void ShouldHealWithLowHP(int currentHPP, int lowHPP, bool expected)
+        public void RestWhenHpLow(int currentHPP, int lowHPP, bool expected)
         {
             // Setup fixture
             context.Player.HppCurrent = currentHPP;
@@ -62,7 +63,7 @@ namespace EasyFarm.Tests.States
         }
 
         [Fact]
-        public void HasAggro_NoResting()
+        public void DontRestWithAggro()
         {
             // Fixture setup
             context.Player.HasAggro = true;
@@ -74,7 +75,7 @@ namespace EasyFarm.Tests.States
         }
 
         [Fact]
-        public void PlayerSwitchesFromStandingToHealing()
+        public void SitDownToRest()
         {
             // Setup fixture
             context.MockAPI.Player.Status = Status.Standing;
@@ -87,7 +88,7 @@ namespace EasyFarm.Tests.States
 
 
         [Fact]
-        public void PlayerSwitchesFromHealingToStanding()
+        public void StandUpAfterResting()
         {
             // Setup fixture
             context.MockAPI.Player.Status = Status.Healing;
@@ -95,6 +96,19 @@ namespace EasyFarm.Tests.States
             sut.Exit(context);
             // Verify outcome
             Assert.Equal(Status.Standing, context.MockAPI.Player.Status);
+            // Teardown
+        }
+
+        [Fact]
+        public void DontRestWithRestBlockingStatusEffect()
+        {
+            // Setup fixture
+            context.SetPlayerInjured();
+            context.MockAPI.Player.StatusEffects = new StatusEffect[] {StatusEffect.Bio};
+            // Exercise system
+            bool result = sut.Check(context);
+            // Verify outcome
+            Assert.False(result);
             // Teardown
         }
     }
