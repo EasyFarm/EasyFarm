@@ -1,7 +1,6 @@
 ﻿using EasyFarm.Classes;
 using EasyFarm.States;
 using EasyFarm.Tests.Context;
-using EasyFarm.Tests.TestTypes.Mocks;
 using Xunit;
 
 namespace EasyFarm.Tests.States
@@ -12,18 +11,40 @@ namespace EasyFarm.Tests.States
         private readonly SummonTrustsState sut = new SummonTrustsState();
 
         [Fact]
-        public void SummonsSingleTrust()
+        public void HasSpaceToSummonTrust()
         {
             // Setup fixture
             context.SetPlayerHealthy();
-            context.MockAPI.PartyMember[0].Name = "Trust";
-            context.MockAPI.PartyMember[0].UnitPresent = true;
             context.Config.TrustPartySize = 1;
             context.Config.BattleLists["Trusts"].Actions.Add(new BattleAbility(){ IsEnabled = true, Name = "Trust"});
             // Exercise system
             bool result = sut.Check(context);
             // Verify outcome
             Assert.True(result);
+            // Teardown
+        }
+
+        [Fact]
+        public void DismissesTrustWithLowMp()
+        {
+            // Setup fixture
+            context.SetPlayerHealthy();
+            context.AddTrustToParty("Trust");
+            
+            context.Config.TrustPartySize = 1;
+            context.Config.BattleLists["Trusts"].Actions.Add(new BattleAbility()
+            {
+                IsEnabled = true, 
+                Name = "Trust",
+                ResummonOnLowMP = true,
+                ResummonMPLow = 0,
+                ResummonMPHigh = 50
+            });
+
+            // Exercise system
+            sut.Run(context);
+            // Verify outcome
+            Assert.Equal("/refa Trust", context.MockAPI.Windower.LastCommand);
             // Teardown
         }
     }
