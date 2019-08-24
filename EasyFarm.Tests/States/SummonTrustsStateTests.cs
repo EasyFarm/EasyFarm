@@ -28,14 +28,13 @@ namespace EasyFarm.Tests.States
         [InlineData(50)]
         [InlineData(25)]
         [InlineData(0)]
-        public void DismissesTrustWithLowMp(int trustMp)
+        public void DismissesTrustWithLowMpp(int trustMpp)
         {
             // Setup fixture
             context.SetPlayerHealthy();
-            context.AddTrustToParty("Trust");
-            context.MockAPI.PartyMember[1].MPPCurrent = trustMp;
+            context.AddTrustToParty();
+            context.MockAPI.PartyMember[1].MPPCurrent = trustMpp;
             
-            context.Config.TrustPartySize = 1;
             context.Config.BattleLists["Trusts"].Actions.Add(new BattleAbility()
             {
                 IsEnabled = true, 
@@ -43,6 +42,33 @@ namespace EasyFarm.Tests.States
                 ResummonOnLowMP = true,
                 ResummonMPLow = 0,
                 ResummonMPHigh = 50
+            });
+
+            // Exercise system
+            sut.Run(context);
+            // Verify outcome
+            Assert.Equal("/refa Trust", context.MockAPI.Windower.LastCommand);
+            // Teardown
+        }
+
+        [Theory()]
+        [InlineData(50)]
+        [InlineData(25)]
+        [InlineData(0)]
+        public void DismissesTrustWithLowHpp(int trustHpp)
+        {
+            // Setup fixture
+            context.SetPlayerHealthy();
+            context.AddTrustToParty();
+            context.MockAPI.PartyMember[1].HPPCurrent = trustHpp;
+            
+            context.Config.BattleLists["Trusts"].Actions.Add(new BattleAbility()
+            {
+                IsEnabled = true, 
+                Name = "Trust",
+                ResummonOnLowHP = true,
+                ResummonHPLow = 0,
+                ResummonHPHigh = 50
             });
 
             // Exercise system

@@ -82,8 +82,7 @@ namespace EasyFarm.Tests.Context
 
         public void AddTrustToParty(string trustName = null)
         {
-            string name = "Trust" ?? trustName;
-            MockAPI.PartyMember[1].Name = name;
+            MockAPI.PartyMember[1].Name = "Trust";
             MockAPI.PartyMember[1].UnitPresent = true;
             Config.TrustPartySize = 1;
         }
