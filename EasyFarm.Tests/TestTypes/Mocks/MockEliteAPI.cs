@@ -39,7 +39,12 @@ namespace EasyFarm.Tests.TestTypes.Mocks
             Target = new MockTargetTools();
             PartyMember = new Dictionary<byte, MockPartyMemberTools>()
             {
-                {0, new MockPartyMemberTools()}
+                {0, new MockPartyMemberTools()},
+                {1, new MockPartyMemberTools()},
+                {2, new MockPartyMemberTools()},
+                {3, new MockPartyMemberTools()},
+                {4, new MockPartyMemberTools()},
+                {5, new MockPartyMemberTools()}
             };
             Chat = new MockChatTools();
         }
