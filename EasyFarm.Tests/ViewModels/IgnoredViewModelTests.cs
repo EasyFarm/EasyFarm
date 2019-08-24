@@ -28,7 +28,7 @@ namespace EasyFarm.Tests.ViewModels
 {
     public class IgnoredViewModelTests
     {
-        [Fact]
+        [Fact(Skip = "Race")]
         public void AddCommandWithValueAddsItToValues()
         {
             // Fixture setup
