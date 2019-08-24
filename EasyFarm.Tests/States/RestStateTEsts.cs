@@ -111,5 +111,18 @@ namespace EasyFarm.Tests.States
             Assert.False(result);
             // Teardown
         }
+
+        [Fact]
+        public void DontRestWhenFighting()
+        {
+            // Setup fixture
+            context.SetPlayerInjured();
+            context.Player.Status = Status.Fighting;
+            // Exercise system
+            bool result = sut.Check(context);
+            // Verify outcome
+            Assert.False(result);
+            // Teardown
+        }
     }
 }
