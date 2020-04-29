@@ -529,6 +529,12 @@ namespace EasyFarm.Classes
         /// </summary>
         public async Task AutoFill()
         {
+            // Ensure that ranged attack is found in resources.
+            if (AbilityType == AbilityType.Range)
+            {
+                Name = "Ranged";
+            }
+
             // Return if string null or empty.
             if (string.IsNullOrWhiteSpace(Name)) return;
 
@@ -550,7 +556,6 @@ namespace EasyFarm.Classes
                 Id = ability.Id;
                 MpCost = ability.MpCost;
                 TpCost = ability.TpCost;
-                Command = ability.Command;
                 AbilityType = ability.AbilityType;
                 Name = ability.English;
                 TargetType = ability.TargetType.HasFlag(TargetType.Self) ? TargetType.Self : TargetType.Enemy;
