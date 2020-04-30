@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+using System;
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.Context;
@@ -23,6 +24,9 @@ namespace EasyFarm.States
 {
     public class TravelState : BaseState
     {
+
+        private DateTime _lastWatchdogTime = DateTime.MinValue;
+
         public override bool Check(IGameContext context)
         {
             // Waypoint list is empty.
@@ -54,6 +58,14 @@ namespace EasyFarm.States
 
         public override void Run(IGameContext context)
         {
+            var now = DateTime.Now;
+            var secondsSinceLastWatchdog = (now - _lastWatchdogTime).TotalSeconds;
+            if (secondsSinceLastWatchdog > 2.5)
+            {
+                context.API.Windower.SendString("/watchdog track 305");
+                _lastWatchdogTime = now;
+            }
+
             context.API.Navigator.DistanceTolerance = 1;
 
             var nextPosition = context.Config.Route.GetNextPosition(context.API.Player.Position);

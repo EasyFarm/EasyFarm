@@ -26,6 +26,7 @@ namespace EasyFarm.Context
         bool HasAggro { get; set; }
         Zone Zone { get; set; }
         int Str { get; set; }
+        string Name { get; set; }
         int MppCurrent { get; set; }
     }
 }

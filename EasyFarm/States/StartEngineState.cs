@@ -16,6 +16,7 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 using System;
+using System.Linq;
 using EasyFarm.Context;
 
 namespace EasyFarm.States
@@ -25,6 +26,7 @@ namespace EasyFarm.States
     /// </summary>
     public class StartEngineState : BaseState
     {
+        private bool _isAshitaAddonsAndPluginsInitialized = false;
         /// <summary>
         ///     Setup any state before other states start firing.
         /// </summary>
@@ -38,7 +40,24 @@ namespace EasyFarm.States
             Enabled = false;
 
             // No need to run body. 
-            return false;
+            return !_isAshitaAddonsAndPluginsInitialized;
+        }
+
+        public override void Run(IGameContext context)
+        {
+            //var playerUnit = context.Units.First(x => x.Id == context.Player.Id);
+            if (!string.IsNullOrEmpty(context.Player.Name))
+            {
+                context.API.Windower.SendString("/lw profile " + context.Player.Name.ToLowerInvariant());
+            }
+            else
+            {
+                context.API.Windower.SendString("/echo could not find player name ");
+            }
+
+            context.API.Navigator.Reset();
+
+            _isAshitaAddonsAndPluginsInitialized = true;
         }
     }
 }

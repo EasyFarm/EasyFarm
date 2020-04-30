@@ -56,6 +56,12 @@ namespace EasyFarm.Context
             set => throw new NotImplementedException();
         }
 
+        public string Name
+        {
+            get => _memoryAPI.Player.Name;
+            set => throw new NotImplementedException();
+        }
+
         public int Str
         {
             get => _memoryAPI.Player.Stats.Str;
