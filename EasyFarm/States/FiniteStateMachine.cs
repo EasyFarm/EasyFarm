@@ -157,7 +157,21 @@ namespace EasyFarm.States
                     if (isRunnable) mc.Run(_context);
                 }
 
-                TimeWaiter.Pause(250);
+                // Use more responsive loop timer for travel.
+                // FIXME: use time delta since previous loop to make this more consistent.
+
+                var travelFps = (int)Math.Floor(1000.0 / 60.0);
+                var generalFps = 1000 / 4;
+                var nextState = _states.Skip(1).First();
+
+                /*if (nextState == null || !(nextState is TravelState))
+                {
+                    TimeWaiter.Pause(generalFps);
+                } else
+                {*/
+                    TimeWaiter.Pause(travelFps);
+                //}         
+
             }
 
             // ReSharper disable once FunctionNeverReturns
