@@ -24,6 +24,8 @@ namespace EasyFarm.States
 {
     public class TravelState : BaseState
     {
+        private int watchdogIterator = 0;
+        private string[] watchdogIds = new string[] { "305" };
 
         private DateTime _lastWatchdogTime = DateTime.MinValue;
 
@@ -62,8 +64,9 @@ namespace EasyFarm.States
             var secondsSinceLastWatchdog = (now - _lastWatchdogTime).TotalSeconds;
             if (secondsSinceLastWatchdog > 2.5)
             {
-                context.API.Windower.SendString("/watchdog track 305");
+                context.API.Windower.SendString("/watchdog track " + watchdogIds[watchdogIterator % watchdogIds.Count()]);
                 _lastWatchdogTime = now;
+                watchdogIterator++;
             }
 
             context.API.Navigator.DistanceTolerance = 1;
