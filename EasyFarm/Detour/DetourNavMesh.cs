@@ -95,10 +95,22 @@ public static partial class Detour{
     }
     public static float getSlabCoord(float[] va, int vaStart, int side)
     {
-	    if (side == 0 || side == 4)
-		    return va[vaStart+0];
-	    else if (side == 2 || side == 6)
-		    return va[vaStart+2];
+		if (side == 0 || side == 4)
+		{
+			if ((vaStart + 0) >= va.Length)
+			{
+				return Single.NaN;
+			}
+			return va[vaStart + 0];
+		}
+		else if (side == 2 || side == 6)
+		{
+			if ((vaStart + 2) >= va.Length)
+			{
+				return Single.NaN;
+			}
+			return va[vaStart + 2];
+		}
 	    return 0;
     }
 
@@ -107,6 +119,10 @@ public static partial class Detour{
     {
 	    if (side == 0 || side == 4)
 	    {
+			if ((vaStart + 2) >= va.Length || vbStart + 2 >= vb.Length)
+			{
+				return;
+			}
 		    if (va[vaStart + 2] < vb[vbStart + 2])
 		    {
 			    bmin[0] = va[vaStart + 2];
@@ -123,8 +139,12 @@ public static partial class Detour{
 		    }
 	    }
 	    else if (side == 2 || side == 6)
-	    {
-		    if (va[vaStart + 0] < vb[0])
+		{
+			if ((vaStart + 1) >= va.Length || vbStart + 1 >= vb.Length)
+			{
+				return;
+			}
+			if (va[vaStart + 0] < vb[0])
 		    {
 			    bmin[0] = va[vaStart + 0];
 			    bmin[1] = va[vaStart + 1];
@@ -480,7 +500,7 @@ public static partial class Detour{
 		        for (int j = 0; j < nv; ++j)
 		        {
 			        // Skip edges which do not point to the right side.
-			        if (poly.neis[j] != m) 
+			        if (j >= poly.neis.Length || poly.neis[j] != m) 
                         continue;
 			
 			        //const float* vc = &tile.verts[poly.verts[j]*3];
@@ -566,9 +586,13 @@ public static partial class Detour{
 		
 		        int nv = (int)poly.vertCount;
 		        for (int j = 0; j < nv; ++j)
-		        {
-			        // Skip non-portal edges.
-			        if ((poly.neis[j] & DT_EXT_LINK) == 0)
+				{
+					if (j >= poly.neis.Length)
+					{
+						continue;
+					}
+					// Skip non-portal edges.
+					if ((poly.neis[j] & DT_EXT_LINK) == 0)
 				        continue;
 			
 			        int dir = (int)(poly.neis[j] & 0xff);
@@ -579,7 +603,14 @@ public static partial class Detour{
 			        //const float* va = &tile.verts[poly.verts[j]*3];
 			        //const float* vb = &tile.verts[poly.verts[(j+1) % nv]*3];
                     int vaStart = poly.verts[j]*3;
-                    int vbStart = poly.verts[(j+1) % nv]*3;
+
+					var vbStartIndex = (j + 1) % nv;
+					if (vbStartIndex >= poly.verts.Length)
+					{
+						continue;
+					}
+
+					int vbStart = poly.verts[(j+1) % nv]*3;
 
 			        dtPolyRef[] nei = new dtPolyRef[4];
 			        float[] neia = new float[4*2];
@@ -715,6 +746,11 @@ public static partial class Detour{
 		        // in the linked list from lowest index to highest.
 		        for (int j = poly.vertCount-1; j >= 0; --j)
 		        {
+
+					if (j >= poly.neis.Length)
+					{
+						continue;
+					}
 			        // Skip hard and non-internal edges.
 			        if (poly.neis[j] == 0 || (poly.neis[j] & DT_EXT_LINK) != 0) 
                         continue;

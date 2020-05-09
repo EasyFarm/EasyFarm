@@ -368,6 +368,40 @@ public static partial class Detour{
         @endcode */
         public float bvQuantFactor;
 
+        public static int ByteSize()
+        {
+            var size = 0;
+            size += sizeof(int);
+            size += sizeof(int);
+            size += sizeof(int);
+            size += sizeof(int);
+            size += sizeof(int);
+            size += sizeof(uint);
+            size += sizeof(int);
+            size += sizeof(int);
+            size += sizeof(int);
+            size += sizeof(int);
+
+            size += sizeof(int);
+
+
+            size += sizeof(int);
+            size += sizeof(int);
+            size += sizeof(int);
+            size += sizeof(int);
+            size += sizeof(float);
+            size += sizeof(float);
+            size += sizeof(float);
+
+            size += (sizeof(float) * 3);
+
+            size += (sizeof(float) * 3);
+
+            size += sizeof(float);
+
+            return size;
+        }
+
         public int FromBytes(byte[] array, int start) {
             magic = BitConverter.ToInt32(array, start); start += sizeof(int);
             version = BitConverter.ToInt32(array, start); start += sizeof(int);
@@ -622,6 +656,34 @@ public static partial class Detour{
             copy.maxTiles = maxTiles;
             copy.maxPolys = maxPolys;
             return copy;
+        }
+
+        public static int ByteSize()
+        {
+            var size = 0;
+
+            size += (sizeof(float) * 3);
+            size += sizeof(float);
+            size += sizeof(float);
+            size += sizeof(int);
+            size += sizeof(int);
+
+            return size;
+        }
+
+        public int FromBytes(byte[] array, int start)
+        {
+            for (int i = 0; i < 3; ++i)
+            {
+            	orig[i] = BitConverter.ToSingle(array, start); start += sizeof(float);
+            }
+
+            tileWidth = BitConverter.ToSingle(array, start); start += sizeof(float);
+            tileHeight = BitConverter.ToSingle(array, start); start += sizeof(float);
+            maxTiles = BitConverter.ToInt32(array, start); start += sizeof(int);
+            maxPolys = BitConverter.ToInt32(array, start); start += sizeof(int);
+            
+            return start;
         }
     };
 

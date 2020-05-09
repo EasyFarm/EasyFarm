@@ -977,7 +977,8 @@ public static partial class Detour{
 			        if (isLeafNode && overlap)
 			        {
 				        dtPolyRef polyRef = polyRefBase | (dtPolyRef)node.i;
-				        if (filter.passFilter(polyRef, tile, tile.polys[node.i]))
+				        if (node.i < tile.polys.Length && 
+							filter.passFilter(polyRef, tile, tile.polys[node.i]))
 				        {
 					        if (n < maxPolys)
 						        polys[polyStart + n++] = polyRef;
