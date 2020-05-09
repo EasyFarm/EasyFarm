@@ -136,6 +136,9 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="SharpNav, Version=0.9.0.0, Culture=neutral, PublicKeyToken=b467138d8cacd85b, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpNav.0.9.2\lib\net40\SharpNav.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Drawing" />
