@@ -34,13 +34,27 @@ namespace EasyFarm.Context
             Config = new ProxyConfig();
             Memory = new StateMemory(api);
             Target = new NullUnit();
+            NavMesh = new NavMesh(api);
         }
 
         public IConfig Config { get; set; }
         public IPlayer Player { get; set; }
         public IUnit Target { get; set; }
         public Boolean IsFighting { get; set; }
-        public Zone Zone { get;set; }
+        private Zone _zone;
+        public Zone Zone
+        {
+            get
+            {
+                return _zone;
+            }
+            set
+            {
+                _zone = value;
+                NavMesh.LoadZone(_zone);
+            }
+        }
+        public NavMesh NavMesh { get; set; }
 
         public IList<IUnit> Units
         {
