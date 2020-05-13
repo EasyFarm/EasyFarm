@@ -34,7 +34,7 @@ namespace EasyFarm.Context
             Config = new ProxyConfig();
             Memory = new StateMemory(api);
             Target = new NullUnit();
-            NavMesh = new NavMesh(api);
+            NavMesh = new NavMesh();
         }
 
         public IConfig Config { get; set; }
