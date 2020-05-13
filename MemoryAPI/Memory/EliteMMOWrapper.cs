@@ -505,8 +505,26 @@ namespace MemoryAPI.Memory
 
         public class ChatTools : IChatTools
         {
+            private static readonly object LockObject = new object();
             private readonly EliteAPI _api;
-            public Queue<EliteAPI.ChatEntry> ChatEntries { get; set; } = new Queue<EliteAPI.ChatEntry>();
+            private Queue<EliteAPI.ChatEntry> _chatEntries { get; set; } = new Queue<EliteAPI.ChatEntry>();
+            public Queue<EliteAPI.ChatEntry> ChatEntries
+            {
+                get
+                {
+                    lock(LockObject)
+                    {
+                        return _chatEntries;
+                    }
+                }
+                set
+                {
+                    lock(LockObject)
+                    {
+                        _chatEntries = value;
+                    }
+                }
+            }
 
             public ChatTools(EliteAPI api)
             {
@@ -517,10 +535,13 @@ namespace MemoryAPI.Memory
 
             private void QueueChatEntries()
             {
-                EliteAPI.ChatEntry chatEntry;
-                while ((chatEntry =  _api.Chat.GetNextChatLine()) != null)
+                lock (LockObject)
                 {
-                    ChatEntries.Enqueue(chatEntry);
+                    EliteAPI.ChatEntry chatEntry;
+                    while ((chatEntry = _api.Chat.GetNextChatLine()) != null)
+                    {
+                        _chatEntries.Enqueue(chatEntry);
+                    }
                 }
             }
         }
