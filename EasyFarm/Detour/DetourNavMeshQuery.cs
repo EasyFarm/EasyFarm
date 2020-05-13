@@ -1080,7 +1080,7 @@ public static partial class Detour{
 			        for (int j = 0; j < nneis; ++j)
 			        {
 				        n += queryPolygonsInTile(neis[j], bmin, bmax, filter, polys, n, maxPolys-n);
-				        if (n >= maxPolys)
+						if (n >= maxPolys)
 				        {
 					        polyCount = n;
 					        return DT_SUCCESS | DT_BUFFER_TOO_SMALL;

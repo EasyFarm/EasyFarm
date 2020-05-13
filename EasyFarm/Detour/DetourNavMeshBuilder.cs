@@ -47,8 +47,6 @@ public static partial class Detour{
     /// @ingroup detour
     public const int DT_MAX_AREAS = 64;
 
-    const ushort MESH_NULL_IDX = 0xffff;
-
     /// Tile flags used for various functions and fields.
     /// For an example, see dtNavMesh::addTile().
     public enum dtTileFlags {
@@ -69,6 +67,24 @@ public static partial class Detour{
         DT_STRAIGHTPATH_ALL_CROSSINGS = 0x02,	//< Add a vertex at every polygon edge crossing.
     };
 
+    /// Options for dtNavMeshQuery::findPath
+    public enum dtFindPathOptions
+    {
+        DT_FINDPATH_LOW_QUALITY_FAR = 0x01,     ///< [provisional] trade quality for performance far from the origin. The idea is that by then a new query will be issued
+        DT_FINDPATH_ANY_ANGLE = 0x02,           ///< use raycasts during pathfind to "shortcut" (raycast still consider costs)
+    };
+
+    /// Options for dtNavMeshQuery::raycast
+    public enum dtRaycastOptions
+    {
+        DT_RAYCAST_USE_COSTS = 0x01,        ///< Raycast should calculate movement cost along the ray and fill RaycastHit::cost
+    };
+
+
+    public static ushort MESH_NULL_IDX = 0xffff;
+
+    /// Limit raycasting during any angle pahfind
+    /// 
     /// Flags representing the type of a navigation mesh polygon.
     public enum dtPolyTypes {
         /// The polygon is a standard convex polygon that is part of the surface of the mesh.
@@ -92,7 +108,6 @@ public static partial class Detour{
         /*
         @var ushort dtPoly::neis[DT_VERTS_PER_POLYGON]
         @par
-
         Each entry represents data for the edge starting at the vertex of the same index. 
         E.g. The entry at index n represents the edge data for vertex[n] to vertex[n+1].
 
@@ -185,6 +200,7 @@ public static partial class Detour{
             triBase = BitConverter.ToUInt32(array, start); start += sizeof(uint);
             vertCount = array[start]; start += sizeof(byte);
             triCount = array[start]; start += sizeof(byte);
+            start = dtAlign4(start);
             return start;
         }
 
@@ -494,56 +510,93 @@ public static partial class Detour{
         public int FromBytes(byte[] array, int start) {
             header = new dtMeshHeader();
             start = header.FromBytes(array, start);
+            start = dtAlign4(start);
 
-            int count = header.polyCount;
+            int count = header.vertCount * 3;
+            int vertsSize = 0;
+            verts = new float[count];
+            for (int i = 0; i < count; ++i)
+            {
+                verts[i] = BitConverter.ToSingle(array, start);
+                start += sizeof(float);
+                vertsSize += sizeof(float);
+            }
+            start = dtAlign4(start);
+            int polysSize = 0;
+            count = header.polyCount;
             polys = new dtPoly[count];
             for (int i = 0; i < count; ++i) {
                 polys[i] = new dtPoly();
-                start = polys[i].FromBytes(array, start);
+                int nextStart = polys[i].FromBytes(array, start);
+                polysSize += nextStart - start;
+                start = nextStart;
             }
-            count = header.vertCount * 3;
-            verts = new float[count];
-            for (int i = 0; i < count; ++i) {
-                verts[i] = BitConverter.ToSingle(array, start);
-                start += sizeof(float);
-            }
+            start = dtAlign4(start);
+            int linksSize = 0;
             count = header.maxLinkCount;
             links = new dtLink[count];
             for (int i = 0; i < count; ++i) {
                 links[i] = new dtLink();
-                start = links[i].FromBytes(array, start);
+                int nextStart = links[i].FromBytes(array, start);
+                linksSize += nextStart - start;
+                start = nextStart;
             }
+            start = dtAlign4(start);
+            int polyDetailsSize = 0;
             count = header.detailMeshCount;
             detailMeshes = new dtPolyDetail[count];
             for (int i = 0; i < count; ++i) {
                 detailMeshes[i] = new dtPolyDetail();
-                start = detailMeshes[i].FromBytes(array, start);
+                int nextStart = detailMeshes[i].FromBytes(array, start);
+                polyDetailsSize += nextStart - start;
+                start = nextStart;
             }
+            start = dtAlign4(start);
+            int detailVertsSize = 0;
             count = header.detailVertCount * 3;
             detailVerts = new float[count];
             for (int i = 0; i < count; ++i) {
                 detailVerts[i] = BitConverter.ToSingle(array, start);
                 start += sizeof(float);
+                detailVertsSize += sizeof(float);
             }
+            start = dtAlign4(start);
+            int detailTrisSize = 0;
             count = header.detailTriCount * 4;
             detailTris = new byte[count];
             for (int i = 0; i < count; ++i) {
                 detailTris[i] = array[start + i];
             }
+            detailTrisSize = count;
             start += count;
+            start = dtAlign4(start);
+            int bvNodeSize = 0;
             count = header.bvNodeCount;
             bvTree = new dtBVNode[count];
             for (int i = 0; i < count; ++i) {
                 bvTree[i] = new dtBVNode();
-                start = bvTree[i].FromBytes(array, start);
+                int nextStart = bvTree[i].FromBytes(array, start);
+                bvNodeSize += nextStart - start;
+                start = nextStart;
             }
+            start = dtAlign4(start);
+            int offMeshConsSize = 0;
             count = header.offMeshConCount;
             offMeshCons = new dtOffMeshConnection[count];
             for (int i = 0; i < count; ++i) {
                 offMeshCons[i] = new dtOffMeshConnection();
-                start = offMeshCons[i].FromBytes(array, start);
+                int nextStart = offMeshCons[i].FromBytes(array, start);
+                offMeshConsSize += nextStart - start;
+                start = nextStart;
             }
-            flags = BitConverter.ToInt32(array, start);
+            try
+            {
+                flags = BitConverter.ToInt32(array, start);
+            } 
+            catch (ArgumentOutOfRangeException ex)
+            {
+
+            }
             start += sizeof(int);
             return start;
         }
@@ -552,11 +605,12 @@ public static partial class Detour{
             List<byte> bytes = new List<byte>();
 
             bytes.AddRange(header.ToBytes());
-            for (int i = 0; i < polys.Length; ++i) {
-                bytes.AddRange(polys[i].ToBytes());
-            }
             for (int i = 0; i < verts.Length; ++i) {
                 bytes.AddRange(BitConverter.GetBytes(verts[i]));
+            }
+            for (int i = 0; i < polys.Length; ++i)
+            {
+                bytes.AddRange(polys[i].ToBytes());
             }
             for (int i = 0; i < links.Length; ++i) {
                 bytes.AddRange(links[i].ToBytes());
