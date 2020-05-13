@@ -14,9 +14,8 @@ public class NavMesh
 	static int NAVMESHSET_VERSION = 1;
 	private Detour.dtNavMesh dtNavMesh;
 
-	public NavMesh(IMemoryAPI api)
+	public NavMesh()
 	{
-		this.api = api;
 	}
 
 	public struct NavMeshSetHeader
