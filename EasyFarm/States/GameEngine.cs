@@ -57,7 +57,7 @@ namespace EasyFarm.States
         public bool Start()
         {
             var route = Config.Instance.Route;
-            var isPathReachable = !route.IsPathSet || route.IsPathUnreachable(_fface);
+            var isPathReachable = !route.IsPathSet || route.IsPathUnreachable(_stateMachine._context);
 
             if (isPathReachable)
             {

@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using EasyFarm.Context;
 using MemoryAPI;
 using MemoryAPI.Navigation;
 
@@ -26,7 +27,8 @@ namespace EasyFarm.States
 {
     public class Route
     {
-        private int _position;
+        private int _position = -1;
+        private Position _lastPosition;
 
         private List<Position> _positions = new List<Position>();
         public bool StraightRoute = true;
@@ -35,30 +37,66 @@ namespace EasyFarm.States
 
         public bool IsPathSet => Waypoints.Any();
 
+        public void ResetCurrentWaypoint()
+        {
+            _position = -1;
+        }
+
+        public Position GetCurrentPosition(Position playerPosition)
+        {
+            _positions = Waypoints.ToList();
+
+            if (_position == -1)
+            {
+                return GetNextPosition(playerPosition);
+            }
+
+            if (_position >= _positions.Count)
+            {
+                return null;
+            }
+
+            return _positions[_position];
+        }
+
         public Position GetNextPosition(Position playerPosition)
         {
             _positions = Waypoints.ToList();
 
-            if (_position == _positions.Count)
+            if (_positions.Count < 2)
+            {
+                return _positions[_position];
+            }
+
+            var closestPositions = _positions
+                .OrderBy(x => Distance(playerPosition, x));
+
+            var closest = closestPositions.FirstOrDefault();
+
+            if (_position == -1)
+            {
+                _position = _positions.IndexOf(closest);
+            }
+            else if (_position == _positions.Count)
             {
                 if (StraightRoute)
                 {
                     Waypoints = new ObservableCollection<Position>(Waypoints.Reverse());
                     _positions.Reverse();
+                    EasyFarm.ViewModels.LogViewModel.Write("Reached the end of waypoints; reversing.");
+                }
+                else
+                {
+                    EasyFarm.ViewModels.LogViewModel.Write("Reached the end of waypoints; circling.");
                 }
 
                 _position = 0;
-            }
 
-            var distance = Distance(playerPosition, _positions[_position]);
-
-            if (distance > 15)
-            {
-                var closest = _positions.OrderBy(x => Distance(playerPosition, x)).FirstOrDefault();
-                _position = _positions.IndexOf(closest);
             }
 
             var newPosition = _positions[_position];
+
+            EasyFarm.ViewModels.LogViewModel.Write("Navigating to waypoint ("+_position+") " + newPosition.ToString());
 
             _position++;
 
@@ -83,9 +121,10 @@ namespace EasyFarm.States
             return Waypoints.Any(x => Distance(position, x) <= distance);
         }
 
-        public bool IsPathUnreachable(IMemoryAPI fface)
+        public bool IsPathUnreachable(IGameContext context)
         {
-            return Zone == fface.Player.Zone && IsWithinDistance(fface.Player.Position, 20);
+            return Zone == context.Player.Zone &&
+                context.NavMesh.FindPathBetween(context.API.Player.Position, GetCurrentPosition(context.API.Player.Position)).Count > 0;
         }
     }
 }

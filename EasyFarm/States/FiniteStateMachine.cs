@@ -35,7 +35,7 @@ namespace EasyFarm.States
         private readonly IMemoryAPI _fface;
         private readonly List<IState> _states = new List<IState>();
         private CancellationTokenSource _cancellation = new CancellationTokenSource();
-        private readonly GameContext _context;
+        public readonly GameContext _context;
 
         public FiniteStateMachine(IMemoryAPI fface)
         {

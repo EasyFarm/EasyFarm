@@ -72,7 +72,7 @@ namespace EasyFarm.States
             var action = context.Config.BattleLists["Battle"].Actions
                 .FirstOrDefault(x => ActionFilters.TargetedFilter(context.API, x, context.Target));
             if (action == null) return;
-            context.Memory.Executor.UseTargetedActions(new[] {action}, context.Target);
+            context.Memory.Executor.UseTargetedActions(context, new[] {action}, context.Target);
         }
 
         private void ShouldRecycleBattleStateCheck(IGameContext context)
