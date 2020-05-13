@@ -97,18 +97,10 @@ public static partial class Detour{
     {
 		if (side == 0 || side == 4)
 		{
-			if ((vaStart + 0) >= va.Length)
-			{
-				return Single.NaN;
-			}
 			return va[vaStart + 0];
 		}
 		else if (side == 2 || side == 6)
 		{
-			if ((vaStart + 2) >= va.Length)
-			{
-				return Single.NaN;
-			}
 			return va[vaStart + 2];
 		}
 	    return 0;
@@ -119,10 +111,6 @@ public static partial class Detour{
     {
 	    if (side == 0 || side == 4)
 	    {
-			if ((vaStart + 2) >= va.Length || vbStart + 2 >= vb.Length)
-			{
-				return;
-			}
 		    if (va[vaStart + 2] < vb[vbStart + 2])
 		    {
 			    bmin[0] = va[vaStart + 2];
@@ -140,10 +128,6 @@ public static partial class Detour{
 	    }
 	    else if (side == 2 || side == 6)
 		{
-			if ((vaStart + 1) >= va.Length || vbStart + 1 >= vb.Length)
-			{
-				return;
-			}
 			if (va[vaStart + 0] < vb[0])
 		    {
 			    bmin[0] = va[vaStart + 0];
@@ -458,7 +442,7 @@ public static partial class Detour{
 
 	        //return addTile(data, dataSize, flags, 0, 0);
             dtTileRef dummyResult = 0;
-            return addTile(rawTile, flags, 0,ref dummyResult);
+            return addTile(rawTile, 0, flags, 0, ref dummyResult);
         }
 
         /// The navigation mesh initialization params.
@@ -575,9 +559,9 @@ public static partial class Detour{
         {
 	        if (tile == null) 
                 return;
-	
-	        // Connect border links.
-	        for (int i = 0; i < tile.header.polyCount; ++i)
+
+			// Connect border links.
+			for (int i = 0; i < tile.header.polyCount; ++i)
 	        {
 		        dtPoly poly = tile.polys[i];
 
@@ -587,10 +571,6 @@ public static partial class Detour{
 		        int nv = (int)poly.vertCount;
 		        for (int j = 0; j < nv; ++j)
 				{
-					if (j >= poly.neis.Length)
-					{
-						continue;
-					}
 					// Skip non-portal edges.
 					if ((poly.neis[j] & DT_EXT_LINK) == 0)
 				        continue;
@@ -598,21 +578,15 @@ public static partial class Detour{
 			        int dir = (int)(poly.neis[j] & 0xff);
 			        if (side != -1 && dir != side)
 				        continue;
-			
-			        // Create new links
-			        //const float* va = &tile.verts[poly.verts[j]*3];
-			        //const float* vb = &tile.verts[poly.verts[(j+1) % nv]*3];
-                    int vaStart = poly.verts[j]*3;
 
+					// Create new links
+					//const float* va = &tile.verts[poly.verts[j]*3];
+					//const float* vb = &tile.verts[poly.verts[(j+1) % nv]*3];
 					var vbStartIndex = (j + 1) % nv;
-					if (vbStartIndex >= poly.verts.Length)
-					{
-						continue;
-					}
+					int vaStart = poly.verts[j]*3;
+					int vbStart = poly.verts[vbStartIndex] *3;
 
-					int vbStart = poly.verts[(j+1) % nv]*3;
-
-			        dtPolyRef[] nei = new dtPolyRef[4];
+					dtPolyRef[] nei = new dtPolyRef[4];
 			        float[] neia = new float[4*2];
 			        int nnei = findConnectingPolys(tile.verts,vaStart,tile.verts,vbStart, target, dtOppositeTile(dir), nei,neia,4);
 			        for (int k = 0; k < nnei; ++k)
@@ -739,18 +713,15 @@ public static partial class Detour{
 		        dtPoly poly = tile.polys[i];
 		        poly.firstLink = DT_NULL_LINK;
 
-		        if (poly.getType() == (byte) dtPolyTypes.DT_POLYTYPE_OFFMESH_CONNECTION)
-			        continue;
-			
-		        // Build edge links backwards so that the links will be
-		        // in the linked list from lowest index to highest.
-		        for (int j = poly.vertCount-1; j >= 0; --j)
-		        {
+				if (poly.getType() == (byte)dtPolyTypes.DT_POLYTYPE_OFFMESH_CONNECTION)
+				{
+					continue;
+				}
 
-					if (j >= poly.neis.Length)
-					{
-						continue;
-					}
+				// Build edge links backwards so that the links will be
+				// in the linked list from lowest index to highest.
+				for (int j = poly.vertCount-1; j >= 0; --j)
+		        {
 			        // Skip hard and non-internal edges.
 			        if (poly.neis[j] == 0 || (poly.neis[j] & DT_EXT_LINK) != 0) 
                         continue;
@@ -1090,9 +1061,9 @@ public static partial class Detour{
         ///  @param[in]		lastRef		The desired reference for the tile. (When reloading a tile.) [opt] [Default: 0]
         ///  @param[out]	result		The tile reference. (If the tile was succesfully added.) [opt]
         /// @return The status flags for the operation.
-        public dtStatus addTile(dtRawTileData rawTileData, int flags, dtTileRef lastRef, ref dtTileRef result)
+        public dtStatus addTile(dtRawTileData rawTileData, int dataSize, int flags, dtTileRef lastRef, ref dtTileRef result)
         {
-            //C#: Using an intermediate class dtRawTileData because Cpp uses a binary buffer.
+			//C#: Using an intermediate class dtRawTileData because Cpp uses a binary buffer.
 
 	        // Make sure the data is in right format.
 	        dtMeshHeader header = rawTileData.header;
@@ -1152,19 +1123,20 @@ public static partial class Detour{
 	        int h = computeTileHash(header.x, header.y, m_tileLutMask);
 	        tile.next = m_posLookup[h];
 	        m_posLookup[h] = tile;
-	
-	        // Patch header pointers.
-    
-	        //int vertsCount = 3*header.vertCount;
-	        //int polysSize = header.polyCount;
-	        //int linksSize = header.maxLinkCount;
-	        //int detailMeshesSize = header.detailMeshCount;
-	        //int detailVertsSize = 3*header.detailVertCount;
-	        //int detailTrisSize = 4*header.detailTriCount;
-	        //int bvtreeSize = header.bvNodeCount;
-	        //int offMeshLinksSize = header.offMeshConCount;
 
-	        //byte* d = data + headerSize;
+			// Patch header pointers.
+
+			//int vertsCount = 3*header.vertCount;
+			//int polysSize = header.polyCount;
+			//int linksSize = header.maxLinkCount;
+			//int detailMeshesSize = header.detailMeshCount;
+			//int detailVertsSize = 3*header.detailVertCount;
+			//int detailTrisSize = 4*header.detailTriCount;
+			//int bvtreeSize = header.bvNodeCount;
+			//int offMeshLinksSize = header.offMeshConCount;
+
+			//byte* d = data + headerSize;
+			tile.header = rawTileData.header;
 	        tile.verts = rawTileData.verts;
 	        tile.polys = rawTileData.polys;
 	        tile.links = rawTileData.links;
@@ -1174,13 +1146,13 @@ public static partial class Detour{
 	        tile.bvTree = rawTileData.bvTree;
 	        tile.offMeshCons = rawTileData.offMeshCons;
 
-	        // If there are no items in the bvtree, reset the tree pointer.
-            //c#: unnecessary, Cpp is afraid to point to whatever data ends up here
-	        //if (bvtreeSize == 0)
-	        //	tile.bvTree = null;
+			// If there are no items in the bvtree, reset the tree pointer.
+			//c#: unnecessary, Cpp is afraid to point to whatever data ends up here
+			//if (bvtreeSize == 0)
+			//	tile.bvTree = null;
 
-	        // Build links freelist
-	        tile.linksFreeList = 0;
+			// Build links freelist
+			tile.linksFreeList = 0;
 	        tile.links[header.maxLinkCount-1].next = DT_NULL_LINK;
 	        for (int i = 0; i < header.maxLinkCount-1; ++i){
 		        tile.links[i].next = (dtTileRef) (i+1);
@@ -1189,10 +1161,10 @@ public static partial class Detour{
 	        // Init tile.
 	        tile.header = header;
 	        tile.data = rawTileData;
-	        //tile.dataSize = dataSize;
+	        tile.dataSize = dataSize;
 	        tile.flags = flags;
 
-	        connectIntLinks(tile);
+			connectIntLinks(tile);
 	        baseOffMeshLinks(tile);
 
 	        // Create connections with neighbour tiles.
@@ -1202,9 +1174,9 @@ public static partial class Detour{
 	
 	        // Connect with layers in current tile.
 	        nneis = getTilesAt(header.x, header.y, neis, MAX_NEIS);
-	        for (int j = 0; j < nneis; ++j)
-	        {
-		        if (neis[j] != tile)
+			for (int j = 0; j < nneis; ++j)
+			{
+				if (neis[j] != tile)
 		        {
 			        connectExtLinks(tile, neis[j], -1);
 			        connectExtLinks(neis[j], tile, -1);
