@@ -49,7 +49,7 @@ namespace EasyFarm.States
                 .FirstOrDefault(x => ActionFilters.TargetedFilter(context.API, x, context.Target));
             if (weaponskill == null)
                 return;
-            context.Memory.Executor.UseTargetedActions(new[] {weaponskill}, context.Target);
+            context.Memory.Executor.UseTargetedActions(context, new[] {weaponskill}, context.Target);
         }
     }
 }

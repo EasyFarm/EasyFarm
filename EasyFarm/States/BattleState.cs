@@ -76,7 +76,7 @@ namespace EasyFarm.States
             var action = context.Config.BattleLists["Battle"].Actions
                 .FirstOrDefault(x => ActionFilters.TargetedFilter(context.API, x, context.Target));
             if (action == null) return;
-            context.Memory.Executor.UseTargetedActions(new[] {action}, context.Target);
+            context.Memory.Executor.UseTargetedActions(context, new[] {action}, context.Target);
         }
         
         enum BuggedMobResponseActions
@@ -91,10 +91,11 @@ namespace EasyFarm.States
 
             var chatEntries = context.API.Chat.ChatEntries.ToList();
             var invalidTargetPattern = new Regex("Unable to see");
+            var invalidTargetPattern2 = new Regex("cannot see");
             // blacklist "You cannot attack that target"
 
             List<EliteMMO.API.EliteAPI.ChatEntry> matches = chatEntries
-                .Where(x => invalidTargetPattern.IsMatch(x.Text)).ToList();
+                .Where(x => invalidTargetPattern.IsMatch(x.Text) || invalidTargetPattern2.IsMatch(x.Text)).ToList();
 
 
             foreach (EliteMMO.API.EliteAPI.ChatEntry m in matches.Where(x => x.Timestamp.ToString() == DateTime.Now.ToString()))

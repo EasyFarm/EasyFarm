@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.Context;
+using MemoryAPI.Navigation;
 
 namespace EasyFarm.States
 {
@@ -69,15 +70,33 @@ namespace EasyFarm.States
                 watchdogIterator++;
             }
 
-            context.API.Navigator.DistanceTolerance = 1;
+            var currentPosition = context.Config.Route.GetCurrentPosition(context.API.Player.Position);
 
-            var nextPosition = context.Config.Route.GetNextPosition(context.API.Player.Position);
-            var shouldKeepRunningToNextWaypoint = context.Config.Route.Waypoints.Count != 1;
+            if (currentPosition == null || currentPosition.Distance(context.API.Player.Position) <= 1.5)
+            {
+                currentPosition = context.Config.Route.GetNextPosition(context.API.Player.Position);
+            }
 
-            context.API.Navigator.GotoWaypoint(
+            /*context.API.Navigator.GotoWaypoint(
                 nextPosition,
                 context.Config.IsObjectAvoidanceEnabled,
-                shouldKeepRunningToNextWaypoint);
+                shouldKeepRunningToNextWaypoint);*/
+
+            var path = context.NavMesh.FindPathBetween(context.API.Player.Position, currentPosition);
+            if (path.Count > 0)
+            {
+                context.API.Navigator.DistanceTolerance = 0.5;
+
+                while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= 0.5)
+                {
+                    path.Dequeue();
+                }
+
+                if (path.Count > 0)
+                {
+                    context.API.Navigator.GotoWaypoint(path.Peek(), false, path.Count > 1);
+                }
+            }
         }
 
         public override void Exit(IGameContext context)
