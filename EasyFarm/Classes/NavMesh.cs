@@ -13,6 +13,7 @@ public class NavMesh
 	static int NAVMESHSET_MAGIC = 'M' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'MSET';
 	static int NAVMESHSET_VERSION = 1;
 	private Detour.dtNavMesh dtNavMesh;
+	private Zone _zone;
 
 	public NavMesh()
 	{
@@ -83,9 +84,19 @@ public class NavMesh
 	public bool LoadZone(Zone zone)
 
 	{
+		if (zone == Zone.Unknown)
+		{
+			Unload();
+			return false;
+		}
 
 		string path = "navmeshes\\" + zone.ToString() + ".nav";
-		if (this.dtNavMesh != null)
+
+		if (_zone == zone && dtNavMesh != null)
+		{
+			return true;
+		}
+		else
 		{
 			Unload();
 		}
@@ -170,16 +181,6 @@ public class NavMesh
 		return ffxiPosition;
 
 	}
-	private static float[] ToDetourPosition(Position position)
-	{
-		float[] detourPosition = new float[3];
-		
-		detourPosition[0] = position.X;
-		detourPosition[1] = -position.Y;
-		detourPosition[2] = -position.Z;
-
-		return detourPosition;
-	}
 
 	public Queue<Position> FindPathBetween(Position start, Position end, bool useStraightPath = false)
 	{
@@ -189,8 +190,8 @@ public class NavMesh
 		{
 			return path;
 		}
-		var startDetourPosition = ToDetourPosition(start);
-		var endDetourPosition = ToDetourPosition(end);
+		var startDetourPosition = start.ToDetourPosition();
+		var endDetourPosition = end.ToDetourPosition();
 
 		var queryFilter = new Detour.dtQueryFilter();
 		var navMeshQuery = new Detour.dtNavMeshQuery();
@@ -210,7 +211,7 @@ public class NavMesh
 		float[] startNearest = new float[3];
 		float[] endNearest = new float[3];
 
-		float[] extents = new float[] { 10.0F, 20.0F, 10.0F };
+		float[] extents = new float[] { 10.0F, (float)EasyFarm.UserSettings.Config.Instance.HeightThreshold, 10.0F };
 
 		status = navMeshQuery.findNearestPoly(startDetourPosition, extents, queryFilter, ref startRef, ref startNearest);
 
@@ -242,21 +243,7 @@ public class NavMesh
 			return path;
 		}
 
-        // i starts at 3 so the start position is ignored
-        for (int i = 1; i < pathCount; i++)
-        {
-            float[] pathPos = new float[3];
-            bool posOverPoly = false;
-            if (Detour.dtStatusFailed(navMeshQuery.closestPointOnPoly(pathPolys[i], startDetourPosition, pathPos, ref posOverPoly)))
-            //if (Detour.dtStatusFailed(navMeshQuery.closestPointOnPolyBoundary(pathPolys[i], startDetourPosition, pathPos)))
-                return path;
-
-            var position = ToFFXIPosition(pathPos);
-
-            path.Enqueue(position);
-        }
-
-        /*if (path.Count < 3)
+		if (path.Count < 1)
         {
             float[] straightPath = new float[256 * 3];
             byte[] straightPathFlags = new byte[256];
@@ -298,7 +285,28 @@ public class NavMesh
                     path.Enqueue(position);
                 }
             }
-        }*/
+        } 
+		else
+		{
+			// i starts at 3 so the start position is ignored
+			for (int i = 1; i < pathCount; i++)
+			{
+				float[] pathPos = new float[3];
+				bool posOverPoly = false;
+				if (Detour.dtStatusFailed(navMeshQuery.closestPointOnPoly(pathPolys[i], startDetourPosition, pathPos, ref posOverPoly)))
+					return path;
+
+				if (path.Count < 1)
+				{
+					if (Detour.dtStatusFailed(navMeshQuery.closestPointOnPolyBoundary(pathPolys[i], startDetourPosition, pathPos)))
+						return path;
+				}
+
+				var position = ToFFXIPosition(pathPos);
+
+				path.Enqueue(position);
+			}
+		}
 
         return path;
 

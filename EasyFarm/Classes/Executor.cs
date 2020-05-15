@@ -91,30 +91,35 @@ namespace EasyFarm.Classes
 
             foreach (var action in actions)
             {
-                MoveIntoActionRange(context, target, action);
+                var isInRange = MoveIntoActionRange(context, target, action);
+
                 _fface.Navigator.FaceHeading(target.Position);
                 Player.SetTarget(_fface, target);
 
-                _fface.Navigator.Reset();
-                TimeWaiter.Pause(100);
-
-                if (ResourceHelper.IsSpell(action.AbilityType))
+                if (isInRange)
                 {
-                    CastSpell(action);
-                }
-                else
-                {
-                    CastAbility(action);
-                }
 
-                action.Usages++;
-                action.LastCast = DateTime.Now.AddSeconds(action.Recast);
+                    _fface.Navigator.Reset();
+                    TimeWaiter.Pause(100);
 
-                TimeWaiter.Pause(Config.Instance.GlobalCooldown);
+                    if (ResourceHelper.IsSpell(action.AbilityType))
+                    {
+                        CastSpell(action);
+                    }
+                    else
+                    {
+                        CastAbility(action);
+                    }
+
+                    action.Usages++;
+                    action.LastCast = DateTime.Now.AddSeconds(action.Recast);
+
+                    TimeWaiter.Pause(Config.Instance.GlobalCooldown);
+                }
             }
         }
 
-        private void MoveIntoActionRange(EasyFarm.Context.IGameContext context, IUnit target, BattleAbility action)
+        private bool MoveIntoActionRange(EasyFarm.Context.IGameContext context, IUnit target, BattleAbility action)
         {
             if (target.Distance > action.Distance)
             {
@@ -130,17 +135,24 @@ namespace EasyFarm.Classes
                         _fface.Navigator.DistanceTolerance = action.Distance;
                     }
 
-                    while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= 0.5)
+                    while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= _fface.Navigator.DistanceTolerance)
                     {
                         path.Dequeue();
                     }
 
                     if (path.Count > 0)
                     {
-                        context.API.Navigator.GotoWaypoint(path.Peek(), false, path.Count > 1);
+                        context.API.Navigator.GotoNPC(target.Id, path.Peek(), true);
+                    } else
+                    {
+                        context.API.Navigator.Reset();
                     }
                 }
+
+                return false;
             }
+
+            return true;
         }        
 
         private bool EnsureCast(string command)

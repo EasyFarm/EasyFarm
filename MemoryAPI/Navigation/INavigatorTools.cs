@@ -16,6 +16,7 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 using MemoryAPI.Navigation;
+using System.Collections.Generic;
 
 namespace MemoryAPI
 {
@@ -23,8 +24,8 @@ namespace MemoryAPI
     {
         double DistanceTolerance { get; set; }
         void FaceHeading(Position position);
-        void GotoWaypoint(Position position, bool useObjectAvoidance, bool keepRunning);
-        void GotoNPC(int ID, bool useObjectAvoidance);
+        void GotoWaypoint(Position position, bool keepRunning);
+        void GotoNPC(int ID, Position position, bool keepRunning);
         void Reset();
     }
 }

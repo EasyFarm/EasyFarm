@@ -56,5 +56,16 @@ namespace MemoryAPI.Navigation
         {
             return Math.Sqrt(Math.Pow(X - other.X, 2) + Math.Pow(Z - other.Z, 2));
         }
+
+        public float[] ToDetourPosition()
+        {
+            float[] detourPosition = new float[3];
+
+            detourPosition[0] = X;
+            detourPosition[1] = -Y;
+            detourPosition[2] = -Z;
+
+            return detourPosition;
+        }
     }
 }
