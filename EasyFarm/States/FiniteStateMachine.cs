@@ -45,7 +45,7 @@ namespace EasyFarm.States
             //Create the states
             AddState(new DeadState() {Priority = 7});
             AddState(new ZoneState() {Priority = 7});
-            AddState(new SetTargetState() {Priority = 7});
+            AddState(new SetTargetState() {Priority = 0});
             AddState(new SetFightingState() {Priority = 7});
             AddState(new FollowState() {Priority = 5});
             AddState(new RestState() {Priority = 2});
