@@ -140,7 +140,11 @@ namespace EasyFarm.Classes
                         path.Dequeue();
                     }
 
-                    context.API.Navigator.GotoNPC(target.Id, path.Peek(), path.Count > 0);
+                    if (path.Count > 0)
+                    {
+                        context.API.Navigator.GotoNPC(target.Id, path.Peek(), true);
+                    }
+
                 }
 
                 return false;
