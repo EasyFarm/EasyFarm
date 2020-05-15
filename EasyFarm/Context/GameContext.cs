@@ -35,6 +35,8 @@ namespace EasyFarm.Context
             Memory = new StateMemory(api);
             Target = new NullUnit();
             NavMesh = new NavMesh();
+            Zone = api.Player.Zone;
+            NavMesh.LoadZone(_zone);
         }
 
         public IConfig Config { get; set; }
@@ -50,8 +52,8 @@ namespace EasyFarm.Context
             }
             set
             {
-                _zone = value;
                 NavMesh.LoadZone(_zone);
+                _zone = value;
             }
         }
         public NavMesh NavMesh { get; set; }

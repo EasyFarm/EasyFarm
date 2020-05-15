@@ -67,12 +67,27 @@ namespace MemoryAPI.Memory
                 _api = api;
             }
 
+            private static float Bearing(Position player, Position position)
+            {
+                var bearing = -Math.Atan2(position.Z - player.Z, position.X - player.X);
+
+                return (float)bearing;
+            }
+
             public void FaceHeading(Position position)
             {
                 var player = _api.Entity.GetLocalPlayer();
-                var angle = (byte)(Math.Atan((position.Z - player.Z) / (position.X - player.X)) * -(128.0f / Math.PI));
-                if (player.X > position.X) angle += 128;
-                var radian = (float)angle / 255 * 2 * Math.PI;
+                var playerPosition = new Position();
+                playerPosition.X = player.X;
+                playerPosition.Y = player.Y;
+                playerPosition.Z = player.Z;
+                playerPosition.H = player.H;
+
+                var radian = Bearing(playerPosition, position);
+                if (_api.Player.H != radian)
+                {
+                    SetViewMode(ViewMode.FirstPerson);
+                }
                 _api.Entity.SetEntityHPosition(_api.Entity.LocalPlayerIndex, (float)radian);
             }
 
@@ -86,19 +101,19 @@ namespace MemoryAPI.Memory
                     Math.Pow(position.Z - player.Z, 2));
             }
 
-            public void GotoWaypoint(Position position, bool useObjectAvoidance, bool keepRunning)
+            public void GotoWaypoint(Position position, bool keepRunning)
             {
                 if (!(DistanceTo(position) > DistanceTolerance)) return;
-                MoveForwardTowardsPosition(() => position, useObjectAvoidance);
+                MoveForwardTowardsPosition(() => position);
                 if (!keepRunning) Reset();
             }
 
-            public void GotoNPC(int id, bool useObjectAvoidance)
+            public void GotoNPC(int id, Position position, bool keepRunning)
             {
-                MoveForwardTowardsPosition(() => GetEntityPosition(id), useObjectAvoidance);
+                if (!(DistanceTo(position) > DistanceTolerance)) return;
+                GotoWaypoint(position, true);
                 KeepOneYalmBack(GetEntityPosition(id));
-                FaceHeading(GetEntityPosition(id));
-                Reset();
+                if (!keepRunning) Reset();
             }
 
             private Position GetEntityPosition(int id)
@@ -109,21 +124,14 @@ namespace MemoryAPI.Memory
             }            
 
             private void MoveForwardTowardsPosition(
-                Func<Position> targetPosition,
-                bool useObjectAvoidance)
+                Func<Position> targetPosition)
             {
-                if (!(DistanceTo(targetPosition()) > DistanceTolerance)) return;
-
                 DateTime duration = DateTime.Now.AddSeconds(5);
 
-                while (DistanceTo(targetPosition()) > DistanceTolerance && DateTime.Now < duration)
-                {
-                    SetViewMode(ViewMode.FirstPerson);
-                    FaceHeading(targetPosition());
-                    _api.ThirdParty.KeyDown(Keys.NUMPAD8);
-                    if (useObjectAvoidance) AvoidObstacles();
-                    Thread.Sleep(100);
-                }
+                FaceHeading(targetPosition());
+                _api.ThirdParty.KeyDown(Keys.NUMPAD8);
+                
+                AvoidObstacles();
             }
 
             private void KeepRunningWithKeyboard()
@@ -140,7 +148,6 @@ namespace MemoryAPI.Memory
 
                 while (DistanceTo(position) <= TooCloseDistance && DateTime.Now < duration)
                 {
-                    SetViewMode(ViewMode.FirstPerson);
                     FaceHeading(position);
                     Thread.Sleep(30);
                 }
@@ -180,9 +187,12 @@ namespace MemoryAPI.Memory
             {
                 var firstX = _api.Player.X;
                 var firstZ = _api.Player.Z;
-                Thread.Sleep(TimeSpan.FromSeconds(0.5));
+                var checkTime = 0.1;
+                var playerSpeed = _api.Player.Speed;
+                var expectedDelta = checkTime / playerSpeed;
+                Thread.Sleep(TimeSpan.FromSeconds(checkTime));
                 var dchange = Math.Pow(firstX - _api.Player.X, 2) + Math.Pow(firstZ - _api.Player.Z, 2);
-                return Math.Abs(dchange) < 1;
+                return Math.Abs(dchange) < expectedDelta;
             }
 
             /// <summary>
@@ -219,7 +229,7 @@ namespace MemoryAPI.Memory
                 {
                     _api.Entity.GetLocalPlayer().H = _api.Player.H + (float)(Math.PI / 180 * dir);
                     _api.ThirdParty.KeyDown(Keys.NUMPAD8);
-                    Thread.Sleep(TimeSpan.FromSeconds(2));
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
                     _api.ThirdParty.KeyUp(Keys.NUMPAD8);
                     count++;
                     if (count == 4)

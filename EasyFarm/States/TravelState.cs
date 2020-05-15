@@ -72,7 +72,7 @@ namespace EasyFarm.States
 
             var currentPosition = context.Config.Route.GetCurrentPosition(context.API.Player.Position);
 
-            if (currentPosition == null || currentPosition.Distance(context.API.Player.Position) <= 1.5)
+            if (currentPosition == null || currentPosition.Distance(context.API.Player.Position) <= 0.5)
             {
                 currentPosition = context.Config.Route.GetNextPosition(context.API.Player.Position);
             }
@@ -87,14 +87,18 @@ namespace EasyFarm.States
             {
                 context.API.Navigator.DistanceTolerance = 0.5;
 
-                while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= 0.5)
+                while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= context.API.Navigator.DistanceTolerance)
                 {
                     path.Dequeue();
                 }
 
                 if (path.Count > 0)
                 {
-                    context.API.Navigator.GotoWaypoint(path.Peek(), false, path.Count > 1);
+                    context.API.Navigator.GotoWaypoint(path.Peek(), true);
+                } 
+                else
+                {
+                    context.Config.Route.GetNextPosition(context.API.Player.Position);
                 }
             }
         }

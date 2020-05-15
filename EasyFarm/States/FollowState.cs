@@ -83,7 +83,11 @@ namespace EasyFarm.States
 
                 if (path.Count > 0)
                 {
-                    context.API.Navigator.GotoWaypoint(path.Peek(), false, path.Count > 1);
+                    context.API.Navigator.GotoWaypoint(path.Peek(), true);
+                }
+                else
+                {
+                    context.API.Navigator.Reset();
                 }
             }
         }
