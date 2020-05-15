@@ -126,8 +126,6 @@ namespace MemoryAPI.Memory
             private void MoveForwardTowardsPosition(
                 Func<Position> targetPosition)
             {
-                DateTime duration = DateTime.Now.AddSeconds(5);
-
                 FaceHeading(targetPosition());
                 _api.ThirdParty.KeyDown(Keys.NUMPAD8);
                 
@@ -210,7 +208,7 @@ namespace MemoryAPI.Memory
             private void Disengage()
             {
                 _api.ThirdParty.SendString("/attack off");
-                Thread.Sleep(30);
+                Thread.Sleep(2000);
             }
 
             /// <summary>
@@ -223,16 +221,18 @@ namespace MemoryAPI.Memory
             /// </remarks>
             private void WiggleCharacter(int attempts)
             {
+                int originalAttempts = attempts;
                 int count = 0;
                 float dir = -45;
                 while (IsStuck() && attempts-- > 0)
                 {
                     _api.Entity.GetLocalPlayer().H = _api.Player.H + (float)(Math.PI / 180 * dir);
                     _api.ThirdParty.KeyDown(Keys.NUMPAD8);
-                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                    var keydownTime = Math.Round((originalAttempts - attempts) * new Random().NextDouble() * 3.5);
+                    Thread.Sleep(TimeSpan.FromSeconds(keydownTime));
                     _api.ThirdParty.KeyUp(Keys.NUMPAD8);
                     count++;
-                    if (count == 4)
+                    if (count >= originalAttempts + 1)
                     {
                         dir = (Math.Abs(dir - -45) < .001 ? 45 : -45);
                         count = 0;
@@ -510,6 +510,23 @@ namespace MemoryAPI.Memory
             public void SendKeyPress(Keys key)
             {
                 _api.ThirdParty.KeyPress(key);
+            }
+
+            public void SendHoldKey(Keys key, int milliseconds)
+            {
+                _api.ThirdParty.KeyDown(key);
+                Thread.Sleep(milliseconds);
+                _api.ThirdParty.KeyUp(key);
+            }
+
+            public void SendKeyDown(Keys key)
+            {
+                _api.ThirdParty.KeyDown(key);
+            }
+
+            public void SendKeyUp(Keys key)
+            {
+                _api.ThirdParty.KeyUp(key);
             }
         }
 

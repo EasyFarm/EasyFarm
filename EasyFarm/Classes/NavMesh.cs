@@ -233,63 +233,72 @@ public class NavMesh
 		}
 
 		uint[] pathPolys = new uint[256];
-
 		int pathCount = 0;
+		float[] straightPath = new float[256 * 3];
+		byte[] straightPathFlags = new byte[256];
+		uint[] straightPathPolys = new uint[256];
+		int straightPathCount = 0;
 
-		status = navMeshQuery.findPath(startRef, endRef, startNearest, endNearest, queryFilter, pathPolys, ref pathCount, 256);
+		status = navMeshQuery.findPath(
+			startRef,
+			endRef, 
+			startNearest,
+			endNearest,
+			queryFilter,
+			pathPolys,
+			ref pathCount,
+			256
+		);
 
 		if (Detour.dtStatusFailed(status))
 		{
+			path.Enqueue(start);
+			path.Enqueue(end);
 			return path;
 		}
 
-		if (path.Count < 1)
-        {
-            float[] straightPath = new float[256 * 3];
-            byte[] straightPathFlags = new byte[256];
-            uint[] straightPathPolys = new uint[256];
-            int straightPathCount = 256 * 3;
+		status = navMeshQuery.findStraightPath(
+			startNearest,
+			endNearest,
+			pathPolys,
+			pathCount,
+			straightPath,
+			straightPathFlags,
+			straightPathPolys,
+			ref straightPathCount,
+			256,
+			0
+		);
 
-            status = navMeshQuery.findStraightPath(
-                startNearest,
-                endNearest,
-                pathPolys,
-                pathCount,
-                straightPath,
-                straightPathFlags,
-                straightPathPolys,
-                ref straightPathCount,
-                256,
-                0
-            );
+		if (Detour.dtStatusFailed(status))
+		{
+			path.Enqueue(start);
+			path.Enqueue(end);
+			return path;
+		}
 
-            if (straightPathCount > 1)
-            {
-                if (Detour.dtStatusFailed(status))
-                {
-                    return path;
-				}
+		if (straightPathCount > 1)
+		{
+			if (Detour.dtStatusFailed(status))
+			{
+				return path;
+			}
 
-				path.Clear();
+			for (int i = 0; i < straightPathCount * 3;)
+			{
+				float[] pathPos = new float[3];
+				pathPos[0] = straightPath[i++];
+				pathPos[1] = straightPath[i++];
+				pathPos[2] = straightPath[i++];
 
-				// i starts at 3 so the start position is ignored
-				for (int i = 3; i < straightPathCount * 3;)
-                {
-                    float[] pathPos = new float[3];
-                    pathPos[0] = straightPath[i++];
-                    pathPos[1] = straightPath[i++];
-                    pathPos[2] = straightPath[i++];
+				var position = ToFFXIPosition(pathPos);
 
-                    var position = ToFFXIPosition(pathPos);
-
-                    path.Enqueue(position);
-                }
-            }
-        } 
+				path.Enqueue(position);
+			}
+		}
 		else
 		{
-			// i starts at 3 so the start position is ignored
-			for (int i = 1; i < pathCount; i++)
+			for (int i = 0; i < pathCount; i++)
 			{
 				float[] pathPos = new float[3];
 				bool posOverPoly = false;
@@ -306,6 +315,12 @@ public class NavMesh
 
 				path.Enqueue(position);
 			}
+		}
+
+		if (path.Count == 0)
+		{
+			path.Enqueue(start);
+			path.Enqueue(end);
 		}
 
         return path;

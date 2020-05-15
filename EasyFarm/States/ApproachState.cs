@@ -66,9 +66,9 @@ namespace EasyFarm.States
                 var path = context.NavMesh.FindPathBetween(context.API.Player.Position, context.Target.Position);
                 if (path.Count > 0)
                 {
-                    if (path.Count > 1)
+                    if (path.Count > 2)
                     {
-                        context.API.Navigator.DistanceTolerance = 0.5;
+                        context.API.Navigator.DistanceTolerance = 1;
                     }
                     else
                     {

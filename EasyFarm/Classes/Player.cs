@@ -56,7 +56,7 @@ namespace EasyFarm.Classes
             if (fface.Player.Status.Equals(Status.Healing))
             {
                 fface.Windower.SendString(Constants.RestingOff);
-                TimeWaiter.Pause(50);
+                TimeWaiter.Pause(2000); // avoid stuck detection from triggering
             }
         }
 
@@ -68,7 +68,7 @@ namespace EasyFarm.Classes
             if (!fface.Player.Status.Equals(Status.Fighting))
             {
                 fface.Windower.SendString(Constants.AttackTarget);
-                Thread.Sleep(1500); // avoid stuck detection from triggering
+                Thread.Sleep(2000); // avoid stuck detection from triggering
             }
         }
 
@@ -80,7 +80,7 @@ namespace EasyFarm.Classes
             if (fface.Player.Status.Equals(Status.Fighting))
             {
                 fface.Windower.SendString(Constants.AttackOff);
-                Thread.Sleep(1500); // avoid stuck detection from triggering
+                Thread.Sleep(2000); // avoid stuck detection from triggering
             }
         }
 

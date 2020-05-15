@@ -126,9 +126,9 @@ namespace EasyFarm.Classes
                 var path = context.NavMesh.FindPathBetween(context.API.Player.Position, context.Target.Position);
                 if (path.Count > 0)
                 {
-                    if (path.Count > 1)
+                    if (path.Count > 2)
                     {
-                        _fface.Navigator.DistanceTolerance = 0.5;
+                        context.API.Navigator.DistanceTolerance = 1;
                     }
                     else
                     {
@@ -140,13 +140,7 @@ namespace EasyFarm.Classes
                         path.Dequeue();
                     }
 
-                    if (path.Count > 0)
-                    {
-                        context.API.Navigator.GotoNPC(target.Id, path.Peek(), true);
-                    } else
-                    {
-                        context.API.Navigator.Reset();
-                    }
+                    context.API.Navigator.GotoNPC(target.Id, path.Peek(), path.Count > 0);
                 }
 
                 return false;
