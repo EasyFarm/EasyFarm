@@ -97,8 +97,10 @@ namespace EasyFarm.States
             List<EliteMMO.API.EliteAPI.ChatEntry> matches = chatEntries
                 .Where(x => invalidTargetPattern.IsMatch(x.Text) || invalidTargetPattern2.IsMatch(x.Text)).ToList();
 
+            var now = DateTime.Now;
+            var threeSeconds = now.AddSeconds(-1.5);
 
-            foreach (EliteMMO.API.EliteAPI.ChatEntry m in matches.Where(x => x.Timestamp.ToString() == DateTime.Now.ToString()))
+            foreach (EliteMMO.API.EliteAPI.ChatEntry m in matches.Where(x => x.Timestamp >= threeSeconds && x.Timestamp <= now))
             {
                 // only try to unstuck bugged mob if mob isn't moving...
                 if (lastPosition == null || !context.Target.Position.Equals(lastPosition) || context.Target.Distance > context.Config.MeleeDistance)
