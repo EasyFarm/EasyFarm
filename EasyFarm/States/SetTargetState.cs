@@ -30,8 +30,8 @@ namespace EasyFarm.States
 
         public override bool Check(IGameContext context)
         {
-            // Currently fighting, do not change target. 
-            if (!context.Target.IsValid)
+            // Currently fighting, do not change target unless we have aggro from another mob
+            if (!context.Target.IsValid || !(!context.Target.HasAggroed && context.Player.HasAggro))
             {
                 // Still not time to update for new target. 
                 if (!ShouldCheckTarget()) return false;
@@ -48,7 +48,9 @@ namespace EasyFarm.States
 
                 if (context.Target.IsValid)
                 {
-                    context.Config.Route.ResetCurrentWaypoint();
+                    // FIXME: if random path is set, do not reset? make this configurable?
+                    //context.Config.Route.ResetCurrentWaypoint();
+
                     LogViewModel.Write("Now targeting " + context.Target.Name + " : " + context.Target.Id);
                 }
             }
