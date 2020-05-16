@@ -202,7 +202,6 @@ public class NavMesh
 		{
 			return path;
 		}
-
 		queryFilter.setIncludeFlags(0xffff);
 		queryFilter.setExcludeFlags(0x0);
 
@@ -211,7 +210,7 @@ public class NavMesh
 		float[] startNearest = new float[3];
 		float[] endNearest = new float[3];
 
-		float[] extents = new float[] { 10.0F, (float)EasyFarm.UserSettings.Config.Instance.HeightThreshold, 10.0F };
+		float[] extents = new float[] { 10.0F, 25.0F, 10.0F };
 
 		status = navMeshQuery.findNearestPoly(startDetourPosition, extents, queryFilter, ref startRef, ref startNearest);
 
@@ -232,11 +231,12 @@ public class NavMesh
 			return path;
 		}
 
-		uint[] pathPolys = new uint[256];
+		int maxPath = 256;
+		uint[] pathPolys = new uint[maxPath];
 		int pathCount = 0;
-		float[] straightPath = new float[256 * 3];
-		byte[] straightPathFlags = new byte[256];
-		uint[] straightPathPolys = new uint[256];
+		float[] straightPath = new float[maxPath * 3];
+		byte[] straightPathFlags = new byte[maxPath];
+		uint[] straightPathPolys = new uint[maxPath];
 		int straightPathCount = 0;
 
 		status = navMeshQuery.findPath(
@@ -247,7 +247,7 @@ public class NavMesh
 			queryFilter,
 			pathPolys,
 			ref pathCount,
-			256
+			maxPath
 		);
 
 		if (Detour.dtStatusFailed(status))
@@ -267,7 +267,7 @@ public class NavMesh
 			straightPathPolys,
 			ref straightPathCount,
 			256,
-			0
+			(int)Detour.dtStraightPathOptions.DT_STRAIGHTPATH_ALL_CROSSINGS
 		);
 
 		if (Detour.dtStatusFailed(status))
@@ -277,14 +277,14 @@ public class NavMesh
 			return path;
 		}
 
-		if (straightPathCount > 1)
+		if (straightPathCount > 0)
 		{
 			if (Detour.dtStatusFailed(status))
 			{
 				return path;
 			}
 
-			for (int i = 0; i < straightPathCount * 3;)
+			for (int i = 3; i < straightPathCount * 3;)
 			{
 				float[] pathPos = new float[3];
 				pathPos[0] = straightPath[i++];
@@ -298,7 +298,7 @@ public class NavMesh
 		}
 		else
 		{
-			for (int i = 0; i < pathCount; i++)
+			for (int i = 1; i < pathCount; i++)
 			{
 				float[] pathPos = new float[3];
 				bool posOverPoly = false;
@@ -317,9 +317,8 @@ public class NavMesh
 			}
 		}
 
-		if (path.Count == 0)
+		if (path.Count < 1)
 		{
-			path.Enqueue(start);
 			path.Enqueue(end);
 		}
 

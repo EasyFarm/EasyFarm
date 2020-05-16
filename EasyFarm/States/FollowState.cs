@@ -16,6 +16,7 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 using EasyFarm.Context;
+using EasyFarm.UserSettings;
 using MemoryAPI;
 using MemoryAPI.Navigation;
 using Player = EasyFarm.Classes.Player;
@@ -67,18 +68,16 @@ namespace EasyFarm.States
             var path = context.NavMesh.FindPathBetween(context.API.Player.Position, context.Target.Position);
             if (path.Count > 0)
             {
-                if (path.Count > 2)
-                {
-                    context.API.Navigator.DistanceTolerance = 1;
-                }
-                else
-                {
-                    context.API.Navigator.DistanceTolerance = context.Config.FollowDistance;
-                }
+                context.API.Navigator.DistanceTolerance = 1;
 
                 while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= context.API.Navigator.DistanceTolerance)
                 {
                     path.Dequeue();
+                }
+                
+                if (path.Peek().Distance(context.Target.Position) <= Config.Instance.FollowDistance ||
+                    context.API.Player.Position.Distance(context.Target.Position) <= Config.Instance.FollowDistance) {
+                      context.API.Navigator.DistanceTolerance = Config.Instance.FollowDistance;
                 }
 
                 context.API.Navigator.GotoNPC(context.Target.Id, path.Peek(), path.Count > 0);

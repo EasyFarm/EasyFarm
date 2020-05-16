@@ -66,14 +66,7 @@ namespace EasyFarm.States
                 var path = context.NavMesh.FindPathBetween(context.API.Player.Position, context.Target.Position);
                 if (path.Count > 0)
                 {
-                    if (path.Count > 2)
-                    {
-                        context.API.Navigator.DistanceTolerance = 1;
-                    }
-                    else
-                    {
-                        context.API.Navigator.DistanceTolerance = context.Config.MeleeDistance;
-                    }
+                    context.API.Navigator.DistanceTolerance = 1;
 
                     while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= context.API.Navigator.DistanceTolerance)
                     {
@@ -82,6 +75,10 @@ namespace EasyFarm.States
                     
                     if (path.Count > 0)
                     {
+                        if (path.Peek().Distance(context.Target.Position) <= Config.Instance.MeleeDistance ||
+                            context.API.Player.Position.Distance(context.Target.Position) <= Config.Instance.MeleeDistance) {
+                            context.API.Navigator.DistanceTolerance = Config.Instance.MeleeDistance;
+                        }
                         context.API.Navigator.GotoNPC(context.Target.Id, path.Peek(), true);
                     }
                     else
