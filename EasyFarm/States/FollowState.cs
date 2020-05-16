@@ -64,20 +64,14 @@ namespace EasyFarm.States
             var player = context.Memory.UnitService.GetUnitByName(context.Config.FollowedPlayer);
 
             // Follow the player. 
-            context.API.Navigator.DistanceTolerance = context.Config.FollowDistance;
             var path = context.NavMesh.FindPathBetween(context.API.Player.Position, context.Target.Position);
-            if (path.Count > 0)
+            if (path.Count > 0 && context.API.Player.Position.Distance(context.Target.Position) > context.Config.FollowDistance)
             {
                 context.API.Navigator.DistanceTolerance = 1;
 
                 while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= context.API.Navigator.DistanceTolerance)
                 {
                     path.Dequeue();
-                }
-                
-                if (path.Peek().Distance(context.Target.Position) <= Config.Instance.FollowDistance ||
-                    context.API.Player.Position.Distance(context.Target.Position) <= Config.Instance.FollowDistance) {
-                      context.API.Navigator.DistanceTolerance = Config.Instance.FollowDistance;
                 }
 
                 context.API.Navigator.GotoNPC(context.Target.Id, path.Peek(), path.Count > 0);

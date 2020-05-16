@@ -64,7 +64,18 @@ namespace EasyFarm.States
             {
                 // Move to target if out of melee range. 
                 var path = context.NavMesh.FindPathBetween(context.API.Player.Position, context.Target.Position);
-                if (path.Count > 0)
+
+                if (context.API.Player.Position.Distance(context.Target.Position) <= Config.Instance.MeleeDistance)
+                {
+                    context.API.Navigator.FaceHeading(context.Target.Position);
+                    context.API.Navigator.Reset();
+
+                    // Has the user decided we should engage in battle. 
+                    if (context.Config.IsEngageEnabled)
+                        if (!context.API.Player.Status.Equals(Status.Fighting) && context.Target.Distance < 25)
+                            context.API.Windower.SendString(Constants.AttackTarget);
+                }
+                else if (path.Count > 0)
                 {
                     context.API.Navigator.DistanceTolerance = 1;
 
@@ -81,22 +92,13 @@ namespace EasyFarm.States
                         }
                         context.API.Navigator.GotoNPC(context.Target.Id, path.Peek(), true);
                     }
-                    else
-                    {
-                        context.API.Navigator.FaceHeading(context.Target.Position);
-                        context.API.Navigator.Reset();
-
-                        // Has the user decided we should engage in battle. 
-                        if (context.Config.IsEngageEnabled)
-                            if (!context.API.Player.Status.Equals(Status.Fighting) && context.Target.Distance < 25)
-                                context.API.Windower.SendString(Constants.AttackTarget);
-                    }
                 }
             } 
             else
             {
                 // Face mob. 
                 context.API.Navigator.FaceHeading(context.Target.Position);
+                context.API.Navigator.Reset();
             }
         }
     }
