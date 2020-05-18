@@ -16,6 +16,8 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using EliteMMO.API;
 
 namespace MemoryAPI.Chat
@@ -40,6 +42,11 @@ namespace MemoryAPI.Chat
                 T outObj;
                 queue.TryDequeue(out outObj);
             }
+        }
+
+        public List<T> ToList()
+        {
+            return queue.ToList();
         }
     }
 
