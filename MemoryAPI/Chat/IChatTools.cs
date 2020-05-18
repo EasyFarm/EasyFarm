@@ -15,13 +15,36 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using EliteMMO.API;
 
 namespace MemoryAPI.Chat
 {
+    public class FixedSizeQueue<T>
+    {
+        readonly ConcurrentQueue<T> queue = new ConcurrentQueue<T>();
+
+        public int Size { get; private set; }
+
+        public FixedSizeQueue(int size)
+        {
+            Size = size;
+        }
+
+        public void Enqueue(T obj)
+        {
+            queue.Enqueue(obj);
+
+            while (queue.Count > Size)
+            {
+                T outObj;
+                queue.TryDequeue(out outObj);
+            }
+        }
+    }
+
     public interface IChatTools
     {
-        Queue<EliteAPI.ChatEntry> ChatEntries { get; set; }
+        FixedSizeQueue<EliteAPI.ChatEntry> ChatEntries { get; set; }
     }
 }

@@ -16,6 +16,7 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -183,6 +184,11 @@ namespace MemoryAPI.Memory
             /// </remarks>
             private bool IsStuck()
             {
+                /* FIXME: move prohibiteffects to MemoryAPI
+                if (ProhibitEffects.ProhibitEffectsMovement
+                    .Intersect(context.API.Player.StatusEffects).Any())
+                    return false;
+                    */
                 var firstX = _api.Player.X;
                 var firstZ = _api.Player.Z;
                 var checkTime = 0.1;
@@ -228,7 +234,7 @@ namespace MemoryAPI.Memory
                 {
                     _api.Entity.GetLocalPlayer().H = _api.Player.H + (float)(Math.PI / 180 * dir);
                     _api.ThirdParty.KeyDown(Keys.NUMPAD8);
-                    var keydownTime = Math.Round((originalAttempts - attempts) * new Random().NextDouble() * 3.5);
+                    var keydownTime = Math.Round((originalAttempts - attempts) * new Random().NextDouble() * 3);
                     Thread.Sleep(TimeSpan.FromSeconds(keydownTime));
                     _api.ThirdParty.KeyUp(Keys.NUMPAD8);
                     count++;
@@ -534,24 +540,7 @@ namespace MemoryAPI.Memory
         {
             private static readonly object LockObject = new object();
             private readonly EliteAPI _api;
-            private Queue<EliteAPI.ChatEntry> _chatEntries { get; set; } = new Queue<EliteAPI.ChatEntry>();
-            public Queue<EliteAPI.ChatEntry> ChatEntries
-            {
-                get
-                {
-                    lock(LockObject)
-                    {
-                        return _chatEntries;
-                    }
-                }
-                set
-                {
-                    lock(LockObject)
-                    {
-                        _chatEntries = value;
-                    }
-                }
-            }
+            public FixedSizeQueue<EliteAPI.ChatEntry> ChatEntries { get; set; } = new FixedSizeQueue<EliteAPI.ChatEntry>(50);
 
             public ChatTools(EliteAPI api)
             {
@@ -562,13 +551,10 @@ namespace MemoryAPI.Memory
 
             private void QueueChatEntries()
             {
-                lock (LockObject)
+                EliteAPI.ChatEntry chatEntry;
+                while ((chatEntry = _api.Chat.GetNextChatLine()) != null)
                 {
-                    EliteAPI.ChatEntry chatEntry;
-                    while ((chatEntry = _api.Chat.GetNextChatLine()) != null)
-                    {
-                        _chatEntries.Enqueue(chatEntry);
-                    }
+                    ChatEntries.Enqueue(chatEntry);
                 }
             }
         }
