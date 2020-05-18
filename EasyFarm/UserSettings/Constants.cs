@@ -69,7 +69,7 @@ namespace EasyFarm.UserSettings
         /// <summary>
         /// Controls the wait time between checks on the unit array to control performance.
         /// </summary>
-        public const double UnitArrayCheckRate = 1;
+        public const double UnitArrayCheckRate = 0.1;
 
         /// <summary>
         /// The maximum priority for states in the FSM. 
