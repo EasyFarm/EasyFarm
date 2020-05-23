@@ -63,7 +63,7 @@ namespace EasyFarm.States
         {
             _positions = Waypoints.ToList();
 
-            if (_positions.Count < 2)
+            if (_positions.Count < 2 && _position > -1)
             {
                 return _positions[_position];
             }
