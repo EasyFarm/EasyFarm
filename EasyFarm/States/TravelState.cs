@@ -25,11 +25,6 @@ namespace EasyFarm.States
 {
     public class TravelState : BaseState
     {
-        private int watchdogIterator = 0;
-        private string[] watchdogIds = new string[] { "305" };
-
-        private DateTime _lastWatchdogTime = DateTime.MinValue;
-
         public override bool Check(IGameContext context)
         {
             // Waypoint list is empty.
@@ -62,13 +57,6 @@ namespace EasyFarm.States
         public override void Run(IGameContext context)
         {
             var now = DateTime.Now;
-            var secondsSinceLastWatchdog = (now - _lastWatchdogTime).TotalSeconds;
-            if (secondsSinceLastWatchdog > 2.5)
-            {
-                context.API.Windower.SendString("/watchdog track " + watchdogIds[watchdogIterator % watchdogIds.Count()]);
-                _lastWatchdogTime = now;
-                watchdogIterator++;
-            }
 
             var currentPosition = context.Config.Route.GetCurrentPosition(context.API.Player.Position);
 
