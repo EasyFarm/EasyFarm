@@ -63,6 +63,11 @@ namespace EasyFarm.States
         {
             _positions = Waypoints.ToList();
 
+            if (_positions.Count <= 0)
+            {
+                return null;
+            }
+
             if (_positions.Count < 2 && _position > -1)
             {
                 return _positions[_position];
@@ -110,9 +115,10 @@ namespace EasyFarm.States
 
         public void Reset()
         {
+            _lastPosition = null;
             Waypoints.Clear();
             Zone = Zone.Unknown;
-            _position = 0;
+            _position = -1;
             _positions.Clear();
         }
 

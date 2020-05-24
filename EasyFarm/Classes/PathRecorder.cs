@@ -87,6 +87,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public void Start()
         {
+            _lastPosition = null;
             _recorder.Start();
             IsRecording = true;
         }
@@ -98,6 +99,7 @@ namespace EasyFarm.Classes
         {
             _recorder.Stop();
             IsRecording = false;
+            _lastPosition = null;
         }        
 
         /// <summary>
