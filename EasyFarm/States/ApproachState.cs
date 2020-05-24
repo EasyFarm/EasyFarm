@@ -67,7 +67,7 @@ namespace EasyFarm.States
 
                 if (context.API.Player.Position.Distance(context.Target.Position) <= Config.Instance.MeleeDistance)
                 {
-                    context.API.Navigator.FaceHeading(context.Target.Position);
+                    context.API.Navigator.FaceHeading(context.Target.Position, false);
                     context.API.Navigator.Reset();
 
                     // Has the user decided we should engage in battle. 
@@ -77,7 +77,7 @@ namespace EasyFarm.States
                 }
                 else if (path.Count > 0)
                 {
-                    context.API.Navigator.DistanceTolerance = 1;
+                    context.API.Navigator.DistanceTolerance = 3;
 
                     while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= context.API.Navigator.DistanceTolerance)
                     {
@@ -97,7 +97,7 @@ namespace EasyFarm.States
             else
             {
                 // Face mob. 
-                context.API.Navigator.FaceHeading(context.Target.Position);
+                context.API.Navigator.FaceHeading(context.Target.Position, false);
                 context.API.Navigator.Reset();
             }
         }

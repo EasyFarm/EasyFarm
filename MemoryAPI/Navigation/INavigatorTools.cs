@@ -23,7 +23,7 @@ namespace MemoryAPI
     public interface INavigatorTools
     {
         double DistanceTolerance { get; set; }
-        void FaceHeading(Position position);
+        void FaceHeading(Position position, bool isRunning);
         void GotoWaypoint(Position position, bool keepRunning);
         void GotoNPC(int ID, Position position, bool keepRunning);
         void Reset();

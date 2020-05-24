@@ -42,7 +42,7 @@
             <RadioButton x:Name="StraightRoute"
                          DockPanel.Dock="Left"
                          Content="Straight"
-                         IsChecked="{Binding Straight, FallbackValue=True}">
+                         IsChecked="{Binding StraightRoute, FallbackValue=True}">
             </RadioButton>
             <RadioButton x:Name="CircularRoute"
                          DockPanel.Dock="Left"

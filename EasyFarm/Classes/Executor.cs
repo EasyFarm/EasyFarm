@@ -93,7 +93,7 @@ namespace EasyFarm.Classes
             {
                 var isInRange = MoveIntoActionRange(context, target, action);
 
-                _fface.Navigator.FaceHeading(target.Position);
+                _fface.Navigator.FaceHeading(target.Position, false);
                 Player.SetTarget(_fface, target);
 
                 if (isInRange)
@@ -126,7 +126,7 @@ namespace EasyFarm.Classes
                 var path = context.NavMesh.FindPathBetween(context.API.Player.Position, context.Target.Position);
                 if (path.Count > 0)
                 {
-                    context.API.Navigator.DistanceTolerance = 1;
+                    context.API.Navigator.DistanceTolerance = 3;
 
                     while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= _fface.Navigator.DistanceTolerance)
                     {
@@ -144,7 +144,7 @@ namespace EasyFarm.Classes
                     }
                     else
                     {
-                        context.API.Navigator.FaceHeading(target.Position);
+                        context.API.Navigator.FaceHeading(target.Position, false);
                     }
 
                 }

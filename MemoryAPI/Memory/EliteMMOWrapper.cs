@@ -16,7 +16,6 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -68,28 +67,35 @@ namespace MemoryAPI.Memory
                 _api = api;
             }
 
-            private static float Bearing(Position player, Position position)
+            private static double Bearing(Position player, Position position)
             {
                 var bearing = -Math.Atan2(position.Z - player.Z, position.X - player.X);
 
-                return (float)bearing;
+                return bearing;
             }
 
-            public void FaceHeading(Position position)
+            private static double Radius(Position player, Position position)
+            {
+                return Math.Sqrt(Math.Pow(position.Z - player.Z, 2) + Math.Pow(position.X - player.X, 2));
+            }
+
+            public void FaceHeading(Position position, bool isRunning)
             {
                 var player = _api.Entity.GetLocalPlayer();
+
+
                 var playerPosition = new Position();
                 playerPosition.X = player.X;
                 playerPosition.Y = player.Y;
                 playerPosition.Z = player.Z;
                 playerPosition.H = player.H;
 
-                var radian = Bearing(playerPosition, position);
-                if (_api.Player.H != radian)
-                {
-                    SetViewMode(ViewMode.FirstPerson);
-                }
-                _api.Entity.SetEntityHPosition(_api.Entity.LocalPlayerIndex, (float)radian);
+                var radius = Radius(playerPosition, position);
+                var heading = Bearing(playerPosition, position);
+
+                SetViewMode(ViewMode.FirstPerson);
+                Thread.Sleep(250);
+                _api.Entity.SetEntityHPosition(_api.Entity.LocalPlayerIndex, (float)heading);
             }
 
             private double DistanceTo(Position position)
@@ -104,17 +110,22 @@ namespace MemoryAPI.Memory
 
             public void GotoWaypoint(Position position, bool keepRunning)
             {
-                if (!(DistanceTo(position) > DistanceTolerance)) return;
-                MoveForwardTowardsPosition(() => position);
-                if (!keepRunning) Reset();
+                if (DistanceTo(position) <= DistanceTolerance)
+                {
+                    if (!keepRunning) Reset();
+                    return;
+                }
+                MoveForwardTowardsPosition(position, keepRunning);
             }
 
             public void GotoNPC(int id, Position position, bool keepRunning)
             {
-                if (!(DistanceTo(position) > DistanceTolerance)) return;
-                GotoWaypoint(position, true);
-                KeepOneYalmBack(GetEntityPosition(id));
-                if (!keepRunning) Reset();
+                if (DistanceTo(position) <= DistanceTolerance)
+                {
+                    if (!keepRunning) Reset();
+                    return;
+                }
+                MoveForwardTowardsPosition(position, keepRunning, true);
             }
 
             private Position GetEntityPosition(int id)
@@ -122,15 +133,22 @@ namespace MemoryAPI.Memory
                 var entity = _api.GetCachedEntity(id);
                 var position = Helpers.ToPosition(entity.X, entity.Y, entity.Z, entity.H);
                 return position;
-            }            
+            }
 
-            private void MoveForwardTowardsPosition(
-                Func<Position> targetPosition)
+            private void MoveForwardTowardsPosition(Position targetPosition, bool keepRunning = true, bool keepOneYalmBack = false)
             {
-                FaceHeading(targetPosition());
+                FaceHeading(targetPosition, keepRunning);
+
                 _api.ThirdParty.KeyDown(Keys.NUMPAD8);
-                
+
+                /*if (keepOneYalmBack)
+                {
+                    KeepOneYalmBack(targetPosition, keepRunning);
+                }*/
+
                 AvoidObstacles();
+
+                if (!keepRunning) Reset();
             }
 
             private void KeepRunningWithKeyboard()
@@ -138,7 +156,7 @@ namespace MemoryAPI.Memory
                 _api.ThirdParty.KeyDown(Keys.NUMPAD8);
             }
 
-            private void KeepOneYalmBack(Position position)
+            private void KeepOneYalmBack(Position position, bool isRunning)
             {
                 if (DistanceTo(position) > TooCloseDistance) return;
 
@@ -147,7 +165,7 @@ namespace MemoryAPI.Memory
 
                 while (DistanceTo(position) <= TooCloseDistance && DateTime.Now < duration)
                 {
-                    FaceHeading(position);
+                    FaceHeading(position, isRunning);
                     Thread.Sleep(30);
                 }
 
@@ -191,7 +209,7 @@ namespace MemoryAPI.Memory
                     */
                 var firstX = _api.Player.X;
                 var firstZ = _api.Player.Z;
-                var checkTime = 0.1;
+                var checkTime = 0.3;
                 var playerSpeed = _api.Player.Speed;
                 var expectedDelta = checkTime / playerSpeed;
                 Thread.Sleep(TimeSpan.FromSeconds(checkTime));
@@ -227,7 +245,7 @@ namespace MemoryAPI.Memory
             /// </remarks>
             private void WiggleCharacter(int attempts)
             {
-                int originalAttempts = attempts;
+                /*int originalAttempts = attempts;
                 int count = 0;
                 float dir = -45;
                 while (IsStuck() && attempts-- > 0)
@@ -244,11 +262,34 @@ namespace MemoryAPI.Memory
                         count = 0;
                     }
                 }
-                _api.ThirdParty.KeyUp(Keys.NUMPAD8);
+                _api.ThirdParty.KeyUp(Keys.NUMPAD8);*/
+            }
+
+            public void ResetFacing(Keys? ignoreKey = null)
+            {
+                if (!ignoreKey.HasValue || ignoreKey.Value != Keys.Q)
+                {
+                    _api.ThirdParty.KeyUp(Keys.Q);
+                }
+                if (!ignoreKey.HasValue || ignoreKey.Value != Keys.E)
+                {
+                    _api.ThirdParty.KeyUp(Keys.E);
+                }
+                if (!ignoreKey.HasValue || ignoreKey.Value != Keys.A)
+                {
+                    _api.ThirdParty.KeyUp(Keys.A);
+                }
+                if (!ignoreKey.HasValue || ignoreKey.Value != Keys.D)
+                {
+                    _api.ThirdParty.KeyUp(Keys.D);
+                }
             }
 
             public void Reset()
             {
+                ResetFacing();
+                _api.ThirdParty.KeyUp(Keys.NUMPAD6);
+                _api.ThirdParty.KeyUp(Keys.NUMPAD4);
                 _api.ThirdParty.KeyUp(Keys.NUMPAD8);
                 _api.ThirdParty.KeyUp(Keys.NUMPAD2);
             }

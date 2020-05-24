@@ -30,29 +30,33 @@ namespace EasyFarm.States
 
         public override bool Check(IGameContext context)
         {
-            // Currently fighting, do not change target unless we have aggro from another mob
-            if (!context.Target.IsValid || !(!context.Target.HasAggroed && context.Player.HasAggro))
+            // Currently fighting, do not set target unless we have aggro from another mob
+            if (context.Target.IsValid && (!context.Target.HasAggroed && context.Player.HasAggro))
             {
-                // Still not time to update for new target. 
-                if (!ShouldCheckTarget()) return false;
+                LogViewModel.Write("Cancelling targeting " + context.Target.Name + " : " + context.Target.Id + " because we have aggro from another mob.");
+                //context.Target = null;
+                return false;
+            }
 
-                // First get the first mob by distance.
-                var mobs = context.Units.Where(x => x.IsValid).ToList();
-                mobs = TargetPriority.Prioritize(mobs).ToList();
+            // Still not time to update for new target. 
+            if (!ShouldCheckTarget()) return false;
 
-                // Set our new target at the end so that we don't accidentally cast on a new target.
-                context.Target = mobs.FirstOrDefault() ?? new NullUnit();
+            // First get the first mob by distance.
+            var mobs = context.Units.Where(x => x.IsValid).ToList();
+            mobs = TargetPriority.Prioritize(mobs).ToList();
 
-                // Update last time target was updated. 
-                _lastTargetCheck = DateTime.Now;
+            // Set our new target at the end so that we don't accidentally cast on a new target.
+            context.Target = mobs.FirstOrDefault() ?? new NullUnit();
 
-                if (context.Target.IsValid)
-                {
-                    // FIXME: if random path is set, do not reset? make this configurable?
-                    //context.Config.Route.ResetCurrentWaypoint();
+            // Update last time target was updated. 
+            _lastTargetCheck = DateTime.Now;
 
-                    LogViewModel.Write("Now targeting " + context.Target.Name + " : " + context.Target.Id);
-                }
+            if (context.Target.IsValid)
+            {
+                // FIXME: if random path is set, do not reset? make this configurable?
+                context.Config.Route.ResetCurrentWaypoint();
+
+                LogViewModel.Write("Now targeting " + context.Target.Name + " : " + context.Target.Id);
             }
 
             return false;

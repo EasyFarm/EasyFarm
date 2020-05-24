@@ -10,6 +10,7 @@ using MemoryAPI.Navigation;
 public class NavMesh
 {
 
+	static int MAX_PATH = 256;
 	static int NAVMESHSET_MAGIC = 'M' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'MSET';
 	static int NAVMESHSET_VERSION = 1;
 	private Detour.dtNavMesh dtNavMesh;
@@ -100,6 +101,8 @@ public class NavMesh
 		{
 			Unload();
 		}
+
+		_zone = zone;
 
 		var headerBufferSize = NavMeshSetHeader.ByteSize();
 		var headerBuffer = new byte[headerBufferSize];
@@ -196,7 +199,7 @@ public class NavMesh
 		var queryFilter = new Detour.dtQueryFilter();
 		var navMeshQuery = new Detour.dtNavMeshQuery();
 
-		var status = navMeshQuery.init(dtNavMesh, 256);
+		var status = navMeshQuery.init(dtNavMesh, MAX_PATH);
 
 		if (Detour.dtStatusFailed(status))
 		{
@@ -231,12 +234,11 @@ public class NavMesh
 			return path;
 		}
 
-		int maxPath = 256;
-		uint[] pathPolys = new uint[maxPath];
+		uint[] pathPolys = new uint[MAX_PATH];
 		int pathCount = 0;
-		float[] straightPath = new float[maxPath * 3];
-		byte[] straightPathFlags = new byte[maxPath];
-		uint[] straightPathPolys = new uint[maxPath];
+		float[] straightPath = new float[MAX_PATH * 3];
+		byte[] straightPathFlags = new byte[MAX_PATH];
+		uint[] straightPathPolys = new uint[MAX_PATH];
 		int straightPathCount = 0;
 
 		status = navMeshQuery.findPath(
@@ -247,7 +249,7 @@ public class NavMesh
 			queryFilter,
 			pathPolys,
 			ref pathCount,
-			maxPath
+			MAX_PATH
 		);
 
 		if (Detour.dtStatusFailed(status))
@@ -266,7 +268,7 @@ public class NavMesh
 			straightPathFlags,
 			straightPathPolys,
 			ref straightPathCount,
-			256,
+			MAX_PATH,
 			(int)Detour.dtStraightPathOptions.DT_STRAIGHTPATH_ALL_CROSSINGS
 		);
 

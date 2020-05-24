@@ -48,6 +48,8 @@ namespace EasyFarm.States
             //var playerUnit = context.Units.First(x => x.Id == context.Player.Id);
             if (!string.IsNullOrEmpty(context.Player.Name))
             {
+                context.API.Navigator.Reset();
+                context.API.Windower.SendString("/autotarget off");
                 context.API.Windower.SendString("/lw profile " + context.Player.Name.ToLowerInvariant());
             }
             else

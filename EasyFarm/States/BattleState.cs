@@ -64,6 +64,7 @@ namespace EasyFarm.States
         {
             Player.Stand(context.API);
             context.API.Navigator.Reset();
+            context.API.Navigator.FaceHeading(context.Target.Position, false);
         }
 
         public override void Run(IGameContext context)
