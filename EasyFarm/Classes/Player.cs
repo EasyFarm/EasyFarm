@@ -29,6 +29,7 @@ namespace EasyFarm.Classes
         private static Player _instance = new Player();
 
         public bool IsMoving { get; set; }
+        public bool IsStuck { get; set; }
 
         public static Player Instance
         {
@@ -68,7 +69,8 @@ namespace EasyFarm.Classes
             if (!fface.Player.Status.Equals(Status.Fighting))
             {
                 fface.Windower.SendString(Constants.AttackTarget);
-                Thread.Sleep(2000); // avoid stuck detection from triggering
+                Thread.Sleep(500);
+                fface.Windower.SendString(Constants.ToggleLockOn);
             }
         }
 
@@ -80,7 +82,6 @@ namespace EasyFarm.Classes
             if (fface.Player.Status.Equals(Status.Fighting))
             {
                 fface.Windower.SendString(Constants.AttackOff);
-                Thread.Sleep(2000); // avoid stuck detection from triggering
             }
         }
 
@@ -121,11 +122,8 @@ namespace EasyFarm.Classes
 
         private static void SetTargetUsingMemory(IMemoryAPI fface, IUnit target)
         {
-            if (target.Id != fface.Target.ID)
-            {
-                fface.Target.SetNPCTarget(target.Id);
-                fface.Windower.SendString(Constants.SetTargetCursor);
-            }
+            fface.Target.SetNPCTarget(target.Id);
+            fface.Windower.SendString(Constants.SetTargetCursor);
         }
     }
 }

@@ -52,7 +52,7 @@ namespace EasyFarm.States
 
             if (healingMoves.Count <= 0) return;
             var healingMove = healingMoves.First();
-            context.Memory.Executor.UseBuffingActions(new[] {healingMove});
+            context.Memory.Executor.UseBuffingActions(new[] {healingMove}, context.API.Player.Position);
         }
     }
 }

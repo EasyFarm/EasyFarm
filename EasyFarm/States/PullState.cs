@@ -18,6 +18,7 @@
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.Context;
+using Player = EasyFarm.Classes.Player;
 
 namespace EasyFarm.States
 {
@@ -48,6 +49,10 @@ namespace EasyFarm.States
         /// </summary>
         public override void Run(IGameContext context)
         {
+            // Has the user decided we should engage in battle. 
+            if (context.Target.Distance <= 25 && context.Config.IsEngageEnabled)
+                Player.Engage(context.API);
+
             var actions = context.Config.BattleLists["Pull"].Actions.ToList();
             var usable = actions.Where(x => ActionFilters.TargetedFilter(context.API, x, context.Target)).ToList();
             context.Memory.Executor.UseTargetedActions(context, usable, context.Target);

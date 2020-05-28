@@ -59,8 +59,10 @@ namespace MemoryAPI.Memory
         {
             private const double TooCloseDistance = 1.5;
             private readonly EliteAPI _api;
+            private readonly EliteAPI _memoryApi;
 
             public double DistanceTolerance { get; set; } = 3;
+            public bool IsStuck { get; set; } = false;
 
             public NavigationTools(EliteAPI api)
             {
@@ -83,7 +85,6 @@ namespace MemoryAPI.Memory
             {
                 var player = _api.Entity.GetLocalPlayer();
 
-
                 var playerPosition = new Position();
                 playerPosition.X = player.X;
                 playerPosition.Y = player.Y;
@@ -94,7 +95,6 @@ namespace MemoryAPI.Memory
                 var heading = Bearing(playerPosition, position);
 
                 SetViewMode(ViewMode.FirstPerson);
-                Thread.Sleep(250);
                 _api.Entity.SetEntityHPosition(_api.Entity.LocalPlayerIndex, (float)heading);
             }
 
@@ -141,10 +141,10 @@ namespace MemoryAPI.Memory
 
                 _api.ThirdParty.KeyDown(Keys.NUMPAD8);
 
-                /*if (keepOneYalmBack)
+                if (keepOneYalmBack)
                 {
                     KeepOneYalmBack(targetPosition, keepRunning);
-                }*/
+                }
 
                 AvoidObstacles();
 
@@ -177,6 +177,7 @@ namespace MemoryAPI.Memory
                 if ((ViewMode)_api.Player.ViewMode != viewMode)
                 {
                     _api.Player.ViewMode = (int)viewMode;
+                    Thread.Sleep(200);
                 }
             }
 
@@ -185,37 +186,13 @@ namespace MemoryAPI.Memory
             /// </summary>
             private void AvoidObstacles()
             {
-                if (IsStuck())
+                if (IsStuck)
                 {
-                    if (IsEngaged()) Disengage();
+                    //if (IsEngaged()) Disengage();
                     WiggleCharacter(attempts: 3);
                 }
             }
 
-            /// <summary>
-            /// Determines if the player has become stuck.
-            /// </summary>
-            /// <returns></returns>
-            /// <remarks>
-            /// Author: dlsmd
-            /// http://www.elitemmonetwork.com/forums/viewtopic.php?p=4627#p4627
-            /// </remarks>
-            private bool IsStuck()
-            {
-                /* FIXME: move prohibiteffects to MemoryAPI
-                if (ProhibitEffects.ProhibitEffectsMovement
-                    .Intersect(context.API.Player.StatusEffects).Any())
-                    return false;
-                    */
-                var firstX = _api.Player.X;
-                var firstZ = _api.Player.Z;
-                var checkTime = 0.3;
-                var playerSpeed = _api.Player.Speed;
-                var expectedDelta = checkTime / playerSpeed;
-                Thread.Sleep(TimeSpan.FromSeconds(checkTime));
-                var dchange = Math.Pow(firstX - _api.Player.X, 2) + Math.Pow(firstZ - _api.Player.Z, 2);
-                return Math.Abs(dchange) < expectedDelta;
-            }
 
             /// <summary>
             /// If the player is in fighting stance.
@@ -232,7 +209,6 @@ namespace MemoryAPI.Memory
             private void Disengage()
             {
                 _api.ThirdParty.SendString("/attack off");
-                Thread.Sleep(2000);
             }
 
             /// <summary>
@@ -245,14 +221,15 @@ namespace MemoryAPI.Memory
             /// </remarks>
             private void WiggleCharacter(int attempts)
             {
-                /*int originalAttempts = attempts;
+                int originalAttempts = attempts;
                 int count = 0;
                 float dir = -45;
-                while (IsStuck() && attempts-- > 0)
+                while (IsStuck && attempts-- > 0)
                 {
+                    Console.WriteLine("Wiggle character");
                     _api.Entity.GetLocalPlayer().H = _api.Player.H + (float)(Math.PI / 180 * dir);
                     _api.ThirdParty.KeyDown(Keys.NUMPAD8);
-                    var keydownTime = Math.Round((originalAttempts - attempts) * new Random().NextDouble() * 3);
+                    var keydownTime = Math.Round((originalAttempts - attempts) * new Random().NextDouble() * 1.5);
                     Thread.Sleep(TimeSpan.FromSeconds(keydownTime));
                     _api.ThirdParty.KeyUp(Keys.NUMPAD8);
                     count++;
@@ -262,7 +239,7 @@ namespace MemoryAPI.Memory
                         count = 0;
                     }
                 }
-                _api.ThirdParty.KeyUp(Keys.NUMPAD8);*/
+                _api.ThirdParty.KeyUp(Keys.NUMPAD8);
             }
 
             public void ResetFacing(Keys? ignoreKey = null)

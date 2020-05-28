@@ -130,7 +130,7 @@ namespace EasyFarm.States
             var trusts = context.Config.BattleLists["Trusts"].Actions.Where(t => t.IsEnabled);
             foreach (var trust in trusts)
                 if (TrustNeedsSummoning(context, trust) && AbilityUtils.IsRecastable(context.API, trust))
-                    context.Memory.Executor.UseActions(new[] {trust});
+                    context.Memory.Executor.UseActions(new[] {trust}, context.API.Player.Position);
         }
     }
 }

@@ -39,11 +39,6 @@ namespace EasyFarm.States
 
         public override bool Check(IGameContext context)
         {
-            // Do not follow during fighting. 
-            if (context.IsFighting) return false;
-
-            // Do not follow when resting. 
-            if (new RestState().Check(context)) return false;
 
             // Avoid following empty units. 
             if (string.IsNullOrWhiteSpace(context.Config.FollowedPlayer)) return false;
@@ -54,8 +49,18 @@ namespace EasyFarm.States
             // If no player is nearby, return. 
             if (player == null) return false;
 
+            // Do not follow during fighting. 
+            if (context.IsFighting) return false;
+
+            // Do not follow when resting. 
+            if (new RestState().Check(context)) return false;
+
+            if (player.Status == Status.Healing) return true; 
+
             // If we're already close, no action needed. 
-            return player.Distance > context.Config.FollowDistance;
+            var isClose = player.Distance <= context.Config.FollowDistance;
+
+            return !isClose;
         }
 
         public override void Run(IGameContext context)
@@ -64,18 +69,33 @@ namespace EasyFarm.States
             var player = context.Memory.UnitService.GetUnitByName(context.Config.FollowedPlayer);
 
             // Follow the player. 
-            var path = context.NavMesh.FindPathBetween(context.API.Player.Position, context.Target.Position);
-            if (path.Count > 0 && context.API.Player.Position.Distance(context.Target.Position) > context.Config.FollowDistance)
+            var path = context.NavMesh.FindPathBetween(context.API.Player.Position, player.Position);
+            if (path.Count > 0 && player.Distance > context.Config.FollowDistance)
             {
-                context.API.Navigator.DistanceTolerance = 3;
+                context.API.Navigator.DistanceTolerance = 3.0;
 
                 while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= context.API.Navigator.DistanceTolerance)
                 {
                     path.Dequeue();
                 }
 
-                context.API.Navigator.GotoNPC(context.Target.Id, path.Peek(), path.Count > 0);
+                if (path.Count > 0)
+                {
+                    if (path.Peek().Distance(player.Position) <= context.Config.FollowDistance)
+                    {
+                        context.API.Navigator.DistanceTolerance = Config.Instance.FollowDistance;
+                    }
+
+                    context.API.Navigator.GotoNPC(player.Id, path.Peek(), true);
+                }
             }
+        }
+
+        public override void Exit(IGameContext context)
+        {
+            var player = context.Memory.UnitService.GetUnitByName(context.Config.FollowedPlayer);
+            context.API.Navigator.GotoNPC(player.Id, player.Position, false);
+            context.API.Navigator.Reset();
         }
     }
 }

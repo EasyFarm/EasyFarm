@@ -49,8 +49,22 @@ namespace EasyFarm.States
             if (!string.IsNullOrEmpty(context.Player.Name))
             {
                 context.API.Navigator.Reset();
+
+                context.API.Windower.SendString("/addon load chatmon");
+                context.API.Windower.SendString("/load lootwhore");
                 context.API.Windower.SendString("/autotarget off");
                 context.API.Windower.SendString("/lw profile " + context.Player.Name.ToLowerInvariant());
+                context.API.Windower.SendString("/chatmon enable tell");
+                context.API.Windower.SendString("/chatmon enable examine");
+                context.API.Windower.SendString("/chatmon enable gmtell");
+                context.API.Windower.SendString("/chatmon enable party");
+                context.API.Windower.SendString("/chatmon enable say");
+                context.API.Windower.SendString("/chatmon enable invite");
+                context.API.Windower.SendString("/chatmon enable emote");
+                context.API.Windower.SendString("/chatmon enable examined");
+                context.API.Windower.SendString("/chatmon enable inventory");
+                context.API.Windower.SendString("/chatmon mute skillup");
+
             }
             else
             {

@@ -36,6 +36,8 @@ namespace EasyFarm.States
             // Has valid target to fight.
             if (context.Target.IsValid) return false;
 
+            if (new FollowState().Check(context)) return false;
+
             // We don't have to rest.
             if (new RestState().Check(context)) return false;
 
@@ -73,7 +75,7 @@ namespace EasyFarm.States
             var path = context.NavMesh.FindPathBetween(context.API.Player.Position, currentPosition);
             if (path.Count > 0)
             {
-                context.API.Navigator.DistanceTolerance = 3;
+                context.API.Navigator.DistanceTolerance = 3.0;
 
                 while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= context.API.Navigator.DistanceTolerance)
                 {

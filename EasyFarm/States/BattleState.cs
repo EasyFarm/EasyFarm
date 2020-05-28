@@ -72,7 +72,9 @@ namespace EasyFarm.States
             ShouldRecycleBattleStateCheck(context, lastPosition);
 
             lastPosition = context.Target.Position;
-            
+
+            context.API.Navigator.FaceHeading(context.Target.Position, false);
+
             // Cast only one action to prevent blocking curing. 
             var action = context.Config.BattleLists["Battle"].Actions
                 .FirstOrDefault(x => ActionFilters.TargetedFilter(context.API, x, context.Target));
@@ -121,93 +123,17 @@ namespace EasyFarm.States
                     var action = actions.GetValue(actionIndex);
                     switch (action)
                     {
-                        /*case BuggedMobResponseActions.MoveBack:
-                            LogViewModel.Write("Target is bugged, trying to unbug it by moving back.");
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
-                            break;*/
                         case BuggedMobResponseActions.MoveLeft:
                             LogViewModel.Write("Target is bugged, trying to unbug it by moving left.");
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyDown(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendHoldKey(EliteMMO.API.Keys.S, new Random().Next(500, 3000));
+                            context.API.Windower.SendKeyUp(EliteMMO.API.Keys.A);
                             break;
                         case BuggedMobResponseActions.MoveRight:
                             LogViewModel.Write("Target is bugged, trying to unbug it by moving right.");
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
-                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyDown(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendHoldKey(EliteMMO.API.Keys.W, new Random().Next(500, 3000));
+                            context.API.Windower.SendKeyUp(EliteMMO.API.Keys.A);
                             break;
                     }
                 }

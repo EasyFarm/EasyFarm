@@ -49,7 +49,7 @@ namespace EasyFarm.States
                 .Actions.Where(x => ActionFilters.BuffingFilter(context.API, x));
 
             // Execute moves at target. 
-            context.Memory.Executor.UseBuffingActions(usable);
+            context.Memory.Executor.UseBuffingActions(usable, context.API.Player.Position);
         }
     }
 }

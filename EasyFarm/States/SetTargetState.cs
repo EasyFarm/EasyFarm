@@ -21,6 +21,7 @@ using EasyFarm.Classes;
 using EasyFarm.Context;
 using EasyFarm.UserSettings;
 using EasyFarm.ViewModels;
+using Player = EasyFarm.Classes.Player;
 
 namespace EasyFarm.States
 {
@@ -30,36 +31,36 @@ namespace EasyFarm.States
 
         public override bool Check(IGameContext context)
         {
-            // Currently fighting, do not set target unless we have aggro from another mob
-            if (context.Target.IsValid && (!context.Target.HasAggroed && context.Player.HasAggro))
-            {
-                LogViewModel.Write("Cancelling targeting " + context.Target.Name + " : " + context.Target.Id + " because we have aggro from another mob.");
-                //context.Target = null;
-                return false;
-            }
-
-            // Still not time to update for new target. 
-            if (!ShouldCheckTarget()) return false;
-
-            // First get the first mob by distance.
-            var mobs = context.Units.Where(x => x.IsValid).ToList();
-            mobs = TargetPriority.Prioritize(mobs).ToList();
-
-            // Set our new target at the end so that we don't accidentally cast on a new target.
-            context.Target = mobs.FirstOrDefault() ?? new NullUnit();
+            var shouldCheck = ShouldCheckTarget();
 
             // Update last time target was updated. 
             _lastTargetCheck = DateTime.Now;
 
-            if (context.Target.IsValid)
+            return shouldCheck;
+        }
+
+        public override void Run(IGameContext context)
+        {
+            // First get the first mob by distance.
+            var mobs = context.Units.Where(x => x.IsValid).ToList();
+            mobs = TargetPriority.Prioritize(mobs).ToList();
+
+            var lastTarget = context.Target;
+
+            // Set our new target at the end so that we don't accidentally cast on a new target.
+            var target = mobs.FirstOrDefault() ?? new NullUnit();
+
+            if (target.IsValid && lastTarget != target)
             {
+                context.Target = target;
+
                 // FIXME: if random path is set, do not reset? make this configurable?
                 context.Config.Route.ResetCurrentWaypoint();
 
                 LogViewModel.Write("Now targeting " + context.Target.Name + " : " + context.Target.Id);
             }
 
-            return false;
+            Player.SetTarget(context.API, target);
         }
 
         private bool ShouldCheckTarget()

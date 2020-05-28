@@ -24,7 +24,9 @@ namespace EasyFarm.Classes
     {
         public static IOrderedEnumerable<IUnit> Prioritize(IEnumerable<IUnit> units)
         {
-            return units.OrderByDescending(x => x.PartyClaim)
+            return units
+                .Where(x => x.IsValid)
+                .OrderByDescending(x => x.PartyClaim)
                 .ThenByDescending(x => x.HasAggroed)
                 .ThenBy(x => x.Distance);
         }

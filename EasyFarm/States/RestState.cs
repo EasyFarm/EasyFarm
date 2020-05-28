@@ -35,13 +35,10 @@ namespace EasyFarm.States
         /// <returns></returns>
         public override bool Check(IGameContext context)
         {
-            // Check for effects taht stop resting. 
-            if (ProhibitEffects.ProhibitEffectsDots
-                .Intersect(context.API.Player.StatusEffects).Any()) 
-                return false;
+            var partyFighting = context.Units.Where(x => x.IsValid && (x.PartyClaim || x.HasAggroed)).Count() > 0;
 
             // Do not rest if we are being attacked. 
-            if (context.Player.HasAggro) 
+            if (context.Player.HasAggro || partyFighting)
                 return false;
 
             // Check if we are fighting. 
@@ -66,6 +63,35 @@ namespace EasyFarm.States
                 context.Config.HighHealth)) 
                 return true;
 
+            foreach(var partyMember in context.API.PartyMember.Select(x => x.Value).Where(x => x.UnitPresent).ToList())
+            {
+                var status = Status.Standing;
+
+                var partyMemberUnit = context.Memory.UnitService.GetUnitByName(partyMember.Name);
+                if (partyMemberUnit != null)
+                {
+                    status = partyMemberUnit.Status;
+                }
+
+                // Check if we should rest for health.
+                if (ShouldRestForHealth(
+                    partyMember.HPPCurrent,
+                    status,
+                    context.Config.IsHealthEnabled,
+                    context.Config.LowHealth,
+                    context.Config.HighHealth))
+                    return true;
+
+                // Check if we should rest for magic. 
+                if (ShouldRestForMagic(
+                    partyMember.MPPCurrent,
+                    status,
+                    context.Config.IsMagicEnabled,
+                    context.Config.LowMagic,
+                    context.Config.HighHealth))
+                    return true;
+            }
+
             // We do not meet the conditions for resting. 
             return false;
         }
@@ -75,6 +101,12 @@ namespace EasyFarm.States
         /// </summary>
         public override void Run(IGameContext context)
         {
+
+            // Check for effects taht stop resting. 
+            if (ProhibitEffects.ProhibitEffectsDots
+                .Intersect(context.API.Player.StatusEffects).Any())
+                return;
+
             Player.Rest(context.API);
         }
 

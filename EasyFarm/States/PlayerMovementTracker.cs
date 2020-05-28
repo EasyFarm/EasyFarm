@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EasyFarm.Classes;
+using EliteMMO.API;
 using MemoryAPI;
 using MemoryAPI.Navigation;
 
@@ -29,7 +30,13 @@ namespace EasyFarm.States
         private static readonly object LockObject = new object();
 
         private readonly IMemoryAPI _fface;
-        private readonly Queue<Position> _positionHistory = new Queue<Position>();
+        struct Tuple
+        {
+            public Position position;
+            public DateTime time;
+        }
+
+        private readonly Queue<Tuple> _positionHistory = new Queue<Tuple>();
 
         public PlayerMovementTracker(IMemoryAPI fface)
         {
@@ -41,20 +48,42 @@ namespace EasyFarm.States
             lock (LockObject)
             {
                 var position = _fface.Player.Position;
-                _positionHistory.Enqueue(Helpers.ToPosition(position.X, position.Y, position.Z, position.H));
-                if (_positionHistory.Count >= 15) _positionHistory.Dequeue();
+                Tuple tuple = new Tuple() { position = position, time = DateTime.Now };
+                _positionHistory.Enqueue(tuple);
+                if (_positionHistory.Count >= 30) _positionHistory.Dequeue();
             }
-            Player.Instance.IsMoving = IsMoving();
+            var isMoving = IsMoving();
+            var isStuck = IsStuck();
+            Player.Instance.IsMoving = isMoving;
+            Player.Instance.IsStuck = isMoving && isStuck;
+
+            _fface.Navigator.IsStuck = isStuck;
         }
 
         public bool IsMoving()
         {
             lock (LockObject)
             {
-                var changeInX = _positionHistory.Average(positon => positon.X) - _fface.Player.PosX;
-                var changeInZ = _positionHistory.Average(position => position.Z) - _fface.Player.PosZ;
+                var changeInX = _positionHistory.Average(tuple => tuple.position.X) - _fface.Player.PosX;
+                var changeInZ = _positionHistory.Average(tuple => tuple.position.Z) - _fface.Player.PosZ;
                 
                 return Math.Abs(changeInX) + Math.Abs(changeInZ) > 0;
+            }
+        }
+
+        public bool IsStuck()
+        {
+            lock (LockObject)
+            {
+                var changeInX = _positionHistory.Average(tuple => tuple.position.X) - _fface.Player.PosX;
+                var changeInZ = _positionHistory.Average(tuple => tuple.position.Z) - _fface.Player.PosZ;
+
+                var checkTime = DateTime.Now - _positionHistory.Last().time;
+                var expectedDelta = 0.3; //(checkTime.TotalSeconds / _api.Player.Speed) * 0.25;
+                var dchange = Math.Pow(changeInX, 2) + Math.Pow(changeInZ, 2);
+                var isStuck = Math.Abs(dchange) < expectedDelta;
+
+                return isStuck;
             }
         }
     }

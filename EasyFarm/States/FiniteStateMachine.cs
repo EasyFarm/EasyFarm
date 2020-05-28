@@ -149,8 +149,16 @@ namespace EasyFarm.States
                     // Run last state's exits method.
                     if (_cache[mc] != isRunnable)
                     {
-                        if (isRunnable) mc.Enter(_context);
-                        else mc.Exit(_context);
+                        if (isRunnable)
+                        {
+                            AppServices.InformUser("Entering " + mc.GetType().Name);
+                            mc.Enter(_context);
+                        }
+                        else
+                        {
+                            mc.Exit(_context);
+                            AppServices.InformUser("Exited " + mc.GetType().Name);
+                        }
                         _cache[mc] = isRunnable;
                     }
 

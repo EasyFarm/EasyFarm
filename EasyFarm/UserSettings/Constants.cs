@@ -31,6 +31,8 @@ namespace EasyFarm.UserSettings
         /// </summary>
         public const string AttackTarget = "/attack <t>";
 
+        public const string ToggleLockOn = "/lockon";
+
         /// <summary>
         /// Min distance to stand when attacking an opponent.
         /// </summary>

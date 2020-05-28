@@ -58,7 +58,7 @@ namespace EasyFarm.States
             var usable = context.Config.BattleLists["End"].Actions
                 .Where(x => ActionFilters.BuffingFilter(context.API, x));
 
-            context.Memory.Executor.UseBuffingActions(usable);
+            context.Memory.Executor.UseBuffingActions(usable, context.API.Player.Position);
 
             // Reset all usage data to begin a new battle.
             foreach (var action in context.Config.BattleLists.Actions) action.Usages = 0;

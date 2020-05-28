@@ -28,10 +28,6 @@ namespace EasyFarm.ViewModels
 {
     public class SelectProcessViewModel : ViewModelBase
     {
-        /// <summary>
-        ///     The name of the Processes to search for.
-        /// </summary>
-        private const string ProcessName = "pol";
 
         public SelectProcessViewModel(BaseMetroDialog dialog)
         {
@@ -77,21 +73,30 @@ namespace EasyFarm.ViewModels
 
         public BaseMetroDialog Dialog { get; }
 
-        /// <summary>
+        /// <summary>,
         /// Refresh the processes.
         /// </summary>
         private void OnRefresh()
         {
             Processes.Clear();
 
-            Processes.AddRange(Process.GetProcessesByName(ProcessName)
-                .Where(x => !string.IsNullOrWhiteSpace((x.MainWindowTitle)))
-                .ToList());
-
-            if (Processes.Count > 0) return;
-
             Processes.AddRange(Process.GetProcesses()
-                .Where(x => !string.IsNullOrWhiteSpace(x.MainWindowTitle))
+                .Where(x =>
+                {
+                    var isNotEmpty = !string.IsNullOrWhiteSpace(x.MainWindowTitle);
+
+                    try
+                    {
+                        var hasFFXIMain = (from ProcessModule m in x.Modules where m.ModuleName.ToLower() == "ffximain.dll" select m).FirstOrDefault() != null;
+                        return isNotEmpty && hasFFXIMain;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+
+                    return isNotEmpty;
+                })
                 .ToList());
         }
 

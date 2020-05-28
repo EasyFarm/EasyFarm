@@ -16,6 +16,7 @@
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
 using System.Linq;
+using System.Threading;
 using EasyFarm.Classes;
 using EasyFarm.Context;
 using EasyFarm.UserSettings;
@@ -50,8 +51,13 @@ namespace EasyFarm.States
             // Approach when there are no pulling moves available. 
             if (!usable.Any()) return true;
 
-            // Approach mobs if their distance is close. 
-            return context.Target.Distance < 8;
+            return context.Target.Distance >= Config.Instance.MeleeDistance;
+        }
+
+        public override void Enter(IGameContext context)
+        {
+            Player.Instance.IsStuck = false;
+            context.API.Navigator.FaceHeading(context.Target.Position, false);
         }
 
         public override void Run(IGameContext context)
@@ -65,19 +71,18 @@ namespace EasyFarm.States
                 // Move to target if out of melee range. 
                 var path = context.NavMesh.FindPathBetween(context.API.Player.Position, context.Target.Position);
 
-                if (context.API.Player.Position.Distance(context.Target.Position) <= Config.Instance.MeleeDistance)
+                // Has the user decided we should engage in battle. 
+                if (context.Target.Distance <= 25 && context.Config.IsEngageEnabled)
+                    Player.Engage(context.API);
+
+                if (context.Target.Distance <= Config.Instance.MeleeDistance)
                 {
                     context.API.Navigator.FaceHeading(context.Target.Position, false);
                     context.API.Navigator.Reset();
-
-                    // Has the user decided we should engage in battle. 
-                    if (context.Config.IsEngageEnabled)
-                        if (!context.API.Player.Status.Equals(Status.Fighting) && context.Target.Distance < 25)
-                            context.API.Windower.SendString(Constants.AttackTarget);
                 }
                 else if (path.Count > 0)
                 {
-                    context.API.Navigator.DistanceTolerance = 3;
+                    context.API.Navigator.DistanceTolerance = 3.0;
 
                     while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= context.API.Navigator.DistanceTolerance)
                     {
@@ -92,14 +97,19 @@ namespace EasyFarm.States
                         }
                         context.API.Navigator.GotoNPC(context.Target.Id, path.Peek(), true);
                     }
+                    else
+                    {
+                        context.API.Navigator.GotoNPC(context.Target.Id, context.Target.Position, false);
+                    }
                 }
-            } 
-            else
-            {
-                // Face mob. 
-                context.API.Navigator.FaceHeading(context.Target.Position, false);
-                context.API.Navigator.Reset();
             }
+        }
+
+        public override void Exit(IGameContext context)
+        {
+            // Face mob. 
+            context.API.Navigator.FaceHeading(context.Target.Position, false);
+            context.API.Navigator.Reset();
         }
     }
 }

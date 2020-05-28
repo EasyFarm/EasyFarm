@@ -37,7 +37,7 @@ namespace EasyFarm.Classes
             _fface = fface;
         }
 
-        public void UseActions(IEnumerable<BattleAbility> actions)
+        public void UseActions(IEnumerable<BattleAbility> actions, Position position)
         {
             if (actions == null) throw new ArgumentNullException(nameof(actions));
 
@@ -48,7 +48,7 @@ namespace EasyFarm.Classes
                     continue;
                 }
 
-                if (!CastSpell(action)) continue;
+                if (!CastSpell(action, position)) continue;
 
                 action.Usages++;
                 action.LastCast = DateTime.Now.AddSeconds(action.Recast);
@@ -57,7 +57,7 @@ namespace EasyFarm.Classes
             }
         }
 
-        public void UseBuffingActions(IEnumerable<BattleAbility> actions)
+        public void UseBuffingActions(IEnumerable<BattleAbility> actions, Position position)
         {
             if (actions == null) throw new ArgumentNullException(nameof(actions));
 
@@ -73,7 +73,7 @@ namespace EasyFarm.Classes
                         continue;
                     }
 
-                    if (!CastSpell(action)) continue;
+                    if (!CastSpell(action, position)) continue;
 
                     castables.Remove(action);
                     action.Usages++;
@@ -93,22 +93,21 @@ namespace EasyFarm.Classes
             {
                 var isInRange = MoveIntoActionRange(context, target, action);
 
-                _fface.Navigator.FaceHeading(target.Position, false);
                 Player.SetTarget(_fface, target);
 
                 if (isInRange)
                 {
-
+                    _fface.Navigator.FaceHeading(target.Position, false);
                     _fface.Navigator.Reset();
                     TimeWaiter.Pause(100);
 
                     if (ResourceHelper.IsSpell(action.AbilityType))
                     {
-                        CastSpell(action);
+                        CastSpell(action, target.Position);
                     }
                     else
                     {
-                        CastAbility(action);
+                        CastAbility(action, target.Position);
                     }
 
                     action.Usages++;
@@ -126,9 +125,9 @@ namespace EasyFarm.Classes
                 var path = context.NavMesh.FindPathBetween(context.API.Player.Position, context.Target.Position);
                 if (path.Count > 0)
                 {
-                    context.API.Navigator.DistanceTolerance = 3;
+                    context.API.Navigator.DistanceTolerance = 3.0;
 
-                    while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= _fface.Navigator.DistanceTolerance)
+                    while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= context.API.Navigator.DistanceTolerance)
                     {
                         path.Dequeue();
                     }
@@ -144,6 +143,7 @@ namespace EasyFarm.Classes
                     }
                     else
                     {
+                        context.API.Navigator.GotoNPC(target.Id, target.Position, false);
                         context.API.Navigator.FaceHeading(target.Position, false);
                     }
 
@@ -159,7 +159,7 @@ namespace EasyFarm.Classes
         {            
             var previous = _fface.Player.CastPercentEx;
             var startTime = DateTime.Now;
-            var interval = startTime.AddSeconds(3);
+            var interval = startTime.AddSeconds(5);
 
             while (DateTime.Now < interval)
             {
@@ -187,14 +187,16 @@ namespace EasyFarm.Classes
             return false;
         }
 
-        private bool MonitorCast()
+        private bool MonitorCast(Position position)
         {
             var prior = _fface.Player.CastPercentEx;
 
             var stopwatch = new Stopwatch();
 
-            while (stopwatch.Elapsed.TotalSeconds < 2)
+            while (stopwatch.Elapsed.TotalSeconds < 5)
             {
+                _fface.Navigator.FaceHeading(position, false);
+
                 if (Math.Abs(prior - _fface.Player.CastPercentEx) < .5)
                 {
                     if (!stopwatch.IsRunning) stopwatch.Start();
@@ -212,8 +214,9 @@ namespace EasyFarm.Classes
             return Math.Abs(prior - 100) < .5;
         }
 
-        private bool CastAbility(BattleAbility ability)
+        private bool CastAbility(BattleAbility ability, Position position)
         {
+            _fface.Navigator.FaceHeading(position, false);
             SendCommand(ability.Command);
             TimeWaiter.Pause(100);
             return true;
@@ -225,9 +228,9 @@ namespace EasyFarm.Classes
             _fface.Windower.SendString(command);
         }
 
-        private bool CastSpell(BattleAbility ability)
+        private bool CastSpell(BattleAbility ability, Position position)
         {
-            if (EnsureCast(ability.Command)) return MonitorCast();
+            if (EnsureCast(ability.Command)) return MonitorCast(position);
             return false;
         }
     }
