@@ -85,7 +85,7 @@ namespace EasyFarm.ViewModels
             Processes.Clear();
 
             Processes.AddRange(Process.GetProcessesByName(ProcessName)
-                .Where(x => string.IsNullOrWhiteSpace((x.MainWindowTitle)))
+                .Where(x => !string.IsNullOrWhiteSpace((x.MainWindowTitle)))
                 .ToList());
 
             if (Processes.Count > 0) return;
