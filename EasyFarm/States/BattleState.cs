@@ -33,6 +33,8 @@ namespace EasyFarm.States
     /// </summary>
     public class BattleState : BaseState
     {
+        private MemoryAPI.Navigation.Position lastPosition = null;
+
         public override bool Check(IGameContext context)
         {
             if (new RestState().Check(context)) 
@@ -66,7 +68,9 @@ namespace EasyFarm.States
 
         public override void Run(IGameContext context)
         {
-            ShouldRecycleBattleStateCheck(context);
+            ShouldRecycleBattleStateCheck(context, lastPosition);
+
+            lastPosition = context.Target.Position;
             
             // Cast only one action to prevent blocking curing. 
             var action = context.Config.BattleLists["Battle"].Actions
@@ -74,19 +78,135 @@ namespace EasyFarm.States
             if (action == null) return;
             context.Memory.Executor.UseTargetedActions(new[] {action}, context.Target);
         }
-
-        private void ShouldRecycleBattleStateCheck(IGameContext context)
+        
+        enum BuggedMobResponseActions
         {
+            MoveLeft,
+            MoveRight/*,
+            MoveBack*/
+        }
+
+        private void ShouldRecycleBattleStateCheck(IGameContext context, MemoryAPI.Navigation.Position lastPosition)
+        {
+
             var chatEntries = context.API.Chat.ChatEntries.ToList();
             var invalidTargetPattern = new Regex("Unable to see");
+            // blacklist "You cannot attack that target"
 
             List<EliteMMO.API.EliteAPI.ChatEntry> matches = chatEntries
                 .Where(x => invalidTargetPattern.IsMatch(x.Text)).ToList();
 
+
             foreach (EliteMMO.API.EliteAPI.ChatEntry m in matches.Where(x => x.Timestamp.ToString() == DateTime.Now.ToString()))
             {
-                context.API.Windower.SendString(Constants.AttackOff);
-                LogViewModel.Write("Recycled battle stance to properly engage the target.");
+                // only try to unstuck bugged mob if mob isn't moving...
+                if (lastPosition == null || !context.Target.Position.Equals(lastPosition) || context.Target.Distance > context.Config.MeleeDistance)
+                {
+                    LogViewModel.Write("Unable to engage target, but it is moving, so not counting it as bugged yet.");
+                    return;
+                } else
+                {
+                    var random = new Random();
+                    // only execute 50% of the time
+                    /*if (random.NextDouble() > 0.5)
+                    {
+                        continue;
+                    }*/
+                    var actionIndex = random.Next(Enum.GetNames(typeof(BuggedMobResponseActions)).Length);
+                    var actions = Enum.GetValues(typeof(BuggedMobResponseActions));
+                    var action = actions.GetValue(actionIndex);
+                    switch (action)
+                    {
+                        /*case BuggedMobResponseActions.MoveBack:
+                            LogViewModel.Write("Target is bugged, trying to unbug it by moving back.");
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.S);
+                            break;*/
+                        case BuggedMobResponseActions.MoveLeft:
+                            LogViewModel.Write("Target is bugged, trying to unbug it by moving left.");
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.A);
+                            break;
+                        case BuggedMobResponseActions.MoveRight:
+                            LogViewModel.Write("Target is bugged, trying to unbug it by moving right.");
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            context.API.Windower.SendKeyPress(EliteMMO.API.Keys.D);
+                            break;
+                    }
+                }
             }
         }
     }
