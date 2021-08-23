@@ -26,6 +26,7 @@ namespace EasyFarm.Parsing
         Unknown,
         WeaponSkill,
         Misc,
+        Range,
         JobAbility,
         PetCommand,
         CorsairRoll,

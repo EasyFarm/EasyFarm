@@ -74,6 +74,8 @@ namespace EasyFarm.Parsing
                     return CategoryType.WeaponSkill;
                 case "Misc":
                     return CategoryType.Misc;
+                case "Range":
+                    return CategoryType.Range;
                 case "JobAbility":
                     return CategoryType.JobAbility;
                 case "PetCommand":
@@ -227,6 +229,7 @@ namespace EasyFarm.Parsing
                 case AbilityType.Ninjutsu:
                 case AbilityType.Song:
                 case AbilityType.Item:
+                case AbilityType.Range:
                 case AbilityType.Trust:
                     return true;
                 default:
@@ -242,7 +245,6 @@ namespace EasyFarm.Parsing
             switch (abilityType)
             {
                 case AbilityType.Weaponskill:
-                case AbilityType.Range:
                 case AbilityType.Jobability:
                 case AbilityType.Pet:
                 case AbilityType.Monsterskill:
