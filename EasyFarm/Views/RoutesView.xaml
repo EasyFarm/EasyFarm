@@ -49,6 +49,11 @@
                          Content="Circular"
                          IsChecked="{Binding ElementName=StraightRoute, Path=IsChecked, Converter={StaticResource InverseBooleanConverter }}">
             </RadioButton>
+            <CheckBox x:Name="Debug"
+                      DockPanel.Dock="Left"
+                      Content="Debug Mode"
+                      IsChecked="{Binding DebugMode, FallbackValue=False}">
+            </CheckBox>
             <Button Command="{Binding ResetNavigatorCommand}"
                     DockPanel.Dock="Right"
                     Content="Reset Character"

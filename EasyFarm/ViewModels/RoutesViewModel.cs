@@ -60,6 +60,12 @@ namespace EasyFarm.ViewModels
             set { Set(ref _recordHeader, value); }
         }
 
+        public bool DebugMode
+        {
+            get { return Config.Instance.DebugRoutes; }
+            set { Set(ref Config.Instance.DebugRoutes, value); }
+        }
+
         /// <summary>
         ///     Exposes the list of waypoints to the user.
         /// </summary>

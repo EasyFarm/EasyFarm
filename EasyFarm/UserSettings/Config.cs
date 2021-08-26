@@ -81,6 +81,11 @@ namespace EasyFarm.UserSettings
         public ObservableCollection<string> IgnoredMobs = new ObservableCollection<string>();
 
         /// <summary>
+        ///     Debug routes, don't engage
+        /// </summary>
+        public bool DebugRoutes = false;
+
+        /// <summary>
         ///     Name of the mob to be ignored
         /// </summary>
         public string IgnoredName = string.Empty;
