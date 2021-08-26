@@ -180,12 +180,19 @@
     <Compile Include="Classes\IUnitFilters.cs" />
     <Compile Include="Classes\IUnitService.cs" />
     <Compile Include="Classes\EventMessenger.cs" />
+    <Compile Include="Classes\NavMesh.cs" />
     <Compile Include="Classes\Result.cs" />
     <Compile Include="Classes\TargetPriority.cs" />
     <Compile Include="Context\GameContext.cs" />
     <Compile Include="Context\IGameContext.cs" />
     <Compile Include="Context\IPlayer.cs" />
     <Compile Include="Context\Player.cs" />
+    <Compile Include="Detour\DetourCommon.cs" />
+    <Compile Include="Detour\DetourNavMesh.cs" />
+    <Compile Include="Detour\DetourNavMeshBuilder.cs" />
+    <Compile Include="Detour\DetourNavMeshQuery.cs" />
+    <Compile Include="Detour\DetourNode.cs" />
+    <Compile Include="Detour\DetourStatus.cs" />
     <Compile Include="Handlers\SelectAbilityRequestHandler.cs" />
     <Compile Include="Handlers\SelectCharacter.cs" />
     <Compile Include="Handlers\SelectCharacterResult.cs" />
@@ -222,6 +229,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Classes\NullUnit.cs" />
+    <Compile Include="Recast\Recast.cs" />
+    <Compile Include="Recast\RecastArea.cs" />
+    <Compile Include="Recast\RecastContour.cs" />
+    <Compile Include="Recast\RecastFilter.cs" />
+    <Compile Include="Recast\RecastLayers.cs" />
+    <Compile Include="Recast\RecastMesh.cs" />
+    <Compile Include="Recast\RecastMeshDetail.cs" />
+    <Compile Include="Recast\RecastRasterization.cs" />
+    <Compile Include="Recast\RecastRegion.cs" />
     <Compile Include="States\StateHistory.cs" />
     <Compile Include="States\StateLog.cs" />
     <Compile Include="States\StateStatus.cs" />
@@ -347,6 +363,8 @@
   <ItemGroup>
     <AppDesigner Include="Properties\" />
     <None Include="app.config" />
+    <None Include="Detour\DetourNode.cs.meta" />
+    <None Include="Detour\DetourStatus.cs.meta" />
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -464,6 +482,15 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Recast\Recast.cs.meta" />
+    <None Include="Recast\RecastArea.cs.meta" />
+    <None Include="Recast\RecastContour.cs.meta" />
+    <None Include="Recast\RecastFilter.cs.meta" />
+    <None Include="Recast\RecastLayers.cs.meta" />
+    <None Include="Recast\RecastMesh.cs.meta" />
+    <None Include="Recast\RecastMeshDetail.cs.meta" />
+    <None Include="Recast\RecastRasterization.cs.meta" />
+    <None Include="Recast\RecastRegion.cs.meta" />
     <None Include="trayicon.ico" />
   </ItemGroup>
   <ItemGroup>

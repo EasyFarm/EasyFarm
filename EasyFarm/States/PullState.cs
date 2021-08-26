@@ -50,7 +50,7 @@ namespace EasyFarm.States
         {
             var actions = context.Config.BattleLists["Pull"].Actions.ToList();
             var usable = actions.Where(x => ActionFilters.TargetedFilter(context.API, x, context.Target)).ToList();
-            context.Memory.Executor.UseTargetedActions(usable, context.Target);
+            context.Memory.Executor.UseTargetedActions(context, usable, context.Target);
         }
 
         /// <summary>

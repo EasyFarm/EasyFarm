@@ -31,7 +31,7 @@ namespace MemoryAPI.Navigation
 
         public override string ToString()
         {
-            return "X: " + X + "Z: " + Z;
+            return "(X: " + X + " Z: " + Z + ")";
         }
 
         public override int GetHashCode()
@@ -50,6 +50,22 @@ namespace MemoryAPI.Navigation
                 Math.Abs(this.H - other.H);
 
             return Math.Abs(deviation) <= 0;
+        }
+
+        public double Distance(Position other)
+        {
+            return Math.Sqrt(Math.Pow(X - other.X, 2) + Math.Pow(Z - other.Z, 2));
+        }
+
+        public float[] ToDetourPosition()
+        {
+            float[] detourPosition = new float[3];
+
+            detourPosition[0] = X;
+            detourPosition[1] = -Y;
+            detourPosition[2] = -Z;
+
+            return detourPosition;
         }
     }
 }

@@ -18,6 +18,7 @@
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.Context;
+using MemoryAPI.Navigation;
 
 namespace EasyFarm.States
 {
@@ -56,13 +57,37 @@ namespace EasyFarm.States
         {
             context.API.Navigator.DistanceTolerance = 1;
 
-            var nextPosition = context.Config.Route.GetNextPosition(context.API.Player.Position);
-            var shouldKeepRunningToNextWaypoint = context.Config.Route.Waypoints.Count != 1;
+            var currentPosition = context.Config.Route.GetCurrentPosition(context.API.Player.Position);
 
-            context.API.Navigator.GotoWaypoint(
+            if (currentPosition == null || currentPosition.Distance(context.API.Player.Position) <= 0.5)
+            {
+                currentPosition = context.Config.Route.GetNextPosition(context.API.Player.Position);
+            }
+
+            /*context.API.Navigator.GotoWaypoint(
                 nextPosition,
                 context.Config.IsObjectAvoidanceEnabled,
-                shouldKeepRunningToNextWaypoint);
+                shouldKeepRunningToNextWaypoint);*/
+
+            var path = context.NavMesh.FindPathBetween(context.API.Player.Position, currentPosition);
+            if (path.Count > 0)
+            {
+                context.API.Navigator.DistanceTolerance = 0.5;
+
+                while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= context.API.Navigator.DistanceTolerance)
+                {
+                    path.Dequeue();
+                }
+
+                if (path.Count > 0)
+                {
+                    context.API.Navigator.GotoWaypoint(path.Peek(), true);
+                } 
+                else
+                {
+                    context.Config.Route.GetNextPosition(context.API.Player.Position);
+                }
+            }
         }
 
         public override void Exit(IGameContext context)

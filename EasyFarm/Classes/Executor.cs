@@ -22,6 +22,7 @@ using System.Linq;
 using EasyFarm.Parsing;
 using EasyFarm.UserSettings;
 using MemoryAPI;
+using MemoryAPI.Navigation;
 using StatusEffect = MemoryAPI.StatusEffect;
 
 namespace EasyFarm.Classes
@@ -83,43 +84,75 @@ namespace EasyFarm.Classes
             }
         }   
 
-        public void UseTargetedActions(IEnumerable<BattleAbility> actions, IUnit target)
+        public void UseTargetedActions(EasyFarm.Context.IGameContext context, IEnumerable<BattleAbility> actions, IUnit target)
         {
             if (actions == null) throw new ArgumentNullException(nameof(actions));
             if (target == null) throw new ArgumentNullException(nameof(target));
 
             foreach (var action in actions)
             {
-                MoveIntoActionRange(target, action);
+                var isInRange = MoveIntoActionRange(context, target, action);
+
                 _fface.Navigator.FaceHeading(target.Position);
                 Player.SetTarget(_fface, target);
 
-                _fface.Navigator.Reset();
-                TimeWaiter.Pause(100);
-
-                if (ResourceHelper.IsSpell(action.AbilityType))
+                if (isInRange)
                 {
-                    CastSpell(action);
-                }
-                else
-                {
-                    CastAbility(action);
-                }
 
-                action.Usages++;
-                action.LastCast = DateTime.Now.AddSeconds(action.Recast);
+                    _fface.Navigator.Reset();
+                    TimeWaiter.Pause(100);
 
-                TimeWaiter.Pause(Config.Instance.GlobalCooldown);
+                    if (ResourceHelper.IsSpell(action.AbilityType))
+                    {
+                        CastSpell(action);
+                    }
+                    else
+                    {
+                        CastAbility(action);
+                    }
+
+                    action.Usages++;
+                    action.LastCast = DateTime.Now.AddSeconds(action.Recast);
+
+                    TimeWaiter.Pause(Config.Instance.GlobalCooldown);
+                }
             }
         }
 
-        private void MoveIntoActionRange(IUnit target, BattleAbility action)
+        private bool MoveIntoActionRange(EasyFarm.Context.IGameContext context, IUnit target, BattleAbility action)
         {
             if (target.Distance > action.Distance)
             {
-                _fface.Navigator.DistanceTolerance = action.Distance;
-                _fface.Navigator.GotoNPC(target.Id, Config.Instance.IsObjectAvoidanceEnabled);
+                var path = context.NavMesh.FindPathBetween(context.API.Player.Position, context.Target.Position);
+                if (path.Count > 0)
+                {
+                    if (path.Count > 1)
+                    {
+                        _fface.Navigator.DistanceTolerance = 0.5;
+                    }
+                    else
+                    {
+                        _fface.Navigator.DistanceTolerance = action.Distance;
+                    }
+
+                    while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= _fface.Navigator.DistanceTolerance)
+                    {
+                        path.Dequeue();
+                    }
+
+                    if (path.Count > 0)
+                    {
+                        context.API.Navigator.GotoNPC(target.Id, path.Peek(), true);
+                    } else
+                    {
+                        context.API.Navigator.Reset();
+                    }
+                }
+
+                return false;
             }
+
+            return true;
         }        
 
         private bool EnsureCast(string command)

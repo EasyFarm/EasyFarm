@@ -46,7 +46,11 @@ namespace EasyFarm.States
                 // Update last time target was updated. 
                 _lastTargetCheck = DateTime.Now;
 
-                if (context.Target.IsValid) LogViewModel.Write("Now targeting " + context.Target.Name + " : " + context.Target.Id);
+                if (context.Target.IsValid)
+                {
+                    context.Config.Route.ResetCurrentWaypoint();
+                    LogViewModel.Write("Now targeting " + context.Target.Name + " : " + context.Target.Id);
+                }
             }
 
             return false;

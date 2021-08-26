@@ -20,6 +20,7 @@ using EasyFarm.Classes;
 using EasyFarm.Context;
 using EasyFarm.UserSettings;
 using MemoryAPI;
+using MemoryAPI.Navigation;
 using Player = EasyFarm.Classes.Player;
 
 namespace EasyFarm.States
@@ -55,24 +56,51 @@ namespace EasyFarm.States
 
         public override void Run(IGameContext context)
         {
+            // Target mob if not currently targeted. 
+            Player.SetTarget(context.API, context.Target);
+
             // Has the user decided that we should approach targets?
             if (context.Config.IsApproachEnabled)
             {
                 // Move to target if out of melee range. 
-                context.API.Navigator.DistanceTolerance = context.Config.MeleeDistance;
-                context.API.Navigator.GotoNPC(context.Target.Id, context.Config.IsObjectAvoidanceEnabled);
+                var path = context.NavMesh.FindPathBetween(context.API.Player.Position, context.Target.Position);
+                if (path.Count > 0)
+                {
+                    if (path.Count > 1)
+                    {
+                        context.API.Navigator.DistanceTolerance = 0.5;
+                    }
+                    else
+                    {
+                        context.API.Navigator.DistanceTolerance = context.Config.MeleeDistance;
+                    }
+
+                    while (path.Count > 0 && path.Peek().Distance(context.API.Player.Position) <= context.API.Navigator.DistanceTolerance)
+                    {
+                        path.Dequeue();
+                    }
+                    
+                    if (path.Count > 0)
+                    {
+                        context.API.Navigator.GotoNPC(context.Target.Id, path.Peek(), true);
+                    }
+                    else
+                    {
+                        context.API.Navigator.FaceHeading(context.Target.Position);
+                        context.API.Navigator.Reset();
+
+                        // Has the user decided we should engage in battle. 
+                        if (context.Config.IsEngageEnabled)
+                            if (!context.API.Player.Status.Equals(Status.Fighting) && context.Target.Distance < 25)
+                                context.API.Windower.SendString(Constants.AttackTarget);
+                    }
+                }
+            } 
+            else
+            {
+                // Face mob. 
+                context.API.Navigator.FaceHeading(context.Target.Position);
             }
-
-            // Face mob. 
-            context.API.Navigator.FaceHeading(context.Target.Position);
-
-            // Target mob if not currently targeted. 
-            Player.SetTarget(context.API, context.Target);
-
-            // Has the user decided we should engage in battle. 
-            if (context.Config.IsEngageEnabled)
-                if (!context.API.Player.Status.Equals(Status.Fighting) && context.Target.Distance < 25)
-                    context.API.Windower.SendString(Constants.AttackTarget);
         }
     }
 }

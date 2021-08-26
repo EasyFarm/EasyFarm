@@ -49,6 +49,8 @@ namespace EasyFarm.Classes
         /// </summary>
         private Position _lastPosition;
 
+        private float _recordDistance = 30;
+
         /// <summary>
         /// The memory source to retrieve the character's position from. 
         /// </summary>
@@ -125,8 +127,7 @@ namespace EasyFarm.Classes
             // Update the path if we've changed out position. Rotating our heading does not
             // count as the player moving. 
             if (_lastPosition == null ||
-                position.X != _lastPosition.X ||
-                position.Z != _lastPosition.Z)
+                position.Distance(_lastPosition) >= _recordDistance)
             {
                 // Fire positon added event. 
                 OnPositionAdded?.Invoke(position);
