@@ -46,5 +46,7 @@ namespace MemoryAPI.Memory
         public IChatTools Chat { get; set; }
 
         public IResourcesTools Resource { get; set; }
+
+        public IFollowTools Follow { get; set; }
     }
 }

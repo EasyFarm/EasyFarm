@@ -238,6 +238,7 @@
     <Compile Include="Recast\RecastMeshDetail.cs" />
     <Compile Include="Recast\RecastRasterization.cs" />
     <Compile Include="Recast\RecastRegion.cs" />
+    <Compile Include="States\DebugNavigationState.cs" />
     <Compile Include="States\StateHistory.cs" />
     <Compile Include="States\StateLog.cs" />
     <Compile Include="States\StateStatus.cs" />

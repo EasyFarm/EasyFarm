@@ -32,5 +32,6 @@ namespace MemoryAPI
         IWindowerTools Windower { get; set; }
         IChatTools Chat { get; set; }
         IResourcesTools Resource { get; set; }
+        IFollowTools Follow { get; set; }
     }
 }

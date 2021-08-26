@@ -54,6 +54,7 @@
     <Compile Include="Enums\enums.cs" />
     <Compile Include="Enums\NPCType.cs" />
     <Compile Include="Enums\Structures.cs" />
+    <Compile Include="Follow\IFollowTools.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="IMemoryAPI.cs" />
     <Compile Include="Memory\EliteApiExtensions.cs" />

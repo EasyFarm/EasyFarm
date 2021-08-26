@@ -48,6 +48,7 @@ namespace MemoryAPI.Memory
             Windower = new WindowerTools(eliteApi);
             Chat = new ChatTools(eliteApi);
             Resource = new ResourcesTools(eliteApi);
+            Follow = new FollowTools(eliteApi);
 
             for (byte i = 0; i < 16; i++)
             {
@@ -532,6 +533,27 @@ namespace MemoryAPI.Memory
                 {
                     ChatEntries.Enqueue(chatEntry);
                 }
+            }
+        }
+
+        public class FollowTools : IFollowTools
+        {
+            private readonly EliteAPI _api;
+
+            public FollowTools(EliteAPI api)
+            {
+                _api = api;
+            }
+
+            public void SetFollowCoords(float x, float y, float z)
+            {
+                _api.AutoFollow.SetAutoFollowCoords(x, y, z);
+                _api.AutoFollow.IsAutoFollowing = true;
+            }
+
+            public void Reset()
+            {
+                _api.AutoFollow.IsAutoFollowing = false;
             }
         }
     }
