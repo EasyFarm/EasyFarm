@@ -166,7 +166,7 @@ namespace EasyFarm.States
                     if (isRunnable) mc.Run(_context);
                 }
 
-                TimeWaiter.Pause(250);
+                TimeWaiter.Pause(100);
             }
 
             // ReSharper disable once FunctionNeverReturns

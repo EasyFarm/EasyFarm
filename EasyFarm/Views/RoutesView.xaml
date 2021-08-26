@@ -71,6 +71,7 @@
                     Content="Save" />
             <Button Command="{Binding LoadCommand}"
                     Content="Load" />
+            <Button Content="Add Waypoint" Command="{Binding AddCommand}" />
         </StackPanel>
 
         <ListBox Grid.Row="0"

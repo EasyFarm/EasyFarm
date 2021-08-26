@@ -79,6 +79,7 @@ namespace EasyFarm.States
             IsWorking = false;
             _stateMachine.Stop();
             _playerMonitor.Stop();
+            _fface.Follow.Reset();
         }
     }
 }

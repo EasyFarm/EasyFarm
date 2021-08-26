@@ -724,10 +724,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)Dependencies\*.*" "$(TargetDir)"
-if not exist "$(TargetDir)NavigationMeshes" mkdir "$(TargetDir)NavigationMeshes"
-xcopy "$(ProjectDir)Dependencies\NavigationMeshes" "$(TargetDir)NavigationMeshes"
+    <PostBuildEvent>xcopy /E "$(ProjectDir)Dependencies\*.*" "$(TargetDir)"
 </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>rd /s /q "$(TargetDir)"
+</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

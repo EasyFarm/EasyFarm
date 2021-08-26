@@ -43,6 +43,7 @@ namespace EasyFarm.ViewModels
             RecordCommand = new RelayCommand(Record);
             SaveCommand = new RelayCommand(Save);
             LoadCommand = new RelayCommand(Load);
+            AddCommand = new RelayCommand(AddWaypoinnt);
             ResetNavigatorCommand = new RelayCommand(ResetNavigator);
 
             RecordHeader = "Record";
@@ -95,6 +96,8 @@ namespace EasyFarm.ViewModels
         /// </summary>
         public ICommand LoadCommand { get; set; }
 
+        public ICommand AddCommand { get; set; }
+
         /// <summary>
         /// A command to stop the player from running navigator 
         /// throwing an error. 
@@ -106,7 +109,7 @@ namespace EasyFarm.ViewModels
         /// </summary>
         private void ClearRoute()
         {
-            Config.Instance.Route.Reset();
+            Application.Current.Dispatcher.Invoke(() => Config.Instance.Route.Reset());
         }
 
         /// <summary>
@@ -170,6 +173,35 @@ namespace EasyFarm.ViewModels
             {
                 AppServices.InformUser("Failed to load the path.");
             }
+        }
+
+        private void AddWaypoinnt()
+        {
+            // Return when the user has not selected a process. 
+            if (FFACE == null)
+            {
+                AppServices.InformUser("No process has been selected.");
+                return;
+            }
+
+            if (FFACE.Player.Zone != Config.Instance.Route.Zone && Config.Instance.Route.Zone != Zone.Unknown)
+            {
+                AppServices.InformUser("Cannot record waypoints from a different zone.");
+                return;
+            }
+
+            Config.Instance.Route.Zone = FFACE.Player.Zone;
+
+            var position = new Position
+            {
+                X = FFACE.Player.Position.X,
+                Y = FFACE.Player.Position.Y,
+                Z = FFACE.Player.Position.Z,
+                H = FFACE.Player.Position.H
+            };
+
+            Application.Current.Dispatcher.Invoke(() => Route.Add(position));
+            AppServices.InformUser("Waypoint added!");
         }
 
         /// <summary>

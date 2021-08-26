@@ -98,7 +98,8 @@ namespace EasyFarm.Classes
         {
             _recorder.Stop();
             IsRecording = false;
-        }        
+        }   
+        
 
         /// <summary>
         ///     Records a new path for the player to travel.
