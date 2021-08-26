@@ -90,7 +90,7 @@ public class NavMesh
 			return false;
 		}
 
-		string path = "navmeshes\\" + zone.ToString() + ".nav";
+		string path = string.Format(@"NavigationMeshes\{0}.nav", zone.ToString());
 
 		if (_zone == zone && dtNavMesh != null)
 		{
