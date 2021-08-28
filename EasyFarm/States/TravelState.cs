@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+using System;
 using System.Linq;
 using EasyFarm.Classes;
 using EasyFarm.Context;
@@ -64,6 +65,10 @@ namespace EasyFarm.States
                 currentPosition = context.Config.Route.GetNextPosition(context.API.Player.Position);
             }
 
+            if (currentPosition.Distance(context.API.Player.Position) < 0.5)
+            {
+                context.API.Follow.Reset();
+            }
 
             var path = context.NavMesh.FindPathBetween(context.API.Player.Position, currentPosition);
             if (path.Count > 0)
@@ -86,6 +91,7 @@ namespace EasyFarm.States
                 else
                 {
                     context.Config.Route.GetNextPosition(context.API.Player.Position);
+                    context.API.Follow.Reset();
                 }
             }
         }
