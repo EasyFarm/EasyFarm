@@ -67,7 +67,7 @@
                             Grid.Column="1"
                             Margin="5 0 0 0"
                             Minimum="0"
-                            Maximum="50"
+                            Maximum="300"
                             Value="{Binding DetectionDistance}" />
                     <Label Grid.Row="1"
                            Grid.Column="0"
@@ -94,7 +94,7 @@
                             Grid.Column="1"
                             Margin="5 0 0 0"
                             Minimum="0"
-                            Maximum="50"
+                            Maximum="350"
                             Value="{Binding WanderDistance}" />
                     <Label Grid.Row="4"
                            Grid.Column="0"
