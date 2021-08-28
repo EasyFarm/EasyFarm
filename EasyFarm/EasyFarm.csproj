@@ -176,7 +176,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Behaviors\Hunt.cs" />
     <Compile Include="Classes\AppServices.cs" />
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
@@ -378,7 +377,6 @@
   <ItemGroup>
     <AppDesigner Include="Properties\" />
     <None Include="app.config" />
-    <None Include="Dependencies\lavits.eup" />
     <None Include="Dependencies\NavigationMeshes\288.nav" />
     <None Include="Dependencies\NavigationMeshes\Abyssea-Altepa.nav" />
     <None Include="Dependencies\NavigationMeshes\Abyssea-Attohwa.nav" />
