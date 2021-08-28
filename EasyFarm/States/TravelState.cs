@@ -70,11 +70,6 @@ namespace EasyFarm.States
                 context.API.Follow.Reset();
             }
 
-            /*context.API.Navigator.GotoWaypoint(
-                nextPosition,
-                context.Config.IsObjectAvoidanceEnabled,
-                shouldKeepRunningToNextWaypoint);*/
-
             var path = context.NavMesh.FindPathBetween(context.API.Player.Position, currentPosition);
             if (path.Count > 0)
             {

@@ -6,12 +6,18 @@
              xmlns:local="clr-namespace:EasyFarm.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel>
-        <GroupBox Header="Mobs to Kill">
-            <local:TargetsView/>
-        </GroupBox>
-        <GroupBox Header="Mobs to Avoid">
-            <local:IgnoredView/>
-        </GroupBox>
-    </StackPanel>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <GroupBox Header="Notorius Monsters">
+                <local:NotoriousMonsterView />
+            </GroupBox>
+            <GroupBox Header="Mobs to Kill">
+                <local:TargetsView/>
+            </GroupBox>
+            <GroupBox Header="Mobs to Avoid">
+                <local:IgnoredView/>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
+    
 </UserControl>

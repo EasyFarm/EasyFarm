@@ -86,18 +86,15 @@ namespace MemoryAPI.Navigation
             };
         }
 
-        public Position Normalized
+        public Position Normalized()
         {
-            get
+            var length = (float)Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2));
+            return new Position
             {
-                var length = (float)Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2));
-                return new Position
-                {
-                    X = X / length,
-                    Y = Y / length,
-                    Z = Z / length
-                };
-            }
+                X = X / length,
+                Y = Y / length,
+                Z = Z / length
+            };
         }
 
         public static Position operator -(Position A, Position B)

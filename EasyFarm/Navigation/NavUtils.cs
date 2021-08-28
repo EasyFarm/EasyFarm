@@ -12,7 +12,7 @@ namespace EasyFarm.Navigation
     {
         public static bool IsBetween(Position A, Position B, Position C)
         {
-            return Position.Dot((B - A).Normalized, (C - B).Normalized) < 0f && Position.Dot((A - B).Normalized, (C - A).Normalized) < 0f;
+            return Position.Dot((B - A).Normalized(), (C - B).Normalized()) < 0f && Position.Dot((A - B).Normalized(), (C - A).Normalized()) < 0f;
         }
     }
 }

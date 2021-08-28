@@ -312,6 +312,7 @@
     <Compile Include="Handlers\SelectCharacterEvent.cs" />
     <Compile Include="ViewModels\SelectProcessViewModel.cs" />
     <Compile Include="ViewModels\TargetingViewModel.cs" />
+    <Compile Include="ViewModels\NotoriousMonsterViewModel.cs" />
     <Compile Include="Views\AbilityView.xaml.cs">
       <DependentUpon>AbilityView.xaml</DependentUpon>
     </Compile>
@@ -326,6 +327,9 @@
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NotoriousMonsterView.xaml.cs">
+      <DependentUpon>NotoriousMonsterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SelectProcessDialog.xaml.cs">
       <DependentUpon>SelectProcessDialog.xaml</DependentUpon>
@@ -633,6 +637,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NotoriousMonsterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

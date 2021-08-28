@@ -33,6 +33,10 @@ namespace EasyFarm.UserSettings
     {
         private static Lazy<Config> _lazy = new Lazy<Config>(() => new Config());
 
+        public bool IsNMHunting = false;
+        public string PlaceholderID = "";
+        public string NotoriousMonsterName = "";
+
         /// <summary>
         ///     Used to filter out aggroed mobs.
         /// </summary>

@@ -49,6 +49,11 @@ namespace EasyFarm.States
         {
             _nodes = Waypoints.ToList();
 
+            if (_nodes.Count < 2)
+            {
+                return _nodes.FirstOrDefault();
+            }
+
             if (_goal == -1)
             {
                 return GetNextPosition(playerPosition);
@@ -160,9 +165,6 @@ namespace EasyFarm.States
                     return false;
                 }
             }
-     
-            //return Zone == context.Player.Zone &&
-            //       context.NavMesh.FindPathBetween(context.API.Player.Position, GetNextPosition(context.API.Player.Position)).Count > 0;
         }
     }
 }
