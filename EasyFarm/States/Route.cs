@@ -67,6 +67,9 @@ namespace EasyFarm.States
             // Refresh Node List
             _nodes = Waypoints.ToList();
 
+            if (_nodes.Count < 2)
+                return _nodes.FirstOrDefault();
+
 
             if (_goal == -1)
             {

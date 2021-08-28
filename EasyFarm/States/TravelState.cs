@@ -81,7 +81,11 @@ namespace EasyFarm.States
 
                 if (path.Count > 0)
                 {
-                    context.API.Navigator.GotoWaypoint(path.Peek(), true);
+                    var node = path.Peek();
+                    float deltaX = node.X - context.API.Player.Position.X;
+                    float deltaY = node.Y - context.API.Player.Position.Y;
+                    float deltaZ = node.Z - context.API.Player.Position.Z;
+                    context.API.Follow.SetFollowCoords(deltaX, deltaY, deltaZ);
                 } 
                 else
                 {
@@ -92,7 +96,7 @@ namespace EasyFarm.States
 
         public override void Exit(IGameContext context)
         {
-            context.API.Navigator.Reset();
+            context.API.Follow.Reset();
         }
     }
 }
