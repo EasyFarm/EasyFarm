@@ -214,14 +214,12 @@ public class NavMesh
 		float[] extents = new float[] { 10.0F, (float)EasyFarm.UserSettings.Config.Instance.HeightThreshold, 10.0F };
 
 		status = navMeshQuery.findNearestPoly(startDetourPosition, extents, queryFilter, ref startRef, ref startNearest);
-
 		if (Detour.dtStatusFailed(status))
 		{
 			return path;
 		}
 
 		status = navMeshQuery.findNearestPoly(endDetourPosition, extents, queryFilter, ref endRef, ref endNearest);
-
 		if (Detour.dtStatusFailed(status))
 		{
 			return path;

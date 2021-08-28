@@ -29,7 +29,9 @@ namespace EasyFarm.States
         {
             if (context.Target.IsValid)
                 if (!context.Config.BattleLists["Pull"].Actions.Any(x => x.IsEnabled))
+                {
                     return context.IsFighting = true;
+                }
                 else
                     return context.IsFighting = context.Target.Status.Equals(Status.Fighting);
 

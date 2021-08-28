@@ -67,5 +67,47 @@ namespace MemoryAPI.Navigation
 
             return detourPosition;
         }
+
+        public static int Dot(Position A, Position B)
+        {
+            return
+                (int)((A.X * B.X) +
+                (A.Y * B.Y) +
+                (A.Z * B.Z));
+        }
+
+        public static Position Cross(Position A, Position B)
+        {
+            return new Position()
+            {
+                X = A.Y * B.Z - A.Z * B.Y,
+                Y = -(A.X * B.Z - A.Z * B.X),
+                Z = A.X * B.Y - A.Y * B.X
+            };
+        }
+
+        public Position Normalized
+        {
+            get
+            {
+                var length = (float)Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2));
+                return new Position
+                {
+                    X = X / length,
+                    Y = Y / length,
+                    Z = Z / length
+                };
+            }
+        }
+
+        public static Position operator -(Position A, Position B)
+        {
+            return new Position
+            {
+                X = A.X - B.X,
+                Y = A.Y - B.Y,
+                Z = A.Z - B.Z
+            };
+        }
     }
 }

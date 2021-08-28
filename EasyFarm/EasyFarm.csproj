@@ -106,6 +106,9 @@
       <HintPath>Dependencies\EliteMMO.API.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="FluentBehaviourTree, Version=0.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentBehaviourTree.0.0.4.0\lib\net35\FluentBehaviourTree.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
@@ -173,6 +176,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\Hunt.cs" />
     <Compile Include="Classes\AppServices.cs" />
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
@@ -201,6 +205,8 @@
     <Compile Include="Handlers\LoadedEvent.cs" />
     <Compile Include="Infrastructure\TabViewModels.cs" />
     <Compile Include="Handlers\UpdateAPI.cs" />
+    <Compile Include="Navigation\ComplexRoute.cs" />
+    <Compile Include="Navigation\NavUtils.cs" />
     <Compile Include="Parsing\AbilityMapper.cs" />
     <Compile Include="Parsing\ItemMapper.cs" />
     <Compile Include="Parsing\Resource.cs" />
@@ -312,6 +318,9 @@
     <Compile Include="ViewModels\IgnoredViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\DebugOverlay.xaml.cs">
+      <DependentUpon>DebugOverlay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FollowView.xaml.cs">
       <DependentUpon>FollowView.xaml</DependentUpon>
     </Compile>
@@ -615,6 +624,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\DebugOverlay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FollowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -722,6 +735,7 @@
       <Name>MemoryAPI</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /E "$(ProjectDir)Dependencies\*.*" "$(TargetDir)"

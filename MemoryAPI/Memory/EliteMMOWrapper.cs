@@ -85,10 +85,10 @@ namespace MemoryAPI.Memory
                 playerPosition.H = player.H;
 
                 var radian = Bearing(playerPosition, position);
-                if (_api.Player.H != radian)
-                {
-                    SetViewMode(ViewMode.FirstPerson);
-                }
+                //if (_api.Player.H != radian)
+                //{
+                //    SetViewMode(ViewMode.FirstPerson);
+                //}
                 _api.Entity.SetEntityHPosition(_api.Entity.LocalPlayerIndex, (float)radian);
             }
 

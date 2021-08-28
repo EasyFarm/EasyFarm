@@ -82,12 +82,17 @@ namespace EasyFarm.States
                     
                     if (path.Count > 0)
                     {
-                        context.API.Navigator.GotoNPC(context.Target.Id, path.Peek(), true);
+                        var node = path.Peek();
+
+                        float deltaX = node.X - context.API.Player.Position.X;
+                        float deltaY = node.Y - context.API.Player.Position.Y;
+                        float deltaZ = node.Z - context.API.Player.Position.Z;
+                        context.API.Follow.SetFollowCoords(deltaX, deltaY, deltaZ);
                     }
                     else
                     {
                         context.API.Navigator.FaceHeading(context.Target.Position);
-                        context.API.Navigator.Reset();
+                        context.API.Follow.Reset();
 
                         // Has the user decided we should engage in battle. 
                         if (context.Config.IsEngageEnabled)
