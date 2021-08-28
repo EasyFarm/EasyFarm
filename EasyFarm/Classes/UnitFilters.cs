@@ -58,7 +58,9 @@ namespace EasyFarm.Classes
             // Type is not mob
             if (!mob.NpcType.Equals(NpcType.Mob)) return false;
 
-                
+            // Kill aggro if aggro's checked regardless of target's list but follows the ignored list.
+            if (mob.HasAggroed && config.AggroFilter) return true;
+
             // NM Huntinng
             if (Config.Instance.IsNMHunting)
             {
@@ -88,18 +90,11 @@ namespace EasyFarm.Classes
             if (MatchAny(mob.Name, config.IgnoredMobs,
                 RegexOptions.IgnoreCase)) return false;
 
-            // Kill aggro if aggro's checked regardless of target's list but follows the ignored list.
-            if (mob.HasAggroed && config.AggroFilter) return true;
-
             // There is a target's list but the mob is not on it.
             if (!MatchAny(mob.Name, config.TargetedMobs, RegexOptions.IgnoreCase) &&
                 config.TargetedMobs.Any())
                 return false;
 
-            // Mob on our targets list or not on our ignore list.
-
-            // Kill the creature if it has aggroed and aggro is checked.
-            if (mob.HasAggroed && config.AggroFilter) return true;
 
             // Kill the creature if it is claimed by party and party is checked.
             if (mob.PartyClaim && config.PartyFilter) return true;
