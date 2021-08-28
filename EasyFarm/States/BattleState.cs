@@ -66,7 +66,7 @@ namespace EasyFarm.States
 
         public override void Run(IGameContext context)
         {
-            ShouldRecycleBattleStateCheck(context);
+            //ShouldRecycleBattleStateCheck(context);
             
             // Cast only one action to prevent blocking curing. 
             var action = context.Config.BattleLists["Battle"].Actions
@@ -77,16 +77,23 @@ namespace EasyFarm.States
 
         private void ShouldRecycleBattleStateCheck(IGameContext context)
         {
-            var chatEntries = context.API.Chat.ChatEntries.ToList();
-            var invalidTargetPattern = new Regex("Unable to see");
-
-            List<EliteMMO.API.EliteAPI.ChatEntry> matches = chatEntries
-                .Where(x => invalidTargetPattern.IsMatch(x.Text)).ToList();
-
-            foreach (EliteMMO.API.EliteAPI.ChatEntry m in matches.Where(x => x.Timestamp.ToString() == DateTime.Now.ToString()))
+            try
             {
-                context.API.Windower.SendString(Constants.AttackOff);
-                LogViewModel.Write("Recycled battle stance to properly engage the target.");
+                var chatEntries = context.API.Chat.ChatEntries.ToList();
+                var invalidTargetPattern = new Regex("Unable to see");
+
+                List<EliteMMO.API.EliteAPI.ChatEntry> matches = chatEntries
+                    .Where(x => invalidTargetPattern.IsMatch(x.Text)).ToList();
+
+                foreach (EliteMMO.API.EliteAPI.ChatEntry m in matches.Where(x => x.Timestamp.ToString() == DateTime.Now.ToString()))
+                {
+                    context.API.Windower.SendString(Constants.AttackOff);
+                    LogViewModel.Write("Recycled battle stance to properly engage the target.");
+                }
+            }
+            catch (System.InvalidOperationException e)
+            {
+                LogViewModel.Write("Chat log updated while trying to recycle, could not recycle battle stance.  Exception message: " + e.Message);
             }
         }
     }

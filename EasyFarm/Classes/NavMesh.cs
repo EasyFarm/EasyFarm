@@ -106,6 +106,7 @@ public class NavMesh
 
 		if (!File.Exists(path))
 		{
+			EasyFarm.ViewModels.LogViewModel.Write("Missing zone mesh file: " + path.ToString());
 			return false;
 		}
 
@@ -188,6 +189,7 @@ public class NavMesh
 
 		if (dtNavMesh == null)
 		{
+			EasyFarm.ViewModels.LogViewModel.Write("FindPathBetween: Unable to path due to lacking navigation mesh for zone " + _zone.ToString());
 			return path;
 		}
 		var startDetourPosition = start.ToDetourPosition();
