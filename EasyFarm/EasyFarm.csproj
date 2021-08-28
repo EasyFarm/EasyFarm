@@ -180,6 +180,7 @@
     <Compile Include="Classes\AppServices.cs" />
     <Compile Include="Classes\BattleList.cs" />
     <Compile Include="Classes\BattleLists.cs" />
+    <Compile Include="Classes\ChatMonitor.cs" />
     <Compile Include="Classes\IUnit.cs" />
     <Compile Include="Classes\IUnitFilters.cs" />
     <Compile Include="Classes\IUnitService.cs" />
@@ -377,6 +378,7 @@
   <ItemGroup>
     <AppDesigner Include="Properties\" />
     <None Include="app.config" />
+    <None Include="Dependencies\lavits.eup" />
     <None Include="Dependencies\NavigationMeshes\288.nav" />
     <None Include="Dependencies\NavigationMeshes\Abyssea-Altepa.nav" />
     <None Include="Dependencies\NavigationMeshes\Abyssea-Attohwa.nav" />

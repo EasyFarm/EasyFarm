@@ -31,8 +31,8 @@ namespace EasyFarm.States
         ///     Provides information about game data.
         /// </summary>
         private readonly IMemoryAPI _fface;
-
         private readonly PlayerMonitor _playerMonitor;
+        private readonly ChatMonitor _chatMonitor;
 
         /// <summary>
         ///     The engine that controls player actions.
@@ -49,6 +49,7 @@ namespace EasyFarm.States
             _fface = fface;
             _stateMachine = new FiniteStateMachine(fface);
             _playerMonitor = new PlayerMonitor(fface);
+            //_chatMonitor = new ChatMonitor(fface);
         }
 
         /// <summary>
@@ -59,6 +60,7 @@ namespace EasyFarm.States
             IsWorking = true;
             _stateMachine.Start();
             _playerMonitor.Start();
+            //_chatMonitor.Watch();
             return true;
         }
 
@@ -70,6 +72,7 @@ namespace EasyFarm.States
             IsWorking = false;
             _stateMachine.Stop();
             _playerMonitor.Stop();
+            //_chatMonitor.Stop();
             _fface.Follow.Reset();
         }
     }
