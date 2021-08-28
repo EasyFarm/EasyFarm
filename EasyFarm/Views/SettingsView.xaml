@@ -76,7 +76,7 @@
                             Grid.Column="1"
                             Margin="5 0 0 0"
                             Minimum="0"
-                            Maximum="50"
+                            Maximum="250"
                             Value="{Binding HeightThreshold}" />
                     <Label Grid.Row="2"
                            Grid.Column="0"

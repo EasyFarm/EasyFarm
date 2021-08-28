@@ -34,17 +34,17 @@ namespace EasyFarm.UserSettings
         /// <summary>
         /// Min distance to stand when attacking an opponent.
         /// </summary>
-        public const int MeleeDistance = 3;
+        public const int MeleeDistance = 2;
 
         /// <summary>
         /// Max difference an attackable mob can be before being considered unreachable.
         /// </summary>
-        public const int HeightThreshold = 5;
+        public const int HeightThreshold = 100;
 
         /// <summary>
         /// The max distance a mob will be recoginized by the bot.
         /// </summary>
-        public const double DetectionDistance = 17;
+        public const double DetectionDistance = 100;
 
         /// <summary>
         /// Command for resting

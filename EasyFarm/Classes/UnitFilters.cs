@@ -59,7 +59,7 @@ namespace EasyFarm.Classes
             if (!mob.NpcType.Equals(NpcType.Mob)) return false;
 
             // Kill aggro if aggro's checked regardless of target's list but follows the ignored list.
-            if (mob.HasAggroed && config.AggroFilter) return true;
+            if (mob.HasAggroed) return true;
 
             // NM Huntinng
             if (Config.Instance.IsNMHunting)
