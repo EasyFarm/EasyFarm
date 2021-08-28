@@ -56,19 +56,10 @@ namespace EasyFarm.States
         /// </summary>
         public bool Start()
         {
-            var route = Config.Instance.Route;
-            var isPathReachable = !route.IsPathSet || route.IsPathUnreachable(_stateMachine._context);
-
-            if (isPathReachable)
-            {
-                IsWorking = true;
-                _stateMachine.Start();
-                _playerMonitor.Start();
-                return true;
-            }
-
-            AppServices.InformUser("The route is not reachable");
-            return false;
+            IsWorking = true;
+            _stateMachine.Start();
+            _playerMonitor.Start();
+            return true;
         }
 
         /// <summary>

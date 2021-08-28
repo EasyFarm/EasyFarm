@@ -58,6 +58,15 @@ namespace EasyFarm.Classes
             // Type is not mob
             if (!mob.NpcType.Equals(NpcType.Mob)) return false;
 
+                
+            // NM Huntinng
+            if (Config.Instance.IsNMHunting)
+            {
+                int pid = Convert.ToInt32(Config.Instance.PlaceholderID, 16);
+                return mob.Id == pid || mob.Name == Config.Instance.NotoriousMonsterName;
+            }
+
+
             // Mob is out of range
             if (!(mob.Distance < config.DetectionDistance)) return false;
 
@@ -66,7 +75,7 @@ namespace EasyFarm.Classes
             // If any unit is within the wander distance then the
             if (config.Route.Waypoints.Any())
             {
-                if (!(config.Route.Waypoints.Any(waypoint => Distance(mob, waypoint) <= config.WanderDistance))) return false;
+                if (!config.Route.Waypoints.Any(waypoint => Distance(mob, waypoint) <= config.WanderDistance)) return false;
             }
 
             // Mob too high out of reach.
