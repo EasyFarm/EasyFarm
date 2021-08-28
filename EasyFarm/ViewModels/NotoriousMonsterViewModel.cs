@@ -28,6 +28,7 @@ namespace EasyFarm.ViewModels
             ViewName = "NotoriousMonster";
         }
 
+        public override string Value { get; set; }
 
         public bool IsEnabled
         {
@@ -35,16 +36,29 @@ namespace EasyFarm.ViewModels
             set { Set(ref Config.Instance.IsNMHunting, value); }
         }
 
-        public string PlaceholderID
+        public override ObservableCollection<string> Values
         {
-            get { return Config.Instance.PlaceholderID; }
-            set { Set(ref Config.Instance.PlaceholderID, value); }
+            get { return Config.Instance.PlaceholderIDs; }
+            set { Set(ref Config.Instance.PlaceholderIDs, value); }
         }
 
         public string Name
         {
             get { return Config.Instance.NotoriousMonsterName; }
             set { Set(ref Config.Instance.NotoriousMonsterName, value); }
+        }
+
+        protected override void Add()
+        {
+            if (string.IsNullOrWhiteSpace(Value)) return;
+            base.Add();
+            Value = "";
+        }
+
+        protected override void Clear()
+        {
+            base.Clear();
+            Value = "";
         }
     }
 }

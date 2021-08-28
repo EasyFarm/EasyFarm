@@ -64,8 +64,13 @@ namespace EasyFarm.Classes
             // NM Huntinng
             if (Config.Instance.IsNMHunting)
             {
-                int pid = Convert.ToInt32(Config.Instance.PlaceholderID, 16);
-                return mob.Id == pid || mob.Name == Config.Instance.NotoriousMonsterName;
+                if (mob.Name == Config.Instance.NotoriousMonsterName) return true;
+
+                if (Config.Instance.PlaceholderIDs.Any())
+                {
+                    var placeholderIds = Config.Instance.PlaceholderIDs.Select(x => Convert.ToInt32(x, 16));
+                    return placeholderIds.Where(x => mob.Id == x).Any();
+                }
             }
 
 

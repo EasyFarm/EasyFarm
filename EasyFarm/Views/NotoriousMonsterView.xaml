@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label Grid.Column="0" VerticalAlignment="Center" Content="NM Hunting" />
@@ -23,8 +24,37 @@
 
 
         <Label Grid.Row="1" VerticalAlignment="Center" Content="Placeholder ID" />
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding PlaceholderID}" />
+        <ComboBox Grid.Row="1"
+                  Grid.Column="1"
+                  Margin="5"
+                  IsEditable="True"
+                  ItemsSource="{Binding Values}"
+                  Text="{Binding Value}"
+                  IsSynchronizedWithCurrentItem="True" />
+        
         <Label Grid.Row="2" Content="Name" VerticalContentAlignment="Center" />
         <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Name}" />
+        
+        <Grid Grid.Row="3" Grid.Column="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BtnAddTarget"
+                    Grid.Column="0"
+                    Content="Add"
+                    Command="{Binding AddCommand}" />
+            <Button x:Name="BtnDeleteTarget"
+                    Grid.Column="1"
+                    Margin="5 0"
+                    Content="Delete"
+                    Command="{Binding DeleteCommand}" />
+            <Button x:Name="BtnClearTarget"
+                    Grid.Column="2"
+                    Content="Clear"
+                    Command="{Binding ClearCommand}" />
+        </Grid>
+        
     </Grid>
 </UserControl>
