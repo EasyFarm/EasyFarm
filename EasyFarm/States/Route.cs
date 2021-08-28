@@ -87,7 +87,12 @@ namespace EasyFarm.States
                 EasyFarm.ViewModels.LogViewModel.Write("Navigating to waypoint (" + _goal + ") " + closest.ToString());
 
                 return _nodes[_goal];
-            } 
+            }
+            else if (_nodes.Count < 2)
+            {
+                _goal = 0;
+                return _nodes[_goal];
+            }
             else if (_nodes.Count < 3)
             {
                 _goal = (_goal == 0) ? 1 : 0;
@@ -137,8 +142,27 @@ namespace EasyFarm.States
 
         public bool IsPathUnreachable(IGameContext context)
         {
-            return Zone == context.Player.Zone &&
-                context.NavMesh.FindPathBetween(context.API.Player.Position, GetNextPosition(context.API.Player.Position)).Count > 0;
+            if (Zone != context.Player.Zone)
+            {
+                return false;
+            }
+            else
+            {
+                Position nextPos = GetNextPosition(context.API.Player.Position);
+                if (nextPos != null)
+                {
+                    return (Distance(context.API.Player.Position, nextPos) < 0.5
+                           || context.NavMesh.FindPathBetween(context.API.Player.Position, GetNextPosition(context.API.Player.Position)).Count > 0
+                           );
+                }
+                else
+                {
+                    return false;
+                }
+            }
+     
+            //return Zone == context.Player.Zone &&
+            //       context.NavMesh.FindPathBetween(context.API.Player.Position, GetNextPosition(context.API.Player.Position)).Count > 0;
         }
     }
 }
