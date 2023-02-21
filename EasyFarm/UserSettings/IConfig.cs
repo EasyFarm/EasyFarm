@@ -53,6 +53,9 @@ namespace EasyFarm.UserSettings
         bool IsObjectAvoidanceEnabled { get; set; }
         double FollowDistance { get; set; }
         string FollowedPlayer { get; set; }
+        int MinutesToRun { get; set; }
+        int StopAtLevel { get; set; }
+
         Route Route { get; set; }
     }
 }

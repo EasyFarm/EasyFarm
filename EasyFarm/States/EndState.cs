@@ -15,7 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // If not, see <http://www.gnu.org/licenses/>.
 // ///////////////////////////////////////////////////////////////////
+using System;
 using System.Linq;
+using System.Security.Cryptography;
 using EasyFarm.Classes;
 using EasyFarm.Context;
 using EasyFarm.UserSettings;
@@ -62,6 +64,10 @@ namespace EasyFarm.States
 
             // Reset all usage data to begin a new battle.
             foreach (var action in context.Config.BattleLists.Actions) action.Usages = 0;
+
+            // dont go to the next state too quickly
+            var rando = new Random();
+            TimeWaiter.Pause(rando.Next(1800, 9400));
         }
     }
 }

@@ -37,6 +37,7 @@ namespace MemoryAPI
         int TPCurrent { get; }
         Zone Zone { get; }
         Job Job { get; }
+        int JobLevel { get; }
         Job SubJob { get; }
     }
 }

@@ -154,6 +154,16 @@ namespace EasyFarm.UserSettings
         /// </summary>
         public double WanderDistance = Constants.DetectionDistance;
 
+        /// <summary>
+        ///     How many hours to keep running.
+        /// </summary>
+        public int MinutesToRun = 4;
+
+        /// <summary>
+        ///     Stop at character level.
+        /// </summary>
+        public int StopAtLevel = 76;
+
         static Config()
         {
             Instance.Initialize();

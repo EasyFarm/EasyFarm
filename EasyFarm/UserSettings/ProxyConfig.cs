@@ -154,6 +154,19 @@ namespace EasyFarm.UserSettings
             get => Config.Instance.TrustPartySize;
             set => Config.Instance.TrustPartySize = value;
         }
+
+        public int MinutesToRun
+        {
+            get => Config.Instance.MinutesToRun;
+            set => Config.Instance.MinutesToRun = value;
+        }
+
+        public int StopAtLevel
+        {
+            get => Config.Instance.StopAtLevel;
+            set => Config.Instance.StopAtLevel = value;
+        }
+
         public bool HomePointOnDeath
         {
             get => Config.Instance.HomePointOnDeath;

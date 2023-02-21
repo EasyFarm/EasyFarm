@@ -185,7 +185,7 @@ namespace EasyFarm.Classes
         /// </summary>
         public bool HasAggroed
         {
-            get { return (!IsClaimed || MyClaim) && Status == Status.Fighting; }
+            get { return (!IsClaimed || MyClaim) && Status == Status.Fighting && _npc.HPPCurrent(Id) == 100; }
         }
 
         /// <summary>

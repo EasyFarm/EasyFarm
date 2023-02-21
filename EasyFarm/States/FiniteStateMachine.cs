@@ -17,6 +17,7 @@
 // ///////////////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -133,8 +134,20 @@ namespace EasyFarm.States
 
         private void RunStateMachine()
         {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
             while (true)
             {
+                if (timer.Elapsed.Minutes > _context.Config.MinutesToRun) {
+                    LogViewModel.Write("Stopping due to time limit reached: " + timer.Elapsed.Minutes.ToString() + " minutes");
+                    throw new Exception();
+                }
+                else if (_context.API.Player.JobLevel >= _context.Config.StopAtLevel)
+                {
+                    LogViewModel.Write("Stopping due to level limit reached: " + _context.API.Player.JobLevel.ToString());
+                    throw new Exception();
+                }
+
                 // Sort the List, States may have updated Priorities.
                 _states.Sort();
 

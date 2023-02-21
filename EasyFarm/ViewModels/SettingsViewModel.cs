@@ -131,6 +131,26 @@ namespace EasyFarm.ViewModels
             }
         }
 
+        public int MinutesToRun
+        {
+            get { return Config.Instance.MinutesToRun; }
+            set
+            {
+                Set(ref Config.Instance.MinutesToRun, value);
+                AppServices.InformUser("MinutesToRun Set: {0}.", value);
+            }
+        }
+
+        public int StopAtLevel
+        {
+            get { return Config.Instance.StopAtLevel; }
+            set
+            {
+                Set(ref Config.Instance.StopAtLevel, value);
+                AppServices.InformUser("StopAtLevel Set: {0}.", value);
+            }
+        }
+
         private void RestoreDefaults()
         {
             DetectionDistance = Constants.DetectionDistance;
@@ -144,6 +164,8 @@ namespace EasyFarm.ViewModels
             ShouldEngage = true;
             HomePointOnDeath = false;
             TrustPartySize = Constants.TrustPartySize;
+            MinutesToRun = 4;
+            StopAtLevel = 76;
             AppServices.InformUser("Defaults have been restored.");
         }        
     }

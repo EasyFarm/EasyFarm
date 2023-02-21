@@ -451,6 +451,8 @@ namespace MemoryAPI.Memory
 
             public Job Job => (Job)_api.Player.MainJob;
 
+            public int JobLevel => (int)_api.Player.MainJobLevel;
+
             public Job SubJob => (Job)_api.Player.SubJob;
         }
 

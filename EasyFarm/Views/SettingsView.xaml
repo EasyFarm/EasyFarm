@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
-             d:DesignHeight="281.856"
+             d:DesignHeight="600"
              d:DesignWidth="400">
     <ScrollViewer HorizontalScrollBarVisibility="Auto"
                   VerticalScrollBarVisibility="Auto">
@@ -49,6 +49,8 @@
             <Expander Header="Misc Settings" Margin="0,2">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
@@ -113,7 +115,26 @@
                             Grid.Column="1"
                             Margin="5 0 0 0"
                               IsChecked="{Binding AvoidObjects}" />
-                    <Button Grid.Row="6"
+                    <Label Grid.Row="6"
+                           Grid.Column="0"
+                           Content="Time Limit: Minutes" />
+                    <Slider Grid.Row="6"
+                            Grid.Column="1"
+                            Margin="5 0 0 0"
+                            Minimum="0"
+                            Maximum="350"
+                            Value="{Binding MinutesToRun}" />
+                    <Label 
+                        Margin="5"
+                        Grid.Row="7"
+                        Content="Stop At Level" />
+                    <controls:NumericUpDown 
+                        Grid.Column="1"
+                        Grid.Row="7"
+                        Margin="5"
+                        ToolTip="Stop when character reaches level."
+                        Value="{Binding StopAtLevel}"  />
+                    <Button Grid.Row="8"
                             Grid.ColumnSpan="2" Grid.Column="0"
                                 Margin="0 5 0 0"
                             Command="{Binding RestoreDefaultsCommand}"

@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31321.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarm", "EasyFarm\EasyFarm.csproj", "{14508978-627B-46AE-9779-1F6B4FB0611E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryAPI", "MemoryAPI\MemoryAPI.csproj", "{CC6CC9BE-32F0-4B8A-A1AD-6C7C744E2FAD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFarm.Tests", "EasyFarm.Tests\EasyFarm.Tests.csproj", "{43285FC5-222E-4828-B8F2-396FF628553D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{CC6CC9BE-32F0-4B8A-A1AD-6C7C744E2FAD}.Debug|Any CPU.Build.0 = Debug|x86
 		{CC6CC9BE-32F0-4B8A-A1AD-6C7C744E2FAD}.Release|Any CPU.ActiveCfg = Release|x86
 		{CC6CC9BE-32F0-4B8A-A1AD-6C7C744E2FAD}.Release|Any CPU.Build.0 = Release|x86
-		{43285FC5-222E-4828-B8F2-396FF628553D}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{43285FC5-222E-4828-B8F2-396FF628553D}.Debug|Any CPU.Build.0 = Debug|x86
-		{43285FC5-222E-4828-B8F2-396FF628553D}.Release|Any CPU.ActiveCfg = Release|x86
-		{43285FC5-222E-4828-B8F2-396FF628553D}.Release|Any CPU.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
